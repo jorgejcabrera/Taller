@@ -21,9 +21,11 @@
 *.la
 *.a
 *.lib
-*.projects
+*.project
+*.cproject
 
 # Executables
 *.exe
 *.out
 *.app
+/Debug/
