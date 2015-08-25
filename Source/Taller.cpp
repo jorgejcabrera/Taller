@@ -7,15 +7,15 @@
 //============================================================================
 
 #include <iostream>
-//#include "SDL/SDL.h"
+#include "SDL/SDL.h"
 
 using namespace std;
 
-int main() {
+int main( int argc, char* args[] ) {
 	//Start SDL
-	//SDL_Init( SDL_INIT_EVERYTHING );
+	SDL_Init( SDL_INIT_EVERYTHING );
 	//Quit SDL
-	//SDL_Quit();
+	SDL_Quit();
 	cout << "Primer main" << endl; // prints tp---taller
 	return 0;
 }
