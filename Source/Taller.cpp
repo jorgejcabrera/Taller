@@ -12,6 +12,36 @@
 using namespace std;
 
 SDL_Surface *demo_screen;
+float demo_time_measure = 0.0f;
+float demo_time_step = 0.0f;
+/* Convert from timespec to float */
+
+float demo_convert_time(struct timespec *ts){
+	float accu;
+	/* Combine the value into floating number */
+	accu = (float)ts->tv_sec; /* Seconds that have gone by */
+	accu *= 1000000000.0f; /* One second is 1000x1000x1000 nanoseconds, s -> ms, us, ns */
+	accu += (float)ts->tv_nsec; /* Nanoseconds that have gone by */
+	/* Bring it back into the millisecond range but keep the nanosecond resolution */
+	accu /= 1000000.0f;
+	return accu;
+}
+
+/* Start time */
+void demo_start_time(){
+	struct timespec ts;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID,&ts);
+	demo_time_measure = demo_convert_time(&ts);
+}
+
+/* End time */
+void demo_end_time(){
+	struct timespec ts;
+	float delta;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID,&ts);
+	delta = demo_convert_time(&ts)-demo_time_measure; /* Find the distance in time */
+	demo_time_step = delta/(1000.0f/16.0f); /* Weird formula, equals 1.0f at 16 frames a second */
+}
 
 int main( int argc, char* args[] ) {
 
@@ -31,10 +61,19 @@ int main( int argc, char* args[] ) {
 	active = 1;
 	while (active) {
 		/* Handle events */
-		while (SDL_PollEvent(&ev)) {
-			if (ev.type == SDL_QUIT)
+		while(SDL_PollEvent(&ev))
+		{
+			if(ev.type == SDL_QUIT)
 				active = 0; /* End */
 		}
+		/* Start time */
+		demo_start_time();
+		/* Clear screen */
+		SDL_FillRect(demo_screen,NULL,SDL_MapRGBA(demo_screen->format,0,0,255,255));
+		/* Show screen */
+		SDL_Flip(demo_screen);
+		/* End time */
+		demo_end_time();
 	}
 
 	/* Clear screen */
