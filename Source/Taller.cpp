@@ -15,6 +15,7 @@
 #include <time.h>
 #include "SDL/SDL.h"
 #include <stdlib.h>
+#include <yaml.h>
 
 /* Types */
 typedef struct {
@@ -160,5 +161,4 @@ int main(int argn, char **argv) {
 	/* Exit */
 	SDL_Quit();
 	return 0;
-
 }
