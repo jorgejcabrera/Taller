@@ -16,7 +16,7 @@ sudo make install
 Luego necesitamos importar la librería en el IDE
 ```
 Eclipse
-Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL
+Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2
 ```
 
 La configuración de cada mapa correspondiente a la partida se encuentra en un arhcivo [YAML](http://yaml.org/). Para el manejo de este tipo de archivos usamos [**libyaml**](http://pyyaml.org/wiki/LibYAML). La librería se puede descargar de [aquí](http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz.). Una vez descompimido:
