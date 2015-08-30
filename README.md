@@ -8,10 +8,10 @@ Para la interfaz gráfica usamos la librería [**SDL**](https://www.libsdl.org/d
 Instalación
 ```	
 Ubuntu/Debian
--descargamos la version SDL2-2.0.3
--./configure
--make
--make install
+descargamos SDL2-2.0.3
+./configure
+make
+sudo make install
 ```
 Luego necesitamos importar la librería en el IDE
 ```
