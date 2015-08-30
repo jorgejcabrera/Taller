@@ -8,13 +8,18 @@
 #ifndef SOURCE_MODELO_ENTIDADPARTIDA_H_
 #define SOURCE_MODELO_ENTIDADPARTIDA_H_
 
+#include <string>
+
 namespace std {
 
 class EntidadPartida {
 private:
 	int salud;
-	int cordX;
-	int cordY;
+	int posX;
+	int posY;
+	int ancho;
+	int largo;
+	string image;
 
 public:
 	EntidadPartida();

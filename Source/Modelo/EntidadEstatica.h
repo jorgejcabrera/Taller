@@ -13,6 +13,8 @@
 namespace std {
 
 class EntidadEstatica: public EntidadPartida {
+private:
+	bool edificable;
 public:
 	EntidadEstatica();
 	virtual ~EntidadEstatica();
