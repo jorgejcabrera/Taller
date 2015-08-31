@@ -10,14 +10,12 @@
 
 #include "SDL2/SDL.h"
 
-namespace std {
+using namespace std;
 
 class MapaVista {
 public:
 	MapaVista();
 	virtual ~MapaVista();
 };
-
-} /* namespace std */
 
 #endif /* SOURCE_VISTA_MAPAVISTA_H_ */

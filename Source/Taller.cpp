@@ -14,12 +14,15 @@
 /* Includes */
 #include <time.h>
 #include "SDL2/SDL.h"
+#include "Vista/MapaVista.h"
+#include "Modelo/EntidadEstatica.h"
 #include <stdlib.h>
 #include <yaml.h>
 
+using namespace std;
 
 int main(int argc, char* argv[]) {
-
+	MapaVista* unaEntidad = new MapaVista();
     return 0;
 }
 

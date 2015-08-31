@@ -7,8 +7,6 @@
 
 #include "EntidadDinamica.h"
 
-namespace std {
-
 EntidadDinamica::EntidadDinamica() {
 	// TODO Auto-generated constructor stub
 
@@ -18,4 +16,3 @@ EntidadDinamica::~EntidadDinamica() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace std */

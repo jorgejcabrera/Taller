@@ -7,7 +7,7 @@
 
 #include "MapaVista.h"
 
-namespace std {
+using namespace std;
 
 MapaVista::MapaVista() {
 
@@ -47,4 +47,3 @@ MapaVista::~MapaVista() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace std */

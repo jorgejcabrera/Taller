@@ -10,17 +10,15 @@
 
 #include "EntidadPartida.h"
 
-namespace std {
+using namespace std;
 
 class EntidadDinamica: public EntidadPartida {
-private:
-	int velocidad;
-public:
-	EntidadDinamica();
-	virtual ~EntidadDinamica();
-	void trasladarse();
+	private:
+		int velocidad;
+	public:
+		EntidadDinamica();
+		virtual ~EntidadDinamica();
+		void trasladarse();
 };
-
-} /* namespace std */
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */
