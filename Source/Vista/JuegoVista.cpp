@@ -7,14 +7,47 @@
 
 #include "JuegoVista.h"
 
+
+SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
+	SDL_Surface *bmp = SDL_LoadBMP(file.c_str());
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(ren, bmp);
+
+//	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
+	if (texture == NULL){
+		std::cout << "loadTexture Error: " << SDL_GetError() << std::endl;
+	}
+	return texture;
+}
+
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
+	//Setup the destination rectangle to be at the position we want
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y = y;
+	dst.w = w;
+	dst.h = h;
+	SDL_RenderCopy(ren, tex, NULL, &dst);
+}
+
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
+	int w, h;
+	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+	renderTexture(tex, ren, x, y, w, h);
+}
+
 JuegoVista::JuegoVista() {
+
+	const int SCREEN_WIDTH  = 640;
+	const int SCREEN_HEIGHT = 480;
+	const int TILE_SIZE = 40;
+
     //inicializamos SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
     	 cout << "Error SDL_Init:"  <<  SDL_GetError ();
     }
 
     // creamos la ventana
-    SDL_Window *win = SDL_CreateWindow("Age of empires", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    SDL_Window *win = SDL_CreateWindow("Age of empires", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (win == NULL){
     	cout << "SDL_CreateWindow Error: " << SDL_GetError();
     	SDL_Quit();
@@ -27,40 +60,50 @@ JuegoVista::JuegoVista() {
     	SDL_Quit();
     }
 
+    string imagePath = "../Taller/Images/white_tile.bmp";
+    string backgroundPath = "../Taller/Images/grass_only.bmp";
+    SDL_Texture *background = loadTexture(backgroundPath, ren);
+    SDL_Texture *image = loadTexture(imagePath, ren);
+    //Make sure they both loaded ok
+    if (background == NULL || image == NULL){
+    	SDL_DestroyRenderer(ren);
+    	SDL_DestroyWindow(win);
+    	SDL_DestroyTexture(background);
+    	SDL_DestroyTexture(image);
+    	std::cout << "loadTexture Error: " << SDL_GetError() << std::endl;
+    	SDL_Quit();
+    }
+
+    //Tiling the Background
+
+    //Determine how many tiles we'll need to fill the screen
+    int xTiles = SCREEN_WIDTH / TILE_SIZE;
+    int yTiles = SCREEN_HEIGHT / TILE_SIZE;
+
+    //Draw the tiles by calculating their positions
+    for (int i = 0; i < xTiles * yTiles; ++i){
+    	int x = i % xTiles;
+    	int y = i / xTiles;
+    	renderTexture(background, ren, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,
+    		TILE_SIZE);
+    }
+
+    //Drawing the Foreground
+    int iW, iH;
+    SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
+    int x = SCREEN_WIDTH / 2 - iW / 2;
+    int y = SCREEN_HEIGHT / 2 - iH / 2;
+    renderTexture(image, ren, x, y);
+
+    SDL_RenderPresent(ren);
+    SDL_Delay(2000);
+
     //string imagePath = "/home/jorge/Escritorio/Taller/image.png";
-    string imagePath = "../Taller/Images/image.bmp";
-    SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
-    if (bmp == NULL){
-    	SDL_DestroyRenderer(ren);
-    	SDL_DestroyWindow(win);
-    	cout << "corto aca \n";
-    	cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
-    	SDL_Quit();
-    }
 
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
-    SDL_FreeSurface(bmp);
-    if (tex == NULL){
-    	SDL_DestroyRenderer(ren);
-    	SDL_DestroyWindow(win);
-    	std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
-    	SDL_Quit();
-    }
-
-    //Dibujamos la textura
-    for (int i = 0; i < 3; ++i){
-    	//First clear the renderer
-    	SDL_RenderClear(ren);
-    	//Draw the texture
-    	SDL_RenderCopy(ren, tex, NULL, NULL);
-    	//Update the screen
-    	SDL_RenderPresent(ren);
-    	//Take a quick break after all that hard work
-    	SDL_Delay(1000);
-    }
 
     // Clean up
-    SDL_DestroyTexture(tex);
+    SDL_DestroyTexture(background);
+    SDL_DestroyTexture(image);
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();
@@ -69,3 +112,5 @@ JuegoVista::JuegoVista() {
 JuegoVista::~JuegoVista() {
 	// TODO Auto-generated destructor stub
 }
+
+
