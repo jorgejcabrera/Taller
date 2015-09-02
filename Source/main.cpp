@@ -21,11 +21,10 @@
 #include <stdlib.h>
 #include <yaml.h>
 
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    SDL_Window *window;                    // Declare a pointer
-
     //inicializamos SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
     	 cout << "Error SDL_Init:"  <<  SDL_GetError ();
@@ -45,8 +44,9 @@ int main(int argc, char* argv[]) {
     	SDL_Quit();
     }
 
-    string imagePath = "/home/jorge/Escritorio/Taller/image.png";
-    SDL_Surface *bmp = IMG_Load(imagePath.c_str());
+    //string imagePath = "/home/jorge/Escritorio/Taller/image.png";
+    string imagePath = "../Taller/Images/image.bmp";
+    SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
     if (bmp == NULL){
     	SDL_DestroyRenderer(ren);
     	SDL_DestroyWindow(win);
