@@ -7,16 +7,10 @@
 
 #include "JuegoVista.h"
 
-using namespace std;
-
 JuegoVista::JuegoVista() {
-
-    SDL_Window *window;                    // Declare a pointer
-
     //inicializamos SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
     	 cout << "Error SDL_Init:"  <<  SDL_GetError ();
-    	 return;
     }
 
     // creamos la ventana
@@ -24,7 +18,6 @@ JuegoVista::JuegoVista() {
     if (win == NULL){
     	cout << "SDL_CreateWindow Error: " << SDL_GetError();
     	SDL_Quit();
-    	return;
     }
 
     SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -32,17 +25,17 @@ JuegoVista::JuegoVista() {
     	SDL_DestroyWindow(win);
     	cout << "SDL_CreateRenderer Error: " << SDL_GetError();
     	SDL_Quit();
-    	return;
     }
 
-    string imagePath = "/home/jorge/Escritorio/Taller/image.bmp";
+    //string imagePath = "/home/jorge/Escritorio/Taller/image.png";
+    string imagePath = "../Taller/Images/image.bmp";
     SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
     if (bmp == NULL){
     	SDL_DestroyRenderer(ren);
     	SDL_DestroyWindow(win);
+    	cout << "corto aca \n";
     	cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
     	SDL_Quit();
-    	return;
     }
 
     SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
@@ -52,7 +45,6 @@ JuegoVista::JuegoVista() {
     	SDL_DestroyWindow(win);
     	std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
     	SDL_Quit();
-    	return;
     }
 
     //Dibujamos la textura

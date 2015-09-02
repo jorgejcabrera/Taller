@@ -10,7 +10,7 @@
 
 #include "EntidadPartida.h"
 
-namespace std {
+using namespace std;
 
 class EntidadEstatica: public EntidadPartida {
 private:
@@ -19,7 +19,5 @@ public:
 	EntidadEstatica();
 	virtual ~EntidadEstatica();
 };
-
-} /* namespace std */
 
 #endif /* SOURCE_MODELO_ENTIDADESTATICA_H_ */

@@ -7,7 +7,7 @@
 
 #include "EntidadEstatica.h"
 
-namespace std {
+using namespace std;
 
 EntidadEstatica::EntidadEstatica() {
 	// TODO Auto-generated constructor stub
@@ -17,5 +17,3 @@ EntidadEstatica::EntidadEstatica() {
 EntidadEstatica::~EntidadEstatica() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */
