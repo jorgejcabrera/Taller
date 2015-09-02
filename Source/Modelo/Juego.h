@@ -10,17 +10,18 @@
 
 #include "Mapa.h"
 #include "EntidadDinamica.h"
-namespace std {
+using namespace std ;
 
 class Juego {
 private:
 	Mapa mapa;
 	EntidadDinamica personajeSeleccionado;
+	bool juegoFinalizado;
 public:
 	Juego();
 	virtual ~Juego();
+	void terminarJuego();
+	bool getStatusPartida();
 };
-
-} /* namespace std */
 
 #endif /* SOURCE_MODELO_JUEGO_H_ */
