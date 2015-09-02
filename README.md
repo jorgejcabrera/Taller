@@ -16,10 +16,10 @@ sudo make install
 
 También se van a usar algunas librerías auxiliares de SDL, como [**SDL_image**](https://www.libsdl.org/projects/SDL_image/). Los pasos para la instalación son los mismos que se describieron arriba.
 
-Luego necesitamos importar la librería en el IDE
+Luego necesitamos importar las librería en el IDE
 ```
 Eclipse
-Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2
+Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image 
 ```
 
 La configuración de cada mapa correspondiente a la partida se encuentra en un arhcivo [**YAML**](http://yaml.org/). Para el manejo de este tipo de archivos usamos [**libyaml**](http://pyyaml.org/wiki/LibYAML). La librería se puede descargar de [**aquí**](http://pyyaml.org/download/libyaml/). Una vez descompimido:
