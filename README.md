@@ -7,22 +7,25 @@ Para la interfaz gráfica usamos la librería [**SDL**](https://www.libsdl.org/d
 
 Instalación
 ```	
-Ubuntu/Debian
+Ubuntu/Debian/MacOs
 descargamos SDL2-2.0.3
 ./configure
 make
 sudo make install
 ```
+
+También se van a usar algunas librerías auxiliares de SDL, como [**SDL_image**](https://www.libsdl.org/projects/SDL_image/). Los pasos para la instalación son los mismos que se describieron arriba.
+
 Luego necesitamos importar la librería en el IDE
 ```
 Eclipse
 Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2
 ```
 
-La configuración de cada mapa correspondiente a la partida se encuentra en un arhcivo [YAML](http://yaml.org/). Para el manejo de este tipo de archivos usamos [**libyaml**](http://pyyaml.org/wiki/LibYAML). La librería se puede descargar de [aquí](http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz.). Una vez descompimido:
+La configuración de cada mapa correspondiente a la partida se encuentra en un arhcivo [**YAML*+](http://yaml.org/). Para el manejo de este tipo de archivos usamos [**libyaml**](http://pyyaml.org/wiki/LibYAML). La librería se puede descargar de [**aquí**](http://pyyaml.org/download/libyaml/). Una vez descompimido:
 ```
-Ubuntu/Debian
+Ubuntu/Debian/MacOs
 ./configure
 make
-sudp make install
+sudo make install
 ```
