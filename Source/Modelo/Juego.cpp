@@ -7,15 +7,20 @@
 
 #include "Juego.h"
 
-namespace std {
+using namespace std;
 
 Juego::Juego() {
 	// TODO Auto-generated constructor stub
+	this->juegoFinalizado = false;
+}
 
+void Juego::terminarJuego(){
+	this->juegoFinalizado = true;
+}
+bool Juego::getStatusPartida(){
+	return this->juegoFinalizado;
 }
 
 Juego::~Juego() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

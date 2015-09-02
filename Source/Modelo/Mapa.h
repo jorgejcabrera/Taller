@@ -9,18 +9,19 @@
 #define SOURCE_MODELO_MAPA_H_
 
 #include "EntidadPartida.h"
+#include "Tile.h"
 #include <list>
 
-namespace std {
+using namespace std;
 
 class Mapa {
 private:
-	std::list<EntidadPartida> entidades;
+	list<EntidadPartida> entidades;
+	list<Tile> tiles;
 public:
 	Mapa();
 	virtual ~Mapa();
 };
 
-} /* namespace std */
 
 #endif /* SOURCE_MODELO_MAPA_H_ */

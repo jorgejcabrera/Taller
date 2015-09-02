@@ -1,20 +1,20 @@
 /*
- * Mapa.cpp
+ * Tile.cpp
  *
- *  Created on: 30 de ago. de 2015
+ *  Created on: 1 de set. de 2015
  *      Author: jorge
  */
 
-#include "Mapa.h"
+#include "Tile.h"
 
 using namespace std;
 
-Mapa::Mapa() {
+Tile::Tile() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Mapa::~Mapa() {
+Tile::~Tile() {
 	// TODO Auto-generated destructor stub
 }
 
