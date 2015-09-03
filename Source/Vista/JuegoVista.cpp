@@ -56,7 +56,7 @@ JuegoVista::JuegoVista() {
     	//Update the screen
     	SDL_RenderPresent(ren);
     	//Take a quick break after all that hard work
-    	SDL_Delay(1000);
+    	SDL_Delay(10000000);
     }
 
     // Clean up

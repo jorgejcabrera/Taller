@@ -12,6 +12,7 @@ using namespace std;
 Juego::Juego() {
 	// TODO Auto-generated constructor stub
 	this->juegoFinalizado = false;
+
 }
 
 void Juego::terminarJuego(){
