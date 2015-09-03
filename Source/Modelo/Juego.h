@@ -16,7 +16,6 @@ using namespace std ;
 
 class Juego {
 private:
-	defaultSettings_t defaultSettings;
 	Mapa mapa;
 	EntidadDinamica personajeSeleccionado;
 	bool juegoFinalizado;
