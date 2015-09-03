@@ -27,45 +27,28 @@ JuegoVista::JuegoVista() {
     	SDL_Quit();
     }
 
-    //string imagePath = "/home/jorge/Escritorio/Taller/image.png";
-    string imagePath = "../Taller/Images/image.bmp";
-    SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
-    if (bmp == NULL){
-    	SDL_DestroyRenderer(ren);
-    	SDL_DestroyWindow(win);
-    	cout << "corto aca \n";
-    	cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
-    	SDL_Quit();
-    }
+	SDL_RenderClear(ren);
+	SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
+	SDL_Rect rectangle;
+	rectangle.x = 2;
+	rectangle.y = 0.5;
+	rectangle.w = 50;
+	rectangle.h = 50;
+	SDL_RenderFillRect(ren, &rectangle);
 
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
-    SDL_FreeSurface(bmp);
-    if (tex == NULL){
-    	SDL_DestroyRenderer(ren);
-    	SDL_DestroyWindow(win);
-    	std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
-    	SDL_Quit();
-    }
+	SDL_RenderPresent(ren);
 
-    //Dibujamos la textura
-    for (int i = 0; i < 3; ++i){
-    	//First clear the renderer
-    	SDL_RenderClear(ren);
-    	//Draw the texture
-    	SDL_RenderCopy(ren, tex, NULL, NULL);
-    	//Update the screen
-    	SDL_RenderPresent(ren);
-    	//Take a quick break after all that hard work
-    	SDL_Delay(1000);
-    }
-
-    // Clean up
-    SDL_DestroyTexture(tex);
-    SDL_DestroyRenderer(ren);
-    SDL_DestroyWindow(win);
-    SDL_Quit();
+//
+//    // Clean up
+//    SDL_DestroyTexture(tex);
+//    SDL_DestroyRenderer(ren);
+//    SDL_DestroyWindow(win);
+//    SDL_Quit();
 }
 
 JuegoVista::~JuegoVista() {
-	// TODO Auto-generated destructor stub
+//    SDL_DestroyTexture(tex);
+//    SDL_DestroyRenderer(ren);
+//    SDL_DestroyWindow(win);
+    SDL_Quit();
 }
