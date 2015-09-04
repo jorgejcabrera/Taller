@@ -8,13 +8,32 @@
 #ifndef SOURCE_MODELO_DEFAULTSETTINGS_H_
 #define SOURCE_MODELO_DEFAULTSETTINGS_H_
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-#define TILE_SIZE 40
-#define CONF_VEL_PERSONAJE 3
-#define MARGEN_SCROLL 30
-#define NOMBRE_ESCENARIO "Orleans"
-#define ESCENARIO_ANCHO 100
-#define ESCENARIO_ALTO 100
+#include <string>
+using namespace std;
+
+class DefaultSettings {
+	private:
+		int SCREEN_WIDTH;
+		int SCREEN_HEIGHT;
+		int TILE_SIZE;
+		int CONF_VEL_PERSONAJE;
+		int MARGEN_SCROLL;
+		string NOMBRE_ESCENARIO;
+		int ESCENARIO_ANCHO;
+		int ESCENARIO_ALTO;
+	public:
+		DefaultSettings();
+		virtual ~DefaultSettings();
+		int getScreenWidth();
+		int getScreenHeight();
+		int getTileSize();
+		int getMargenScroll();
+		string getNombreEscenario();
+		int getEscenarioAncho();
+		int getEscenarioAlto();
+		void setTileSize(int value);
+		void trasladarse();
+};
+
 
 #endif /* SOURCE_MODELO_DEFAULTSETTINGS_H_ */
