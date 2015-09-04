@@ -9,7 +9,9 @@
 #define SOURCE_VISTA_JUEGOVISTA_H_
 
 #include "SDL2/SDL.h"
+#include "../Modelo/DefaultSettings.h"
 #include "SDL2/SDL_image.h"
+
 #include <string>
 #include <iostream>
 #include <stdlib.h>
