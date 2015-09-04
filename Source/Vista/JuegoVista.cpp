@@ -36,11 +36,20 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
 	renderTexture(tex, ren, x, y, w, h);
 }
 
-void drawTopTiles(int cant,int xTiles,SDL_Texture *image, SDL_Renderer *ren, int tile_size){
-	int x = cant % xTiles;
-	int y = cant / xTiles;
-	for(int i=0;i<cant;i++){
-		renderTexture(image, ren, x * tile_size, y * tile_size, tile_size,tile_size);
+void drawTopTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
+    int yTiles = SCREEN_HEIGHT / TILE_SIZE;
+	int x = cant % yTiles;
+	int y = cant / yTiles;
+
+	if (cant == 1){
+		renderTexture(image, ren, SCREEN_WIDTH / 2, 0, TILE_SIZE,TILE_SIZE);
+	}else{
+		x = SCREEN_WIDTH / 2 - (x - 1) * TILE_SIZE / 2;
+		y = (cant - 1) * TILE_SIZE / 2;
+		for(int i=0;i<cant;i++){
+			renderTexture(image, ren, x, y, TILE_SIZE,TILE_SIZE);
+			x += TILE_SIZE;
+		}
 	}
 }
 
@@ -75,7 +84,7 @@ JuegoVista::JuegoVista() {
     	SDL_DestroyWindow(win);
     	//SDL_DestroyTexture(background);
     	SDL_DestroyTexture(image);
-    	std::cout << "loadTexture Error: " << SDL_GetError() << std::endl;
+    	cout << "loadTexture Error: " << SDL_GetError() << std::endl;
     	SDL_Quit();
     }
 
@@ -84,13 +93,12 @@ JuegoVista::JuegoVista() {
     //Determine how many tiles we'll need to fill the screen
     int xTiles = SCREEN_WIDTH / TILE_SIZE;
     int yTiles = SCREEN_HEIGHT / TILE_SIZE;
+    int aux;
 
     //Draw the tiles by calculating their positions
-    for (int i = 0; i < SCREEN_HEIGHT /TILE_SIZE ; ++i){
-    	//int x = i % xTiles;
-    	//int y = i / xTiles;
-    	//renderTexture(image, ren, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,TILE_SIZE);
-    	drawTopTiles(i++,xTiles,image,ren,TILE_SIZE);
+    for (int i = 0; i < yTiles; i++){
+    	aux = i;
+    	drawTopTiles(++aux,image,ren);
     }
 
     //Drawing the Foreground
