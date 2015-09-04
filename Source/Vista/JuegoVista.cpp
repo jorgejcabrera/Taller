@@ -115,7 +115,10 @@ JuegoVista::JuegoVista() {
 }
 
 JuegoVista::~JuegoVista() {
-	// TODO Auto-generated destructor stub
+//    SDL_DestroyTexture(tex);
+//    SDL_DestroyRenderer(ren);
+//    SDL_DestroyWindow(win);
+    SDL_Quit();
 }
 
 
