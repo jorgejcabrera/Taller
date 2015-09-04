@@ -8,7 +8,7 @@
 #include "JuegoVista.h"
 
 
-SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
+SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren){
 	SDL_Surface *bmp = SDL_LoadBMP(file.c_str());
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(ren, bmp);
 
@@ -33,6 +33,14 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
 	int w, h;
 	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
 	renderTexture(tex, ren, x, y, w, h);
+}
+
+void drawTopTiles(int cant,int xTiles,SDL_Texture *image, SDL_Renderer *ren, int tile_size){
+	int x = cant % xTiles;
+	int y = cant / xTiles;
+	for(int i=0;i<cant;i++){
+		renderTexture(image, ren, x * tile_size, y * tile_size, tile_size,tile_size);
+	}
 }
 
 JuegoVista::JuegoVista() {
@@ -61,14 +69,14 @@ JuegoVista::JuegoVista() {
     }
 
     string imagePath = "../Taller/Images/white_tile.bmp";
-    string backgroundPath = "../Taller/Images/grass_only.bmp";
-    SDL_Texture *background = loadTexture(backgroundPath, ren);
+    //string backgroundPath = "../Taller/Images/grass_only.bmp";
+    //SDL_Texture *background = loadTexture(backgroundPath, ren);
     SDL_Texture *image = loadTexture(imagePath, ren);
     //Make sure they both loaded ok
-    if (background == NULL || image == NULL){
+    if (/*background == NULL ||*/ image == NULL){
     	SDL_DestroyRenderer(ren);
     	SDL_DestroyWindow(win);
-    	SDL_DestroyTexture(background);
+    	//SDL_DestroyTexture(background);
     	SDL_DestroyTexture(image);
     	std::cout << "loadTexture Error: " << SDL_GetError() << std::endl;
     	SDL_Quit();
@@ -81,28 +89,25 @@ JuegoVista::JuegoVista() {
     int yTiles = SCREEN_HEIGHT / TILE_SIZE;
 
     //Draw the tiles by calculating their positions
-    for (int i = 0; i < xTiles * yTiles; ++i){
-    	int x = i % xTiles;
-    	int y = i / xTiles;
-    	renderTexture(background, ren, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,
-    		TILE_SIZE);
+    for (int i = 0; i < SCREEN_HEIGHT /TILE_SIZE ; ++i){
+    	//int x = i % xTiles;
+    	//int y = i / xTiles;
+    	//renderTexture(image, ren, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,TILE_SIZE);
+    	drawTopTiles(i++,xTiles,image,ren,TILE_SIZE);
     }
 
     //Drawing the Foreground
-    int iW, iH;
+    /*int iW, iH;
     SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
     int x = SCREEN_WIDTH / 2 - iW / 2;
     int y = SCREEN_HEIGHT / 2 - iH / 2;
-    renderTexture(image, ren, x, y);
+    renderTexture(image, ren, x, y);*/
 
     SDL_RenderPresent(ren);
     SDL_Delay(2000);
 
-    //string imagePath = "/home/jorge/Escritorio/Taller/image.png";
-
-
     // Clean up
-    SDL_DestroyTexture(background);
+    //SDL_DestroyTexture(background);
     SDL_DestroyTexture(image);
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
