@@ -6,16 +6,16 @@
  */
 
 #include "JuegoVista.h"
-#include "../Modelo/DefaultSettings.h"
+#include "SDL2/SDL_image.h"
 
 
 SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren){
-	SDL_Surface *bmp = SDL_LoadBMP(file.c_str());
-	SDL_Texture *texture = SDL_CreateTextureFromSurface(ren, bmp);
-
-//	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
+	//SDL_Surface *bmp = SDL_LoadBMP(file.c_str());
+	//SDL_SetColorKey( bmp ,SDL_SRCCOLORKEY, SDL_MapRGB( bmp->format, 0, 0, 0) );
+	//SDL_Texture *texture = SDL_CreateTextureFromSurface(ren, bmp);
+	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
 	if (texture == NULL){
-		std::cout << "loadTexture Error: " << SDL_GetError() << std::endl;
+		cout << "loadTexture Error: " << SDL_GetError() << std::endl;
 	}
 	return texture;
 }
@@ -28,6 +28,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
 	dst.w = w;
 	dst.h = h;
 	SDL_RenderCopy(ren, tex, NULL, &dst);
+	SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
 }
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
@@ -91,7 +92,7 @@ JuegoVista::JuegoVista() {
     //Tiling the Background
 
     //Determine how many tiles we'll need to fill the screen
-    int xTiles = SCREEN_WIDTH / TILE_SIZE;
+    //sint xTiles = SCREEN_WIDTH / TILE_SIZE;
     int yTiles = SCREEN_HEIGHT / TILE_SIZE;
     int aux;
 
