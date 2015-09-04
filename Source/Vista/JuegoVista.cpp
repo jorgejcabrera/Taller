@@ -6,6 +6,7 @@
  */
 
 #include "JuegoVista.h"
+#include "../Modelo/DefaultSettings.h"
 
 
 SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren){
@@ -44,10 +45,6 @@ void drawTopTiles(int cant,int xTiles,SDL_Texture *image, SDL_Renderer *ren, int
 }
 
 JuegoVista::JuegoVista() {
-
-	const int SCREEN_WIDTH  = 640;
-	const int SCREEN_HEIGHT = 480;
-	const int TILE_SIZE = 40;
 
     //inicializamos SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
