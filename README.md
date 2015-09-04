@@ -32,6 +32,8 @@ sudo make install
 
 Si al correr el programa, aparece el error: "error while loading shared libraries:
 libSDL2_image-2.0.so.0: cannot open shared object file: No such file or directory", en eclipse ir a:
+```
 Run -> Run Configurations... -> Enviroment -> New Enviroment Variable. 
 Nombre de la variable: LD_LIBRARY_PATH
 Value: /usr/local/lib
+```
