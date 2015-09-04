@@ -48,7 +48,7 @@ void drawTopTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
 
 void drawLowerTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
 	int x = SCREEN_WIDTH / 2 - (cant - 1) * TILE_SIZE / 2;
-	int y = SCREEN_HEIGHT - (cant - 1) * TILE_SIZE / 2;
+	int y = SCREEN_HEIGHT - (cant - 1) * TILE_SIZE / 2 - TILE_SIZE;
 	for(int i=0;i<cant;i++){
 		renderTexture(image, ren, x, y, TILE_SIZE,TILE_SIZE);
 		x += TILE_SIZE;
@@ -101,7 +101,11 @@ JuegoVista::JuegoVista() {
     for (int i = 0; i < yTiles; i++){
     	aux = i;
     	drawTopTiles(++aux,image,ren);
-    	drawLowerTiles(++aux,image,ren);
+    	if ( i < yTiles - 1 ){
+    		aux = i;
+    		drawLowerTiles(++aux,image,ren);
+    	}
+
     }
 
     //Drawing the Foreground
