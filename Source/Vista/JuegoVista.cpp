@@ -26,37 +26,27 @@ void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y
 	SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
 }
 
-void JuegoVista::drawTopTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
-	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
-	int y = (cant - 1) *  defaultSettings->getTileSize() / 2;
-	//barrido horizontal de los tiles
-	for(int i=0;i<cant;i++){
-		renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize() * 2;
-	}
-}
+void JuegoVista::drawTiles(SDL_Texture *image, SDL_Renderer *ren){
+	int yTiles = defaultSettings->getScreenHeight() /  defaultSettings->getTileSize();
+	int cant = 0;
+	int y = 0;
+	int x = 0;
 
-void JuegoVista::drawLowerTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
-	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * (defaultSettings->getTileSize() / 2 + 20);
-	int y = defaultSettings->getScreenHeight() - (cant - 1) *  defaultSettings->getTileSize() / 2 -  defaultSettings->getTileSize();
-	//barrido horizontal de los tiles
-	for(int i=0;i<cant;i++){
-		renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize() * 2;
-	}
-}
+	//barrido vertical de los tiles
+	for(int i=0; i <= yTiles * 2;i++){
+		//me fijo la cantidad de tiles a dibujar segun la altura que este posicionado
+		if( i > yTiles)
+			cant = yTiles - ( i - yTiles - 1);
+		else
+			cant = i + 1;
+		x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
 
-int JuegoVista::getCountTiles(){
-	int cant = defaultSettings->getScreenHeight() %  defaultSettings->getTileSize();
-	if ( cant == 0)
-		return defaultSettings->getScreenHeight() /  defaultSettings->getTileSize();
-	else{
-		while(cant != 0){
-			int aux = defaultSettings->getTileSize() - 1;
-			defaultSettings->setTileSize(aux);
-			cant = defaultSettings->getScreenHeight() %  defaultSettings->getTileSize();
+		//barrido horizontal de los tiles parte superior
+		for(int j=0;j<cant;j++){
+			renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
+			x +=  defaultSettings->getTileSize() * 2;
 		}
-		return cant;
+		y +=  defaultSettings->getTileSize() / 2;
 	}
 }
 
@@ -92,19 +82,7 @@ JuegoVista::JuegoVista() {
     	SDL_Quit();
     }
 
-    int yTiles = defaultSettings->getScreenHeight() /  defaultSettings->getTileSize();
-    int aux;
-
-    //Draw the tiles by calculating their positions
-    for (int i = 0; i < yTiles; i++){
-    	aux = i;
-    	drawTopTiles(++aux,image,ren);
-    	if ( i < yTiles - 1 ){
-    		aux = i;
-    		drawLowerTiles(++aux,image,ren);
-    	}
-
-    }
+    drawTiles(image,ren);
 
     SDL_RenderPresent(ren);
     SDL_Delay(20000);

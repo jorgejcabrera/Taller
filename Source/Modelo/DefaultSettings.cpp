@@ -11,7 +11,7 @@ DefaultSettings::DefaultSettings() {
 	// TODO Auto-generated constructor stub
 	this->CONF_VEL_PERSONAJE;
 	this->SCREEN_WIDTH = 800;
-	this->SCREEN_HEIGHT = 600;
+	this->SCREEN_HEIGHT = 680;
 	this->TILE_SIZE = 40;
 	this->MARGEN_SCROLL = 30;
 	this->NOMBRE_ESCENARIO = "Orleans";
