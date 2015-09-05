@@ -8,9 +8,6 @@
 #include "JuegoVista.h"
 
 SDL_Texture* JuegoVista::loadTexture(const string &file, SDL_Renderer *ren){
-	//SDL_Surface *bmp = SDL_LoadBMP(file.c_str());
-	//SDL_SetColorKey( bmp ,SDL_SRCCOLORKEY, SDL_MapRGB( bmp->format, 0, 0, 0) );
-	//SDL_Texture *texture = SDL_CreateTextureFromSurface(ren, bmp);
 	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
 	if (texture == NULL){
 		cout << "loadTexture Error: " << SDL_GetError() << std::endl;
@@ -23,7 +20,7 @@ void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y
 	SDL_Rect dst;
 	dst.x = x;
 	dst.y = y;
-	dst.w = w;
+	dst.w = w + 40;
 	dst.h = h;
 	SDL_RenderCopy(ren, tex, NULL, &dst);
 	SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
@@ -36,20 +33,22 @@ void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y
 }
 
 void JuegoVista::drawTopTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
-	int x = defaultSettings->getScreenWidth() / 2 - (cant - 1) * defaultSettings->getTileSize() / 2;
+	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * (defaultSettings->getTileSize() / 2 + 20);
 	int y = (cant - 1) *  defaultSettings->getTileSize() / 2;
+	//barrido horizontal de los tiles
 	for(int i=0;i<cant;i++){
 		renderTexture(image, ren, x, y,  defaultSettings->getTileSize(), defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize();
+		x +=  defaultSettings->getTileSize() + 40;
 	}
 }
 
 void JuegoVista::drawLowerTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
-	int x = defaultSettings->getScreenWidth() / 2 - (cant - 1) *  defaultSettings->getTileSize() / 2;
+	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * (defaultSettings->getTileSize() / 2 + 20);
 	int y = defaultSettings->getScreenHeight() - (cant - 1) *  defaultSettings->getTileSize() / 2 -  defaultSettings->getTileSize();
+	//barrido horizontal de los tiles
 	for(int i=0;i<cant;i++){
 		renderTexture(image, ren, x, y,  defaultSettings->getTileSize(), defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize();
+		x +=  defaultSettings->getTileSize() + 40;
 	}
 }
 
@@ -89,8 +88,6 @@ JuegoVista::JuegoVista() {
     }
 
     string imagePath = "../Taller/Images/white_tile.bmp";
-    //string backgroundPath = "../Taller/Images/grass_only.bmp";
-    //SDL_Texture *background = loadTexture(backgroundPath, ren);
     SDL_Texture *image = loadTexture(imagePath, ren);
     //Make sure they both loaded ok
     if (/*background == NULL ||*/ image == NULL){
@@ -102,10 +99,6 @@ JuegoVista::JuegoVista() {
     	SDL_Quit();
     }
 
-    //Tiling the Background
-
-    //Determine how many tiles we'll need to fill the screen
-    //sint xTiles = SCREEN_WIDTH / TILE_SIZE;
     int yTiles = defaultSettings->getScreenHeight() /  defaultSettings->getTileSize();
     int aux;
 
@@ -120,18 +113,10 @@ JuegoVista::JuegoVista() {
 
     }
 
-    //Drawing the Foreground
-    /*int iW, iH;
-    SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
-    int x = SCREEN_WIDTH / 2 - iW / 2;
-    int y = SCREEN_HEIGHT / 2 - iH / 2;
-    renderTexture(image, ren, x, y);*/
-
     SDL_RenderPresent(ren);
-    SDL_Delay(2000);
+    SDL_Delay(20000000);
 
     // Clean up
-    //SDL_DestroyTexture(background);
     SDL_DestroyTexture(image);
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
