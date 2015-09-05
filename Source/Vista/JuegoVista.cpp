@@ -20,25 +20,19 @@ void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y
 	SDL_Rect dst;
 	dst.x = x;
 	dst.y = y;
-	dst.w = w + 40;
+	dst.w = w;
 	dst.h = h;
 	SDL_RenderCopy(ren, tex, NULL, &dst);
 	SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
 }
 
-void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
-	int w, h;
-	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
-	renderTexture(tex, ren, x, y, w, h);
-}
-
 void JuegoVista::drawTopTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
-	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * (defaultSettings->getTileSize() / 2 + 20);
+	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
 	int y = (cant - 1) *  defaultSettings->getTileSize() / 2;
 	//barrido horizontal de los tiles
 	for(int i=0;i<cant;i++){
-		renderTexture(image, ren, x, y,  defaultSettings->getTileSize(), defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize() + 40;
+		renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
+		x +=  defaultSettings->getTileSize() * 2;
 	}
 }
 
@@ -47,8 +41,8 @@ void JuegoVista::drawLowerTiles(int cant,SDL_Texture *image, SDL_Renderer *ren){
 	int y = defaultSettings->getScreenHeight() - (cant - 1) *  defaultSettings->getTileSize() / 2 -  defaultSettings->getTileSize();
 	//barrido horizontal de los tiles
 	for(int i=0;i<cant;i++){
-		renderTexture(image, ren, x, y,  defaultSettings->getTileSize(), defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize() + 40;
+		renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
+		x +=  defaultSettings->getTileSize() * 2;
 	}
 }
 
@@ -89,7 +83,6 @@ JuegoVista::JuegoVista() {
 
     string imagePath = "../Taller/Images/white_tile.bmp";
     SDL_Texture *image = loadTexture(imagePath, ren);
-    //Make sure they both loaded ok
     if (/*background == NULL ||*/ image == NULL){
     	SDL_DestroyRenderer(ren);
     	SDL_DestroyWindow(win);
@@ -114,7 +107,7 @@ JuegoVista::JuegoVista() {
     }
 
     SDL_RenderPresent(ren);
-    SDL_Delay(20000000);
+    SDL_Delay(20000);
 
     // Clean up
     SDL_DestroyTexture(image);

@@ -10,6 +10,7 @@
 
 #include "Mapa.h"
 #include "EntidadDinamica.h"
+#include "DefaultSettings.h"
 #include <map>
 
 using namespace std ;
@@ -18,7 +19,11 @@ class Juego {
 private:
 	Mapa mapa;
 	EntidadDinamica personajeSeleccionado;
+	DefaultSettings* defaultSettings = new DefaultSettings();
 	bool juegoFinalizado;
+	void setTilesPosition();
+	void setTilesLowerPosition(int cant);
+	void setTilesTopPosition(int cant);
 public:
 	Juego();
 	virtual ~Juego();
