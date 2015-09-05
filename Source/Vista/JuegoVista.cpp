@@ -27,7 +27,7 @@ void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y
 }
 
 void JuegoVista::drawTiles(SDL_Texture *image, SDL_Renderer *ren){
-	int yTiles = defaultSettings->getScreenHeight() /  defaultSettings->getTileSize();
+	int yTiles = defaultSettings->getMapHeight() /  defaultSettings->getTileSize();
 	int cant = 0;
 	int y = 0;
 	int x = 0;
@@ -39,7 +39,7 @@ void JuegoVista::drawTiles(SDL_Texture *image, SDL_Renderer *ren){
 			cant = yTiles - ( i - yTiles - 1);
 		else
 			cant = i + 1;
-		x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
+		x = (defaultSettings->getMapWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
 
 		//barrido horizontal de los tiles parte superior
 		for(int j=0;j<cant;j++){

@@ -19,8 +19,8 @@ class DefaultSettings {
 		int CONF_VEL_PERSONAJE;
 		int MARGEN_SCROLL;
 		string NOMBRE_ESCENARIO;
-		int ESCENARIO_ANCHO;
-		int ESCENARIO_ALTO;
+		int MAP_WIDTH;
+		int MAP_HEIGHT;
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
@@ -29,8 +29,8 @@ class DefaultSettings {
 		int getTileSize();
 		int getMargenScroll();
 		string getNombreEscenario();
-		int getEscenarioAncho();
-		int getEscenarioAlto();
+		int getMapWidth();
+		int getMapHeight();
 		void setTileSize(int value);
 		void trasladarse();
 };

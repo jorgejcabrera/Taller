@@ -10,13 +10,13 @@
 DefaultSettings::DefaultSettings() {
 	// TODO Auto-generated constructor stub
 	this->CONF_VEL_PERSONAJE;
-	this->SCREEN_WIDTH = 800;
-	this->SCREEN_HEIGHT = 680;
+	this->SCREEN_WIDTH = 1024;
+	this->SCREEN_HEIGHT = 860;
 	this->TILE_SIZE = 40;
 	this->MARGEN_SCROLL = 30;
 	this->NOMBRE_ESCENARIO = "Orleans";
-	this->ESCENARIO_ANCHO = 100;
-	this->ESCENARIO_ALTO = 100;
+	this->MAP_WIDTH = 800;
+	this->MAP_HEIGHT = 680;
 
 }
 
@@ -35,11 +35,11 @@ int DefaultSettings::getMargenScroll(){
 string DefaultSettings::getNombreEscenario(){
 	return this->NOMBRE_ESCENARIO;
 }
-int DefaultSettings::getEscenarioAncho(){
-	return this->ESCENARIO_ANCHO;
+int DefaultSettings::getMapWidth(){
+	return this->MAP_WIDTH;
 }
-int DefaultSettings::getEscenarioAlto(){
-	return this->ESCENARIO_ALTO;
+int DefaultSettings::getMapHeight(){
+	return this->MAP_HEIGHT;
 }
 
 void DefaultSettings::trasladarse(){}
