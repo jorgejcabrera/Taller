@@ -10,24 +10,20 @@
 
 #include "Mapa.h"
 #include "EntidadDinamica.h"
-#include "DefaultSettings.h"
 #include <map>
 
 using namespace std ;
 
 class Juego {
 private:
-	Mapa mapa;
+	Mapa* mapa = NULL;
 	EntidadDinamica personajeSeleccionado;
-	DefaultSettings* defaultSettings = new DefaultSettings();
 	bool juegoFinalizado;
-	void setTilesPosition();
 	void setTilesLowerPosition(int cant);
 	void setTilesTopPosition(int cant);
 public:
 	Juego();
 	virtual ~Juego();
-
 	//Intenta cargar la conf del yaml y setear los atributos al mapa, si por algún motivo no los encuentra setea los valores por default
 	void comenzarPartida();
 

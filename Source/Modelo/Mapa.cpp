@@ -10,8 +10,15 @@
 using namespace std;
 
 Mapa::Mapa() {
-	// TODO Auto-generated constructor stub
 
+	//barrido vertical del mapa
+	for(int i = 0; i < this->defaultSettings->getMapHeight(); i++){
+		//barrido horizontal del mapa
+		for(int j = 0; j < this->defaultSettings->getScreenWidth(); j++){
+			Tile* newTile =  new Tile(j,i);
+			this->tiles.push_back(*newTile);
+		}
+	}
 }
 
 Mapa::~Mapa() {

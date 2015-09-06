@@ -12,41 +12,9 @@ using namespace std;
 Juego::Juego() {
 	// TODO Auto-generated constructor stub
 	this->juegoFinalizado = false;
+	this->mapa = new Mapa();
 }
 
-void Juego::setTilesPosition(){
-    int yTiles = defaultSettings->getScreenHeight() /  defaultSettings->getTileSize();
-    int aux;
-
-    for (int i = 0; i < yTiles; i++){
-    	aux = i;
-    	this->setTilesTopPosition(++aux);
-    	if ( i < yTiles - 1 ){
-    		aux = i;
-    		this->setTilesLowerPosition(++aux);
-    	}
-    }
-}
-
-void Juego::setTilesLowerPosition(int cant){
-	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * (defaultSettings->getTileSize() / 2 + 20);
-	int y = defaultSettings->getScreenHeight() - (cant - 1) *  defaultSettings->getTileSize() / 2 -  defaultSettings->getTileSize();
-	//barrido horizontal de los tiles
-	for(int i=0;i<cant;i++){
-		//renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize() * 2;
-	}
-}
-
-void Juego::setTilesTopPosition(int cant){
-	int x = (defaultSettings->getScreenWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
-	int y = (cant - 1) *  defaultSettings->getTileSize() / 2;
-	//barrido horizontal de los tiles
-	for(int i=0;i<cant;i++){
-		//renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
-		x +=  defaultSettings->getTileSize() * 2;
-	}
-}
 
 void Juego::terminarJuego(){
 	this->juegoFinalizado = true;

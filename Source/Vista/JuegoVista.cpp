@@ -82,6 +82,7 @@ JuegoVista::JuegoVista() {
     	SDL_Quit();
     }
 
+    //dibujamos los tiles del mapa
     drawTiles(image,ren);
 
     SDL_RenderPresent(ren);

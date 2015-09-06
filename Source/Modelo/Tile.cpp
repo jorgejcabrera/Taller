@@ -9,9 +9,10 @@
 
 using namespace std;
 
-Tile::Tile() {
+Tile::Tile(int x, int y) {
 	// TODO Auto-generated constructor stub
-
+	this->posX = x;
+	this->posY = y;
 }
 
 Tile::~Tile() {

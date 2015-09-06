@@ -11,8 +11,10 @@
 
 
 class Tile {
+	int posX;
+	int posY;
 public:
-	Tile();
+	Tile(int x,int y);
 	virtual ~Tile();
 };
 

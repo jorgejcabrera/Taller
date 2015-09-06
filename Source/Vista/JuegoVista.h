@@ -27,7 +27,6 @@ public:
 private:
 	SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren);
 	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h);
-	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y);
 	void drawTiles(SDL_Texture *image, SDL_Renderer *ren);
 	int getCountTiles();
 };
