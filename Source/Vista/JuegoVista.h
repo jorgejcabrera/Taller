@@ -20,16 +20,15 @@ using namespace std;
 
 class JuegoVista {
 private:
-	DefaultSettings* defaultSettings = new DefaultSettings();
-public:
-	JuegoVista();
-	virtual ~JuegoVista();
-private:
 	SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren);
 	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h);
 	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y);
 	void drawTiles(SDL_Texture *image, SDL_Renderer *ren);
 	int getCountTiles();
+public:
+	JuegoVista();
+	virtual ~JuegoVista();
+
 };
 
 #endif /* SOURCE_VISTA_JUEGOVISTA_H_ */

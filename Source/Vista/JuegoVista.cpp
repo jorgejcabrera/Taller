@@ -27,7 +27,7 @@ void JuegoVista::renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y
 }
 
 void JuegoVista::drawTiles(SDL_Texture *image, SDL_Renderer *ren){
-	int yTiles = defaultSettings->getMapHeight() /  defaultSettings->getTileSize();
+	int yTiles = DefaultSettings::getMapHeight() /  DefaultSettings::getTileSize();
 	int cant = 0;
 	int y = 0;
 	int x = 0;
@@ -39,14 +39,14 @@ void JuegoVista::drawTiles(SDL_Texture *image, SDL_Renderer *ren){
 			cant = yTiles - ( i - yTiles - 1);
 		else
 			cant = i + 1;
-		x = (defaultSettings->getMapWidth() / 2) - (cant - 1) * defaultSettings->getTileSize();
+		x = (DefaultSettings::getMapWidth() / 2) - (cant - 1) * DefaultSettings::getTileSize();
 
 		//barrido horizontal de los tiles parte superior
 		for(int j=0;j<cant;j++){
-			renderTexture(image, ren, x, y,  defaultSettings->getTileSize() * 2, defaultSettings->getTileSize());
-			x +=  defaultSettings->getTileSize() * 2;
+			renderTexture(image, ren, x, y,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
+			x +=  DefaultSettings::getTileSize() * 2;
 		}
-		y +=  defaultSettings->getTileSize() / 2;
+		y +=  DefaultSettings::getTileSize() / 2;
 	}
 }
 
@@ -58,7 +58,7 @@ JuegoVista::JuegoVista() {
     }
 
     // creamos la ventana
-    SDL_Window *win = SDL_CreateWindow("Age of empires", 100, 100, defaultSettings->getScreenWidth(), defaultSettings->getScreenHeight(), SDL_WINDOW_SHOWN);
+    SDL_Window *win = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
     if (win == NULL){
     	cout << "SDL_CreateWindow Error: " << SDL_GetError();
     	SDL_Quit();
