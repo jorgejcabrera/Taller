@@ -19,8 +19,8 @@ class DefaultSettings {
 		static const int CONF_VEL_PERSONAJE;
 		static const int MARGEN_SCROLL = 30;
 		static const string NOMBRE_ESCENARIO;
-		static const int MAP_WIDTH = 15;
-		static const int MAP_HEIGHT = 15;
+		static const int MAP_WIDTH = 20;
+		static const int MAP_HEIGHT = 20;
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();

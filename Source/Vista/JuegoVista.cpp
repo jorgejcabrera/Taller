@@ -10,8 +10,6 @@
 void JuegoVista::drawTiles(SDL_Texture *image, PicassoHelper* picassoHelper){
 	int posX = 0;
 	int posY = 0;
-	map<pair<int,int>,Tile>::iterator verticeInferior = this->mapa->getTiles()->end();
-	int max = DefaultSettings::getTileSize() + DefaultSettings::getMapWidth() / 2;
 	for (map<pair<int,int>,Tile>::iterator it = this->mapa->getTiles()->begin(); it != this->mapa->getTiles()->end();++it){
 		Tile tileActual = (*it).second;
 		posY = (tileActual.getPosX()+tileActual.getPosY()) * DefaultSettings::getTileSize() / 2;
