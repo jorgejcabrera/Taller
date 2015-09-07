@@ -6,8 +6,6 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-//http://www.dreamincode.net/forums/topic/290187-linux-game-programming-tutorial-1-introduction-first-sdl/
-
 /* Defines */
 #define NUM_DOTS 1024
 
@@ -16,11 +14,13 @@
 #include "Vista/MapaVista.h"
 #include "Vista/JuegoVista.h"
 #include "Modelo/EntidadEstatica.h"
+#include "Modelo/Juego.h"
 #include <yaml.h>
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
+	Juego* newJuego = new Juego();
 	JuegoVista* juego = new JuegoVista();
 	int count = 0;
 	while(true){

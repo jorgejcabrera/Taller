@@ -10,9 +10,12 @@
 using namespace std;
 
 Tile::Tile(int x, int y) {
-	// TODO Auto-generated constructor stub
 	this->posX = x;
 	this->posY = y;
+}
+
+void Tile::show(){
+	cout << "x:" << this->posX << ", y:" << this->posY << "\n";
 }
 
 Tile::~Tile() {

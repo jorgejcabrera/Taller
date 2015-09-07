@@ -11,7 +11,10 @@
 #include "EntidadPartida.h"
 #include "Tile.h"
 #include "DefaultSettings.h"
+#include <iostream>
+#include <map>
 #include <list>
+
 
 using namespace std;
 
@@ -19,9 +22,10 @@ class Mapa {
 private:
 	DefaultSettings* defaultSettings = new DefaultSettings();
 	list<EntidadPartida> entidades;
-	list<Tile> tiles;
+	map<pair<int,int>,Tile> tiles;
 public:
 	Mapa();
+	void show();
 	virtual ~Mapa();
 };
 

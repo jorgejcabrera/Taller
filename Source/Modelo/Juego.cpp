@@ -13,8 +13,8 @@ Juego::Juego() {
 	// TODO Auto-generated constructor stub
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
+	this->mapa->show();
 }
-
 
 void Juego::terminarJuego(){
 	this->juegoFinalizado = true;

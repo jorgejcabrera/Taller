@@ -19,8 +19,6 @@ private:
 	Mapa* mapa = NULL;
 	EntidadDinamica personajeSeleccionado;
 	bool juegoFinalizado;
-	void setTilesLowerPosition(int cant);
-	void setTilesTopPosition(int cant);
 public:
 	Juego();
 	virtual ~Juego();
