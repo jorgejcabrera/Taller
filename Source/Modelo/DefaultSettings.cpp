@@ -42,5 +42,4 @@ void DefaultSettings::trasladarse(){}
 }*/
 
 DefaultSettings::~DefaultSettings() {
-	// TODO Auto-generated destructor stub
 }
