@@ -19,7 +19,7 @@ También se van a usar algunas librerías auxiliares de SDL, como [**SDL_image**
 Luego necesitamos importar las librería en el IDE
 ```
 Eclipse
-Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image 
+	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image 
 ```
 
 La configuración de cada mapa correspondiente a la partida se encuentra en un arhcivo [**YAML**](http://yaml.org/). Para el manejo de este tipo de archivos usamos [**libyaml**](http://pyyaml.org/wiki/LibYAML). La librería se puede descargar de [**aquí**](http://pyyaml.org/download/libyaml/). Una vez descompimido:
@@ -33,7 +33,8 @@ sudo make install
 Si al correr el programa, aparece el error: "error while loading shared libraries:
 libSDL2_image-2.0.so.0: cannot open shared object file: No such file or directory", en eclipse ir a:
 ```
-Run -> Run Configurations... -> Enviroment -> New Enviroment Variable. 
-Nombre de la variable: LD_LIBRARY_PATH
-Value: /usr/local/lib
+Eclipse
+	Run -> Run Configurations... -> Enviroment -> New Enviroment Variable. 
+	Nombre de la variable: LD_LIBRARY_PATH
+	Value: /usr/local/lib
 ```
