@@ -10,6 +10,7 @@
 
 #include "SDL2/SDL.h"
 #include "../Modelo/DefaultSettings.h"
+#include "../Modelo/PicassoHelper.h"
 #include "SDL2/SDL_image.h"
 
 #include <string>
@@ -20,15 +21,16 @@ using namespace std;
 
 class JuegoVista {
 private:
-	DefaultSettings* defaultSettings = new DefaultSettings();
+	PicassoHelper* picassoHelper;
+	//SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren);
+	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h);
+	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y);
+	void drawTiles(SDL_Texture *image, PicassoHelper* picassoHelper);
+	int getCountTiles();
 public:
 	JuegoVista();
-	virtual ~JuegoVista();
-private:
-	SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren);
-	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h);
-	void drawTiles(SDL_Texture *image, SDL_Renderer *ren);
-	int getCountTiles();
+	~JuegoVista();
+
 };
 
 #endif /* SOURCE_VISTA_JUEGOVISTA_H_ */

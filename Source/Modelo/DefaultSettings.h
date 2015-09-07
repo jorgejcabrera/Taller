@@ -13,26 +13,26 @@ using namespace std;
 
 class DefaultSettings {
 	private:
-		int SCREEN_WIDTH;
-		int SCREEN_HEIGHT;
-		int TILE_SIZE;
-		int CONF_VEL_PERSONAJE;
-		int MARGEN_SCROLL;
-		string NOMBRE_ESCENARIO;
-		int MAP_WIDTH;
-		int MAP_HEIGHT;
+		static const int SCREEN_WIDTH = 1024;
+		static const int SCREEN_HEIGHT = 860;
+		static const int TILE_SIZE = 40;
+		static const int CONF_VEL_PERSONAJE;
+		static const int MARGEN_SCROLL = 30;
+		static const string NOMBRE_ESCENARIO;
+		static const int MAP_WIDTH = 800;
+		static const int MAP_HEIGHT = 680;
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
-		int getScreenWidth();
-		int getScreenHeight();
-		int getTileSize();
-		int getMargenScroll();
-		string getNombreEscenario();
-		int getMapWidth();
-		int getMapHeight();
-		void setTileSize(int value);
-		void trasladarse();
+		static int getScreenWidth();
+		static int getScreenHeight();
+		static int getTileSize();
+		static int getMargenScroll();
+		static string getNombreEscenario();
+		static int getMapWidth();
+		static int getMapHeight();
+		//static void setTileSize(int value);
+		static void trasladarse();
 };
 
 

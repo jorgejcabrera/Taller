@@ -24,10 +24,10 @@ int main(int argc, char* argv[]) {
 	JuegoVista* juego = new JuegoVista();
 	int count = 0;
 	while(true){
-		if(count == 100000)
+		if(count == 10)
 			break;
 		count++;
-    	SDL_Delay(100);
+    	SDL_Delay(500);
 	}
 	juego->~JuegoVista();
 	return 0;
