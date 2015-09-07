@@ -14,6 +14,14 @@ Tile::Tile(int x, int y) {
 	this->posY = y;
 }
 
+int Tile::getPosX(){
+	return this->posX;
+}
+
+int Tile::getPosY(){
+	return this->posY;
+}
+
 void Tile::show(){
 	cout << "x:" << this->posX << ", y:" << this->posY << "\n";
 }

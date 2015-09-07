@@ -19,6 +19,8 @@ class Tile {
 public:
 	Tile(int x,int y);
 	void show();
+	int getPosX();
+	int getPosY();
 	virtual ~Tile();
 };
 

@@ -31,7 +31,6 @@ class DefaultSettings {
 		static string getNombreEscenario();
 		static int getMapWidth();
 		static int getMapHeight();
-		//static void setTileSize(int value);
 		static void trasladarse();
 };
 

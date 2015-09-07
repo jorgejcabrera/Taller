@@ -12,13 +12,21 @@ using namespace std;
 Mapa::Mapa() {
 
 	//barrido vertical del mapa
-	for(int i = 0; i < this->defaultSettings->getMapHeight(); i++){
+	for(int i = 0; i < DefaultSettings::getMapHeight(); i++){
 		//barrido horizontal del mapa
-		for(int j = 0; j < this->defaultSettings->getScreenWidth(); j++){
+		for(int j = 0; j < DefaultSettings::getMapWidth(); j++){
 			Tile* newTile =  new Tile(j,i);
 			this->tiles.insert(std::make_pair(std::make_pair(j,i),*newTile));
 		}
 	}
+}
+
+Tile* Mapa::getTileAt(int x,int y){
+	return &(this->tiles.at(make_pair(x,y)));
+}
+
+map<pair<int,int>,Tile>* Mapa::getTiles(){
+	return &this->tiles;
 }
 
 void Mapa::show(){

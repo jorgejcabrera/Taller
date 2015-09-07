@@ -14,14 +14,14 @@
 #include "Vista/MapaVista.h"
 #include "Vista/JuegoVista.h"
 #include "Modelo/EntidadEstatica.h"
-#include "Modelo/Juego.h"
+#include "Modelo/Mapa.h"
 #include <yaml.h>
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	Juego* newJuego = new Juego();
-	JuegoVista* juego = new JuegoVista();
+	Mapa* newMapa = new Mapa();
+	JuegoVista* juego = new JuegoVista(newMapa);
 	int count = 0;
 	while(true){
 		if(count == 10)

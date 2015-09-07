@@ -10,6 +10,7 @@
 
 #include "SDL2/SDL.h"
 #include "../Modelo/DefaultSettings.h"
+#include "../Modelo/Mapa.h"
 #include "../Modelo/PicassoHelper.h"
 #include "SDL2/SDL_image.h"
 
@@ -22,13 +23,13 @@ using namespace std;
 class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
-	//SDL_Texture* loadTexture(const string &file, SDL_Renderer *ren);
+	Mapa* mapa;
 	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h);
 	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y);
 	void drawTiles(SDL_Texture *image, PicassoHelper* picassoHelper);
 	int getCountTiles();
 public:
-	JuegoVista();
+	JuegoVista(Mapa* mapaActual);
 	~JuegoVista();
 
 };

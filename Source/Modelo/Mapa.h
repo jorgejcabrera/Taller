@@ -20,12 +20,13 @@ using namespace std;
 
 class Mapa {
 private:
-	DefaultSettings* defaultSettings = new DefaultSettings();
 	list<EntidadPartida> entidades;
 	map<pair<int,int>,Tile> tiles;
 public:
 	Mapa();
 	void show();
+	Tile* getTileAt(int x,int y);
+	map<pair<int,int>,Tile>* getTiles();
 	virtual ~Mapa();
 };
 
