@@ -24,10 +24,7 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Mapa* mapa;
-	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h);
-	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y);
 	void drawIsometricMap(SDL_Texture *image, PicassoHelper* picassoHelper);
-	int getCountTiles();
 public:
 	JuegoVista(Mapa* mapaActual);
 	~JuegoVista();

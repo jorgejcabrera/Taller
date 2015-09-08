@@ -12,8 +12,9 @@ void JuegoVista::drawIsometricMap(SDL_Texture *image, PicassoHelper* picassoHelp
 	int posY = 0;
 	for (map<pair<int,int>,Tile>::iterator it = this->mapa->getTiles()->begin(); it != this->mapa->getTiles()->end();++it){
 		Tile tileActual = (*it).second;
+		//transformo coordenadas cartesianas a isométricas
 		posY = (tileActual.getPosX()+tileActual.getPosY()) * DefaultSettings::getTileSize() / 2;
-		posX = (tileActual.getPosX()-tileActual.getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
+		posX = (tileActual.getPosX()-tileActual.getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;	//comienzo a dibujar de la mitad de la pantalla
 		picassoHelper->renderTexture(image,posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
 	}
 }
