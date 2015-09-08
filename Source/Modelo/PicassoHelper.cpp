@@ -6,6 +6,7 @@
  */
 
 #include "PicassoHelper.h"
+PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper() {
 }
@@ -68,3 +69,9 @@ void PicassoHelper::renderView(){
 	SDL_RenderPresent(renderer);
 }
 
+PicassoHelper* PicassoHelper::GetInstance() {
+	if (!instance) {
+		instance = new PicassoHelper();
+	}
+	return instance;
+}

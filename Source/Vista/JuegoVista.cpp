@@ -7,7 +7,7 @@
 
 #include "JuegoVista.h"
 
-void JuegoVista::drawIsometricMap(SDL_Texture *image, PicassoHelper* picassoHelper){
+void JuegoVista::drawIsometricMap(SDL_Texture *image){
 	int posX = 0;
 	int posY = 0;
 	for (map<pair<int,int>,Tile>::iterator it = this->mapa->getTiles()->begin(); it != this->mapa->getTiles()->end();++it){
@@ -21,11 +21,11 @@ void JuegoVista::drawIsometricMap(SDL_Texture *image, PicassoHelper* picassoHelp
 
 JuegoVista::JuegoVista(Mapa* mapa) {
 	this->mapa = mapa;
-	picassoHelper = new PicassoHelper();
+	picassoHelper = PicassoHelper::GetInstance();
 	picassoHelper->createContext();
     string imagePath = "../Taller/Images/white_tile.bmp";
     SDL_Texture *image = picassoHelper->loadTexture(imagePath);
-    drawIsometricMap(image,picassoHelper);
+    drawIsometricMap(image);
     picassoHelper->renderView();
 }
 

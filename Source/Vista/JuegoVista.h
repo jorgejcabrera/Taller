@@ -24,7 +24,7 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Mapa* mapa;
-	void drawIsometricMap(SDL_Texture *image, PicassoHelper* picassoHelper);
+	void drawIsometricMap(SDL_Texture *image);
 public:
 	JuegoVista(Mapa* mapaActual);
 	~JuegoVista();
