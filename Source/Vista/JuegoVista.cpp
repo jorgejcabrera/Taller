@@ -9,7 +9,7 @@
 
 void JuegoVista::drawIsometricMap(const string &file){
 	int posX = 0;
-	int posY = 0;
+	int posY = 2;
 	for (map<pair<int,int>,Tile>::iterator it = this->mapa->getTiles()->begin(); it != this->mapa->getTiles()->end();++it){
 		Tile* tileActual = &((*it).second);
 		//transformo coordenadas cartesianas a isométricas
@@ -24,17 +24,14 @@ JuegoVista::JuegoVista(Mapa* mapa) {
 	picassoHelper = PicassoHelper::GetInstance();
 	picassoHelper->createContext();
     string imagePath = "../Taller/Images/grass_new.png";
-    drawIsometricMap(imagePath);
+	drawIsometricMap(imagePath);
 
     // Agrego un castillo para probar el path de imagen y para ver como se muestra
     EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getTileSize() * 6,DefaultSettings::getTileSize() * 4,"castle",true);
 	int posY = 0 * castillo->getLength();
 	int posX = 0 * castillo->getWidth() + DefaultSettings::getScreenWidth() / 2;
 
-	cout << posX << endl;
-	cout << posY << endl;
-
-    picassoHelper->renderObject(castillo->getPathImage(),posX, posY,castillo->getWidth(), castillo->getLength());
+    picassoHelper->renderObject(castillo->getPathImage(),posX - 80, posY - 40,castillo->getWidth(), castillo->getLength());
     picassoHelper->renderView();
 }
 
