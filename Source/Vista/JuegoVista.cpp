@@ -23,7 +23,7 @@ JuegoVista::JuegoVista(Mapa* mapa) {
 	this->mapa = mapa;
 	picassoHelper = PicassoHelper::GetInstance();
 	picassoHelper->createContext();
-    string imagePath = "../Taller/Images/white_tile.bmp";
+    string imagePath = "../Taller/Images/grass.bmp";
     SDL_Texture *image = picassoHelper->loadTexture(imagePath);
     drawIsometricMap(image);
     picassoHelper->renderView();
