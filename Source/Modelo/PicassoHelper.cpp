@@ -27,12 +27,23 @@ void PicassoHelper::createContext(){
 	    }
 }
 
+void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h){
+		SDL_Texture* textureExists;
+		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+		if(it != mapByImagePath.end()){
+			textureExists = it->second;
+		}else{
+			textureExists = loadTexture(file);
+		}
+		renderTexture(textureExists,x,y,w,h);
+}
+
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	SDL_Texture *texture = IMG_LoadTexture(renderer, file.c_str());
 	if (texture == NULL){
 		this->exitError("loadTexture Error:");
 	}
-	listTexture.push_front(texture);
+	this->mapByImagePath[file.c_str()] = texture;
 	return texture;
 }
 
@@ -48,8 +59,8 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 }
 
 PicassoHelper::~PicassoHelper() {
-	for(list<SDL_Texture*>::iterator list_iter = listTexture.begin();list_iter != listTexture.end(); list_iter++){
-		SDL_DestroyTexture(*list_iter);
+	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
+		SDL_DestroyTexture(it->second);
 	}
 	if (renderer != NULL){
 		SDL_DestroyRenderer(renderer);

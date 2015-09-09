@@ -9,6 +9,7 @@
 #define SOURCE_MODELO_DEFAULTSETTINGS_H_
 
 #include <string>
+#include <map>
 using namespace std;
 
 class DefaultSettings {
@@ -21,6 +22,7 @@ class DefaultSettings {
 		static const string NOMBRE_ESCENARIO;
 		static const int MAP_WIDTH = 15;		//esto vendría a ser el eje x
 		static const int MAP_HEIGHT = 15 ;			//esto viene a ser el eje y
+
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
@@ -32,6 +34,7 @@ class DefaultSettings {
 		static int getMapWidth();
 		static int getMapHeight();
 		static void trasladarse();
+		static string imagePathByType(const string &object);
 };
 
 

@@ -37,9 +37,12 @@ int DefaultSettings::getMapHeight(){
 
 void DefaultSettings::trasladarse(){}
 
-/*void DefaultSettings::setTileSize(int value){
-	TILE_SIZE = value;
-}*/
+string DefaultSettings::imagePathByType(const string &object){
+	if(object == "castle"){
+		return "../Taller/Images/castle.png";
+	}
+	return "../Taller/Images/white_tile.bmp";
+}
 
 DefaultSettings::~DefaultSettings() {
 }

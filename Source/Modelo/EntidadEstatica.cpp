@@ -10,8 +10,21 @@
 using namespace std;
 
 EntidadEstatica::EntidadEstatica() {
-	// TODO Auto-generated constructor stub
+}
 
+EntidadEstatica::EntidadEstatica(string tipoEntidad, bool esEdificable, const string &sourceImage){
+	edificable = esEdificable;
+	tipo = tipoEntidad;
+	pathImage = sourceImage;
+}
+
+EntidadEstatica::EntidadEstatica(string tipoEntidad, bool esEdificable){
+	edificable = esEdificable;
+	tipo = tipoEntidad;
+	pathImage = DefaultSettings::imagePathByType(tipoEntidad);
+}
+string EntidadEstatica::getPathImage(){
+	return pathImage;
 }
 
 EntidadEstatica::~EntidadEstatica() {

@@ -12,6 +12,7 @@
 #include "../Modelo/DefaultSettings.h"
 #include "../Modelo/Mapa.h"
 #include "../Modelo/PicassoHelper.h"
+#include "../Modelo/EntidadEstatica.h"
 #include "SDL2/SDL_image.h"
 
 #include <string>
@@ -24,7 +25,7 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Mapa* mapa;
-	void drawIsometricMap(SDL_Texture *image);
+	void drawIsometricMap(const string &file);
 public:
 	JuegoVista(Mapa* mapaActual);
 	~JuegoVista();
