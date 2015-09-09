@@ -12,19 +12,31 @@ using namespace std;
 EntidadEstatica::EntidadEstatica() {
 }
 
-EntidadEstatica::EntidadEstatica(string tipoEntidad, bool esEdificable, const string &sourceImage){
+EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage){
+	this->width = width;
+	this->length = length;
 	edificable = esEdificable;
 	tipo = tipoEntidad;
 	pathImage = sourceImage;
 }
 
-EntidadEstatica::EntidadEstatica(string tipoEntidad, bool esEdificable){
+EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable){
+	this->width = width;
+	this->length = length;
 	edificable = esEdificable;
 	tipo = tipoEntidad;
 	pathImage = DefaultSettings::imagePathByType(tipoEntidad);
 }
 string EntidadEstatica::getPathImage(){
 	return pathImage;
+}
+
+int EntidadEstatica::getWidth(){
+	return this->width;
+}
+
+int EntidadEstatica::getLength(){
+	return this->length;
 }
 
 EntidadEstatica::~EntidadEstatica() {

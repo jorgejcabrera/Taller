@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 		if(count == 10)
 			break;
 		count++;
-    	SDL_Delay(500);
+    	SDL_Delay(5000);
 	}
 	juego->~JuegoVista();
 	return 0;
