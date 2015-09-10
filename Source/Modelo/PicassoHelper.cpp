@@ -93,8 +93,13 @@ PicassoHelper* PicassoHelper::GetInstance() {
 
 pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 	pair<int,int> isometricPosition;
-	isometricPosition.first = entidad->getPosition()->second * entidad->getWidth() + DefaultSettings::getScreenWidth() / 2 -  ( entidad->getWidth() - 1) * DefaultSettings::getTileSize();
-	isometricPosition.second = entidad->getPosition()->first * entidad->getLength()  - ( entidad->getLength() - 1) * DefaultSettings::getTileSize() ;
+	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
+	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
+	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
+
+	//ahora hay que centrar la entidad con el tile
+	isometricPosition.first = isometricPosition.first - entidad->getWidth() *  DefaultSettings::getTileSize() / 2 - 20;
+	isometricPosition.second = isometricPosition.second - entidad->getLength() *  DefaultSettings::getTileSize() / 2;
 	return isometricPosition;
 }
 
