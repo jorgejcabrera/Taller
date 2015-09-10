@@ -13,6 +13,7 @@
 #include "SDL2/SDL_image.h"
 #include <iostream>
 #include <map>
+#include <fstream>
 
 class PicassoHelper {
 private:
@@ -23,6 +24,7 @@ private:
 	map<string,SDL_Texture*> mapByImagePath;
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h);
 	SDL_Texture* loadTexture(const string &file);
+	bool isFileExist(const string fileName);
 
 public:
 	void createContext();

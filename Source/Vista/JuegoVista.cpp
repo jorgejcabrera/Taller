@@ -27,7 +27,7 @@ JuegoVista::JuegoVista(Mapa* mapa) {
 	drawIsometricMap(imagePath);
 
     // Agrego un castillo para probar el path de imagen y para ver como se muestra
-    EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getTileSize() * 6,DefaultSettings::getTileSize() * 4,"castle",true);
+    EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getTileSize() * 6,DefaultSettings::getTileSize() * 4,"castillo",true);
 	int posY = 0 * castillo->getLength();
 	int posX = 0 * castillo->getWidth() + DefaultSettings::getScreenWidth() / 2;
 

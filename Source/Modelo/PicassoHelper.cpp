@@ -39,11 +39,15 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 }
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
-	SDL_Texture *texture = IMG_LoadTexture(renderer, file.c_str());
+	string fileImage = file.c_str();
+	if(!(isFileExist(fileImage)))
+		fileImage = DefaultSettings::defaultImage();
+
+	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
 	if (texture == NULL){
 		this->exitError("loadTexture Error:");
 	}
-	this->mapByImagePath[file.c_str()] = texture;
+	this->mapByImagePath[fileImage.c_str()] = texture;
 	return texture;
 }
 
@@ -85,4 +89,9 @@ PicassoHelper* PicassoHelper::GetInstance() {
 		instance = new PicassoHelper();
 	}
 	return instance;
+}
+
+bool PicassoHelper::isFileExist(const string fileName){
+    std::ifstream infile(fileName.c_str());
+    return infile.good();
 }

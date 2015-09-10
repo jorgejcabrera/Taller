@@ -7,7 +7,8 @@
 
 #include "DefaultSettings.h"
 
-const std::string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
+const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
+const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images/";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -35,13 +36,26 @@ int DefaultSettings::getMapHeight(){
 	return MAP_HEIGHT;
 }
 
-void DefaultSettings::trasladarse(){}
+//void DefaultSettings::trasladarse(){}
+
+bool DefaultSettings::isEntityTypeValid(const string &type){
+	list<string> validTypes;
+	validTypes.push_back("castillo");
+	validTypes.push_back("arbol");
+
+	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
+	return found;
+}
 
 string DefaultSettings::imagePathByType(const string &object){
-	if(object == "castle"){
-		return "../Taller/Images/castle.png";
+	if(isEntityTypeValid(object)){
+		return IMAGE_BASE_PATH +object+".png";
 	}
-	return "../Taller/Images/white_tile.bmp";
+	return NULL;
+}
+string DefaultSettings::defaultImage(){
+	return IMAGE_BASE_PATH +"white_tile.bmp";
+
 }
 
 DefaultSettings::~DefaultSettings() {

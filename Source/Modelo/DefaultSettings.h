@@ -9,7 +9,9 @@
 #define SOURCE_MODELO_DEFAULTSETTINGS_H_
 
 #include <string>
-#include <map>
+#include <list>
+#include <algorithm>
+
 using namespace std;
 
 class DefaultSettings {
@@ -20,6 +22,7 @@ class DefaultSettings {
 		static const int CONF_VEL_PERSONAJE;
 		static const int MARGEN_SCROLL = 30;
 		static const string NOMBRE_ESCENARIO;
+		static const string IMAGE_BASE_PATH;
 		static const int MAP_WIDTH = 15;		//esto vendría a ser el eje x
 		static const int MAP_HEIGHT = 15 ;			//esto viene a ser el eje y
 
@@ -33,8 +36,10 @@ class DefaultSettings {
 		static string getNombreEscenario();
 		static int getMapWidth();
 		static int getMapHeight();
-		static void trasladarse();
+		//static void trasladarse();
 		static string imagePathByType(const string &object);
+		static string defaultImage();
+		static bool isEntityTypeValid(const string &type);
 };
 
 

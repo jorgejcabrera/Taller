@@ -20,6 +20,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+
 	Mapa* newMapa = new Mapa();
 	JuegoVista* juego = new JuegoVista(newMapa);
 	int count = 0;
@@ -27,7 +28,7 @@ int main(int argc, char* argv[]) {
 		if(count == 10)
 			break;
 		count++;
-    	SDL_Delay(5000);
+    	SDL_Delay(500);
 	}
 	juego->~JuegoVista();
 	return 0;

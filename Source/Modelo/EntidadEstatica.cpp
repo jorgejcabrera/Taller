@@ -21,11 +21,11 @@ EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool e
 }
 
 EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable){
-	this->width = width;
-	this->length = length;
-	edificable = esEdificable;
-	tipo = tipoEntidad;
-	pathImage = DefaultSettings::imagePathByType(tipoEntidad);
+		this->width = width;
+		this->length = length;
+		edificable = esEdificable;
+		tipo = tipoEntidad;
+		pathImage = DefaultSettings::imagePathByType(tipoEntidad);
 }
 string EntidadEstatica::getPathImage(){
 	return pathImage;
