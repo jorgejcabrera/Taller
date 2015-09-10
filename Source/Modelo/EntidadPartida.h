@@ -15,8 +15,7 @@ namespace std {
 class EntidadPartida {
 protected:
 	int salud;
-	int posX;
-	int posY;
+	pair<int,int> position;
 	int width;
 	int length;
 	string image;
@@ -26,6 +25,8 @@ public:
 	virtual ~EntidadPartida();
 	int getWidth();
 	int getLength();
+	void push(int x, int y);
+	pair<int,int>* getPosition();
 	void restarSalud();
 };
 

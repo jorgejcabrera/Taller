@@ -10,6 +10,7 @@
 
 #include "SDL2/SDL.h"
 #include "../Modelo/DefaultSettings.h"
+#include "EntidadPartida.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
 #include <map>
@@ -29,6 +30,7 @@ private:
 public:
 	void createContext();
 	~PicassoHelper();
+	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 	void exitError(const string &message);
 	void renderView();
 	void renderObject(const string &file, int x, int y, int w, int h);

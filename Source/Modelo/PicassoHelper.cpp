@@ -91,6 +91,15 @@ PicassoHelper* PicassoHelper::GetInstance() {
 	return instance;
 }
 
+pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
+	int posY = 0 * entidad->getLength()  - ( entidad->getLength() - 1) * DefaultSettings::getTileSize() ;
+	int posX = 0 * entidad->getWidth() + DefaultSettings::getScreenWidth() / 2 -  ( entidad->getWidth() - 1) * DefaultSettings::getTileSize();
+	pair<int,int> isometricPosition;
+	isometricPosition.first = posX;
+	isometricPosition.second = posY;
+	return isometricPosition;
+}
+
 bool PicassoHelper::isFileExist(const string fileName){
     std::ifstream infile(fileName.c_str());
     return infile.good();

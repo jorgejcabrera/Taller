@@ -10,8 +10,8 @@
 using namespace std;
 
 Tile::Tile(int x, int y ) {
-	this->posX = x;
-	this->posY = y;
+	this->position.first = x;
+	this->position.second = y;
 	this->superficie = superficie;
 }
 
@@ -23,20 +23,16 @@ int Tile::getSurfaceSpeed(){
 	return this->superficie;
 }
 
-void Tile::pushEntity(EntidadPartida* entidad){
-	this->entidad = entidad;
-}
-
-EntidadPartida* Tile::getEntity(){
-	return this->entidad;
+pair<int,int>* Tile::getPosition(){
+	return &this->position;
 }
 
 int Tile::getPosX(){
-	return this->posX;
+	return this->position.first;
 }
 
 int Tile::getPosY(){
-	return this->posY;
+	return this->position.second;
 }
 
 void Tile::show(){

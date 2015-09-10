@@ -14,6 +14,15 @@ EntidadPartida::EntidadPartida() {
 
 }
 
+void EntidadPartida::push(int x,int y){
+	this->position.first = x;
+	this->position.second = y;
+}
+
+pair<int,int>* EntidadPartida::getPosition(){
+	return &this->position;
+}
+
 int EntidadPartida::getWidth(){
 	return this->width;
 }

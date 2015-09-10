@@ -24,15 +24,14 @@ enum surface_type{
 class Tile {
 	int posX;
 	int posY;
+	pair<int,int> position;
 	surface_type superficie = grass;	//por default la superficie es pasto
-	EntidadPartida* entidad = NULL;
 public:
 	Tile(int x,int y);
 	void show();
 	int getPosX();
 	int getPosY();
-	void pushEntity(EntidadPartida* entidad);
-	EntidadPartida* getEntity();
+	pair<int,int>* getPosition();
 	void pushSurface(surface_type surface);
 	int getSurfaceSpeed();
 	virtual ~Tile();
