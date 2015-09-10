@@ -92,11 +92,9 @@ PicassoHelper* PicassoHelper::GetInstance() {
 }
 
 pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
-	int posY = 0 * entidad->getLength()  - ( entidad->getLength() - 1) * DefaultSettings::getTileSize() ;
-	int posX = 0 * entidad->getWidth() + DefaultSettings::getScreenWidth() / 2 -  ( entidad->getWidth() - 1) * DefaultSettings::getTileSize();
 	pair<int,int> isometricPosition;
-	isometricPosition.first = posX;
-	isometricPosition.second = posY;
+	isometricPosition.first = entidad->getPosition()->second * entidad->getWidth() + DefaultSettings::getScreenWidth() / 2 -  ( entidad->getWidth() - 1) * DefaultSettings::getTileSize();
+	isometricPosition.second = entidad->getPosition()->first * entidad->getLength()  - ( entidad->getLength() - 1) * DefaultSettings::getTileSize() ;
 	return isometricPosition;
 }
 
