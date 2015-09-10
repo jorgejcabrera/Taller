@@ -9,7 +9,7 @@
 
 void JuegoVista::drawIsometricMap(const string &file){
 	int posX = 0;
-	int posY = 2;
+	int posY = 0;
 	for (map<pair<int,int>,Tile>::iterator it = this->mapa->getTiles()->begin(); it != this->mapa->getTiles()->end();++it){
 		Tile* tileActual = &((*it).second);
 		//transformo coordenadas cartesianas a isométricas
@@ -27,11 +27,11 @@ JuegoVista::JuegoVista(Mapa* mapa) {
 	drawIsometricMap(imagePath);
 
     // Agrego un castillo para probar el path de imagen y para ver como se muestra
-    EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getTileSize() * 6,DefaultSettings::getTileSize() * 4,"castillo",true);
-	int posY = 0 * castillo->getLength();
-	int posX = 0 * castillo->getWidth() + DefaultSettings::getScreenWidth() / 2;
+    EntidadEstatica* castillo = new EntidadEstatica(3,2,"castillo",true);
+	int posY = 0 * castillo->getLength()  - ( castillo->getLength() - 1) * DefaultSettings::getTileSize() ;
+	int posX = 0 * castillo->getWidth() + DefaultSettings::getScreenWidth() / 2 -  ( castillo->getWidth() - 1) * DefaultSettings::getTileSize();
 
-    picassoHelper->renderObject(castillo->getPathImage(),posX - 80, posY - 40,castillo->getWidth(), castillo->getLength());
+    picassoHelper->renderObject(castillo->getPathImage(), posX , posY,(castillo->getWidth()) * 2 * DefaultSettings::getTileSize(), (castillo->getLength()) * DefaultSettings::getTileSize() * 2);
     picassoHelper->renderView();
 }
 

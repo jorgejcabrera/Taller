@@ -31,13 +31,13 @@ string EntidadEstatica::getPathImage(){
 	return pathImage;
 }
 
-int EntidadEstatica::getWidth(){
+/*int EntidadEstatica::getWidth(){
 	return this->width;
 }
 
 int EntidadEstatica::getLength(){
 	return this->length;
-}
+}*/
 
 EntidadEstatica::~EntidadEstatica() {
 	// TODO Auto-generated destructor stub

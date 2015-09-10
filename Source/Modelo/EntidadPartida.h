@@ -13,17 +13,19 @@
 namespace std {
 
 class EntidadPartida {
-private:
+protected:
 	int salud;
 	int posX;
 	int posY;
-	int ancho;
-	int largo;
+	int width;
+	int length;
 	string image;
 
 public:
 	EntidadPartida();
 	virtual ~EntidadPartida();
+	int getWidth();
+	int getLength();
 	void restarSalud();
 };
 
