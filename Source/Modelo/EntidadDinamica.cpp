@@ -7,6 +7,10 @@
 
 #include "EntidadDinamica.h"
 
+EntidadDinamica::EntidadDinamica(){
+
+}
+
 EntidadDinamica::EntidadDinamica(int vel,float x,float y) {
 
 	this->caminando = false;

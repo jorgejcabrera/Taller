@@ -9,6 +9,7 @@
 #define SOURCE_MODELO_ENTIDADDINAMICA_H_
 
 #include "EntidadPartida.h"
+#include <math.h>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class EntidadDinamica: public EntidadPartida {
 		float distanciaEnY(float y);
 
 	public:
+		EntidadDinamica();
 		EntidadDinamica(int vel,float posX,float posY);
 		virtual ~EntidadDinamica();
 
