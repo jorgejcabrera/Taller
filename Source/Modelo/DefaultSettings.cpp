@@ -9,7 +9,7 @@
 
 const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
 const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images";
-const string DefaultSettings::AGE_OF_EMPIRES = "Medieval_Age";
+const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -39,13 +39,15 @@ int DefaultSettings::getMapHeight(){
 
 bool DefaultSettings::isEntityTypeValid(const string &type){
 	list<string> validTypes;
+
+	//Medieval_age
 	validTypes.push_back("Castle");
-	validTypes.push_back("Boardinghouse_Full");
+	validTypes.push_back("Town_Center");
+
+	//Industrial_age
 	validTypes.push_back("Consulate");
 	validTypes.push_back("Town_Hall");
-	validTypes.push_back("Urbanresidence_Full");
-	validTypes.push_back("Victorianhouse_Full");
-	validTypes.push_back("Workers_house");
+	validTypes.push_back("Church");
 
 	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
 	return found;
