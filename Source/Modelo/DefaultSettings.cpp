@@ -42,6 +42,8 @@ bool DefaultSettings::isEntityTypeValid(const string &type){
 	list<string> validTypes;
 	validTypes.push_back("castillo");
 	validTypes.push_back("arbol");
+	validTypes.push_back("consulado");
+	validTypes.push_back("Town_Hall_(Industrial_Age)");
 
 	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
 	return found;
