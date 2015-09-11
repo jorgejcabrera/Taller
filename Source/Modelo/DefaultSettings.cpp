@@ -8,7 +8,8 @@
 #include "DefaultSettings.h"
 
 const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
-const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images/";
+const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images";
+const string DefaultSettings::AGE_OF_EMPIRES = "Medieval_Age";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -36,28 +37,33 @@ int DefaultSettings::getMapHeight(){
 	return MAP_HEIGHT;
 }
 
-//void DefaultSettings::trasladarse(){}
-
 bool DefaultSettings::isEntityTypeValid(const string &type){
 	list<string> validTypes;
-	validTypes.push_back("castillo");
-	validTypes.push_back("arbol");
-	validTypes.push_back("consulado");
-	validTypes.push_back("Town_Hall_(Industrial_Age)");
+	validTypes.push_back("Castle");
+	validTypes.push_back("Boardinghouse_Full");
+	validTypes.push_back("Consulate");
+	validTypes.push_back("Town_Hall");
+	validTypes.push_back("Urbanresidence_Full");
+	validTypes.push_back("Victorianhouse_Full");
+	validTypes.push_back("Workers_house");
 
 	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
 	return found;
 }
 
-string DefaultSettings::imagePathByType(const string &object){
+string DefaultSettings::imagePathByTypeAndAge(const string &object,const string &age){
 	if(isEntityTypeValid(object)){
-		return IMAGE_BASE_PATH +object+".png";
+		return IMAGE_BASE_PATH +"/"+age+"/"+object+".png";
 	}
 	return NULL;
 }
 string DefaultSettings::defaultImage(){
 	return IMAGE_BASE_PATH +"white_tile.bmp";
 
+}
+
+string DefaultSettings::getAgeOfEmpires(){
+	return AGE_OF_EMPIRES;
 }
 
 DefaultSettings::~DefaultSettings() {

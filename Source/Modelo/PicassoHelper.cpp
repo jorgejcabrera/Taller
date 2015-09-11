@@ -8,7 +8,8 @@
 #include "PicassoHelper.h"
 PicassoHelper* PicassoHelper::instance = NULL;
 
-PicassoHelper::PicassoHelper() {
+PicassoHelper::PicassoHelper(Juego* juego) {
+	this->juego = juego;
 }
 
 void PicassoHelper::createContext(){
@@ -84,9 +85,9 @@ void PicassoHelper::renderView(){
 	SDL_RenderPresent(renderer);
 }
 
-PicassoHelper* PicassoHelper::GetInstance() {
+PicassoHelper* PicassoHelper::GetInstance(Juego* juego) {
 	if (!instance) {
-		instance = new PicassoHelper();
+		instance = new PicassoHelper(juego);
 	}
 	return instance;
 }

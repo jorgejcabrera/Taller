@@ -10,6 +10,7 @@
 
 #include "SDL2/SDL.h"
 #include "../Modelo/DefaultSettings.h"
+#include "../Modelo/Juego.h"
 #include "EntidadPartida.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
@@ -18,9 +19,10 @@
 
 class PicassoHelper {
 private:
+	Juego* juego;
 	SDL_Window *window = NULL;
 	SDL_Renderer *renderer = NULL;
-	PicassoHelper();
+	PicassoHelper(Juego* juego);
 	static PicassoHelper* instance;
 	map<string,SDL_Texture*> mapByImagePath;
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h);
@@ -34,7 +36,7 @@ public:
 	void exitError(const string &message);
 	void renderView();
 	void renderObject(const string &file, int x, int y, int w, int h);
-	static PicassoHelper* GetInstance();
+	static PicassoHelper* GetInstance(Juego* juego);
 };
 
 #endif /* MODELO_PICASSOHELPER_H_ */

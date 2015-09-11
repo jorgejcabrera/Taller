@@ -10,6 +10,7 @@
 
 #include "Mapa.h"
 #include "EntidadDinamica.h"
+#include "../Modelo/DefaultSettings.h"
 #include <map>
 
 using namespace std ;
@@ -17,16 +18,17 @@ using namespace std ;
 class Juego {
 private:
 	Mapa* mapa = NULL;
+	string currentAge;
 	EntidadDinamica personajeSeleccionado;
-	bool juegoFinalizado;
+	bool juegoFinalizado = false;
 public:
 	Juego();
 	virtual ~Juego();
 	//Intenta cargar la conf del yaml y setear los atributos al mapa, si por algún motivo no los encuentra setea los valores por default
+	Mapa* getMap();
 	void comenzarPartida();
-
 	void terminarJuego();
-
+	string getCurrentAge();
 	bool getStatusPartida();
 };
 

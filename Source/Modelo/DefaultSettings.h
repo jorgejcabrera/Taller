@@ -23,9 +23,9 @@ class DefaultSettings {
 		static const int MARGEN_SCROLL = 30;
 		static const string NOMBRE_ESCENARIO;
 		static const string IMAGE_BASE_PATH;
-		static const int MAP_WIDTH = 15;		//esto vendría a ser el eje x
-		static const int MAP_HEIGHT = 15 ;			//esto viene a ser el eje y
-
+		static const string AGE_OF_EMPIRES;
+		static const int MAP_WIDTH = 15;							//esto vendría a ser el eje x
+		static const int MAP_HEIGHT = 15 ;							//esto viene a ser el eje y
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
@@ -36,8 +36,8 @@ class DefaultSettings {
 		static string getNombreEscenario();
 		static int getMapWidth();
 		static int getMapHeight();
-		//static void trasladarse();
-		static string imagePathByType(const string &object);
+		static string getAgeOfEmpires();
+		static string imagePathByTypeAndAge(const string &object,const string &age);
 		static string defaultImage();
 		static bool isEntityTypeValid(const string &type);
 };

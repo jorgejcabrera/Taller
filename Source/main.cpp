@@ -21,8 +21,8 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	Mapa* newMapa = new Mapa();
-	JuegoVista* juego = new JuegoVista(newMapa);
+	Juego* newGame = new Juego();
+	JuegoVista* juego = new JuegoVista(newGame);
 	int count = 0;
 	while(true){
 		if(count == 10)
