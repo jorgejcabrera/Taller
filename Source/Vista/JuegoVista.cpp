@@ -19,6 +19,76 @@ void JuegoVista::drawIsometricMap(const string &file){
 	}
 }
 
+void JuegoVista::actualizarMapa(){
+	const int VELOCIDAD_SCROLL_UNO = 1 * 40;
+		const int VELOCIDAD_SCROLL_DOS = 3 * 40;
+		const int ANCHO_BORDE = 50;
+
+		// borde derecho
+		int BORDE_DERECHO_UNO_SCROLL = DefaultSettings::getScreenWidth() - ANCHO_BORDE * 2;
+		int BORDE_DERECHO_DOS_SCROLL = DefaultSettings::getScreenWidth() - ANCHO_BORDE;
+
+		// borde izquierdo
+		int BORDE_IZQUIERDO_UNO_SCROLL = 40;
+		int BORDE_IZQUIERDO_DOS_SCROLL = 20;
+
+		// borde superior
+		const int BORDE_SUPERIOR_UNO = 40;
+		const int BORDE_SUPERIOR_DOS = 20;
+		// limites
+			const int LIMITE_DERECHO = -320; // limite de la posicion x inicio de la imagen
+			const int LIMITE_IZQUIERDO = 20;
+
+		int posicionX = 0;
+			int posicionY = 0;
+			int posX_inicioMapa = DefaultSettings::getScreenWidth() / 2;
+			int posicionMapaY = 0;
+		// obtiene la posicion del mouse
+
+			//picassoHelper->actualizarVista();
+				SDL_GetMouseState(&posicionX, &posicionY);
+
+				cout << "posicion del mouse: (" << posicionX << ", " << posicionX << ") " << endl;
+
+				if (posicionX >= BORDE_DERECHO_UNO_SCROLL
+								&& posicionX <= BORDE_DERECHO_DOS_SCROLL
+								&& !((posX_inicioMapa <= LIMITE_DERECHO))) {
+							posX_inicioMapa -= 1 * VELOCIDAD_SCROLL_UNO;
+							cout << "### posicion del mouse: (" << posicionX << ", " << posicionX << ") " << endl;
+						}
+
+						if (posicionX >= BORDE_DERECHO_DOS_SCROLL
+								&& !((posX_inicioMapa <= LIMITE_DERECHO))) {
+							posX_inicioMapa -= 1 * VELOCIDAD_SCROLL_DOS;
+						}
+
+						if ((posicionX >= BORDE_IZQUIERDO_DOS_SCROLL)
+								&& (posicionX <= BORDE_IZQUIERDO_UNO_SCROLL)
+								&& !((posX_inicioMapa >= LIMITE_IZQUIERDO))) {
+							posX_inicioMapa += 1 * VELOCIDAD_SCROLL_UNO;
+						}
+
+						if (posicionX <= BORDE_IZQUIERDO_DOS_SCROLL
+								&& !((posX_inicioMapa >= LIMITE_IZQUIERDO))) {
+							posX_inicioMapa += 1 * VELOCIDAD_SCROLL_DOS;
+						}
+
+	int tilePosX = 0;
+	int tilePosY = 2;
+	string imagePath = "../Taller_tp/Images/grass_new.png"; // de prueba
+		for (map<pair<int,int>,Tile>::iterator it = this->juego->getMap()->getTiles()->begin(); it != this->juego->getMap()->getTiles()->end();++it){
+			Tile* tileActual = &((*it).second);
+			//transformo coordenadas cartesianas a isométricas
+			tilePosY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2;
+			tilePosX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + posX_inicioMapa;
+			picassoHelper->renderObject(imagePath,tilePosX,tilePosY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
+		}
+
+			//busca eventos
+					SDL_PollEvent(event);
+
+}
+
 void JuegoVista::drawEntities(){
 	pair<int,int> isometricPosition;
 	for(map<pair<int,int>,EntidadPartida*>::iterator it=this->juego->getMap()->getEntities()->begin();it!=this->juego->getMap()->getEntities()->end();++it){

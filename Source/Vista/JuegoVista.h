@@ -30,6 +30,7 @@ private:
 public:
 	void render();
 	JuegoVista(Juego* juego);
+	void actualizarMapa();
 	~JuegoVista();
 
 };

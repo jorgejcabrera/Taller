@@ -18,10 +18,10 @@ using namespace std ;
 
 class Juego {
 private:
-	Mapa* mapa = NULL;
+	Mapa* mapa;
 	string currentAge;
 	EntidadDinamica personajeSeleccionado;
-	bool juegoFinalizado = false;
+	bool juegoFinalizado;
 public:
 	Juego();
 	virtual ~Juego();

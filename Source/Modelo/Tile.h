@@ -24,7 +24,7 @@ enum surface_type{
 class Tile {
 	bool available;
 	pair<int,int> position;
-	surface_type superficie = grass;	//por default la superficie es pasto
+	surface_type superficie;	//por default la superficie es pasto
 public:
 	Tile(int x,int y);
 	void show();
