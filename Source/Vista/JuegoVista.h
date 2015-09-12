@@ -24,11 +24,13 @@ using namespace std;
 class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
+	EntidadDinamica* protagonista;
 	Juego* juego;
 	void drawIsometricMap(const string &file);
 	void drawEntities();
 public:
 	void render();
+	void renderProtagonista();
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 
