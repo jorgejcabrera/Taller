@@ -20,8 +20,8 @@
 class PicassoHelper {
 private:
 	Juego* juego;
-	SDL_Window *window = NULL;
-	SDL_Renderer *renderer = NULL;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
 	PicassoHelper(Juego* juego);
 	static PicassoHelper* instance;
 	map<string,SDL_Texture*> mapByImagePath;

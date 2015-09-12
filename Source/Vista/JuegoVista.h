@@ -32,6 +32,7 @@ public:
 	void render();
 	void renderProtagonista();
 	JuegoVista(Juego* juego);
+	void actualizarMapa();
 	~JuegoVista();
 
 };
