@@ -25,7 +25,6 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-
 	Parser* p = new Parser();
 	p->Parsear();
 	GameController* gController = new GameController();
