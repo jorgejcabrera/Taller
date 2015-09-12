@@ -11,6 +11,7 @@
 #include "Mapa.h"
 #include "EntidadDinamica.h"
 #include <map>
+#include "Parser.h"
 
 using namespace std ;
 

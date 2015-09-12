@@ -17,11 +17,15 @@
 #include "Vista/JuegoVista.h"
 #include "Modelo/EntidadEstatica.h"
 #include <yaml.h>
+#include "Modelo/Parser.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 	JuegoVista* juego = new JuegoVista();
+	Parser* p = new Parser();
+	p->Parsear();
+
 	int count = 0;
 	while(true){
 		if(count == 100)
