@@ -76,16 +76,10 @@ void JuegoVista::actualizarMapa(){
 	int tilePosX = 0;
 	int tilePosY = 2;
 	string imagePath = "../Taller_tp/Images/grass_new.png"; // de prueba
-		for (map<pair<int,int>,Tile>::iterator it = this->juego->getMap()->getTiles()->begin(); it != this->juego->getMap()->getTiles()->end();++it){
-			Tile* tileActual = &((*it).second);
-			//transformo coordenadas cartesianas a isométricas
-			tilePosY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2;
-			tilePosX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + posX_inicioMapa;
-			picassoHelper->renderObject(imagePath,tilePosX,tilePosY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
-		}
+
 
 			//busca eventos
-					SDL_PollEvent(event);
+					//SDL_PollEvent(event);
 
 }
 
