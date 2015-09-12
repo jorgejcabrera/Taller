@@ -23,6 +23,12 @@
 
 using namespace std;
 
+void sleep(unsigned int mseconds)
+{
+    clock_t goal = mseconds + clock();
+    while (goal > clock());
+}
+
 int main(int argc, char* argv[]) {
 
 
@@ -37,6 +43,8 @@ int main(int argc, char* argv[]) {
     	SDL_Delay(500);
 
 	}
+
+	gController->~GameController();
 
 	std::cout<<"fin";
 	return 0;

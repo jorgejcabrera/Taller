@@ -12,9 +12,6 @@ GameController::GameController(){
 	this->juego = new Juego();
 	this->juegoVista = new JuegoVista(juego);
 
-	this->protagonista = new EntidadDinamica(5,300,300);
-	string imgPath = "../Taller/Images/ricardo.png";
-
 	this->event = new SDL_Event();
 
 	this->posMouseX = 0;
@@ -28,7 +25,7 @@ void GameController::obtenerMouseInput(){
 
 	if(event->type == SDL_QUIT) std::cout<<"cerrar"<<std::endl;
 
-	if( event->type == SDL_MOUSEBUTTONDOWN) if (event->button.button == SDL_BUTTON_RIGHT){
+	if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
 
 		SDL_GetMouseState(&posMouseX,&posMouseY);
 
@@ -41,7 +38,7 @@ void GameController::obtenerMouseInput(){
 bool GameController::finDeJuego(){
 
 	std::cout<<"loop"<<std::endl;
-	return (event->type == SDL_QUIT);
+	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
 }
 
 void GameController::render(){

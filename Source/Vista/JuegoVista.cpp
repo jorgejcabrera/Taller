@@ -47,21 +47,19 @@ void JuegoVista::actualizarMapa(){
 			//int posicionMapaY = 0;
 
 				SDL_GetMouseState(&posicionX, &posicionY);
-				cout << "posicion del mouse: (" << posicionX << ", " << posicionX << ") " << endl;
-				cout << "offSet X: (" <<  offSetX << ") " << endl;
-				cout << "offSet Y: (" <<  offSetY << ") " << endl;
+
 
 				if (posicionX >= BORDE_DERECHO_UNO_SCROLL
 								&& posicionX <= BORDE_DERECHO_DOS_SCROLL
 								&& !(( (DefaultSettings::getScreenWidth() /2 + offSetX) <= LIMITE_DERECHO))) {
 							offSetX -= 1 * VELOCIDAD_SCROLL_UNO;
-							cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", " << posicionX << ") " << endl;
+							//cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", " << posicionX << ") " << endl;
 						}
 
 						if (posicionX >= BORDE_DERECHO_DOS_SCROLL
 								&& !(( (DefaultSettings::getScreenWidth() /2 + offSetX) <= LIMITE_DERECHO))) {
 							offSetX -= 1 * VELOCIDAD_SCROLL_DOS;
-							cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", " << posicionX << ") " << endl;
+							//cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", " << posicionX << ") " << endl;
 						}
 
 						if ((posicionX >= BORDE_IZQUIERDO_DOS_SCROLL)
@@ -102,7 +100,8 @@ void JuegoVista::render(){
 
 void JuegoVista::renderProtagonista(){
 	string imagePath = "../Taller/Images/ricardo.png";
-	picassoHelper->renderObject(imagePath,20,320,50,50);
+	picassoHelper->renderObject(imagePath,400,400,50,50);
+	picassoHelper->renderView();
 }
 
 JuegoVista::JuegoVista(Juego* juego) {

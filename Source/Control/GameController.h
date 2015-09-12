@@ -20,8 +20,6 @@ private:
 	Juego* juego;
 	JuegoVista* juegoVista;
 
-	EntidadDinamica* protagonista;
-
 	int posMouseX;
 	int posMouseY;
 

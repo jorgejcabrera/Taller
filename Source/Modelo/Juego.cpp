@@ -19,6 +19,11 @@ Juego::Juego() {
 Mapa* Juego::getMap(){
 	return this->mapa;
 }
+
+EntidadDinamica* Juego::getProtagonista(){
+	return this->protagonista;
+}
+
 string Juego::getCurrentAge(){
 	return this->currentAge;
 }

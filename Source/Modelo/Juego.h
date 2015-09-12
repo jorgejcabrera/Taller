@@ -20,7 +20,7 @@ class Juego {
 private:
 	Mapa* mapa;
 	string currentAge;
-	EntidadDinamica personajeSeleccionado;
+	EntidadDinamica* protagonista;
 	bool juegoFinalizado;
 public:
 	Juego();
@@ -31,6 +31,7 @@ public:
 	void terminarJuego();
 	string getCurrentAge();
 	bool getStatusPartida();
+	EntidadDinamica* getProtagonista();
 };
 
 #endif /* SOURCE_MODELO_JUEGO_H_ */
