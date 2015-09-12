@@ -31,7 +31,6 @@ void sleep(unsigned int mseconds)
 
 int main(int argc, char* argv[]) {
 
-
 	Parser* p = new Parser();
 	p->Parsear();
 	GameController* gController = new GameController();
