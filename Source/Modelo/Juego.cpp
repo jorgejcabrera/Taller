@@ -12,6 +12,15 @@ using namespace std;
 Juego::Juego() {
 	// TODO Auto-generated constructor stub
 	this->juegoFinalizado = false;
+	this->mapa = new Mapa();
+	this->currentAge = DefaultSettings::getAgeOfEmpires();
+}
+
+Mapa* Juego::getMap(){
+	return this->mapa;
+}
+string Juego::getCurrentAge(){
+	return this->currentAge;
 }
 
 void Juego::terminarJuego(){

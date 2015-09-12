@@ -7,15 +7,34 @@
 
 #include "EntidadPartida.h"
 
-namespace std {
+using namespace std;
 
 EntidadPartida::EntidadPartida() {
 	// TODO Auto-generated constructor stub
 
 }
 
+void EntidadPartida::push(int x,int y){
+	this->position.first = x;
+	this->position.second = y;
+}
+
+pair<int,int>* EntidadPartida::getPosition(){
+	return &this->position;
+}
+
+int EntidadPartida::getWidth(){
+	return this->width;
+}
+
+int EntidadPartida::getLength(){
+	return this->length;
+}
+
+string EntidadPartida::getPathImage(){
+	return pathImage;
+}
+
 EntidadPartida::~EntidadPartida() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace std */

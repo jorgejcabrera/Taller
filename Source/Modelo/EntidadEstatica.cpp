@@ -10,8 +10,22 @@
 using namespace std;
 
 EntidadEstatica::EntidadEstatica() {
-	// TODO Auto-generated constructor stub
+}
 
+EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage){
+	this->width = width;
+	this->length = length;
+	edificable = esEdificable;
+	tipo = tipoEntidad;
+	pathImage = sourceImage;
+}
+
+EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable){
+		this->width = width;
+		this->length = length;
+		edificable = esEdificable;
+		tipo = tipoEntidad;
+		pathImage = DefaultSettings::imagePathByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
 }
 
 EntidadEstatica::~EntidadEstatica() {

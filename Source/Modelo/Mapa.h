@@ -9,17 +9,29 @@
 #define SOURCE_MODELO_MAPA_H_
 
 #include "EntidadPartida.h"
+#include "EntidadEstatica.h"
 #include "Tile.h"
+#include "DefaultSettings.h"
+#include <iostream>
+#include <map>
 #include <list>
+
 
 using namespace std;
 
 class Mapa {
 private:
-	list<EntidadPartida> entidades;
-	list<Tile> tiles;
+	map<pair<int,int>,EntidadPartida*> entidades;
+	map<pair<int,int>,Tile*> tiles;
 public:
 	Mapa();
+	void show();
+	Tile* getTileAt(int x,int y);
+	void pushEntity(EntidadPartida* entidad);
+	bool positionAvailable(EntidadPartida* entidad);
+	EntidadPartida* getEntityAt(int x,int y);
+	map<pair<int,int>,Tile*>* getTiles();
+	map<pair<int,int>,EntidadPartida*>* getEntities();
 	virtual ~Mapa();
 };
 

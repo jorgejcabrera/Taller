@@ -7,48 +7,39 @@
 
 #include "JuegoVista.h"
 
-JuegoVista::JuegoVista() {
-    //inicializamos SDL
-    if (SDL_Init(SDL_INIT_VIDEO) != 0){
-    	 cout << "Error SDL_Init:"  <<  SDL_GetError ();
-    }
+void JuegoVista::drawIsometricMap(const string &file){
+	int posX = 0;
+	int posY = 0;
+	for (map<pair<int,int>,Tile*>::iterator it = this->juego->getMap()->getTiles()->begin(); it != this->juego->getMap()->getTiles()->end();++it){
+		Tile* tileActual = (*it).second;
+		//transformo coordenadas cartesianas a isométricas
+		posY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2;
+		posX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;	//comienzo a dibujar de la mitad de la pantalla
+		picassoHelper->renderObject(file,posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
+	}
+}
 
-    // creamos la ventana
-    SDL_Window *win = SDL_CreateWindow("Age of empires", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-    if (win == NULL){
-    	cout << "SDL_CreateWindow Error: " << SDL_GetError();
-    	SDL_Quit();
-    }
+void JuegoVista::drawEntities(){
+	pair<int,int> isometricPosition;
+	for(map<pair<int,int>,EntidadPartida*>::iterator it=this->juego->getMap()->getEntities()->begin();it!=this->juego->getMap()->getEntities()->end();++it){
+		EntidadPartida* entidad = (*it).second;
+		isometricPosition = picassoHelper->getIsometricPosition(entidad);
+		picassoHelper->renderObject(entidad->getPathImage(), isometricPosition.first , isometricPosition.second,entidad->getWidth() * 2 * DefaultSettings::getTileSize(), (entidad->getLength()-1) * DefaultSettings::getTileSize() * 2);
+	}
+}
 
-    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (ren == NULL){
-    	SDL_DestroyWindow(win);
-    	cout << "SDL_CreateRenderer Error: " << SDL_GetError();
-    	SDL_Quit();
-    }
-
-	SDL_RenderClear(ren);
-	SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-	SDL_Rect rectangle;
-	rectangle.x = 2;
-	rectangle.y = 0.5;
-	rectangle.w = 50;
-	rectangle.h = 50;
-	SDL_RenderFillRect(ren, &rectangle);
-
-	SDL_RenderPresent(ren);
-
-//
-//    // Clean up
-//    SDL_DestroyTexture(tex);
-//    SDL_DestroyRenderer(ren);
-//    SDL_DestroyWindow(win);
-//    SDL_Quit();
+JuegoVista::JuegoVista(Juego* juego) {
+	this->juego = juego;
+	picassoHelper = PicassoHelper::GetInstance(juego);
+	picassoHelper->createContext();
+    string imagePath = "../Taller/Images/grass_new.png";
+	drawIsometricMap(imagePath);
+	drawEntities();
+    picassoHelper->renderView();
 }
 
 JuegoVista::~JuegoVista() {
-//    SDL_DestroyTexture(tex);
-//    SDL_DestroyRenderer(ren);
-//    SDL_DestroyWindow(win);
-    SDL_Quit();
+	picassoHelper->~PicassoHelper();
 }
+
+
