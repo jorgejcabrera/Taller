@@ -28,6 +28,7 @@ private:
 	void drawIsometricMap(const string &file);
 	void drawEntities();
 public:
+	void render();
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 

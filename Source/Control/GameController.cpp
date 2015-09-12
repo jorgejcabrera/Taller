@@ -41,6 +41,11 @@ bool GameController::finDeJuego(){
 	return (event->type == SDL_QUIT);
 }
 
+void GameController::render(){
+
+	juegoVista->render();
+}
+
 GameController::~GameController() {
 
 	juego->~Juego();

@@ -60,7 +60,11 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 	dst.w = w;
 	dst.h = h;
 	SDL_RenderCopy(renderer, tex, NULL, &dst);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+}
+
+void PicassoHelper::setFondo(){
+
+	SDL_SetRenderDrawColor(renderer,255,0,0,255);
 }
 
 PicassoHelper::~PicassoHelper() {
@@ -82,6 +86,7 @@ void PicassoHelper::exitError(const string &message) {
 }
 
 void PicassoHelper::renderView(){
+	SDL_SetRenderDrawColor(renderer,255,0,0,255);
 	SDL_RenderPresent(renderer);
 }
 

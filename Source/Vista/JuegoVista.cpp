@@ -28,14 +28,21 @@ void JuegoVista::drawEntities(){
 	}
 }
 
+void JuegoVista::render(){
+
+	picassoHelper->setFondo();
+
+	string imagePath = "../Taller/Images/grass_new.png";
+	drawIsometricMap(imagePath);
+	drawEntities();
+	picassoHelper->renderView();
+}
+
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
-    string imagePath = "../Taller/Images/grass_new.png";
-	drawIsometricMap(imagePath);
-	drawEntities();
-    picassoHelper->renderView();
+
 }
 
 JuegoVista::~JuegoVista() {

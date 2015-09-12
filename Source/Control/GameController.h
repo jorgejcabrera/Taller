@@ -26,6 +26,7 @@ private:
 
 public:
 	GameController();
+	void render();
 	void setProtagonista(EntidadDinamica protagonista);
 	void obtenerMouseInput();
 	bool finDeJuego();
