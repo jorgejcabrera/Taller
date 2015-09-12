@@ -35,23 +35,6 @@ JuegoVista::JuegoVista(Juego* juego) {
     string imagePath = "../Taller/Images/grass_new.png";
 	drawIsometricMap(imagePath);
 	drawEntities();
-
-    // Agrego un castillo para probar el path de imagen y para ver como se muestra
-//    EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Consulate",true);
-//    castillo->push(9,2);
-//    pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(castillo);
-//    picassoHelper->renderObject(castillo->getPathImage(), isometricPosition.first , isometricPosition.second,castillo->getWidth() * 2 * DefaultSettings::getTileSize(), (castillo->getLength()-1) * DefaultSettings::getTileSize() * 2);
-//
-//    EntidadEstatica* torre = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Church",true);
-//    torre->push(0,0);
-//    isometricPosition = picassoHelper->getIsometricPosition(torre);
-//    picassoHelper->renderObject(torre->getPathImage(), isometricPosition.first , isometricPosition.second,torre->getWidth() * 2 * DefaultSettings::getTileSize(), (torre->getLength()-1) * DefaultSettings::getTileSize() * 2);
-//
-//    EntidadEstatica* edificio = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Town_Hall",true);
-//    edificio->push(2,10);
-//    isometricPosition = picassoHelper->getIsometricPosition(edificio);
-//    picassoHelper->renderObject(edificio->getPathImage(), isometricPosition.first , isometricPosition.second,edificio->getWidth() * 2 * DefaultSettings::getTileSize(), (edificio->getLength()-1) * DefaultSettings::getTileSize() * 2);
-
     picassoHelper->renderView();
 }
 
