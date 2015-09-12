@@ -24,6 +24,7 @@ using namespace std;
 class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
+	EntidadDinamica* protagonista;
 	Juego* juego;
 	SDL_Event* event;
 	int offSetX;
@@ -35,6 +36,7 @@ private:
 public:
 	void render();
 	void actualizarMapa();
+	void renderProtagonista();
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 

@@ -20,19 +20,22 @@
 }
 
 void JuegoVista::actualizarMapa(){
+
 	 int VELOCIDAD_SCROLL_UNO = 1 * 10;
 		 int VELOCIDAD_SCROLL_DOS = 3 * 10;
-		 int ANCHO_BORDE = 50;
+		 int ANCHO_BORDE = 30;
 
 		// borde derecho
 		int BORDE_DERECHO_UNO_SCROLL = DefaultSettings::getScreenWidth()/2 - ANCHO_BORDE * 2;
 		int BORDE_DERECHO_DOS_SCROLL = DefaultSettings::getScreenWidth()/2 - ANCHO_BORDE;
+
 
 		// borde izquierdo
 		int BORDE_IZQUIERDO_UNO_SCROLL = 40;
 		int BORDE_IZQUIERDO_DOS_SCROLL = 20;
 
 		// borde superior
+
 		//int BORDE_SUPERIOR_UNO = 40;
 		//int BORDE_SUPERIOR_DOS = 20;
 		// limites
@@ -74,6 +77,7 @@ void JuegoVista::actualizarMapa(){
 
 	drawIsometricMap("../Taller/Images/grass_new.png");
 
+
 }
 
 void JuegoVista::drawEntities(){
@@ -96,10 +100,18 @@ void JuegoVista::render(){
 	picassoHelper->renderView();
 }
 
+void JuegoVista::renderProtagonista(){
+	string imagePath = "../Taller/Images/ricardo.png";
+	picassoHelper->renderObject(imagePath,20,320,50,50);
+}
+
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	this->offSetX = 0;
 	this->offSetY = 0;
+
+	this->protagonista = new EntidadDinamica(5,20,20);
+
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
 

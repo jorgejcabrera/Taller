@@ -10,7 +10,10 @@
 GameController::GameController(){
 
 	this->juego = new Juego();
-	this->juegoVista = new JuegoVista(this->juego);
+	this->juegoVista = new JuegoVista(juego);
+
+	this->protagonista = new EntidadDinamica(5,300,300);
+	string imgPath = "../Taller/Images/ricardo.png";
 
 	this->event = new SDL_Event();
 
@@ -44,6 +47,7 @@ bool GameController::finDeJuego(){
 void GameController::render(){
 
 	juegoVista->render();
+	juegoVista->renderProtagonista();
 }
 
 GameController::~GameController() {

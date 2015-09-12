@@ -20,6 +20,8 @@ private:
 	Juego* juego;
 	JuegoVista* juegoVista;
 
+	EntidadDinamica* protagonista;
+
 	int posMouseX;
 	int posMouseY;
 
@@ -27,7 +29,6 @@ private:
 public:
 	GameController();
 	void render();
-	void setProtagonista(EntidadDinamica protagonista);
 	void obtenerMouseInput();
 	bool finDeJuego();
 	virtual ~GameController();
