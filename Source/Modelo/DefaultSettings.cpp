@@ -37,6 +37,10 @@ int DefaultSettings::getMapHeight(){
 	return MAP_HEIGHT;
 }
 
+int DefaultSettings::getMediumSize(){
+	return MEDIUM_SIZE;
+}
+
 bool DefaultSettings::isEntityTypeValid(const string &type){
 	list<string> validTypes;
 

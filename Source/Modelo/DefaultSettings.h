@@ -26,6 +26,7 @@ class DefaultSettings {
 		static const string AGE_OF_EMPIRES;
 		static const int MAP_WIDTH = 15;							//esto vendría a ser el eje x
 		static const int MAP_HEIGHT = 15 ;							//esto viene a ser el eje y
+		static const int MEDIUM_SIZE = 3;
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
@@ -36,6 +37,7 @@ class DefaultSettings {
 		static string getNombreEscenario();
 		static int getMapWidth();
 		static int getMapHeight();
+		static int getMediumSize();
 		static string getAgeOfEmpires();
 		static string imagePathByTypeAndAge(const string &object,const string &age);
 		static string defaultImage();

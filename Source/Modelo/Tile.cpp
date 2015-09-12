@@ -12,7 +12,15 @@ using namespace std;
 Tile::Tile(int x, int y ) {
 	this->position.first = x;
 	this->position.second = y;
-	this->superficie = superficie;
+	this->available = true;
+}
+
+void Tile::changeStatusAvailable(){
+	this->available = this->available == false;
+}
+
+bool Tile::isAvailable(){
+	return this->available;
 }
 
 void Tile::pushSurface(surface_type surface){
@@ -36,7 +44,7 @@ int Tile::getPosY(){
 }
 
 void Tile::show(){
-	cout << "x:" << this->posX << ", y:" << this->posY << "\n";
+	cout << "x:" << this->position.first << ", y:" << this->position.second << "\n";
 }
 
 Tile::~Tile() {

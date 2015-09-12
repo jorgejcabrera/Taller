@@ -26,6 +26,7 @@ private:
 	PicassoHelper* picassoHelper;
 	Juego* juego;
 	void drawIsometricMap(const string &file);
+	void drawEntities();
 public:
 	JuegoVista(Juego* juego);
 	~JuegoVista();

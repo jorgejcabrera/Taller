@@ -31,6 +31,10 @@ int EntidadPartida::getLength(){
 	return this->length;
 }
 
+string EntidadPartida::getPathImage(){
+	return pathImage;
+}
+
 EntidadPartida::~EntidadPartida() {
 	// TODO Auto-generated destructor stub
 }

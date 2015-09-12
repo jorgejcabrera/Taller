@@ -27,17 +27,6 @@ EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool e
 		tipo = tipoEntidad;
 		pathImage = DefaultSettings::imagePathByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
 }
-string EntidadEstatica::getPathImage(){
-	return pathImage;
-}
-
-/*int EntidadEstatica::getWidth(){
-	return this->width;
-}
-
-int EntidadEstatica::getLength(){
-	return this->length;
-}*/
 
 EntidadEstatica::~EntidadEstatica() {
 	// TODO Auto-generated destructor stub

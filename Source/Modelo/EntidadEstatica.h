@@ -17,13 +17,11 @@ class EntidadEstatica: public EntidadPartida {
 private:
 	bool edificable;
 	string tipo;
-	string pathImage;
 
 public:
 	EntidadEstatica();
 	EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage);
 	EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable);
-	string getPathImage();
 	virtual ~EntidadEstatica();
 };
 

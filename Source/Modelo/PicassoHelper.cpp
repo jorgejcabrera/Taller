@@ -99,8 +99,8 @@ pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
 
 	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth() - 1) *  DefaultSettings::getTileSize();
-	isometricPosition.second = isometricPosition.second - entidad->getLength() *  DefaultSettings::getTileSize() / 2;
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  DefaultSettings::getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  DefaultSettings::getTileSize() / 2;
 	return isometricPosition;
 }
 
