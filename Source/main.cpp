@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 
 		gController->render();
 		gController->obtenerMouseInput();
-    	SDL_Delay(10);
+    	SDL_Delay(500);
 
 	}
 

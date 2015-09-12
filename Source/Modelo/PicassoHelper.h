@@ -20,8 +20,8 @@
 class PicassoHelper {
 private:
 	Juego* juego;
-	SDL_Window *window = NULL;
-	SDL_Renderer *renderer = NULL;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
 	PicassoHelper(Juego* juego);
 	static PicassoHelper* instance;
 	map<string,SDL_Texture*> mapByImagePath;
@@ -36,6 +36,7 @@ public:
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 	void exitError(const string &message);
 	void renderView();
+	void clearView();
 	void renderObject(const string &file, int x, int y, int w, int h);
 	static PicassoHelper* GetInstance(Juego* juego);
 };

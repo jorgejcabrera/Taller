@@ -18,6 +18,7 @@ void PicassoHelper::createContext(){
 	    	this->exitError("Error SDL_Init:");
 	    }
 	    // creamos la ventana
+	    //window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
@@ -88,6 +89,11 @@ void PicassoHelper::exitError(const string &message) {
 void PicassoHelper::renderView(){
 	SDL_SetRenderDrawColor(renderer,255,0,0,255);
 	SDL_RenderPresent(renderer);
+}
+
+void PicassoHelper::clearView(){
+	SDL_RenderClear(renderer);
+
 }
 
 PicassoHelper* PicassoHelper::GetInstance(Juego* juego) {

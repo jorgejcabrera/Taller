@@ -7,16 +7,73 @@
 
 #include "JuegoVista.h"
 
-void JuegoVista::drawIsometricMap(const string &file){
+	void JuegoVista::drawIsometricMap(const string &file){
 	int posX = 0;
 	int posY = 0;
 	for (map<pair<int,int>,Tile*>::iterator it = this->juego->getMap()->getTiles()->begin(); it != this->juego->getMap()->getTiles()->end();++it){
 		Tile* tileActual = (*it).second;
 		//transformo coordenadas cartesianas a isométricas
-		posY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2;
-		posX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;	//comienzo a dibujar de la mitad de la pantalla
+		posY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2 + this->offSetY;
+		posX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2 + offSetX;	//comienzo a dibujar de la mitad de la pantalla
 		picassoHelper->renderObject(file,posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
 	}
+}
+
+void JuegoVista::actualizarMapa(){
+	 int VELOCIDAD_SCROLL_UNO = 1 * 10;
+		 int VELOCIDAD_SCROLL_DOS = 3 * 10;
+		 int ANCHO_BORDE = 50;
+
+		// borde derecho
+		int BORDE_DERECHO_UNO_SCROLL = DefaultSettings::getScreenWidth()/2 - ANCHO_BORDE * 2;
+		int BORDE_DERECHO_DOS_SCROLL = DefaultSettings::getScreenWidth()/2 - ANCHO_BORDE;
+
+		// borde izquierdo
+		int BORDE_IZQUIERDO_UNO_SCROLL = 40;
+		int BORDE_IZQUIERDO_DOS_SCROLL = 20;
+
+		// borde superior
+		//int BORDE_SUPERIOR_UNO = 40;
+		//int BORDE_SUPERIOR_DOS = 20;
+		// limites
+			int LIMITE_DERECHO = -320; // limite de la posicion x inicio de la imagen
+			int LIMITE_IZQUIERDO = 20;
+
+		int posicionX = 0;
+			int posicionY = 0;
+			//int posicionMapaY = 0;
+
+				SDL_GetMouseState(&posicionX, &posicionY);
+				cout << "posicion del mouse: (" << posicionX << ", " << posicionX << ") " << endl;
+				cout << "offSet X: (" <<  offSetX << ") " << endl;
+				cout << "offSet Y: (" <<  offSetY << ") " << endl;
+
+				if (posicionX >= BORDE_DERECHO_UNO_SCROLL
+								&& posicionX <= BORDE_DERECHO_DOS_SCROLL
+								&& !(( (DefaultSettings::getScreenWidth() /2 + offSetX) <= LIMITE_DERECHO))) {
+							offSetX -= 1 * VELOCIDAD_SCROLL_UNO;
+							cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", " << posicionX << ") " << endl;
+						}
+
+						if (posicionX >= BORDE_DERECHO_DOS_SCROLL
+								&& !(( (DefaultSettings::getScreenWidth() /2 + offSetX) <= LIMITE_DERECHO))) {
+							offSetX -= 1 * VELOCIDAD_SCROLL_DOS;
+							cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", " << posicionX << ") " << endl;
+						}
+
+						if ((posicionX >= BORDE_IZQUIERDO_DOS_SCROLL)
+								&& (posicionX <= BORDE_IZQUIERDO_UNO_SCROLL)
+								&& !(( (DefaultSettings::getScreenWidth() /2 + offSetX) >= LIMITE_IZQUIERDO))) {
+							offSetX += 1 * VELOCIDAD_SCROLL_UNO;
+						}
+
+						if (posicionX <= BORDE_IZQUIERDO_DOS_SCROLL
+								&& !(( (DefaultSettings::getScreenWidth() /2 + offSetX) >= LIMITE_IZQUIERDO))) {
+							offSetX += 1 * VELOCIDAD_SCROLL_DOS;
+						}
+
+	drawIsometricMap("../Taller/Images/grass_new.png");
+
 }
 
 void JuegoVista::drawEntities(){
@@ -30,16 +87,19 @@ void JuegoVista::drawEntities(){
 
 void JuegoVista::render(){
 
+	picassoHelper->clearView();
 	picassoHelper->setFondo();
 
 	string imagePath = "../Taller/Images/grass_new.png";
-	drawIsometricMap(imagePath);
+	actualizarMapa();
 	drawEntities();
 	picassoHelper->renderView();
 }
 
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
+	this->offSetX = 0;
+	this->offSetY = 0;
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
 

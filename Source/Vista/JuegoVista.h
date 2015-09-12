@@ -25,10 +25,16 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Juego* juego;
+	SDL_Event* event;
+	int offSetX;
+	int offSetY;
+
+	//void drawIsometricMap(const string &file, int offSetX, int offSetY);
 	void drawIsometricMap(const string &file);
 	void drawEntities();
 public:
 	void render();
+	void actualizarMapa();
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 
