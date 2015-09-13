@@ -13,6 +13,18 @@
 
 using namespace std;
 
+enum Direccion{
+	Norte,
+	Noreste,
+	Este,
+	Sureste,
+	Sur,
+	Suroeste,
+	Oeste,
+	Noroeste,
+	Sindireccion
+};
+
 class EntidadDinamica: public EntidadPartida {
 	private:
 
@@ -28,18 +40,20 @@ class EntidadDinamica: public EntidadPartida {
 		float destinoY;
 
 		float distanciaA(float x, float y);
-
 		float distanciaEnX(float x);
 		float distanciaEnY(float y);
+
+		Direccion getDireccionVertical();
+		Direccion getDireccionHorizontal();
 
 	public:
 		EntidadDinamica();
 		EntidadDinamica(int vel,float posX,float posY);
 		virtual ~EntidadDinamica();
 
-		// creo que no hace falta que sean publicos estos gets
 		float getX();
 		float getY();
+		Direccion getDireccion();
 
 		void setDestino(float x, float y);
 		void trasladarse();
