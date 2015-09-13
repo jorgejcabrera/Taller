@@ -32,7 +32,6 @@ private:
 public:
 	void createContext();
 	~PicassoHelper();
-	void setFondo();
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 	void exitError(const string &message);
 	void renderView();

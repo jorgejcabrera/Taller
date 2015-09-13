@@ -43,13 +43,11 @@ void GameController::actualizarJuego(){
 }
 
 bool GameController::finDeJuego(){
-
-	std::cout<<"loop"<<std::endl;
+	//std::cout<<"loop"<<std::endl;
 	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
 }
 
 void GameController::render(){
-
 	juegoVista->render();
 	juegoVista->renderProtagonista();
 }
