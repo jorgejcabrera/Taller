@@ -28,7 +28,7 @@ void GameController::obtenerMouseInput(){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
 
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			std::cout<<posMouseX<<std::endl;
+			//std::cout<<posMouseX<<std::endl;
 			juego->setDestinoProtagonista(posMouseX,posMouseY);
 		}
 
