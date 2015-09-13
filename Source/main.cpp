@@ -23,16 +23,11 @@
 
 using namespace std;
 
-void sleep(unsigned int mseconds)
-{
-    clock_t goal = mseconds + clock();
-    while (goal > clock());
-}
 
 int main(int argc, char* argv[]) {
 
-	Parser* p = new Parser();
-	p->Parsear();
+	//Parser* p = new Parser();
+	//p->Parsear();
 	GameController* gController = new GameController();
 
 	while(! gController->finDeJuego() ){
