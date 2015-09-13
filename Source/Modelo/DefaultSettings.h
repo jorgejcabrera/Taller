@@ -24,8 +24,8 @@ class DefaultSettings {
 		static const string NOMBRE_ESCENARIO;
 		static const string IMAGE_BASE_PATH;
 		static const string AGE_OF_EMPIRES;
-		static const int MAP_WIDTH = 15;							//esto vendría a ser el eje x
-		static const int MAP_HEIGHT = 15 ;							//esto viene a ser el eje y
+		static const int MAP_WIDTH = 14;							//esto vendría a ser el eje x
+		static const int MAP_HEIGHT = 14 ;							//esto viene a ser el eje y
 		static const int MEDIUM_SIZE = 3;
 	public:
 		DefaultSettings();

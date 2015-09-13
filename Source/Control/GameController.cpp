@@ -39,7 +39,7 @@ void GameController::obtenerMouseInput(){
 }
 
 pair<float,float> GameController::convertToCartesian(int xScreen,int yScreen){
-	cout<< "ScreenCoord: "<< xScreen<<","<<yScreen<<endl;
+	cout<< "ScreenCoord: "<< xScreen<<","<< yScreen << endl;
 	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
 	float x = ( yScreen * 2 + xScreen - startMapX + DefaultSettings::getTileSize()) / (DefaultSettings::getTileSize() * 2);
 	float y =  yScreen / (DefaultSettings::getTileSize() / 2) - x;

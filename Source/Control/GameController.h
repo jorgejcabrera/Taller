@@ -20,10 +20,8 @@ private:
 	SDL_Event* event;
 	Juego* juego;
 	JuegoVista* juegoVista;
-
 	int posMouseX;
 	int posMouseY;
-
 	bool salirDelJuego;
 
 
