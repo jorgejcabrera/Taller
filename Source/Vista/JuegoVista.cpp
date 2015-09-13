@@ -124,7 +124,7 @@ void JuegoVista::render(){
 	string imagePath = "../Taller/Images/grass_new.png";
 	//actualizarMapa();
 	drawIsometricMap(imagePath);
-	drawEntities();
+	//drawEntities();
 	picassoHelper->renderView();
 }
 
