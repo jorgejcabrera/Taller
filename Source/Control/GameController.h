@@ -12,6 +12,7 @@
 #include "SDL2/SDL_image.h"
 #include "../Modelo/Juego.h"
 #include "../Vista/JuegoVista.h"
+#include "../Modelo/DefaultSettings.h"
 
 class GameController {
 
@@ -32,6 +33,7 @@ public:
 	void render();
 	void obtenerMouseInput();
 	bool finDeJuego();
+	pair<float,float> convertToCartesian(int xScreen,int yScreen);
 	virtual ~GameController();
 };
 
