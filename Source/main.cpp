@@ -35,11 +35,12 @@ int main(int argc, char* argv[]) {
 	p->Parsear();
 	GameController* gController = new GameController();
 
-	while(! gController->finDeJuego()){
+	while(! gController->finDeJuego() ){
 
+		gController->obtenerMouseInput();
 		gController->render();
 		gController->obtenerMouseInput();
-    	SDL_Delay(500);
+    	SDL_Delay(300);
 
 	}
 

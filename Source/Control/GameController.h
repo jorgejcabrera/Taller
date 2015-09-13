@@ -23,6 +23,8 @@ private:
 	int posMouseX;
 	int posMouseY;
 
+	bool salirDelJuego;
+
 
 public:
 	GameController();

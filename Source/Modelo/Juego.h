@@ -30,6 +30,7 @@ public:
 	void comenzarPartida();
 	void terminarJuego();
 	string getCurrentAge();
+	void setDestinoProtagonista(int x,int y);
 	bool getStatusPartida();
 	EntidadDinamica* getProtagonista();
 };

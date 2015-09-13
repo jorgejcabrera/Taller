@@ -9,6 +9,8 @@
 
 GameController::GameController(){
 
+	this->salirDelJuego = false;
+
 	this->juego = new Juego();
 	this->juegoVista = new JuegoVista(juego);
 
@@ -21,17 +23,17 @@ GameController::GameController(){
 
 void GameController::obtenerMouseInput(){
 
-	SDL_PollEvent(event);
+	while(SDL_PollEvent(event)){
 
-	if(event->type == SDL_QUIT) std::cout<<"cerrar"<<std::endl;
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
 
-	if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
+			SDL_GetMouseState(&posMouseX,&posMouseY);
+			std::cout<<posMouseX<<std::endl;
+			juego->setDestinoProtagonista(posMouseX,posMouseY);
+		}
 
-		SDL_GetMouseState(&posMouseX,&posMouseY);
+		if( event->type == SDL_QUIT) this->salirDelJuego = true;
 
-		std::cout<<posMouseX<<std::endl;
-
-		// aca le tengo que decir al juego que actualice al protragonista
 	}
 }
 

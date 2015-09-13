@@ -14,6 +14,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
+	this->protagonista = new EntidadDinamica();
 }
 
 Mapa* Juego::getMap(){
@@ -26,6 +27,10 @@ EntidadDinamica* Juego::getProtagonista(){
 
 string Juego::getCurrentAge(){
 	return this->currentAge;
+}
+
+void Juego::setDestinoProtagonista(int x,int y){
+	protagonista->setDestino(x,y);
 }
 
 void Juego::terminarJuego(){
