@@ -131,7 +131,7 @@ void JuegoVista::render(){
 
 void JuegoVista::renderProtagonista(){
 	string imagePath = "../Taller/Images/ricardo.png";
-	picassoHelper->renderObject(imagePath,400,400,50,50);
+	picassoHelper->renderObject(imagePath,protagonista->getX(),protagonista->getY(),50,50);
 	picassoHelper->renderView();
 }
 
@@ -140,7 +140,7 @@ JuegoVista::JuegoVista(Juego* juego) {
 	this->offSetX = 0;
 	this->offSetY = 0;
 
-	this->protagonista = new EntidadDinamica(5,20,20);
+	this->protagonista = juego->getProtagonista();
 
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();

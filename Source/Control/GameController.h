@@ -28,6 +28,7 @@ private:
 
 public:
 	GameController();
+	void actualizarJuego();
 	void render();
 	void obtenerMouseInput();
 	bool finDeJuego();

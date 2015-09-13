@@ -37,6 +37,11 @@ void GameController::obtenerMouseInput(){
 	}
 }
 
+void GameController::actualizarJuego(){
+
+	juego->actualizarProtagonista();
+}
+
 bool GameController::finDeJuego(){
 
 	std::cout<<"loop"<<std::endl;

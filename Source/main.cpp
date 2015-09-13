@@ -38,9 +38,10 @@ int main(int argc, char* argv[]) {
 	while(! gController->finDeJuego() ){
 
 		gController->obtenerMouseInput();
+		gController->actualizarJuego();
 		gController->render();
-		gController->obtenerMouseInput();
-    	SDL_Delay(300);
+
+    	SDL_Delay(200);
 
 	}
 
