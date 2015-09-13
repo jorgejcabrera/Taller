@@ -10,6 +10,7 @@ PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper(Juego* juego) {
 	this->juego = juego;
+	this->window = NULL;
 }
 
 void PicassoHelper::createContext(){
@@ -18,7 +19,6 @@ void PicassoHelper::createContext(){
 	    	this->exitError("Error SDL_Init:");
 	    }
 	    // creamos la ventana
-	    //window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
@@ -63,11 +63,6 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 	SDL_RenderCopy(renderer, tex, NULL, &dst);
 }
 
-void PicassoHelper::setFondo(){
-
-	SDL_SetRenderDrawColor(renderer,255,0,0,255);
-}
-
 PicassoHelper::~PicassoHelper() {
 	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
 		SDL_DestroyTexture(it->second);
@@ -87,13 +82,13 @@ void PicassoHelper::exitError(const string &message) {
 }
 
 void PicassoHelper::renderView(){
-	SDL_SetRenderDrawColor(renderer,255,0,0,255);
+	SDL_SetRenderDrawColor(renderer,0,0,0,1);
 	SDL_RenderPresent(renderer);
 }
 
 void PicassoHelper::clearView(){
 	SDL_RenderClear(renderer);
-
+	SDL_SetRenderDrawColor(renderer,255,0,0,255);
 }
 
 PicassoHelper* PicassoHelper::GetInstance(Juego* juego) {

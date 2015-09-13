@@ -13,6 +13,7 @@ Tile::Tile(int x, int y ) {
 	this->position.first = x;
 	this->position.second = y;
 	this->available = true;
+	this->superficie = grass;
 }
 
 void Tile::changeStatusAvailable(){
@@ -48,6 +49,5 @@ void Tile::show(){
 }
 
 Tile::~Tile() {
-	// TODO Auto-generated destructor stub
 }
 

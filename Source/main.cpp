@@ -36,13 +36,10 @@ int main(int argc, char* argv[]) {
 	GameController* gController = new GameController();
 
 	while(! gController->finDeJuego() ){
-
 		gController->obtenerMouseInput();
 		gController->actualizarJuego();
 		gController->render();
-
     	SDL_Delay(200);
-
 	}
 
 	gController->~GameController();
