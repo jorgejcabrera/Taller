@@ -30,6 +30,12 @@ private:
 	int offSetX;
 	int offSetY;
 
+	//proporciones del protagonista y el offset
+	int pheight;
+	int pwidth;
+	int offh;
+	int offw;
+
 	//void drawIsometricMap(const string &file, int offSetX, int offSetY);
 	void drawIsometricMap(const string &file);
 	void drawEntities();
