@@ -12,6 +12,7 @@
 #include "SDL2/SDL_image.h"
 #include "../Modelo/Juego.h"
 #include "../Vista/JuegoVista.h"
+#include "../Modelo/DefaultSettings.h"
 
 class GameController {
 
@@ -19,10 +20,8 @@ private:
 	SDL_Event* event;
 	Juego* juego;
 	JuegoVista* juegoVista;
-
 	int posMouseX;
 	int posMouseY;
-
 	bool salirDelJuego;
 
 
@@ -32,6 +31,7 @@ public:
 	void render();
 	void obtenerMouseInput();
 	bool finDeJuego();
+	pair<float,float> convertToCartesian(int xScreen,int yScreen);
 	virtual ~GameController();
 };
 
