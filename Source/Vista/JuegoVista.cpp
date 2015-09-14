@@ -113,13 +113,13 @@ void JuegoVista::render(){
 	actualizarMapa();
 	drawIsometricMap(imagePath);
 	drawEntities();
+	this-> renderProtagonista();
 	picassoHelper->renderView();
 }
 
 void JuegoVista::renderProtagonista(){
 	string imagePath = "../Taller/Images/ricardo.png";
 	picassoHelper->renderObject(imagePath,this->juego->getProtagonista()->getX(),this->juego->getProtagonista()->getY(),DefaultSettings::getTileSize(),DefaultSettings::getTileSize());
-	picassoHelper->renderView();
 }
 
 JuegoVista::JuegoVista(Juego* juego) {

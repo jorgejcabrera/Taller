@@ -61,7 +61,6 @@ bool GameController::finDeJuego(){
 
 void GameController::render(){
 	juegoVista->render();
-	juegoVista->renderProtagonista();
 }
 
 GameController::~GameController() {
