@@ -24,8 +24,8 @@ int DefaultSettings::getScreenHeight(){
 int DefaultSettings::getTileSize(){
 	return TILE_SIZE;
 }
-int DefaultSettings::getMargenScroll(){
-	return MARGEN_SCROLL;
+int DefaultSettings::getLongMargenScroll(){
+	return LONG_MARGEN_SCROLL;
 }
 string DefaultSettings::getNombreEscenario(){
 	return NOMBRE_ESCENARIO;
@@ -40,6 +40,63 @@ int DefaultSettings::getMapHeight(){
 int DefaultSettings::getMediumSize(){
 	return MEDIUM_SIZE;
 }
+
+int DefaultSettings::getVelocidadScrollUno(){
+	return VELOCIDAD_SCROLL_UNO;
+}
+
+int DefaultSettings::getVelocidadScrollDos(){
+	return VELOCIDAD_SCROLL_DOS;
+}
+
+int DefaultSettings::getLimiteDerecho(){
+	return -SCREEN_WIDTH / 10;
+}
+
+int DefaultSettings::getLimiteIzquierdo(){
+return  SCREEN_WIDTH / 10;
+}
+
+int DefaultSettings::getLimiteInferior(){
+return - SCREEN_HEIGHT / 10;
+}
+
+int DefaultSettings::getLimiteSuperior(){
+	return SCREEN_HEIGHT / 10;
+}
+
+int DefaultSettings::getMargenDerechoUno(){
+return SCREEN_WIDTH - LONG_MARGEN_SCROLL * 2;
+}
+
+int DefaultSettings::getMargenDerechoDos(){
+return SCREEN_WIDTH - LONG_MARGEN_SCROLL;
+}
+
+int DefaultSettings::getMargenIzquierdoUno(){
+return LONG_MARGEN_SCROLL * 2;
+}
+
+int DefaultSettings::getMargenIzquierdoDos(){
+return LONG_MARGEN_SCROLL;
+}
+
+int DefaultSettings::getMargenSuperiorUno(){
+return LONG_MARGEN_SCROLL * 2;
+}
+
+int DefaultSettings::getMargenSuperiorDos(){
+return LONG_MARGEN_SCROLL;
+}
+
+int DefaultSettings::getMargenInferiorUno(){
+return SCREEN_HEIGHT - 2 * LONG_MARGEN_SCROLL;
+}
+
+int DefaultSettings::getMargenInferiorDos(){
+return SCREEN_HEIGHT - LONG_MARGEN_SCROLL;
+}
+
 
 bool DefaultSettings::isEntityTypeValid(const string &type){
 	list<string> validTypes;
