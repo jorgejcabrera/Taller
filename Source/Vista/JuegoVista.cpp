@@ -19,83 +19,68 @@
 	}
 }
 
-void JuegoVista::actualizarMapa(){
+	void JuegoVista::actualizarMapa() {
 
-	 int VELOCIDAD_SCROLL_UNO = 1 * 10;
-	 int VELOCIDAD_SCROLL_DOS = 3 * 10;
-	 int ANCHO_BORDE = 40;
+		int posicionX = 0;
+		int posicionY = 0;
 
-	// borde derecho
-	int BORDE_DERECHO_UNO_SCROLL = DefaultSettings::getScreenWidth() - ANCHO_BORDE * 2;
-	int BORDE_DERECHO_DOS_SCROLL = DefaultSettings::getScreenWidth() - ANCHO_BORDE;
+		SDL_GetMouseState(&posicionX, &posicionY);
+		cout << "posicion del mouse: (" << posicionX << ", " << posicionY << ") "
+				<< endl;
+		cout << "offSet X: (" << offSetX << ") " << endl;
+		cout << "offSet Y: (" << offSetY << ") " << endl;
 
-	// borde izquierdo
-	int BORDE_IZQUIERDO_UNO_SCROLL = ANCHO_BORDE *2;
-	int BORDE_IZQUIERDO_DOS_SCROLL = ANCHO_BORDE;
+		if (posicionX >= DefaultSettings::getMargenDerechoUno()
+				&& posicionX < DefaultSettings::getMargenDerechoDos()
+				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
+			offSetX -= DefaultSettings::getVelocidadScrollUno();
+			cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", "
+					<< posicionX << ") " << endl;
+		}
 
-	// borde superior
-	int BORDE_SUPERIOR_UNO = ANCHO_BORDE * 2;
-	int BORDE_SUPERIOR_DOS = ANCHO_BORDE;
+		if (posicionX >= DefaultSettings::getMargenDerechoDos()
+				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
+			offSetX -= 1 * DefaultSettings::getVelocidadScrollDos();
+			cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", "
+					<< posicionX << ") " << endl;
+		}
 
-	// limites
-	int LIMITE_DERECHO = -524; // limite de la posicion x inicio de la imagen
-	int LIMITE_IZQUIERDO = 524;
+		if ((posicionX >= DefaultSettings::getMargenIzquierdoUno())
+				&& (posicionX < DefaultSettings::getMargenIzquierdoDos())
+				&& !(offSetX > DefaultSettings::getLimiteIzquierdo())) {
+			offSetX += DefaultSettings::getVelocidadScrollUno();
+		}
 
-	int LIMITE_INFERIOR = -500;
-	int LIMITE_SUPERIOR = 500;
-	int posicionX = 0;
-	int posicionY = 0;
-	//int posicionMapaY = 0;
+		if (posicionX <= DefaultSettings::getMargenIzquierdoDos()
+				&& !(offSetX > DefaultSettings::getLimiteIzquierdo())) {
+			offSetX += DefaultSettings::getVelocidadScrollDos();
+		}
 
-	SDL_GetMouseState(&posicionX, &posicionY);
-	if (posicionX >= BORDE_DERECHO_UNO_SCROLL && posicionX <= BORDE_DERECHO_DOS_SCROLL && !(( (DefaultSettings::getScreenWidth() /2 + offSetX) <= LIMITE_DERECHO))) {
-		offSetX -= 1 * VELOCIDAD_SCROLL_UNO;
-		//cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", " << posicionX << ") " << endl;
+		if ((posicionY <= DefaultSettings::getMargenSuperiorUno())
+				&& (posicionY > DefaultSettings::getMargenSuperiorDos())
+				&& !((offSetY > DefaultSettings::getLimiteSuperior()))) {
+			offSetY += DefaultSettings::getVelocidadScrollUno();
+		}
+
+		if (posicionY <= DefaultSettings::getMargenSuperiorDos()
+				&& !((offSetY > DefaultSettings::getLimiteSuperior()))) {
+			offSetY += DefaultSettings::getVelocidadScrollDos();
+		}
+
+		if (posicionY >= DefaultSettings::getMargenInferiorUno()
+				&& (posicionY < DefaultSettings::getMargenInferiorDos())
+				&& !((offSetY < DefaultSettings::getLimiteInferior()))) {
+			offSetY -= DefaultSettings::getVelocidadScrollUno();
+		}
+
+		if ((posicionY >= DefaultSettings::getMargenInferiorDos())
+				&& !((offSetY < DefaultSettings::getLimiteInferior()))) {
+			offSetY -= DefaultSettings::getVelocidadScrollDos();
+		}
+
+		drawIsometricMap("../Taller/Images/grass_new.png");
+
 	}
-	if (posicionX >= BORDE_DERECHO_DOS_SCROLL && !(( (DefaultSettings::getScreenWidth() /2 + offSetX) <= LIMITE_DERECHO))) {
-		offSetX -= 1 * VELOCIDAD_SCROLL_DOS;
-		//cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", " << posicionX << ") " << endl;
-	}
-
-	if ((posicionX >= BORDE_IZQUIERDO_UNO_SCROLL) && (posicionX <= BORDE_IZQUIERDO_DOS_SCROLL) && !(offSetX >= LIMITE_IZQUIERDO)) {
-		offSetX += 1 * VELOCIDAD_SCROLL_UNO;
-	}
-
-	if (posicionX <= BORDE_IZQUIERDO_DOS_SCROLL && !(offSetX >= LIMITE_IZQUIERDO)) {
-		offSetX += 1 * VELOCIDAD_SCROLL_DOS;
-	}
-
-	/**if ((posicionY >= BORDE_SUPERIOR_DOS)
-					&& (posicionY <= BORDE_SUPERIOR_UNO)
-						&& !((offSetY >= LIMITE_SUPERIOR))) {
-					rectanguloPasto.y += 1 * VELOCIDAD_SCROLL_UNO;
-				}
-
-				if (posicionY <= BORDE_SUPERIOR_DOS
-						&& !((rectanguloPasto.y >= LIMITE_SUPERIOR))) {
-					rectanguloPasto.y += 1 * VELOCIDAD_SCROLL_DOS;
-				}
-
-				if (posicionY >= BORDE_INFERIOR_UNO
-						&& (posicionY <= BORDE_INFERIOR_DOS)
-						&& !((rectanguloPasto.y <= LIMITE_INFERIOR))) {
-					rectanguloPasto.y -= 1 * VELOCIDAD_SCROLL_UNO;
-				}
-
-				if ((posicionY >= BORDE_INFERIOR_DOS)
-						&& !((rectanguloPasto.y <= LIMITE_INFERIOR))) {
-					rectanguloPasto.y -= 1 * VELOCIDAD_SCROLL_DOS;
-					cout << "posicion del mouse: (" << posicionX << ", "
-							<< posicionX << ") " << endl;
-					cout << "posicion del rectanguro: (" << rectanguloPasto.x << ", "
-							<< rectanguloPasto.y << endl;
-				}
-
-				*/
-
-drawIsometricMap("../Taller/Images/grass_new.png");
-
-}
 
 void JuegoVista::drawEntities(){
 	pair<int,int> isometricPosition;
