@@ -15,6 +15,7 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 
 	this->caminando = false;
 
+	//son las coordenadas cartesianas de donde se va a posicionar el chabon
 	this->position.first = x;
 	this->position.second = y;
 
@@ -23,8 +24,8 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->destinoY = y;
 
 	this->velocidad = vel;
-	this->vecVelocity.first = 40;
-	this->vecVelocity.second = 40;
+	this->vecVelocity.first = 0;
+	this->vecVelocity.second = 0;
 
 }
 
