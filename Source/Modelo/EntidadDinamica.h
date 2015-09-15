@@ -9,6 +9,8 @@
 #define SOURCE_MODELO_ENTIDADDINAMICA_H_
 
 #include "EntidadPartida.h"
+#include "DefaultSettings.h"
+#include "SDL2/SDL.h"
 #include <math.h>
 
 using namespace std;
@@ -29,15 +31,14 @@ class EntidadDinamica: public EntidadPartida {
 	private:
 
 		int velocidad;
-		float velX;
-		float velY;
-
+		float velX = 0;
+		float velY = 0;
+		int framesPerSecond = 4;
 		bool caminando;
-
 		float posX;
 		float posY;
-		float destinoX;
-		float destinoY;
+		float destinoX = 0;
+		float destinoY = 0;
 
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
@@ -45,11 +46,15 @@ class EntidadDinamica: public EntidadPartida {
 
 		Direccion getDireccionVertical();
 		Direccion getDireccionHorizontal();
+		int getLineSprite(Direccion dir);
 
 	public:
 		EntidadDinamica();
 		EntidadDinamica(int vel,float posX,float posY);
+		EntidadDinamica(string typeEntity, int vel,float posX,float posY, float width, float length, int fps);
 		virtual ~EntidadDinamica();
+		SDL_Rect getPositionOfSprite();
+		string getEntityType();
 
 		float getX();
 		float getY();

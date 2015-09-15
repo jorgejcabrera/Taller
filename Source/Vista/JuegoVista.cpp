@@ -7,7 +7,7 @@
 
 #include "JuegoVista.h"
 
-	void JuegoVista::drawIsometricMap(const string &file){
+	void JuegoVista::drawIsometricMap(){
 	int posX = 0;
 	int posY = 0;
 	for (map<pair<int,int>,Tile*>::iterator it = this->juego->getMap()->getTiles()->begin(); it != this->juego->getMap()->getTiles()->end();++it){
@@ -15,7 +15,7 @@
 		//transformo coordenadas cartesianas a isométricas
 		posY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2 + this->offSetY;
 		posX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2 + offSetX;	//comienzo a dibujar de la mitad de la pantalla
-		picassoHelper->renderObject(file,posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
+		picassoHelper->renderObject(tileActual->getPathImage(),posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
 	}
 }
 
@@ -25,24 +25,25 @@
 		int posicionY = 0;
 
 		SDL_GetMouseState(&posicionX, &posicionY);
-		cout << "posicion del mouse: (" << posicionX << ", " << posicionY << ") "
+		/*cout << "posicion del mouse: (" << posicionX << ", " << posicionY << ") "
 				<< endl;
 		cout << "offSet X: (" << offSetX << ") " << endl;
 		cout << "offSet Y: (" << offSetY << ") " << endl;
+		*/
 
 		if (posicionX >= DefaultSettings::getMargenDerechoUno()
 				&& posicionX < DefaultSettings::getMargenDerechoDos()
 				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
 			offSetX -= DefaultSettings::getVelocidadScrollUno();
-			cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", "
-					<< posicionX << ") " << endl;
+			/*cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", "
+					<< posicionX << ") " << endl;*/
 		}
 
 		if (posicionX >= DefaultSettings::getMargenDerechoDos()
 				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
 			offSetX -= 1 * DefaultSettings::getVelocidadScrollDos();
-			cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", "
-					<< posicionX << ") " << endl;
+			/*cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", "
+					<< posicionX << ") " << endl;*/
 		}
 
 		if ((posicionX >= DefaultSettings::getMargenIzquierdoUno())
@@ -78,7 +79,7 @@
 			offSetY -= DefaultSettings::getVelocidadScrollDos();
 		}
 
-		drawIsometricMap("../Taller/Images/grass_new.png");
+		this->drawIsometricMap();
 
 	}
 
@@ -94,17 +95,15 @@ void JuegoVista::drawEntities(){
 void JuegoVista::render(){
 
 	picassoHelper->clearView();
-	string imagePath = "../Taller/Images/grass_new.png";
 	actualizarMapa();
-	drawIsometricMap(imagePath);
+	this->drawIsometricMap();
 	drawEntities();
-	this-> renderProtagonista();
+	this->renderProtagonista();
 	picassoHelper->renderView();
 }
 
 void JuegoVista::renderProtagonista(){
-	string imagePath = "../Taller/Images/ricardo.png";
-	picassoHelper->renderObject(imagePath,this->juego->getProtagonista()->getX(),this->juego->getProtagonista()->getY(),DefaultSettings::getTileSize(),DefaultSettings::getTileSize());
+	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(),this->juego->getProtagonista()->getX(),this->juego->getProtagonista()->getY(),DefaultSettings::getTileSize(),DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
 }
 
 JuegoVista::JuegoVista(Juego* juego) {
@@ -115,7 +114,6 @@ JuegoVista::JuegoVista(Juego* juego) {
 	this->pwidth = 50;
 	this->offh = pheight;
 	this->offw = (pwidth / 2);*/
-
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
 

@@ -26,6 +26,7 @@ public:
 	int getWidth();
 	int getLength();
 	string getPathImage();
+	void setPathImage(string path);
 	void push(int x, int y);
 	pair<int,int>* getPosition();
 	void restarSalud();

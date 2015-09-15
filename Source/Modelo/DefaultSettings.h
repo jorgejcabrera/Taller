@@ -25,6 +25,8 @@ class DefaultSettings {
 		static const string NOMBRE_ESCENARIO;
 		static const string IMAGE_BASE_PATH;
 		static const string AGE_OF_EMPIRES;
+		static const string IMAGE_TILES_PATH;
+		static const string IMAGE_PERSONAJES_PATH;
 		static const int MAP_WIDTH = 14;							//esto vendría a ser el eje x
 		static const int MAP_HEIGHT = 14 ;							//esto viene a ser el eje y
 		static const int MEDIUM_SIZE = 3;
@@ -42,7 +44,10 @@ class DefaultSettings {
 		static int getMapHeight();
 		static int getMediumSize();
 		static string getAgeOfEmpires();
-		static string imagePathByTypeAndAge(const string &object,const string &age);
+		static string imagePathBuildingsByTypeAndAge(const string &object,const string &age);
+		static string imagePathPersonajesByType(const string &object);
+		static string imagePathTilesByType(const string &object);
+
 		static string defaultImage();
 		static bool isEntityTypeValid(const string &type);
 		static int getVelocidadScrollUno();

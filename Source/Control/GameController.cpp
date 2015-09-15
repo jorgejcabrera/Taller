@@ -18,7 +18,6 @@ GameController::GameController(){
 
 	this->posMouseX = 0;
 	this->posMouseY = 0;
-
 }
 
 void GameController::obtenerMouseInput(){
@@ -30,7 +29,7 @@ void GameController::obtenerMouseInput(){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			juego->setDestinoProtagonista(posMouseX,posMouseY);
 			pair<float,float> result = this->convertToCartesian(posMouseX,posMouseY);
-			cout <<"La posicion cartesiana es: " <<result.first << ","<< result.second<<endl;
+			//cout <<"La posicion cartesiana es: " <<result.first << ","<< result.second<<endl;
 		}
 
 		if( event->type == SDL_QUIT) this->salirDelJuego = true;

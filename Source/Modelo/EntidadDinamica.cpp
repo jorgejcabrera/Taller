@@ -12,20 +12,34 @@ EntidadDinamica::EntidadDinamica(){
 }
 
 EntidadDinamica::EntidadDinamica(int vel,float x,float y) {
-
 	this->caminando = false;
-
 	this->posX = x;
 	this->posY = y;
-
-	//no importa el destino inicial porque no esta caminando
-	this->destinoX = x;
-	this->destinoY = y;
-
 	this->velocidad = vel;
-	this->velX = 0;
-	this->velY = 0;
+	this->width = 50;
+	this->length = 50;
+}
 
+EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float w, float l, int fps){
+	this->caminando = false;
+	this->posX = x;
+	this->posY = y;
+	this->velocidad = vel;
+	this->width = w;
+	this->length = l;
+	this->framesPerSecond = fps;
+	this->setPathImage(DefaultSettings::imagePathPersonajesByType(typeDinamicEntity));
+}
+
+SDL_Rect EntidadDinamica::getPositionOfSprite(){
+	Uint32 sprite = 0;
+	if(this->caminando){
+		Uint32 ticks = SDL_GetTicks();
+		sprite = (ticks / 100) % this->framesPerSecond;
+	}
+	int lineaSprite = this->getLineSprite(this->getDireccion());
+	SDL_Rect srcrect = { sprite * this->width, this->length*lineaSprite, this->width, this->length };
+	return srcrect;
 }
 
 float EntidadDinamica::getX(){
@@ -37,33 +51,26 @@ float EntidadDinamica::getY(){
 }
 
 float EntidadDinamica::distanciaEnX(float x){
-
 	float res;
 	if(posX > x) res = posX - x;
 	else res = x - posX;
-
 	return res;
 }
 
 float EntidadDinamica::distanciaEnY(float y){
-
 	float res;
 	if(posY > y) res = posY - y;
 	else res = y - posY;
-
 	return res;
 }
 
 float EntidadDinamica::distanciaA(float x, float y){
-
 	float distY = (posY - y);
 	float distX = (posX - x);
-
 	return sqrt((distX * distX) +  (distY * distY));
 }
 
 Direccion EntidadDinamica::getDireccionVertical(){
-
 	//para que la direccion sea norte/sur el seno del angulo tiene que ser mayor a 0.38
 	// equivale a un angulo de 22,5 grados o mas
 
@@ -72,23 +79,19 @@ Direccion EntidadDinamica::getDireccionVertical(){
 		if(posY > destinoY) dVertical = Norte;
 		else dVertical = Sur;
 	}
-
 	return dVertical;
 }
 
 Direccion EntidadDinamica::getDireccionHorizontal(){
-
 	Direccion dHorizontal = Sindireccion;
 	if(caminando && (velX / velocidad > 0.38)){
 		if(posX > destinoX) dHorizontal = Oeste;
 		else dHorizontal = Este;
 	}
-
 	return dHorizontal;
 }
 
 Direccion EntidadDinamica::getDireccion(){
-
 	Direccion dir = Sindireccion;
 	Direccion dVertical = getDireccionVertical();
 	Direccion dHorizontal = getDireccionHorizontal();
@@ -106,12 +109,24 @@ Direccion EntidadDinamica::getDireccion(){
 			  case Oeste: dir = Suroeste;break;
 			  }
 	}
-
 	return dir;
 }
 
-void EntidadDinamica::setDestino(float x,float y){
+int EntidadDinamica::getLineSprite(Direccion dir){
+	switch(dir){
+	case Norte: return 1; break;
+	case Noreste: return 2; break;
+	case Este: return 0; break;
+	case Sureste: return 5; break;
+	case Sur: return 4; break;
+	case Suroeste: return 5; break;
+	case Oeste: return 7; break;
+	case Noroeste: return 3; break;
+	case Sindireccion: return 0; break;
+	}
+}
 
+void EntidadDinamica::setDestino(float x,float y){
 	this->destinoX = x;
 	this->destinoY = y;
 
@@ -127,31 +142,24 @@ void EntidadDinamica::setDestino(float x,float y){
 }
 
 void EntidadDinamica::trasladarse(){
-
 	if(caminando){
-
 		if(posX > destinoX) posX -= velX;
 		if(posX < destinoX) posX += velX;
-
 		if(posY > destinoY) posY -= velY;
 		if(posY < destinoY) posY += velY;
 	}
 
 	if(distanciaEnX(destinoX) <= velX){
-
 		posX = destinoX;
 		caminando = false;
 	}
 
 	if(distanciaEnY(destinoY) <= velY){
-
 		posY = destinoY;
 		caminando = false;
 	}
-
 }
 
 EntidadDinamica::~EntidadDinamica() {
-	// TODO Auto-generated destructor stub
 }
 

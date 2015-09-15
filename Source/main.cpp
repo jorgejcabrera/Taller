@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 		gController->obtenerMouseInput();
 		gController->actualizarJuego();
 		gController->render();
-    	SDL_Delay(200);
+    	SDL_Delay(100);
 	}
 
 	gController->~GameController();

@@ -25,7 +25,7 @@ EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool e
 		this->length = length;
 		edificable = esEdificable;
 		tipo = tipoEntidad;
-		pathImage = DefaultSettings::imagePathByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
+		pathImage = DefaultSettings::imagePathBuildingsByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
 }
 
 EntidadEstatica::~EntidadEstatica() {
