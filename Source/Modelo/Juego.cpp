@@ -33,8 +33,11 @@ string Juego::getCurrentAge(){
 	return this->currentAge;
 }
 
-void Juego::setDestinoProtagonista(int x,int y){
-	protagonista->setDestino(x,y);
+void Juego::setDestinoProtagonista(int x,int y, int screenPosX, int screenPosY){
+	this->protagonista->setPosition(x,y);
+	//no entiendo muy bien el motivo de este método en el modelo, lo que importan son las coordenadas cartesianas
+	//POR FAVOR REVISALO JUAN
+	this->protagonista->setScreenPosition(screenPosX,screenPosY);
 }
 
 void Juego::terminarJuego(){

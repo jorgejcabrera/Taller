@@ -31,32 +31,25 @@ class EntidadDinamica: public EntidadPartida {
 		int velocidad;
 		float velX;
 		float velY;
-
 		bool caminando;
-
-		float posX;
-		float posY;
+		pair<int,int> position;
 		float destinoX;
 		float destinoY;
-
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
 		float distanciaEnY(float y);
-
 		Direccion getDireccionVertical();
 		Direccion getDireccionHorizontal();
 
 	public:
 		EntidadDinamica();
-		EntidadDinamica(int vel,float posX,float posY);
-		virtual ~EntidadDinamica();
-
-		float getX();
-		float getY();
+		EntidadDinamica(int vel,int posX,int posY);
+		pair<int,int>* getPosition();
 		Direccion getDireccion();
-
-		void setDestino(float x, float y);
+		void setPosition(int x,int y);
+		void setScreenPosition(float x, float y);
 		void trasladarse();
+		virtual ~EntidadDinamica();
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */

@@ -88,15 +88,15 @@ void JuegoVista::render(){
 	picassoHelper->clearView();
 	string imagePath = "../Taller/Images/grass_new.png";
 	//actualizarMapa();
-	drawIsometricMap(imagePath);
+	this->drawIsometricMap(imagePath);
 	//drawEntities();
-	this-> renderProtagonista();
-	picassoHelper->renderView();
+	this->renderProtagonista();
+	this->picassoHelper->renderView();
 }
 
 void JuegoVista::renderProtagonista(){
 	string imagePath = "../Taller/Images/ricardo.png";
-	picassoHelper->renderObject(imagePath,this->juego->getProtagonista()->getX(),this->juego->getProtagonista()->getY(),DefaultSettings::getTileSize(),DefaultSettings::getTileSize());
+	picassoHelper->renderObject(imagePath,this->juego->getProtagonista()->getPosition()->first-DefaultSettings::getTileSize() / 2 ,this->juego->getProtagonista()->getPosition()->second-DefaultSettings::getTileSize()/2,DefaultSettings::getTileSize(),DefaultSettings::getTileSize());
 }
 
 JuegoVista::JuegoVista(Juego* juego) {

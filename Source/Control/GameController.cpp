@@ -26,27 +26,17 @@ void GameController::obtenerMouseInput(){
 	while(SDL_PollEvent(event)){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
-
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			juego->setDestinoProtagonista(posMouseX,posMouseY);
-			pair<float,float> result = this->convertToCartesian(posMouseX,posMouseY);
+			//TODO si la posicion está por fuera del mapa, dejar que se mueva hasta el borde.
+			pair<int,int> cartesianPosition = this->convertToCartesian(posMouseX,posMouseX);
+			//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
+			juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
 		}
 
 		if( event->type == SDL_QUIT) this->salirDelJuego = true;
 
 	}
 }
-
-pair<float,float> GameController::convertToCartesian(int xScreen,int yScreen){
-	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
-	float x = ( yScreen * 2 + xScreen - startMapX + DefaultSettings::getTileSize()) / (DefaultSettings::getTileSize() * 2);
-	float y =  yScreen / (DefaultSettings::getTileSize() / 2) - x;
-	pair<float,float> cartesianPosition;
-	cartesianPosition.first = x;
-	cartesianPosition.second = y;
-	return cartesianPosition;
-}
-
 
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
@@ -59,6 +49,18 @@ bool GameController::finDeJuego(){
 void GameController::render(){
 	juegoVista->render();
 }
+
+pair<int,int> GameController::convertToCartesian(int xScreen,int yScreen){
+	//TODO agregar lógica para ver si el chabón se quiere mover por fuera del mapa que lo deje llegar hasta el borde
+	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
+	int x = ( yScreen * 2 + xScreen - startMapX) / (DefaultSettings::getTileSize() * 2);
+	int y = yScreen / (DefaultSettings::getTileSize() / 2) - x;
+	pair<int,int> cartesianPosition;
+	cartesianPosition.first = x;
+	cartesianPosition.second = y;
+	return cartesianPosition;
+}
+
 
 GameController::~GameController() {
 
