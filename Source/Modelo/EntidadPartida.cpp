@@ -14,7 +14,7 @@ EntidadPartida::EntidadPartida() {
 
 }
 
-void EntidadPartida::push(int x,int y){
+void EntidadPartida::setPosition(int x,int y){
 	this->position.first = x;
 	this->position.second = y;
 }

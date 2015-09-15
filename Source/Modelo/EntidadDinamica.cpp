@@ -23,20 +23,20 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->destinoY = y;
 
 	this->velocidad = vel;
-	this->velX = 0;
-	this->velY = 0;
+	this->vecVelocity.first = 40;
+	this->vecVelocity.second = 40;
 
 }
 
 pair<float,float>* EntidadDinamica::getPosition(){
-	return &this->position;
+	return &this->screenPosition;
 }
 
 float EntidadDinamica::distanciaEnX(float x){
 
 	float res;
-	if(position.first > x) res = position.first - x;
-	else res = x - position.first;
+	if(screenPosition.first > x) res = screenPosition.first - x;
+	else res = x - screenPosition.first;
 
 	return res;
 }
@@ -44,16 +44,16 @@ float EntidadDinamica::distanciaEnX(float x){
 float EntidadDinamica::distanciaEnY(float y){
 
 	float res;
-	if(position.second > y) res = position.second - y;
-	else res = y - position.second;
+	if(screenPosition.second > y) res = screenPosition.second - y;
+	else res = y - screenPosition.second;
 
 	return res;
 }
 
 float EntidadDinamica::distanciaA(float x, float y){
 
-	float distY = (position.second - y);
-	float distX = (position.first - x);
+	float distY = (screenPosition.second - y);
+	float distX = (screenPosition.first - x);
 
 	return sqrt((distX * distX) +  (distY * distY));
 }
@@ -64,8 +64,8 @@ Direccion EntidadDinamica::getDireccionVertical(){
 	// equivale a un angulo de 22,5 grados o mas
 
 	Direccion dVertical = Sindireccion;
-	if(caminando && (velY / velocidad > 0.38 )){
-		if(position.second > destinoY) dVertical = Norte;
+	if(caminando && (vecVelocity.second / velocidad > 0.38 )){
+		if(screenPosition.second > destinoY) dVertical = Norte;
 		else dVertical = Sur;
 	}
 
@@ -75,8 +75,8 @@ Direccion EntidadDinamica::getDireccionVertical(){
 Direccion EntidadDinamica::getDireccionHorizontal(){
 
 	Direccion dHorizontal = Sindireccion;
-	if(caminando && (velX / velocidad > 0.38)){
-		if(position.first > destinoX) dHorizontal = Oeste;
+	if(caminando && (vecVelocity.first / velocidad > 0.38)){
+		if(screenPosition.first > destinoX) dHorizontal = Oeste;
 		else dHorizontal = Este;
 	}
 
@@ -106,11 +106,6 @@ Direccion EntidadDinamica::getDireccion(){
 	return dir;
 }
 
-void EntidadDinamica::setPosition(int x,int y){
-	this->position.first = x;
-	this->position.second = y;
-}
-
 void EntidadDinamica::setScreenPosition(float x,float y){
 
 	this->destinoX = x;
@@ -123,30 +118,30 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 	float seno = distanciaEnY(y) / distanciaDest;
 	float coseno = distanciaEnX(x) / distanciaDest;
 
-	this->velX = velocidad * coseno;
-	this->velY = velocidad * seno;
+	this->vecVelocity.first = velocidad * coseno;
+	this->vecVelocity.second = velocidad * seno;
 }
 
 void EntidadDinamica::trasladarse(){
 
 	if(caminando){
 
-		if(position.first > destinoX) position.first -= velX;
-		if(position.first < destinoX) position.first += velX;
+		if(screenPosition.first > destinoX) screenPosition.first -= vecVelocity.first;
+		if(screenPosition.first < destinoX) screenPosition.first += vecVelocity.first;
 
-		if(position.second > destinoY) position.second -= velY;
-		if(position.second < destinoY) position.second += velY;
+		if(screenPosition.second > destinoY) screenPosition.second -= vecVelocity.second;
+		if(screenPosition.second < destinoY) screenPosition.second += vecVelocity.second;
 	}
 
-	if(distanciaEnX(destinoX) <= velX){
+	if(distanciaEnX(destinoX) <= vecVelocity.first){
 
-		position.first = destinoX;
+		screenPosition.first = destinoX;
 		caminando = false;
 	}
 
-	if(distanciaEnY(destinoY) <= velY){
+	if(distanciaEnY(destinoY) <= vecVelocity.second){
 
-		position.second = destinoY;
+		screenPosition.second = destinoY;
 		caminando = false;
 	}
 

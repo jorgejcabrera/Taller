@@ -29,10 +29,9 @@ class EntidadDinamica: public EntidadPartida {
 	private:
 
 		int velocidad;
-		float velX;
-		float velY;
 		bool caminando;
-		pair<float,float> position;
+		pair<float,float> vecVelocity;
+		pair<float,float> screenPosition;
 		float destinoX;
 		float destinoY;
 		float distanciaA(float x, float y);
@@ -46,7 +45,6 @@ class EntidadDinamica: public EntidadPartida {
 		EntidadDinamica(int vel,int posX,int posY);
 		pair<float,float>* getPosition();
 		Direccion getDireccion();
-		void setPosition(int x,int y);
 		void setScreenPosition(float x, float y);
 		void trasladarse();
 		virtual ~EntidadDinamica();
