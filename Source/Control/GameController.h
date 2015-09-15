@@ -25,6 +25,7 @@ private:
 	bool salirDelJuego;
 	pair<int,int> convertToCartesian(int xScreen,int yScreen);
 
+
 public:
 	GameController();
 	void actualizarJuego();
