@@ -13,15 +13,6 @@ descargamos SDL2-2.0.3
 make
 sudo make install
 ```
-
-También se van a usar algunas librerías auxiliares de SDL, como [**SDL_image**](https://www.libsdl.org/projects/SDL_image/). Los pasos para la instalación son los mismos que se describieron arriba.
-
-Luego necesitamos importar las librería en el IDE
-```
-Eclipse
-	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image 
-```
-
 La configuración de cada mapa correspondiente a la partida se encuentra en un arhcivo [**YAML**](http://yaml.org/). Para el manejo de este tipo de archivos usamos [**libyaml**](http://pyyaml.org/wiki/LibYAML). La librería se puede descargar de [**aquí**](http://pyyaml.org/download/libyaml/). Una vez descompimido:
 ```
 Ubuntu/Debian/MacOs
@@ -29,6 +20,16 @@ Ubuntu/Debian/MacOs
 make
 sudo make install
 ```
+
+También se van a usar algunas librerías auxiliares de SDL, como [**SDL_image**](https://www.libsdl.org/projects/SDL_image/). Los pasos para la instalación son los mismos que se describieron arriba.
+
+Luego necesitamos importar las librería en el IDE
+```
+Eclipse
+	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / yaml
+```
+
+
 
 Si al correr el programa, aparece el error: "error while loading shared libraries:
 libSDL2_image-2.0.so.0: cannot open shared object file: No such file or directory", en eclipse ir a:
