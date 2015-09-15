@@ -42,7 +42,7 @@ class EntidadDinamica: public EntidadPartida {
 
 	public:
 		EntidadDinamica();
-		EntidadDinamica(int vel,int posX,int posY);
+		EntidadDinamica(int vel,int posX,int posY,float screenX,float screenY);
 		pair<float,float>* getPosition();
 		Direccion getDireccion();
 		void setScreenPosition(float x, float y);

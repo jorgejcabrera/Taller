@@ -11,9 +11,12 @@ EntidadDinamica::EntidadDinamica(){
 	//esto no sirve, hay que borrarlo
 }
 
-EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
+EntidadDinamica::EntidadDinamica(int vel,int x,int y,float screenX,float screenY) {
 
 	this->caminando = false;
+
+	this->screenPosition.first = screenX;
+	this->screenPosition.second = screenY;
 
 	//son las coordenadas cartesianas de donde se va a posicionar el chabon
 	this->position.first = x;
@@ -125,6 +128,18 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 
 void EntidadDinamica::trasladarse(){
 
+	if(distanciaEnX(destinoX) <= vecVelocity.first){
+
+			screenPosition.first = destinoX;
+			caminando = false;
+		}
+
+	if(distanciaEnY(destinoY) <= vecVelocity.second){
+
+			screenPosition.second = destinoY;
+			caminando = false;
+		}
+
 	if(caminando){
 
 		if(screenPosition.first > destinoX) screenPosition.first -= vecVelocity.first;
@@ -134,17 +149,7 @@ void EntidadDinamica::trasladarse(){
 		if(screenPosition.second < destinoY) screenPosition.second += vecVelocity.second;
 	}
 
-	if(distanciaEnX(destinoX) <= vecVelocity.first){
 
-		screenPosition.first = destinoX;
-		caminando = false;
-	}
-
-	if(distanciaEnY(destinoY) <= vecVelocity.second){
-
-		screenPosition.second = destinoY;
-		caminando = false;
-	}
 
 }
 
