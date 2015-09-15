@@ -30,7 +30,6 @@ void GameController::obtenerMouseInput(){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			juego->setDestinoProtagonista(posMouseX,posMouseY);
 			pair<float,float> result = this->convertToCartesian(posMouseX,posMouseY);
-			cout <<"La posicion cartesiana es: " <<result.first << ","<< result.second<<endl;
 		}
 
 		if( event->type == SDL_QUIT) this->salirDelJuego = true;
@@ -39,7 +38,6 @@ void GameController::obtenerMouseInput(){
 }
 
 pair<float,float> GameController::convertToCartesian(int xScreen,int yScreen){
-	cout<< "ScreenCoord: "<< xScreen<<","<< yScreen << endl;
 	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
 	float x = ( yScreen * 2 + xScreen - startMapX + DefaultSettings::getTileSize()) / (DefaultSettings::getTileSize() * 2);
 	float y =  yScreen / (DefaultSettings::getTileSize() / 2) - x;
@@ -55,7 +53,6 @@ void GameController::actualizarJuego(){
 }
 
 bool GameController::finDeJuego(){
-	//std::cout<<"loop"<<std::endl;
 	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
 }
 

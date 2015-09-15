@@ -25,24 +25,16 @@
 		int posicionY = 0;
 
 		SDL_GetMouseState(&posicionX, &posicionY);
-		cout << "posicion del mouse: (" << posicionX << ", " << posicionY << ") "
-				<< endl;
-		cout << "offSet X: (" << offSetX << ") " << endl;
-		cout << "offSet Y: (" << offSetY << ") " << endl;
 
 		if (posicionX >= DefaultSettings::getMargenDerechoUno()
 				&& posicionX < DefaultSettings::getMargenDerechoDos()
 				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
 			offSetX -= DefaultSettings::getVelocidadScrollUno();
-			cout << "### scrolllllllllll velocidad uno: (" << posicionX << ", "
-					<< posicionX << ") " << endl;
 		}
 
 		if (posicionX >= DefaultSettings::getMargenDerechoDos()
 				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
 			offSetX -= 1 * DefaultSettings::getVelocidadScrollDos();
-			cout << "### scrolllllllllll velocidad dos: (" << posicionX << ", "
-					<< posicionX << ") " << endl;
 		}
 
 		if ((posicionX >= DefaultSettings::getMargenIzquierdoUno())
@@ -111,11 +103,6 @@ JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	this->offSetX = 0;
 	this->offSetY = 0;
-	/*this->pheight = 50;
-	this->pwidth = 50;
-	this->offh = pheight;
-	this->offw = (pwidth / 2);*/
-
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
 

@@ -9,7 +9,6 @@
 PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper(Juego* juego) {
-	this->juego = juego;
 	this->window = NULL;
 }
 
