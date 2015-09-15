@@ -15,24 +15,31 @@
 #include "Vista/JuegoVista.h"
 #include "Modelo/EntidadEstatica.h"
 #include "Modelo/Mapa.h"
+#include "Control/GameController.h"
 #include <yaml.h>
+#include "SDL2/SDL.h"
 #include "Modelo/Parser.h"
+
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
-	Juego* newGame = new Juego();
-	JuegoVista* juego = new JuegoVista(newGame);	Parser* p = new Parser();
-	p->Parsear();
 
-	int count = 0;
-	while(true){
-		if(count == 10)
-			break;
-		count++;
-    	SDL_Delay(500);
+int main(int argc, char* argv[]) {
+
+	//Parser* p = new Parser();
+	//p->Parsear();
+	GameController* gController = new GameController();
+
+	while(! gController->finDeJuego() ){
+		gController->obtenerMouseInput();
+		gController->actualizarJuego();
+		gController->render();
+    	SDL_Delay(100);
 	}
-	juego->~JuegoVista();
+
+	gController->~GameController();
+
+	std::cout<<"fin";
 	return 0;
 }
 

@@ -33,7 +33,7 @@ Mapa::Mapa() {
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
-	pair<int,int>* position = entidad->getPosition();
+	//pair<int,int>* position = entidad->getPosition();
 	if(!this->positionAvailable(entidad)){
 		cout << "no se puede colocar la entidad, en este tile"<<endl;
 		return;

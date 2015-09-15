@@ -9,7 +9,7 @@
 PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper(Juego* juego) {
-	this->juego = juego;
+	this->window = NULL;
 }
 
 void PicassoHelper::createContext(){
@@ -39,6 +39,17 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 		renderTexture(textureExists,x,y,w,h);
 }
 
+void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject){
+		SDL_Texture* textureExists;
+		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+		if(it != mapByImagePath.end()){
+			textureExists = it->second;
+		}else{
+			textureExists = loadTexture(file);
+		}
+		renderTexture(textureExists,x,y,w,h,rectObject);
+}
+
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	string fileImage = file.c_str();
 	if(!(isFileExist(fileImage)))
@@ -60,7 +71,16 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 	dst.w = w;
 	dst.h = h;
 	SDL_RenderCopy(renderer, tex, NULL, &dst);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+}
+
+void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject){
+	//Setup the destination rectangle to be at the position we want
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y = y;
+	dst.w = w;
+	dst.h = h;
+	SDL_RenderCopy(renderer, tex, &rectObject, &dst);
 }
 
 PicassoHelper::~PicassoHelper() {
@@ -83,6 +103,11 @@ void PicassoHelper::exitError(const string &message) {
 
 void PicassoHelper::renderView(){
 	SDL_RenderPresent(renderer);
+}
+
+void PicassoHelper::clearView(){
+	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(renderer,0,0,0,1);
 }
 
 PicassoHelper* PicassoHelper::GetInstance(Juego* juego) {

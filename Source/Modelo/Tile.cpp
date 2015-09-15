@@ -13,6 +13,8 @@ Tile::Tile(int x, int y ) {
 	this->position.first = x;
 	this->position.second = y;
 	this->available = true;
+	this->superficie = grass;
+	this->pathImage = DefaultSettings::imagePathTilesByType("grass");
 }
 
 void Tile::changeStatusAvailable(){
@@ -25,6 +27,8 @@ bool Tile::isAvailable(){
 
 void Tile::pushSurface(surface_type surface){
 	this->superficie = surface;
+	//modificar el path de la imagen
+	//this->pathImage = DefaultSettings::imagePathTilesByType("grass");
 }
 
 int Tile::getSurfaceSpeed(){
@@ -48,6 +52,14 @@ void Tile::show(){
 }
 
 Tile::~Tile() {
-	// TODO Auto-generated destructor stub
 }
+
+string Tile::getPathImage(){
+	return pathImage;
+}
+
+void Tile::setPathImage(string path){
+	this->pathImage = path;
+}
+
 

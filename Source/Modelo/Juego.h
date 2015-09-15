@@ -18,10 +18,10 @@ using namespace std ;
 
 class Juego {
 private:
-	Mapa* mapa = NULL;
+	Mapa* mapa;
 	string currentAge;
-	EntidadDinamica personajeSeleccionado;
-	bool juegoFinalizado = false;
+	EntidadDinamica* protagonista;
+	bool juegoFinalizado;
 public:
 	Juego();
 	virtual ~Juego();
@@ -30,7 +30,10 @@ public:
 	void comenzarPartida();
 	void terminarJuego();
 	string getCurrentAge();
+	void setDestinoProtagonista(int x,int y);
+	void actualizarProtagonista();
 	bool getStatusPartida();
+	EntidadDinamica* getProtagonista();
 };
 
 #endif /* SOURCE_MODELO_JUEGO_H_ */

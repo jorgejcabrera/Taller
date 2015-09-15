@@ -11,6 +11,8 @@
 #include <string>
 #include <iostream>
 #include "EntidadPartida.h"
+#include "DefaultSettings.h"
+
 using namespace std;
 
 //indica el porcentaje de la velocidad con la que se mueve el personaje
@@ -21,10 +23,14 @@ enum surface_type{
 	sand = 20
 };
 
+
 class Tile {
 	bool available;
 	pair<int,int> position;
-	surface_type superficie = grass;	//por default la superficie es pasto
+	surface_type superficie;	//por default la superficie es pasto
+	string pathImage;
+	void setPathImage(string path);
+
 public:
 	Tile(int x,int y);
 	void show();
@@ -36,6 +42,7 @@ public:
 	void pushSurface(surface_type surface);
 	int getSurfaceSpeed();
 	virtual ~Tile();
+	string getPathImage();
 };
 
 #endif /* SOURCE_MODELO_TILE_H_ */
