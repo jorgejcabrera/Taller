@@ -32,7 +32,7 @@ class EntidadDinamica: public EntidadPartida {
 		float velX;
 		float velY;
 		bool caminando;
-		pair<int,int> position;
+		pair<float,float> position;
 		float destinoX;
 		float destinoY;
 		float distanciaA(float x, float y);
@@ -44,7 +44,7 @@ class EntidadDinamica: public EntidadPartida {
 	public:
 		EntidadDinamica();
 		EntidadDinamica(int vel,int posX,int posY);
-		pair<int,int>* getPosition();
+		pair<float,float>* getPosition();
 		Direccion getDireccion();
 		void setPosition(int x,int y);
 		void setScreenPosition(float x, float y);

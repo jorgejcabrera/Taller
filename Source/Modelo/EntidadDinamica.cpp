@@ -28,7 +28,7 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 
 }
 
-pair<int,int>* EntidadDinamica::getPosition(){
+pair<float,float>* EntidadDinamica::getPosition(){
 	return &this->position;
 }
 
