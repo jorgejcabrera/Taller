@@ -19,7 +19,6 @@
 
 class PicassoHelper {
 private:
-	Juego* juego;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	PicassoHelper(Juego* juego);
