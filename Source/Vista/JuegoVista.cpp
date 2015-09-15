@@ -96,7 +96,7 @@ void JuegoVista::render(){
 
 void JuegoVista::renderProtagonista(){
 	string imagePath = "../Taller/Images/ricardo.png";
-	picassoHelper->renderObject(imagePath, this->juego->getProtagonista()->getPosition()->first-DefaultSettings::getTileSize()/2, this->juego->getProtagonista()->getPosition()->second-DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
+	picassoHelper->renderObject(imagePath, this->juego->getProtagonista()->getScreenPosition()->first-DefaultSettings::getTileSize()/2, this->juego->getProtagonista()->getScreenPosition()->second-DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
 }
 
 JuegoVista::JuegoVista(Juego* juego) {

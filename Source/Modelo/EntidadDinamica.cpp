@@ -11,12 +11,9 @@ EntidadDinamica::EntidadDinamica(){
 	//esto no sirve, hay que borrarlo
 }
 
-EntidadDinamica::EntidadDinamica(int vel,int x,int y,float screenX,float screenY) {
+EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 
 	this->caminando = false;
-
-	this->screenPosition.first = screenX;
-	this->screenPosition.second = screenY;
 
 	//son las coordenadas cartesianas de donde se va a posicionar el chabon
 	this->position.first = x;
@@ -32,8 +29,12 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y,float screenX,float screenY
 
 }
 
-pair<float,float>* EntidadDinamica::getPosition(){
+pair<float,float>* EntidadDinamica::getScreenPosition(){
 	return &this->screenPosition;
+}
+
+pair<int,int>* EntidadDinamica::getPosition(){
+	return &this->position;
 }
 
 float EntidadDinamica::distanciaEnX(float x){

@@ -42,8 +42,9 @@ class EntidadDinamica: public EntidadPartida {
 
 	public:
 		EntidadDinamica();
-		EntidadDinamica(int vel,int posX,int posY,float screenX,float screenY);
-		pair<float,float>* getPosition();
+		EntidadDinamica(int vel,int posX,int posY);
+		pair<float,float>* getScreenPosition();
+		pair<int,int>* getPosition();
 		Direccion getDireccion();
 		void setScreenPosition(float x, float y);
 		void trasladarse();

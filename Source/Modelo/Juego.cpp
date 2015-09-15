@@ -14,11 +14,20 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica(12,10,4,350,300);
+
 }
 
 Mapa* Juego::getMap(){
 	return this->mapa;
+}
+
+void Juego::setProtagonistaAt(int velocidad,int x,int y){
+
+	cout<<"cartesianas: "<<x<<","<<y<<endl;
+	this->protagonista = new EntidadDinamica(velocidad,x,y);
+	pair<int,int> isometricas = getIsometricPosition(protagonista);
+	cout<<"isometricas: "<<isometricas.first<<","<<isometricas.second<<endl;
+	this->protagonista->setScreenPosition(isometricas.first,isometricas.second);
 }
 
 EntidadDinamica* Juego::getProtagonista(){
@@ -44,6 +53,18 @@ void Juego::terminarJuego(){
 }
 bool Juego::getStatusPartida(){
 	return this->juegoFinalizado;
+}
+
+pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
+	pair<int,int> isometricPosition;
+	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
+	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
+	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
+
+	//ahora hay que centrar la entidad con el tile
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  DefaultSettings::getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  DefaultSettings::getTileSize() / 2;
+	return isometricPosition;
 }
 
 Juego::~Juego() {
