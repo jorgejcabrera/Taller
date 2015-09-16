@@ -39,11 +39,13 @@ private:
 	void load();
 
 public:
+
 	static Loader* GetInstance();
 	int getScreenWidth();
 	int getScreenHeight();
-	int getTileSize();
 	int getMargenScroll();
+	int getVelPersonaje();
+	int getTileSize();
 	string getNombreEscenario();
 	int getMapWidth();
 	int getMapHeight();

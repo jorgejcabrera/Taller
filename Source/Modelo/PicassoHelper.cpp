@@ -19,6 +19,7 @@ void PicassoHelper::createContext(){
 	    }
 
 	    //cargamos la conf. del archivo yaml
+
 	    loader = Loader::GetInstance();
 
 	    // creamos la ventana

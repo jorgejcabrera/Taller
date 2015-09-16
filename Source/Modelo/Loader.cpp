@@ -24,7 +24,7 @@ void Loader::load() {
 	FILE *fh = fopen("mapConfig.yml", "r");
 	yaml_parser_t parser;
 	yaml_event_t  event;   /* New variable */
-	string map,key;
+	string map,key,scalarValue;
 	int value;
 	config c;
 	  /* Initialize parser */
@@ -35,8 +35,6 @@ void Loader::load() {
 
 	  /* Set input file */
 	  yaml_parser_set_input_file(&parser, fh);
-
-
 
 	  /* START new code */
 	  do {
@@ -60,8 +58,7 @@ void Loader::load() {
 	    case YAML_MAPPING_START_EVENT:
 	    {
 	    	puts("<b>Start Mapping</b>");
-	    	map=key;
-	    	key="";
+	    	map=scalarValue;
 	    	break;
 	    }
 	    case YAML_MAPPING_END_EVENT:    puts("<b>End Mapping</b>");    break;
@@ -69,7 +66,7 @@ void Loader::load() {
 	    case YAML_ALIAS_EVENT:  printf("Got alias (anchor %s)\n", event.data.alias.anchor); break;
 	    case YAML_SCALAR_EVENT:
 	    {
-	    	key = string(reinterpret_cast<char*>(event.data.scalar.value));
+	    	scalarValue = string(reinterpret_cast<char*>(event.data.scalar.value));
 
 	    	if (map == "pantalla") c=pantalla;
 	    	if (map == "configuracion") c=configuracion;
@@ -81,9 +78,9 @@ void Loader::load() {
 
 	    	case pantalla:
 	    	{
-	    		if ( key =="") key = string(reinterpret_cast<char*>(event.data.scalar.value));
+	    		if ( key =="") key = scalarValue;
 	    		else {
-	    			value = atoi(reinterpret_cast<char*>(event.data.scalar.value));
+	    			value = atoi(scalarValue.c_str());
 	    			screen->insert(pair<string,int>(key,value));
 	    			//cout << "key: " << key << " value: "<< value << endl;
 	    			key = "";
@@ -93,9 +90,9 @@ void Loader::load() {
 
 	    	case configuracion:
 	    	{
-	    		if ( key =="") key = string(reinterpret_cast<char*>(event.data.scalar.value));
+	    		if ( key =="") key = scalarValue;
 	    		else {
-	    			value = atoi(reinterpret_cast<char*>(event.data.scalar.value));
+	    			value = atoi(scalarValue.c_str());
 	    			conf->insert(pair<string,int>(key,value));
 	    			key = "";
 	    		}
@@ -112,16 +109,7 @@ void Loader::load() {
 	    		break;
 	    	}
 
-
 	    	}
-		/*	if (map == "pantalla"){
-					if ( key =="") key = string(reinterpret_cast<char*>(event.data.scalar.value));
-					else {
-						value = atoi(reinterpret_cast<char*>(event.data.scalar.value));
-						screen->insert(pair<string,int>(key,value));
-						key = "";
-					}
-				}*/
 	    	break;
 	    }
 
@@ -153,6 +141,7 @@ Loader* Loader::GetInstance() {
 	}
 	return instance;
 }
+
 
 Loader::~Loader() {
 	//Loader* Loader::instance = NULL;
