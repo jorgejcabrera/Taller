@@ -22,14 +22,6 @@ Mapa* Juego::getMap(){
 	return this->mapa;
 }
 
-void Juego::setProtagonistaAt(int velocidad,int x,int y){
-
-	cout<<"cartesianas: "<<x<<","<<y<<endl;
-	pair<int,int> isometricas = getIsometricPosition(protagonista);
-	cout<<"isometricas: "<<isometricas.first<<","<<isometricas.second<<endl;
-	this->protagonista->setScreenPosition(isometricas.first,isometricas.second);
-}
-
 EntidadDinamica* Juego::getProtagonista(){
 	return this->protagonista;
 }

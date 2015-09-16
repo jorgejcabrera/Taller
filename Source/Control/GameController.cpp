@@ -12,7 +12,6 @@ GameController::GameController(){
 	this->salirDelJuego = false;
 
 	this->juego = new Juego();
-	this->juego->setProtagonistaAt(12,4,5);
 	this->juegoVista = new JuegoVista(juego);
 
 	this->event = new SDL_Event();
