@@ -30,6 +30,7 @@ void GameController::obtenerMouseInput(){
 			pair<int,int> cartesianPosition = this->convertToCartesian(posMouseX,posMouseX);
 			//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 			juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+			juegoVista->protagonistaYaSeMovio();
 		}
 
 		if( event->type == SDL_QUIT) this->salirDelJuego = true;

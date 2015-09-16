@@ -48,6 +48,12 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(){
 	return srcrect;
 }
 
+void EntidadDinamica::setInitialScreenPosition(float x,float y){
+	// no borrar por favor
+	this->screenPosition.first = x;
+	this->screenPosition.second = y;
+}
+
 pair<float,float>* EntidadDinamica::getScreenPosition(){
 	return &this->screenPosition;
 }

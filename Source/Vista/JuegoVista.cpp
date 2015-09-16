@@ -94,16 +94,23 @@ void JuegoVista::render(){
 }
 
 void JuegoVista::renderProtagonista(){
-	pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(this->juego->getProtagonista());
-	cout<<"la posicion es: "<< isometricPosition.first<< " " << isometricPosition.second<<endl;
-	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), isometricPosition.first + DefaultSettings::getTileSize()/2, isometricPosition.second, DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
+	if(! protagonistaSeMovio){
+		pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(this->juego->getProtagonista());
+		cout<<"la posicion es: "<< isometricPosition.first<< " " << isometricPosition.second<<endl;
+		picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), isometricPosition.first + DefaultSettings::getTileSize()/2, isometricPosition.second, DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
+	}
+	else picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), juego->getProtagonista()->getScreenPosition()->first - DefaultSettings::getTileSize()/2, juego->getProtagonista()->getScreenPosition()->second, DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
 }
 
+void JuegoVista::protagonistaYaSeMovio(){
+	this->protagonistaSeMovio = true;
+}
 
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	this->offSetX = 0;
 	this->offSetY = 0;
+	this->protagonistaSeMovio = false;
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
 
