@@ -37,11 +37,12 @@ private:
 
 public:
 	Loader();
-	void Load();
+	void Load(char*	 file);
 	int getScreenWidth();
 	int getScreenHeight();
-	int getTileSize();
 	int getMargenScroll();
+	int getVelPersonaje();
+	int getTileSize();
 	string getNombreEscenario();
 	int getMapWidth();
 	int getMapHeight();
