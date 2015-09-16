@@ -27,7 +27,7 @@ void GameController::obtenerMouseInput(){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			//TODO si la posicion está por fuera del mapa, dejar que se mueva hasta el borde.
-			pair<int,int> cartesianPosition = this->convertToCartesian(posMouseX,posMouseX);
+			pair<int,int> cartesianPosition = this->convertToCartesian(posMouseX,posMouseY);
 			//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 			juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
 			juegoVista->protagonistaYaSeMovio();
@@ -55,6 +55,7 @@ pair<int,int> GameController::convertToCartesian(int xScreen,int yScreen){
 	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
 	int x = ( yScreen * 2 + xScreen - startMapX) / (DefaultSettings::getTileSize() * 2);
 	int y = yScreen / (DefaultSettings::getTileSize() / 2) - x;
+	cout << "xC: "<< x<<",yC: "<<y<<endl;
 	pair<int,int> cartesianPosition;
 	cartesianPosition.first = x;
 	cartesianPosition.second = y;
