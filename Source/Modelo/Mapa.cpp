@@ -22,13 +22,13 @@ Mapa::Mapa() {
 
 	//TODO sacar esto. Creamos un par de entidades para probar
     EntidadEstatica* torre = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Church",true);
-    torre->push(0,0);
+    torre->setPosition(0,0);
     this->pushEntity(torre);
 	EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Consulate",true);
-    castillo->push(9,2);
+    castillo->setPosition(9,2);
     this->pushEntity(castillo);
     EntidadEstatica* edificio = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Town_Hall",true);
-    edificio->push(2,10);
+    edificio->setPosition(2,10);
     this->pushEntity(edificio);
 }
 

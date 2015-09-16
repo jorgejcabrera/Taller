@@ -23,6 +23,7 @@ private:
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
+	pair<int,int> convertToCartesian(int xScreen,int yScreen);
 
 
 public:
@@ -31,7 +32,6 @@ public:
 	void render();
 	void obtenerMouseInput();
 	bool finDeJuego();
-	pair<float,float> convertToCartesian(int xScreen,int yScreen);
 	virtual ~GameController();
 };
 

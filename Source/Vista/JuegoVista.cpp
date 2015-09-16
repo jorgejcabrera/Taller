@@ -26,47 +26,35 @@
 
 		SDL_GetMouseState(&posicionX, &posicionY);
 
-		if (posicionX >= DefaultSettings::getMargenDerechoUno()
-				&& posicionX < DefaultSettings::getMargenDerechoDos()
-				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
+		if (posicionX >= DefaultSettings::getMargenDerechoUno() && posicionX < DefaultSettings::getMargenDerechoDos() /*&& !(offSetX < DefaultSettings::getLimiteDerecho())*/) {
 			offSetX -= DefaultSettings::getVelocidadScrollUno();
 		}
 
-		if (posicionX >= DefaultSettings::getMargenDerechoDos()
-				&& !(offSetX < DefaultSettings::getLimiteDerecho())) {
+		if (posicionX >= DefaultSettings::getMargenDerechoDos() /*&& !(offSetX < DefaultSettings::getLimiteDerecho())*/) {
 			offSetX -= 1 * DefaultSettings::getVelocidadScrollDos();
 		}
 
-		if ((posicionX >= DefaultSettings::getMargenIzquierdoUno())
-				&& (posicionX < DefaultSettings::getMargenIzquierdoDos())
-				&& !(offSetX > DefaultSettings::getLimiteIzquierdo())) {
+		if ((posicionX >= DefaultSettings::getMargenIzquierdoUno()) && (posicionX < DefaultSettings::getMargenIzquierdoDos()) /*&& !(offSetX > DefaultSettings::getLimiteIzquierdo())*/) {
 			offSetX += DefaultSettings::getVelocidadScrollUno();
 		}
 
-		if (posicionX <= DefaultSettings::getMargenIzquierdoDos()
-				&& !(offSetX > DefaultSettings::getLimiteIzquierdo())) {
+		if (posicionX <= DefaultSettings::getMargenIzquierdoDos() /*&& !(offSetX > DefaultSettings::getLimiteIzquierdo())*/) {
 			offSetX += DefaultSettings::getVelocidadScrollDos();
 		}
 
-		if ((posicionY <= DefaultSettings::getMargenSuperiorUno())
-				&& (posicionY > DefaultSettings::getMargenSuperiorDos())
-				&& !((offSetY > DefaultSettings::getLimiteSuperior()))) {
+		if ((posicionY <= DefaultSettings::getMargenSuperiorUno()) && (posicionY > DefaultSettings::getMargenSuperiorDos()) /*&& !((offSetY > DefaultSettings::getLimiteSuperior()))*/) {
 			offSetY += DefaultSettings::getVelocidadScrollUno();
 		}
 
-		if (posicionY <= DefaultSettings::getMargenSuperiorDos()
-				&& !((offSetY > DefaultSettings::getLimiteSuperior()))) {
+		if (posicionY <= DefaultSettings::getMargenSuperiorDos() /*&& !((offSetY > DefaultSettings::getLimiteSuperior()))*/) {
 			offSetY += DefaultSettings::getVelocidadScrollDos();
 		}
 
-		if (posicionY >= DefaultSettings::getMargenInferiorUno()
-				&& (posicionY < DefaultSettings::getMargenInferiorDos())
-				&& !((offSetY < DefaultSettings::getLimiteInferior()))) {
+		if (posicionY >= DefaultSettings::getMargenInferiorUno() && (posicionY < DefaultSettings::getMargenInferiorDos()) /*&& !((offSetY < DefaultSettings::getLimiteInferior()))*/) {
 			offSetY -= DefaultSettings::getVelocidadScrollUno();
 		}
 
-		if ((posicionY >= DefaultSettings::getMargenInferiorDos())
-				&& !((offSetY < DefaultSettings::getLimiteInferior()))) {
+		if ((posicionY >= DefaultSettings::getMargenInferiorDos()) /*&& !((offSetY < DefaultSettings::getLimiteInferior()))*/) {
 			offSetY -= DefaultSettings::getVelocidadScrollDos();
 		}
 
@@ -88,22 +76,32 @@ void JuegoVista::render(){
 	picassoHelper->clearView();
 	actualizarMapa();
 	this->drawIsometricMap();
-	drawEntities();
 	this->renderProtagonista();
-	picassoHelper->renderView();
+	drawEntities();
+	this->picassoHelper->renderView();
 }
 
 void JuegoVista::renderProtagonista(){
-	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(),this->juego->getProtagonista()->getX(),this->juego->getProtagonista()->getY(),DefaultSettings::getTileSize(),DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
+	if(!protagonistaSeMovio){
+		pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(this->juego->getProtagonista());
+		picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), isometricPosition.first + DefaultSettings::getTileSize()/2, isometricPosition.second - 25, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
+	}else{
+		pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
+		picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - DefaultSettings::getTileSize()/2, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 , DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
+	}
+}
+
+void JuegoVista::protagonistaYaSeMovio(){
+	this->protagonistaSeMovio = true;
 }
 
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	this->offSetX = 0;
 	this->offSetY = 0;
+	this->protagonistaSeMovio = false;
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
-
 }
 
 JuegoVista::~JuegoVista() {

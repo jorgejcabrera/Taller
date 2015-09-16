@@ -11,22 +11,30 @@ EntidadDinamica::EntidadDinamica(){
 	//esto no sirve, hay que borrarlo
 }
 
-EntidadDinamica::EntidadDinamica(int vel,float x,float y) {
+EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
+
 	this->caminando = false;
-	this->posX = x;
-	this->posY = y;
+	//son las coordenadas cartesianas de donde se va a posicionar el chabon
+	this->position.first = x;
+	this->position.first = x = y;
 	this->velocidad = vel;
 	this->width = 50;
 	this->length = 50;
 }
 
-EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float w, float l, int fps){
+EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
 	this->caminando = false;
-	this->posX = x;
-	this->posY = y;
+	this->position.first = x;
+	this->position.second = y;
 	this->velocidad = vel;
-	this->width = w;
-	this->length = l;
+	this->vecVelocity.first = 0;
+	this->vecVelocity.second = 0;
+
+	//el ancho y el largo es siempre el del tamaño del tile
+	this->width = 1;
+	this->length = 1;
+	this->widthPixel = widthPixel;
+	this->lengthPixel = lengthPixels;
 	this->framesPerSecond = fps;
 	this->setPathImage(DefaultSettings::imagePathPersonajesByType(typeDinamicEntity));
 }
@@ -38,35 +46,49 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(){
 		sprite = (ticks / 100) % this->framesPerSecond;
 	}
 	int lineaSprite = this->getLineSprite(this->getDireccion());
-	SDL_Rect srcrect = { sprite * this->width, this->length*lineaSprite, this->width, this->length };
+	SDL_Rect srcrect = { sprite * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
 	return srcrect;
 }
 
-float EntidadDinamica::getX(){
-	return this->posX;
+void EntidadDinamica::setInitialScreenPosition(float x,float y){
+	// no borrar por favor
+	this->screenPosition.first = x;
+	this->screenPosition.second = y;
 }
 
-float EntidadDinamica::getY(){
-	return this->posY;
+pair<float,float>* EntidadDinamica::getScreenPosition(){
+	return &this->screenPosition;
+}
+
+pair<int,int>* EntidadDinamica::getPosition(){
+	return &this->position;
 }
 
 float EntidadDinamica::distanciaEnX(float x){
 	float res;
-	if(posX > x) res = posX - x;
-	else res = x - posX;
+	if(screenPosition.first > x) res = screenPosition.first - x;
+	else res = x - screenPosition.first;
 	return res;
+}
+
+int EntidadDinamica::getWidthPixel(){
+	return this->widthPixel;
+}
+
+int EntidadDinamica::getLengthPixel(){
+	return this->lengthPixel;
 }
 
 float EntidadDinamica::distanciaEnY(float y){
 	float res;
-	if(posY > y) res = posY - y;
-	else res = y - posY;
+	if(screenPosition.second > y) res = screenPosition.second - y;
+	else res = y - screenPosition.second;
 	return res;
 }
 
 float EntidadDinamica::distanciaA(float x, float y){
-	float distY = (posY - y);
-	float distX = (posX - x);
+	float distY = (screenPosition.second - y);
+	float distX = (screenPosition.first - x);
 	return sqrt((distX * distX) +  (distY * distY));
 }
 
@@ -75,8 +97,8 @@ Direccion EntidadDinamica::getDireccionVertical(){
 	// equivale a un angulo de 22,5 grados o mas
 
 	Direccion dVertical = Sindireccion;
-	if(caminando && (velY / velocidad > 0.38 )){
-		if(posY > destinoY) dVertical = Norte;
+	if(caminando && (vecVelocity.second / velocidad > 0.38 )){
+		if(screenPosition.second > destinoY) dVertical = Norte;
 		else dVertical = Sur;
 	}
 	return dVertical;
@@ -84,8 +106,8 @@ Direccion EntidadDinamica::getDireccionVertical(){
 
 Direccion EntidadDinamica::getDireccionHorizontal(){
 	Direccion dHorizontal = Sindireccion;
-	if(caminando && (velX / velocidad > 0.38)){
-		if(posX > destinoX) dHorizontal = Oeste;
+	if(caminando && (vecVelocity.first / velocidad > 0.38)){
+		if(screenPosition.first > destinoX) dHorizontal = Oeste;
 		else dHorizontal = Este;
 	}
 	return dHorizontal;
@@ -126,7 +148,7 @@ int EntidadDinamica::getLineSprite(Direccion dir){
 	}
 }
 
-void EntidadDinamica::setDestino(float x,float y){
+void EntidadDinamica::setScreenPosition(float x,float y){
 	this->destinoX = x;
 	this->destinoY = y;
 
@@ -137,28 +159,34 @@ void EntidadDinamica::setDestino(float x,float y){
 	float seno = distanciaEnY(y) / distanciaDest;
 	float coseno = distanciaEnX(x) / distanciaDest;
 
-	this->velX = velocidad * coseno;
-	this->velY = velocidad * seno;
+	this->vecVelocity.first = velocidad * coseno;
+	this->vecVelocity.second = velocidad * seno;
 }
 
 void EntidadDinamica::trasladarse(){
+
+	if(distanciaEnX(destinoX) <= vecVelocity.first){
+
+			screenPosition.first = destinoX;
+			caminando = false;
+		}
+
+	if(distanciaEnY(destinoY) <= vecVelocity.second){
+
+			screenPosition.second = destinoY;
+			caminando = false;
+		}
+
 	if(caminando){
-		if(posX > destinoX) posX -= velX;
-		if(posX < destinoX) posX += velX;
-		if(posY > destinoY) posY -= velY;
-		if(posY < destinoY) posY += velY;
-	}
 
-	if(distanciaEnX(destinoX) <= velX){
-		posX = destinoX;
-		caminando = false;
-	}
+		if(screenPosition.first > destinoX) screenPosition.first -= vecVelocity.first;
+		if(screenPosition.first < destinoX) screenPosition.first += vecVelocity.first;
 
-	if(distanciaEnY(destinoY) <= velY){
-		posY = destinoY;
-		caminando = false;
+		if(screenPosition.second > destinoY) screenPosition.second -= vecVelocity.second;
+		if(screenPosition.second < destinoY) screenPosition.second += vecVelocity.second;
 	}
 }
+
 
 EntidadDinamica::~EntidadDinamica() {
 }

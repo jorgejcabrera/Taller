@@ -31,12 +31,12 @@ class EntidadDinamica: public EntidadPartida {
 	private:
 
 		int velocidad;
-		float velX = 0;
-		float velY = 0;
-		int framesPerSecond = 4;
 		bool caminando;
-		float posX;
-		float posY;
+		pair<float,float> vecVelocity;
+		pair<float,float> screenPosition;
+		int widthPixel;
+		int lengthPixel;
+		int framesPerSecond = 4;
 		float destinoX = 0;
 		float destinoY = 0;
 
@@ -50,17 +50,22 @@ class EntidadDinamica: public EntidadPartida {
 
 	public:
 		EntidadDinamica();
-		EntidadDinamica(int vel,float posX,float posY);
+		EntidadDinamica(int vel,int posX,int posY);
 		EntidadDinamica(string typeEntity, int vel,float posX,float posY, float width, float length, int fps);
+		void setInitialScreenPosition(float x,float y);
+		int getWidthPixel();
+		int getLengthPixel();
 		virtual ~EntidadDinamica();
 		SDL_Rect getPositionOfSprite();
 		string getEntityType();
 
-		float getX();
-		float getY();
+
+		pair<float,float>* getScreenPosition();
+		pair<int,int>* getPosition();
+
 		Direccion getDireccion();
 
-		void setDestino(float x, float y);
+		void setScreenPosition(float x, float y);
 		void trasladarse();
 };
 

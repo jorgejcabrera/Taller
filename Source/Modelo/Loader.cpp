@@ -7,6 +7,7 @@
 
 #include "Loader.h"
 #include <stack>
+Loader* Loader::instance = NULL;
 
 namespace std {
 
@@ -19,8 +20,8 @@ Loader::Loader() {
 
 }
 
-void Loader::Load(char* file) {
-	FILE *fh = fopen(file, "r");
+void Loader::load() {
+	FILE *fh = fopen("mapConfig.yml", "r");
 	yaml_parser_t parser;
 	yaml_event_t  event;   /* New variable */
 	string map,key,scalarValue;
@@ -81,6 +82,7 @@ void Loader::Load(char* file) {
 	    		else {
 	    			value = atoi(scalarValue.c_str());
 	    			screen->insert(pair<string,int>(key,value));
+	    			//cout << "key: " << key << " value: "<< value << endl;
 	    			key = "";
 	    		}
 	    		break;
@@ -132,17 +134,17 @@ int Loader::getScreenHeight(){
 	return screen->operator []("alto");
 }
 
-int Loader::getMargenScroll(){
-	return conf->operator []("margen_scroll");
-}
-
-int Loader::getVelPersonaje(){
-	return conf->operator []("vel_personaje");
+Loader* Loader::GetInstance() {
+	if (!instance) {
+		instance = new Loader();
+		instance->load();
+	}
+	return instance;
 }
 
 
 Loader::~Loader() {
-	// TODO Auto-generated destructor stub
+	//Loader* Loader::instance = NULL;
 }
 
 } /* namespace std */
