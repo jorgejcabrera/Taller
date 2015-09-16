@@ -27,6 +27,9 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->vecVelocity.first = 0;
 	this->vecVelocity.second = 0;
 
+	//el ancho y el largo es siempre el del tamaño del tile
+	this->width = 1;
+	this->length = 1;
 }
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){

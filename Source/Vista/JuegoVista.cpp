@@ -96,7 +96,9 @@ void JuegoVista::render(){
 
 void JuegoVista::renderProtagonista(){
 	string imagePath = "../Taller/Images/ricardo.png";
-	picassoHelper->renderObject(imagePath, this->juego->getProtagonista()->getScreenPosition()->first-DefaultSettings::getTileSize()/2, this->juego->getProtagonista()->getScreenPosition()->second-DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
+	pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(this->juego->getProtagonista());
+	std::cout<<isometricPosition.first<<" "<<isometricPosition.second << endl;
+	picassoHelper->renderObject(imagePath, isometricPosition.first-DefaultSettings::getTileSize()/2, isometricPosition.second-DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
 }
 
 JuegoVista::JuegoVista(Juego* juego) {

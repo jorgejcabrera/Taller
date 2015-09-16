@@ -9,6 +9,7 @@
 #define SOURCE_MODELO_ENTIDADDINAMICA_H_
 
 #include "EntidadPartida.h"
+#include "DefaultSettings.h"
 #include <math.h>
 
 using namespace std;
