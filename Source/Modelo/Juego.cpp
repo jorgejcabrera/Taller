@@ -14,6 +14,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
+	this->protagonista = new EntidadDinamica(0,0,0);
 
 }
 
@@ -24,7 +25,6 @@ Mapa* Juego::getMap(){
 void Juego::setProtagonistaAt(int velocidad,int x,int y){
 
 	cout<<"cartesianas: "<<x<<","<<y<<endl;
-	this->protagonista = new EntidadDinamica(velocidad,x,y);
 	pair<int,int> isometricas = getIsometricPosition(protagonista);
 	cout<<"isometricas: "<<isometricas.first<<","<<isometricas.second<<endl;
 	this->protagonista->setScreenPosition(isometricas.first,isometricas.second);
