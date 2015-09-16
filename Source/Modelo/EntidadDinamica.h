@@ -53,6 +53,8 @@ class EntidadDinamica: public EntidadPartida {
 		EntidadDinamica(int vel,int posX,int posY);
 		EntidadDinamica(string typeEntity, int vel,float posX,float posY, float width, float length, int fps);
 		void setInitialScreenPosition(float x,float y);
+		int getWidthPixel();
+		int getLengthPixel();
 		virtual ~EntidadDinamica();
 		SDL_Rect getPositionOfSprite();
 		string getEntityType();

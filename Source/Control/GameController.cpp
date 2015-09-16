@@ -24,7 +24,7 @@ void GameController::obtenerMouseInput(){
 
 	while(SDL_PollEvent(event)){
 
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			//TODO si la posicion está por fuera del mapa, dejar que se mueva hasta el borde.
 			pair<int,int> cartesianPosition = this->convertToCartesian(posMouseX,posMouseY);

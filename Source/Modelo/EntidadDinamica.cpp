@@ -71,6 +71,14 @@ float EntidadDinamica::distanciaEnX(float x){
 	return res;
 }
 
+int EntidadDinamica::getWidthPixel(){
+	return this->widthPixel;
+}
+
+int EntidadDinamica::getLengthPixel(){
+	return this->lengthPixel;
+}
+
 float EntidadDinamica::distanciaEnY(float y){
 	float res;
 	if(screenPosition.second > y) res = screenPosition.second - y;

@@ -33,3 +33,4 @@
 #Others
 *.settings
 *.DS_Store
+/Debug/
