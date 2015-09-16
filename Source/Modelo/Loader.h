@@ -34,10 +34,12 @@ private:
 	int MAP_WIDTH;							//esto vendría a ser el eje x
 	int MAP_HEIGHT;							//esto viene a ser el eje y
 	int MEDIUM_SIZE;
+	Loader();
+	static Loader* instance;
+	void load();
 
 public:
-	Loader();
-	void Load();
+	static Loader* GetInstance();
 	int getScreenWidth();
 	int getScreenHeight();
 	int getTileSize();

@@ -7,6 +7,7 @@
 
 #include "Loader.h"
 #include <stack>
+Loader* Loader::instance = NULL;
 
 namespace std {
 
@@ -19,7 +20,7 @@ Loader::Loader() {
 
 }
 
-void Loader::Load() {
+void Loader::load() {
 	FILE *fh = fopen("mapConfig.yml", "r");
 	yaml_parser_t parser;
 	yaml_event_t  event;   /* New variable */
@@ -84,6 +85,7 @@ void Loader::Load() {
 	    		else {
 	    			value = atoi(reinterpret_cast<char*>(event.data.scalar.value));
 	    			screen->insert(pair<string,int>(key,value));
+	    			//cout << "key: " << key << " value: "<< value << endl;
 	    			key = "";
 	    		}
 	    		break;
@@ -144,9 +146,16 @@ int Loader::getScreenHeight(){
 	return screen->operator []("alto");
 }
 
+Loader* Loader::GetInstance() {
+	if (!instance) {
+		instance = new Loader();
+		instance->load();
+	}
+	return instance;
+}
 
 Loader::~Loader() {
-	// TODO Auto-generated destructor stub
+	//Loader* Loader::instance = NULL;
 }
 
 } /* namespace std */
