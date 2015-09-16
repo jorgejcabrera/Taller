@@ -18,7 +18,6 @@ GameController::GameController(){
 
 	this->posMouseX = 0;
 	this->posMouseY = 0;
-
 }
 
 void GameController::obtenerMouseInput(){

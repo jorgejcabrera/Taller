@@ -9,6 +9,9 @@
 
 const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
 const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images";
+const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
+const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
+
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 
 DefaultSettings::DefaultSettings() {
@@ -110,19 +113,42 @@ bool DefaultSettings::isEntityTypeValid(const string &type){
 	validTypes.push_back("Town_Hall");
 	validTypes.push_back("Church");
 
+	//Personajes
+	validTypes.push_back("soldado");
+
+	//Tiles
+	validTypes.push_back("grass");
+	validTypes.push_back("ceramic");
+	validTypes.push_back("hielo");
+	validTypes.push_back("sand");
+
 	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
 	return found;
 }
 
-string DefaultSettings::imagePathByTypeAndAge(const string &object,const string &age){
+string DefaultSettings::imagePathBuildingsByTypeAndAge(const string &object,const string &age){
 	if(isEntityTypeValid(object)){
 		return IMAGE_BASE_PATH +"/"+age+"/"+object+".png";
 	}
 	return NULL;
 }
 string DefaultSettings::defaultImage(){
-	return IMAGE_BASE_PATH +"white_tile.bmp";
+	return IMAGE_BASE_PATH +"/Tiles/" +"white_tile.bmp";
 
+}
+
+string DefaultSettings::imagePathPersonajesByType(const string &object){
+	if(isEntityTypeValid(object)){
+			return IMAGE_BASE_PATH+"/"+IMAGE_PERSONAJES_PATH+"/"+object+".png";
+		}
+		return NULL;
+}
+
+string DefaultSettings::imagePathTilesByType(const string &object){
+	if(isEntityTypeValid(object)){
+			return IMAGE_BASE_PATH+"/"+IMAGE_TILES_PATH+"/"+object+".png";
+		}
+		return NULL;
 }
 
 string DefaultSettings::getAgeOfEmpires(){

@@ -12,7 +12,6 @@
 #include "EntidadDinamica.h"
 #include "../Modelo/DefaultSettings.h"
 #include <map>
-#include "Parser.h"
 
 using namespace std ;
 

@@ -28,7 +28,7 @@ private:
 	SDL_Event* event;
 	int offSetX;
 	int offSetY;
-	void drawIsometricMap(const string &file);
+	void drawIsometricMap();
 	void drawEntities();
 public:
 	void render();

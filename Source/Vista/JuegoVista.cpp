@@ -7,7 +7,7 @@
 
 #include "JuegoVista.h"
 
-	void JuegoVista::drawIsometricMap(const string &file){
+	void JuegoVista::drawIsometricMap(){
 	int posX = 0;
 	int posY = 0;
 	for (map<pair<int,int>,Tile*>::iterator it = this->juego->getMap()->getTiles()->begin(); it != this->juego->getMap()->getTiles()->end();++it){
@@ -15,7 +15,7 @@
 		//transformo coordenadas cartesianas a isométricas
 		posY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2 + this->offSetY;
 		posX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2 + offSetX;	//comienzo a dibujar de la mitad de la pantalla
-		picassoHelper->renderObject(file,posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
+		picassoHelper->renderObject(tileActual->getPathImage(),posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
 	}
 }
 
@@ -70,7 +70,7 @@
 			offSetY -= DefaultSettings::getVelocidadScrollDos();
 		}
 
-		drawIsometricMap("../Taller/Images/grass_new.png");
+		this->drawIsometricMap();
 
 	}
 
@@ -86,19 +86,18 @@ void JuegoVista::drawEntities(){
 void JuegoVista::render(){
 
 	picassoHelper->clearView();
-	string imagePath = "../Taller/Images/grass_new.png";
 	//actualizarMapa();
-	this->drawIsometricMap(imagePath);
+	this->drawIsometricMap();
 	//drawEntities();
 	this->renderProtagonista();
 	this->picassoHelper->renderView();
 }
 
 void JuegoVista::renderProtagonista(){
-	string imagePath = "../Taller/Images/ricardo.png";
 	pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(this->juego->getProtagonista());
-	picassoHelper->renderObject(imagePath, isometricPosition.first + DefaultSettings::getTileSize()/2, isometricPosition.second, DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
+	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), isometricPosition.first + DefaultSettings::getTileSize()/2, isometricPosition.second, DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
 }
+
 
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;

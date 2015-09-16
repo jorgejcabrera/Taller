@@ -17,7 +17,13 @@ void PicassoHelper::createContext(){
 	    if (SDL_Init(SDL_INIT_VIDEO) != 0){
 	    	this->exitError("Error SDL_Init:");
 	    }
+
+	    //cargamos la conf. del archivo yaml
+	    loader = new Loader();
+	    loader->Load();
+
 	    // creamos la ventana
+//	    window = SDL_CreateWindow("Age of empires", 100, 100, loader->getScreenWidth(), loader->getScreenHeight(), SDL_WINDOW_SHOWN);
 	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
@@ -37,6 +43,17 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 			textureExists = loadTexture(file);
 		}
 		renderTexture(textureExists,x,y,w,h);
+}
+
+void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject){
+		SDL_Texture* textureExists;
+		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+		if(it != mapByImagePath.end()){
+			textureExists = it->second;
+		}else{
+			textureExists = loadTexture(file);
+		}
+		renderTexture(textureExists,x,y,w,h,rectObject);
 }
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
@@ -62,6 +79,16 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 	SDL_RenderCopy(renderer, tex, NULL, &dst);
 }
 
+void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject){
+	//Setup the destination rectangle to be at the position we want
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y = y;
+	dst.w = w;
+	dst.h = h;
+	SDL_RenderCopy(renderer, tex, &rectObject, &dst);
+}
+
 PicassoHelper::~PicassoHelper() {
 	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
 		SDL_DestroyTexture(it->second);
@@ -81,13 +108,12 @@ void PicassoHelper::exitError(const string &message) {
 }
 
 void PicassoHelper::renderView(){
-	SDL_SetRenderDrawColor(renderer,0,0,0,1);
 	SDL_RenderPresent(renderer);
 }
 
 void PicassoHelper::clearView(){
 	SDL_RenderClear(renderer);
-	SDL_SetRenderDrawColor(renderer,255,0,0,255);
+	SDL_SetRenderDrawColor(renderer,0,0,0,1);
 }
 
 PicassoHelper* PicassoHelper::GetInstance(Juego* juego) {

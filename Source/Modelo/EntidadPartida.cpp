@@ -10,8 +10,6 @@
 using namespace std;
 
 EntidadPartida::EntidadPartida() {
-	// TODO Auto-generated constructor stub
-
 }
 
 void EntidadPartida::setPosition(int x,int y){
@@ -35,6 +33,9 @@ string EntidadPartida::getPathImage(){
 	return pathImage;
 }
 
+void EntidadPartida::setPathImage(string path){
+	this->pathImage = path;
+}
+
 EntidadPartida::~EntidadPartida() {
-	// TODO Auto-generated destructor stub
 }
