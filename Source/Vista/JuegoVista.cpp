@@ -88,8 +88,8 @@ void JuegoVista::render(){
 	picassoHelper->clearView();
 	//actualizarMapa();
 	this->drawIsometricMap();
-	drawEntities();
 	this->renderProtagonista();
+	drawEntities();
 	this->picassoHelper->renderView();
 }
 
