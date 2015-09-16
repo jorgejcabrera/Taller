@@ -53,11 +53,11 @@ int DefaultSettings::getVelocidadScrollDos(){
 }
 
 int DefaultSettings::getLimiteDerecho(){
-	return -SCREEN_WIDTH / 10;
+	return -SCREEN_WIDTH / 100 * 10;
 }
 
 int DefaultSettings::getLimiteIzquierdo(){
-return  SCREEN_WIDTH / 10;
+return  SCREEN_WIDTH / 100 * 10;
 }
 
 int DefaultSettings::getLimiteInferior(){

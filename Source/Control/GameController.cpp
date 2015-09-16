@@ -55,7 +55,7 @@ pair<int,int> GameController::convertToCartesian(int xScreen,int yScreen){
 	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
 	int x = ( yScreen * 2 + xScreen - startMapX) / (DefaultSettings::getTileSize() * 2);
 	int y = yScreen / (DefaultSettings::getTileSize() / 2) - x;
-	cout << "xC: "<< x<<",yC: "<<y<<endl;
+	//cout << "xC: "<< x<<",yC: "<<y<<endl;
 	pair<int,int> cartesianPosition;
 	cartesianPosition.first = x;
 	cartesianPosition.second = y;
