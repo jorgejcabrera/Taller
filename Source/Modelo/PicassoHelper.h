@@ -16,6 +16,7 @@
 #include <iostream>
 #include <map>
 #include <fstream>
+#include "Loader.h"
 
 class PicassoHelper {
 private:
@@ -28,6 +29,7 @@ private:
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject);
 	SDL_Texture* loadTexture(const string &file);
 	bool isFileExist(const string fileName);
+	Loader *loader;
 
 public:
 	void createContext();

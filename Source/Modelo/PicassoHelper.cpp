@@ -17,8 +17,14 @@ void PicassoHelper::createContext(){
 	    if (SDL_Init(SDL_INIT_VIDEO) != 0){
 	    	this->exitError("Error SDL_Init:");
 	    }
+
+	    //cargamos la conf. del archivo yaml
+	    loader = new Loader();
+	    loader->Load();
+
 	    // creamos la ventana
-	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
+	    window = SDL_CreateWindow("Age of empires", 100, 100, loader->getScreenWidth(), loader->getScreenHeight(), SDL_WINDOW_SHOWN);
+//	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
 	    }

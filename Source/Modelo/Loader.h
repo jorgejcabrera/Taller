@@ -19,7 +19,7 @@ namespace std {
 class Loader {
 private:
 	map<string,int>* screen;
-//	map<string,string>* conf;
+	map<string,int>* conf;
 //	list<map<void,void> >* type;
 //	map<void,void>* stage;
 
