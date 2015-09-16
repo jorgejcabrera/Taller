@@ -46,7 +46,7 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(){
 		sprite = (ticks / 100) % this->framesPerSecond;
 	}
 	int lineaSprite = this->getLineSprite(this->getDireccion());
-	SDL_Rect srcrect = { sprite * this->width, this->length*lineaSprite, this->width, this->length };
+	SDL_Rect srcrect = { sprite * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
 	return srcrect;
 }
 
