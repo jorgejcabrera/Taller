@@ -114,7 +114,6 @@ JuegoVista::JuegoVista(Juego* juego) {
 	this->protagonistaSeMovio = false;
 	picassoHelper = PicassoHelper::GetInstance(juego);
 	picassoHelper->createContext();
-
 }
 
 JuegoVista::~JuegoVista() {
