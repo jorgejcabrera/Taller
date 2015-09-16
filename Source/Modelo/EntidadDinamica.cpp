@@ -22,7 +22,7 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->length = 50;
 }
 
-EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float w, float l, int fps){
+EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
 	this->caminando = false;
 	this->position.first = x;
 	this->position.second = y;
@@ -31,8 +31,10 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	this->vecVelocity.second = 0;
 
 	//el ancho y el largo es siempre el del tamaño del tile
-	this->width = w;
-	this->length = l;
+	this->width = 1;
+	this->length = 1;
+	this->widthPixel = widthPixel;
+	this->lengthPixel = lengthPixels;
 	this->framesPerSecond = fps;
 	this->setPathImage(DefaultSettings::imagePathPersonajesByType(typeDinamicEntity));
 }

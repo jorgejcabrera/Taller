@@ -34,6 +34,8 @@ class EntidadDinamica: public EntidadPartida {
 		bool caminando;
 		pair<float,float> vecVelocity;
 		pair<float,float> screenPosition;
+		int widthPixel;
+		int lengthPixel;
 		int framesPerSecond = 4;
 		float destinoX = 0;
 		float destinoY = 0;

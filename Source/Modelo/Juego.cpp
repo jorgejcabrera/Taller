@@ -14,7 +14,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica("soldado",10,2,2,1,1,6);
+	this->protagonista = new EntidadDinamica("soldado",10,1,1,50,50,6);
 
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + DefaultSettings::getTileSize() ,isometricas.second);
