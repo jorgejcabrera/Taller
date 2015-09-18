@@ -18,6 +18,7 @@ GameController::GameController(){
 
 	this->posMouseX = 0;
 	this->posMouseY = 0;
+	this->inicioDeCiclo = 0;
 }
 
 void GameController::obtenerMouseInput(){
@@ -43,6 +44,7 @@ void GameController::actualizarJuego(){
 }
 
 bool GameController::finDeJuego(){
+	this->inicioDeCiclo = SDL_GetTicks();
 	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
 }
 
@@ -62,12 +64,15 @@ pair<int,int> GameController::convertToCartesian(int xScreen,int yScreen){
 	return cartesianPosition;
 }
 
-
+void GameController::delay(){
+	if((SDL_GetTicks()-this->inicioDeCiclo) < 1000 / this->juego->getProtagonista()->getFramesPerSecond()){
+		int valor = ((1000 / this->juego->getProtagonista()->getFramesPerSecond()) - (SDL_GetTicks()-this->inicioDeCiclo));
+		SDL_Delay(valor);
+	}
+}
 GameController::~GameController() {
-
 	juego->~Juego();
 	juegoVista->~JuegoVista();
-
 	delete event;
 }
 

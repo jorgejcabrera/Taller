@@ -40,13 +40,16 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 }
 
 SDL_Rect EntidadDinamica::getPositionOfSprite(){
-	Uint32 sprite = 0;
-	if(this->caminando){
-		Uint32 ticks = SDL_GetTicks();
-		sprite = (ticks / 100) % this->framesPerSecond;
+	if(!this->caminando){
+		this->frame = 0;
 	}
 	int lineaSprite = this->getLineSprite(this->getDireccion());
-	SDL_Rect srcrect = { sprite * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
+	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
+	  this->frame++;
+	  if( this->frame % 7 == 0){
+		  this->frame = 0;
+	  }
+
 	return srcrect;
 }
 
@@ -164,29 +167,27 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 }
 
 void EntidadDinamica::trasladarse(){
-
 	if(distanciaEnX(destinoX) <= vecVelocity.first){
-
 			screenPosition.first = destinoX;
 			caminando = false;
 		}
 
 	if(distanciaEnY(destinoY) <= vecVelocity.second){
-
 			screenPosition.second = destinoY;
 			caminando = false;
 		}
 
 	if(caminando){
-
 		if(screenPosition.first > destinoX) screenPosition.first -= vecVelocity.first;
 		if(screenPosition.first < destinoX) screenPosition.first += vecVelocity.first;
-
 		if(screenPosition.second > destinoY) screenPosition.second -= vecVelocity.second;
 		if(screenPosition.second < destinoY) screenPosition.second += vecVelocity.second;
 	}
 }
 
+int EntidadDinamica::getFramesPerSecond(){
+	return this->framesPerSecond;
+}
 
 EntidadDinamica::~EntidadDinamica() {
 }

@@ -24,7 +24,7 @@ private:
 	int posMouseY;
 	bool salirDelJuego;
 	pair<int,int> convertToCartesian(int xScreen,int yScreen);
-
+	int inicioDeCiclo;
 
 public:
 	GameController();
@@ -33,6 +33,7 @@ public:
 	void obtenerMouseInput();
 	bool finDeJuego();
 	virtual ~GameController();
+	void delay();
 };
 
 #endif /* GAMECONTROLLER_H_ */

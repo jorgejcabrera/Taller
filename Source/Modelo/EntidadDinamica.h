@@ -12,6 +12,8 @@
 #include "DefaultSettings.h"
 #include "SDL2/SDL.h"
 #include <math.h>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -36,9 +38,10 @@ class EntidadDinamica: public EntidadPartida {
 		pair<float,float> screenPosition;
 		int widthPixel;
 		int lengthPixel;
-		int framesPerSecond = 4;
+		int framesPerSecond = 20;
 		float destinoX = 0;
 		float destinoY = 0;
+		int frame = 0;
 
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
@@ -58,6 +61,7 @@ class EntidadDinamica: public EntidadPartida {
 		virtual ~EntidadDinamica();
 		SDL_Rect getPositionOfSprite();
 		string getEntityType();
+		int getFramesPerSecond();
 
 
 		pair<float,float>* getScreenPosition();

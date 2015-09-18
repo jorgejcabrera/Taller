@@ -25,13 +25,16 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
+	int framePerSecond = 10;
+
 	GameController* gController = new GameController();
+	int tiempoInicio = 0;
 
 	while(! gController->finDeJuego() ){
 		gController->obtenerMouseInput();
 		gController->actualizarJuego();
 		gController->render();
-    	SDL_Delay(100);
+    	gController->delay();
 	}
 
 	gController->~GameController();
