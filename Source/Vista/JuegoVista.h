@@ -27,14 +27,12 @@ private:
 	Juego* juego;
 	int offSetX;
 	int offSetY;
-	bool protagonistaSeMovio;
 	void drawIsometricMap();
 	void drawEntities();
 public:
 	void render();
 	void actualizarMapa();
 	void renderProtagonista();
-	void protagonistaYaSeMovio();
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 

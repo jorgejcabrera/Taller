@@ -31,7 +31,6 @@ void GameController::obtenerMouseInput(){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			this->moveCharacter(posMouseX,posMouseY);
-			juegoVista->protagonistaYaSeMovio();
 		}
 
 		if( event->type == SDL_QUIT) this->salirDelJuego = true;

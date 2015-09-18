@@ -74,7 +74,7 @@ void JuegoVista::drawEntities(){
 void JuegoVista::render(){
 
 	picassoHelper->clearView();
-	actualizarMapa();
+	//actualizarMapa();
 	this->drawIsometricMap();
 	this->renderProtagonista();
 	drawEntities();
@@ -86,15 +86,10 @@ void JuegoVista::renderProtagonista(){
 	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - DefaultSettings::getTileSize()/2 + this->offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + this->offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
 }
 
-void JuegoVista::protagonistaYaSeMovio(){
-	this->protagonistaSeMovio = true;
-}
-
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	this->offSetX = 0;
 	this->offSetY = 0;
-	this->protagonistaSeMovio = false;
 	picassoHelper = PicassoHelper::GetInstance();
 	picassoHelper->createContext();
 }
