@@ -40,16 +40,28 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 }
 
 SDL_Rect EntidadDinamica::getPositionOfSprite(){
-	if(!this->caminando){
-		this->frame = 0;
-	}
 	int lineaSprite = this->getLineSprite(this->getDireccion());
 	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
-	  this->frame++;
-	  if( this->frame % 7 == 0){
-		  this->frame = 0;
-	  }
-
+	if(this->inDelayPeriod){
+		if(this->delayIndex <= (this->delay*this->framesPerSecond)){
+			delayIndex++;
+		}else{
+			this->inDelayPeriod = false;
+		}
+	}else{
+			if(!this->caminando){
+				this->frame = 0;
+			}else{
+				this->frame++;
+				if( (this->frame % this->getFramesInLineFile()) == 0){
+					this->frame = 0;
+					if(this->delay>0){
+						this->delayIndex = 0;
+						this->inDelayPeriod = true;
+					}
+				}
+			}
+	}
 	return srcrect;
 }
 
@@ -57,6 +69,15 @@ void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	// no borrar por favor
 	this->screenPosition.first = x;
 	this->screenPosition.second = y;
+}
+
+//seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
+void EntidadDinamica::setFramesInLineFile(int qty){
+	this->framesInLineFile = qty;
+}
+
+int EntidadDinamica::getFramesInLineFile(){
+	return this->framesInLineFile;
 }
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){
@@ -190,5 +211,9 @@ int EntidadDinamica::getFramesPerSecond(){
 }
 
 EntidadDinamica::~EntidadDinamica() {
+}
+
+void EntidadDinamica::setDelay(int delayFrames){
+	this->delay = delayFrames;
 }
 

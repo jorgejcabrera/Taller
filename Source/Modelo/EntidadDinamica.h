@@ -42,6 +42,14 @@ class EntidadDinamica: public EntidadPartida {
 		float destinoX = 0;
 		float destinoY = 0;
 		int frame = 0;
+		int framesInLineFile = 5;
+
+		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+		int delay = 0;
+		//variable de control para indicar si estoy en medio del periodo de delay
+		bool inDelayPeriod = false;
+		// indice de segundo del delay por el cual voy
+		int delayIndex = 0;
 
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
@@ -52,6 +60,8 @@ class EntidadDinamica: public EntidadPartida {
 		int getLineSprite(Direccion dir);
 
 	public:
+		void setFramesInLineFile(int qty);
+		int getFramesInLineFile();
 		EntidadDinamica();
 		EntidadDinamica(int vel,int posX,int posY);
 		EntidadDinamica(string typeEntity, int vel,float posX,float posY, float width, float length, int fps);
@@ -62,6 +72,7 @@ class EntidadDinamica: public EntidadPartida {
 		SDL_Rect getPositionOfSprite();
 		string getEntityType();
 		int getFramesPerSecond();
+		void setDelay(int delayFrames);
 
 
 		pair<float,float>* getScreenPosition();

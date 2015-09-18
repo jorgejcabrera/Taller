@@ -10,11 +10,12 @@
 using namespace std;
 
 Juego::Juego() {
-	// TODO Auto-generated constructor stub
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
 	this->protagonista = new EntidadDinamica("soldado",10,4,4,50,50,15);
+	this->protagonista->setFramesInLineFile(7);
+	//this->protagonista->setDelay(2);
 
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + DefaultSettings::getTileSize() ,isometricas.second);
