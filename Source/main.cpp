@@ -25,15 +25,13 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	//int framePerSecond = 10;
 	bool juegoTermina = false;
 	bool salir = false;
 
-	while(! juegoTermina){
+	while(!juegoTermina){
 		juegoTermina = true;
 		salir = false;
 		GameController* gController = new GameController();
-		//int tiempoInicio = 0;
 
 		while(! gController->finDeJuego() && !salir ){
 			gController->obtenerMouseInput();

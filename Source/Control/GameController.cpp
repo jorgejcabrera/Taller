@@ -86,6 +86,8 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+	cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
+	cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;
 	return;
 }
 
