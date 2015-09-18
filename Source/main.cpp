@@ -26,18 +26,30 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
 	int framePerSecond = 10;
+	bool juegoTermina = false;
+	bool salir = false;
 
-	GameController* gController = new GameController();
-	int tiempoInicio = 0;
+	while(! juegoTermina){
 
-	while(! gController->finDeJuego() ){
-		gController->obtenerMouseInput();
-		gController->actualizarJuego();
-		gController->render();
-    	gController->delay();
+		cout <<"hola"<<endl;
+		juegoTermina = true;
+		salir = false;
+		GameController* gController = new GameController();
+		int tiempoInicio = 0;
+
+
+		while(! gController->finDeJuego() && !salir ){
+			gController->obtenerMouseInput();
+			gController->actualizarJuego();
+			gController->render();
+			gController->delay();
+
+			salir = gController->reiniciarJuego();
+			if(salir){ juegoTermina = false; cout<<"ESTO ESTA BIEN"<<endl;}
+		}
+		cout<<"fin ???";
+		gController->~GameController();
 	}
-
-	gController->~GameController();
 
 	std::cout<<"fin";
 	return 0;

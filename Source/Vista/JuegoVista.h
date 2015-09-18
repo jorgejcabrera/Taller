@@ -25,7 +25,6 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Juego* juego;
-	SDL_Event* event;
 	int offSetX;
 	int offSetY;
 	bool protagonistaSeMovio;

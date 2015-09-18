@@ -84,6 +84,5 @@ void Mapa::show(){
 }
 
 Mapa::~Mapa() {
-	// TODO Auto-generated destructor stub
 }
 

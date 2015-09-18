@@ -64,5 +64,6 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 }
 
 Juego::~Juego() {
-	// TODO Auto-generated destructor stub
+	this->protagonista->~EntidadDinamica();
+	this->mapa->~Mapa();
 }

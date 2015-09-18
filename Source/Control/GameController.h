@@ -25,11 +25,13 @@ private:
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
+	bool reiniciar;
 	int inicioDeCiclo;
 	void moveCharacter(int xScreen,int yScreen);
 
 public:
 	GameController();
+	bool reiniciarJuego();
 	void actualizarJuego();
 	void render();
 	void obtenerMouseInput();

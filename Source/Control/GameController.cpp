@@ -12,6 +12,7 @@ GameController::GameController(){
 	this->utils = UtilsController::GetInstance();
 
 	this->salirDelJuego = false;
+	this->reiniciar = false;
 
 	this->juego = new Juego();
 	this->juegoVista = new JuegoVista(juego);
@@ -35,11 +36,17 @@ void GameController::obtenerMouseInput(){
 
 		if( event->type == SDL_QUIT) this->salirDelJuego = true;
 
+		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r) this->reiniciar = true;
+
 	}
 }
 
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
+}
+
+bool GameController::reiniciarJuego(){
+	return this->reiniciar;
 }
 
 bool GameController::finDeJuego(){
