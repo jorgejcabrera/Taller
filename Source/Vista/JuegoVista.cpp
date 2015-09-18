@@ -82,19 +82,12 @@ void JuegoVista::render(){
 }
 
 void JuegoVista::renderProtagonista(){
-	if(!protagonistaSeMovio){
-		pair<int,int> isometricPosition = picassoHelper->getIsometricPosition(this->juego->getProtagonista());
-
-		picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), isometricPosition.first + DefaultSettings::getTileSize()/2 + this->offSetX, isometricPosition.second - this->juego->getProtagonista()->getLengthPixel() / 2 + this->offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
-	}else{
-		pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
-		picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - DefaultSettings::getTileSize()/2 + this->offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + this->offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
-	}
+	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
+	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - DefaultSettings::getTileSize()/2 + this->offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + this->offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
 }
 
 void JuegoVista::protagonistaYaSeMovio(){
 	this->protagonistaSeMovio = true;
-	cout<< "La nueva posicion es: "<<this->juego->getProtagonista()->getPosition()->first << "," << this->juego->getProtagonista()->getPosition()->second<<endl;
 }
 
 JuegoVista::JuegoVista(Juego* juego) {

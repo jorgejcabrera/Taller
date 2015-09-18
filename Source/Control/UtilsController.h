@@ -20,7 +20,7 @@ private:
 public:
 	static UtilsController* GetInstance();
 	pair<int,int> convertToCartesian(int xScreen,int yScreen);
-	pair<int,int> getIsometricPosition(int x,int y, int width, int length);
+	pair<int,int> getIsometricPosition(int x,int y);
 	virtual ~UtilsController();
 };
 
