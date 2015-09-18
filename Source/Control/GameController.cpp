@@ -73,9 +73,7 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 
 	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
 	if(correctPosition){
-		int widthEntity = this->juego->getProtagonista()->getWidth();
-		int lengthEntity = this->juego->getProtagonista()->getLength();
-		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second,widthEntity,lengthEntity);
+		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
 		posMouseX = isometricPosition.first;
 		posMouseY = isometricPosition.second;
 	}

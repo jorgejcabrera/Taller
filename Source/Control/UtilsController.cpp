@@ -30,15 +30,16 @@ pair<int,int> UtilsController::convertToCartesian(int xScreen,int yScreen){
 	return cartesianPosition;
 }
 
-pair<int,int> UtilsController::getIsometricPosition(int x,int y,int width,int length){
+pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
 	isometricPosition.first = ( x - y) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
 	isometricPosition.second = ( x + y) * DefaultSettings::getTileSize() / 2  ;
 
-	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (width - 1)  *  DefaultSettings::getTileSize();
-	isometricPosition.second = isometricPosition.second - (length - 1) *  DefaultSettings::getTileSize() / 2;
+	//TODO revisar si las entidades tienen que tener siempre ancho y tamaño 1
+	//ahora hay que centrar la entidad con el tile. Por default las entidades tienen ancho y largo 1
+	isometricPosition.first = isometricPosition.first + DefaultSettings::getTileSize();
+	isometricPosition.second = isometricPosition.second + DefaultSettings::getTileSize()/2;
 	return isometricPosition;
 }
 
