@@ -74,7 +74,6 @@ class EntidadDinamica: public EntidadPartida {
 		int getFramesPerSecond();
 		void setDelay(int delayFrames);
 
-
 		pair<float,float>* getScreenPosition();
 		pair<int,int>* getPosition();
 

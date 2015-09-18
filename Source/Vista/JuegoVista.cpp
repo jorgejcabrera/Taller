@@ -74,7 +74,7 @@ void JuegoVista::drawEntities(){
 void JuegoVista::render(){
 
 	picassoHelper->clearView();
-	//actualizarMapa();
+	actualizarMapa();
 	this->drawIsometricMap();
 	this->renderProtagonista();
 	drawEntities();

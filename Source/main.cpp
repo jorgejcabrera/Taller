@@ -30,13 +30,10 @@ int main(int argc, char* argv[]) {
 	bool salir = false;
 
 	while(! juegoTermina){
-
-		cout <<"hola"<<endl;
 		juegoTermina = true;
 		salir = false;
 		GameController* gController = new GameController();
 		int tiempoInicio = 0;
-
 
 		while(! gController->finDeJuego() && !salir ){
 			gController->obtenerMouseInput();
@@ -47,11 +44,8 @@ int main(int argc, char* argv[]) {
 			salir = gController->reiniciarJuego();
 			if(salir){ juegoTermina = false; cout<<"ESTO ESTA BIEN"<<endl;}
 		}
-		cout<<"fin ???";
 		gController->~GameController();
 	}
-
-	std::cout<<"fin";
 	return 0;
 }
 
