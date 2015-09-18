@@ -14,7 +14,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica("soldado",10,1,1,50,50,6);
+	this->protagonista = new EntidadDinamica("soldado",10,4,4,50,50,6);
 
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + DefaultSettings::getTileSize() ,isometricas.second);
@@ -39,6 +39,7 @@ string Juego::getCurrentAge(){
 void Juego::setDestinoProtagonista(int x,int y, int screenPosX, int screenPosY){
 	//Actualiza las coordenadas cartesianas del protagonista
 	this->protagonista->setPosition(x,y);
+	//Actualizo las coordenadas de pantalla del protagonista
 	this->protagonista->setScreenPosition(screenPosX,screenPosY);
 }
 
@@ -56,8 +57,8 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
 
 	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  DefaultSettings::getTileSize();
-	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  DefaultSettings::getTileSize() / 2;
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth() - 1)  *  DefaultSettings::getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength() - 1) *  DefaultSettings::getTileSize() / 2;
 	return isometricPosition;
 }
 

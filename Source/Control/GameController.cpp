@@ -9,6 +9,8 @@
 
 GameController::GameController(){
 
+	this->utils = UtilsController::GetInstance();
+
 	this->salirDelJuego = false;
 
 	this->juego = new Juego();
@@ -26,10 +28,7 @@ void GameController::obtenerMouseInput(){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			//TODO si la posicion está por fuera del mapa, dejar que se mueva hasta el borde.
-			pair<int,int> cartesianPosition = this->convertToCartesian(posMouseX,posMouseY);
-			//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
-			juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+			this->moveCharacter(posMouseX,posMouseY);
 			juegoVista->protagonistaYaSeMovio();
 		}
 
@@ -50,16 +49,38 @@ void GameController::render(){
 	juegoVista->render();
 }
 
-pair<int,int> GameController::convertToCartesian(int xScreen,int yScreen){
-	//TODO agregar lógica para ver si el chabón se quiere mover por fuera del mapa que lo deje llegar hasta el borde
-	int startMapX = DefaultSettings::getScreenWidth() / 2 + DefaultSettings::getTileSize();
-	int x = ( yScreen * 2 + xScreen - startMapX) / (DefaultSettings::getTileSize() * 2);
-	int y = yScreen / (DefaultSettings::getTileSize() / 2) - x;
-	//cout << "xC: "<< x<<",yC: "<<y<<endl;
-	pair<int,int> cartesianPosition;
-	cartesianPosition.first = x;
-	cartesianPosition.second = y;
-	return cartesianPosition;
+void GameController::moveCharacter(int xScreen,int yScreen){
+	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen,yScreen);
+	bool correctPosition = false;
+
+	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
+	if( cartesianPosition.first < 0 ){
+		cartesianPosition.first = 0;
+		correctPosition = true;
+	}else if( cartesianPosition.first >= DefaultSettings::getMapWidth()){
+		cartesianPosition.first = DefaultSettings::getMapWidth() - 1 ;
+		correctPosition = true;
+	}
+	if( cartesianPosition.second < 0){
+		cartesianPosition.second = 0;
+		correctPosition = true;
+	}else if( cartesianPosition.second >= DefaultSettings::getMapHeight()){
+		cartesianPosition.second = DefaultSettings::getMapHeight() - 1;
+		correctPosition = true;
+	}
+
+	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
+	if(correctPosition){
+		int widthEntity = this->juego->getProtagonista()->getWidth();
+		int lengthEntity = this->juego->getProtagonista()->getLength();
+		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second,widthEntity,lengthEntity);
+		posMouseX = isometricPosition.first;
+		posMouseY = isometricPosition.second;
+	}
+
+	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
+	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+	return;
 }
 
 

@@ -74,7 +74,7 @@ void JuegoVista::drawEntities(){
 void JuegoVista::render(){
 
 	picassoHelper->clearView();
-	actualizarMapa();
+	//actualizarMapa();
 	this->drawIsometricMap();
 	this->renderProtagonista();
 	drawEntities();
@@ -94,6 +94,7 @@ void JuegoVista::renderProtagonista(){
 
 void JuegoVista::protagonistaYaSeMovio(){
 	this->protagonistaSeMovio = true;
+	cout<< "La nueva posicion es: "<<this->juego->getProtagonista()->getPosition()->first << "," << this->juego->getProtagonista()->getPosition()->second<<endl;
 }
 
 JuegoVista::JuegoVista(Juego* juego) {
