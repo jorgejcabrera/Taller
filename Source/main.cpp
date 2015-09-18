@@ -42,7 +42,10 @@ int main(int argc, char* argv[]) {
 			gController->delay();
 
 			salir = gController->reiniciarJuego();
-			if(salir){ juegoTermina = false; cout<<"ESTO ESTA BIEN"<<endl;}
+
+			if(salir)
+				juegoTermina = false;
+
 		}
 		gController->~GameController();
 	}

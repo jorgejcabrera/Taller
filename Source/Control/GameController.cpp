@@ -32,10 +32,10 @@ void GameController::obtenerMouseInput(){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			this->moveCharacter(posMouseX,posMouseY);
 		}
-
-		if( event->type == SDL_QUIT) this->salirDelJuego = true;
-
-		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r) this->reiniciar = true;
+		if( event->type == SDL_QUIT)
+			this->salirDelJuego = true;
+		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r)
+			this->reiniciar = true;
 
 	}
 }
