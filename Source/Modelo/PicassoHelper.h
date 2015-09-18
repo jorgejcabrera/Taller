@@ -22,7 +22,7 @@ class PicassoHelper {
 private:
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	PicassoHelper(Juego* juego);
+	PicassoHelper();
 	static PicassoHelper* instance;
 	map<string,SDL_Texture*> mapByImagePath;
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h);
@@ -40,7 +40,7 @@ public:
 	void clearView();
 	void renderObject(const string &file, int x, int y, int w, int h);
 	void renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject);
-	static PicassoHelper* GetInstance(Juego* juego);
+	static PicassoHelper* GetInstance();
 };
 
 #endif /* MODELO_PICASSOHELPER_H_ */

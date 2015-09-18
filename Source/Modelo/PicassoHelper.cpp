@@ -8,7 +8,7 @@
 #include "PicassoHelper.h"
 PicassoHelper* PicassoHelper::instance = NULL;
 
-PicassoHelper::PicassoHelper(Juego* juego) {
+PicassoHelper::PicassoHelper() {
 	this->window = NULL;
 }
 
@@ -117,9 +117,9 @@ void PicassoHelper::clearView(){
 	SDL_SetRenderDrawColor(renderer,0,0,0,1);
 }
 
-PicassoHelper* PicassoHelper::GetInstance(Juego* juego) {
+PicassoHelper* PicassoHelper::GetInstance() {
 	if (!instance) {
-		instance = new PicassoHelper(juego);
+		instance = new PicassoHelper();
 	}
 	return instance;
 }
