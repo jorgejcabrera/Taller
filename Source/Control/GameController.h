@@ -13,18 +13,20 @@
 #include "../Modelo/Juego.h"
 #include "../Vista/JuegoVista.h"
 #include "../Modelo/DefaultSettings.h"
+#include "../Control/UtilsController.h"
 
 class GameController {
 
 private:
+	UtilsController* utils;
 	SDL_Event* event;
 	Juego* juego;
 	JuegoVista* juegoVista;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
-	pair<int,int> convertToCartesian(int xScreen,int yScreen);
 	int inicioDeCiclo;
+	void moveCharacter(int xScreen,int yScreen);
 
 public:
 	GameController();
