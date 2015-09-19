@@ -97,9 +97,9 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	pair<int,int>* offset = this->juego->getOffset();
 	cout << "offset " << offset->first << ","<<offset->second<<endl;
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen+offset->first,yScreen+offset->second);
-	cout << "la coordenada cartesiana es: " << cartesianPosition.first << "," << cartesianPosition.second<<endl;
 	bool correctPosition = false;
 
+	cout << "la coordenada cartesiana es: " << cartesianPosition.first << "," << cartesianPosition.second<<endl;
 	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
 	if( cartesianPosition.first < 0 ){
 		cartesianPosition.first = 0;
@@ -115,6 +115,8 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 		cartesianPosition.second = DefaultSettings::getMapHeight() - 1;
 		correctPosition = true;
 	}
+	cout << "la coordenada cartesiana es: " << cartesianPosition.first << "," << cartesianPosition.second<<endl;
+
 
 	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
 	if(correctPosition){

@@ -53,7 +53,7 @@ void Juego::setDestinoProtagonista(int x,int y, int screenPosX, int screenPosY){
 	//Actualiza las coordenadas cartesianas del protagonista
 	this->protagonista->setPosition(x,y);
 	//Actualizo las coordenadas de pantalla del protagonista
-	this->protagonista->setScreenPosition(screenPosX,screenPosY);
+	this->protagonista->setScreenPosition(screenPosX - this->offset.first,screenPosY - this->offset.second);
 }
 
 void Juego::terminarJuego(){
