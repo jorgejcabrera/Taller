@@ -28,8 +28,8 @@ class DefaultSettings {
 		static const string AGE_OF_EMPIRES;
 		static const string IMAGE_TILES_PATH;
 		static const string IMAGE_PERSONAJES_PATH;
-		static const int MAP_WIDTH = 25;							//esto vendría a ser el eje x
-		static const int MAP_HEIGHT = 25 ;							//esto viene a ser el eje y
+		static const int MAP_WIDTH = 20;							//esto vendría a ser el eje x
+		static const int MAP_HEIGHT = 20 ;							//esto viene a ser el eje y
 		static const int MEDIUM_SIZE = 3;
 		static const int VELOCIDAD_SCROLL_UNO = 10;
 		static const int VELOCIDAD_SCROLL_DOS = 30;
