@@ -41,7 +41,10 @@ void GameController::obtenerMouseInput(){
 
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
-	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
+	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
+	pair<int,int> offset;
+	offset.first = 0;
+	offset.second = 0;
 	juego->actualizarOffset(offset.first,offset.second);
 }
 
