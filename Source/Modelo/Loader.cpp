@@ -10,6 +10,8 @@
 #include <map>
 #include <string>
 #include <stack>
+#include <sstream>
+#include <stdlib.h>
 
 Loader* Loader::instance = NULL;
 
@@ -39,7 +41,7 @@ void Loader::load() {
 
 	/* Initialize parser */
 	if(!yaml_parser_initialize(&parser)) log("Failed to initialize parser", "WARNING");
-	if(fh == NULL) log("Failed to open file!", "ERROR");
+	if(fh == NULL) log("Failed to open file", "ERROR");
 	else {
 		yaml_parser_set_input_file(&parser, fh);
 
@@ -47,8 +49,8 @@ void Loader::load() {
 		/* START new code */
 		do {
 			if (!yaml_parser_parse(&parser, &event)) {
-				printf("Parser error %d\n", parser.error);
-				exit(EXIT_FAILURE);
+				parserError(&parser);
+				goto Cleanup;
 			}
 
 			switch(event.type)
@@ -159,7 +161,7 @@ void Loader::load() {
 		yaml_event_delete(&event);
 		/* END new code */
 
-		/* Cleanup */
+		Cleanup:
 		yaml_parser_delete(&parser);
 		fclose(fh);
 		fclose (pFile);
@@ -205,7 +207,98 @@ void Loader::log(string msg, string type){
 	fprintf (pFile, "%s %s Loader %s %s\n",userName, strTime, type.c_str(), msg.c_str());
 }
 
+void Loader::parserError(yaml_parser_t* parser){
+	char* pChar;
+	string str,str2;
+	stringstream sstr,sstr2;
+	switch (parser->error)
+		{
+		case YAML_MEMORY_ERROR:
+			sprintf(pChar,"Memory error: Not enough memory for parsing");
+			break;
 
+		case YAML_READER_ERROR:
+			if (parser->problem_value != -1) {
+				sprintf(pChar, "Reader error: %s: #%X at %d\n", parser->problem,
+						parser->problem_value, parser->problem_offset);
+				str = string(pChar);
+				log(str,"ERROR");
+			} else {
+				sprintf(pChar, "Reader error: %s at %d\n", parser->problem,
+						parser->problem_offset);
+				str = string(pChar);
+					log(str,"ERROR");
+			}
+			break;
+		case YAML_SCANNER_ERROR:
+			if (parser->context) {
+				sprintf(pChar,"Scanner error: %s at line %d, column %d\n"
+                      "%s at line %d, column %d\n", parser->context,
+                      parser->context_mark.line+1, parser->context_mark.column+1,
+                      parser->problem, parser->problem_mark.line+1,
+                      parser->problem_mark.column+1);
+				str = string(pChar);
+				log(str,"ERROR");
+			}
+			else {
+				sprintf(pChar,"Scanner error: %s at line %d, column %d\n",
+						parser->problem, parser->problem_mark.line+1,
+						parser->problem_mark.column+1);
+				str = string(pChar);
+				log(str,"ERROR");
+
+			}
+			break;
+
+		case YAML_PARSER_ERROR:
+			if (parser->context) {
+				sprintf(pChar,"Parser error: %s at line %d, column %d\n"
+                      "%s at line %d, column %d\n", parser->context,
+                      parser->context_mark.line+1, parser->context_mark.column+1,
+                      parser->problem, parser->problem_mark.line+1,
+                      parser->problem_mark.column+1);
+				str = string(pChar);
+				log(str,"ERROR");
+
+			}
+			else {
+				sprintf(pChar,"Parser error: %s at line %d, column %d\n",
+                      parser->problem, parser->problem_mark.line+1,
+                      parser->problem_mark.column+1);
+				str = string(pChar);
+				log(str,"ERROR");
+
+			}
+			break;
+
+		case YAML_COMPOSER_ERROR:
+			if (parser->context) {
+				sprintf(pChar,"Composer error: %s at line %d, column %d\n"
+                      "%s at line %d, column %d\n", parser->context,
+                      parser->context_mark.line+1, parser->context_mark.column+1,
+                      parser->problem, parser->problem_mark.line+1,
+                      parser->problem_mark.column+1);
+				str = string(pChar);
+				log(str,"ERROR");
+
+			}
+			else {
+				sprintf(pChar,"Composer error: %s at line %d, column %d\n",
+                      parser->problem, parser->problem_mark.line+1,
+                      parser->problem_mark.column+1);
+				str = string(pChar);
+				log(str,"ERROR");
+
+			}
+			break;
+
+		default:
+			/* Couldn't happen.*/
+			log("Internal error","ERROR");
+
+			break;
+		}
+}
 
 Loader* Loader::GetInstance() {
 	if (!instance) {

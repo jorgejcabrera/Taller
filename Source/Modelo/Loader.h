@@ -43,6 +43,7 @@ private:
 	int MEDIUM_SIZE;
 */	Loader();
 	static Loader* instance;
+	void parserError(yaml_parser_t* parser);
 	void load();
 
 public:

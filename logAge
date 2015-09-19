@@ -1,0 +1,70 @@
+nico 19-09-2015 05:34:55 Loader INFO STREAM START
+nico 19-09-2015 05:34:55 Loader INFO Start Document
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar pantalla
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar ancho
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 800
+nico 19-09-2015 05:34:55 Loader INFO Got scalar alto
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 600
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar configuracion
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar vel_personaje
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 3
+nico 19-09-2015 05:34:55 Loader INFO Got scalar margen_scroll
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 30
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar tipos
+nico 19-09-2015 05:34:55 Loader INFO Start Sequence
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar nombre
+nico 19-09-2015 05:34:55 Loader INFO Got scalar arbol
+nico 19-09-2015 05:34:55 Loader INFO Got scalar imagen
+nico 19-09-2015 05:34:55 Loader INFO Got scalar path/a/imagen.png
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar nombre
+nico 19-09-2015 05:34:55 Loader INFO Got scalar castillo
+nico 19-09-2015 05:34:55 Loader INFO Got scalar imagen
+nico 19-09-2015 05:34:55 Loader INFO Got scalar path/a/imagen.png
+nico 19-09-2015 05:34:55 Loader INFO Got scalar ancho_base
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 2
+nico 19-09-2015 05:34:55 Loader INFO Got scalar alto_base
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 2
+nico 19-09-2015 05:34:55 Loader INFO Got scalar pixel_ref_x
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 30
+nico 19-09-2015 05:34:55 Loader INFO Got scalar pixel_ref_y
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 40
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar nombre
+nico 19-09-2015 05:34:55 Loader INFO Got scalar soldado
+nico 19-09-2015 05:34:55 Loader INFO Got scalar imagen
+nico 19-09-2015 05:34:55 Loader INFO Got scalar path/a/imagen.png
+nico 19-09-2015 05:34:55 Loader INFO Got scalar fps
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 10
+nico 19-09-2015 05:34:55 Loader INFO Got scalar delay
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 5
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar nombre
+nico 19-09-2015 05:34:55 Loader INFO Got scalar juana_de_arco
+nico 19-09-2015 05:34:55 Loader INFO Got scalar imagen
+nico 19-09-2015 05:34:55 Loader INFO Got scalar path/a/imagen.png
+nico 19-09-2015 05:34:55 Loader INFO Got scalar fps
+nico 19-09-2015 05:34:55 Loader INFO Got scalar 10
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar nombre
+nico 19-09-2015 05:34:55 Loader INFO Got scalar tierra
+nico 19-09-2015 05:34:55 Loader INFO Got scalar imagen
+nico 19-09-2015 05:34:55 Loader INFO Got scalar path/a/imagen.png
+nico 19-09-2015 05:34:55 Loader INFO End Mapping
+nico 19-09-2015 05:34:55 Loader INFO Start Mapping
+nico 19-09-2015 05:34:55 Loader INFO Got scalar nombre
+nico 19-09-2015 05:34:55 Loader INFO Got scalar agua
+nico 19-09-2015 05:34:55 Loader INFO Got scalar imagen
+nico 19-09-2015 05:34:55 Loader ERROR Scanner error: while scanning a plain scalar at line 33, column 11
+found a tab character that violate intendation at line 35, column 1
+
