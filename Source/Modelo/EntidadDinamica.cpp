@@ -208,7 +208,7 @@ void EntidadDinamica::trasladarse(){
 		if(screenPosition.second < destinoY)
 			screenPosition.second += vecVelocity.second;
 	}
-	cout<<"la posicion es: "<<screenPosition.first<<";"<<screenPosition.second<<endl;
+//	cout<<"la posicion es: "<<screenPosition.first<<";"<<screenPosition.second<<endl;
 }
 
 int EntidadDinamica::getFramesPerSecond(){

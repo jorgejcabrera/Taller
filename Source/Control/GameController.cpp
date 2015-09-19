@@ -29,6 +29,7 @@ void GameController::obtenerMouseInput(){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
+			cout << "clickeamos en :"<< posMouseX << "," << posMouseY <<endl;
 			this->moveCharacter(posMouseX,posMouseY);
 		}
 		if( event->type == SDL_QUIT)
@@ -41,10 +42,10 @@ void GameController::obtenerMouseInput(){
 
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
-	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
-	pair<int,int> offset;
+	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
+	/*pair<int,int> offset;
 	offset.first = 0;
-	offset.second = 0;
+	offset.second = 0;*/
 	juego->actualizarOffset(offset.first,offset.second);
 }
 
@@ -93,7 +94,10 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 }
 
 void GameController::moveCharacter(int xScreen,int yScreen){
-	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen,yScreen);
+	pair<int,int>* offset = this->juego->getOffset();
+	cout << "offset " << offset->first << ","<<offset->second<<endl;
+	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen+offset->first,yScreen+offset->second);
+	cout << "la coordenada cartesiana es: " << cartesianPosition.first << "," << cartesianPosition.second<<endl;
 	bool correctPosition = false;
 
 	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
@@ -121,8 +125,8 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
-	cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
-	cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;
+	//cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
+	//cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;
 	return;
 }
 
