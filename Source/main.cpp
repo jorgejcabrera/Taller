@@ -11,7 +11,6 @@
 
 /* Includes */
 #include <time.h>
-#include "Vista/MapaVista.h"
 #include "Vista/JuegoVista.h"
 #include "Modelo/EntidadEstatica.h"
 #include "Modelo/Mapa.h"

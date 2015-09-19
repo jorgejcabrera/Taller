@@ -15,6 +15,9 @@ Juego::Juego() {
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
 	this->protagonista = new EntidadDinamica("soldado",10,4,4,50,50,15);
 	this->protagonista->setFramesInLineFile(7);
+	this->offset.first = 0;
+	this->offset.second = 0;
+
 	//this->protagonista->setDelay(2);
 
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);

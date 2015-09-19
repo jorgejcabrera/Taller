@@ -21,6 +21,7 @@ private:
 	string currentAge;
 	EntidadDinamica* protagonista;
 	bool juegoFinalizado;
+	pair<int,int> offset;
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 public:
 	Juego();
@@ -30,6 +31,7 @@ public:
 	void comenzarPartida();
 	void terminarJuego();
 	string getCurrentAge();
+	pair<int,int>* getOffset();
 	void setProtagonistaAt(int velocidad,int x,int y);
 	void setDestinoProtagonista(int x,int y, int screenPositionX, int screenPositionY);
 	void actualizarProtagonista();
