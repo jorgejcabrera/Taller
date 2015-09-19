@@ -44,6 +44,11 @@ string Juego::getCurrentAge(){
 	return this->currentAge;
 }
 
+void Juego::actualizarOffset(int offsetX,int offsetY){
+	this->offset.first = offsetX;
+	this->offset.second = offsetY;
+}
+
 void Juego::setDestinoProtagonista(int x,int y, int screenPosX, int screenPosY){
 	//Actualiza las coordenadas cartesianas del protagonista
 	this->protagonista->setPosition(x,y);

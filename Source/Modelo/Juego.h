@@ -28,6 +28,7 @@ public:
 	virtual ~Juego();
 	//Intenta cargar la conf del yaml y setear los atributos al mapa, si por algún motivo no los encuentra setea los valores por default
 	Mapa* getMap();
+	void actualizarOffset(int offsetX,int offsetY);
 	void comenzarPartida();
 	void terminarJuego();
 	string getCurrentAge();

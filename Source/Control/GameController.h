@@ -35,6 +35,7 @@ public:
 	void actualizarJuego();
 	void render();
 	void obtenerMouseInput();
+	pair<int,int> getOffset(int mouseX,int mouseY);
 	bool finDeJuego();
 	virtual ~GameController();
 	void delay();

@@ -42,6 +42,8 @@ void GameController::obtenerMouseInput(){
 
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
+	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
+	juego->actualizarOffset(offset.first,offset.second);
 }
 
 bool GameController::reiniciarJuego(){
@@ -55,6 +57,41 @@ bool GameController::finDeJuego(){
 
 void GameController::render(){
 	juegoVista->render();
+}
+
+pair<int,int> GameController::getOffset(int offSetX, int offSetY){
+	int posicionX = 0;
+	int posicionY = 0;
+	SDL_GetMouseState(&posicionX, &posicionY);
+
+	if (posicionX >= DefaultSettings::getMargenDerechoUno() && posicionX < DefaultSettings::getMargenDerechoDos() /*&& !(offSetX < DefaultSettings::getLimiteDerecho())*/) {
+		offSetX -= DefaultSettings::getVelocidadScrollUno();
+	}
+	if (posicionX >= DefaultSettings::getMargenDerechoDos() /*&& !(offSetX < DefaultSettings::getLimiteDerecho())*/) {
+		offSetX -= 1 * DefaultSettings::getVelocidadScrollDos();
+	}
+	if ((posicionX >= DefaultSettings::getMargenIzquierdoUno()) && (posicionX < DefaultSettings::getMargenIzquierdoDos()) /*&& !(offSetX > DefaultSettings::getLimiteIzquierdo())*/) {
+		offSetX += DefaultSettings::getVelocidadScrollUno();
+	}
+	if (posicionX <= DefaultSettings::getMargenIzquierdoDos() /*&& !(offSetX > DefaultSettings::getLimiteIzquierdo())*/) {
+		offSetX += DefaultSettings::getVelocidadScrollDos();
+	}
+	if ((posicionY <= DefaultSettings::getMargenSuperiorUno()) && (posicionY > DefaultSettings::getMargenSuperiorDos()) /*&& !((offSetY > DefaultSettings::getLimiteSuperior()))*/) {
+		offSetY += DefaultSettings::getVelocidadScrollUno();
+	}
+	if (posicionY <= DefaultSettings::getMargenSuperiorDos() /*&& !((offSetY > DefaultSettings::getLimiteSuperior()))*/) {
+		offSetY += DefaultSettings::getVelocidadScrollDos();
+	}
+	if (posicionY >= DefaultSettings::getMargenInferiorUno() && (posicionY < DefaultSettings::getMargenInferiorDos()) /*&& !((offSetY < DefaultSettings::getLimiteInferior()))*/) {
+		offSetY -= DefaultSettings::getVelocidadScrollUno();
+	}
+	if ((posicionY >= DefaultSettings::getMargenInferiorDos()) /*&& !((offSetY < DefaultSettings::getLimiteInferior()))*/) {
+		offSetY -= DefaultSettings::getVelocidadScrollDos();
+	}
+	pair<int,int> curretOffset;
+	curretOffset.first = offSetX;
+	curretOffset.second = offSetY;
+	return curretOffset;
 }
 
 void GameController::moveCharacter(int xScreen,int yScreen){
