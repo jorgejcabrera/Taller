@@ -26,10 +26,10 @@ private:
 	PicassoHelper* picassoHelper;
 	Juego* juego;
 	void drawIsometricMap();
-	void drawEntities();
+	void drawStaticEntities();
+	void drawDinamicEntities();
 public:
 	void render();
-	void renderProtagonista();
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 
