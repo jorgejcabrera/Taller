@@ -165,7 +165,7 @@ int EntidadDinamica::getLineSprite(Direccion dir){
 	case Este: return 0; break;
 	case Sureste: return 5; break;
 	case Sur: return 4; break;
-	case Suroeste: return 5; break;
+	case Suroeste: return 6; break;
 	case Oeste: return 7; break;
 	case Noroeste: return 3; break;
 	case Sindireccion: return 0; break;
@@ -188,15 +188,14 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 }
 
 void EntidadDinamica::trasladarse(){
-	if(distanciaEnX(destinoX) <= vecVelocity.first){
+	if(distanciaEnX(destinoX) <= vecVelocity.first)
 			screenPosition.first = destinoX;
-			caminando = false;
-	}
 
-	if(distanciaEnY(destinoY) <= vecVelocity.second){
+	if(distanciaEnY(destinoY) <= vecVelocity.second)
 			screenPosition.second = destinoY;
-			caminando = false;
-	}
+
+	if(distanciaEnX(destinoX) <= vecVelocity.first && distanciaEnY(destinoY) <= vecVelocity.first)
+		caminando = false;
 
 	if(caminando){
 		if(screenPosition.first > destinoX)
