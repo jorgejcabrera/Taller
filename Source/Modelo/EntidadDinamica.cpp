@@ -214,10 +214,13 @@ int EntidadDinamica::getFramesPerSecond(){
 	return this->framesPerSecond;
 }
 
-EntidadDinamica::~EntidadDinamica() {
-}
-
 void EntidadDinamica::setDelay(int delayFrames){
 	this->delay = delayFrames;
 }
 
+void EntidadDinamica::destruir(){
+	this->~EntidadDinamica();
+}
+
+EntidadDinamica::~EntidadDinamica() {
+}

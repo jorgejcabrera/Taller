@@ -20,6 +20,7 @@ private:
 
 public:
 	EntidadEstatica();
+	void destruir();
 	EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage);
 	EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable);
 	virtual ~EntidadEstatica();

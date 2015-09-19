@@ -18,8 +18,8 @@ using namespace std ;
 class Juego {
 private:
 	Mapa* mapa;
-	string currentAge;
 	EntidadDinamica* protagonista;
+	string currentAge;
 	bool juegoFinalizado;
 	pair<int,int> offset;
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);

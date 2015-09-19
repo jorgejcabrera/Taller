@@ -84,5 +84,11 @@ void Mapa::show(){
 }
 
 Mapa::~Mapa() {
+	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
+		(*it).second->destruir();
+	}
+	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
+		(*it).second->~Tile();
+	}
 }
 

@@ -44,7 +44,7 @@ pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 }
 
 UtilsController::~UtilsController() {
-	// TODO Auto-generated destructor stub
+	delete this->instance;
 }
 
 

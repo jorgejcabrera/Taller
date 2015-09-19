@@ -56,6 +56,7 @@ JuegoVista::JuegoVista(Juego* juego) {
 
 JuegoVista::~JuegoVista() {
 	this->picassoHelper->~PicassoHelper();
+	this->juego->~Juego();
 }
 
 

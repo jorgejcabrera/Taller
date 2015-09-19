@@ -90,19 +90,6 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h ,
 	SDL_RenderCopy(renderer, tex, &rectObject, &dst);
 }
 
-PicassoHelper::~PicassoHelper() {
-	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
-		SDL_DestroyTexture(it->second);
-	}
-	if (renderer != NULL){
-		SDL_DestroyRenderer(renderer);
-	}
-	if (window != NULL){
-			SDL_DestroyWindow(window);
-	}
-	SDL_Quit();
-}
-
 void PicassoHelper::exitError(const string &message) {
 	cout << message << " " << SDL_GetError() << endl;
 	this->~PicassoHelper();
@@ -139,4 +126,19 @@ pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 bool PicassoHelper::isFileExist(const string fileName){
     std::ifstream infile(fileName.c_str());
     return infile.good();
+}
+
+PicassoHelper::~PicassoHelper() {
+	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
+		SDL_DestroyTexture(it->second);
+	}
+
+	if (renderer != NULL){
+		SDL_DestroyRenderer(renderer);
+	}
+	if (window != NULL){
+		SDL_DestroyWindow(window);
+	}
+	//delete this->instance;
+	SDL_Quit();
 }

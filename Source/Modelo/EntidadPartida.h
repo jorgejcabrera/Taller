@@ -23,6 +23,7 @@ protected:
 public:
 	EntidadPartida();
 	virtual ~EntidadPartida();
+	void destruir();
 	int getWidth();
 	int getLength();
 	string getPathImage();

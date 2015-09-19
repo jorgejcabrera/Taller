@@ -37,5 +37,10 @@ void EntidadPartida::setPathImage(string path){
 	this->pathImage = path;
 }
 
+void EntidadPartida::destruir(){
+}
+
+
 EntidadPartida::~EntidadPartida() {
+	this->destruir();
 }

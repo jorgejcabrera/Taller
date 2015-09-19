@@ -60,6 +60,7 @@ class EntidadDinamica: public EntidadPartida {
 		int getLineSprite(Direccion dir);
 
 	public:
+		void destruir();
 		void setFramesInLineFile(int qty);
 		int getFramesInLineFile();
 		EntidadDinamica();

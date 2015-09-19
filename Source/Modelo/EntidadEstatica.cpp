@@ -28,6 +28,10 @@ EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool e
 		pathImage = DefaultSettings::imagePathBuildingsByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
 }
 
+void EntidadEstatica::destruir(){
+	this->~EntidadEstatica();
+}
+
 EntidadEstatica::~EntidadEstatica() {
 	// TODO Auto-generated destructor stub
 }
