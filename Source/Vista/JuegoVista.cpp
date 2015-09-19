@@ -22,11 +22,6 @@
 	}
 }
 
-	void JuegoVista::actualizarMapa() {
-		this->drawIsometricMap();
-
-	}
-
 void JuegoVista::drawEntities(){
 	pair<int,int> isometricPosition;
 	int offSetX = this->juego->getOffset()->first;
@@ -42,7 +37,7 @@ void JuegoVista::drawEntities(){
 void JuegoVista::render(){
 
 	picassoHelper->clearView();
-	actualizarMapa();
+	this->drawIsometricMap();
 	this->renderProtagonista();
 	drawEntities();
 	this->picassoHelper->renderView();
@@ -52,8 +47,6 @@ void JuegoVista::renderProtagonista(){
 	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
 	int offSetX = this->juego->getOffset()->first;
 	int offSetY = this->juego->getOffset()->second;
-
-
 	picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - DefaultSettings::getTileSize()/2 + offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
 }
 

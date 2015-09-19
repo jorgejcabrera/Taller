@@ -29,7 +29,6 @@ private:
 	void drawEntities();
 public:
 	void render();
-	void actualizarMapa();
 	void renderProtagonista();
 	JuegoVista(Juego* juego);
 	~JuegoVista();

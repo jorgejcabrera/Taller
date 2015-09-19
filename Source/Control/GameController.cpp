@@ -41,10 +41,10 @@ void GameController::obtenerMouseInput(){
 
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
-	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
-	pair<int,int> offset;
+	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
+	/*pair<int,int> offset;
 	offset.first = 0;
-	offset.second = 0;
+	offset.second = 0;*/
 	juego->actualizarOffset(offset.first,offset.second);
 }
 
@@ -121,8 +121,8 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
-	/*cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
-	cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;*/
+	cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
+	cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;
 	return;
 }
 
