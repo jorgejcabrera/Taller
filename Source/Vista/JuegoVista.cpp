@@ -75,7 +75,6 @@ void JuegoVista::render(){
 
 	picassoHelper->clearView();
 	actualizarMapa();
-	this->drawIsometricMap();
 	this->renderProtagonista();
 	drawEntities();
 	this->picassoHelper->renderView();

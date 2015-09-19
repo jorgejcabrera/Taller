@@ -24,6 +24,10 @@ Juego::Juego() {
 	protagonista->setInitialScreenPosition(isometricas.first + DefaultSettings::getTileSize() ,isometricas.second);
 }
 
+pair<int,int>* Juego::getOffset(){
+	return &this->offset;
+}
+
 Mapa* Juego::getMap(){
 	return this->mapa;
 }
