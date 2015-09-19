@@ -52,20 +52,42 @@ int DefaultSettings::getVelocidadScrollDos(){
 	return VELOCIDAD_SCROLL_DOS;
 }
 
-int DefaultSettings::getLimiteDerecho(){
-	return -SCREEN_WIDTH / 100 * 10;
+int DefaultSettings::getLimiteDerecho() {
+	double factor = TILE_SIZE * TILE_SIZE - (17 / 16);
+	int altura = sqrt(factor);
+	int widthMapaIsometric = altura * 2 * MAP_WIDTH;
+
+	if (widthMapaIsometric > SCREEN_WIDTH) {
+		return ((SCREEN_WIDTH - widthMapaIsometric) / 2) - TILE_SIZE;
+	} else {
+		return 0;
+	}
 }
 
-int DefaultSettings::getLimiteIzquierdo(){
-return  SCREEN_WIDTH / 100 * 10;
+int DefaultSettings::getLimiteIzquierdo() {
+	double factor = TILE_SIZE * TILE_SIZE - (17 / 16);
+	int altura = sqrt(factor);
+	int widthMapaIsometric = altura * 2 * MAP_WIDTH;
+	if (widthMapaIsometric > SCREEN_WIDTH) {
+		return ((widthMapaIsometric - SCREEN_WIDTH) / 2) - TILE_SIZE;
+	} else {
+		return 0;
+	}
 }
 
-int DefaultSettings::getLimiteInferior(){
-return - SCREEN_HEIGHT / 10;
+int DefaultSettings::getLimiteInferior() {
+	double factor = TILE_SIZE * TILE_SIZE - (17 / 16);
+	int altura = sqrt(factor);
+	int heightMapaIsometric = altura * MAP_HEIGHT;
+	if (heightMapaIsometric > SCREEN_HEIGHT) {
+		return (SCREEN_HEIGHT - heightMapaIsometric);
+	} else {
+		return TILE_SIZE/2;
+	}
 }
 
-int DefaultSettings::getLimiteSuperior(){
-	return SCREEN_HEIGHT / 10;
+int DefaultSettings::getLimiteSuperior() {
+	return 0;
 }
 
 int DefaultSettings::getMargenDerechoUno(){

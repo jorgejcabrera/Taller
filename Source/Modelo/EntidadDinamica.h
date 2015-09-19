@@ -38,18 +38,18 @@ class EntidadDinamica: public EntidadPartida {
 		pair<float,float> screenPosition;
 		int widthPixel;
 		int lengthPixel;
-		int framesPerSecond = 20;
-		float destinoX = 0;
-		float destinoY = 0;
-		int frame = 0;
-		int framesInLineFile = 5;
+		int framesPerSecond;
+		float destinoX;
+		float destinoY;
+		int frame;
+		int framesInLineFile;
 
 		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
-		int delay = 0;
+		int delay;
 		//variable de control para indicar si estoy en medio del periodo de delay
-		bool inDelayPeriod = false;
+		bool inDelayPeriod;
 		// indice de segundo del delay por el cual voy
-		int delayIndex = 0;
+		int delayIndex;
 
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
