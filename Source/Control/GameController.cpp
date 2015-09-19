@@ -96,7 +96,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 void GameController::moveCharacter(int xScreen,int yScreen){
 	pair<int,int>* offset = this->juego->getOffset();
 	cout << "offset " << offset->first << ","<<offset->second<<endl;
-	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen+offset->first,yScreen+offset->second);
+	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
 	bool correctPosition = false;
 
 	cout << "la coordenada cartesiana es: " << cartesianPosition.first << "," << cartesianPosition.second<<endl;
