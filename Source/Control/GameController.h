@@ -21,21 +21,21 @@ private:
 	UtilsController* utils;
 	SDL_Event* event;
 	Juego* juego;
-	JuegoVista* juegoVista;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
 	bool reiniciar;
 	int inicioDeCiclo;
 	void moveCharacter(int xScreen,int yScreen);
+	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:
 	GameController();
+	Juego* getJuego();
 	bool reiniciarJuego();
 	void actualizarJuego();
 	void render();
 	void obtenerMouseInput();
-	pair<int,int> getOffset(int mouseX,int mouseY);
 	bool finDeJuego();
 	virtual ~GameController();
 	void delay();

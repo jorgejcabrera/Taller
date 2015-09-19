@@ -25,8 +25,6 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Juego* juego;
-	int offSetX;
-	int offSetY;
 	void drawIsometricMap();
 	void drawEntities();
 public:

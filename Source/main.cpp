@@ -31,13 +31,17 @@ int main(int argc, char* argv[]) {
 		juegoTermina = true;
 		salir = false;
 		GameController* gController = new GameController();
+		JuegoVista* juegoVista = new JuegoVista(gController->getJuego());
 
 		while(! gController->finDeJuego() && !salir ){
+			//primero el controller actualiza el modelo
 			gController->obtenerMouseInput();
 			gController->actualizarJuego();
-			gController->render();
-			gController->delay();
 
+			//una vez actualizado el modelo la vista lo renderiza
+			juegoVista->render();
+
+			gController->delay();
 			salir = gController->reiniciarJuego();
 
 			if(salir)
@@ -45,6 +49,7 @@ int main(int argc, char* argv[]) {
 
 		}
 		gController->~GameController();
+		juegoVista->~JuegoVista();
 	}
 	return 0;
 }

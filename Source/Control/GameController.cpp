@@ -10,18 +10,17 @@
 GameController::GameController(){
 
 	this->utils = UtilsController::GetInstance();
-
 	this->salirDelJuego = false;
 	this->reiniciar = false;
-
 	this->juego = new Juego();
-	this->juegoVista = new JuegoVista(juego);
-
 	this->event = new SDL_Event();
-
 	this->posMouseX = 0;
 	this->posMouseY = 0;
 	this->inicioDeCiclo = 0;
+}
+
+Juego* GameController::getJuego(){
+	return this->juego;
 }
 
 void GameController::obtenerMouseInput(){
@@ -53,10 +52,6 @@ bool GameController::reiniciarJuego(){
 bool GameController::finDeJuego(){
 	this->inicioDeCiclo = SDL_GetTicks();
 	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
-}
-
-void GameController::render(){
-	juegoVista->render();
 }
 
 pair<int,int> GameController::getOffset(int offSetX, int offSetY){
@@ -123,8 +118,8 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
-	cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
-	cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;
+	/*cout << "posicion del personaje: " << cartesianPosition.first << ";" << cartesianPosition.second<<endl;
+	cout << "screen position: "<< juego->getProtagonista()->getScreenPosition()->first<<";"<<juego->getProtagonista()->getScreenPosition()->second<<endl;*/
 	return;
 }
 
@@ -136,7 +131,6 @@ void GameController::delay(){
 }
 GameController::~GameController() {
 	juego->~Juego();
-	juegoVista->~JuegoVista();
 	delete event;
 }
 
