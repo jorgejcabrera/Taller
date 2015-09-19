@@ -25,6 +25,7 @@ private:
 	map< string, string> * stage;
 	vector< map< string, string> >* entitys;
 	map< string, string> * mainCharacter;
+	FILE * pFile;
 
 
 //	map<void,void>* stage;
@@ -54,6 +55,7 @@ public:
 	map<string,int>* getConf();
 	map< string, string> * getStage();
 	map< string, string> * getMainCharacter();
+	void log(string msg, string type);
 /*	int getMargenScroll();
 	int getVelPersonaje();
 	int getTileSize();

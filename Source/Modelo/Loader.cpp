@@ -15,8 +15,6 @@ Loader* Loader::instance = NULL;
 
 namespace std {
 
-enum config { pantalla = 1, configuracion = 2, tipos = 3, escenario = 4 };
-
 Loader::Loader() {
 	screen = new map<string,int>();
 	conf = new map<string,int>();
@@ -35,57 +33,57 @@ void Loader::load() {
 	string map,key,scalarValue,value;
 	vector<pair<string,string> > nestedStructures;
 	pair<string,string> structure;
+    pFile = fopen ("logAge","w");
 
 
-	  /* Initialize parser */
-	  if(!yaml_parser_initialize(&parser))
-	    fputs("Failed to initialize parser!\n", stderr);
-	  if(fh == NULL)
-	    fputs("Failed to open file!\n", stderr);
 
-	  /* Set input file */
-	  yaml_parser_set_input_file(&parser, fh);
+	/* Initialize parser */
+	if(!yaml_parser_initialize(&parser)) log("Failed to initialize parser", "WARNING");
+	if(fh == NULL) log("Failed to open file!", "ERROR");
+	else {
+		yaml_parser_set_input_file(&parser, fh);
 
-	  /* START new code */
-	  do {
-	    if (!yaml_parser_parse(&parser, &event)) {
-	       printf("Parser error %d\n", parser.error);
-	       exit(EXIT_FAILURE);
-	    }
 
-	    switch(event.type)
-	    {
-	    case YAML_NO_EVENT: puts("No event!"); break;
-	    /* Stream start/end */
-	    case YAML_STREAM_START_EVENT: puts("STREAM START"); break;
-	    case YAML_STREAM_END_EVENT:   puts("STREAM END");   break;
-	    /* Block delimeters */
-	    case YAML_DOCUMENT_START_EVENT: puts("<b>Start Document</b>"); break;
-	    case YAML_DOCUMENT_END_EVENT:   puts("<b>End Document</b>");   break;
-	    case YAML_SEQUENCE_START_EVENT:
-	    	{
+		/* START new code */
+		do {
+			if (!yaml_parser_parse(&parser, &event)) {
+				printf("Parser error %d\n", parser.error);
+				exit(EXIT_FAILURE);
+			}
 
-	    		nestedStructures.push_back(pair<string,string>(key,"sequence"));
-	    		key="";
-	    		puts("<b>Start Sequence</b>");
-	    		break;
-	    	}
-	    case YAML_SEQUENCE_END_EVENT:
-	    	{
-	    		nestedStructures.pop_back();
-	    		puts("<b>End Sequence</b>");
-	    		break;
-	    	}
+			switch(event.type)
+			{
+			case YAML_NO_EVENT: log("No event!","INFO"); break;
+			/* Stream start/end */
+			case YAML_STREAM_START_EVENT: log("STREAM START","INFO"); break;
+			case YAML_STREAM_END_EVENT:   log("STREAM END","INFO");   break;
+		/* Block delimeters */
+			case YAML_DOCUMENT_START_EVENT: log("Start Document","INFO"); break;
+			case YAML_DOCUMENT_END_EVENT:   log("End Document","INFO");   break;
+			case YAML_SEQUENCE_START_EVENT:
+			{
 
-	    case YAML_MAPPING_START_EVENT:
-	    {
-	    	puts("<b>Start Mapping</b>");
-	    	nestedStructures.push_back(pair<string,string>(key,"map"));
-	    	key="";
-	    	break;
-	    }
+				nestedStructures.push_back(pair<string,string>(key,"sequence"));
+				key="";
+				log("Start Sequence","INFO");
+				break;
+			}
+			case YAML_SEQUENCE_END_EVENT:
+			{
+				nestedStructures.pop_back();
+				log("End Sequence","INFO");
+				break;
+			}
 
-	    case YAML_MAPPING_END_EVENT:
+			case YAML_MAPPING_START_EVENT:
+			{
+				log("Start Mapping","INFO");
+				nestedStructures.push_back(pair<string,string>(key,"map"));
+				key="";
+				break;
+			}
+
+			case YAML_MAPPING_END_EVENT:
 	    	{
 	    		structure = nestedStructures.at(nestedStructures.size()-1);
 				nestedStructures.pop_back();
@@ -101,72 +99,72 @@ void Loader::load() {
 					}
 
 				}
-		    	puts("<b>End Mapping</b>");
+		    	log("End Mapping","INFO");
 		    	break;
 	    	}
-	    /* Data */
-	    case YAML_ALIAS_EVENT:  printf("Got alias (anchor %s)\n", event.data.alias.anchor); break;
-	    case YAML_SCALAR_EVENT:
-	    {
-	    	scalarValue = string(reinterpret_cast<char*>(event.data.scalar.value));
-	    	printf("Got scalar %s\n", event.data.scalar.value);
+	    	/* Data */
+			case YAML_ALIAS_EVENT:  printf("Got alias (anchor %s)\n", event.data.alias.anchor); break;
+			case YAML_SCALAR_EVENT:
+			{
+				scalarValue = string(reinterpret_cast<char*>(event.data.scalar.value));
+				log(("Got scalar "+scalarValue),"INFO" );
 
-    		if ( key =="") key = scalarValue;
-    		else {
-    			value = scalarValue;
-    			structure = nestedStructures.at(1);
-    			//PANTALLA
-    			if (structure == pair<string,string>("pantalla","map")){
-    				screen->insert(pair<string,int>(key,atoi(value.c_str())));
-    			}
-    			//CONFIGURACION
-    			else if (structure == pair<string,string>("configuracion","map")){
-    		    	conf->insert(pair<string,int>(key,atoi(value.c_str())));
-    		    }
-    			//TIPOS
-    			else if (structure == pair<string,string>("tipos","sequence")){
-    				structure = nestedStructures.at(2);
+				if ( key =="") key = scalarValue;
+				else {
+					value = scalarValue;
+					structure = nestedStructures.at(1);
+					//PANTALLA
+					if (structure == pair<string,string>("pantalla","map")){
+						screen->insert(pair<string,int>(key,atoi(value.c_str())));
+					}
+					//CONFIGURACION
+					else if (structure == pair<string,string>("configuracion","map")){
+						conf->insert(pair<string,int>(key,atoi(value.c_str())));
+					}
+					//TIPOS
+					else if (structure == pair<string,string>("tipos","sequence")){
+						structure = nestedStructures.at(2);
 
-    				if ( structure == pair<string,string>("","map")){
-    					stringMap.operator [](key) = value;
-    				}
-    			}
+						if ( structure == pair<string,string>("","map")){
+							stringMap.operator [](key) = value;
+						}
+					}
 
-    			//ESCENARIO
-    			else if (structure == pair<string,string>("escenario","map")){
-    				//stage
-    				try{structure = nestedStructures.at(2);}
-    				catch(...){stage->operator [](key) = value;}
-    				//entitys
-    				if (structure == pair<string,string>("entidades","sequence")){
-        				try{structure = nestedStructures.at(3);}catch(...){}
-        				if (structure == pair<string,string>("","map")){
-        					stringMap.operator [](key) = value;
-        				}
-    				}
-    				//mainCharacter
-    				if (structure == pair<string,string>("protagonista","map")){
-    					mainCharacter->operator [](key) = value;
-    				}
+					//ESCENARIO
+					else if (structure == pair<string,string>("escenario","map")){
+						//stage
+						try{structure = nestedStructures.at(2);}
+						catch(...){stage->operator [](key) = value;}
+						//entitys
+						if (structure == pair<string,string>("entidades","sequence")){
+							try{structure = nestedStructures.at(3);}catch(...){}
+							if (structure == pair<string,string>("","map")){
+								stringMap.operator [](key) = value;
+							}
+						}
+						//mainCharacter
+						if (structure == pair<string,string>("protagonista","map")){
+							mainCharacter->operator [](key) = value;
+						}
 
-    		    }
-        		key = "";
-    		}
+					}
+					key = "";
+				}
 
-    	break;
-	    }
-	    }
-	    if(event.type != YAML_STREAM_END_EVENT)
-	      yaml_event_delete(&event);
-	  } while(event.type != YAML_STREAM_END_EVENT);
-	  yaml_event_delete(&event);
-	  /* END new code */
+				break;
+			}
+			}
+			if(event.type != YAML_STREAM_END_EVENT) yaml_event_delete(&event);
+		} while(event.type != YAML_STREAM_END_EVENT);
+		yaml_event_delete(&event);
+		/* END new code */
 
-	  /* Cleanup */
-	  yaml_parser_delete(&parser);
-	  fclose(fh);
-
-}
+		/* Cleanup */
+		yaml_parser_delete(&parser);
+		fclose(fh);
+		fclose (pFile);
+		}
+	}
 }
 
 int Loader::getScreenWidth(){
@@ -194,6 +192,19 @@ map< string, string>* Loader::getStage(){
 map< string, string>* Loader::getMainCharacter(){
 	return mainCharacter;
 }
+
+void Loader::log(string msg, string type){
+	time_t rawtime;
+	struct tm * timeinfo;
+	char strTime[80];
+	time (&rawtime);
+	timeinfo = localtime(&rawtime);
+	char *userName = getenv("LOGNAME");
+
+	strftime(strTime,80,"%d-%m-%Y %I:%M:%S",timeinfo);
+	fprintf (pFile, "%s %s Loader %s %s\n",userName, strTime, type.c_str(), msg.c_str());
+}
+
 
 
 Loader* Loader::GetInstance() {
