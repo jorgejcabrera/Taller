@@ -191,19 +191,24 @@ void EntidadDinamica::trasladarse(){
 	if(distanciaEnX(destinoX) <= vecVelocity.first){
 			screenPosition.first = destinoX;
 			caminando = false;
-		}
+	}
 
 	if(distanciaEnY(destinoY) <= vecVelocity.second){
 			screenPosition.second = destinoY;
 			caminando = false;
-		}
+	}
 
 	if(caminando){
-		if(screenPosition.first > destinoX) screenPosition.first -= vecVelocity.first;
-		if(screenPosition.first < destinoX) screenPosition.first += vecVelocity.first;
-		if(screenPosition.second > destinoY) screenPosition.second -= vecVelocity.second;
-		if(screenPosition.second < destinoY) screenPosition.second += vecVelocity.second;
+		if(screenPosition.first > destinoX)
+			screenPosition.first -= vecVelocity.first;
+		if(screenPosition.first < destinoX)
+			screenPosition.first += vecVelocity.first;
+		if(screenPosition.second > destinoY)
+			screenPosition.second -= vecVelocity.second;
+		if(screenPosition.second < destinoY)
+			screenPosition.second += vecVelocity.second;
 	}
+	cout<<"la posicion es: "<<screenPosition.first<<";"<<screenPosition.second<<endl;
 }
 
 int EntidadDinamica::getFramesPerSecond(){

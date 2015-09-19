@@ -17,7 +17,7 @@ void JuegoVista::drawIsometricMap(){
 		//transformo coordenadas cartesianas a isométricas
 		posY = (tileActual->getPosX()+tileActual->getPosY()) * DefaultSettings::getTileSize() / 2 + offsetY;
 		posX = (tileActual->getPosX()-tileActual->getPosY()) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
-		picassoHelper->renderObject(tileActual->getPathImage(),posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
+		this->picassoHelper->renderObject(tileActual->getPathImage(),posX,posY,  DefaultSettings::getTileSize() * 2, DefaultSettings::getTileSize());
 	}
 }
 
