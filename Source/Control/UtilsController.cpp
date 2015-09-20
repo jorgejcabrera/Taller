@@ -44,7 +44,8 @@ pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 }
 
 UtilsController::~UtilsController() {
-	delete this->instance;
+	//delete this->instance;
+	this->instance = NULL;
 }
 
 

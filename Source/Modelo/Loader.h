@@ -51,6 +51,7 @@ public:
 	static Loader* GetInstance();
 	int getScreenWidth();
 	int getScreenHeight();
+	void printDatos();
 	vector< map< string, string> >* getTypes();
 	vector< map< string, string> >* getEntitys();
 	map<string,int>* getConf();

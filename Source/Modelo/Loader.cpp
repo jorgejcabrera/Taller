@@ -28,6 +28,7 @@ Loader::Loader() {
 }
 
 void Loader::load() {
+	//FILE *fh = fopen("/home/jorlando/Documentos/repositorios/Taller/mapConfig.yml", "r");
 	FILE *fh = fopen("mapConfig.yml", "r");
 	yaml_parser_t parser;
 	yaml_event_t  event;   /* New variable */
@@ -304,13 +305,33 @@ Loader* Loader::GetInstance() {
 	if (!instance) {
 		instance = new Loader();
 		instance->load();
+		//instance->printDatos();
 	}
 	return instance;
 }
 
 
 Loader::~Loader() {
-	//Loader* Loader::instance = NULL;
+	//delete this->instance;
+	this->instance=NULL;
+}
+
+void Loader::printDatos(){
+	cout << "INICIO PRINT DATOS" << endl;
+	cout << "SCREEN: " << screen->size() << endl;
+	cout << "conf: " << conf->size() << endl;
+	cout << "stage: " << stage->size() << endl;
+	cout << "mainCharacter: " << mainCharacter->size() <<endl;
+
+	for (map<string,int>::iterator it=screen->begin(); it!=screen->end(); ++it)
+				cout <<"SCREEN: " << it->first << " => " << it->second << endl;
+	for (map<string,int>::iterator it=conf->begin(); it!=conf->end(); ++it)
+					cout <<"CONF: " << it->first << " => " << it->second << endl;
+	for (map< string, string>::iterator it=stage->begin(); it!=stage->end(); ++it)
+						cout <<"STAGE: " << it->first << " => " << it->second << endl;
+	for (map< string, string>::iterator it=mainCharacter->begin(); it!=mainCharacter->end(); ++it)
+						cout <<"mainCharacter: " << it->first << " => " << it->second << endl;
+	cout << "FIN PRINT DATOS" <<endl;
 }
 
 /* namespace std */

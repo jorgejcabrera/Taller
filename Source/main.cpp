@@ -29,29 +29,22 @@ int main(int argc, char* argv[]) {
 
 
 	while(reiniciar){
-		cout<<"hola"<<endl;
 		reiniciar = false;
-		salir = false;
 		GameController* gController = new GameController();
 		JuegoVista* juegoVista = new JuegoVista(gController->getJuego());
 
-		while(! gController->finDeJuego() && !salir ){
+		while(! gController->finDeJuego() && !reiniciar ){
 			//primero el controller actualiza el modelo
 			gController->obtenerMouseInput();
 			gController->actualizarJuego();
-
 			//una vez actualizado el modelo la vista lo renderiza
 			juegoVista->render();
-
 			gController->delay();
-			salir = gController->reiniciarJuego();
-
-			if(salir)
-				reiniciar = true;
+			reiniciar = gController->reiniciarJuego();
 
 		}
-		gController->~GameController();
 		juegoVista->~JuegoVista();
+		gController->~GameController();
 	}
 	return 0;
 }

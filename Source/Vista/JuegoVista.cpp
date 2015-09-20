@@ -56,7 +56,8 @@ JuegoVista::JuegoVista(Juego* juego) {
 
 JuegoVista::~JuegoVista() {
 	this->picassoHelper->~PicassoHelper();
-	this->juego->~Juego();
+	//No ejecuto el destructor porque lo hace el GameController
+	this->juego = NULL;
 }
 
 

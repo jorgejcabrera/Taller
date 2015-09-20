@@ -142,6 +142,6 @@ void GameController::delay(){
 GameController::~GameController() {
 	this->juego->~Juego();
 	this->utils->~UtilsController();
-	delete event;
+	//delete event;
 }
 
