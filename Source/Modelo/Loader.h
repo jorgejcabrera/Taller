@@ -41,10 +41,9 @@ private:
 	int MAP_WIDTH;							//esto vendría a ser el eje x
 	int MAP_HEIGHT;							//esto viene a ser el eje y
 	int MEDIUM_SIZE;
-*/	Loader();
+*/
 //	static Loader* instance;
 	void parserError(yaml_parser_t* parser);
-	void load();
 
 public:
 
@@ -68,7 +67,9 @@ public:
 	string imagePathByTypeAndAge(const string &object,const string &age);
 	string defaultImage();
 	bool isEntityTypeValid(const string &type);
-*/	virtual ~Loader();
+*/	Loader();
+	void load();
+	virtual ~Loader();
 };
 
 } /* namespace std */

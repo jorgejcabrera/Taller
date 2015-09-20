@@ -12,6 +12,7 @@
 #include "EntidadEstatica.h"
 #include "Tile.h"
 #include "DefaultSettings.h"
+#include "GameSettings.h"
 #include <iostream>
 #include <map>
 #include <list>
@@ -23,6 +24,7 @@ class Mapa {
 private:
 	map<pair<int,int>,EntidadPartida*> entidades;
 	map<pair<int,int>,Tile*> tiles;
+	GameSettings* gameSettings;
 public:
 	Mapa();
 	void show();

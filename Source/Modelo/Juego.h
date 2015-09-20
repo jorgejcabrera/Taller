@@ -11,6 +11,7 @@
 #include "Mapa.h"
 #include "EntidadDinamica.h"
 #include "../Modelo/DefaultSettings.h"
+#include "GameSettings.h"
 #include <map>
 
 using namespace std ;
@@ -21,6 +22,7 @@ private:
 	EntidadDinamica* protagonista;
 	string currentAge;
 	bool juegoFinalizado;
+	GameSettings* gameSettings;
 	pair<int,int> offset;
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 public:

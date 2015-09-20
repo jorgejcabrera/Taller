@@ -16,7 +16,7 @@
 #include <iostream>
 #include <map>
 #include <fstream>
-#include "Loader.h"
+#include "GameSettings.h"
 
 class PicassoHelper {
 private:

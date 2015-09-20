@@ -12,6 +12,7 @@
 #include "SDL2/SDL_image.h"
 #include "../Modelo/Juego.h"
 #include "../Vista/JuegoVista.h"
+#include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
 
@@ -26,6 +27,7 @@ private:
 	bool salirDelJuego;
 	bool reiniciar;
 	int inicioDeCiclo;
+	GameSettings* gameSettings;
 	void moveCharacter(int xScreen,int yScreen);
 	pair<int,int> getOffset(int mouseX,int mouseY);
 

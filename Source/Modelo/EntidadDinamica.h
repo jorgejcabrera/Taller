@@ -10,6 +10,7 @@
 
 #include "EntidadPartida.h"
 #include "DefaultSettings.h"
+#include "GameSettings.h"
 #include "SDL2/SDL.h"
 #include <math.h>
 #include <iostream>
@@ -31,7 +32,7 @@ enum Direccion{
 
 class EntidadDinamica: public EntidadPartida {
 	private:
-
+		GameSettings* gameSettings;
 		int velocidad;
 		bool caminando;
 		pair<float,float> vecVelocity;

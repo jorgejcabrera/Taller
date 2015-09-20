@@ -9,6 +9,7 @@
 #define SOURCE_CONTROL_UTILSCONTROLLER_H_
 #include <iostream>
 #include "../Modelo/DefaultSettings.h"
+#include "../Modelo/GameSettings.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ class UtilsController {
 private:
 	UtilsController();
 	static UtilsController* instance;
+	GameSettings* gameSettings;
 
 public:
 	static UtilsController* GetInstance();

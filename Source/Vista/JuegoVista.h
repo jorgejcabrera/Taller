@@ -14,6 +14,7 @@
 #include "../Modelo/PicassoHelper.h"
 #include "../Modelo/EntidadEstatica.h"
 #include "SDL2/SDL_image.h"
+#include "../Modelo/GameSettings.h"
 
 #include <string>
 #include <iostream>
@@ -25,6 +26,7 @@ class JuegoVista {
 private:
 	PicassoHelper* picassoHelper;
 	Juego* juego;
+	GameSettings* gameSettings;
 	void drawIsometricMap();
 	void drawStaticEntities();
 	void drawDinamicEntities();

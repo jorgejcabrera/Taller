@@ -10,6 +10,8 @@
 
 #include "EntidadPartida.h"
 #include "DefaultSettings.h"
+#include "GameSettings.h"
+
 
 using namespace std;
 
@@ -17,6 +19,7 @@ class EntidadEstatica: public EntidadPartida {
 private:
 	bool edificable;
 	string tipo;
+	GameSettings* gameSettings;
 
 public:
 	EntidadEstatica();

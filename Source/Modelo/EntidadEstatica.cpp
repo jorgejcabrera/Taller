@@ -13,6 +13,7 @@ EntidadEstatica::EntidadEstatica() {
 }
 
 EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage){
+	gameSettings = GameSettings::GetInstance();
 	this->width = width;
 	this->length = length;
 	edificable = esEdificable;
@@ -25,7 +26,7 @@ EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool e
 		this->length = length;
 		edificable = esEdificable;
 		tipo = tipoEntidad;
-		pathImage = DefaultSettings::imagePathBuildingsByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
+		pathImage = gameSettings->imagePathBuildingsByTypeAndAge(tipoEntidad, gameSettings->getAgeOfEmpires());
 }
 
 void EntidadEstatica::destruir(){

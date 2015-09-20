@@ -10,11 +10,12 @@
 using namespace std;
 
 Tile::Tile(int x, int y ) {
+	gameSettings = GameSettings::GetInstance();
 	this->position.first = x;
 	this->position.second = y;
 	this->available = true;
 	this->superficie = grass;
-	this->pathImage = DefaultSettings::imagePathTilesByType("grass");
+	this->pathImage = gameSettings->imagePathTilesByType("grass");
 }
 
 void Tile::changeStatusAvailable(){

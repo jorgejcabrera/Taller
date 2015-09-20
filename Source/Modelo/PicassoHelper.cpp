@@ -24,7 +24,7 @@ void PicassoHelper::createContext(){
 
 	    // creamos la ventana
 //	    window = SDL_CreateWindow("Age of empires", 100, 100, loader->getScreenWidth(), loader->getScreenHeight(), SDL_WINDOW_SHOWN);
-	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
+	    window = SDL_CreateWindow("Age of empires", 100, 100, gameSettings->getScreenWidth(), gameSettings->getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
 	    }
@@ -59,7 +59,7 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	string fileImage = file.c_str();
 	if(!(isFileExist(fileImage)))
-		fileImage = DefaultSettings::defaultImage();
+		fileImage = gameSettings->defaultImage();
 
 	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
 	if (texture == NULL){
@@ -113,12 +113,12 @@ PicassoHelper* PicassoHelper::GetInstance() {
 pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
-	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
-	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
+	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
+	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
 
 	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  DefaultSettings::getTileSize();
-	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  DefaultSettings::getTileSize() / 2;
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize() / 2;
 	return isometricPosition;
 }
 

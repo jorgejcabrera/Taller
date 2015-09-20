@@ -99,58 +99,28 @@ return DefaultSettings::getMargenInferiorDos();
 }
 
 
-bool DefaultSettings::isEntityTypeValid(const string &type){
-	list<string> validTypes;
-
-	//Medieval_age
-	validTypes.push_back("Castle");
-	validTypes.push_back("Town_Center");
-
-	//Industrial_age
-	validTypes.push_back("Consulate");
-	validTypes.push_back("Town_Hall");
-	validTypes.push_back("Church");
-
-	//Personajes
-	validTypes.push_back("soldado");
-
-	//Tiles
-	validTypes.push_back("grass");
-	validTypes.push_back("ceramic");
-	validTypes.push_back("hielo");
-	validTypes.push_back("sand");
-
-	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
-	return found;
+bool GameSettings::isEntityTypeValid(const string &type){
+	return DefaultSettings::isEntityTypeValid(type);
 }
 
-string DefaultSettings::imagePathBuildingsByTypeAndAge(const string &object,const string &age){
-	if(isEntityTypeValid(object)){
-		return IMAGE_BASE_PATH +"/"+age+"/"+object+".png";
-	}
-	return NULL;
-}
-string DefaultSettings::defaultImage(){
-	return IMAGE_BASE_PATH +"/Tiles/" +"white_tile.bmp";
-
+string GameSettings::imagePathBuildingsByTypeAndAge(const string &object,const string &age){
+	return DefaultSettings::imagePathBuildingsByTypeAndAge(object,age);
 }
 
-string DefaultSettings::imagePathPersonajesByType(const string &object){
-	if(isEntityTypeValid(object)){
-			return IMAGE_BASE_PATH+"/"+IMAGE_PERSONAJES_PATH+"/"+object+".png";
-		}
-		return NULL;
+string GameSettings::defaultImage(){
+	return DefaultSettings::defaultImage();
 }
 
-string DefaultSettings::imagePathTilesByType(const string &object){
-	if(isEntityTypeValid(object)){
-			return IMAGE_BASE_PATH+"/"+IMAGE_TILES_PATH+"/"+object+".png";
-		}
-		return NULL;
+string GameSettings::imagePathPersonajesByType(const string &object){
+	return DefaultSettings::imagePathPersonajesByType(object);
 }
 
-string DefaultSettings::getAgeOfEmpires(){
-	return AGE_OF_EMPIRES;
+string GameSettings::imagePathTilesByType(const string &object){
+	return DefaultSettings::imagePathTilesByType(object);
+}
+
+string GameSettings::getAgeOfEmpires(){
+	return DefaultSettings::getAgeOfEmpires();
 }
 
 void GameSettings::SetGameSettings(){
