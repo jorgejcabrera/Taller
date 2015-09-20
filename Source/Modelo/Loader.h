@@ -42,13 +42,13 @@ private:
 	int MAP_HEIGHT;							//esto viene a ser el eje y
 	int MEDIUM_SIZE;
 */	Loader();
-	static Loader* instance;
+//	static Loader* instance;
 	void parserError(yaml_parser_t* parser);
 	void load();
 
 public:
 
-	static Loader* GetInstance();
+//	static Loader* GetInstance();
 	int getScreenWidth();
 	int getScreenHeight();
 	vector< map< string, string> >* getTypes();

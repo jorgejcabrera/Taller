@@ -29,7 +29,7 @@ private:
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject);
 	SDL_Texture* loadTexture(const string &file);
 	bool isFileExist(const string fileName);
-	Loader *loader;
+	GameSettings* gameSettings;
 
 public:
 	void createContext();

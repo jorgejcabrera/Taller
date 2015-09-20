@@ -20,10 +20,9 @@ void PicassoHelper::createContext(){
 
 	    //cargamos la conf. del archivo yaml
 
-	    loader = Loader::GetInstance();
+	    gameSettings = GameSettings::GetInstance();
 
 	    // creamos la ventana
-	    cout << "LOADER: " << loader->getScreenWidth() << loader->getScreenHeight() << endl;
 //	    window = SDL_CreateWindow("Age of empires", 100, 100, loader->getScreenWidth(), loader->getScreenHeight(), SDL_WINDOW_SHOWN);
 	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){

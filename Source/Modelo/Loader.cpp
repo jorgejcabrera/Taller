@@ -13,7 +13,7 @@
 #include <sstream>
 #include <stdlib.h>
 
-Loader* Loader::instance = NULL;
+//Loader* Loader::instance = NULL;
 
 namespace std {
 
@@ -300,13 +300,13 @@ void Loader::parserError(yaml_parser_t* parser){
 		}
 }
 
-Loader* Loader::GetInstance() {
+/*Loader* Loader::GetInstance() {
 	if (!instance) {
 		instance = new Loader();
 		instance->load();
 	}
 	return instance;
-}
+}*/
 
 
 Loader::~Loader() {
