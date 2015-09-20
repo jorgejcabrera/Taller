@@ -24,11 +24,13 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	bool juegoTermina = false;
+	bool reiniciar = true;
 	bool salir = false;
 
-	while(!juegoTermina){
-		juegoTermina = true;
+
+	while(reiniciar){
+		cout<<"hola"<<endl;
+		reiniciar = false;
 		salir = false;
 		GameController* gController = new GameController();
 		JuegoVista* juegoVista = new JuegoVista(gController->getJuego());
@@ -45,7 +47,7 @@ int main(int argc, char* argv[]) {
 			salir = gController->reiniciarJuego();
 
 			if(salir)
-				juegoTermina = false;
+				reiniciar = true;
 
 		}
 		gController->~GameController();
