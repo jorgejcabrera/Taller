@@ -28,16 +28,14 @@ Loader::Loader() {
 }
 
 void Loader::load() {
-	FILE *fh = fopen("mapConfig.yml", "r");
+	FILE *fh = fopen("firstMap.yml", "r");
 	yaml_parser_t parser;
-	yaml_event_t  event;   /* New variable */
+	yaml_event_t  event;
 	map< string, string> stringMap;
 	string map,key,scalarValue,value;
 	vector<pair<string,string> > nestedStructures;
 	pair<string,string> structure;
     pFile = fopen ("logAge","w");
-
-
 
 	/* Initialize parser */
 	if(!yaml_parser_initialize(&parser)) log("Failed to initialize parser", "WARNING");
@@ -59,7 +57,7 @@ void Loader::load() {
 			/* Stream start/end */
 			case YAML_STREAM_START_EVENT: log("STREAM START","INFO"); break;
 			case YAML_STREAM_END_EVENT:   log("STREAM END","INFO");   break;
-		/* Block delimeters */
+			/* Block delimeters */
 			case YAML_DOCUMENT_START_EVENT: log("Start Document","INFO"); break;
 			case YAML_DOCUMENT_END_EVENT:   log("End Document","INFO");   break;
 			case YAML_SEQUENCE_START_EVENT:
@@ -169,12 +167,9 @@ void Loader::load() {
 	}
 }
 
-int Loader::getScreenWidth(){
-	return screen->operator []("ancho");
-}
 
-int Loader::getScreenHeight(){
-	return screen->operator []("alto");
+map< string, int> * Loader::getScreen(){
+	return screen;
 }
 
 vector< map< string, string> >* Loader::getTypes(){
@@ -300,17 +295,9 @@ void Loader::parserError(yaml_parser_t* parser){
 		}
 }
 
-/*Loader* Loader::GetInstance() {
-	if (!instance) {
-		instance = new Loader();
-		instance->load();
-	}
-	return instance;
-}*/
 
 
 Loader::~Loader() {
-	//Loader* Loader::instance = NULL;
 }
 
 /* namespace std */

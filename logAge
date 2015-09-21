@@ -1,126 +1,126 @@
-nico 20-09-2015 05:38:10 Loader INFO STREAM START
-nico 20-09-2015 05:38:10 Loader INFO Start Document
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar pantalla
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar ancho
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 800
-nico 20-09-2015 05:38:10 Loader INFO Got scalar alto
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 600
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar configuracion
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar vel_personaje
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 3
-nico 20-09-2015 05:38:10 Loader INFO Got scalar margen_scroll
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 30
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tipos
-nico 20-09-2015 05:38:10 Loader INFO Start Sequence
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar arbol
-nico 20-09-2015 05:38:10 Loader INFO Got scalar imagen
-nico 20-09-2015 05:38:10 Loader INFO Got scalar path/a/imagen.png
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar castillo
-nico 20-09-2015 05:38:10 Loader INFO Got scalar imagen
-nico 20-09-2015 05:38:10 Loader INFO Got scalar path/a/imagen.png
-nico 20-09-2015 05:38:10 Loader INFO Got scalar ancho_base
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 2
-nico 20-09-2015 05:38:10 Loader INFO Got scalar alto_base
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 2
-nico 20-09-2015 05:38:10 Loader INFO Got scalar pixel_ref_x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 30
-nico 20-09-2015 05:38:10 Loader INFO Got scalar pixel_ref_y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 40
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar soldado
-nico 20-09-2015 05:38:10 Loader INFO Got scalar imagen
-nico 20-09-2015 05:38:10 Loader INFO Got scalar path/a/imagen.png
-nico 20-09-2015 05:38:10 Loader INFO Got scalar fps
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 10
-nico 20-09-2015 05:38:10 Loader INFO Got scalar delay
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 5
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar juana_de_arco
-nico 20-09-2015 05:38:10 Loader INFO Got scalar imagen
-nico 20-09-2015 05:38:10 Loader INFO Got scalar path/a/imagen.png
-nico 20-09-2015 05:38:10 Loader INFO Got scalar fps
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 10
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tierra
-nico 20-09-2015 05:38:10 Loader INFO Got scalar imagen
-nico 20-09-2015 05:38:10 Loader INFO Got scalar path/a/imagen.png
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar agua
-nico 20-09-2015 05:38:10 Loader INFO Got scalar imagen
-nico 20-09-2015 05:38:10 Loader INFO Got scalar path/a/imagen.png
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO End Sequence
-nico 20-09-2015 05:38:10 Loader INFO Got scalar escenario
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar nombre
-nico 20-09-2015 05:38:10 Loader INFO Got scalar orleans
-nico 20-09-2015 05:38:10 Loader INFO Got scalar size_x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 100
-nico 20-09-2015 05:38:10 Loader INFO Got scalar size_y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 100
-nico 20-09-2015 05:38:10 Loader INFO Got scalar entidades
-nico 20-09-2015 05:38:10 Loader INFO Start Sequence
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 10
-nico 20-09-2015 05:38:10 Loader INFO Got scalar y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 15
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tipo
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tierra
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 15
-nico 20-09-2015 05:38:10 Loader INFO Got scalar y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 20
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tipo
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tierra
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 10
-nico 20-09-2015 05:38:10 Loader INFO Got scalar y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 15
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tipo
-nico 20-09-2015 05:38:10 Loader INFO Got scalar agua
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 30
-nico 20-09-2015 05:38:10 Loader INFO Got scalar y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 55
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tipo
-nico 20-09-2015 05:38:10 Loader INFO Got scalar castillo
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO End Sequence
-nico 20-09-2015 05:38:10 Loader INFO Got scalar protagonista
-nico 20-09-2015 05:38:10 Loader INFO Start Mapping
-nico 20-09-2015 05:38:10 Loader INFO Got scalar tipo
-nico 20-09-2015 05:38:10 Loader INFO Got scalar juana_de_arco
-nico 20-09-2015 05:38:10 Loader INFO Got scalar x
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 50
-nico 20-09-2015 05:38:10 Loader INFO Got scalar y
-nico 20-09-2015 05:38:10 Loader INFO Got scalar 50
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO End Mapping
-nico 20-09-2015 05:38:10 Loader INFO End Document
-nico 20-09-2015 05:38:10 Loader INFO STREAM END
+nico 21-09-2015 06:25:41 Loader INFO STREAM START
+nico 21-09-2015 06:25:41 Loader INFO Start Document
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar pantalla
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar ancho
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 680
+nico 21-09-2015 06:25:41 Loader INFO Got scalar alto
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 1024
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar configuracion
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar vel_personaje
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 3
+nico 21-09-2015 06:25:41 Loader INFO Got scalar margen_scroll
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 30
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tipos
+nico 21-09-2015 06:25:41 Loader INFO Start Sequence
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar arbol
+nico 21-09-2015 06:25:41 Loader INFO Got scalar imagen
+nico 21-09-2015 06:25:41 Loader INFO Got scalar path/a/imagen.png
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar castillo
+nico 21-09-2015 06:25:41 Loader INFO Got scalar imagen
+nico 21-09-2015 06:25:41 Loader INFO Got scalar path/a/imagen.png
+nico 21-09-2015 06:25:41 Loader INFO Got scalar ancho_base
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 2
+nico 21-09-2015 06:25:41 Loader INFO Got scalar alto_base
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 2
+nico 21-09-2015 06:25:41 Loader INFO Got scalar pixel_ref_x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 30
+nico 21-09-2015 06:25:41 Loader INFO Got scalar pixel_ref_y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 40
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar soldado
+nico 21-09-2015 06:25:41 Loader INFO Got scalar imagen
+nico 21-09-2015 06:25:41 Loader INFO Got scalar path/a/imagen.png
+nico 21-09-2015 06:25:41 Loader INFO Got scalar fps
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 10
+nico 21-09-2015 06:25:41 Loader INFO Got scalar delay
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 5
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar juana_de_arco
+nico 21-09-2015 06:25:41 Loader INFO Got scalar imagen
+nico 21-09-2015 06:25:41 Loader INFO Got scalar path/a/imagen.png
+nico 21-09-2015 06:25:41 Loader INFO Got scalar fps
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 10
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tierra
+nico 21-09-2015 06:25:41 Loader INFO Got scalar imagen
+nico 21-09-2015 06:25:41 Loader INFO Got scalar path/a/imagen.png
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar agua
+nico 21-09-2015 06:25:41 Loader INFO Got scalar imagen
+nico 21-09-2015 06:25:41 Loader INFO Got scalar path/a/imagen.png
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO End Sequence
+nico 21-09-2015 06:25:41 Loader INFO Got scalar escenario
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar nombre
+nico 21-09-2015 06:25:41 Loader INFO Got scalar orleans
+nico 21-09-2015 06:25:41 Loader INFO Got scalar size_x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 100
+nico 21-09-2015 06:25:41 Loader INFO Got scalar size_y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 100
+nico 21-09-2015 06:25:41 Loader INFO Got scalar entidades
+nico 21-09-2015 06:25:41 Loader INFO Start Sequence
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 10
+nico 21-09-2015 06:25:41 Loader INFO Got scalar y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 15
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tipo
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tierra
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 15
+nico 21-09-2015 06:25:41 Loader INFO Got scalar y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 20
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tipo
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tierra
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 10
+nico 21-09-2015 06:25:41 Loader INFO Got scalar y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 15
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tipo
+nico 21-09-2015 06:25:41 Loader INFO Got scalar agua
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 30
+nico 21-09-2015 06:25:41 Loader INFO Got scalar y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 55
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tipo
+nico 21-09-2015 06:25:41 Loader INFO Got scalar castillo
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO End Sequence
+nico 21-09-2015 06:25:41 Loader INFO Got scalar protagonista
+nico 21-09-2015 06:25:41 Loader INFO Start Mapping
+nico 21-09-2015 06:25:41 Loader INFO Got scalar tipo
+nico 21-09-2015 06:25:41 Loader INFO Got scalar juana_de_arco
+nico 21-09-2015 06:25:41 Loader INFO Got scalar x
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 50
+nico 21-09-2015 06:25:41 Loader INFO Got scalar y
+nico 21-09-2015 06:25:41 Loader INFO Got scalar 50
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO End Mapping
+nico 21-09-2015 06:25:41 Loader INFO End Document
+nico 21-09-2015 06:25:41 Loader INFO STREAM END

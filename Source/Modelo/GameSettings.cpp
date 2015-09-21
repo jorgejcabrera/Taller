@@ -13,53 +13,82 @@ namespace std {
 
 GameSettings::GameSettings() {
 	loader = new Loader();
+	this->SCREEN_HEIGHT = -1;
+	this->SCREEN_WIDTH = -1;
+
 }
 
 int GameSettings::getScreenWidth(){
-	return DefaultSettings::getScreenWidth();
+	return (SCREEN_WIDTH > 1) ? SCREEN_WIDTH : DefaultSettings::getScreenWidth();
+}
 
-}
 int GameSettings::getScreenHeight(){
-	return DefaultSettings::getScreenHeight();
+	return (SCREEN_HEIGHT > 1) ? SCREEN_HEIGHT : DefaultSettings::getScreenHeight();
 }
+
 int GameSettings::getTileSize(){
 	return DefaultSettings::getTileSize();
 }
+
 int GameSettings::getLongMargenScroll(){
-	return DefaultSettings::getLongMargenScroll();
+	return (LONG_MARGEN_SCROLL > 1) ? LONG_MARGEN_SCROLL : DefaultSettings::getLongMargenScroll();
 }
+
 string GameSettings::getNombreEscenario(){
-	return DefaultSettings::getNombreEscenario();
+	return (NOMBRE_ESCENARIO == "") ? NOMBRE_ESCENARIO : DefaultSettings::getNombreEscenario();
 }
+
 int GameSettings::getMapWidth(){
-	return DefaultSettings::getMapWidth();
+	return (MAP_WIDTH > 0 ) ? MAP_WIDTH : DefaultSettings::getMapWidth();
 }
+
 int GameSettings::getMapHeight(){
-	return DefaultSettings::getMapHeight();
+	return (MAP_HEIGHT > 0 ) ? MAP_HEIGHT : DefaultSettings::getMapHeight();
 }
 
 int GameSettings::getMediumSize(){
-	return DefaultSettings::getMediumSize();
+	return (MEDIUM_SIZE > 0 ) ? MEDIUM_SIZE : DefaultSettings::getMediumSize();
 }
 
 int GameSettings::getVelocidadScrollUno(){
-	return DefaultSettings::getVelocidadScrollUno();
+	return (VELOCIDAD_SCROLL_UNO > 0) ? VELOCIDAD_SCROLL_UNO : DefaultSettings::getVelocidadScrollUno();
 }
 
 int GameSettings::getVelocidadScrollDos(){
-	return DefaultSettings::getVelocidadScrollDos();
+	return (VELOCIDAD_SCROLL_DOS > 0) ? VELOCIDAD_SCROLL_DOS : DefaultSettings::getVelocidadScrollDos();
 }
 
 int GameSettings::getLimiteDerecho() {
-	return DefaultSettings::getLimiteDerecho();
+	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
+	int altura = sqrt(factor);
+	int widthMapaIsometric = altura * 2 * this->getMapWidth();
+	if (widthMapaIsometric > this->getScreenWidth()) {
+		return ((this->getScreenWidth() - widthMapaIsometric) / 2) - this->getTileSize();
+	} else {
+		return 0;
+	}
 }
 
 int GameSettings::getLimiteIzquierdo() {
-	return DefaultSettings::getLimiteIzquierdo();
+	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
+	int altura = sqrt(factor);
+	int widthMapaIsometric = altura * 2 * this->getMapWidth();
+	if (widthMapaIsometric > this->getScreenWidth()) {
+		return ((widthMapaIsometric - this->getScreenWidth()) / 2) - this->getTileSize();
+	} else {
+		return 0;
+	}
 }
 
 int GameSettings::getLimiteInferior() {
-	return DefaultSettings::getLimiteInferior();
+	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
+	int altura = sqrt(factor);
+	int heightMapaIsometric = altura * this->getMapHeight();
+	if (heightMapaIsometric > this->getScreenHeight()) {
+		return (this->getScreenHeight() - heightMapaIsometric);
+	} else {
+		return this->getTileSize()/2;
+	}
 }
 
 int GameSettings::getLimiteSuperior() {
@@ -67,35 +96,36 @@ int GameSettings::getLimiteSuperior() {
 }
 
 int GameSettings::getMargenDerechoUno(){
-	return DefaultSettings::getMargenDerechoUno();
+	return ( this->getScreenWidth() - this->getLongMargenScroll() * 2);
 }
 
 int GameSettings::getMargenDerechoDos(){
-	return DefaultSettings::getMargenDerechoDos();
+	return (this->getScreenWidth() - this->getLongMargenScroll());
 }
 
 int GameSettings::getMargenIzquierdoUno(){
-return DefaultSettings::getMargenIzquierdoUno();
+	return this->getLongMargenScroll() * 2;
 }
 
 int GameSettings::getMargenIzquierdoDos(){
-return DefaultSettings::getMargenIzquierdoDos();
+	return this->getLongMargenScroll();
 }
 
 int GameSettings::getMargenSuperiorUno(){
-return DefaultSettings::getMargenSuperiorUno();
+	return this->getLongMargenScroll() * 2;
 }
 
 int GameSettings::getMargenSuperiorDos(){
-return DefaultSettings::getMargenSuperiorDos();
+	return this->getLongMargenScroll() * 2;
 }
 
 int GameSettings::getMargenInferiorUno(){
-return DefaultSettings::getMargenInferiorUno();
+	return (this->getScreenHeight() - 2 * this->getLongMargenScroll());
 }
 
+
 int GameSettings::getMargenInferiorDos(){
-return DefaultSettings::getMargenInferiorDos();
+	return (this->getScreenHeight() - this->getLongMargenScroll());
 }
 
 
@@ -124,7 +154,17 @@ string GameSettings::getAgeOfEmpires(){
 }
 
 void GameSettings::SetGameSettings(){
+	map<string,int>* mapSI = new map<string,int>();
+	vector< map< string, string> >* vectorMSS = new vector< map< string, string> >();
+	map< string, string> * mapSS = new map< string, string>();
+
 	loader->load();
+
+	mapSI = loader->getScreen();
+	this->SCREEN_HEIGHT = mapSI->operator []("ancho");
+	this->SCREEN_WIDTH = mapSI->operator []("alto");
+	mapSI->clear();
+
 }
 
 GameSettings* GameSettings::GetInstance() {
@@ -136,7 +176,7 @@ GameSettings* GameSettings::GetInstance() {
 }
 
 GameSettings::~GameSettings() {
-	// TODO Auto-generated destructor stub
+//	GameSettings* GameSettings::instance = NULL;
 }
 
 } /* namespace std */

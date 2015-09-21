@@ -56,7 +56,6 @@ int DefaultSettings::getLimiteDerecho() {
 	double factor = TILE_SIZE * TILE_SIZE - (17 / 16);
 	int altura = sqrt(factor);
 	int widthMapaIsometric = altura * 2 * MAP_WIDTH;
-
 	if (widthMapaIsometric > SCREEN_WIDTH) {
 		return ((SCREEN_WIDTH - widthMapaIsometric) / 2) - TILE_SIZE;
 	} else {
