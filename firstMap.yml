@@ -3,7 +3,7 @@ pantalla:
  alto: 1024
 
 configuracion: 
- vel_personaje : 3
+ vel_personaje : 1
  margen_scroll : 30
 
 tipos:
@@ -42,6 +42,6 @@ escenario:
   - {x: 10, y: 15, tipo: agua} 
   - {x: 30, y: 55, tipo: castillo} 
   protagonista: 
-   tipo: juana_de_arco 
-   x: 50 
-   y: 50 
+   tipo: soldado 
+   x: 7 
+   y: 14 

@@ -13,8 +13,6 @@ namespace std {
 
 GameSettings::GameSettings() {
 	loader = new Loader();
-	this->SCREEN_HEIGHT = -1;
-	this->SCREEN_WIDTH = -1;
 
 }
 
@@ -154,13 +152,18 @@ string GameSettings::getAgeOfEmpires(){
 }
 
 string GameSettings::getTipoProtagonista(){
-	return this->TIPO_PROTAGONISTA;
+	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
 }
+
 int GameSettings::getPosXProtagonista(){
-	return this->POS_X_PROTAGONISTA;
+	return (this->POS_X_PROTAGONISTA > 0) ? this->POS_X_PROTAGONISTA : DefaultSettings::getPosXProtagonista();
 }
 int GameSettings::getPosYProtagonista(){
-	return this->POS_Y_PROTAGONISTA;
+	return (this->POS_Y_PROTAGONISTA > 0) ? this->POS_Y_PROTAGONISTA : DefaultSettings::getPosYProtagonista();
+}
+
+int GameSettings::getVelocidadPersonaje	(){
+	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
 }
 
 void GameSettings::SetGameSettings(){
@@ -186,7 +189,7 @@ void GameSettings::SetGameSettings(){
 	this->MAP_WIDTH = atoi(mapSS->operator []("size_y").c_str());
 	mapSS->clear();
 	//seteo protagonista
-	mapSS = loader->getStage();
+	mapSS = loader->getMainCharacter();
 	this->TIPO_PROTAGONISTA = mapSS->operator []("tipo");
 	this->POS_X_PROTAGONISTA = atoi(mapSS->operator []("x").c_str());
 	this->POS_Y_PROTAGONISTA = atoi(mapSS->operator []("y").c_str());

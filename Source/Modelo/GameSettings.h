@@ -85,6 +85,7 @@ public:
 	string getTipoProtagonista();
 	int getPosXProtagonista();
 	int getPosYProtagonista();
+	int getVelocidadPersonaje();
 };
 
 } /* namespace std */
