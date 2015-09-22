@@ -16,7 +16,6 @@ namespace std {
 
 class EntidadSemiEstatica: public EntidadPartida {
 private:
-	pair<float,float> screenPosition;
 	int widthPixel;
 	int lengthPixel;
 	int framesPerSecond;
@@ -30,17 +29,13 @@ private:
 	bool inDelayPeriod = false;
 	// indice de segundo del delay por el cual voy
 	int delayIndex = 0;
-
 public:
 	EntidadSemiEstatica();
 	EntidadSemiEstatica(int width, int length,float widthPixel,float lengthPixels, int fps,const string &tipoEntidad);
 
-	void setInitialScreenPosition(float x,float y);
 	int getWidthPixel();
 	int getLengthPixel();
-	pair<float,float>* getScreenPosition();
 	pair<int,int>* getPosition();
-	void setScreenPosition(float x, float y);
 	void setFramesInLineFile(int qty);
 	int getFramesInLineFile();
 	int getFramesPerSecond();

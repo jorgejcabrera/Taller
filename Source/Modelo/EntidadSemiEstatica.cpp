@@ -42,12 +42,6 @@ int EntidadSemiEstatica::getLengthPixel(){
 	return this->lengthPixel;
 }
 
-void EntidadSemiEstatica::setInitialScreenPosition(float x,float y){
-	// no borrar por favor
-	this->screenPosition.first = x;
-	this->screenPosition.second = y;
-}
-
 //seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
 void EntidadSemiEstatica::setFramesInLineFile(int qty){
 	this->framesInLineFile = qty;
@@ -55,10 +49,6 @@ void EntidadSemiEstatica::setFramesInLineFile(int qty){
 
 int EntidadSemiEstatica::getFramesInLineFile(){
 	return this->framesInLineFile;
-}
-
-pair<float,float>* EntidadSemiEstatica::getScreenPosition(){
-	return &this->screenPosition;
 }
 
 pair<int,int>* EntidadSemiEstatica::getPosition(){
@@ -88,7 +78,7 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(){
 }
 
 void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
-	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), screenPosition.first - DefaultSettings::getTileSize()/2 + offSetX, screenPosition.second - this->getLengthPixel() / 2 + offSetY, this->widthPixel,this->lengthPixel, this->getPositionOfSprite());
+	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),(isometricPosition.first+ offSetX), (isometricPosition.second+ offSetY), this->widthPixel,this->lengthPixel, this->getPositionOfSprite());
 }
 
 EntidadSemiEstatica::~EntidadSemiEstatica() {

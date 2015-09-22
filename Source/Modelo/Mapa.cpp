@@ -10,7 +10,6 @@
 using namespace std;
 
 Mapa::Mapa() {
-
 	//barrido vertical del mapa
 	for(int i = 0; i < DefaultSettings::getMapHeight(); i++){
 		//barrido horizontal del mapa
@@ -21,7 +20,7 @@ Mapa::Mapa() {
 	}
 
 	//TODO sacar esto. Creamos un par de entidades para probar
-    EntidadEstatica* edificio = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Town_Hall",true);
+    EntidadEstatica* edificio = new EntidadEstatica(3,3,"Town_Hall",true);
     edificio->setPosition(2,10);
     this->pushEntity(edificio);
 
@@ -29,13 +28,10 @@ Mapa::Mapa() {
     molino->setPosition(10,10);
     molino->setFramesInLineFile(23);
     molino->setDelay(5);
-    pair<float,float> isometricasMolino = UtilsController::GetInstance()->getIsometricPosition(10,10);
-    molino->setInitialScreenPosition(isometricasMolino.first + DefaultSettings::getTileSize() ,isometricasMolino.second);
     this->pushEntity(molino);
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
-	//pair<int,int>* position = entidad->getPosition();
 	if(!this->positionAvailable(entidad)){
 		cout << "no se puede colocar la entidad, en este tile"<<endl;
 		return;
