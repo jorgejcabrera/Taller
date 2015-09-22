@@ -15,9 +15,8 @@ EntidadSemiEstatica::EntidadSemiEstatica() {
 }
 
 
-EntidadSemiEstatica::EntidadSemiEstatica(string path,float x,float y, float widthPixel, float lengthPixels, int fps) {
-		this->position.first = x;
-		this->position.second = y;
+EntidadSemiEstatica::EntidadSemiEstatica(string path,float widthPixel, float lengthPixels, int fps) {
+
 		//el ancho y el largo es siempre el del tamaño del tile
 		this->width = 3;
 		this->length = 3;

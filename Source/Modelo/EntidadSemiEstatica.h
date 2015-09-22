@@ -33,7 +33,7 @@ private:
 
 public:
 	EntidadSemiEstatica();
-	EntidadSemiEstatica(string path,float x,float y, float widthPixel, float lengthPixels, int fps);
+	EntidadSemiEstatica(string path, float widthPixel, float lengthPixels, int fps);
 
 	void setInitialScreenPosition(float x,float y);
 	int getWidthPixel();
