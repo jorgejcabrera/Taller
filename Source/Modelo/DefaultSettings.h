@@ -68,7 +68,7 @@ class DefaultSettings {
 		static int getMargenInferiorDos();
 		static string getTypeEntity(const string &type);
 		static bool isInList(list<string> listOfThings, const string &type);
-		list<string> getListOfAttributesCanSetByType(const string &type);
+		static list<string> getListOfAttributesCanSetByType(const string &type);
 };
 
 

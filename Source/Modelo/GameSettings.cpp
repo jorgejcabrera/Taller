@@ -181,7 +181,9 @@ GameSettings* GameSettings::GetInstance() {
 }
 
 GameSettings::~GameSettings() {
-//	GameSettings* GameSettings::instance = NULL;
+	for (list<EntidadEstatica*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
+			//(*it)->destruir();
+		}
 }
 
 //TODO: revisar este metodo
@@ -198,16 +200,36 @@ void GameSettings::processTypes(){
 void GameSettings::createEntidades(){
 	vector< map< string, string> > *entidades = loader->getEntitys();
 	for(vector< map< string, string> >::iterator it = entidades->begin(); it!= entidades->end(); ++it){
-			string tipo = this->getValueInMap(*it, "tipo");//  getValueInMap(it,"nombre");
-			cout << "tipo: " << tipo <<endl;
-			string tipox = this->getValueInMap(*it, "x");
-			string tipoy = this->getValueInMap(*it, "y");
-			cout << "x: " << tipox <<endl;
-			cout << "y: " << tipoy <<endl;
-			//string tipoPersonaje = DefaultSettings::getTypeEntity(const string &type);
-			//for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
-			  //  std::cout << itMap->first << " => " << itMap->second << '\n';
+			string nombre = this->getValueInMap(*it, "tipo");//  getValueInMap(it,"nombre");
+			string posXStr = this->getValueInMap(*it, "x");
+			string posYStr = this->getValueInMap(*it, "y");
+			if(nombre!="" and posXStr!= "" and posYStr!=""){
+				int posX = atoi(posXStr.c_str());
+				int posY = atoi(posYStr.c_str());
+				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
+				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
+				string imagen = this->getValueInMap(entidadObjeto, "imagen");
+
+				if(tipoEntidad == "edificios"){
+					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
+					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
+					if(anchoBase>0 and altoBase>0){
+						EntidadEstatica* edificioCreado = new EntidadEstatica(anchoBase,altoBase,nombre,true,imagen);
+						edificioCreado->setPosition(posX,posY);
+						this->edificios.push_back(edificioCreado);
+					}
+				}
+			}
+
+
+			//list<string> lista = DefaultSettings::getListOfAttributesCanSetByType(tipoEntidad);
+			//for (std::map<string,string>::iterator itMap=entidadObjeto.begin(); itMap!=entidadObjeto.end(); ++itMap)
+			  //std::cout << itMap->first << " => " << itMap->second << '\n';
 	}
+}
+
+list<EntidadEstatica*> GameSettings::getEntidadesEstaticas(){
+	return this->edificios;
 }
 
 string GameSettings::getValueInMap(map<string,string> myMap, const string &key){
@@ -216,6 +238,17 @@ string GameSettings::getValueInMap(map<string,string> myMap, const string &key){
 				return iterador2->second;
 	 }
 	 return "";
+}
+
+map<string,string> GameSettings::getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value){
+	map<string,string> objeto;
+	for(vector< map< string, string> >::iterator it = myVector.begin(); it!= myVector.end(); ++it){
+				string keyValue = this->getValueInMap(*it, key);
+				if(keyValue==value){
+					objeto = *it;
+				}
+		}
+	 return objeto;
 }
 
 bool GameSettings::isFileExist(const string fileName){

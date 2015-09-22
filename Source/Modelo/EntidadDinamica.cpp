@@ -12,7 +12,7 @@ EntidadDinamica::EntidadDinamica(){
 }
 
 EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
-	gameSettings = GameSettings::GetInstance();
+	//gameSettings = GameSettings::GetInstance();
 	this->caminando = false;
 	//son las coordenadas cartesianas de donde se va a posicionar el chabon
 	this->position.first = x;
@@ -36,7 +36,7 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	this->widthPixel = widthPixel;
 	this->lengthPixel = lengthPixels;
 	this->framesPerSecond = fps;
-	this->setPathImage(gameSettings->imagePathPersonajesByType(typeDinamicEntity));
+	//this->setPathImage(gameSettings->imagePathPersonajesByType(typeDinamicEntity));
 }
 
 SDL_Rect EntidadDinamica::getPositionOfSprite(){

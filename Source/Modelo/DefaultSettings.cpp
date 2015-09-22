@@ -130,6 +130,7 @@ bool DefaultSettings::isEntityTypeValid(const string &type){
 string DefaultSettings::getTypeEntity(const string &type){
 	list<string> edificios;
 	edificios.push_back("Castle");
+	edificios.push_back("castillo");
 	edificios.push_back("Town_Center");
 	edificios.push_back("Consulate");
 	edificios.push_back("Town_Hall");
@@ -146,7 +147,8 @@ string DefaultSettings::getTypeEntity(const string &type){
 	tiles.push_back("pasto");
 	tiles.push_back("ceramico");
 	tiles.push_back("hielo");
-	tiles.push_back("arena");
+	tiles.push_back("tierra");
+	tiles.push_back("agua");
 	if(isInList(tiles,type))
 		return "tiles";
 	return "";
@@ -154,7 +156,7 @@ string DefaultSettings::getTypeEntity(const string &type){
 
 list<string> DefaultSettings::getListOfAttributesCanSetByType(const string &type){
 	list<string> attributes;
-	attributes.push_back("path");
+	attributes.push_back("imagen");
 	if(type == "edificios"){
 		attributes.push_back("ancho_base");
 		attributes.push_back("alto_base");

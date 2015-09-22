@@ -10,6 +10,8 @@
 
 #include "Loader.h"
 #include "DefaultSettings.h"
+#include "EntidadEstatica.h"
+#include <list>
 #include <fstream>
 
 namespace std {
@@ -39,6 +41,7 @@ private:
 
 
 public:
+	list<EntidadEstatica*> edificios;
 	void SetGameSettings();
 	static GameSettings* GetInstance();
 	virtual ~GameSettings();
@@ -73,6 +76,9 @@ public:
 	int getMargenInferiorDos();
 	void createEntidades();
 	string getValueInMap(map<string,string> myMap, const string &key);
+	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
+	list<EntidadEstatica*> getEntidadesEstaticas();
+
 };
 
 } /* namespace std */

@@ -20,20 +20,13 @@ Mapa::Mapa() {
 		}
 	}
 
-	//TODO sacar esto. Creamos un par de entidades para probar
-    EntidadEstatica* torre = new EntidadEstatica(gameSettings->getMediumSize(),gameSettings->getMediumSize(),"Church",true);
-    torre->setPosition(0,0);
-    this->pushEntity(torre);
-	EntidadEstatica* castillo = new EntidadEstatica(gameSettings->getMediumSize(),gameSettings->getMediumSize(),"Consulate",true);
-    castillo->setPosition(9,2);
-    this->pushEntity(castillo);
-    EntidadEstatica* edificio = new EntidadEstatica(gameSettings->getMediumSize(),gameSettings->getMediumSize(),"Town_Hall",true);
-    edificio->setPosition(2,10);
-    this->pushEntity(edificio);
+	list<EntidadEstatica*> edificios = gameSettings->getEntidadesEstaticas();
+	for(list<EntidadEstatica*>::iterator it=edificios.begin(); it!=edificios.end(); ++it){
+		this->pushEntity(*it);
+	}
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
-	//pair<int,int>* position = entidad->getPosition();
 	if(!this->positionAvailable(entidad)){
 		cout << "no se puede colocar la entidad, en este tile"<<endl;
 		return;
