@@ -9,8 +9,6 @@
 #define MODELO_PICASSOHELPER_H_
 
 #include "SDL2/SDL.h"
-#include "../Modelo/DefaultSettings.h"
-#include "../Modelo/Juego.h"
 #include "EntidadPartida.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>

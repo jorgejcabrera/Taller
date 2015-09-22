@@ -7,7 +7,6 @@
 
 #include "Loader.h"
 
-//Loader* Loader::instance = NULL;
 
 namespace std {
 
@@ -30,7 +29,7 @@ void Loader::load() {
 	string map,key,scalarValue,value;
 	vector<pair<string,string> > nestedStructures;
 	pair<string,string> structure;
-    pFile = fopen ("logAge","w");
+    pFile = fopen ("logAge.log","w");
 
 	/* Initialize parser */
 	if(!yaml_parser_initialize(&parser)) log("Failed to initialize parser", "WARNING");
@@ -291,8 +290,8 @@ void Loader::parserError(yaml_parser_t* parser){
 }
 
 
-
 Loader::~Loader() {
 }
+
 
 /* namespace std */

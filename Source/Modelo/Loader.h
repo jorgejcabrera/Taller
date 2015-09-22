@@ -9,10 +9,9 @@
 #define LOADER_H_
 
 #include <yaml.h>
-#include "DefaultSettings.h"
 #include <iostream>
 #include <map>
-#include <string>
+//#include <string>
 #include <vector>
 #include <stack>
 #include <sstream>
@@ -32,8 +31,6 @@ private:
 	void parserError(yaml_parser_t* parser);
 
 public:
-
-
 	map< string, int> * getScreen();
 	vector< map< string, string> >* getTypes();
 	vector< map< string, string> >* getEntitys();

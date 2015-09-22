@@ -168,7 +168,6 @@ list<string> DefaultSettings::getListOfAttributesCanSetByType(const string &type
 	return attributes;
 }
 
-
 bool DefaultSettings::isInList(list<string> listOfThings, const string &type){
 	return (std::find(listOfThings.begin(), listOfThings.end(), type) != listOfThings.end());
 }

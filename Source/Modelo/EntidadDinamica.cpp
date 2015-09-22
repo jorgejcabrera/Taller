@@ -223,3 +223,6 @@ void EntidadDinamica::destruir(){
 
 EntidadDinamica::~EntidadDinamica() {
 }
+
+void EntidadDinamica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
+}

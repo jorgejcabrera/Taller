@@ -30,7 +30,7 @@ void JuegoVista::drawStaticEntities(){
 	for(map<pair<int,int>,EntidadPartida*>::iterator it=this->juego->getMap()->getEntities()->begin();it!=this->juego->getMap()->getEntities()->end();++it){
 		EntidadPartida* entidad = (*it).second;
 		isometricPosition = this->picassoHelper->getIsometricPosition(entidad);
-		this->picassoHelper->renderObject(entidad->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,entidad->getWidth() * 2 * gameSettings->getTileSize(), (entidad->getLength()-1) * gameSettings->getTileSize() * 2);
+		entidad->drawMe(isometricPosition,offSetX,offSetY);
 	}
 }
 
@@ -57,7 +57,8 @@ JuegoVista::JuegoVista(Juego* juego) {
 
 JuegoVista::~JuegoVista() {
 	this->picassoHelper->~PicassoHelper();
-	this->juego->~Juego();
+	//No ejecuto el destructor porque lo hace el GameController
+	this->juego = NULL;
 }
 
 

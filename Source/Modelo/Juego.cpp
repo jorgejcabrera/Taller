@@ -13,6 +13,7 @@ Juego::Juego() {
 	gameSettings = GameSettings::GetInstance();
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
+
 	this->currentAge = gameSettings->getAgeOfEmpires();
 	this->protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),gameSettings->getVelocidadPersonaje(),gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista(),50,50,15);
 	this->protagonista->setFramesInLineFile(7);

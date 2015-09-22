@@ -9,6 +9,10 @@
 #define SOURCE_MODELO_ENTIDADPARTIDA_H_
 
 #include <string>
+#include <iostream>
+#include <typeinfo>
+#include "DefaultSettings.h"
+#include "PicassoHelper.h"
 
 namespace std {
 
@@ -30,6 +34,7 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	pair<int,int>* getPosition();
+	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 	void restarSalud();
 };
 

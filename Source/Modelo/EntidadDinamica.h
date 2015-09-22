@@ -9,8 +9,6 @@
 #define SOURCE_MODELO_ENTIDADDINAMICA_H_
 
 #include "EntidadPartida.h"
-//#include "DefaultSettings.h"
-//#include "GameSettings.h"
 #include "SDL2/SDL.h"
 #include <math.h>
 #include <iostream>
@@ -83,6 +81,7 @@ class EntidadDinamica: public EntidadPartida {
 
 		void setScreenPosition(float x, float y);
 		void trasladarse();
+		void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */

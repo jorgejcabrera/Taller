@@ -10,6 +10,7 @@ PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper() {
 	this->window = NULL;
+	this->renderer = NULL;
 }
 
 void PicassoHelper::createContext(){
@@ -23,7 +24,7 @@ void PicassoHelper::createContext(){
 	    gameSettings = GameSettings::GetInstance();
 	    printf("width = %d ",gameSettings->getScreenWidth());
 	    // creamos la ventana
-//	    window = SDL_CreateWindow("Age of empires", 100, 100, loader->getScreenWidth(), loader->getScreenHeight(), SDL_WINDOW_SHOWN);
+
 	    window = SDL_CreateWindow("Age of empires", 100, 100, gameSettings->getScreenWidth(), gameSettings->getScreenHeight(), SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
@@ -138,6 +139,6 @@ PicassoHelper::~PicassoHelper() {
 	if (window != NULL){
 		SDL_DestroyWindow(window);
 	}
-	//delete this->instance;
 	SDL_Quit();
+	this->instance=NULL;
 }

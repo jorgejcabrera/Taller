@@ -10,9 +10,11 @@
 
 #include "EntidadPartida.h"
 #include "EntidadEstatica.h"
+#include "EntidadSemiEstatica.h"
 #include "Tile.h"
 #include "DefaultSettings.h"
 #include "GameSettings.h"
+#include "../Control/UtilsController.h"
 #include <iostream>
 #include <map>
 #include <list>
