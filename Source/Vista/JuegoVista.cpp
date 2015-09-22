@@ -30,6 +30,7 @@ void JuegoVista::drawStaticEntities(){
 		EntidadPartida* entidad = (*it).second;
 		isometricPosition = this->picassoHelper->getIsometricPosition(entidad);
 		this->picassoHelper->renderObject(entidad->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,entidad->getWidth() * 2 * DefaultSettings::getTileSize(), (entidad->getLength()-1) * DefaultSettings::getTileSize() * 2);
+		//entidad->drawMe(isometricPosition,offSetX,offSetY);
 	}
 }
 

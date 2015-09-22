@@ -16,14 +16,13 @@ EntidadSemiEstatica::EntidadSemiEstatica() {
 
 
 EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel, float lengthPixels,int fps,const string &tipoEntidad) {
-
-		//el ancho y el largo es siempre el del tamaño del tile
-		this->width = width;
-		this->length = length;
-		this->widthPixel = widthPixel;
-		this->lengthPixel = lengthPixels;
-		this->framesPerSecond = fps;
-		this->pathImage = DefaultSettings::imagePathBuildingsByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
+	//el ancho y el largo es siempre el del tamaño del tile
+	this->width = width;
+	this->length = length;
+	this->widthPixel = widthPixel;
+	this->lengthPixel = lengthPixels;
+	this->framesPerSecond = fps;
+	this->pathImage = DefaultSettings::imagePathBuildingsByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
 
 }
 
@@ -88,7 +87,7 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(){
 		return srcrect;
 }
 
-void EntidadSemiEstatica::dibujate(pair<int,int> isometricPosition, int offSetX, int offSetY){
+void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
 	//cout << "image " << this->getPathImage() <<" FIRST " << screenPosition.first << " OFSETX " << offSetX << " SECOND " << screenPosition.second  << "LENGTH PIXEL: " << this->getLengthPixel() << " TILE " << DefaultSettings::getTileSize() <<endl;
 	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), screenPosition.first - DefaultSettings::getTileSize()/2 + offSetX, screenPosition.second - this->getLengthPixel() / 2 + offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->getPositionOfSprite());
 	cout << "PASEEEE" << endl;
