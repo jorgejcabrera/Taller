@@ -88,7 +88,7 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(){
 }
 
 void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
-	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), screenPosition.first - DefaultSettings::getTileSize()/2 + offSetX, screenPosition.second - this->getLengthPixel() / 2 + offSetY, DefaultSettings::getTileSize(), DefaultSettings::getTileSize(), this->getPositionOfSprite());
+	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), screenPosition.first - DefaultSettings::getTileSize()/2 + offSetX, screenPosition.second - this->getLengthPixel() / 2 + offSetY, this->widthPixel,this->lengthPixel, this->getPositionOfSprite());
 }
 
 EntidadSemiEstatica::~EntidadSemiEstatica() {
