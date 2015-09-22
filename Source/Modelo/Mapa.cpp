@@ -30,6 +30,10 @@ Mapa::Mapa() {
     EntidadEstatica* edificio = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Town_Hall",true);
     edificio->setPosition(2,10);
     this->pushEntity(edificio);
+
+    EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),100,100,10,"molino");
+    molino->setPosition(3,3);
+    this->pushEntity(molino);
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){

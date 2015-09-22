@@ -13,7 +13,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = DefaultSettings::getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica("soldado",10,4,4,50,50,15);
+	this->protagonista = new EntidadDinamica("soldado",10,1,1,50,50,15);
 	this->protagonista->setFramesInLineFile(7);
 	this->offset.first = 0;
 	this->offset.second = 0;
