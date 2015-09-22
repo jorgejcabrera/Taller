@@ -140,8 +140,11 @@ void GameController::delay(){
 	}
 }
 GameController::~GameController() {
-	this->juego->~Juego();
+	//No ejecuto el destructor de juego porque lo hace el juegoVista
+	this->juego=NULL;
 	this->utils->~UtilsController();
+	this->gameSettings->~GameSettings();
+	//this->event = NULL;
 	//delete event;
 }
 

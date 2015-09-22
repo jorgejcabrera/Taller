@@ -61,5 +61,5 @@ escenario:
   - {x: 2, y: 10, tipo: Town_Hall}
   protagonista: 
    tipo: soldado 
-   x: 7 
-   y: 14 
+   x: 5 
+   y: 5 

@@ -16,6 +16,7 @@
 #include <stack>
 #include <sstream>
 #include <stdlib.h>
+#include <iostream>
 
 namespace std {
 
@@ -40,9 +41,7 @@ public:
 	void log(string msg, string type);
 	Loader();
 	void load();
-	virtual ~Loader();
+	~Loader();
 };
-
-} /* namespace std */
-
+}
 #endif /* LOADER_H_ */

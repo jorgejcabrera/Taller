@@ -13,6 +13,7 @@ namespace std {
 
 GameSettings::GameSettings() {
 	loader = new Loader();
+	loader->load();
 
 }
 
@@ -174,8 +175,6 @@ void GameSettings::SetGameSettings(){
 	map<string,int>* mapSI = new map<string,int>();
 	map< string, string> * mapSS = new map< string, string>();
 
-	loader->load();
-
 	// seteo screen
 	mapSI = loader->getScreen();
 	this->SCREEN_HEIGHT = mapSI->operator []("ancho");
@@ -216,8 +215,10 @@ GameSettings* GameSettings::GetInstance() {
 
 GameSettings::~GameSettings() {
 	for (list<EntidadEstatica*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
-			//(*it)->destruir();
+			(*it)->~EntidadEstatica();
 		}
+	//this->edificios = NULL;
+	this->instance =NULL;
 }
 
 //TODO: revisar este metodo

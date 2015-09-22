@@ -92,7 +92,6 @@ void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, i
 }
 
 EntidadSemiEstatica::~EntidadSemiEstatica() {
-	// TODO Auto-generated destructor stub
 }
 
 } /* namespace std */

@@ -19,13 +19,11 @@ void PicassoHelper::createContext(){
 	    	this->exitError("Error SDL_Init:");
 	    }
 
-	    //cargamos la conf. del archivo yaml
-
-	    gameSettings = GameSettings::GetInstance();
-	    printf("width = %d ",gameSettings->getScreenWidth());
+	    //cargamos la conf. del archivo yaml;
 	    // creamos la ventana
 
-	    window = SDL_CreateWindow("Age of empires", 100, 100, gameSettings->getScreenWidth(), gameSettings->getScreenHeight(), SDL_WINDOW_SHOWN);
+	    //window = SDL_CreateWindow("Age of empires", 100, 100, GameSettings::GetInstance()->getScreenWidth(), GameSettings::GetInstance()->getScreenHeight(), SDL_WINDOW_SHOWN);
+	    window = SDL_CreateWindow("Age of empires", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
 	    }
@@ -59,8 +57,8 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	string fileImage = file.c_str();
-	if(!(isFileExist(fileImage)))
-		fileImage = gameSettings->defaultImage();
+	//if(!(isFileExist(fileImage)))
+		//fileImage = gameSettings->defaultImage();
 
 	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
 	if (texture == NULL){
@@ -140,6 +138,7 @@ PicassoHelper::~PicassoHelper() {
 	if (window != NULL){
 		SDL_DestroyWindow(window);
 	}
+
 	SDL_Quit();
 	this->instance=NULL;
 }

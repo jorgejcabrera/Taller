@@ -54,7 +54,7 @@ JuegoVista::JuegoVista(Juego* juego) {
 }
 
 JuegoVista::~JuegoVista() {
-	//No ejecuto el destructor porque lo hace el GameController
+	this->juego->~Juego();
 	this->juego = NULL;
 }
 

@@ -8,7 +8,6 @@
 #include "Loader.h"
 
 namespace std {
-
 Loader::Loader() {
 	screen = new map<string,int>();
 	conf = new map<string,int>();
@@ -158,7 +157,6 @@ void Loader::load() {
 		fclose (pFile);
 		}
 	}
-}
 
 
 map< string, int> * Loader::getScreen(){
@@ -290,7 +288,6 @@ void Loader::parserError(yaml_parser_t* parser){
 
 
 Loader::~Loader() {
+
 }
-
-
-/* namespace std */
+}

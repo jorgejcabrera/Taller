@@ -12,8 +12,11 @@
 #include "SDL2/SDL_image.h"
 #include <iostream>
 #include <map>
+#include <string>
 #include <fstream>
-#include "GameSettings.h"
+//#include "GameSettings.h"
+
+using namespace std;
 
 class PicassoHelper {
 private:
@@ -26,7 +29,7 @@ private:
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject);
 	SDL_Texture* loadTexture(const string &file);
 	bool isFileExist(const string fileName);
-	GameSettings* gameSettings;
+	//GameSettings* gameSettings;
 
 public:
 	void createContext();
