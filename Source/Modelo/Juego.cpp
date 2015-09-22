@@ -14,7 +14,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = gameSettings->getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica("soldado",10,4,4,50,50,15);
+	this->protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),gameSettings->getVelocidadPersonaje(),gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista(),50,50,15);
 	this->protagonista->setFramesInLineFile(7);
 	this->protagonista->setPathImage(DefaultSettings::imagePathPersonajesByType("soldado"));
 	this->offset.first = 0;

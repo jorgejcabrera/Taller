@@ -34,6 +34,11 @@ class DefaultSettings {
 		static const int MEDIUM_SIZE = 3;
 		static const int VELOCIDAD_SCROLL_UNO = 10;
 		static const int VELOCIDAD_SCROLL_DOS = 30;
+		static const string TIPO_PROTAGONISTA;
+		static const int POS_X_PROTAGONISTA = 5;
+		static const int POS_Y_PROTAGONISTA = 5;
+		static const int VELOCIDAD_PERSONAJE = 10;
+
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
@@ -69,6 +74,10 @@ class DefaultSettings {
 		static string getTypeEntity(const string &type);
 		static bool isInList(list<string> listOfThings, const string &type);
 		static list<string> getListOfAttributesCanSetByType(const string &type);
+		static string getTipoProtagonista();
+		static int getPosXProtagonista();
+		static int getPosYProtagonista();
+		static int getVelocidadPersonaje();
 };
 
 

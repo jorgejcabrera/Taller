@@ -3,7 +3,7 @@ pantalla:
  alto: 1024
 
 configuracion: 
- vel_personaje : 3
+ vel_personaje : 10
  margen_scroll : 30
 
 tipos:
@@ -11,11 +11,26 @@ tipos:
   imagen: path/a/imagen.png
 
 - nombre: castillo
-  imagen: path/a/imagen.png
+  imagen: ../Taller/Images/Industrial_Age/castillo.png
   ancho_base: 2
   alto_base: 2
   pixel_ref_x: 30
   pixel_ref_y: 40
+
+- nombre: Church
+  imagen: ../Taller/Images/Industrial_Age/Church.png
+  ancho_base: 3
+  alto_base: 3
+  
+- nombre: Consulate
+  imagen: ../Taller/Images/Industrial_Age/Consulate.png
+  ancho_base: 3
+  alto_base: 3
+  
+- nombre: Town_Hall
+  imagen: ../Taller/Images/Industrial_Age/Town_Hall.png
+  ancho_base: 3
+  alto_base: 3
 
 - nombre: soldado
   imagen: path/a/imagen.png
@@ -31,7 +46,7 @@ tipos:
 
 - nombre: agua
   imagen: path/a/imagen.png
-
+  
 escenario:
   nombre: orleans
   size_x: 100
@@ -40,8 +55,11 @@ escenario:
   - {x: 10, y: 15, tipo: tierra}
   - {x: 15, y: 20, tipo: tierra} 
   - {x: 10, y: 15, tipo: agua} 
-  - {x: 30, y: 55, tipo: castillo} 
+  - {x: 10, y: 10, tipo: castillo}
+  - {x: 0, y: 0, tipo: Church} 
+  - {x: 9, y: 2, tipo: Consulate} 
+  - {x: 2, y: 10, tipo: Town_Hall}
   protagonista: 
-   tipo: juana_de_arco 
-   x: 50 
-   y: 50 
+   tipo: soldado 
+   x: 7 
+   y: 14 

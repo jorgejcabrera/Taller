@@ -18,18 +18,32 @@ namespace std {
 
 class GameSettings {
 private:
+	//pantalla:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
+	//configuracion:
+	int VELOCIDAD_PERSONAJE;
+	int LONG_MARGEN_SCROLL;
+	//escenario
+	string NOMBRE_ESCENARIO;
+	int MAP_WIDTH;
+	int MAP_HEIGHT;
+	//protagonista
+	string TIPO_PROTAGONISTA;
+	int POS_X_PROTAGONISTA;
+	int POS_Y_PROTAGONISTA;
+	//tipos
+	vector< map< string, string> >* tipos;
+	//entidades
+	vector< map< string, string> >* entidades;
+
+
 	int TILE_SIZE;
 	int CONF_VEL_PERSONAJE;
-	int LONG_MARGEN_SCROLL;
-	string NOMBRE_ESCENARIO;
 	string IMAGE_BASE_PATH;
 	string AGE_OF_EMPIRES;
 	string IMAGE_TILES_PATH;
 	string IMAGE_PERSONAJES_PATH;
-	int MAP_WIDTH;
-	int MAP_HEIGHT;
 	int MEDIUM_SIZE;
 	int VELOCIDAD_SCROLL_UNO;
 	int VELOCIDAD_SCROLL_DOS;
@@ -78,7 +92,10 @@ public:
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
 	list<EntidadEstatica*> getEntidadesEstaticas();
-
+	string getTipoProtagonista();
+	int getPosXProtagonista();
+	int getPosYProtagonista();
+	int getVelocidadPersonaje();
 };
 
 } /* namespace std */

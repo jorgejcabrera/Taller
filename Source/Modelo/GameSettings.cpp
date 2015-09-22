@@ -13,8 +13,6 @@ namespace std {
 
 GameSettings::GameSettings() {
 	loader = new Loader();
-	this->SCREEN_HEIGHT = -1;
-	this->SCREEN_WIDTH = -1;
 
 }
 
@@ -157,17 +155,53 @@ string GameSettings::getAgeOfEmpires(){
 	return DefaultSettings::getAgeOfEmpires();
 }
 
+string GameSettings::getTipoProtagonista(){
+	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
+}
+
+int GameSettings::getPosXProtagonista(){
+	return (this->POS_X_PROTAGONISTA > 0) ? this->POS_X_PROTAGONISTA : DefaultSettings::getPosXProtagonista();
+}
+int GameSettings::getPosYProtagonista(){
+	return (this->POS_Y_PROTAGONISTA > 0) ? this->POS_Y_PROTAGONISTA : DefaultSettings::getPosYProtagonista();
+}
+
+int GameSettings::getVelocidadPersonaje	(){
+	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
+}
+
 void GameSettings::SetGameSettings(){
 	map<string,int>* mapSI = new map<string,int>();
-	vector< map< string, string> >* vectorMSS = new vector< map< string, string> >();
 	map< string, string> * mapSS = new map< string, string>();
 
 	loader->load();
 
+	// seteo screen
 	mapSI = loader->getScreen();
 	this->SCREEN_HEIGHT = mapSI->operator []("ancho");
 	this->SCREEN_WIDTH = mapSI->operator []("alto");
 	mapSI->clear();
+	// seteo conf
+	mapSI = loader->getConf();
+	this->VELOCIDAD_PERSONAJE = mapSI->operator []("vel_personaje");
+	this->LONG_MARGEN_SCROLL = mapSI->operator []("margen_scroll");
+	mapSI->clear();
+	//seteo escenario
+	mapSS = loader->getStage();
+	this->NOMBRE_ESCENARIO = mapSS->operator []("orleans");
+	this->MAP_HEIGHT = atoi(mapSS->operator []("size_x").c_str());
+	this->MAP_WIDTH = atoi(mapSS->operator []("size_y").c_str());
+	mapSS->clear();
+	//seteo protagonista
+	mapSS = loader->getMainCharacter();
+	this->TIPO_PROTAGONISTA = mapSS->operator []("tipo");
+	this->POS_X_PROTAGONISTA = atoi(mapSS->operator []("x").c_str());
+	this->POS_Y_PROTAGONISTA = atoi(mapSS->operator []("y").c_str());
+	mapSS->clear();
+	//seteo entidades
+	this->entidades = loader->getEntitys();
+	//seteo tipos
+	this->tipos = loader->getTypes();
 
 }
 

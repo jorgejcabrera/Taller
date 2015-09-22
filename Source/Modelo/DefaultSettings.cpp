@@ -13,6 +13,7 @@ const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
+const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -199,6 +200,20 @@ string DefaultSettings::imagePathTilesByType(const string &object){
 
 string DefaultSettings::getAgeOfEmpires(){
 	return AGE_OF_EMPIRES;
+}
+
+string DefaultSettings::getTipoProtagonista(){
+	return TIPO_PROTAGONISTA;
+}
+int DefaultSettings::getPosXProtagonista(){
+	return POS_X_PROTAGONISTA;
+}
+int DefaultSettings::getPosYProtagonista(){
+	return POS_Y_PROTAGONISTA;
+}
+
+int DefaultSettings::getVelocidadPersonaje	(){
+	return VELOCIDAD_PERSONAJE;
 }
 
 DefaultSettings::~DefaultSettings() {
