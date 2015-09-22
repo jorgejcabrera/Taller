@@ -25,7 +25,7 @@ Mapa::Mapa() {
 
 
     EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
-    molino->setPosition(10,10);
+    molino->setPosition(0,4);
     molino->setFramesInLineFile(23);
     molino->setDelay(5);
     this->pushEntity(molino);

@@ -25,7 +25,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
 	bool reiniciar = true;
-	bool salir = false;
+	//bool salir = false;
 
 
 	while(reiniciar){
