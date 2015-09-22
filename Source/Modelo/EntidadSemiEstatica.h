@@ -9,6 +9,7 @@
 #define SOURCE_MODELO_ENTIDADSEMIESTATICA_H_
 
 #include "EntidadPartida.h"
+#include "PicassoHelper.h"
 #include "SDL2/SDL.h"
 
 namespace std {
