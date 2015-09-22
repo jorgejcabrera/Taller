@@ -13,6 +13,7 @@ const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
+const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -56,7 +57,6 @@ int DefaultSettings::getLimiteDerecho() {
 	double factor = TILE_SIZE * TILE_SIZE - (17 / 16);
 	int altura = sqrt(factor);
 	int widthMapaIsometric = altura * 2 * MAP_WIDTH;
-
 	if (widthMapaIsometric > SCREEN_WIDTH) {
 		return ((SCREEN_WIDTH - widthMapaIsometric) / 2) - TILE_SIZE;
 	} else {
@@ -124,38 +124,59 @@ return SCREEN_HEIGHT - LONG_MARGEN_SCROLL;
 
 
 bool DefaultSettings::isEntityTypeValid(const string &type){
-	list<string> validTypes;
+	string tipo = getTypeEntity(type);
+	return (tipo!="");
+}
 
-	//Medieval_age
-	validTypes.push_back("Castle");
-	validTypes.push_back("Town_Center");
+string DefaultSettings::getTypeEntity(const string &type){
+	list<string> edificios;
+	edificios.push_back("Castle");
+	edificios.push_back("castillo");
+	edificios.push_back("Town_Center");
+	edificios.push_back("Consulate");
+	edificios.push_back("Town_Hall");
+	edificios.push_back("Church");
+	if(isInList(edificios,type))
+		return "edificios";
 
-	//Industrial_age
-	validTypes.push_back("Consulate");
-	validTypes.push_back("Town_Hall");
-	validTypes.push_back("Church");
-	validTypes.push_back("Molino");
-	validTypes.push_back("molino");
+	list<string> personajes;
+	personajes.push_back("soldado");
+	if(isInList(personajes,type))
+		return "personajes";
 
+	list<string> tiles;
+	tiles.push_back("pasto");
+	tiles.push_back("ceramico");
+	tiles.push_back("hielo");
+	tiles.push_back("tierra");
+	tiles.push_back("agua");
+	if(isInList(tiles,type))
+		return "tiles";
+	return "";
+}
 
-	//Personajes
-	validTypes.push_back("soldado");
+list<string> DefaultSettings::getListOfAttributesCanSetByType(const string &type){
+	list<string> attributes;
+	attributes.push_back("imagen");
+	if(type == "edificios"){
+		attributes.push_back("ancho_base");
+		attributes.push_back("alto_base");
+	}else if (type == "personajes"){
+		attributes.push_back("fps");
+		attributes.push_back("delay");
+	}
+	return attributes;
+}
 
-	//Tiles
-	validTypes.push_back("grass");
-	validTypes.push_back("ceramic");
-	validTypes.push_back("hielo");
-	validTypes.push_back("sand");
-
-	bool found = (std::find(validTypes.begin(), validTypes.end(), type) != validTypes.end());
-	return found;
+bool DefaultSettings::isInList(list<string> listOfThings, const string &type){
+	return (std::find(listOfThings.begin(), listOfThings.end(), type) != listOfThings.end());
 }
 
 string DefaultSettings::imagePathBuildingsByTypeAndAge(const string &object,const string &age){
 	if(isEntityTypeValid(object)){
 		return IMAGE_BASE_PATH +"/"+age+"/"+object+".png";
 	}
-	return NULL;
+	return defaultImage();
 }
 string DefaultSettings::defaultImage(){
 	return IMAGE_BASE_PATH +"/Tiles/" +"white_tile.bmp";
@@ -164,20 +185,34 @@ string DefaultSettings::defaultImage(){
 
 string DefaultSettings::imagePathPersonajesByType(const string &object){
 	if(isEntityTypeValid(object)){
-			return IMAGE_BASE_PATH+"/"+IMAGE_PERSONAJES_PATH+"/"+object+".png";
-		}
-		return NULL;
+		return IMAGE_BASE_PATH+"/"+IMAGE_PERSONAJES_PATH+"/"+object+".png";
+	}
+	return defaultImage();
 }
 
 string DefaultSettings::imagePathTilesByType(const string &object){
 	if(isEntityTypeValid(object)){
 			return IMAGE_BASE_PATH+"/"+IMAGE_TILES_PATH+"/"+object+".png";
 		}
-		return NULL;
+	return defaultImage();
 }
 
 string DefaultSettings::getAgeOfEmpires(){
 	return AGE_OF_EMPIRES;
+}
+
+string DefaultSettings::getTipoProtagonista(){
+	return TIPO_PROTAGONISTA;
+}
+int DefaultSettings::getPosXProtagonista(){
+	return POS_X_PROTAGONISTA;
+}
+int DefaultSettings::getPosYProtagonista(){
+	return POS_Y_PROTAGONISTA;
+}
+
+int DefaultSettings::getVelocidadPersonaje	(){
+	return VELOCIDAD_PERSONAJE;
 }
 
 DefaultSettings::~DefaultSettings() {

@@ -9,13 +9,14 @@
 #define MODELO_PICASSOHELPER_H_
 
 #include "SDL2/SDL.h"
-#include "../Modelo/DefaultSettings.h"
-#include "EntidadPartida.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
 #include <map>
+#include <string>
 #include <fstream>
-#include "Loader.h"
+//#include "GameSettings.h"
+
+using namespace std;
 
 class PicassoHelper {
 private:
@@ -28,12 +29,12 @@ private:
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject);
 	SDL_Texture* loadTexture(const string &file);
 	bool isFileExist(const string fileName);
-	Loader *loader;
+	//GameSettings* gameSettings;
 
 public:
 	void createContext();
 	~PicassoHelper();
-	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
+	//pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 	void exitError(const string &message);
 	void renderView();
 	void clearView();

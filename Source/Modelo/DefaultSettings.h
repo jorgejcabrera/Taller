@@ -12,6 +12,7 @@
 #include <list>
 #include <algorithm>
 #include <math.h>
+#include <iostream>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ class DefaultSettings {
 	private:
 		static const int SCREEN_WIDTH = 1024;
 		//static const int SCREEN_HEIGHT = 860;
-		static const int SCREEN_HEIGHT = 680;
+		static const int SCREEN_HEIGHT = 800;
 		static const int TILE_SIZE = 40;
 		static const int CONF_VEL_PERSONAJE;
 		static const int LONG_MARGEN_SCROLL = 30;
@@ -33,6 +34,11 @@ class DefaultSettings {
 		static const int MEDIUM_SIZE = 3;
 		static const int VELOCIDAD_SCROLL_UNO = 10;
 		static const int VELOCIDAD_SCROLL_DOS = 30;
+		static const string TIPO_PROTAGONISTA;
+		static const int POS_X_PROTAGONISTA = 5;
+		static const int POS_Y_PROTAGONISTA = 5;
+		static const int VELOCIDAD_PERSONAJE = 10;
+
 	public:
 		DefaultSettings();
 		virtual ~DefaultSettings();
@@ -65,6 +71,13 @@ class DefaultSettings {
 		static int getMargenSuperiorDos();
 		static int getMargenInferiorUno();
 		static int getMargenInferiorDos();
+		static string getTypeEntity(const string &type);
+		static bool isInList(list<string> listOfThings, const string &type);
+		static list<string> getListOfAttributesCanSetByType(const string &type);
+		static string getTipoProtagonista();
+		static int getPosXProtagonista();
+		static int getPosYProtagonista();
+		static int getVelocidadPersonaje();
 };
 
 

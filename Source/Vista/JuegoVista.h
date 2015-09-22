@@ -11,9 +11,11 @@
 #include "SDL2/SDL.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Modelo/Juego.h"
-#include "../Modelo/PicassoHelper.h"
 #include "../Modelo/EntidadEstatica.h"
 #include "SDL2/SDL_image.h"
+#include "../Modelo/GameSettings.h"
+#include "../Modelo/PicassoHelper.h"
+#include "../Control/UtilsController.h"
 
 #include <string>
 #include <iostream>
@@ -23,8 +25,8 @@ using namespace std;
 
 class JuegoVista {
 private:
-	PicassoHelper* picassoHelper;
 	Juego* juego;
+	GameSettings* gameSettings;
 	void drawIsometricMap();
 	void drawStaticEntities();
 	void drawDinamicEntities();

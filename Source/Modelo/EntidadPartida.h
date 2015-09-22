@@ -11,6 +11,8 @@
 #include <string>
 #include <iostream>
 #include <typeinfo>
+#include "DefaultSettings.h"
+#include "PicassoHelper.h"
 
 namespace std {
 

@@ -7,28 +7,29 @@
 
 #include "Mapa.h"
 
-using namespace std;
-
 Mapa::Mapa() {
+	gameSettings = GameSettings::GetInstance();
 	//barrido vertical del mapa
-	for(int i = 0; i < DefaultSettings::getMapHeight(); i++){
+	for(int i = 0; i < gameSettings->getMapHeight(); i++){
 		//barrido horizontal del mapa
-		for(int j = 0; j < DefaultSettings::getMapWidth(); j++){
+		for(int j = 0; j < gameSettings->getMapWidth(); j++){
 			Tile* newTile =  new Tile(j,i);
 			this->tiles.insert(std::make_pair(std::make_pair(j,i),newTile));
 		}
 	}
 
-	//TODO sacar esto. Creamos un par de entidades para probar
-    EntidadEstatica* edificio = new EntidadEstatica(3,3,"Town_Hall",true);
-    edificio->setPosition(2,10);
-    this->pushEntity(edificio);
+	list<EntidadEstatica*> edificios = gameSettings->getEntidadesEstaticas();
+	for(list<EntidadEstatica*>::iterator it=edificios.begin(); it!=edificios.end(); ++it){
+		this->pushEntity(*it);
+	}
+
 
     EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
     molino->setPosition(10,10);
     molino->setFramesInLineFile(23);
     molino->setDelay(5);
     this->pushEntity(molino);
+
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
@@ -55,7 +56,7 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	if(!this->getTileAt(x,y)->isAvailable())
 		return false;
 	//TODO cambir esto por el ancho del y alto del mapa que lo tiene que tener el loader, que es quien parsea el YMAL
-	if( x > DefaultSettings::getMapWidth() || y > DefaultSettings::getMapHeight() || x < 0 || y < 0)
+	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0)
 		return false;
 	return true;
 }
@@ -85,7 +86,7 @@ void Mapa::show(){
 
 Mapa::~Mapa() {
 	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
-		(*it).second->destruir();
+		(*it).second->~EntidadPartida();
 	}
 	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
 		(*it).second->~Tile();

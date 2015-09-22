@@ -6,17 +6,8 @@
  */
 
 #include "Loader.h"
-#include <stack>
-#include <map>
-#include <string>
-#include <stack>
-#include <sstream>
-#include <stdlib.h>
-
-Loader* Loader::instance = NULL;
 
 namespace std {
-
 Loader::Loader() {
 	screen = new map<string,int>();
 	conf = new map<string,int>();
@@ -28,17 +19,15 @@ Loader::Loader() {
 }
 
 void Loader::load() {
-	//FILE *fh = fopen("/home/jorlando/Documentos/repositorios/Taller/mapConfig.yml", "r");
-	FILE *fh = fopen("mapConfig.yml", "r");
+	//FILE *fh = fopen("/home/jorlando/Documentos/repositorios/Taller/firstMap.yml", "r");
+	FILE *fh = fopen("firstMap.yml", "r");
 	yaml_parser_t parser;
-	yaml_event_t  event;   /* New variable */
+	yaml_event_t  event;
 	map< string, string> stringMap;
 	string map,key,scalarValue,value;
 	vector<pair<string,string> > nestedStructures;
 	pair<string,string> structure;
     pFile = fopen ("logAge.log","w");
-
-
 
 	/* Initialize parser */
 	if(!yaml_parser_initialize(&parser)) log("Failed to initialize parser", "WARNING");
@@ -60,7 +49,7 @@ void Loader::load() {
 			/* Stream start/end */
 			case YAML_STREAM_START_EVENT: log("STREAM START","INFO"); break;
 			case YAML_STREAM_END_EVENT:   log("STREAM END","INFO");   break;
-		/* Block delimeters */
+			/* Block delimeters */
 			case YAML_DOCUMENT_START_EVENT: log("Start Document","INFO"); break;
 			case YAML_DOCUMENT_END_EVENT:   log("End Document","INFO");   break;
 			case YAML_SEQUENCE_START_EVENT:
@@ -168,14 +157,10 @@ void Loader::load() {
 		fclose (pFile);
 		}
 	}
-}
 
-int Loader::getScreenWidth(){
-	return screen->operator []("ancho");
-}
 
-int Loader::getScreenHeight(){
-	return screen->operator []("alto");
+map< string, int> * Loader::getScreen(){
+	return screen;
 }
 
 vector< map< string, string> >* Loader::getTypes(){
@@ -301,37 +286,8 @@ void Loader::parserError(yaml_parser_t* parser){
 		}
 }
 
-Loader* Loader::GetInstance() {
-	if (!instance) {
-		instance = new Loader();
-		instance->load();
-		//instance->printDatos();
-	}
-	return instance;
-}
-
 
 Loader::~Loader() {
-	//delete this->instance;
-	this->instance=NULL;
+
 }
-
-void Loader::printDatos(){
-	cout << "INICIO PRINT DATOS" << endl;
-	cout << "SCREEN: " << screen->size() << endl;
-	cout << "conf: " << conf->size() << endl;
-	cout << "stage: " << stage->size() << endl;
-	cout << "mainCharacter: " << mainCharacter->size() <<endl;
-
-	for (map<string,int>::iterator it=screen->begin(); it!=screen->end(); ++it)
-				cout <<"SCREEN: " << it->first << " => " << it->second << endl;
-	for (map<string,int>::iterator it=conf->begin(); it!=conf->end(); ++it)
-					cout <<"CONF: " << it->first << " => " << it->second << endl;
-	for (map< string, string>::iterator it=stage->begin(); it!=stage->end(); ++it)
-						cout <<"STAGE: " << it->first << " => " << it->second << endl;
-	for (map< string, string>::iterator it=mainCharacter->begin(); it!=mainCharacter->end(); ++it)
-						cout <<"mainCharacter: " << it->first << " => " << it->second << endl;
-	cout << "FIN PRINT DATOS" <<endl;
 }
-
-/* namespace std */

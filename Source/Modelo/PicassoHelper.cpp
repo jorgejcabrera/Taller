@@ -19,13 +19,11 @@ void PicassoHelper::createContext(){
 	    	this->exitError("Error SDL_Init:");
 	    }
 
-	    //cargamos la conf. del archivo yaml
-
-	    loader = Loader::GetInstance();
-
+	    //cargamos la conf. del archivo yaml;
 	    // creamos la ventana
-	    //window = SDL_CreateWindow("Age of empires", 100, 100, loader->getScreenWidth(), loader->getScreenHeight(), SDL_WINDOW_SHOWN);
-	    window = SDL_CreateWindow("Age of empires", 100, 100, DefaultSettings::getScreenWidth(), DefaultSettings::getScreenHeight(), SDL_WINDOW_SHOWN);
+
+	    //window = SDL_CreateWindow("Age of empires", 100, 100, GameSettings::GetInstance()->getScreenWidth(), GameSettings::GetInstance()->getScreenHeight(), SDL_WINDOW_SHOWN);
+	    window = SDL_CreateWindow("Age of empires", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
 	    }
@@ -59,8 +57,8 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	string fileImage = file.c_str();
-	if(!(isFileExist(fileImage)))
-		fileImage = DefaultSettings::defaultImage();
+	//if(!(isFileExist(fileImage)))
+		//fileImage = gameSettings->defaultImage();
 
 	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
 	if (texture == NULL){
@@ -107,21 +105,22 @@ void PicassoHelper::clearView(){
 PicassoHelper* PicassoHelper::GetInstance() {
 	if (!instance) {
 		instance = new PicassoHelper();
+		instance->createContext();
 	}
 	return instance;
 }
 
-pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
+/*pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
-	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
-	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
+	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
+	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
 
 	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  DefaultSettings::getTileSize();
-	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  DefaultSettings::getTileSize() / 2;
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize() / 2;
 	return isometricPosition;
-}
+}*/
 
 bool PicassoHelper::isFileExist(const string fileName){
     std::ifstream infile(fileName.c_str());
@@ -139,8 +138,7 @@ PicassoHelper::~PicassoHelper() {
 	if (window != NULL){
 		SDL_DestroyWindow(window);
 	}
+
 	SDL_Quit();
-	//delete this->instance;
-	loader->~Loader();
 	this->instance=NULL;
 }

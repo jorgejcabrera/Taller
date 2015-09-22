@@ -1,9 +1,9 @@
 pantalla:
- ancho: 1024
- alto: 800
+ ancho: 680
+ alto: 1024
 
 configuracion: 
- vel_personaje : 3
+ vel_personaje : 10
  margen_scroll : 30
 
 tipos:
@@ -46,11 +46,11 @@ tipos:
 
 - nombre: agua
   imagen: path/a/imagen.png
-
+  
 escenario:
   nombre: orleans
-  size_x: 100
-  size_y: 100
+  size_x: 20
+  size_y: 20
   entidades:
   - {x: 10, y: 15, tipo: tierra}
   - {x: 15, y: 20, tipo: tierra} 
@@ -59,9 +59,7 @@ escenario:
   - {x: 0, y: 0, tipo: Church} 
   - {x: 9, y: 2, tipo: Consulate} 
   - {x: 2, y: 10, tipo: Town_Hall}
-  
-  
   protagonista: 
-   tipo: juana_de_arco 
-   x: 50 
-   y: 50 
+   tipo: soldado 
+   x: 5 
+   y: 5 

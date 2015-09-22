@@ -8,7 +8,7 @@
 #include "GameController.h"
 
 GameController::GameController(){
-
+	gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->salirDelJuego = false;
 	this->reiniciar = false;
@@ -60,36 +60,36 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	int posicionY = 0;
 	SDL_GetMouseState(&posicionX, &posicionY);
 
-	if (posicionX >= DefaultSettings::getMargenDerechoUno()	&& posicionX < DefaultSettings::getMargenDerechoDos() && !(offSetX < DefaultSettings::getLimiteDerecho())) {
-			offSetX -= DefaultSettings::getVelocidadScrollUno();
+	if (posicionX >= gameSettings->getMargenDerechoUno()	&& posicionX < gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
+			offSetX -= gameSettings->getVelocidadScrollUno();
 	}
 
-	if (posicionX >= DefaultSettings::getMargenDerechoDos() && !(offSetX < DefaultSettings::getLimiteDerecho())) {
-			offSetX -= 1 * DefaultSettings::getVelocidadScrollDos();
+	if (posicionX >= gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
+			offSetX -= 1 * gameSettings->getVelocidadScrollDos();
 	}
 
-	if ((posicionX > DefaultSettings::getMargenIzquierdoDos()) && (posicionX <= DefaultSettings::getMargenIzquierdoUno()) && !(offSetX > DefaultSettings::getLimiteIzquierdo())) {
-			offSetX += DefaultSettings::getVelocidadScrollUno();
+	if ((posicionX > gameSettings->getMargenIzquierdoDos()) && (posicionX <= gameSettings->getMargenIzquierdoUno()) && !(offSetX > gameSettings->getLimiteIzquierdo())) {
+			offSetX += gameSettings->getVelocidadScrollUno();
 		}
 
-	if (posicionX <= DefaultSettings::getMargenIzquierdoDos() && !(offSetX > DefaultSettings::getLimiteIzquierdo())) {
-			offSetX += DefaultSettings::getVelocidadScrollDos();
+	if (posicionX <= gameSettings->getMargenIzquierdoDos() && !(offSetX > gameSettings->getLimiteIzquierdo())) {
+			offSetX += gameSettings->getVelocidadScrollDos();
 	}
 
-	if ((posicionY <= DefaultSettings::getMargenSuperiorUno()) && (posicionY > DefaultSettings::getMargenSuperiorDos()) && !((offSetY > DefaultSettings::getLimiteSuperior()))) {
-			offSetY += DefaultSettings::getVelocidadScrollUno();
+	if ((posicionY <= gameSettings->getMargenSuperiorUno()) && (posicionY > gameSettings->getMargenSuperiorDos()) && !((offSetY > gameSettings->getLimiteSuperior()))) {
+			offSetY += gameSettings->getVelocidadScrollUno();
 	}
 
-	if (posicionY <= DefaultSettings::getMargenSuperiorDos() && !((offSetY > DefaultSettings::getLimiteSuperior()))) {
-		offSetY += DefaultSettings::getVelocidadScrollDos();
+	if (posicionY <= gameSettings->getMargenSuperiorDos() && !((offSetY > gameSettings->getLimiteSuperior()))) {
+		offSetY += gameSettings->getVelocidadScrollDos();
 	}
 
-	if (posicionY >= DefaultSettings::getMargenInferiorUno() && (posicionY < DefaultSettings::getMargenInferiorDos()) && !((offSetY < DefaultSettings::getLimiteInferior()))) {
-			offSetY -= DefaultSettings::getVelocidadScrollUno();
+	if (posicionY >= gameSettings->getMargenInferiorUno() && (posicionY < gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
+			offSetY -= gameSettings->getVelocidadScrollUno();
 	}
 
-	if ((posicionY >= DefaultSettings::getMargenInferiorDos()) && !((offSetY < DefaultSettings::getLimiteInferior()))) {
-		offSetY -= DefaultSettings::getVelocidadScrollDos();
+	if ((posicionY >= gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
+		offSetY -= gameSettings->getVelocidadScrollDos();
 	}
 
 	pair<int,int> curretOffset;
@@ -107,15 +107,15 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	if( cartesianPosition.first < 0 ){
 		cartesianPosition.first = 0;
 		correctPosition = true;
-	}else if( cartesianPosition.first >= DefaultSettings::getMapWidth()){
-		cartesianPosition.first = DefaultSettings::getMapWidth() - 1 ;
+	}else if( cartesianPosition.first >= gameSettings->getMapWidth()){
+		cartesianPosition.first = gameSettings->getMapWidth() - 1 ;
 		correctPosition = true;
 	}
 	if( cartesianPosition.second < 0){
 		cartesianPosition.second = 0;
 		correctPosition = true;
-	}else if( cartesianPosition.second >= DefaultSettings::getMapHeight()){
-		cartesianPosition.second = DefaultSettings::getMapHeight() - 1;
+	}else if( cartesianPosition.second >= gameSettings->getMapHeight()){
+		cartesianPosition.second = gameSettings->getMapHeight() - 1;
 		correctPosition = true;
 	}
 
@@ -140,8 +140,11 @@ void GameController::delay(){
 	}
 }
 GameController::~GameController() {
-	this->juego->~Juego();
+	//No ejecuto el destructor de juego porque lo hace el juegoVista
+	this->juego=NULL;
 	this->utils->~UtilsController();
+	this->gameSettings->~GameSettings();
+	//this->event = NULL;
 	//delete event;
 }
 

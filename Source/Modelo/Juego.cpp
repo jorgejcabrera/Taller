@@ -10,18 +10,21 @@
 using namespace std;
 
 Juego::Juego() {
+	gameSettings = GameSettings::GetInstance();
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
-	this->currentAge = DefaultSettings::getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica("soldado",10,1,1,50,50,15);
+
+	this->currentAge = gameSettings->getAgeOfEmpires();
+	this->protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),gameSettings->getVelocidadPersonaje(),gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista(),50,50,15);
 	this->protagonista->setFramesInLineFile(7);
+	this->protagonista->setPathImage(DefaultSettings::imagePathPersonajesByType("soldado"));
 	this->offset.first = 0;
 	this->offset.second = 0;
 
 	//this->protagonista->setDelay(2);
 
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
-	protagonista->setInitialScreenPosition(isometricas.first + DefaultSettings::getTileSize() ,isometricas.second);
+	protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
 }
 
 pair<int,int>* Juego::getOffset(){
@@ -66,16 +69,17 @@ bool Juego::getStatusPartida(){
 pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
-	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * DefaultSettings::getTileSize() + DefaultSettings::getScreenWidth() / 2;
-	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * DefaultSettings::getTileSize() / 2  ;
+	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
+	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
 
 	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth() - 1)  *  DefaultSettings::getTileSize();
-	isometricPosition.second = isometricPosition.second - (entidad->getLength() - 1) *  DefaultSettings::getTileSize() / 2;
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth() - 1)  *  gameSettings->getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength() - 1) *  gameSettings->getTileSize() / 2;
 	return isometricPosition;
 }
 
 Juego::~Juego() {
 	this->protagonista->~EntidadDinamica();
 	this->mapa->~Mapa();
+	//this->gameSettings->~GameSettings();
 }

@@ -44,5 +44,4 @@ void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int of
 }
 
 EntidadPartida::~EntidadPartida() {
-	this->destruir();
 }
