@@ -82,6 +82,7 @@ class EntidadDinamica: public EntidadPartida {
 
 		void setScreenPosition(float x, float y);
 		void trasladarse();
+		void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */

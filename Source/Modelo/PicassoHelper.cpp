@@ -47,6 +47,7 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 }
 
 void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject){
+		cout << "ENTREEE" << file <<endl;
 		SDL_Texture* textureExists;
 		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
 		if(it != mapByImagePath.end()){

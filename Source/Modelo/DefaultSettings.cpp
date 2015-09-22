@@ -135,6 +135,7 @@ bool DefaultSettings::isEntityTypeValid(const string &type){
 	validTypes.push_back("Town_Hall");
 	validTypes.push_back("Church");
 	validTypes.push_back("Molino");
+	validTypes.push_back("molino");
 
 
 	//Personajes

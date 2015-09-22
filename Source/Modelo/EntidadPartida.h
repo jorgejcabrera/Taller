@@ -9,6 +9,8 @@
 #define SOURCE_MODELO_ENTIDADPARTIDA_H_
 
 #include <string>
+#include <iostream>
+#include <typeinfo>
 
 namespace std {
 
@@ -30,7 +32,7 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	pair<int,int>* getPosition();
-	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
+	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 	void restarSalud();
 };
 
