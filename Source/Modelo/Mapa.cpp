@@ -23,12 +23,11 @@ Mapa::Mapa() {
 		this->pushEntity(*it);
 	}
 
+
     EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
     molino->setPosition(10,10);
     molino->setFramesInLineFile(23);
     molino->setDelay(5);
-    pair<float,float> isometricasMolino = UtilsController::GetInstance()->getIsometricPosition(10,10);
-    molino->setInitialScreenPosition(isometricasMolino.first + DefaultSettings::getTileSize() ,isometricasMolino.second);
     this->pushEntity(molino);
 
 }
