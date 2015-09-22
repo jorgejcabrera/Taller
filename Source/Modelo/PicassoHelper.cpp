@@ -107,11 +107,12 @@ void PicassoHelper::clearView(){
 PicassoHelper* PicassoHelper::GetInstance() {
 	if (!instance) {
 		instance = new PicassoHelper();
+		instance->createContext();
 	}
 	return instance;
 }
 
-pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
+/*pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
 	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
@@ -121,7 +122,7 @@ pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
 	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
 	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize() / 2;
 	return isometricPosition;
-}
+}*/
 
 bool PicassoHelper::isFileExist(const string fileName){
     std::ifstream infile(fileName.c_str());

@@ -7,7 +7,6 @@
 
 #include "Loader.h"
 
-
 namespace std {
 
 Loader::Loader() {

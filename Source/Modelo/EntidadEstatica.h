@@ -9,7 +9,6 @@
 #define SOURCE_MODELO_ENTIDADESTATICA_H_
 
 #include "EntidadPartida.h"
-#include "PicassoHelper.h"
 
 using namespace std;
 

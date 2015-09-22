@@ -10,7 +10,6 @@ UtilsController* UtilsController::instance = NULL;
 
 
 UtilsController::UtilsController() {
-	// TODO Auto-generated constructor stub
 	gameSettings = GameSettings::GetInstance();
 
 }
@@ -29,6 +28,18 @@ pair<int,int> UtilsController::convertToCartesian(int xScreen,int yScreen){
 	cartesianPosition.first = x;
 	cartesianPosition.second = y;
 	return cartesianPosition;
+}
+
+pair<int,int> UtilsController::getIsometricPosition(EntidadPartida* entidad){
+	pair<int,int> isometricPosition;
+	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
+	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
+	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
+
+	//ahora hay que centrar la entidad con el tile
+	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
+	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize() / 2;
+	return isometricPosition;
 }
 
 pair<int,int> UtilsController::getIsometricPosition(int x,int y){

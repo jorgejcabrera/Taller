@@ -9,7 +9,6 @@
 #define MODELO_PICASSOHELPER_H_
 
 #include "SDL2/SDL.h"
-#include "EntidadPartida.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
 #include <map>
@@ -32,7 +31,7 @@ private:
 public:
 	void createContext();
 	~PicassoHelper();
-	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
+	//pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 	void exitError(const string &message);
 	void renderView();
 	void clearView();

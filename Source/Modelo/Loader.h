@@ -11,7 +11,7 @@
 #include <yaml.h>
 #include <iostream>
 #include <map>
-//#include <string>
+#include <string>
 #include <vector>
 #include <stack>
 #include <sstream>
