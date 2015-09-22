@@ -34,6 +34,8 @@ Mapa::Mapa() {
     EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),100,100,10,"molino");
     molino->setPosition(10,10);
     molino->setFramesInLineFile(23);
+    pair<float,float> isometricasMolino = UtilsController::GetInstance()->getIsometricPosition(10,10);
+    molino->setInitialScreenPosition(isometricasMolino.first + DefaultSettings::getTileSize() ,isometricasMolino.second);
     this->pushEntity(molino);
 }
 

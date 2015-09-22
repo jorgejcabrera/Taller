@@ -13,6 +13,7 @@
 #include "EntidadSemiEstatica.h"
 #include "Tile.h"
 #include "DefaultSettings.h"
+#include "../Control/UtilsController.h"
 #include <iostream>
 #include <map>
 #include <list>
