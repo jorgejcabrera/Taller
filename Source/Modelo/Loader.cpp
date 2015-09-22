@@ -6,12 +6,6 @@
  */
 
 #include "Loader.h"
-#include <stack>
-#include <map>
-#include <string>
-#include <stack>
-#include <sstream>
-#include <stdlib.h>
 
 //Loader* Loader::instance = NULL;
 
@@ -28,7 +22,8 @@ Loader::Loader() {
 }
 
 void Loader::load() {
-	FILE *fh = fopen("firstMap.yml", "r");
+	FILE *fh = fopen("/home/jorlando/Documentos/repositorios/Taller/mapConfig.yml", "r");
+	//FILE *fh = fopen("firstMap.yml", "r");
 	yaml_parser_t parser;
 	yaml_event_t  event;
 	map< string, string> stringMap;

@@ -15,7 +15,7 @@ Tile::Tile(int x, int y ) {
 	this->position.second = y;
 	this->available = true;
 	this->superficie = grass;
-	this->pathImage = gameSettings->imagePathTilesByType("grass");
+	this->pathImage = gameSettings->imagePathTilesByType("pasto");
 }
 
 void Tile::changeStatusAvailable(){

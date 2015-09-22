@@ -14,6 +14,9 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <stack>
+#include <sstream>
+#include <stdlib.h>
 
 namespace std {
 

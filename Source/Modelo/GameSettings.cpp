@@ -19,11 +19,15 @@ GameSettings::GameSettings() {
 }
 
 int GameSettings::getScreenWidth(){
-	return (SCREEN_WIDTH > 1) ? SCREEN_WIDTH : DefaultSettings::getScreenWidth();
+	if((SCREEN_WIDTH<=0) or (SCREEN_WIDTH>DefaultSettings::getScreenWidth()))
+		return DefaultSettings::getScreenWidth();
+	return this->SCREEN_WIDTH;
 }
 
 int GameSettings::getScreenHeight(){
-	return (SCREEN_HEIGHT > 1) ? SCREEN_HEIGHT : DefaultSettings::getScreenHeight();
+	if((SCREEN_HEIGHT<=0) or (SCREEN_HEIGHT>DefaultSettings::getScreenHeight()))
+		return DefaultSettings::getScreenHeight();
+	return this->SCREEN_HEIGHT;
 }
 
 int GameSettings::getTileSize(){
@@ -171,12 +175,52 @@ GameSettings* GameSettings::GetInstance() {
 	if (!instance) {
 		instance = new GameSettings();
 		instance->SetGameSettings();
+		instance->createEntidades();
 	}
 	return instance;
 }
 
 GameSettings::~GameSettings() {
 //	GameSettings* GameSettings::instance = NULL;
+}
+
+//TODO: revisar este metodo
+void GameSettings::processTypes(){
+	vector< map< string, string> > *tipos = loader->getTypes();
+
+	for(vector< map< string, string> >::iterator it = tipos->begin(); it!= tipos->end(); ++it){
+		cout <<"ENTRE en processTypes"<<endl;
+		for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
+		    std::cout << itMap->first << " => " << itMap->second << '\n';
+	}
+}
+
+void GameSettings::createEntidades(){
+	vector< map< string, string> > *entidades = loader->getEntitys();
+	for(vector< map< string, string> >::iterator it = entidades->begin(); it!= entidades->end(); ++it){
+			string tipo = this->getValueInMap(*it, "tipo");//  getValueInMap(it,"nombre");
+			cout << "tipo: " << tipo <<endl;
+			string tipox = this->getValueInMap(*it, "x");
+			string tipoy = this->getValueInMap(*it, "y");
+			cout << "x: " << tipox <<endl;
+			cout << "y: " << tipoy <<endl;
+			//string tipoPersonaje = DefaultSettings::getTypeEntity(const string &type);
+			//for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
+			  //  std::cout << itMap->first << " => " << itMap->second << '\n';
+	}
+}
+
+string GameSettings::getValueInMap(map<string,string> myMap, const string &key){
+	map<string,string>::iterator iterador2 = myMap.find(key);
+		if (iterador2 != myMap.end()){
+				return iterador2->second;
+	 }
+	 return "";
+}
+
+bool GameSettings::isFileExist(const string fileName){
+    std::ifstream infile(fileName.c_str());
+    return infile.good();
 }
 
 } /* namespace std */

@@ -10,6 +10,7 @@
 
 #include "Loader.h"
 #include "DefaultSettings.h"
+#include <fstream>
 
 namespace std {
 
@@ -32,10 +33,12 @@ private:
 	int VELOCIDAD_SCROLL_DOS;
 	Loader* loader;
 	static GameSettings* instance;
+	GameSettings();
+	bool isFileExist(const string fileName);
+	void processTypes();
 
 
 public:
-	GameSettings();
 	void SetGameSettings();
 	static GameSettings* GetInstance();
 	virtual ~GameSettings();
@@ -68,6 +71,8 @@ public:
 	int getMargenSuperiorDos();
 	int getMargenInferiorUno();
 	int getMargenInferiorDos();
+	void createEntidades();
+	string getValueInMap(map<string,string> myMap, const string &key);
 };
 
 } /* namespace std */

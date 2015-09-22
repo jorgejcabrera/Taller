@@ -12,6 +12,7 @@
 #include <list>
 #include <algorithm>
 #include <math.h>
+#include <iostream>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ class DefaultSettings {
 	private:
 		static const int SCREEN_WIDTH = 1024;
 		//static const int SCREEN_HEIGHT = 860;
-		static const int SCREEN_HEIGHT = 680;
+		static const int SCREEN_HEIGHT = 800;
 		static const int TILE_SIZE = 40;
 		static const int CONF_VEL_PERSONAJE;
 		static const int LONG_MARGEN_SCROLL = 30;
@@ -65,6 +66,9 @@ class DefaultSettings {
 		static int getMargenSuperiorDos();
 		static int getMargenInferiorUno();
 		static int getMargenInferiorDos();
+		static string getTypeEntity(const string &type);
+		static bool isInList(list<string> listOfThings, const string &type);
+		list<string> getListOfAttributesCanSetByType(const string &type);
 };
 
 
