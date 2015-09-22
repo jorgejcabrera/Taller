@@ -177,8 +177,8 @@ void GameSettings::SetGameSettings(){
 
 	// seteo screen
 	mapSI = loader->getScreen();
-	this->SCREEN_HEIGHT = mapSI->operator []("ancho");
-	this->SCREEN_WIDTH = mapSI->operator []("alto");
+	this->SCREEN_HEIGHT = mapSI->operator []("alto");
+	this->SCREEN_WIDTH = mapSI->operator []("ancho");
 	mapSI->clear();
 	// seteo conf
 	mapSI = loader->getConf();

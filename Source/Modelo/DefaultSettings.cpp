@@ -136,6 +136,7 @@ string DefaultSettings::getTypeEntity(const string &type){
 	edificios.push_back("Consulate");
 	edificios.push_back("Town_Hall");
 	edificios.push_back("Church");
+	edificios.push_back("molino");
 	if(isInList(edificios,type))
 		return "edificios";
 
