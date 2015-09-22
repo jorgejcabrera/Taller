@@ -39,12 +39,14 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 		return;
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first + entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
-		for(int j=entidad->getPosition()->second; j<lowerVertex.second; j++){
-			for(int i=entidad->getPosition()->first; i<lowerVertex.first; i++){
+		int i=entidad->getPosition()->first;
+		int j= entidad->getPosition()->second;
+		this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
+
+		for(int j=entidad->getPosition()->second; j<lowerVertex.second; j++)
+			for(int i=entidad->getPosition()->first; i<lowerVertex.first; i++)
 				this->getTileAt(i,j)->changeStatusAvailable();
-				this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
-			}
-		}
+
 		return;
 	}
 }
