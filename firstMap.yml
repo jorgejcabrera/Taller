@@ -49,8 +49,8 @@ tipos:
   
 escenario:
   nombre: orleans
-  size_x: 100
-  size_y: 100
+  size_x: 20
+  size_y: 20
   entidades:
   - {x: 10, y: 15, tipo: tierra}
   - {x: 15, y: 20, tipo: tierra} 

@@ -33,9 +33,9 @@ private:
 	int POS_X_PROTAGONISTA;
 	int POS_Y_PROTAGONISTA;
 	//tipos
-	vector< map< string, string> >* tipos;
+	//vector< map< string, string> >* tipos;
 	//entidades
-	vector< map< string, string> >* entidades;
+	//vector< map< string, string> >* entidades;
 
 
 	int TILE_SIZE;

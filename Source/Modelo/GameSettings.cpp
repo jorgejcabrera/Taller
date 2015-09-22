@@ -199,9 +199,9 @@ void GameSettings::SetGameSettings(){
 	this->POS_Y_PROTAGONISTA = atoi(mapSS->operator []("y").c_str());
 	mapSS->clear();
 	//seteo entidades
-	this->entidades = loader->getEntitys();
+	//this->entidades = loader->getEntitys();
 	//seteo tipos
-	this->tipos = loader->getTypes();
+	//this->tipos = loader->getTypes();
 
 }
 
@@ -237,13 +237,13 @@ void GameSettings::createEntidades(){
 			string nombre = this->getValueInMap(*it, "tipo");//  getValueInMap(it,"nombre");
 			string posXStr = this->getValueInMap(*it, "x");
 			string posYStr = this->getValueInMap(*it, "y");
-			if(nombre!="" and posXStr!= "" and posYStr!=""){
-				int posX = atoi(posXStr.c_str());
-				int posY = atoi(posYStr.c_str());
+			int posX = atoi(posXStr.c_str());
+			int posY = atoi(posYStr.c_str());
+
+			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<=this->MAP_WIDTH and posY<=this->MAP_HEIGHT){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
 				string imagen = this->getValueInMap(entidadObjeto, "imagen");
-
 				if(tipoEntidad == "edificios"){
 					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
