@@ -36,7 +36,7 @@ void Loader::load() {
 	string map,key,scalarValue,value;
 	vector<pair<string,string> > nestedStructures;
 	pair<string,string> structure;
-    pFile = fopen ("logAge","w");
+    pFile = fopen ("logAge.log","w");
 
 
 

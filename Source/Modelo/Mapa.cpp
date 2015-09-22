@@ -21,15 +21,17 @@ Mapa::Mapa() {
 	}
 
 	//TODO sacar esto. Creamos un par de entidades para probar
-    EntidadEstatica* torre = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Church",true);
-    torre->setPosition(0,0);
-    this->pushEntity(torre);
-	EntidadEstatica* castillo = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Consulate",true);
-    castillo->setPosition(9,2);
-    this->pushEntity(castillo);
     EntidadEstatica* edificio = new EntidadEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),"Town_Hall",true);
     edificio->setPosition(2,10);
     this->pushEntity(edificio);
+
+    EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
+    molino->setPosition(10,10);
+    molino->setFramesInLineFile(23);
+    molino->setDelay(5);
+    pair<float,float> isometricasMolino = UtilsController::GetInstance()->getIsometricPosition(10,10);
+    molino->setInitialScreenPosition(isometricasMolino.first + DefaultSettings::getTileSize() ,isometricasMolino.second);
+    this->pushEntity(molino);
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
