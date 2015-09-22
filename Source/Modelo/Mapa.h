@@ -10,6 +10,7 @@
 
 #include "EntidadPartida.h"
 #include "EntidadEstatica.h"
+#include "EntidadSemiEstatica.h"
 #include "Tile.h"
 #include "DefaultSettings.h"
 #include <iostream>
