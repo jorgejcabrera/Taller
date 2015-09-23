@@ -29,9 +29,7 @@ Mapa::Mapa() {
 		int posY = (*it).first.second;
 		this->getTileAt(posX,posY)->setPathImage((*it).second);
 	}
-
-
-    EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
+    EntidadSemiEstatica* molino = new EntidadSemiEstatica(1,1,150,150,2,"molino");
     molino->setPosition(0,4);
     molino->setFramesInLineFile(23);
     molino->setDelay(5);
