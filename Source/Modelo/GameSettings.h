@@ -22,6 +22,15 @@ namespace std {
 
 class GameSettings {
 private:
+
+	Loader* loader;
+	static GameSettings* instance;
+	GameSettings();
+	bool isFileExist(const string fileName);
+	void processTypes();
+
+
+public:
 	//pantalla:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -36,8 +45,6 @@ private:
 	string TIPO_PROTAGONISTA;
 	int POS_X_PROTAGONISTA;
 	int POS_Y_PROTAGONISTA;
-	int FPS_PROTAGONISTA;
-	int PATH_PROTAGONISTA;
 	//tipos
 	//vector< map< string, string> >* tipos;
 	//entidades
@@ -53,14 +60,12 @@ private:
 	int MEDIUM_SIZE;
 	int VELOCIDAD_SCROLL_UNO;
 	int VELOCIDAD_SCROLL_DOS;
-	Loader* loader;
-	static GameSettings* instance;
-	GameSettings();
-	bool isFileExist(const string fileName);
-	void processTypes();
 
+	int FPS_PROTAGONISTA;
+	string PATH_PROTAGONISTA;
+	int FRAMES_IN_FILE_PROTAGONISTA;
+	int PIXEL_DIMENSION_PROTAGONISTA;
 
-public:
 	list<EntidadPartida*> edificios;
 	map<pair<int,int>,string> tiles;
 	void SetGameSettings();
