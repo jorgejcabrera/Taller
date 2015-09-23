@@ -1,6 +1,6 @@
 pantalla:
- ancho: 800
- alto: 600
+ ancho: 1024
+ alto: 800
 
 configuracion: 
  vel_personaje : 10
@@ -42,20 +42,25 @@ tipos:
   fps: 10
 
 - nombre: tierra
-  imagen: path/a/imagen.png
+  imagen: ../Taller/Images/Tiles/tierra.png
 
 - nombre: agua
-  imagen: path/a/imagen.png
+  imagen: ../Taller/Images/Tiles/agua.png
   
 escenario:
   nombre: orleans
   size_x: 20
   size_y: 20
   entidades:
-  - {x: 10, y: 15, tipo: tierra}
-  - {x: 15, y: 20, tipo: tierra} 
-  - {x: 10, y: 15, tipo: agua} 
-  - {x: 5, y: 5, tipo: castillo}
+  - {x: 8, y: 8, tipo: agua}
+  - {x: 9, y: 8, tipo: agua}
+  - {x: 9, y: 9, tipo: agua}
+  - {x: 8, y: 9, tipo: agua}
+  - {x: 9, y: 10, tipo: agua} 
+  - {x: 8, y: 10, tipo: agua}
+  - {x: 12, y: 12, tipo: tierra}
+  - {x: 12, y: 13, tipo: tierra}
+  - {x: 13, y: 13, tipo: tierra}
   - {x: 0, y: 0, tipo: Church} 
   - {x: 9, y: 2, tipo: Consulate} 
   - {x: 2, y: 10, tipo: Town_Hall}

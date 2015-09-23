@@ -31,9 +31,9 @@ class Tile {
 	surface_type superficie;	//por default la superficie es pasto
 	string pathImage;
 	GameSettings* gameSettings;
-	void setPathImage(string path);
 
 public:
+	void setPathImage(string path);
 	Tile(int x,int y);
 	void show();
 	void changeStatusAvailable();

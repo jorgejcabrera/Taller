@@ -13,6 +13,8 @@
 #include "EntidadEstatica.h"
 #include <list>
 #include <fstream>
+#include <map>
+#include <list>
 
 namespace std {
 
@@ -56,6 +58,7 @@ private:
 
 public:
 	list<EntidadEstatica*> edificios;
+	map<pair<int,int>,string> tiles;
 	void SetGameSettings();
 	static GameSettings* GetInstance();
 	virtual ~GameSettings();
@@ -96,6 +99,7 @@ public:
 	int getPosXProtagonista();
 	int getPosYProtagonista();
 	int getVelocidadPersonaje();
+	map<pair<int,int>,string> getTiles();
 };
 
 } /* namespace std */

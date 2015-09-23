@@ -197,11 +197,6 @@ void GameSettings::SetGameSettings(){
 	this->POS_X_PROTAGONISTA = atoi(mapSS->operator []("x").c_str());
 	this->POS_Y_PROTAGONISTA = atoi(mapSS->operator []("y").c_str());
 	mapSS->clear();
-	//seteo entidades
-	//this->entidades = loader->getEntitys();
-	//seteo tipos
-	//this->tipos = loader->getTypes();
-
 }
 
 GameSettings* GameSettings::GetInstance() {
@@ -217,6 +212,9 @@ GameSettings::~GameSettings() {
 	for (list<EntidadEstatica*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
 			(*it)->~EntidadEstatica();
 		}
+	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
+		this->tiles.erase(it);
+		}
 	//this->edificios = NULL;
 	this->instance =NULL;
 }
@@ -226,7 +224,6 @@ void GameSettings::processTypes(){
 	vector< map< string, string> > *tipos = loader->getTypes();
 
 	for(vector< map< string, string> >::iterator it = tipos->begin(); it!= tipos->end(); ++it){
-		//cout <<"ENTRE en processTypes"<<endl;
 		for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
 		    std::cout << itMap->first << " => " << itMap->second << '\n';
 	}
@@ -235,7 +232,7 @@ void GameSettings::processTypes(){
 void GameSettings::createEntidades(){
 	vector< map< string, string> > *entidades = loader->getEntitys();
 	for(vector< map< string, string> >::iterator it = entidades->begin(); it!= entidades->end(); ++it){
-			string nombre = this->getValueInMap(*it, "tipo");//  getValueInMap(it,"nombre");
+			string nombre = this->getValueInMap(*it, "tipo");
 			string posXStr = this->getValueInMap(*it, "x");
 			string posYStr = this->getValueInMap(*it, "y");
 			int posX = atoi(posXStr.c_str());
@@ -253,6 +250,8 @@ void GameSettings::createEntidades(){
 						edificioCreado->setPosition(posX,posY);
 						this->edificios.push_back(edificioCreado);
 					}
+				}else if (tipoEntidad=="tiles"){
+					this->tiles.insert(make_pair(make_pair(posX,posY),imagen));
 				}
 			}
 
@@ -265,6 +264,10 @@ void GameSettings::createEntidades(){
 
 list<EntidadEstatica*> GameSettings::getEntidadesEstaticas(){
 	return this->edificios;
+}
+
+map<pair<int,int>,string> GameSettings::getTiles(){
+	return this->tiles;
 }
 
 string GameSettings::getValueInMap(map<string,string> myMap, const string &key){

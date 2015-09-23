@@ -23,6 +23,13 @@ Mapa::Mapa() {
 		this->pushEntity(*it);
 	}
 
+	map<pair<int,int>,string> tilesToSetImage = gameSettings->getTiles();
+	for (std::map<pair<int,int>,string>::iterator it = tilesToSetImage.begin(); it != tilesToSetImage.end();++it){
+		int posX = (*it).first.first;
+		int posY = (*it).first.second;
+		this->getTileAt(posX,posY)->setPathImage((*it).second);
+	}
+
 
     EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
     molino->setPosition(0,4);
