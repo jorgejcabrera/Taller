@@ -1,6 +1,6 @@
 pantalla:
- ancho: 800
- alto: 600
+ ancho: 1024
+ alto: 800
 
 configuracion: 
  vel_personaje : 10
@@ -55,7 +55,6 @@ escenario:
   - {x: 10, y: 15, tipo: tierra}
   - {x: 15, y: 20, tipo: tierra} 
   - {x: 10, y: 15, tipo: agua} 
-  - {x: 5, y: 5, tipo: castillo}
   - {x: 0, y: 0, tipo: Church} 
   - {x: 9, y: 2, tipo: Consulate} 
   - {x: 2, y: 10, tipo: Town_Hall}
