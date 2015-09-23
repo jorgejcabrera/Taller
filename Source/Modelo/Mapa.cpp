@@ -76,7 +76,7 @@ map<pair<int,int>,EntidadPartida*>* Mapa::getEntities(){
 
 void Mapa::show(){
 	for (std::map<pair<int,int>,Tile*>::iterator it = tiles.begin(); it != tiles.end();++it){
-		  cout<< (*it).first.first << ";" << (*it).first.second << " => ";
+		 // cout<< (*it).first.first << ";" << (*it).first.second << " => ";
 		  (*it).second->show();
 	}
 	return;

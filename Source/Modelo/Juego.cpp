@@ -21,8 +21,6 @@ Juego::Juego() {
 	this->offset.first = 0;
 	this->offset.second = 0;
 
-	//this->protagonista->setDelay(2);
-
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
 }

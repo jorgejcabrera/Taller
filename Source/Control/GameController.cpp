@@ -42,7 +42,6 @@ void GameController::obtenerMouseInput(){
 void GameController::actualizarJuego(){
 	juego->actualizarProtagonista();
 	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
-
 	juego->actualizarOffset(offset.first,offset.second);
 }
 
@@ -144,6 +143,7 @@ GameController::~GameController() {
 	this->juego=NULL;
 	this->utils->~UtilsController();
 	this->gameSettings->~GameSettings();
+	this->gameSettings = NULL;
 	//this->event = NULL;
 	//delete event;
 }

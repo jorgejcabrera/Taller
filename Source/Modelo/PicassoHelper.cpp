@@ -60,8 +60,10 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	string fileImage = file.c_str();
-	if(!(isFileExist(fileImage)))
+	if(!(isFileExist(fileImage))){
+		cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << fileImage <<endl;
 		fileImage = DefaultSettings::defaultImage();
+	}
 
 	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
 	if (texture == NULL){

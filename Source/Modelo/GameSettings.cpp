@@ -14,7 +14,6 @@ namespace std {
 GameSettings::GameSettings() {
 	this->loader = new Loader();
 	this->loader->load();
-
 }
 
 int GameSettings::getScreenWidth(){
@@ -54,11 +53,13 @@ int GameSettings::getMediumSize(){
 }
 
 int GameSettings::getVelocidadScrollUno(){
-	return (VELOCIDAD_SCROLL_UNO > 0) ? VELOCIDAD_SCROLL_UNO : DefaultSettings::getVelocidadScrollUno();
+	//return (VELOCIDAD_SCROLL_UNO > 0) ? VELOCIDAD_SCROLL_UNO : DefaultSettings::getVelocidadScrollUno();
+	return DefaultSettings::getVelocidadScrollUno();
 }
 
 int GameSettings::getVelocidadScrollDos(){
-	return (VELOCIDAD_SCROLL_DOS > 0) ? VELOCIDAD_SCROLL_DOS : DefaultSettings::getVelocidadScrollDos();
+	//return (VELOCIDAD_SCROLL_DOS > 0) ? VELOCIDAD_SCROLL_DOS : DefaultSettings::getVelocidadScrollDos();
+	return DefaultSettings::getVelocidadScrollDos();
 }
 
 int GameSettings::getLimiteDerecho() {
@@ -221,14 +222,14 @@ GameSettings::~GameSettings() {
 	this->instance =NULL;
 }
 
-//TODO: revisar este metodo
+//TODO: borrar este metodo
 void GameSettings::processTypes(){
-	vector< map< string, string> > *tipos = loader->getTypes();
+	/*vector< map< string, string> > *tipos = loader->getTypes();
 
 	for(vector< map< string, string> >::iterator it = tipos->begin(); it!= tipos->end(); ++it){
 		for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
 		    std::cout << itMap->first << " => " << itMap->second << '\n';
-	}
+	}*/
 }
 
 void GameSettings::createEntidades(){
@@ -270,11 +271,6 @@ void GameSettings::createEntidades(){
 
 				}
 			}
-
-
-			//list<string> lista = DefaultSettings::getListOfAttributesCanSetByType(tipoEntidad);
-			//for (std::map<string,string>::iterator itMap=entidadObjeto.begin(); itMap!=entidadObjeto.end(); ++itMap)
-			  //std::cout << itMap->first << " => " << itMap->second << '\n';
 	}
 }
 
