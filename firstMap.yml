@@ -32,6 +32,14 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
+- nombre: molino
+  imagen: ../Taller/Images/Industrial_Age/molino.png
+  ancho_base: 1
+  alto_base: 1
+  fps: 2
+  delay: 5
+  total_frames_line: 23
+
 - nombre: soldado
   imagen: path/a/imagen.png
   fps: 10
@@ -64,6 +72,7 @@ escenario:
   - {x: 0, y: 0, tipo: Church} 
   - {x: 9, y: 2, tipo: Consulate} 
   - {x: 2, y: 10, tipo: Town_Hall}
+  - {x: 0, y: 4, tipo: molino}
   protagonista: 
    tipo: soldado 
    x: 8 

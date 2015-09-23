@@ -10,7 +10,9 @@
 
 #include "Loader.h"
 #include "DefaultSettings.h"
+#include "EntidadPartida.h"
 #include "EntidadEstatica.h"
+#include "EntidadSemiEstatica.h"
 #include <list>
 #include <fstream>
 #include <map>
@@ -57,7 +59,7 @@ private:
 
 
 public:
-	list<EntidadEstatica*> edificios;
+	list<EntidadPartida*> edificios;
 	map<pair<int,int>,string> tiles;
 	void SetGameSettings();
 	static GameSettings* GetInstance();
@@ -94,7 +96,7 @@ public:
 	void createEntidades();
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
-	list<EntidadEstatica*> getEntidadesEstaticas();
+	list<EntidadPartida*> getEntidadesEstaticas();
 	string getTipoProtagonista();
 	int getPosXProtagonista();
 	int getPosYProtagonista();

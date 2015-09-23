@@ -18,8 +18,8 @@ Mapa::Mapa() {
 		}
 	}
 
-	list<EntidadEstatica*> edificios = gameSettings->getEntidadesEstaticas();
-	for(list<EntidadEstatica*>::iterator it=edificios.begin(); it!=edificios.end(); ++it){
+	list<EntidadPartida*> edificios = gameSettings->getEntidadesEstaticas();
+	for(list<EntidadPartida*>::iterator it=edificios.begin(); it!=edificios.end(); ++it){
 		this->pushEntity(*it);
 	}
 
@@ -29,12 +29,6 @@ Mapa::Mapa() {
 		int posY = (*it).first.second;
 		this->getTileAt(posX,posY)->setPathImage((*it).second);
 	}
-    EntidadSemiEstatica* molino = new EntidadSemiEstatica(1,1,150,150,2,"molino");
-    molino->setPosition(0,4);
-    molino->setFramesInLineFile(23);
-    molino->setDelay(5);
-    this->pushEntity(molino);
-
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
@@ -60,7 +54,6 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	int y = entidad->getPosition()->second;
 	if(!this->getTileAt(x,y)->isAvailable())
 		return false;
-	//TODO cambir esto por el ancho del y alto del mapa que lo tiene que tener el loader, que es quien parsea el YMAL
 	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0)
 		return false;
 	return true;

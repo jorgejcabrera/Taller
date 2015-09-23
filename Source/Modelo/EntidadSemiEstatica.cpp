@@ -15,14 +15,14 @@ EntidadSemiEstatica::EntidadSemiEstatica() {
 }
 
 
-EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel, float lengthPixels,int fps,const string &tipoEntidad) {
+EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel, float lengthPixels,int fps,const string &tipoEntidad,const string &pathImage) {
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = width;
 	this->length = length;
 	this->widthPixel = widthPixel;
 	this->lengthPixel = lengthPixels;
 	this->framesPerSecond = fps;
-	this->pathImage = DefaultSettings::imagePathBuildingsByTypeAndAge(tipoEntidad, DefaultSettings::getAgeOfEmpires());
+	this->pathImage = pathImage;
 
 }
 
