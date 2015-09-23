@@ -23,8 +23,8 @@ Mapa::Mapa() {
 		this->pushEntity(*it);
 	}
 
-
-    EntidadSemiEstatica* molino = new EntidadSemiEstatica(DefaultSettings::getMediumSize(),DefaultSettings::getMediumSize(),150,150,2,"molino");
+	//TODO deshardcodear el ancho y alto ---> aunque no se si se va a poder
+    EntidadSemiEstatica* molino = new EntidadSemiEstatica(1,1,150,150,2,"molino");
     molino->setPosition(0,4);
     molino->setFramesInLineFile(23);
     molino->setDelay(5);
