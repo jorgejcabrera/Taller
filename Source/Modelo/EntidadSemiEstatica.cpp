@@ -66,7 +66,6 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(){
 		}else{
 				this->frame++;
 				if( (this->frame % this->getFramesInLineFile()) == 0){
-					cout << "ENTRE EN IF" <<endl;
 					this->frame = 0;
 					if(this->delay>0){
 						this->delayIndex = 0;

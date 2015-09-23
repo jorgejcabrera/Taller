@@ -288,6 +288,5 @@ void Loader::parserError(yaml_parser_t* parser){
 
 
 Loader::~Loader() {
-
 }
 }

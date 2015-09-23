@@ -23,6 +23,9 @@ private:
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	PicassoHelper();
+	PicassoHelper(int width, int high);
+	int widthView = 0;
+	int highView = 0;
 	static PicassoHelper* instance;
 	map<string,SDL_Texture*> mapByImagePath;
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h);
@@ -41,6 +44,7 @@ public:
 	void renderObject(const string &file, int x, int y, int w, int h);
 	void renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject);
 	static PicassoHelper* GetInstance();
+	static PicassoHelper* GetInstance(int width, int high);
 };
 
 #endif /* MODELO_PICASSOHELPER_H_ */

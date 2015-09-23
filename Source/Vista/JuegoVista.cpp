@@ -8,7 +8,6 @@
 #include "JuegoVista.h"
 
 void JuegoVista::drawIsometricMap(){
-	gameSettings = GameSettings::GetInstance();
 	int posX = 0;
 	int posY = 0;
 	int offsetX = this->juego->getOffset()->first;
@@ -51,11 +50,14 @@ void JuegoVista::drawDinamicEntities(){
 
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
+	gameSettings = GameSettings::GetInstance();
+	PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
 
 JuegoVista::~JuegoVista() {
 	this->juego->~Juego();
 	this->juego = NULL;
+	PicassoHelper::GetInstance()->~PicassoHelper();
 }
 
 

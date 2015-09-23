@@ -226,7 +226,7 @@ void GameSettings::processTypes(){
 	vector< map< string, string> > *tipos = loader->getTypes();
 
 	for(vector< map< string, string> >::iterator it = tipos->begin(); it!= tipos->end(); ++it){
-		cout <<"ENTRE en processTypes"<<endl;
+		//cout <<"ENTRE en processTypes"<<endl;
 		for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
 		    std::cout << itMap->first << " => " << itMap->second << '\n';
 	}

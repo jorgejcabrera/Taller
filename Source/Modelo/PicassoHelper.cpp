@@ -13,17 +13,20 @@ PicassoHelper::PicassoHelper() {
 	this->renderer = NULL;
 }
 
+PicassoHelper::PicassoHelper(int width, int high) {
+	this->window = NULL;
+	this->renderer = NULL;
+	this->widthView = width;
+	this->highView = high;
+}
+
 void PicassoHelper::createContext(){
 		//inicializamos SDL
 	    if (SDL_Init(SDL_INIT_VIDEO) != 0){
 	    	this->exitError("Error SDL_Init:");
 	    }
-
-	    //cargamos la conf. del archivo yaml;
 	    // creamos la ventana
-
-	    //window = SDL_CreateWindow("Age of empires", 100, 100, GameSettings::GetInstance()->getScreenWidth(), GameSettings::GetInstance()->getScreenHeight(), SDL_WINDOW_SHOWN);
-	    window = SDL_CreateWindow("Age of empires", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
+	    window = SDL_CreateWindow("Age of empires", 100, 100, this->widthView, this->highView, SDL_WINDOW_SHOWN);
 	    if (window == NULL){
 	    	this->exitError("SDL_CreateWindow Error:");
 	    }
@@ -103,8 +106,18 @@ void PicassoHelper::clearView(){
 }
 
 PicassoHelper* PicassoHelper::GetInstance() {
+	//cout << "ENTREEEE en SIN parametros" << endl;
 	if (!instance) {
 		instance = new PicassoHelper();
+		instance->createContext();
+	}
+	return instance;
+}
+
+PicassoHelper* PicassoHelper::GetInstance(int width, int high) {
+	cout << "ENTREEEE en parametros" << endl;
+	if (!instance) {
+		instance = new PicassoHelper(width,high);
 		instance->createContext();
 	}
 	return instance;
@@ -138,7 +151,11 @@ PicassoHelper::~PicassoHelper() {
 	if (window != NULL){
 		SDL_DestroyWindow(window);
 	}
+	this->widthView = 0;
+		this->highView = 0;
+		this->instance=NULL;
 
 	SDL_Quit();
-	this->instance=NULL;
+
+
 }
