@@ -274,6 +274,35 @@ void GameSettings::createEntidades(){
 	}
 }
 
+int GameSettings::getProtagonistaFPS(){
+	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", this->TIPO_PROTAGONISTA);
+	int fps = atoi(this->getValueInMap(entidadObjeto, "fps").c_str());
+	return (fps>0) ? (fps): (1);
+}
+
+string GameSettings::getProtagonistaPath(){
+	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", this->TIPO_PROTAGONISTA);
+	return this->getValueInMap(entidadObjeto, "imagen");
+}
+
+int GameSettings::getProtagonistaFramesInFile(){
+	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", this->TIPO_PROTAGONISTA);
+	int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
+	if(total_frames_line>0){
+		return total_frames_line;
+	}
+	return 1;
+}
+
+int GameSettings::getProtagonistaPixelDimension(){
+	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", this->TIPO_PROTAGONISTA);
+	int pixels_dimension = atoi(this->getValueInMap(entidadObjeto, "pixels_dimension").c_str());
+	if(pixels_dimension>0){
+		return pixels_dimension;
+	}
+	return 10;
+}
+
 list<EntidadPartida*> GameSettings::getEntidadesEstaticas(){
 	return this->edificios;
 }

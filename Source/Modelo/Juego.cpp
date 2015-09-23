@@ -15,12 +15,18 @@ Juego::Juego() {
 	this->mapa = new Mapa();
 
 	this->currentAge = gameSettings->getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),gameSettings->getVelocidadPersonaje(),gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista(),50,50,15);
-	this->protagonista->setFramesInLineFile(7);
-	this->protagonista->setPathImage(DefaultSettings::imagePathPersonajesByType("soldado"));
+	this->protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
+			gameSettings->getVelocidadPersonaje(),
+			gameSettings->getPosXProtagonista(),
+			gameSettings->getPosYProtagonista(),
+			gameSettings->getProtagonistaPixelDimension(),
+			gameSettings->getProtagonistaPixelDimension(),
+			gameSettings->getProtagonistaFPS());
+
+	this->protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
+	this->protagonista->setPathImage(gameSettings->getProtagonistaPath());
 	this->offset.first = 0;
 	this->offset.second = 0;
-
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
 }

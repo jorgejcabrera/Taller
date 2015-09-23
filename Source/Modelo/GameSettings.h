@@ -36,6 +36,8 @@ private:
 	string TIPO_PROTAGONISTA;
 	int POS_X_PROTAGONISTA;
 	int POS_Y_PROTAGONISTA;
+	int FPS_PROTAGONISTA;
+	int PATH_PROTAGONISTA;
 	//tipos
 	//vector< map< string, string> >* tipos;
 	//entidades
@@ -102,6 +104,10 @@ public:
 	int getPosYProtagonista();
 	int getVelocidadPersonaje();
 	map<pair<int,int>,string> getTiles();
+	int getProtagonistaFPS();
+	string getProtagonistaPath();
+	int getProtagonistaFramesInFile();
+	int getProtagonistaPixelDimension();
 };
 
 } /* namespace std */

@@ -7,15 +7,10 @@ configuracion:
  margen_scroll : 30
 
 tipos:
-- nombre: arbol
-  imagen: path/a/imagen.png
-
 - nombre: castillo
   imagen: ../Taller/Images/Industrial_Age/castillo.png
   ancho_base: 2
   alto_base: 2
-  pixel_ref_x: 30
-  pixel_ref_y: 40
 
 - nombre: Church
   imagen: ../Taller/Images/Industrial_Age/Church.png
@@ -41,9 +36,10 @@ tipos:
   total_frames_line: 23
 
 - nombre: soldado
-  imagen: path/a/imagen.png
-  fps: 10
-  delay: 5
+  imagen: ../Taller/Images/Personajes/soldado.png
+  fps: 15
+  total_frames_line: 7
+  pixels_dimension: 50
 
 - nombre: juana_de_arco
   imagen: path/a/imagen.png
