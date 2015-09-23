@@ -39,3 +39,4 @@
 logAge
 *logAge
 *.log
+*.yml~
