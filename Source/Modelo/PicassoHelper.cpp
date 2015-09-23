@@ -60,8 +60,8 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	string fileImage = file.c_str();
-	//if(!(isFileExist(fileImage)))
-		//fileImage = gameSettings->defaultImage();
+	if(!(isFileExist(fileImage)))
+		fileImage = DefaultSettings::defaultImage();
 
 	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
 	if (texture == NULL){
@@ -106,7 +106,6 @@ void PicassoHelper::clearView(){
 }
 
 PicassoHelper* PicassoHelper::GetInstance() {
-	//cout << "ENTREEEE en SIN parametros" << endl;
 	if (!instance) {
 		instance = new PicassoHelper();
 		instance->createContext();
@@ -115,25 +114,12 @@ PicassoHelper* PicassoHelper::GetInstance() {
 }
 
 PicassoHelper* PicassoHelper::GetInstance(int width, int high) {
-	cout << "ENTREEEE en parametros" << endl;
 	if (!instance) {
 		instance = new PicassoHelper(width,high);
 		instance->createContext();
 	}
 	return instance;
 }
-
-/*pair<int,int> PicassoHelper::getIsometricPosition(EntidadPartida* entidad){
-	pair<int,int> isometricPosition;
-	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
-	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
-	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
-
-	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
-	isometricPosition.second = isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize() / 2;
-	return isometricPosition;
-}*/
 
 bool PicassoHelper::isFileExist(const string fileName){
     std::ifstream infile(fileName.c_str());
