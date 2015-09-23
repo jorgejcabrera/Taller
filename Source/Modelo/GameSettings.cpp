@@ -216,6 +216,7 @@ GameSettings::~GameSettings() {
 		this->tiles.erase(it);
 		}
 	//this->edificios = NULL;
+	this->loader->~Loader();
 	this->instance =NULL;
 }
 

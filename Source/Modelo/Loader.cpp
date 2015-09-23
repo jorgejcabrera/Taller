@@ -288,5 +288,12 @@ void Loader::parserError(yaml_parser_t* parser){
 
 
 Loader::~Loader() {
+	this->pFile = NULL;
+	this->conf = NULL;
+	this->entitys = NULL;
+	this->mainCharacter = NULL;
+	this->screen = NULL;
+	this->stage = NULL;
+	this->type = NULL;
 }
 }

@@ -81,5 +81,7 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 Juego::~Juego() {
 	this->protagonista->~EntidadDinamica();
 	this->mapa->~Mapa();
+	this->protagonista = NULL;
+	this->mapa = NULL;
 	//this->gameSettings->~GameSettings();
 }
