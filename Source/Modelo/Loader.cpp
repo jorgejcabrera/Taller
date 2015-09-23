@@ -155,6 +155,8 @@ void Loader::load() {
 		yaml_parser_delete(&parser);
 		fclose(fh);
 		fclose (pFile);
+		pFile = NULL;
+		fh=NULL;
 		}
 	}
 
@@ -288,5 +290,11 @@ void Loader::parserError(yaml_parser_t* parser){
 
 
 Loader::~Loader() {
+	screen = NULL;
+	conf = NULL;
+	type = NULL;
+	stage = NULL;
+	entitys = NULL;
+	mainCharacter = NULL;
 }
 }
