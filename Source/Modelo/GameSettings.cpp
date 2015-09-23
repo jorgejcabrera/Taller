@@ -12,8 +12,8 @@ GameSettings* GameSettings::instance = NULL;
 namespace std {
 
 GameSettings::GameSettings() {
-	loader = new Loader();
-	loader->load();
+	this->loader = new Loader();
+	this->loader->load();
 
 }
 
@@ -216,6 +216,8 @@ GameSettings::~GameSettings() {
 		this->tiles.erase(it);
 		}
 	//this->edificios = NULL;
+	this->loader->~Loader();
+	this->loader = NULL;
 	this->instance =NULL;
 }
 
