@@ -7,11 +7,6 @@ configuracion:
  margen_scroll : 30
 
 tipos:
-- nombre: castillo
-  imagen: ../Taller/Images/Industrial_Age/castillo.png
-  ancho_base: 2
-  alto_base: 2
-
 - nombre: Church
   imagen: ../Taller/Images/Industrial_Age/Church.png
   ancho_base: 3
@@ -32,7 +27,7 @@ tipos:
   ancho_base: 1
   alto_base: 1
   fps: 2
-  delay: 5
+  delay: 0
   total_frames_line: 23
 
 - nombre: soldado
@@ -53,8 +48,8 @@ tipos:
   
 escenario:
   nombre: orleans
-  size_x: 20
-  size_y: 20
+  size_x: 15
+  size_y: 15
   entidades:
   - {x: 8, y: 8, tipo: agua}
   - {x: 9, y: 8, tipo: agua}
@@ -67,7 +62,7 @@ escenario:
   - {x: 13, y: 13, tipo: tierra}
   - {x: 0, y: 0, tipo: Church} 
   - {x: 9, y: 2, tipo: Consulate} 
-  - {x: 2, y: 10, tipo: Town_Hall}
+  - {x: 12, y: 12, tipo: Town_Hall}
   - {x: 0, y: 4, tipo: molino}
   protagonista: 
    tipo: soldado 

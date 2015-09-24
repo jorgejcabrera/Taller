@@ -56,6 +56,10 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 		return false;
 	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0)
 		return false;
+	int posFinalX = x + entidad->getWidth();
+	int posFinalY = y + entidad->getLength();
+	if( posFinalX > gameSettings->getMapWidth() || posFinalY > gameSettings->getMapHeight())
+		return false;
 	return true;
 }
 EntidadPartida* Mapa::getEntityAt(int x,int y){
