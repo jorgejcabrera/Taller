@@ -61,7 +61,7 @@ escenario:
   - {x: 12, y: 13, tipo: tierra}
   - {x: 13, y: 13, tipo: tierra}
   - {x: 0, y: 0, tipo: Church} 
-  - {x: 9, y: 2, tipo: Consulate} 
+  - {x: 20, y: 2, tipo: Consulate} 
   - {x: 12, y: 12, tipo: Town_Hall}
   - {x: 0, y: 4, tipo: molino}
   protagonista: 

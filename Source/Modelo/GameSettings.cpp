@@ -289,7 +289,7 @@ void GameSettings::createEntidades(){
 							this->edificios.push_back(molino);
 						}
 					}
-				}else if (tipoEntidad=="tiles"){
+				}else if (tipoEntidad=="tiles" && posX < this->getMapHeight() && posY < this->getMapHeight()){
 					this->tiles.insert(make_pair(make_pair(posX,posY),imagen));
 				}
 			}
