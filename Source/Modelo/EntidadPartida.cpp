@@ -40,7 +40,7 @@ void EntidadPartida::setPathImage(string path){
 void EntidadPartida::destruir(){
 }
 
-void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
+void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
 }
 
 EntidadPartida::~EntidadPartida() {
