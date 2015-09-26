@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "EntidadPartida.h"
+#include "../../Headers/Modelo/EntidadPartida.h"
 
 using namespace std;
 

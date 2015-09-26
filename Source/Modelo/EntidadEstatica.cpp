@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "EntidadEstatica.h"
+#include "../../Headers/Modelo/EntidadEstatica.h"
 
 using namespace std;
 

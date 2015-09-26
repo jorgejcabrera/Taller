@@ -5,7 +5,7 @@
  *      Author: juan
  */
 
-#include "GameController.h"
+#include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
 	gameSettings = GameSettings::GetInstance();

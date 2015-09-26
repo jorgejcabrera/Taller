@@ -10,9 +10,9 @@
 #define NUM_DOTS 1024
 
 /* Includes */
-#include "Vista/JuegoVista.h"
-#include "Control/GameController.h"
-#include "Modelo/SocketServer.h"
+#include "../Headers/Vista/JuegoVista.h"
+#include "../Headers/Control/GameController.h"
+#include "../Headers/Modelo/SocketServer.h"
 
 using namespace std;
 

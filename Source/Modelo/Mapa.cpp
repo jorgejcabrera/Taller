@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "Mapa.h"
+#include "../../Headers/Modelo/Mapa.h"
 
 Mapa::Mapa() {
 	gameSettings = GameSettings::GetInstance();
