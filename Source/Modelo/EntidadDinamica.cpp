@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "EntidadDinamica.h"
+#include "../../Headers/Modelo/EntidadDinamica.h"
 
 EntidadDinamica::EntidadDinamica(){
 	//esto no sirve, hay que borrarlo

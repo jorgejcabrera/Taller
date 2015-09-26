@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "EntidadSemiEstatica.h"
+#include "../../Headers/Modelo/EntidadSemiEstatica.h"
 
 namespace std {
 

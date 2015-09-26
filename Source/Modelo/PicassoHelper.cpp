@@ -5,7 +5,7 @@
  *      Author: jorlando
  */
 
-#include "PicassoHelper.h"
+#include "../../Headers/Modelo/PicassoHelper.h"
 PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper() {
