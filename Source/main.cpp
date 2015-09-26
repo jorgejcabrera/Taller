@@ -25,7 +25,7 @@ void* serverRun(void *){
 
 int main(int argc, char* argv[]) {
 
-	server = new SocketServer;
+	/*server = new SocketServer;
 	pthread_t hiloServer;
 	pthread_create(&hiloServer,0,serverRun,NULL);
 	pthread_detach(hiloServer);
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 		string message;
 		cin >> message;
 		server->setMensaje(message.c_str());
-	}
+	}*/
 
 	bool reiniciar = true;
 	//bool salir = false;
