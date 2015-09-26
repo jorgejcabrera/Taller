@@ -148,7 +148,7 @@ void GameController::delay(){
 	this->runCycles++;
 	//if(this->runCycles % this->maxFramesPerSecond == 0){ this->runCycles = 0; }
 
-	SDL_Delay(1000/20); // para que sean 50 frames x segundos
+	SDL_Delay(50); // para que sean 50 frames x segundos
 	//}
 }
 GameController::~GameController() {

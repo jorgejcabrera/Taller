@@ -3,7 +3,7 @@ pantalla:
  alto: 800
 
 configuracion: 
- vel_personaje : 10
+ vel_personaje : 11
  margen_scroll : 30
 
 tipos:
@@ -26,14 +26,14 @@ tipos:
   imagen: ../Taller/Images/Industrial_Age/molino.png
   ancho_base: 1
   alto_base: 1
-  fps: 20
+  fps: 50
   delay: 0
 
   total_frames_line: 23
 
 - nombre: soldado
   imagen: ../Taller/Images/Personajes/soldado.png
-  fps: 20
+  fps: 25
   total_frames_line: 7
   pixels_dimension: 50
 

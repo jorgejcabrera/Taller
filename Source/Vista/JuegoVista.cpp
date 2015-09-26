@@ -45,7 +45,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
 	int offSetX = this->juego->getOffset()->first;
 	int offSetY = this->juego->getOffset()->second;
-	PicassoHelper::GetInstance()->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - gameSettings->getTileSize()/2 + offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + offSetY, gameSettings->getTileSize(), gameSettings->getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
+	PicassoHelper::GetInstance()->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - gameSettings->getTileSize()/2 + offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + offSetY, gameSettings->getTileSize(), gameSettings->getTileSize(), this->juego->getProtagonista()->getPositionOfSprite(runCycles));
 }
 
 JuegoVista::JuegoVista(Juego* juego) {
