@@ -51,8 +51,12 @@ int main(int argc, char* argv[]) {
 			gController->delay();
 			reiniciar = gController->reiniciarJuego();
 		}
-		juegoVista->~JuegoVista();
-		gController->~GameController();
+//		juegoVista->~JuegoVista();
+//		gController->~GameController();
+		delete(juegoVista);
+		delete(gController);
+		juegoVista=NULL;
+		gController=NULL;
 		delete server;
 	}
 	return 0;

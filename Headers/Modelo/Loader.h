@@ -22,12 +22,12 @@ namespace std {
 
 class Loader {
 private:
-	map<string,int>* screen;
-	map<string,int>* conf;
-	vector< map< string, string> >* type;
-	map< string, string> * stage;
-	vector< map< string, string> >* entitys;
-	map< string, string> * mainCharacter;
+	map<string,int> screen;
+	map<string,int> conf;
+	vector< map< string, string> > type;
+	map< string, string>  stage;
+	vector< map< string, string> > entitys;
+	map< string, string> mainCharacter;
 	FILE * pFile;
 	void parserError(yaml_parser_t* parser);
 

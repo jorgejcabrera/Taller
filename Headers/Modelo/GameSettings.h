@@ -27,8 +27,6 @@ private:
 	static GameSettings* instance;
 	GameSettings();
 	bool isFileExist(const string fileName);
-	void processTypes();
-
 
 public:
 	//pantalla:
