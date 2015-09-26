@@ -288,6 +288,7 @@ void GameSettings::createEntidades(){
 							int delay = atoi(this->getValueInMap(entidadObjeto, "delay").c_str());
 							int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 							int total_frames = (total_frames_line > 0) ? total_frames_line : 1;
+							if(fps > 50) fps = 50;
 							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,nombre,imagen);
 							molino->setPosition(posX,posY);
 							molino->setDelay(delay);
