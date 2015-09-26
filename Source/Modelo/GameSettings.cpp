@@ -228,6 +228,12 @@ void GameSettings::SetGameSettings(){
 	}else{
 		this->PIXEL_DIMENSION_PROTAGONISTA = 50;
 	}
+
+	// los pongo en NULL para no borrar informacion del Loader
+	mapSI = NULL;
+	mapSS = NULL;
+	delete mapSI;
+	delete mapSS;
 }
 
 GameSettings* GameSettings::GetInstance() {

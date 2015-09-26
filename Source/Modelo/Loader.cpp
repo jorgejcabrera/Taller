@@ -290,11 +290,12 @@ void Loader::parserError(yaml_parser_t* parser){
 
 
 Loader::~Loader() {
-	screen = NULL;
-	conf = NULL;
-	type = NULL;
-	stage = NULL;
-	entitys = NULL;
-	mainCharacter = NULL;
+	delete screen;
+	delete conf;
+	type = NULL; //no lo puedo destruir
+	delete stage;
+	delete entitys;
+	delete mainCharacter;
+
 }
 }

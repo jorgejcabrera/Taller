@@ -29,6 +29,11 @@ Eclipse
 	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / yaml
 ```
 
+Para el uso de socket y threads debemos incluir la librería pthread
+```
+Eclipse
+	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> pthread
+```
 
 
 Si al correr el programa, aparece el error: "error while loading shared libraries:
