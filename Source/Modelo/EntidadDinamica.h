@@ -68,7 +68,7 @@ class EntidadDinamica: public EntidadPartida {
 		int getWidthPixel();
 		int getLengthPixel();
 		virtual ~EntidadDinamica();
-		SDL_Rect getPositionOfSprite();
+		SDL_Rect getPositionOfSprite(int runCycles);
 		string getEntityType();
 		int getFramesPerSecond();
 		void setDelay(int delayFrames);

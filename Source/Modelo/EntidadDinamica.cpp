@@ -34,10 +34,13 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	this->length = 1;
 	this->widthPixel = widthPixel;
 	this->lengthPixel = lengthPixels;
+	if(fps > 50) fps = 50;
 	this->framesPerSecond = fps;
 }
 
-SDL_Rect EntidadDinamica::getPositionOfSprite(){
+SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
+	int ciclesPerFrame = 50 / this->framesPerSecond;
+
 	int lineaSprite = this->getLineSprite(this->getDireccion());
 	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
 	if(this->inDelayPeriod){
@@ -50,16 +53,19 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(){
 			if(!this->caminando){
 				this->frame = 0;
 			}else{
-				this->frame++;
-				if( (this->frame % this->getFramesInLineFile()) == 0){
-					this->frame = 0;
-					if(this->delay>0){
-						this->delayIndex = 0;
-						this->inDelayPeriod = true;
+				if(ciclos % ciclesPerFrame == 0){
+					this->frame++;
+					if( (this->frame % this->getFramesInLineFile()) == 0){
+						this->frame = 0;
+						if(this->delay>0){
+							this->delayIndex = 0;
+							this->inDelayPeriod = true;
+						}
 					}
 				}
 			}
 	}
+
 	return srcrect;
 }
 

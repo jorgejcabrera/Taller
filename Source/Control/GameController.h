@@ -26,6 +26,8 @@ private:
 	int posMouseY;
 	bool salirDelJuego;
 	bool reiniciar;
+	int runCycles;
+	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
 	void moveCharacter(int xScreen,int yScreen);
@@ -38,6 +40,8 @@ public:
 	void actualizarJuego();
 	void render();
 	void obtenerMouseInput();
+	int getRunCycles();
+	int getMaxFramesPerSecond();
 	bool finDeJuego();
 	virtual ~GameController();
 	void delay();

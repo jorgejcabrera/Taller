@@ -19,15 +19,15 @@ private:
 	int lengthPixel;
 	int framesPerSecond;
 	float destinoY;
-	int frame=0;
+	int frame;
 	int framesInLineFile;
 
 	//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
-	int delay = 0;
+	int delay;
 	//variable de control para indicar si estoy en medio del periodo de delay
-	bool inDelayPeriod = false;
+	bool inDelayPeriod;
 	// indice de segundo del delay por el cual voy
-	int delayIndex = 0;
+	int delayIndex;
 public:
 	EntidadSemiEstatica();
 	EntidadSemiEstatica(int width, int length,float widthPixel,float lengthPixels, int fps,const string &tipoEntidad,const string &pathImage);
@@ -39,8 +39,8 @@ public:
 	int getFramesInLineFile();
 	int getFramesPerSecond();
 	void setDelay(int delayFrames);
-	SDL_Rect getPositionOfSprite();
-	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
+	SDL_Rect getPositionOfSprite(int ciclos);
+	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 
 	virtual ~EntidadSemiEstatica();
 };

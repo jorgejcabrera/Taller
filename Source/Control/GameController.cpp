@@ -16,7 +16,8 @@ GameController::GameController(){
 	this->event = new SDL_Event();
 	this->posMouseX = 0;
 	this->posMouseY = 0;
-	this->inicioDeCiclo = 0;
+	this->runCycles = 0;
+	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 }
 
 Juego* GameController::getJuego(){
@@ -49,6 +50,14 @@ bool GameController::reiniciarJuego(){
 	return this->reiniciar;
 }
 
+int GameController::getRunCycles(){
+	return this->runCycles;
+}
+
+int GameController::getMaxFramesPerSecond(){
+	return this->maxFramesPerSecond;
+}
+
 bool GameController::finDeJuego(){
 	this->inicioDeCiclo = SDL_GetTicks();
 	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
@@ -69,7 +78,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 
 	if ((posicionX > gameSettings->getMargenIzquierdoDos()) && (posicionX <= gameSettings->getMargenIzquierdoUno()) && !(offSetX > gameSettings->getLimiteIzquierdo())) {
 			offSetX += gameSettings->getVelocidadScrollUno();
-		}
+	}
 
 	if (posicionX <= gameSettings->getMargenIzquierdoDos() && !(offSetX > gameSettings->getLimiteIzquierdo())) {
 			offSetX += gameSettings->getVelocidadScrollDos();
@@ -133,10 +142,14 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 }
 
 void GameController::delay(){
-	if((SDL_GetTicks()-this->inicioDeCiclo) < 1000 / this->juego->getProtagonista()->getFramesPerSecond()){
-		int valor = ((1000 / this->juego->getProtagonista()->getFramesPerSecond()) - (SDL_GetTicks()-this->inicioDeCiclo));
-		SDL_Delay(valor);
-	}
+	//if((SDL_GetTicks()-this->inicioDeCiclo) < 1000 / this->juego->getProtagonista()->getFramesPerSecond()){
+		//int valor = ((1000 / this->juego->getProtagonista()->getFramesPerSecond()) - (SDL_GetTicks()-this->inicioDeCiclo));
+		//SDL_Delay(valor);
+	this->runCycles++;
+	//if(this->runCycles % this->maxFramesPerSecond == 0){ this->runCycles = 0; }
+
+	SDL_Delay(50); // para que sean 50 frames x segundos
+	//}
 }
 GameController::~GameController() {
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
