@@ -24,8 +24,8 @@ private:
 	SDL_Renderer *renderer;
 	PicassoHelper();
 	PicassoHelper(int width, int high);
-	int widthView = 0;
-	int highView = 0;
+	int widthView ;
+	int highView;
 	static PicassoHelper* instance;
 	map<string,SDL_Texture*> mapByImagePath;
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h);

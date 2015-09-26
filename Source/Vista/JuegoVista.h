@@ -28,10 +28,10 @@ private:
 	Juego* juego;
 	GameSettings* gameSettings;
 	void drawIsometricMap();
-	void drawStaticEntities();
-	void drawDinamicEntities();
+	void drawStaticEntities(int runCycles);
+	void drawDinamicEntities(int runCycles);
 public:
-	void render();
+	void render(int ciclos);
 	JuegoVista(Juego* juego);
 	~JuegoVista();
 

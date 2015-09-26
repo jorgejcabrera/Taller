@@ -25,23 +25,20 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
 	bool reiniciar = true;
-	//bool salir = false;
-
 
 	while(reiniciar){
 		reiniciar = false;
 		GameController* gController = new GameController();
 		JuegoVista* juegoVista = new JuegoVista(gController->getJuego());
 
-		while(! gController->finDeJuego() && !reiniciar ){
+		while(!gController->finDeJuego() && !reiniciar){
 			//primero el controller actualiza el modelo
 			gController->obtenerMouseInput();
 			gController->actualizarJuego();
 			//una vez actualizado el modelo la vista lo renderiza
-			juegoVista->render();
+			juegoVista->render(gController->getRunCycles());
 			gController->delay();
 			reiniciar = gController->reiniciarJuego();
-
 		}
 		juegoVista->~JuegoVista();
 		gController->~GameController();
