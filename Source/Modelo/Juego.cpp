@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "Juego.h"
+#include "../../Headers/Modelo/Juego.h"
 
 using namespace std;
 

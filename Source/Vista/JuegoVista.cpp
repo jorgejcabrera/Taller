@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "JuegoVista.h"
+#include "../../Headers/Vista/JuegoVista.h"
 
 void JuegoVista::drawIsometricMap(){
 	int posX = 0;

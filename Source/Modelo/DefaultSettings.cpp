@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "DefaultSettings.h"
+#include "../../Headers/Modelo/DefaultSettings.h"
 
 const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
 const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images";

@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "Tile.h"
+#include "../../Headers/Modelo/Tile.h"
 
 using namespace std;
 

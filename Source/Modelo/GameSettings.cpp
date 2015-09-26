@@ -5,7 +5,7 @@
  *      Author: nico
  */
 
-#include "GameSettings.h"
+#include "../../Headers/Modelo/GameSettings.h"
 
 GameSettings* GameSettings::instance = NULL;
 

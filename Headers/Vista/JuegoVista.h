@@ -5,17 +5,17 @@
  *      Author: jorge
  */
 
-#ifndef SOURCE_VISTA_JUEGOVISTA_H_
-#define SOURCE_VISTA_JUEGOVISTA_H_
+#ifndef HEADERS_VISTA_JUEGOVISTA_H_
+#define HEADERS_VISTA_JUEGOVISTA_H_
 
 #include "SDL2/SDL.h"
-#include "../Modelo/DefaultSettings.h"
-#include "../Modelo/Juego.h"
-#include "../Modelo/EntidadEstatica.h"
 #include "SDL2/SDL_image.h"
-#include "../Modelo/GameSettings.h"
-#include "../Modelo/PicassoHelper.h"
-#include "../Control/UtilsController.h"
+#include "../../Headers/Modelo/DefaultSettings.h"
+#include "../../Headers/Modelo/Juego.h"
+#include "../../Headers/Modelo/EntidadEstatica.h"
+#include "../../Headers/Modelo/GameSettings.h"
+#include "../../Headers/Modelo/PicassoHelper.h"
+#include "../../Headers/Control/UtilsController.h"
 
 #include <string>
 #include <iostream>
