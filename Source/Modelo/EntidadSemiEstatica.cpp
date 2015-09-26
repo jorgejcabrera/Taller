@@ -10,7 +10,6 @@
 namespace std {
 
 EntidadSemiEstatica::EntidadSemiEstatica() {
-	// TODO Auto-generated constructor stub
 }
 
 

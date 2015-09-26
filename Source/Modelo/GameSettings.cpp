@@ -207,7 +207,13 @@ void GameSettings::SetGameSettings(){
 		this->FPS_PROTAGONISTA = 1;
 	}
 
-	this->PATH_PROTAGONISTA = this->getValueInMap(entidadObjeto, "imagen");
+	string imagen = this->getValueInMap(entidadObjeto, "imagen");
+	if(!(isFileExist(imagen))){
+		cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
+		this->PATH_PROTAGONISTA = DefaultSettings::defaultImage();
+	}else{
+		this->PATH_PROTAGONISTA = imagen;
+	}
 
 	int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 	if(total_frames_line>0){
@@ -242,10 +248,11 @@ GameSettings* GameSettings::GetInstance() {
 GameSettings::~GameSettings() {
 	for (list<EntidadPartida*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
 			(*it)->~EntidadPartida();
+		//(*it)=NULL;
 		}
 	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
 		this->tiles.erase(it);
-		}
+	}
 	//this->edificios = NULL;
 	this->loader->~Loader();
 	this->loader = NULL;
@@ -275,6 +282,10 @@ void GameSettings::createEntidades(){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
 				string imagen = this->getValueInMap(entidadObjeto, "imagen");
+				if(!(isFileExist(imagen))){
+					cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
+					imagen = DefaultSettings::defaultImage();
+				}
 				if((tipoEntidad == "edificios") or (tipoEntidad=="semiestaticos")){
 					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());

@@ -30,7 +30,6 @@ enum Direccion{
 
 class EntidadDinamica: public EntidadPartida {
 	private:
-		//GameSettings* gameSettings;
 		int velocidad;
 		bool caminando;
 		pair<float,float> vecVelocity;
