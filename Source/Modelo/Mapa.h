@@ -36,7 +36,7 @@ public:
 	EntidadPartida* getEntityAt(int x,int y);
 	map<pair<int,int>,Tile*>* getTiles();
 	map<pair<int,int>,EntidadPartida*>* getEntities();
-	virtual ~Mapa();
+	~Mapa();
 };
 
 

@@ -10,9 +10,6 @@
 
 #include <string>
 #include <iostream>
-#include "EntidadPartida.h"
-#include "DefaultSettings.h"
-#include "GameSettings.h"
 
 using namespace std;
 
@@ -30,7 +27,6 @@ class Tile {
 	pair<int,int> position;
 	surface_type superficie;	//por default la superficie es pasto
 	string pathImage;
-	GameSettings* gameSettings;
 
 public:
 	void setPathImage(string path);

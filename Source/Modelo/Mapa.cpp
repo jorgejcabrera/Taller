@@ -14,6 +14,7 @@ Mapa::Mapa() {
 		//barrido horizontal del mapa
 		for(int j = 0; j < gameSettings->getMapWidth(); j++){
 			Tile* newTile =  new Tile(j,i);
+			newTile->setPathImage(gameSettings->imagePathTilesByType("pasto"));
 			this->tiles.insert(std::make_pair(std::make_pair(j,i),newTile));
 		}
 	}
@@ -80,7 +81,6 @@ map<pair<int,int>,EntidadPartida*>* Mapa::getEntities(){
 
 void Mapa::show(){
 	for (std::map<pair<int,int>,Tile*>::iterator it = tiles.begin(); it != tiles.end();++it){
-		 // cout<< (*it).first.first << ";" << (*it).first.second << " => ";
 		  (*it).second->show();
 	}
 	return;
@@ -88,7 +88,7 @@ void Mapa::show(){
 
 Mapa::~Mapa() {
 	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
-		(*it).second->~EntidadPartida();
+		//(*it).second->~EntidadPartida();
 		(*it).second = NULL;
 	}
 	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){

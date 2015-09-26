@@ -13,7 +13,6 @@ EntidadEstatica::EntidadEstatica() {
 }
 
 EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage){
-	//gameSettings = GameSettings::GetInstance();
 	this->width = width;
 	this->length = length;
 	edificable = esEdificable;
@@ -37,5 +36,4 @@ void EntidadEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int o
 }
 
 EntidadEstatica::~EntidadEstatica() {
-	// TODO Auto-generated destructor stub
 }
