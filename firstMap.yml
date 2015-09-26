@@ -50,8 +50,8 @@ tipos:
   
 escenario:
   nombre: orleans
-  size_x: 100
-  size_y: 100
+  size_x: 20
+  size_y: 20
   entidades:
   - {x: 8, y: 8, tipo: agua}
   - {x: 9, y: 8, tipo: agua}
@@ -63,7 +63,7 @@ escenario:
   - {x: 12, y: 13, tipo: tierra}
   - {x: 13, y: 13, tipo: tierra}
   - {x: 0, y: 0, tipo: Church}
-  - {x: 20, y: 2, tipo: Consulate} 
+  - {x: 19, y: 2, tipo: Consulate} 
   - {x: 0, y: 18, tipo: Town_Hall}
   - {x: 0, y: 4, tipo: molino}
   protagonista: 
