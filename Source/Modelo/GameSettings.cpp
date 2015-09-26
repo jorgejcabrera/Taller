@@ -173,8 +173,11 @@ int GameSettings::getVelocidadPersonaje	(){
 }
 
 void GameSettings::SetGameSettings(){
-	map<string,int>* mapSI = new map<string,int>();
-	map< string, string> * mapSS = new map< string, string>();
+//	map<string,int>* mapSI = new map<string,int>();
+//	map< string, string> * mapSS = new map< string, string>();
+
+	map<string,int>* mapSI;
+	map< string, string> * mapSS;
 
 	// seteo screen
 	mapSI = loader->getScreen();
@@ -243,30 +246,6 @@ GameSettings* GameSettings::GetInstance() {
 		instance->createEntidades();
 	}
 	return instance;
-}
-
-GameSettings::~GameSettings() {
-	for (list<EntidadPartida*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
-			(*it)->~EntidadPartida();
-		//(*it)=NULL;
-		}
-	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
-		this->tiles.erase(it);
-	}
-	//this->edificios = NULL;
-	this->loader->~Loader();
-	this->loader = NULL;
-	this->instance =NULL;
-}
-
-//TODO: borrar este metodo
-void GameSettings::processTypes(){
-	/*vector< map< string, string> > *tipos = loader->getTypes();
-
-	for(vector< map< string, string> >::iterator it = tipos->begin(); it!= tipos->end(); ++it){
-		for (std::map<string,string>::iterator itMap=it->begin(); itMap!=it->end(); ++itMap)
-		    std::cout << itMap->first << " => " << itMap->second << '\n';
-	}*/
 }
 
 void GameSettings::createEntidades(){
@@ -361,5 +340,20 @@ bool GameSettings::isFileExist(const string fileName){
     std::ifstream infile(fileName.c_str());
     return infile.good();
 }
+
+GameSettings::~GameSettings() {
+//	for (list<EntidadPartida*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
+//			(*it)->~EntidadPartida();
+//		}
+//	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
+//		this->tiles.erase(it);
+//		}
+	//this->edificios = NULL;
+//	this->loader->~Loader();
+	delete(this->loader);
+	this->loader = NULL;
+	this->instance =NULL;
+}
+
 
 } /* namespace std */
