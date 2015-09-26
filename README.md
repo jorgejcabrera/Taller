@@ -44,3 +44,15 @@ Eclipse
 	Nombre de la variable: LD_LIBRARY_PATH
 	Value: /usr/local/lib
 ```
+
+Para la utilizacion de valgrind en eclipse, primero ejecutar por consola
+```
+sudo apt-get install valgrind
+```
+
+luego, en eclipse ir a help->install new software... , poner en "Work with" el siguiente link :  
+```
+http://download.eclipse.org/linuxtools/update
+```
+
+enter, seleccionar linux tools (valgrind tools)  next ->finish
