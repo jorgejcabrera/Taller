@@ -30,7 +30,6 @@ enum Direccion{
 
 class EntidadDinamica: public EntidadPartida {
 	private:
-		//GameSettings* gameSettings;
 		int velocidad;
 		bool caminando;
 		pair<float,float> vecVelocity;
@@ -69,7 +68,7 @@ class EntidadDinamica: public EntidadPartida {
 		int getWidthPixel();
 		int getLengthPixel();
 		virtual ~EntidadDinamica();
-		SDL_Rect getPositionOfSprite();
+		SDL_Rect getPositionOfSprite(int runCycles);
 		string getEntityType();
 		int getFramesPerSecond();
 		void setDelay(int delayFrames);

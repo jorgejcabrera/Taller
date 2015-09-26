@@ -5,7 +5,7 @@
  *      Author: jorlando
  */
 
-#include "PicassoHelper.h"
+#include "../../Headers/Modelo/PicassoHelper.h"
 PicassoHelper* PicassoHelper::instance = NULL;
 
 PicassoHelper::PicassoHelper() {
@@ -59,17 +59,11 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 }
 
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
-	string fileImage = file.c_str();
-	if(!(isFileExist(fileImage))){
-		cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << fileImage <<endl;
-		fileImage = DefaultSettings::defaultImage();
-	}
-
-	SDL_Texture *texture = IMG_LoadTexture(renderer, fileImage.c_str());
+	SDL_Texture *texture = IMG_LoadTexture(renderer, file.c_str());
 	if (texture == NULL){
 		this->exitError("loadTexture Error:");
 	}
-	this->mapByImagePath[fileImage.c_str()] = texture;
+	this->mapByImagePath[file.c_str()] = texture;
 	return texture;
 }
 
@@ -121,11 +115,6 @@ PicassoHelper* PicassoHelper::GetInstance(int width, int high) {
 		instance->createContext();
 	}
 	return instance;
-}
-
-bool PicassoHelper::isFileExist(const string fileName){
-    std::ifstream infile(fileName.c_str());
-    return infile.good();
 }
 
 PicassoHelper::~PicassoHelper() {

@@ -5,7 +5,7 @@
  *      Author: nico
  */
 
-#include "GameSettings.h"
+#include "../../Headers/Modelo/GameSettings.h"
 
 GameSettings* GameSettings::instance = NULL;
 
@@ -210,7 +210,13 @@ void GameSettings::SetGameSettings(){
 		this->FPS_PROTAGONISTA = 1;
 	}
 
-	this->PATH_PROTAGONISTA = this->getValueInMap(entidadObjeto, "imagen");
+	string imagen = this->getValueInMap(entidadObjeto, "imagen");
+	if(!(isFileExist(imagen))){
+		cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
+		this->PATH_PROTAGONISTA = DefaultSettings::defaultImage();
+	}else{
+		this->PATH_PROTAGONISTA = imagen;
+	}
 
 	int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 	if(total_frames_line>0){
@@ -251,10 +257,14 @@ void GameSettings::createEntidades(){
 			int posX = atoi(posXStr.c_str());
 			int posY = atoi(posYStr.c_str());
 
-			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<=this->MAP_WIDTH and posY<=this->MAP_HEIGHT){
+			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<this->MAP_WIDTH and posY<this->MAP_HEIGHT){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
 				string imagen = this->getValueInMap(entidadObjeto, "imagen");
+				if(!(isFileExist(imagen))){
+					cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
+					imagen = DefaultSettings::defaultImage();
+				}
 				if((tipoEntidad == "edificios") or (tipoEntidad=="semiestaticos")){
 					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
@@ -268,6 +278,7 @@ void GameSettings::createEntidades(){
 							int delay = atoi(this->getValueInMap(entidadObjeto, "delay").c_str());
 							int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 							int total_frames = (total_frames_line > 0) ? total_frames_line : 1;
+							if(fps > 50) fps = 50;
 							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,nombre,imagen);
 							molino->setPosition(posX,posY);
 							molino->setDelay(delay);

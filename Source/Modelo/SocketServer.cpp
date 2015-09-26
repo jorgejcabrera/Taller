@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "SocketServer.h"
+#include "../../Headers/Modelo/SocketServer.h"
 
 SocketServer::SocketServer(){
 }

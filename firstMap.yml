@@ -6,6 +6,7 @@ configuracion:
  vel_personaje : 10
  margen_scroll : 30
 
+
 tipos:
 - nombre: Church
   imagen: ../Taller/Images/Industrial_Age/Church.png
@@ -26,15 +27,17 @@ tipos:
   imagen: ../Taller/Images/Industrial_Age/molino.png
   ancho_base: 1
   alto_base: 1
-  fps: 2
-  delay: 0
+  fps: 25
+  delay: 5
+
   total_frames_line: 23
 
 - nombre: soldado
   imagen: ../Taller/Images/Personajes/soldado.png
-  fps: 15
+  fps: 50
   total_frames_line: 7
   pixels_dimension: 50
+  delay: 100
 
 - nombre: juana_de_arco
   imagen: path/a/imagen.png
@@ -48,8 +51,8 @@ tipos:
   
 escenario:
   nombre: orleans
-  size_x: 15
-  size_y: 15
+  size_x: 20
+  size_y: 20
   entidades:
   - {x: 8, y: 8, tipo: agua}
   - {x: 9, y: 8, tipo: agua}
@@ -60,9 +63,9 @@ escenario:
   - {x: 12, y: 12, tipo: tierra}
   - {x: 12, y: 13, tipo: tierra}
   - {x: 13, y: 13, tipo: tierra}
-  - {x: 0, y: 0, tipo: Church} 
-  - {x: 20, y: 2, tipo: Consulate} 
-  - {x: 12, y: 12, tipo: Town_Hall}
+  - {x: 0, y: 0, tipo: Church}
+  - {x: 19, y: 2, tipo: Consulate} 
+  - {x: 0, y: 18, tipo: Town_Hall}
   - {x: 0, y: 4, tipo: molino}
   protagonista: 
    tipo: soldado 

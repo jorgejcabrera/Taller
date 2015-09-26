@@ -34,7 +34,7 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	pair<int,int>* getPosition();
-	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
+	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 	void restarSalud();
 };
 

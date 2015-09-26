@@ -5,17 +5,15 @@
  *      Author: jorge
  */
 
-#include "Tile.h"
+#include "../../Headers/Modelo/Tile.h"
 
 using namespace std;
 
 Tile::Tile(int x, int y ) {
-	gameSettings = GameSettings::GetInstance();
 	this->position.first = x;
 	this->position.second = y;
 	this->available = true;
 	this->superficie = grass;
-	this->pathImage = gameSettings->imagePathTilesByType("pasto");
 }
 
 void Tile::changeStatusAvailable(){
@@ -28,8 +26,6 @@ bool Tile::isAvailable(){
 
 void Tile::pushSurface(surface_type surface){
 	this->superficie = surface;
-	//modificar el path de la imagen
-	//this->pathImage = DefaultSettings::imagePathTilesByType("grass");
 }
 
 int Tile::getSurfaceSpeed(){
@@ -61,5 +57,4 @@ void Tile::setPathImage(string path){
 }
 
 Tile::~Tile() {
-	this->gameSettings=NULL;
 }

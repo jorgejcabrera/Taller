@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "EntidadPartida.h"
+#include "../../Headers/Modelo/EntidadPartida.h"
 
 using namespace std;
 
@@ -41,7 +41,7 @@ void EntidadPartida::destruir(){
 	this->~EntidadPartida();
 }
 
-void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
+void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
 }
 
 EntidadPartida::~EntidadPartida() {

@@ -10,9 +10,9 @@
 #define NUM_DOTS 1024
 
 /* Includes */
-#include "Vista/JuegoVista.h"
-#include "Control/GameController.h"
-#include "Modelo/SocketServer.h"
+#include "../Headers/Vista/JuegoVista.h"
+#include "../Headers/Control/GameController.h"
+#include "../Headers/Modelo/SocketServer.h"
 
 using namespace std;
 
@@ -36,23 +36,20 @@ int main(int argc, char* argv[]) {
 	}*/
 
 	bool reiniciar = true;
-	//bool salir = false;
-
 
 	while(reiniciar){
 		reiniciar = false;
 		GameController* gController = new GameController();
 		JuegoVista* juegoVista = new JuegoVista(gController->getJuego());
 
-		while(! gController->finDeJuego() && !reiniciar ){
+		while(!gController->finDeJuego() && !reiniciar){
 			//primero el controller actualiza el modelo
 			gController->obtenerMouseInput();
 			gController->actualizarJuego();
 			//una vez actualizado el modelo la vista lo renderiza
-			juegoVista->render();
+			juegoVista->render(gController->getRunCycles());
 			gController->delay();
 			reiniciar = gController->reiniciarJuego();
-
 		}
 //		juegoVista->~JuegoVista();
 //		gController->~GameController();
