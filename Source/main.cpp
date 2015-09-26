@@ -12,10 +12,28 @@
 /* Includes */
 #include "Vista/JuegoVista.h"
 #include "Control/GameController.h"
+#include "Modelo/SocketServer.h"
 
 using namespace std;
 
+//hacmeos el llamado a server->run desde un hilo
+SocketServer* server;
+void* serverRun(void *){
+	server->run();
+	pthread_exit(NULL);
+}
+
 int main(int argc, char* argv[]) {
+
+	/*server = new SocketServer;
+	pthread_t hiloServer;
+	pthread_create(&hiloServer,0,serverRun,NULL);
+	pthread_detach(hiloServer);
+	while(1){
+		string message;
+		cin >> message;
+		server->setMensaje(message.c_str());
+	}*/
 
 	bool reiniciar = true;
 	//bool salir = false;
@@ -38,6 +56,7 @@ int main(int argc, char* argv[]) {
 		}
 		juegoVista->~JuegoVista();
 		gController->~GameController();
+		delete server;
 	}
 	return 0;
 }
