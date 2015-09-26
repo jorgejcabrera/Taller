@@ -134,8 +134,6 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 		posMouseY = isometricPosition.second+offset->second;
 	}
 
-	cout << cartesianPosition.first << "," << cartesianPosition.second << endl;
-
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
 	return;

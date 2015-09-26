@@ -27,7 +27,7 @@ tipos:
   imagen: ../Taller/Images/Industrial_Age/molino.png
   ancho_base: 1
   alto_base: 1
-  fps: 25
+  fps: 40
   delay: 5
 
   total_frames_line: 23
