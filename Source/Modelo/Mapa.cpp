@@ -88,12 +88,15 @@ void Mapa::show(){
 
 Mapa::~Mapa() {
 	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
-		(*it).second->~EntidadPartida();
+//		(*it).second->~EntidadPartida();
+		delete((*it).second);
 		(*it).second = NULL;
 	}
 	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
-		(*it).second->~Tile();
+//		(*it).second->~Tile();
+		delete((*it).second);
 		(*it).second = NULL;
 	}
+	this->gameSettings=NULL;
 }
 

@@ -52,9 +52,6 @@ void Tile::show(){
 	cout << "x:" << this->position.first << ", y:" << this->position.second << "\n";
 }
 
-Tile::~Tile() {
-}
-
 string Tile::getPathImage(){
 	return pathImage;
 }
@@ -63,4 +60,6 @@ void Tile::setPathImage(string path){
 	this->pathImage = path;
 }
 
-
+Tile::~Tile() {
+	this->gameSettings=NULL;
+}

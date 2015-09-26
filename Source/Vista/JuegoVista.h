@@ -27,6 +27,7 @@ class JuegoVista {
 private:
 	Juego* juego;
 	GameSettings* gameSettings;
+	PicassoHelper* picassoHelper;
 	void drawIsometricMap();
 	void drawStaticEntities();
 	void drawDinamicEntities();

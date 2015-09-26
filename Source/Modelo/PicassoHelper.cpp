@@ -131,18 +131,24 @@ bool PicassoHelper::isFileExist(const string fileName){
 PicassoHelper::~PicassoHelper() {
 	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
 		SDL_DestroyTexture(it->second);
+		it->second=NULL;
 	}
 
 	if (renderer != NULL){
 		SDL_DestroyRenderer(renderer);
+//		free(renderer);
+//		delete(renderer);
+		renderer=NULL;
 	}
 	if (window != NULL){
 		SDL_DestroyWindow(window);
+//		free(this->window);
+//		delete(window);
+		window=NULL;
 	}
 	this->widthView = 0;
 		this->highView = 0;
 		this->instance=NULL;
-
 	SDL_Quit();
 
 

@@ -17,7 +17,7 @@ void JuegoVista::drawIsometricMap(){
 		//transformo coordenadas cartesianas a isométricas
 		posY = (tileActual->getPosX()+tileActual->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
 		posX = (tileActual->getPosX()-tileActual->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
-		PicassoHelper::GetInstance()->renderObject(tileActual->getPathImage(),posX,posY,  gameSettings->getTileSize() * 2, gameSettings->getTileSize());
+		this->picassoHelper->renderObject(tileActual->getPathImage(),posX,posY,  gameSettings->getTileSize() * 2, gameSettings->getTileSize());
 	}
 }
 
@@ -34,30 +34,34 @@ void JuegoVista::drawStaticEntities(){
 }
 
 void JuegoVista::render(){
-	PicassoHelper::GetInstance()->clearView();
+	this->picassoHelper->clearView();
 	this->drawIsometricMap();
 	this->drawDinamicEntities();
 	this->drawStaticEntities();
-	PicassoHelper::GetInstance()->renderView();
+	this->picassoHelper->renderView();
 }
 
 void JuegoVista::drawDinamicEntities(){
 	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
 	int offSetX = this->juego->getOffset()->first;
 	int offSetY = this->juego->getOffset()->second;
-	PicassoHelper::GetInstance()->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - gameSettings->getTileSize()/2 + offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + offSetY, gameSettings->getTileSize(), gameSettings->getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
+	this->picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - gameSettings->getTileSize()/2 + offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + offSetY, gameSettings->getTileSize(), gameSettings->getTileSize(), this->juego->getProtagonista()->getPositionOfSprite());
 }
 
 JuegoVista::JuegoVista(Juego* juego) {
 	this->juego = juego;
 	gameSettings = GameSettings::GetInstance();
-	PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
+	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
 
 JuegoVista::~JuegoVista() {
-	this->juego->~Juego();
+//	this->juego->~Juego();
+	delete(this->juego);
 	this->juego = NULL;
-	PicassoHelper::GetInstance()->~PicassoHelper();
+//	this->picassoHelper()->~PicassoHelper();
+	delete(this->picassoHelper);
+	this->picassoHelper=NULL;
+	this->gameSettings=NULL;
 }
 
 

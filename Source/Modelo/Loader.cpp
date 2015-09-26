@@ -9,13 +9,7 @@
 
 namespace std {
 Loader::Loader() {
-	screen = new map<string,int>();
-	conf = new map<string,int>();
-	type = new vector< map< string, string> >();
-	stage = new map< string, string> ();
-	entitys = new vector< map< string, string> >();
-	mainCharacter = new map< string, string>();
-
+	 pFile = fopen ("logAge.log","w");
 }
 
 void Loader::load() {
@@ -27,7 +21,7 @@ void Loader::load() {
 	string map,key,scalarValue,value;
 	vector<pair<string,string> > nestedStructures;
 	pair<string,string> structure;
-    pFile = fopen ("logAge.log","w");
+
 
 	/* Initialize parser */
 	if(!yaml_parser_initialize(&parser)) log("Failed to initialize parser", "WARNING");
@@ -82,11 +76,11 @@ void Loader::load() {
 				if (structure ==pair<string,string>("","map")){
 					try{structure = nestedStructures.at(nestedStructures.size()-1);}catch(...){}
 					if (structure == pair<string,string>("tipos","sequence")){
-						type->push_back(stringMap);
+						type.push_back(stringMap);
 						stringMap.clear();
 					}
 					else if (structure == pair<string,string>("entidades","sequence")){
-						entitys->push_back(stringMap);
+						entitys.push_back(stringMap);
 						stringMap.clear();
 					}
 
@@ -107,11 +101,11 @@ void Loader::load() {
 					structure = nestedStructures.at(1);
 					//PANTALLA
 					if (structure == pair<string,string>("pantalla","map")){
-						screen->insert(pair<string,int>(key,atoi(value.c_str())));
+						screen.insert(pair<string,int>(key,atoi(value.c_str())));
 					}
 					//CONFIGURACION
 					else if (structure == pair<string,string>("configuracion","map")){
-						conf->insert(pair<string,int>(key,atoi(value.c_str())));
+						conf.insert(pair<string,int>(key,atoi(value.c_str())));
 					}
 					//TIPOS
 					else if (structure == pair<string,string>("tipos","sequence")){
@@ -126,7 +120,7 @@ void Loader::load() {
 					else if (structure == pair<string,string>("escenario","map")){
 						//stage
 						try{structure = nestedStructures.at(2);}
-						catch(...){stage->operator [](key) = value;}
+						catch(...){stage.operator [](key) = value;}
 						//entitys
 						if (structure == pair<string,string>("entidades","sequence")){
 							try{structure = nestedStructures.at(3);}catch(...){}
@@ -136,7 +130,7 @@ void Loader::load() {
 						}
 						//mainCharacter
 						if (structure == pair<string,string>("protagonista","map")){
-							mainCharacter->operator [](key) = value;
+							mainCharacter.operator [](key) = value;
 						}
 
 					}
@@ -162,25 +156,25 @@ void Loader::load() {
 
 
 map< string, int> * Loader::getScreen(){
-	return screen;
+	return &screen;
 }
 
 vector< map< string, string> >* Loader::getTypes(){
-	return type;
+	return &type;
 }
 
 vector< map< string, string> >* Loader::getEntitys(){
-	return entitys;
+	return &entitys;
 }
 
 map< string, int>* Loader::getConf(){
-	return conf;
+	return &conf;
 }
 map< string, string>* Loader::getStage(){
-	return stage;
+	return &stage;
 }
 map< string, string>* Loader::getMainCharacter(){
-	return mainCharacter;
+	return &mainCharacter;
 }
 
 void Loader::log(string msg, string type){
@@ -290,12 +284,12 @@ void Loader::parserError(yaml_parser_t* parser){
 
 
 Loader::~Loader() {
-	delete screen;
+/*	delete screen;
 	delete conf;
 	type = NULL; //no lo puedo destruir
 	delete stage;
 	delete entitys;
 	delete mainCharacter;
-
+*/
 }
 }

@@ -37,5 +37,4 @@ void EntidadEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int o
 }
 
 EntidadEstatica::~EntidadEstatica() {
-	// TODO Auto-generated destructor stub
 }
