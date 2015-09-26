@@ -278,7 +278,7 @@ void GameSettings::createEntidades(){
 			int posX = atoi(posXStr.c_str());
 			int posY = atoi(posYStr.c_str());
 
-			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<=this->MAP_WIDTH and posY<=this->MAP_HEIGHT){
+			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<this->MAP_WIDTH and posY<this->MAP_HEIGHT){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
 				string imagen = this->getValueInMap(entidadObjeto, "imagen");
