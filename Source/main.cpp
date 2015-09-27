@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 		delete(gController);
 		juegoVista=NULL;
 		gController=NULL;
-		delete server;
+		//delete server;
 	}
 	return 0;
 }

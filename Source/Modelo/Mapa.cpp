@@ -37,14 +37,16 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 		cout << "no se puede colocar la entidad, en este tile"<<endl;
 		return;
 	}else{
-		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first + entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
+		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first+ entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
 		int i=entidad->getPosition()->first;
 		int j= entidad->getPosition()->second;
 		this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
 
+		//le cambiamos el estado a los tiles que ocupa
 		for(int j=entidad->getPosition()->second; j<lowerVertex.second; j++)
-			for(int i=entidad->getPosition()->first; i<lowerVertex.first; i++)
-				this->getTileAt(i,j)->changeStatusAvailable();
+			for(int i=entidad->getPosition()->first; i<lowerVertex.first; i++){
+				this->tiles.at(make_pair(i,j))->changeStatusAvailable();
+			}
 
 		return;
 	}
@@ -53,14 +55,16 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 bool Mapa::positionAvailable(EntidadPartida* entidad){
 	int x = entidad->getPosition()->first;
 	int y = entidad->getPosition()->second;
-	if(!this->getTileAt(x,y)->isAvailable())
+	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0){
 		return false;
-	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0)
-		return false;
+	}
 	int posFinalX = x + entidad->getWidth();
 	int posFinalY = y + entidad->getLength();
 	if( posFinalX > gameSettings->getMapWidth() || posFinalY > gameSettings->getMapHeight())
 		return false;
+	if(!this->tiles.at(make_pair(x,y))->isAvailable() || !this->tiles.at(make_pair( x + entidad->getWidth()-1, y + entidad->getLength()-1))->isAvailable() ){
+		return false;
+	}
 	return true;
 }
 EntidadPartida* Mapa::getEntityAt(int x,int y){
