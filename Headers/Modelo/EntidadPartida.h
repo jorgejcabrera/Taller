@@ -35,6 +35,9 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	pair<int,int>* getPosition();
+
+	/*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 2x2,3x3,4x4,
+	 *ya que el render depende de este factor*/
 	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 	void restarSalud();
 };
