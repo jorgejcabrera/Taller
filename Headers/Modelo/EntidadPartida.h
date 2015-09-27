@@ -21,6 +21,7 @@ protected:
 	pair<int,int> position;
 	int width;
 	int length;
+	string sizeString;
 	string pathImage;
 
 public:
@@ -30,6 +31,7 @@ public:
 	int getWidth();
 	int getLength();
 	string getPathImage();
+	string getSizeString();
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	pair<int,int>* getPosition();
