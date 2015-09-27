@@ -9,25 +9,25 @@ configuracion:
 
 tipos:
 - nombre: Church
-  imagen: ../Taller/Images/Industrial_Age/Church.png
+  imagen: ../Taller/Images/Colonial_Age/Mercado.png
   ancho_base: 3
   alto_base: 3
   
 - nombre: Consulate
-  imagen: ../Taller/Images/Industrial_Age/Consulate.png
+  imagen: ../Taller/Images/Industrial_Age/Consulate-3x3.png
   ancho_base: 3
   alto_base: 3
   
 - nombre: Town_Hall
-  imagen: ../Taller/Images/Industrial_Age/Town_Hall.png
-  ancho_base: 3
-  alto_base: 3
+  imagen: ../Taller/Images/Industrial_Age/TownHall-4x4.png
+  ancho_base: 4
+  alto_base: 4
 
 - nombre: molino
-  imagen: ../Taller/Images/Industrial_Age/molino.png
+  imagen: ../Taller/Images/Industrial_Age/Molino.png
   ancho_base: 1
   alto_base: 1
-  fps: 40
+  fps: 25
   delay: 5
 
   total_frames_line: 23
@@ -51,8 +51,8 @@ tipos:
   
 escenario:
   nombre: orleans
-  size_x: 20
-  size_y: 20
+  size_x: 30
+  size_y: 30
   entidades:
   - {x: 8, y: 8, tipo: agua}
   - {x: 9, y: 8, tipo: agua}
@@ -63,10 +63,10 @@ escenario:
   - {x: 12, y: 12, tipo: tierra}
   - {x: 12, y: 13, tipo: tierra}
   - {x: 13, y: 13, tipo: tierra}
-  - {x: 0, y: 0, tipo: Church}
-  - {x: 19, y: 2, tipo: Consulate} 
-  - {x: 0, y: 18, tipo: Town_Hall}
-  - {x: 0, y: 4, tipo: molino}
+  - {x: 14, y: 14, tipo: Church}
+  - {x: 8, y: 4, tipo: Consulate} 
+  - {x: 0, y: 9, tipo: Town_Hall}
+  - {x: 0, y: 3, tipo: molino}
   protagonista: 
    tipo: soldado 
    x: 8 
