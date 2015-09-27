@@ -29,7 +29,7 @@ void JuegoVista::drawStaticEntities(int runCycles){
 	for(map<pair<int,int>,EntidadPartida*>::iterator it=this->juego->getMap()->getEntities()->begin();it!=this->juego->getMap()->getEntities()->end();++it){
 		EntidadPartida* entidad = (*it).second;
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-		entidad->drawMe(isometricPosition,offSetX,offSetY, runCycles );
+		entidad->drawMe(isometricPosition,offSetX,offSetY,runCycles );
 	}
 }
 

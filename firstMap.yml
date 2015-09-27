@@ -19,7 +19,7 @@ tipos:
   alto_base: 3
   
 - nombre: Town_Hall
-  imagen: ../Taller/Images/Industrial_Age/TownHall-4x4.png
+  imagen: ../Taller/Images/Medieval_Age/TownHall-4x4.png
   ancho_base: 4
   alto_base: 4
 
