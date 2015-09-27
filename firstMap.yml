@@ -87,8 +87,8 @@ escenario:
   - {x: 3, y: 1, tipo: Army}
   - {x: 10, y: 4 , tipo: Barracks}
   - {x: 10, y: 0, tipo: Armory}
-  - {x: 12, y: 15 , tipo: Smithy}
-  - {x: 12, y: 11, tipo: University}
+  - {x: 12, y: 13 , tipo: Smithy}
+  - {x: 12, y: 9, tipo: University}
   - {x: 4, y: 16, tipo: Market}
   - {x: 6, y: 8, tipo: House}
   - {x: 6, y: 11, tipo: House}
