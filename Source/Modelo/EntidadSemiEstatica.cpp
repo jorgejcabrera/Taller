@@ -23,6 +23,16 @@ EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel
 	this->pathImage = pathImage;
 	this->frame = 0;
 
+	if(this->getWidth() == 3 && this->getLength() == 3){
+		this->sizeString = "standarMediumSize";
+	}else if(this->getWidth() == 4 && this->getLength() == 4){
+		this->sizeString = "standardBigSize";
+	}else if(this->getWidth() == 2 && this->getLength() == 2){
+		this->sizeString = "standarSmallSize";
+	}else{
+		this->sizeString = "standarMediumSize";
+	}
+
 }
 
 int EntidadSemiEstatica::getFramesPerSecond(){
