@@ -11,7 +11,6 @@ UtilsController* UtilsController::instance = NULL;
 
 UtilsController::UtilsController() {
 	gameSettings = GameSettings::GetInstance();
-
 }
 
 UtilsController* UtilsController::GetInstance(){
@@ -37,26 +36,26 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartida* entidad){
 	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
 
 	//ahora hay que centrar la entidad segun su tamaño
-	string stringSize = this->getStringSize(entidad);
-	if ( stringSize == "standardMediumSize"){
+	stringSize stringSize = this->getStringSize(entidad);
+	if ( stringSize == standarMediumSize){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
 		isometricPosition.second =isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize()/2;
-	}else if( stringSize == "standardBigSize"){
+	}else if( stringSize == standardBigSize){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
 		isometricPosition.second =isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize()/2 - DefaultSettings::getTileSize()/2;	//TODO de donde se esta sacando el valor del tile???!
 	}
 	return isometricPosition;
 }
 
-string UtilsController::getStringSize(EntidadPartida* entidad){
+stringSize UtilsController::getStringSize(EntidadPartida* entidad){
 	if(entidad->getWidth() == 3 && entidad->getLength() == 3){
-		return "standardMediumSize";
+		return standarMediumSize;
 	}else if(entidad->getWidth() == 4 && entidad->getLength() == 4){
-		return "standardBigSize";
+		return standardBigSize;
 	}else if(entidad->getWidth() == 2 && entidad->getLength() == 2){
-		return "standarSmallSize";
+		return standarSmallSize;
 	}else{
-		return "standarMediumSize";
+		return standarMediumSize;
 	}
 }
 
@@ -75,7 +74,6 @@ pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 }
 
 UtilsController::~UtilsController() {
-	//delete this->instance;
 	this->instance = NULL;
 }
 

@@ -13,6 +13,12 @@
 
 using namespace std;
 
+enum stringSize {
+	standarSmallSize,
+	standarMediumSize,
+	standardBigSize
+};
+
 class UtilsController {
 private:
 	UtilsController();
@@ -24,7 +30,7 @@ public:
 	pair<int,int> convertToCartesian(int xScreen,int yScreen);
 	pair<int,int> getIsometricPosition(int x,int y);
 	virtual ~UtilsController();
-	string getStringSize(EntidadPartida* entidad);
+	stringSize getStringSize(EntidadPartida* entidad);
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 };
 

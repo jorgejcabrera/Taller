@@ -27,9 +27,8 @@ tipos:
   imagen: ../Taller/Images/Industrial_Age/Molino.png
   ancho_base: 1
   alto_base: 1
-  fps: 25
-  delay: 5
-
+  fps: 20
+  delay: 50
   total_frames_line: 23
 
 - nombre: soldado
