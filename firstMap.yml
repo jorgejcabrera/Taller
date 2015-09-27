@@ -9,27 +9,61 @@ configuracion:
 
 tipos:
 - nombre: Church
-  imagen: ../Taller/Images/Colonial_Age/Mercado.png
+  imagen: ../Taller/Images/Industrial_Age/Church-3x3.png
   ancho_base: 3
   alto_base: 3
-  
+
 - nombre: Consulate
   imagen: ../Taller/Images/Industrial_Age/Consulate-3x3.png
   ancho_base: 3
   alto_base: 3
-  
+
 - nombre: Town_Hall
-  imagen: ../Taller/Images/Industrial_Age/TownHall-4x4.png
+  imagen: ../Taller/Images/Industrial_Age/Town_Hall-4x4.png
   ancho_base: 4
+  alto_base: 4
+
+- nombre: Army
+  imagen: ../Taller/Images/Industrial_Age/Army-4x4.png
+  ancho_base: 4
+  alto_base: 4
+
+- nombre: Armory
+  imagen: ../Taller/Images/Industrial_Age/Armory-3x3.png
+  ancho_base: 3
+  alto_base: 3
+
+- nombre: Smithy
+  imagen: ../Taller/Images/Industrial_Age/Smithy-3x3.png
+  ancho_base: 3
+  alto_base: 3
+
+- nombre: Barracks
+  imagen: ../Taller/Images/Industrial_Age/Barracks-3x3.png
+  ancho_base: 3
+  alto_base: 3
+
+- nombre: House
+  imagen: ../Taller/Images/Industrial_Age/House-2x2.png
+  ancho_base: 2
+  alto_base: 2
+
+- nombre: University
+  imagen: ../Taller/Images/Industrial_Age/University-3x3.png
+  ancho_base: 3
+  alto_base: 3
+
+- nombre: Market
+  imagen: ../Taller/Images/Industrial_Age/Market-3x4.png
+  ancho_base: 3
   alto_base: 4
 
 - nombre: molino
   imagen: ../Taller/Images/Industrial_Age/Molino.png
   ancho_base: 1
   alto_base: 1
-  fps: 25
-  delay: 5
-
+  fps: 20
+  delay: 50
   total_frames_line: 23
 
 - nombre: soldado
@@ -43,29 +77,22 @@ tipos:
   imagen: path/a/imagen.png
   fps: 10
 
-- nombre: tierra
-  imagen: ../Taller/Images/Tiles/tierra.png
-
-- nombre: agua
-  imagen: ../Taller/Images/Tiles/agua.png
-  
 escenario:
   nombre: orleans
   size_x: 30
   size_y: 30
   entidades:
-  - {x: 8, y: 8, tipo: agua}
-  - {x: 9, y: 8, tipo: agua}
-  - {x: 9, y: 9, tipo: agua}
-  - {x: 8, y: 9, tipo: agua}
-  - {x: 9, y: 10, tipo: agua} 
-  - {x: 8, y: 10, tipo: agua}
-  - {x: 12, y: 12, tipo: tierra}
-  - {x: 12, y: 13, tipo: tierra}
-  - {x: 13, y: 13, tipo: tierra}
-  - {x: 14, y: 14, tipo: Church}
-  - {x: 8, y: 4, tipo: Consulate} 
-  - {x: 0, y: 9, tipo: Town_Hall}
+  - {x: 0, y: 12, tipo: Consulate}
+  - {x: 0, y: 7, tipo: Town_Hall}
+  - {x: 3, y: 1, tipo: Army}
+  - {x: 10, y: 4 , tipo: Barracks}
+  - {x: 10, y: 0, tipo: Armory}
+  - {x: 12, y: 15 , tipo: Smithy}
+  - {x: 12, y: 11, tipo: University}
+  - {x: 4, y: 16, tipo: Market}
+  - {x: 6, y: 8, tipo: House}
+  - {x: 6, y: 11, tipo: House}
+  - {x: 6, y: 14, tipo: House}
   - {x: 0, y: 3, tipo: molino}
   protagonista: 
    tipo: soldado 

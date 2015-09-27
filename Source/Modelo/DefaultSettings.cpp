@@ -11,7 +11,6 @@ const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
 const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images";
 const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
-
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 
@@ -130,12 +129,24 @@ bool DefaultSettings::isEntityTypeValid(const string &type){
 
 string DefaultSettings::getTypeEntity(const string &type){
 	list<string> edificios;
+	//Social
 	edificios.push_back("Castle");
-	edificios.push_back("castillo");
 	edificios.push_back("Town_Center");
 	edificios.push_back("Consulate");
-	edificios.push_back("Town_Hall");
 	edificios.push_back("Church");
+	edificios.push_back("House");
+	edificios.push_back("Market");
+	edificios.push_back("castillo");
+
+	//Desarrollo
+	edificios.push_back("University");
+	edificios.push_back("Armory");
+	edificios.push_back("Smithy");
+
+	//Ejercito
+	edificios.push_back("Army");
+	edificios.push_back("Barracks");
+	edificios.push_back("Town_Hall");
 	if(isInList(edificios,type))
 		return "edificios";
 
