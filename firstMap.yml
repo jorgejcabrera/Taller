@@ -18,6 +18,12 @@ tipos:
   imagen: ../Taller/Images/Industrial_Age/Church-3x4.png
   ancho_base: 3
   alto_base: 4
+  tipos:
+
+- nombre: Factory
+  imagen: ../Taller/Images/Industrial_Age/Factory-4x4.png
+  ancho_base: 4
+  alto_base: 4
 
 - nombre: Consulate
   imagen: ../Taller/Images/Industrial_Age/Consulate-3x3.png
@@ -49,8 +55,8 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
-- nombre: House
-  imagen: ../Taller/Images/Industrial_Age/House-2x2.png
+- nombre: House1
+  imagen: ../Taller/Images/Industrial_Age/House1-2x2.png
   ancho_base: 2
   alto_base: 2
 
@@ -95,12 +101,14 @@ escenario:
   - {x: 10, y: 4 , tipo: Barracks}
   - {x: 10, y: 0, tipo: Armory}
   - {x: 12, y: 13 , tipo: Smithy}
-  - {x: 12, y: 9, tipo: University}
+  - {x: 17, y: 17, tipo: University}
   - {x: 9, y: 17, tipo: Market}
-  - {x: 6, y: 8, tipo: House}
-  - {x: 6, y: 11, tipo: House}
-  - {x: 6, y: 14, tipo: House}
+  - {x: 6, y: 8, tipo: House1}
+  - {x: 6, y: 11, tipo: House1}
+  - {x: 6, y: 14, tipo: House1}
   - {x: 0, y: 3, tipo: molino}
+  - {x: 15, y: 3, tipo: Factory}
+
   protagonista: 
    tipo: soldado 
    x: 8 

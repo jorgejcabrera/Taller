@@ -54,6 +54,7 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartida* entidad){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
 		isometricPosition.second =isometricPosition.second - entidad->getLength() * gameSettings->getTileSize()/2 - DefaultSettings::getTileSize();
 	}
+	//TODO centrar entidades de 4x2
 	return isometricPosition;
 }
 
