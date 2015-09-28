@@ -132,15 +132,19 @@ string DefaultSettings::getTypeEntity(const string &type){
 	//Social
 	edificios.push_back("Castle");
 	edificios.push_back("Town_Center");
+	edificios.push_back("Public_Bath");
 	edificios.push_back("Consulate");
 	edificios.push_back("Church");
 	edificios.push_back("AdvancedChurch");
-	edificios.push_back("House");
+	edificios.push_back("House1");
+	edificios.push_back("House2");
 	edificios.push_back("Market");
+	edificios.push_back("Tabern");
 	edificios.push_back("castillo");
 
 	//Desarrollo
 	edificios.push_back("University");
+	edificios.push_back("Factory");
 	edificios.push_back("Armory");
 	edificios.push_back("Smithy");
 
