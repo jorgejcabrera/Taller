@@ -13,6 +13,12 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
+tipos:
+- nombre: AdvancedChurch
+  imagen: ../Taller/Images/Industrial_Age/Church-3x4.png
+  ancho_base: 3
+  alto_base: 4
+
 - nombre: Consulate
   imagen: ../Taller/Images/Industrial_Age/Consulate-3x3.png
   ancho_base: 3
@@ -82,6 +88,7 @@ escenario:
   size_x: 30
   size_y: 30
   entidades:
+  - {x: 3, y: 17, tipo: AdvancedChurch}
   - {x: 0, y: 12, tipo: Consulate}
   - {x: 0, y: 7, tipo: Town_Hall}
   - {x: 3, y: 1, tipo: Army}
@@ -89,7 +96,7 @@ escenario:
   - {x: 10, y: 0, tipo: Armory}
   - {x: 12, y: 13 , tipo: Smithy}
   - {x: 12, y: 9, tipo: University}
-  - {x: 4, y: 16, tipo: Market}
+  - {x: 9, y: 17, tipo: Market}
   - {x: 6, y: 8, tipo: House}
   - {x: 6, y: 11, tipo: House}
   - {x: 6, y: 14, tipo: House}

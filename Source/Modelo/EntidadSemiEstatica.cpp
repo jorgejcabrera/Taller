@@ -9,6 +9,20 @@
 
 namespace std {
 
+string getStringSize(EntidadPartida* entidad){
+	if(entidad->getWidth() == 3 && entidad->getLength() == 3){
+		return "standarMediumSize";
+	}else if(entidad->getWidth() == 4 && entidad->getLength() == 4){
+		return "standardBigSize";
+	}else if(entidad->getWidth() == 2 && entidad->getLength() == 2){
+		return "standarSmallSize";
+	}else if(entidad->getWidth() == 3 && entidad->getLength() == 4){
+		return "mediumSize";
+	}else{
+		return "standarMediumSize";
+	}
+}
+
 EntidadSemiEstatica::EntidadSemiEstatica() {
 }
 
@@ -22,17 +36,7 @@ EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel
 	this->framesPerSecond = fps;
 	this->pathImage = pathImage;
 	this->frame = 0;
-
-	if(this->getWidth() == 3 && this->getLength() == 3){
-		this->sizeString = "standarMediumSize";
-	}else if(this->getWidth() == 4 && this->getLength() == 4){
-		this->sizeString = "standardBigSize";
-	}else if(this->getWidth() == 2 && this->getLength() == 2){
-		this->sizeString = "standarSmallSize";
-	}else{
-		this->sizeString = "standarMediumSize";
-	}
-
+	this->sizeString = getStringSize(this);
 }
 
 int EntidadSemiEstatica::getFramesPerSecond(){
