@@ -9,42 +9,38 @@
 
 using namespace std;
 
+string getStringSize(EntidadPartida* entidad){
+	if(entidad->getWidth() == 3 && entidad->getLength() == 3){
+		return "standarMediumSize";
+	}else if(entidad->getWidth() == 4 && entidad->getLength() == 4){
+		return "standardBigSize";
+	}else if(entidad->getWidth() == 2 && entidad->getLength() == 2){
+		return "standarSmallSize";
+	}else if(entidad->getWidth() == 3 && entidad->getLength() == 4){
+		return "mediumSize";
+	}else{
+		return "standarMediumSize";
+	}
+}
+
 EntidadEstatica::EntidadEstatica() {
 }
 
 EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage){
 	this->width = width;
 	this->length = length;
-	edificable = esEdificable;
-	tipo = tipoEntidad;
-	pathImage = sourceImage;
-
-	if(this->getWidth() == 3 && this->getLength() == 3){
-		this->sizeString = "standarMediumSize";
-	}else if(this->getWidth() == 4 && this->getLength() == 4){
-		this->sizeString = "standardBigSize";
-	}else if(this->getWidth() == 2 && this->getLength() == 2){
-		this->sizeString = "standarSmallSize";
-	}else{
-		this->sizeString = "standarMediumSize";
-	}
+	this->edificable = esEdificable;
+	this->tipo = tipoEntidad;
+	this->pathImage = sourceImage;
+	this->sizeString = getStringSize(this);
 }
 
 EntidadEstatica::EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable){
 	this->width = width;
 	this->length = length;
-	edificable = esEdificable;
-	tipo = tipoEntidad;
-
-	if(this->getWidth() == 3 && this->getLength() == 3){
-		this->sizeString = "standarMediumSize";
-	}else if(this->getWidth() == 4 && this->getLength() == 4){
-		this->sizeString = "standardBigSize";
-	}else if(this->getWidth() == 2 && this->getLength() == 2){
-		this->sizeString = "standarSmallSize";
-	}else{
-		this->sizeString = "standarMediumSize";
-	}
+	this->edificable = esEdificable;
+	this->tipo = tipoEntidad;
+	this->sizeString = getStringSize(this);
 }
 
 void EntidadEstatica::destruir(){

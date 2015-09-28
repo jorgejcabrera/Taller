@@ -134,6 +134,7 @@ string DefaultSettings::getTypeEntity(const string &type){
 	edificios.push_back("Town_Center");
 	edificios.push_back("Consulate");
 	edificios.push_back("Church");
+	edificios.push_back("AdvancedChurch");
 	edificios.push_back("House");
 	edificios.push_back("Market");
 	edificios.push_back("castillo");
