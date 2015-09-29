@@ -21,7 +21,7 @@ tipos:
   tipos:
 
 - nombre: Factory
-  imagen: ../Taller/Images/Industrial_Age/Factory-4x4.png
+  imagen: ../Taller/Images/Induseagage/Factory-4x4.png
   ancho_base: 4
   alto_base: 4
 
@@ -75,7 +75,7 @@ tipos:
   ancho_base: 1
   alto_base: 1
   fps: 20
-  delay: 50
+  delay: 0
   total_frames_line: 23
 
 - nombre: soldado
@@ -83,7 +83,7 @@ tipos:
   fps: 50
   total_frames_line: 7
   pixels_dimension: 50
-  delay: 100
+  delay: 0
 
 - nombre: juana_de_arco
   imagen: path/a/imagen.png

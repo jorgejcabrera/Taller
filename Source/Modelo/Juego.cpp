@@ -25,6 +25,7 @@ Juego::Juego() {
 
 	this->protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
 	this->protagonista->setPathImage(gameSettings->getProtagonistaPath());
+	this->protagonista->setDelay(gameSettings->getProtagonistaDelay());
 	this->offset.first = 0;
 	this->offset.second = 0;
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);

@@ -36,6 +36,7 @@ EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel
 	this->framesPerSecond = fps;
 	this->pathImage = pathImage;
 	this->frame = 0;
+	this->inDelayPeriod = false;
 	this->sizeString = getStringSize(this);
 }
 
@@ -73,28 +74,23 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(int ciclos){
 		// solo de prueba los 50 fps del ciclo principal
 		int ciclosPerFrame = 50 / framesPerSecond;
 
-		if( ciclos % ciclosPerFrame == 0){
-		this->frame++;
-			if( (this->frame % this->getFramesInLineFile()) == 0){
-				this->frame = 0;
+		if(this->inDelayPeriod){
+			if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
+				this->inDelayPeriod = false;
+			}
+		}else{
+			if( ciclos % ciclosPerFrame == 0){
+				this->frame++;
+				if( (this->frame % this->getFramesInLineFile()) == 0){
+					this->frame = 0;
+					if(this->delay>0){
+						this->delayIndex = SDL_GetTicks();
+						this->inDelayPeriod = true;
 					}
 				}
-		//if(this->inDelayPeriod){
-		//	if(this->delayIndex <= (this->delay*this->framesPerSecond)){
-		//		delayIndex++;
-		//	}else{
-		//		this->inDelayPeriod = false;
-		//	}
-		//}else{
-		//		this->frame++;
-		//		if( (this->frame % this->getFramesInLineFile()) == 0){
-		//			this->frame = 0;
-		//			if(this->delay>0){
-		//				this->delayIndex = 0;
-		//				this->inDelayPeriod = true;
-		//			}
-		//		}
-		//}
+			}
+		}
+
 		return srcrect;
 }
 

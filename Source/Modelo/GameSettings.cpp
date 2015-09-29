@@ -210,9 +210,12 @@ void GameSettings::SetGameSettings(){
 		this->FPS_PROTAGONISTA = 1;
 	}
 
+	int delay = atoi(this->getValueInMap(entidadObjeto, "delay").c_str());
+	this->DELAY_PROTAGONISTA = delay;
+
 	string imagen = this->getValueInMap(entidadObjeto, "imagen");
 	if(!(isFileExist(imagen))){
-		cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
+		cout << "LOG.INFO : Uso la imagen por default porque no existe el file: " << imagen <<endl;
 		this->PATH_PROTAGONISTA = DefaultSettings::defaultImage();
 	}else{
 		this->PATH_PROTAGONISTA = imagen;
@@ -303,6 +306,10 @@ string GameSettings::getProtagonistaPath(){
 
 int GameSettings::getProtagonistaFramesInFile(){
 	return this->FRAMES_IN_FILE_PROTAGONISTA;
+}
+
+int GameSettings::getProtagonistaDelay(){
+	return this->DELAY_PROTAGONISTA;
 }
 
 int GameSettings::getProtagonistaPixelDimension(){

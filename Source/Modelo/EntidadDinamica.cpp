@@ -36,6 +36,7 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	this->lengthPixel = lengthPixels;
 	if(fps > 50) fps = 50;
 	this->framesPerSecond = fps;
+	this->inDelayPeriod = false;
 }
 
 SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
@@ -44,9 +45,7 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
 	int lineaSprite = this->getLineSprite(this->getDireccion());
 	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
 	if(this->inDelayPeriod){
-		if(this->delayIndex <= (this->delay*this->framesPerSecond)){
-			delayIndex++;
-		}else{
+		if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
 			this->inDelayPeriod = false;
 		}
 	}else{
@@ -58,7 +57,7 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
 					if( (this->frame % this->getFramesInLineFile()) == 0){
 						this->frame = 0;
 						if(this->delay>0){
-							this->delayIndex = 0;
+							this->delayIndex = SDL_GetTicks();
 							this->inDelayPeriod = true;
 						}
 					}

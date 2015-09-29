@@ -63,6 +63,7 @@ public:
 	string PATH_PROTAGONISTA;
 	int FRAMES_IN_FILE_PROTAGONISTA;
 	int PIXEL_DIMENSION_PROTAGONISTA;
+	int DELAY_PROTAGONISTA;
 
 	list<EntidadPartida*> edificios;
 	map<pair<int,int>,string> tiles;
@@ -111,6 +112,7 @@ public:
 	string getProtagonistaPath();
 	int getProtagonistaFramesInFile();
 	int getProtagonistaPixelDimension();
+	int getProtagonistaDelay();
 };
 
 } /* namespace std */
