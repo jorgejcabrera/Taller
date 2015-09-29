@@ -37,7 +37,6 @@ EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel
 	this->pathImage = pathImage;
 	this->frame = 0;
 	this->inDelayPeriod = false;
-	this->delayIndex = 0;
 	this->sizeString = getStringSize(this);
 }
 
@@ -76,10 +75,7 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(int ciclos){
 		int ciclosPerFrame = 50 / framesPerSecond;
 
 		if(this->inDelayPeriod){
-			//if(this->delayIndex <= (this->delay*this->framesPerSecond)){
-			if(this->delayIndex <= this->delay){
-				delayIndex++;
-			}else{
+			if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
 				this->inDelayPeriod = false;
 			}
 		}else{
@@ -88,7 +84,7 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(int ciclos){
 				if( (this->frame % this->getFramesInLineFile()) == 0){
 					this->frame = 0;
 					if(this->delay>0){
-						this->delayIndex = 0;
+						this->delayIndex = SDL_GetTicks();
 						this->inDelayPeriod = true;
 					}
 				}
