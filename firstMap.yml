@@ -75,7 +75,7 @@ tipos:
   ancho_base: 1
   alto_base: 1
   fps: 20
-  delay: 50
+  delay: 10
   total_frames_line: 23
 
 - nombre: soldado

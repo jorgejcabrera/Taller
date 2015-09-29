@@ -36,6 +36,8 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	this->lengthPixel = lengthPixels;
 	if(fps > 50) fps = 50;
 	this->framesPerSecond = fps;
+	this->inDelayPeriod = false;
+	this->delayIndex = 0;
 }
 
 SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
