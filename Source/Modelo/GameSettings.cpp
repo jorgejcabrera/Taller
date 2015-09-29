@@ -215,7 +215,7 @@ void GameSettings::SetGameSettings(){
 
 	string imagen = this->getValueInMap(entidadObjeto, "imagen");
 	if(!(isFileExist(imagen))){
-		cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
+		cout << "LOG.INFO : Uso la imagen por default porque no existe el file: " << imagen <<endl;
 		this->PATH_PROTAGONISTA = DefaultSettings::defaultImage();
 	}else{
 		this->PATH_PROTAGONISTA = imagen;
