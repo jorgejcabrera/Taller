@@ -1,9 +1,3 @@
-/*
- * Server.cpp
- *
- *  Created on: 28 de set. de 2015
- *      Author: jorge
- */
 
 #include <iostream>
 #include <string.h>
@@ -19,50 +13,49 @@ using namespace std;
 
 int main(){
 	int clientes, servidor;
-	int portNum = 1500;										//acá va el puerto por el que nos vamos a comunicar
+	int portNum = 7891;										//acá va el puerto por el que nos vamos a comunicar
 	bool salir = false;										//para mantenernos en el ciclo while del chat
-	int bufsize = 1024;
-	char* buffer = new char(bufsize);						//son los char que vamos a mandar con las funciones send y recv
+	int bufsize = 10;
+	char buffer[bufsize];						//son los char que vamos a mandar con las funciones send y recv
 
-	struct sockaddr_in direc;
-	memset(&direc,0,sizeof(direc));
+	struct sockaddr_in serverAddr;
+	memset(&serverAddr,0,sizeof(serverAddr));
 	socklen_t tamano;
-	pid_t pid;
 
 	//init socket
-	if( (clientes = socket(AF_INET, SOCK_STREAM, 0)) < 0 ){	//creamos el socket dominio: AF_INET (Protocolo TCP)
+	if( (clientes = socket(PF_INET, SOCK_STREAM, 0)) < 0 ){	//creamos el socket dominio: AF_INET (Protocolo TCP)
 		cout << "Error al crear el socket"<<endl;
 		exit(1);
 	}
 	cout << "Socket servidor ha sido creado..."<< endl;
 
 
-	direc.sin_family = AF_INET;								//asignamos a la estructura sockaddr_in un dominio, una ip y un puerto
-	direc.sin_addr.s_addr = htons(INADDR_ANY);				//INADDR_ANY es asignarle automaticamente la direccion local
-	direc.sin_port = htons(portNum);						//sin_addr y sin_port deben convertirse a Network byte y para ello usamos htons o htonl
+	serverAddr.sin_family = AF_INET;								//asignamos a la estructura sockaddr_in un dominio, una ip y un puerto
+	//serverAddr.sin_addr.s_addr = htons(INADDR_ANY);				//INADDR_ANY es asignarle automaticamente la serverAddrcion local
+	serverAddr.sin_port = htons(portNum);						//sin_addr y sin_port deben convertirse a Network byte y para ello usamos htons o htonl
 
 	//binding socket
-	if(bind(clientes, (struct sockaddr*)&direc,sizeof(direc)) < 0){	//bind: crea la conexion con el puerto y el socket creado (clientes)
-		cout << "Error en la conexion bind..."<<endl;				//clientes: es el socket a conectar, &direc es una estructura donde
-		exit(1);													//guardamos la ip local y el puerto, tamano de la estrucrura direc
+	if(bind(clientes, (struct sockaddr*)&serverAddr,sizeof(serverAddr)) < 0){	//bind: crea la conexion con el puerto y el socket creado (clientes)
+		cout << "Error en la conexion bind..."<<endl;				//clientes: es el socket a conectar, &serverAddr es una estructura donde
+		exit(1);													//guardamos la ip local y el puerto, tamano de la estrucrura serverAddr
 	}
 
-	tamano = sizeof(direc);
+	tamano = sizeof(serverAddr);
 	cout << "Esperando clientes..."<<endl;
 
 	//listing socket
 	listen(clientes, 1);									//esta funcion escucha si algun cliente se quiere conectar, y el segundo parametro
 															//es el numero de clientes en cola
 
-	while((servidor = accept(clientes,(struct sockaddr*)&direc,&tamano))>0){	//aceptamos la conexion retorna negativo si falla
+	while((servidor = accept(clientes,(struct sockaddr*)&serverAddr,&tamano))>0){	//aceptamos la conexion retorna negativo si falla
 		strcpy(buffer,"Servidor conectado\n");
-		send(servidor,buffer,bufsize,0);
+		write(servidor,buffer,bufsize);
 		cout<<"Conexion con el cliente EXITOSA\n";
 		cout<<"Recuerde poner asterisco al final para mandar un mensaje * \n Con # termina la conexcion"<<endl;
 		cout<<"Mensaje recibido: ";
 
 		do{
-			recv(servidor,buffer,bufsize,0);		//Recibimos el mensaje buffer de tamano bufsize por el socket servidor
+			read(servidor,buffer,bufsize);		//Recibimos el mensaje buffer de tamano bufsize por el socket servidor
 			cout<<buffer<<" ";
 			if(*buffer == '#'){
 				*buffer='*';
@@ -74,9 +67,9 @@ int main(){
 			cout<<"\nEscriba un mensaje: ";
 			do{
 				cin>>buffer;
-				send(servidor,buffer,bufsize,0);		//enviamos de servidor un mensaje buffer de tamano buffsize y una bandera flag
+				write(servidor,buffer,bufsize+1);		//enviamos de servidor un mensaje buffer de tamano buffsize y una bandera flag
 				if(*buffer == '#'){
-					send(servidor,buffer,bufsize,0);
+					write(servidor,buffer,bufsize+1);
 					*buffer = '*';
 					salir = true;
 				}
@@ -84,7 +77,7 @@ int main(){
 
 			cout<<"Mensaje recibido: ";
 			do{
-				recv(servidor,buffer,bufsize,0);
+				read(servidor,buffer,bufsize);
 				cout<<buffer<<" ";
 				if(*buffer == '#'){
 					*buffer = '*';
@@ -94,7 +87,7 @@ int main(){
 
 		}while(!salir);
 
-		cout << "\nEl servidor termino la conexion con "<<inet_ntoa(direc.sin_addr);
+		cout << "\nEl servidor termino la conexion con "<<inet_ntoa(serverAddr.sin_addr);
 		close(servidor);
 		cout<<"\nConecte nuevo cliente."<<endl;
 		salir = false;

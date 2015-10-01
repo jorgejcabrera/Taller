@@ -19,64 +19,62 @@ using namespace std;
 
 //el cliente necesita saber el puerto del servidor
 int main(){
-	char a;
-	int cliente;
-	int puerto = 1500;
-	int bufsize = 1024;
-	char* buffer = new char (bufsize);
-	bool salir = false;
-	char* ip;
-	strcpy(ip,"127.0.0.1");
+  char a;
+  int cliente;
+  int puerto = 7891;
+  int bufsize = 10;
+  char buffer[bufsize];
+  bool salir = false;
 
-	struct sockaddr_in direc;
+  struct sockaddr_in serverAddr;
 
-	if((cliente = socket(AF_INET,SOCK_STREAM,0))<0){
-		cout << "Error al crear el socket cliente"<<endl;
-		exit(0);
-	}
+  if((cliente = socket(PF_INET,SOCK_STREAM,0))<0){
+    cout << "Error al crear el socket cliente"<<endl;
+    exit(0);
+  }
 
-	cout << "Escriba # para acabar la comunicacion"<<endl;
-	cout << "\t\t\t[s] para empezar"<<endl;
-	cin>>a;
+  cout << "Escriba # para acabar la comunicacion"<<endl;
+  cout << "\t\t\t[s] para empezar"<<endl;
+  cin>>a;
 
-	cout<<"Socket creado"<<endl;
-	direc.sin_family = AF_INET;
-	direc.sin_port = htons(puerto);
-	inet_pton(AF_INET,ip,&direc.sin_addr);
+  cout<<"Socket creado"<<endl;
+  serverAddr.sin_family = AF_INET;
+  serverAddr.sin_port = htons(puerto);
+  serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-	if(connect(cliente,(struct sockaddr *)&direc,sizeof(direc))==0)
-		cout<<"Conexion con el servidor "<<inet_ntoa(direc.sin_addr)<<endl;
+  if(connect(cliente,(struct sockaddr *)&serverAddr,sizeof(serverAddr))==0)
+    cout<<"Conexion con el servidor "<<inet_ntoa(serverAddr.sin_addr)<<endl;
 
-	cout<<"Esperando confirmacion del servidor"<<endl;
-	recv(cliente,buffer,bufsize,0);
+  cout<<"Esperando confirmacion del servidor"<<endl;
+  read(cliente,buffer,bufsize);
 
-	cout<<"Respuesta recibida: "<<buffer;
-	cout<<"\nRecuerde poner el asterisco al final para mandar un mensaje *\nEscriba # para terminar la conexion"<<endl;
+  cout<<"Respuesta recibida: "<<buffer;
+  cout<<"\nRecuerde poner el asterisco al final para mandar un mensaje *\nEscriba # para terminar la conexion"<<endl;
 
-	do{
-		cout<<"Escribir un mensaje: ";
-		do{
-			cin>>buffer;
-			send(cliente,buffer,bufsize,0);
-			if(*buffer == '#'){
-				send(cliente,buffer,bufsize,0);
-				*buffer = '*';
-				salir = true;
-			}
-		}while(*buffer != 42);
+  do{
+    cout<<"Escribir un mensaje: ";
+    do{
+      cin>>buffer;
+      write(cliente,buffer,bufsize+1);
+      if(*buffer == '#'){
+        write(cliente,buffer,bufsize+1);
+        *buffer = '*';
+        salir = true;
+      }
+    }while(*buffer != 42);
 
-		cout<<"Mensaje recibido: ";
-		do{
-			recv(cliente,buffer,bufsize,0);
-			cout<<buffer<<" ";
-			if(*buffer == '#'){
-				*buffer = '*';
-				salir = true;
-			}
-		}while(*buffer != 42);
-		cout << endl;
-	}while(!salir);
-	cout<<"Conexcion terminada. Programa finalizado\n\n";
-	close(cliente);
-	return 0;
+    cout<<"Mensaje recibido: ";
+    do{
+      read(cliente,buffer,bufsize);
+      cout<<buffer<<" ";
+      if(*buffer == '#'){
+        *buffer = '*';
+        salir = true;
+      }
+    }while(*buffer != 42);
+    cout << endl;
+  }while(!salir);
+  cout<<"Conexcion terminada. Programa finalizado\n\n";
+  close(cliente);
+  return 0;
 }
