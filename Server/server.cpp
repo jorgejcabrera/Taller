@@ -11,12 +11,31 @@
 
 using namespace std;
 
+bool readFull(int sock, char *buffer, size_t size)
+{
+  size_t received = 0;
+  while (received < size)
+  {
+    ssize_t r = read(sock, buffer + received, size - received);
+    if (r <= 0) break;
+    received += r;
+  }
+  return received == size;
+}
+
+bool writeFull(int servidor, char *buffer, size_t size, const char *msg)
+{
+	strcpy(buffer,msg);
+	ssize_t n=write(servidor,buffer,size);
+	if(n < 0) cout<<"SRV ERROR writing to socket"<<endl;
+	return (n<0);
+}
+
 int main(){
 	int clientes, servidor;
 	int portNum = 7891;										//acá va el puerto por el que nos vamos a comunicar
-	bool salir = false;										//para mantenernos en el ciclo while del chat
-	int bufsize = 10;
-	char buffer[bufsize];						//son los char que vamos a mandar con las funciones send y recv
+	int bufsize = 1024;
+	char buffer[bufsize];//son los char que vamos a mandar con las funciones send y recv
 
 	struct sockaddr_in serverAddr;
 	memset(&serverAddr,0,sizeof(serverAddr));
@@ -24,10 +43,10 @@ int main(){
 
 	//init socket
 	if( (clientes = socket(PF_INET, SOCK_STREAM, 0)) < 0 ){	//creamos el socket dominio: AF_INET (Protocolo TCP)
-		cout << "Error al crear el socket"<<endl;
+		cout << "SRV Error al crear el socket"<<endl;
 		exit(1);
 	}
-	cout << "Socket servidor ha sido creado..."<< endl;
+	cout << "SRV Socket servidor ha sido creado..."<< endl;
 
 
 	serverAddr.sin_family = AF_INET;								//asignamos a la estructura sockaddr_in un dominio, una ip y un puerto
@@ -36,63 +55,30 @@ int main(){
 
 	//binding socket
 	if(bind(clientes, (struct sockaddr*)&serverAddr,sizeof(serverAddr)) < 0){	//bind: crea la conexion con el puerto y el socket creado (clientes)
-		cout << "Error en la conexion bind..."<<endl;				//clientes: es el socket a conectar, &serverAddr es una estructura donde
+		cout << "SRV Error en la conexion bind..."<<endl;				//clientes: es el socket a conectar, &serverAddr es una estructura donde
 		exit(1);													//guardamos la ip local y el puerto, tamano de la estrucrura serverAddr
 	}
 
 	tamano = sizeof(serverAddr);
-	cout << "Esperando clientes..."<<endl;
+	cout << "SRV Esperando clientes..."<<endl;
 
 	//listing socket
 	listen(clientes, 1);									//esta funcion escucha si algun cliente se quiere conectar, y el segundo parametro
 															//es el numero de clientes en cola
 
 	while((servidor = accept(clientes,(struct sockaddr*)&serverAddr,&tamano))>0){	//aceptamos la conexion retorna negativo si falla
-		strcpy(buffer,"Servidor conectado\n");
-		write(servidor,buffer,bufsize);
-		cout<<"Conexion con el cliente EXITOSA\n";
-		cout<<"Recuerde poner asterisco al final para mandar un mensaje * \n Con # termina la conexcion"<<endl;
-		cout<<"Mensaje recibido: ";
-
-		do{
-			read(servidor,buffer,bufsize);		//Recibimos el mensaje buffer de tamano bufsize por el socket servidor
-			cout<<buffer<<" ";
-			if(*buffer == '#'){
-				*buffer='*';
-				salir = true;
-			}
-		}while(*buffer != '*');
-
-		do{
-			cout<<"\nEscriba un mensaje: ";
-			do{
-				cin>>buffer;
-				write(servidor,buffer,bufsize+1);		//enviamos de servidor un mensaje buffer de tamano buffsize y una bandera flag
-				if(*buffer == '#'){
-					write(servidor,buffer,bufsize+1);
-					*buffer = '*';
-					salir = true;
-				}
-			}while(*buffer != '*');
-
-			cout<<"Mensaje recibido: ";
-			do{
-				read(servidor,buffer,bufsize);
-				cout<<buffer<<" ";
-				if(*buffer == '#'){
-					*buffer = '*';
-					salir = true;
-				}
-			}while(*buffer != '*');
-
-		}while(!salir);
-
-		cout << "\nEl servidor termino la conexion con "<<inet_ntoa(serverAddr.sin_addr);
+		writeFull(servidor,buffer,bufsize,"SRV Servidor conectado");
+		cout<<"SRV Conexion con el cliente EXITOSA"<<endl;
+		readFull(servidor,buffer,bufsize);
+		cout << "SRV Mensaje recibido SERVER: "<<buffer<< endl;
+		writeFull(servidor,buffer,bufsize,"SRV mensaje del SERVER");
+		cout << "SRV El servidor termino la conexion con " <<inet_ntoa(serverAddr.sin_addr)<<endl;
 		close(servidor);
-		cout<<"\nConecte nuevo cliente."<<endl;
-		salir = false;
+		cout << "SRV Conecte nuevo cliente."<<endl;
 	}
 
 	close(clientes);	//cerramos el socket
+
+
 	return 0;
 }

@@ -14,67 +14,58 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <stdio.h>
 
 using namespace std;
 
-//el cliente necesita saber el puerto del servidor
-int main(){
-  char a;
-  int cliente;
-  int puerto = 7891;
-  int bufsize = 10;
-  char buffer[bufsize];
-  bool salir = false;
 
+
+
+bool readFull(int sock, char *buffer, size_t size)
+{
+  size_t received = 0;
+  while (received < size)
+  {
+    ssize_t r = read(sock, buffer + received, size - received);
+    if (r <= 0) break;
+    received += r;
+  }
+  cout<<"CLI Respuesta recibida: "<<buffer<<endl;
+  return received == size;
+}
+
+bool writeFull(int cliente, char *buffer, size_t size, const char *msg)
+{
+	strcpy(buffer,msg);
+	ssize_t n=write(cliente,buffer,size);
+	if(n < 0) cout<<"CLI ERROR writing to socket"<<endl;
+	return (n<0);
+}
+
+int main(){
+  int cliente;
+  const char *ip="127.0.0.1";
+  int puerto = 7891;
+  int bufsize = 1024;
+  char buffer[bufsize];
   struct sockaddr_in serverAddr;
 
   if((cliente = socket(PF_INET,SOCK_STREAM,0))<0){
-    cout << "Error al crear el socket cliente"<<endl;
+    cout << "CLI Error al crear el socket cliente"<<endl;
     exit(0);
   }
-
-  cout << "Escriba # para acabar la comunicacion"<<endl;
-  cout << "\t\t\t[s] para empezar"<<endl;
-  cin>>a;
-
-  cout<<"Socket creado"<<endl;
+  cout<<"CLI Socket creado"<<endl;
   serverAddr.sin_family = AF_INET;
   serverAddr.sin_port = htons(puerto);
-  serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+  serverAddr.sin_addr.s_addr = inet_addr(ip);
 
   if(connect(cliente,(struct sockaddr *)&serverAddr,sizeof(serverAddr))==0)
-    cout<<"Conexion con el servidor "<<inet_ntoa(serverAddr.sin_addr)<<endl;
-
-  cout<<"Esperando confirmacion del servidor"<<endl;
-  read(cliente,buffer,bufsize);
-
-  cout<<"Respuesta recibida: "<<buffer;
-  cout<<"\nRecuerde poner el asterisco al final para mandar un mensaje *\nEscriba # para terminar la conexion"<<endl;
-
-  do{
-    cout<<"Escribir un mensaje: ";
-    do{
-      cin>>buffer;
-      write(cliente,buffer,bufsize+1);
-      if(*buffer == '#'){
-        write(cliente,buffer,bufsize+1);
-        *buffer = '*';
-        salir = true;
-      }
-    }while(*buffer != 42);
-
-    cout<<"Mensaje recibido: ";
-    do{
-      read(cliente,buffer,bufsize);
-      cout<<buffer<<" ";
-      if(*buffer == '#'){
-        *buffer = '*';
-        salir = true;
-      }
-    }while(*buffer != 42);
-    cout << endl;
-  }while(!salir);
-  cout<<"Conexcion terminada. Programa finalizado\n\n";
+    cout<<"CLI Conexion con el servidor "<<inet_ntoa(serverAddr.sin_addr)<<endl;
+  cout<<"CLI Esperando confirmacion del servidor"<<endl;
+  readFull(cliente,buffer,bufsize);
+  writeFull(cliente,buffer,bufsize,"CLI mensaje del CLIENTE AGE OF EMPIRES");
+  readFull(cliente,buffer,bufsize);
+  cout<<"CLI Conexion terminada. Programa finalizado\n\n";
   close(cliente);
   return 0;
 }
