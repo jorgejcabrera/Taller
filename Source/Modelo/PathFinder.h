@@ -23,11 +23,17 @@ class PathFinder {
 
 private:
 	int dManhattan(int x,int y);
+	void setInicio();
+
+	candidato inicio;
 	int destinoX;
 	int destinoY;
+	int posX;
+	int posY;
 public:
-	PathFinder(int x,int y);
+	PathFinder(int x,int y,int dX,int dY);
 	candidato getAdyacente(int oX,int oY,int x,int y);
+	void buscarCamino();
 	virtual ~PathFinder();
 };
 

@@ -7,7 +7,11 @@
 
 #include "PathFinder.h"
 
-PathFinder::PathFinder(int dX,int dY) {
+PathFinder::PathFinder(int x,int y,int dX,int dY) {
+
+	this->posX = x;
+	this->posY = y;
+
 	this->destinoX = dX;
 	this->destinoY = dY;
 }
@@ -35,6 +39,26 @@ candidato PathFinder::getAdyacente(int oX,int oY,int x,int y){
 	ady.recorrido = false;
 
 	return ady;
+}
+
+void PathFinder::setInicio(){
+
+	this->inicio.origenX = this->posX;
+	this->inicio.origenY = this->posY;
+	this->inicio.dist = this->dManhattan(posX,posY);
+	this->inicio.origenX = -1;
+	this->inicio.origenY = -1;
+	this->inicio.recorrido = true;
+
+}
+
+void PathFinder::buscarCamino(){
+	this->setInicio();
+	candidato actual = this->inicio;
+
+	int minimo = actual.dist;
+	bool encontrado = false;
+
 }
 
 PathFinder::~PathFinder() {
