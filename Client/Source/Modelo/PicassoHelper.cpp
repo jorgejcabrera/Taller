@@ -61,6 +61,7 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 SDL_Texture* PicassoHelper::loadTexture(const string &file){
 	SDL_Texture *texture = IMG_LoadTexture(renderer, file.c_str());
 	if (texture == NULL){
+		cout << file << endl;
 		this->exitError("loadTexture Error:");
 	}
 	this->mapByImagePath[file.c_str()] = texture;

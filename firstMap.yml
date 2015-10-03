@@ -9,69 +9,69 @@ configuracion:
 
 tipos:
 - nombre: Church
-  imagen: ../Taller/Images/Industrial_Age/Church-3x3.png
+  imagen: ../../Taller/Images/Industrial_Age/Church-3x3.png
   ancho_base: 3
   alto_base: 3
 
 tipos:
 - nombre: AdvancedChurch
-  imagen: ../Taller/Images/Industrial_Age/Church-3x4.png
+  imagen: ../../Taller/Images/Industrial_Age/Church-3x4.png
   ancho_base: 3
   alto_base: 4
   tipos:
 
 - nombre: Factory
-  imagen: ../Taller/Images/Induseagage/Factory-4x4.png
+  imagen: ../../Taller/Images/Industrial_Age/Factory-4x4.png
   ancho_base: 4
   alto_base: 4
 
 - nombre: Consulate
-  imagen: ../Taller/Images/Industrial_Age/Consulate-3x3.png
+  imagen: ../../Taller/Images/Industrial_Age/Consulate-3x3.png
   ancho_base: 3
   alto_base: 3
 
 - nombre: Town_Hall
-  imagen: ../Taller/Images/Industrial_Age/Town_Hall-4x4.png
+  imagen: ../../Taller/Images/Industrial_Age/Town_Hall-4x4.png
   ancho_base: 4
   alto_base: 4
 
 - nombre: Army
-  imagen: ../Taller/Images/Industrial_Age/Army-4x4.png
+  imagen: ../../Taller/Images/Industrial_Age/Army-4x4.png
   ancho_base: 4
   alto_base: 4
 
 - nombre: Armory
-  imagen: ../Taller/Images/Industrial_Age/Armory-3x3.png
+  imagen: ../../Taller/Images/Industrial_Age/Armory-3x3.png
   ancho_base: 3
   alto_base: 3
 
 - nombre: Smithy
-  imagen: ../Taller/Images/Industrial_Age/Smithy-3x3.png
+  imagen: ../../Taller/Images/Industrial_Age/Smithy-3x3.png
   ancho_base: 3
   alto_base: 3
 
 - nombre: Barracks
-  imagen: ../Taller/Images/Industrial_Age/Barracks-3x3.png
+  imagen: ../../Taller/Images/Industrial_Age/Barracks-3x3.png
   ancho_base: 3
   alto_base: 3
 
 - nombre: House1
-  imagen: ../Taller/Images/Industrial_Age/House1-2x2.png
+  imagen: ../../Taller/Images/Industrial_Age/House1-2x2.png
   ancho_base: 2
   alto_base: 2
 
 - nombre: University
-  imagen: ../Taller/Images/Industrial_Age/University-3x3.png
+  imagen: ../../Taller/Images/Industrial_Age/University-3x3.png
   ancho_base: 3
   alto_base: 3
 
 - nombre: Market
-  imagen: ../Taller/Images/Industrial_Age/Market-3x4.png
+  imagen: ../../Taller/Images/Industrial_Age/Market-3x4.png
   ancho_base: 3
   alto_base: 4
 
 - nombre: molino
-  imagen: ../Taller/Images/Industrial_Age/Molino.png
+  imagen: ../../Taller/Images/Industrial_Age/Molino.png
   ancho_base: 1
   alto_base: 1
   fps: 20
@@ -79,7 +79,7 @@ tipos:
   total_frames_line: 23
 
 - nombre: soldado
-  imagen: ../Taller/Images/Personajes/soldado.png
+  imagen: ../../Taller/Images/Personajes/soldado.png
   fps: 50
   total_frames_line: 7
   pixels_dimension: 50
