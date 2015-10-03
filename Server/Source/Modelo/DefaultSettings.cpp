@@ -8,7 +8,7 @@
 #include "../../Headers/Modelo/DefaultSettings.h"
 
 const string DefaultSettings::NOMBRE_ESCENARIO  = "Orleans";
-const string DefaultSettings::IMAGE_BASE_PATH = "../Taller/Images";
+const string DefaultSettings::IMAGE_BASE_PATH = "../../Taller/Images";
 const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
