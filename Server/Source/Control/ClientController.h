@@ -17,7 +17,6 @@ public:
 	void sendAllInfoToClients();
 	void sendAllInfo();
 	void sendInfo();
-
 	virtual ~ClientController();
 };
 
