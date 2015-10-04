@@ -9,6 +9,8 @@
 #define SOURCE_MODELO_SERVER_H_
 
 #include <netinet/in.h>
+#include <iostream>
+#include <string.h>
 using namespace std;
 
 class Server {
@@ -17,13 +19,12 @@ class Server {
 		int port;
 		struct sockaddr_in remote;
 		bool accept_connections;
-		void createListeningSocket();
+		int createSocket();
+
 	public:
-		Server();
 		Server(int port);
 		int prepareSocket();
-		int run(void *data);
-		void stopListening();
+		int run(void* data);
 		virtual ~Server();
 };
 

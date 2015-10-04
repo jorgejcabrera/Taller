@@ -12,14 +12,15 @@
 /* Includes */
 #include "../Headers/Vista/JuegoVista.h"
 #include "../Headers/Control/GameController.h"
+#include "../Headers/Modelo/Server.h"
 
 using namespace std;
 
 
 int main(int argc, char* argv[]) {
 
-	/*POR AHORA NO NOS INTERESA EL JUEGO SINO LA CONEXION DE SOCKET
-	 * bool reiniciar = true;
+	/*POR AHORA NO NOS INTERESA EL JUEGO SINO LA CONEXION DE SOCKET*/
+	/*bool reiniciar = true;
 
 	while(reiniciar){
 		reiniciar = false;
@@ -41,6 +42,8 @@ int main(int argc, char* argv[]) {
 		gController=NULL;
 	}*/
 
+	/*creamos el servidor*/
+	Server server(8181);
 
 	return 0;
 }
