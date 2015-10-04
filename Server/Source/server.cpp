@@ -18,7 +18,8 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	bool reiniciar = true;
+	/*POR AHORA NO NOS INTERESA EL JUEGO SINO LA CONEXION DE SOCKET
+	 * bool reiniciar = true;
 
 	while(reiniciar){
 		reiniciar = false;
@@ -34,14 +35,13 @@ int main(int argc, char* argv[]) {
 			gController->delay();
 			reiniciar = gController->reiniciarJuego();
 		}
-//		juegoVista->~JuegoVista();
-//		gController->~GameController();
 		delete(juegoVista);
 		delete(gController);
 		juegoVista=NULL;
 		gController=NULL;
-		//delete server;
-	}
+	}*/
+
+
 	return 0;
 }
 
