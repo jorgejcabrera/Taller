@@ -5,7 +5,7 @@
  *      Author: juan
  */
 
-#include "PathFinder.h"
+#include "../../Headers/Modelo/PathFinder.h"
 
 using namespace std;
 

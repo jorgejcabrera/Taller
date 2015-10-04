@@ -12,7 +12,7 @@
 /* Includes */
 #include "../Headers/Vista/JuegoVista.h"
 #include "../Headers/Control/GameController.h"
-#include "../Source/Modelo/PathFinder.h"
+#include "../Headers/Modelo/PathFinder.h"
 
 using namespace std;
 
@@ -21,8 +21,8 @@ int main(int argc, char* argv[]) {
 
 	bool reiniciar = true;
 
-	//PathFinder* pf = new PathFinder(2,2,5,6);
-	//pf->buscarCamino();
+	PathFinder* pf = new PathFinder(2,2,5,7);
+	pf->buscarCamino();
 
 	while(reiniciar){
 		reiniciar = false;
