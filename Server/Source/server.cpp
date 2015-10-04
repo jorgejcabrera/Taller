@@ -13,6 +13,8 @@
 #include "../Headers/Vista/JuegoVista.h"
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Server.h"
+#include "../Headers/Modelo/PathFinder.h"
+
 
 using namespace std;
 
@@ -21,6 +23,9 @@ int main(int argc, char* argv[]) {
 
 	/*POR AHORA NO NOS INTERESA EL JUEGO SINO LA CONEXION DE SOCKET*/
 	/*bool reiniciar = true;
+
+	PathFinder* pf = new PathFinder(2,2,5,7);
+	pf->buscarCamino();
 
 	while(reiniciar){
 		reiniciar = false;

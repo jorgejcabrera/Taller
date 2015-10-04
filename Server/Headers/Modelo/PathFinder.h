@@ -8,6 +8,10 @@
 #ifndef PATHFINDER_H_
 #define PATHFINDER_H_
 
+#include <list>
+#include <iostream>
+
+using namespace std;
 
 struct candidato {
   int posX;
@@ -26,6 +30,11 @@ private:
 	void setInicio();
 
 	candidato inicio;
+	list<candidato>* candidatos;
+	bool candidatoExiste(candidato unCandidato);
+	candidato getMinimoNoRecorrido();
+	candidato getCandidato(int x,int y);
+
 	int destinoX;
 	int destinoY;
 	int posX;
