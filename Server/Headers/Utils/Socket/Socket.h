@@ -2,7 +2,8 @@
 #define SOURCE_UTILS_SOCKET_SOCKET_H_
 
 #include <string>
-#include <unistd.h> //close
+#include <iostream>
+#include <unistd.h>
 #include <arpa/inet.h>
 
 using namespace std;

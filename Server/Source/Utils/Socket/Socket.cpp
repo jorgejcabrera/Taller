@@ -6,7 +6,8 @@ Socket::Socket(int sockfd) {
 
 int Socket::socketWrite(const char *buffer, size_t length){
     int wroteBytes = write(socket, buffer, length);
-    if(wroteBytes < 0) cout<<"ERROR writing to socket"<<endl;
+    if( wroteBytes < 0)
+    	cout<<"ERROR writing to socket"<<endl;
     return wroteBytes;
 }
 
