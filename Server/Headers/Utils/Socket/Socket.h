@@ -12,9 +12,12 @@ class Socket {
 		int socket;
 	public:
         Socket(int sockfd);
-        int socketSend(const char * buf, size_t length);
+        int socketWrite(const char * buffer, size_t length);
+        //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);
         int recvMsgSize(size_t size_length);
+
+        int readMessage(string & msg, size_t length);
         int getSocket();
         void socketShutdown();
         void closeConnection();

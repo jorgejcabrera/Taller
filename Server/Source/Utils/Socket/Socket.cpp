@@ -4,17 +4,14 @@ Socket::Socket(int sockfd) {
     this->socket = sockfd;
 }
 
-int Socket::socketSend(const char * buf, size_t length){
-    int bytes_enviados = 0;
-
-    //MSG_NOSIGNAL is important to avoid sign pipe and continue execution
-    bytes_enviados = send(socket, buf, length, MSG_NOSIGNAL);
-
-    return bytes_enviados;
+int Socket::socketWrite(const char *buffer, size_t length){
+    int wroteBytes = write(socket, buffer, length);
+    if(wroteBytes < 0) cout<<"ERROR writing to socket"<<endl;
+    return wroteBytes;
 }
 
 int Socket::recvMsgSize(size_t size_length){
-	std::string size;
+	string size;
 	if (recvMsg(size, size_length) <= 0) return -1;
 
 	uint32_t nro;
@@ -28,23 +25,36 @@ int Socket::recvMsgSize(size_t size_length){
 	return ntohl(nro);
 }
 
-int Socket::recvMsg(std::string & msg, size_t length){
+int Socket::recvMsg(string & msg, size_t length){
     char * c_msg = new char[length + 1]();
 
     int r = recv(socket, c_msg, sizeof(char) * length,  MSG_WAITALL);
-
     // recv can return less than the desired data!
     if (r < (int) (sizeof(char) * length)) {
     	return -1;
     }
-
-
     msg.clear();
     msg.append(c_msg, length);
-
     delete[] c_msg;
-
     return r;
+}
+
+int Socket::readMessage(string & msg,size_t size)
+{
+	char * buffer = new char[size+1]();
+	//Hasta que no leo el total de bytes no paro.
+	int bytesReceived = 0;
+	while (bytesReceived < size){
+		int partialReadBytes = read(this->socket, buffer + bytesReceived, size - bytesReceived);
+		if (partialReadBytes <= 0) break;
+		bytesReceived += partialReadBytes;
+	}
+	// modifico el mensaje con recibido en el buffer
+	//cout<<"Socket Respuesta recibida: "<<buffer<<endl;
+	msg.clear();
+	msg.append(buffer, size);
+	delete[] buffer;
+	return bytesReceived;
 }
 
 int Socket::getSocket(){
