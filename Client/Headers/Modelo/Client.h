@@ -9,28 +9,26 @@
 #define SOURCE_MODELO_CLIENT_H_
 
 #include "../Utils/Socket/Message.h"
-#include <string>
+#include <string.h>
+#include <iostream>
+#include <unistd.h>
+#include <arpa/inet.h>
 
 using namespace std;
 
 class Client {
 private:
 	int port;
+	int sockfd;
+	int status;
 	string ip;
 	string name;
-
-	/*Una vez que tengamos definido el protocolo de comunicon entre el servidor y el cliente, el cliente
-	 *tendra que tener un metodo para entender ese mensaje*/
-	void interpretReceivedMessage(Message* msg);
+	void interpretReceivedMessage(string* msg);
 public:
-	Client();
 	Client(string ip, int port);
-	void setName(string name);
-	string getName();
-	void sendMessage(Message msg);
 	int connectToServer();
-	void reconnectToServer();
 	int getStatus();
+	void sendMessage(string msg);
 	virtual ~Client();
 };
 
