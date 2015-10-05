@@ -8,11 +8,16 @@
 #ifndef SOURCE_MODELO_CLIENT_H_
 #define SOURCE_MODELO_CLIENT_H_
 
+#define ERROR -1
+#define OK 0
+
 #include "../Utils/Socket/Message.h"
 #include <string.h>
 #include <iostream>
+
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 
 using namespace std;
 
@@ -28,7 +33,7 @@ public:
 	Client(string ip, int port);
 	int connectToServer();
 	int getStatus();
-	void sendMessage(string msg);
+	void sendMessage(const char* msg);
 	virtual ~Client();
 };
 
