@@ -7,11 +7,35 @@
 
 #include "../../../Headers/Utils/Socket/Message.h"
 
-Message::Message() {
-	// TODO Auto-generated constructor stub
-
+Message::Message(string msg) {
+	this->body = msg;
 }
 
-Message::~Message() {
-	// TODO Auto-generated destructor stub
+string Message::getBody(){
+	return this->body;
+}
+
+int Message::getBodySize(){
+	return this->sizeBody;
+}
+
+void Message::setBody(char* bodyReceived){
+	this->body.clear();
+	this->body.append(bodyReceived);
+}
+/*
+void Message::setBody(string bodyReceived){
+	this->body.clear();
+	this->body.append(bodyReceived);
+}
+*/
+Message::~Message(){
+}
+
+char * Message::getBodyToWrite(){
+	char* bodyToWrite = new char[this->sizeBody];
+	for(int idx = 0; idx < this->body.length(); idx++){
+		bodyToWrite[idx] = body[idx];
+	}
+	return bodyToWrite;
 }

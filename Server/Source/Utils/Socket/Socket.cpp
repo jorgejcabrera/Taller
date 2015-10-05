@@ -1,11 +1,11 @@
 #include "../../../Headers/Utils/Socket/Socket.h"
 
-Socket::Socket(int sockfd) {
-    this->socket = sockfd;
+Socket::Socket(int socketId) {
+    this->socket = socketId;
 }
 
-int Socket::socketWrite(const char *buffer, size_t length){
-    int wroteBytes = write(socket, buffer, length);
+int Socket::writeMessage(Message *msg){
+    int wroteBytes = write(this->socket, msg->getBodyToWrite(), msg->getBodySize());
     if( wroteBytes < 0)
     	cout<<"ERROR writing to socket"<<endl;
     return wroteBytes;
@@ -40,11 +40,12 @@ int Socket::recvMsg(string & msg, size_t length){
     return r;
 }
 
-int Socket::readMessage(string & msg,size_t size)
+int Socket::readMessage(Message *msg)
 {
+	int size = msg->getBodySize();
 	char * buffer = new char[size+1]();
 	//Hasta que no leo el total de bytes no paro.
-	int bytesReceived = 0;
+	size_t bytesReceived = 0;
 	while (bytesReceived < size){
 		int partialReadBytes = read(this->socket, buffer + bytesReceived, size - bytesReceived);
 		if (partialReadBytes <= 0) break;
@@ -52,8 +53,7 @@ int Socket::readMessage(string & msg,size_t size)
 	}
 	// modifico el mensaje con recibido en el buffer
 	//cout<<"Socket Respuesta recibida: "<<buffer<<endl;
-	msg.clear();
-	msg.append(buffer, size);
+	msg->setBody(buffer);
 	delete[] buffer;
 	return bytesReceived;
 }

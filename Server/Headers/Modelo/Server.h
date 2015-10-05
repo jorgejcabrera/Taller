@@ -11,21 +11,23 @@
 #include <netinet/in.h>
 #include <iostream>
 #include <string.h>
+#include "../../Headers/Utils/Socket/Socket.h"
+
 using namespace std;
 
 class Server {
 	private:
-		int sockfd;
+		int serverSocket;
 		int port;
-		struct sockaddr_in remote;
-		bool accept_connections;
-		int createSocket();
+		struct sockaddr_in serverAddress;
+		//bool accept_connections;
 
 	public:
 		Server(int port);
-		int prepareSocket();
-		int run(void* data);
-		virtual ~Server();
+		int initSocketServer();
+		//int run(void* data);
+		void listenClients();
+		~Server();
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

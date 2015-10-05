@@ -8,52 +8,46 @@
 #include "../../Headers/Modelo/Server.h"
 
 Server::Server(int port) {
-	try{
-		this->sockfd = this->createSocket();
-	}catch (int e){
-		cout << "No se pudo inicializar el socket" << endl;
-	}
-	this->accept_connections = true;
 	this->port = port;
-}
-int Server::createSocket(){
-	int socketNum = socket(AF_INET, SOCK_STREAM, 0);
-	if ( socketNum < 0) {
-		throw -1;
-	} else {
-		return socketNum;
+	this->serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+	if ( this->serverSocket < 0) {
+		cout << "Error al crear el socket" << endl;
 	}
+	this->port = port;
+	int exitCode = this->initSocketServer();
+	if(exitCode<0){
+		cout << "Falle en el init" << endl;
+	}
+	//this->accept_connections = true;
+
 }
+int Server::initSocketServer(){
+	memset(&this->serverAddress, 0, sizeof(this->serverAddress));
+	this->serverAddress.sin_family = AF_INET;
+	this->serverAddress.sin_port = htons(this->port);
 
-int Server::prepareSocket(){
-	struct sockaddr_in server;
-	memset(&server, 0, sizeof(server));
-	server.sin_family = AF_INET;
-	server.sin_addr.s_addr = htonl(INADDR_ANY);
-	server.sin_port = htons(port);
+	//this->serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
+	//int opt = 1;
+	//setsockopt(this->serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int));
 
-	int opt = 1;
-	setsockopt(this->sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int));
-
-	/**ligamos con el sistema operativo**/
-	if ( bind(this->sockfd, (struct sockaddr *)&server, sizeof(struct sockaddr)) < 0 ) {
-		cout << "Error al hacer el bind con el sistema operativo" << endl;
+	//Bindeamos el socket
+	if ( bind(this->serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0 ) {
+		cout << "Error en la conexion bind.." << endl;
 		return -1;
 	}
-
-	/**escuchamos los clientes**/
-	if (listen(this->sockfd, 2) < 0) {
-		cout << "Error al escuchar clientes"<<endl;
+	// Listen socket Clients
+	if (listen(this->serverSocket, 2) < 0) {
+		cout << "Error en el listen"<<endl;
 		return -1;
 	}
 	return 0;
 }
-
+/*
 int Server::run(void * data){
 
 	while (((Server*) data)->accept_connections){
 		socklen_t size = sizeof(struct sockaddr_in);
-		int client_socket = accept(((Server*) data)->sockfd, (struct sockaddr*) &((Server*) data)->remote, &size);
+		int client_socket = accept(((Server*) data)->serverSocket, (struct sockaddr*) &((Server*) data)->remote, &size);
 		if (client_socket < 0 ){
 			cout << "Error al aceptar cliente"<<endl;
 			return -1;
@@ -62,9 +56,30 @@ int Server::run(void * data){
 		}
 	}
 	cout << "El servidor dejo de escuchar nuevas conexiones"<<endl;
+
 	return 0;
+}*/
+
+void Server::listenClients(){
+	int client;
+	socklen_t tamano = sizeof(serverAddress);
+	while((client = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){ //aceptamos la conexion retorna negativo si falla
+		Socket *socketClient = new Socket(client);
+		Message *mensaje = new Message("SRV Servidor Conectado");
+		socketClient->writeMessage(mensaje);
+	    cout<<"SRV Conexion con el cliente EXITOSA"<<endl;
+	    socketClient->readMessage(mensaje);
+	    cout << "SRV Mensaje recibido SERVER: "<<mensaje->getBody()<< endl;
+	    mensaje->setBody("SRV mensaje del SERVER");
+	    socketClient->writeMessage(mensaje);
+	    cout << "SRV El servidor termino la conexion"<<endl;
+		socketClient->~Socket();
+	    close(client);
+	    cout << "SRV Conecte nuevo cliente."<<endl;
+	  }
 }
 
 Server::~Server() {
-	this->accept_connections = false;
+	//this->accept_connections = false;
+	close(this->serverSocket);
 }
