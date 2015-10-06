@@ -33,7 +33,7 @@ public:
 	Client(string ip, int port);
 	int connectToServer();
 	int getStatus();
-	void sendMessage(const char* msg);
+	bool sendMessage(char* buffer,const char* msg);
 	virtual ~Client();
 };
 

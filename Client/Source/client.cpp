@@ -41,10 +41,10 @@ int main(int argc, char* argv[]) {
 		gController=NULL;
 		//delete server;
 	}*/
-
+	char buffer [1024];
 	Client* client = new Client("127.0.0.1",8181);
 	client->connectToServer();
-	client->sendMessage("Hola");
+	client->sendMessage(buffer,"Hola");
 	client->~Client();
 	return 0;
 }

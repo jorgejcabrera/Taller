@@ -9,11 +9,10 @@
 
 Server::Server(int port) {
 	this->port = port;
-	this->serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
 	if ( this->serverSocket < 0) {
 		cout << "Error al crear el socket" << endl;
 	}
-	this->port = port;
 	int exitCode = this->initSocketServer();
 	if(exitCode<0){
 		cout << "Falle en el init" << endl;
@@ -25,6 +24,7 @@ int Server::initSocketServer(){
 	memset(&this->serverAddress, 0, sizeof(this->serverAddress));
 	this->serverAddress.sin_family = AF_INET;
 	this->serverAddress.sin_port = htons(this->port);
+	this->serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
 
 	//this->serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 	//int opt = 1;

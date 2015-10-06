@@ -48,7 +48,8 @@ int main(int argc, char* argv[]) {
 	}*/
 
 	/*creamos el servidor*/
-	Server server(8181);
+	Server server(7891);
+	server.initSocketServer();
 
 	return 0;
 }

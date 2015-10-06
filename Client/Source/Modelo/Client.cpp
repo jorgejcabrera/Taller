@@ -10,13 +10,14 @@
 Client::Client(string ip, int port) {
 	this->ip = ip;
 	this->port = port;
-	this->sockfd = socket(AF_INET, SOCK_STREAM, 0);			//create socket
+	this->sockfd = 0;
 	this->status = -1;										//desconected
 }
 
 int Client::connectToServer(){
+	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 
-	if (this->sockfd < 0) {
+	if ( this->sockfd < 0) {
 		cout << "Error initialising socket" << endl;
 		return -1;
 	}
@@ -39,17 +40,24 @@ int Client::connectToServer(){
 		return -1;
 	}*/
 
-	if ( connect(this->sockfd,(struct sockaddr*)&s_addr, sizeof(s_addr)) < 0){
+	if ( connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr)) < 0){
 		cout << "Error connecting to server" << endl;
 		this->status = -1;
 		return ERROR;
 	}else {
+		cout << "Conexion con el servidor "<<inet_ntoa(s_addr.sin_addr)<<endl;
 		this->status = 0; // conectado :)
 	}
 	return OK;
 }
 
-void Client::sendMessage(const char* msg){
+bool Client::sendMessage(char* buffer,const char* msg){
+	strcpy(buffer,msg);
+	ssize_t n = write(this->sockfd,buffer,1024);				//bufsize hoy en dia esta hardcodeado a 1024
+	if(n < 0)
+		cout<<"ERROR writing to socket"<<endl;
+	return (n<0);
+
 }
 
 
