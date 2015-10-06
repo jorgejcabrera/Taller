@@ -23,12 +23,7 @@ void Message::setBody(char* bodyReceived){
 	this->body.clear();
 	this->body.append(bodyReceived);
 }
-/*
-void Message::setBody(string bodyReceived){
-	this->body.clear();
-	this->body.append(bodyReceived);
-}
-*/
+
 Message::~Message(){
 }
 

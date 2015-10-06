@@ -25,7 +25,6 @@ public:
 	char * getBodyToWrite();
 	int getBodySize();
 	void setBody(char* bodyReceived);
-	//void setBody(string bodyReceived);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */
