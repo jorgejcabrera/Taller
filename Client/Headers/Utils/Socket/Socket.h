@@ -2,8 +2,10 @@
 #define SOURCE_UTILS_SOCKET_SOCKET_H_
 
 #include <string>
-#include <unistd.h> //close
+#include <iostream>
+#include <unistd.h>
 #include <arpa/inet.h>
+#include "../../../Headers/Utils/Socket/Message.h"
 
 using namespace std;
 
@@ -11,10 +13,15 @@ class Socket {
 	private:
 		int socket;
 	public:
-        Socket(int sockfd);
-        int socketSend(const char * buf, size_t length);
+        Socket(int socketId);
+        int writeMessage(Message *msg);
+        int readMessage(Message *msg);
+
+        //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);
         int recvMsgSize(size_t size_length);
+
+
         int getSocket();
         void socketShutdown();
         void closeConnection();

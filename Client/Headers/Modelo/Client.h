@@ -11,7 +11,7 @@
 #define ERROR -1
 #define OK 0
 
-#include "../Utils/Socket/Message.h"
+#include "../../Headers/Utils/Socket/Socket.h"
 #include <string.h>
 #include <iostream>
 
@@ -34,6 +34,7 @@ public:
 	int connectToServer();
 	int getStatus();
 	bool sendMessage(char* buffer,const char* msg);
+	void communicateWithServer();
 	virtual ~Client();
 };
 

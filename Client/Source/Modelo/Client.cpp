@@ -59,6 +59,24 @@ bool Client::sendMessage(char* buffer,const char* msg){
 
 }
 
+void Client::communicateWithServer(){
+	Socket *socketClient = new Socket(this->sockfd);
+	Message *mensaje = new Message("");
+	socketClient->readMessage(mensaje);
+	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->getBody()<< endl;
+	mensaje->setBody("CLI mensaje del CLIENTE AGE OF EMPIRES");
+	socketClient->writeMessage(mensaje);
+	socketClient->readMessage(mensaje);
+	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->getBody()<< endl;
+	socketClient->~Socket();
+	/*
+	 * readFull(cliente,buffer,bufsize);
+	  writeFull(cliente,buffer,bufsize,"CLI mensaje del CLIENTE AGE OF EMPIRES");
+	  readFull(cliente,buffer,bufsize);
+	  cout<<"CLI Conexion terminada. Programa finalizado\n\n";
+	  */
+}
+
 
 int Client::getStatus(){
 	return this->status;
