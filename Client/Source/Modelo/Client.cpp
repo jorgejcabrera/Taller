@@ -54,7 +54,7 @@ bool Client::sendMessage(char* buffer,const char* msg){
 	strcpy(buffer,msg);
 	ssize_t n = write(this->sockfd,buffer,1024);				//bufsize hoy en dia esta hardcodeado a 1024
 	if(n < 0)
-		cout<<"ERROR writing to socket"<<endl;
+		cout<<"ERROR writing to socket: "<< gai_strerror(n)<<endl;
 	return (n<0);
 
 }
