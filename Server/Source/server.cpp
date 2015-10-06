@@ -124,7 +124,8 @@ int main(int argc, char* argv[]) {
 //	close(clientes);	//cerramos el socket
 
 	Server* server = new Server(7841);
-	server->initSocketServer();
+	if( server->initSocketServer() == ERROR)
+		cout<<"Error al inicializar socket"<<endl;
 
 
 	return 0;

@@ -10,8 +10,6 @@
 Server::Server(int port) {
 	this->port = port;
 	this->serverSocket = 0;
-	if( this->initSocketServer() == ERROR)
-		cout<<"Error al inicializar socket"<<endl;
 	//this->accept_1onnections = true;
 
 }
@@ -23,8 +21,9 @@ int Server::initSocketServer(){
 	}
 	memset(&this->serverAddress, 0, sizeof(this->serverAddress));
 	this->serverAddress.sin_family = AF_INET;
-	this->serverAddress.sin_port = htons(this->port);
 	this->serverAddress.sin_addr.s_addr = htons(INADDR_ANY);
+	this->serverAddress.sin_port = htons(this->port);
+
 
 	//int opt = 1;
 	//setsockopt(this->serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int));
