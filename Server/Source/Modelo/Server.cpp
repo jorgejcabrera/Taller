@@ -9,18 +9,22 @@
 
 Server::Server(int port) {
 	this->port = port;
-	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
-	if ( this->serverSocket < 0) {
-		cout << "Error al crear el socket" << endl;
+	this->serverSocket = 0;
+	try{
+		this->initSocketServer();
+	}catch (int e){
+		cout << "Error al inicializar socket"<<endl;
 	}
-	int exitCode = this->initSocketServer();
-	if(exitCode<0){
-		cout << "Falle en el init" << endl;
-	}
+
 	//this->accept_connections = true;
 
 }
 int Server::initSocketServer(){
+	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
+	if ( this->serverSocket < 0) {
+		cout << "Error al crear el socket" << endl;
+		throw -1;
+	}
 	memset(&this->serverAddress, 0, sizeof(this->serverAddress));
 	this->serverAddress.sin_family = AF_INET;
 	this->serverAddress.sin_port = htons(this->port);
@@ -33,12 +37,12 @@ int Server::initSocketServer(){
 	//Bindeamos el socket
 	if ( bind(this->serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0 ) {
 		cout << "Error en la conexion bind.." << endl;
-		return -1;
+		throw -1;
 	}
 	// Listen socket Clients
 	if (listen(this->serverSocket, 2) < 0) {
 		cout << "Error en el listen"<<endl;
-		return -1;
+		throw -1;
 	}
 	return 0;
 }
