@@ -10,41 +10,36 @@
 Server::Server(int port) {
 	this->port = port;
 	this->serverSocket = 0;
-	try{
-		this->initSocketServer();
-	}catch (int e){
-		cout << "Error al inicializar socket"<<endl;
-	}
-
-	//this->accept_connections = true;
+	if( this->initSocketServer() == ERROR)
+		cout<<"Error al inicializar socket"<<endl;
+	//this->accept_1onnections = true;
 
 }
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
 	if ( this->serverSocket < 0) {
 		cout << "Error al crear el socket" << endl;
-		throw -1;
+		return ERROR;
 	}
 	memset(&this->serverAddress, 0, sizeof(this->serverAddress));
 	this->serverAddress.sin_family = AF_INET;
 	this->serverAddress.sin_port = htons(this->port);
-	this->serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
+	this->serverAddress.sin_addr.s_addr = htons(INADDR_ANY);
 
-	//this->serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 	//int opt = 1;
 	//setsockopt(this->serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int));
 
 	//Bindeamos el socket
 	if ( bind(this->serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0 ) {
 		cout << "Error en la conexion bind.." << endl;
-		throw -1;
+		return ERROR;
 	}
 	// Listen socket Clients
 	if (listen(this->serverSocket, 2) < 0) {
 		cout << "Error en el listen"<<endl;
-		throw -1;
+		return ERROR;
 	}
-	return 0;
+	return OK;
 }
 /*
 int Server::run(void * data){

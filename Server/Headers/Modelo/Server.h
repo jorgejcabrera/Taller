@@ -8,6 +8,9 @@
 #ifndef SOURCE_MODELO_SERVER_H_
 #define SOURCE_MODELO_SERVER_H_
 
+#define ERROR -1
+#define OK 0
+
 #include <netinet/in.h>
 #include <iostream>
 #include <string.h>
@@ -15,7 +18,7 @@
 
 using namespace std;
 
-class Server {
+class Server{
 	private:
 		int serverSocket;
 		int port;

@@ -76,52 +76,55 @@ int main(int argc, char* argv[]) {
 
 	/*creamos el servidor*/
 
-	int clientes, servidor;
-	int portNum = 7891;										//acá va el puerto por el que nos vamos a comunicar
-	int bufsize = 1024;
-	char buffer[bufsize];//son los char que vamos a mandar con las funciones send y recv
+//	int clientes, servidor;
+//	int portNum = 7891;										//acá va el puerto por el que nos vamos a comunicar
+//	int bufsize = 1024;
+//	char buffer[bufsize];//son los char que vamos a mandar con las funciones send y recv
+//
+//	struct sockaddr_in serverAddr;
+//	memset(&serverAddr,0,sizeof(serverAddr));
+//	socklen_t tamano;
+//
+//	//init socket
+//	if( (clientes = socket(PF_INET, SOCK_STREAM, 0)) < 0 ){	//creamos el socket dominio: AF_INET (Protocolo TCP)
+//		cout << "SRV Error al crear el socket"<<endl;
+//		exit(1);
+//	}
+//	cout << "SRV Socket servidor ha sido creado..."<< endl;
+//
+//
+//	serverAddr.sin_family = AF_INET;								//asignamos a la estructura sockaddr_in un dominio, una ip y un puerto
+//	//serverAddr.sin_addr.s_addr = htons(INADDR_ANY);				//INADDR_ANY es asignarle automaticamente la serverAddrcion local
+//	serverAddr.sin_port = htons(portNum);						//sin_addr y sin_port deben convertirse a Network byte y para ello usamos htons o htonl
+//
+//	//binding socket
+//	if(bind(clientes, (struct sockaddr*)&serverAddr,sizeof(serverAddr)) < 0){	//bind: crea la conexion con el puerto y el socket creado (clientes)
+//		cout << "SRV Error en la conexion bind..."<<endl;				//clientes: es el socket a conectar, &serverAddr es una estructura donde
+//		exit(1);													//guardamos la ip local y el puerto, tamano de la estrucrura serverAddr
+//	}
+//
+//	tamano = sizeof(serverAddr);
+//	cout << "SRV Esperando clientes..."<<endl;
+//
+//	//listing socket
+//	listen(clientes, 1);									//esta funcion escucha si algun cliente se quiere conectar, y el segundo parametro
+//															//es el numero de clientes en cola
+//
+//	while((servidor = accept(clientes,(struct sockaddr*)&serverAddr,&tamano))>0){	//aceptamos la conexion retorna negativo si falla
+//		writeFull(servidor,buffer,bufsize,"SRV Servidor conectado");
+//		cout<<"SRV Conexion con el cliente EXITOSA"<<endl;
+//		readFull(servidor,buffer,bufsize);
+//		cout << "SRV Mensaje recibido SERVER: "<<buffer<< endl;
+//		writeFull(servidor,buffer,bufsize,"SRV mensaje del SERVER");
+//		cout << "SRV El servidor termino la conexion con " <<inet_ntoa(serverAddr.sin_addr)<<endl;
+//		close(servidor);
+//		cout << "SRV Conecte nuevo cliente."<<endl;
+//	}
+//
+//	close(clientes);	//cerramos el socket
 
-	struct sockaddr_in serverAddr;
-	memset(&serverAddr,0,sizeof(serverAddr));
-	socklen_t tamano;
-
-	//init socket
-	if( (clientes = socket(PF_INET, SOCK_STREAM, 0)) < 0 ){	//creamos el socket dominio: AF_INET (Protocolo TCP)
-		cout << "SRV Error al crear el socket"<<endl;
-		exit(1);
-	}
-	cout << "SRV Socket servidor ha sido creado..."<< endl;
-
-
-	serverAddr.sin_family = AF_INET;								//asignamos a la estructura sockaddr_in un dominio, una ip y un puerto
-	//serverAddr.sin_addr.s_addr = htons(INADDR_ANY);				//INADDR_ANY es asignarle automaticamente la serverAddrcion local
-	serverAddr.sin_port = htons(portNum);						//sin_addr y sin_port deben convertirse a Network byte y para ello usamos htons o htonl
-
-	//binding socket
-	if(bind(clientes, (struct sockaddr*)&serverAddr,sizeof(serverAddr)) < 0){	//bind: crea la conexion con el puerto y el socket creado (clientes)
-		cout << "SRV Error en la conexion bind..."<<endl;				//clientes: es el socket a conectar, &serverAddr es una estructura donde
-		exit(1);													//guardamos la ip local y el puerto, tamano de la estrucrura serverAddr
-	}
-
-	tamano = sizeof(serverAddr);
-	cout << "SRV Esperando clientes..."<<endl;
-
-	//listing socket
-	listen(clientes, 1);									//esta funcion escucha si algun cliente se quiere conectar, y el segundo parametro
-															//es el numero de clientes en cola
-
-	while((servidor = accept(clientes,(struct sockaddr*)&serverAddr,&tamano))>0){	//aceptamos la conexion retorna negativo si falla
-		writeFull(servidor,buffer,bufsize,"SRV Servidor conectado");
-		cout<<"SRV Conexion con el cliente EXITOSA"<<endl;
-		readFull(servidor,buffer,bufsize);
-		cout << "SRV Mensaje recibido SERVER: "<<buffer<< endl;
-		writeFull(servidor,buffer,bufsize,"SRV mensaje del SERVER");
-		cout << "SRV El servidor termino la conexion con " <<inet_ntoa(serverAddr.sin_addr)<<endl;
-		close(servidor);
-		cout << "SRV Conecte nuevo cliente."<<endl;
-	}
-
-	close(clientes);	//cerramos el socket
+	Server* server = new Server(7841);
+	server->initSocketServer();
 
 
 	return 0;
