@@ -126,7 +126,7 @@ int main(int argc, char* argv[]) {
 	Server* server = new Server(7841);
 	if( server->initSocketServer() == ERROR)
 		cout<<"Error al inicializar socket"<<endl;
-
+	server->listenClients();
 
 	return 0;
 }
