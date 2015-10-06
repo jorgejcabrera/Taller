@@ -15,10 +15,10 @@ Client::Client(string ip, int port) {
 }
 
 int Client::connectToServer(){
+	int error;
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
-
 	if ( this->sockfd < 0) {
-		cout << "Error initialising socket" << endl;
+		cout << "Error initialising socket: "<< gai_strerror(this->sockfd)<< endl;
 		return -1;
 	}
 
@@ -30,7 +30,7 @@ int Client::connectToServer(){
 	s_addr.sin_addr.s_addr = inet_addr(this->ip.c_str());	//set server's IP
 
 	if ( s_addr.sin_addr.s_addr < 0 ){
-		cout << "Error en la direccion IP"<< endl;
+		cout << "Error en la direccion IP"<< gai_strerror(s_addr.sin_addr.s_addr)<< endl;
 		return ERROR;
 	}
 	//set server's in another way :=) --> inet_pton converts addresses to binary.
@@ -39,9 +39,8 @@ int Client::connectToServer(){
 		this->status = -1;
 		return -1;
 	}*/
-
-	if ( connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr)) < 0){
-		cout << "Error connecting to server" << endl;
+	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
+		cout << "Error connecting to server: "<< gai_strerror(error) << endl;
 		this->status = -1;
 		return ERROR;
 	}else {

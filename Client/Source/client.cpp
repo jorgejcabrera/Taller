@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 		gController=NULL;
 		//delete server;
 	}*/
-	  int cliente;
+	  /*int cliente;
 	  const char *ip="127.0.0.1";
 	  int puerto = 7891;
 	  int bufsize = 1024;
@@ -84,7 +84,10 @@ int main(int argc, char* argv[]) {
 	  writeFull(cliente,buffer,bufsize,"CLI mensaje del CLIENTE AGE OF EMPIRES");
 	  readFull(cliente,buffer,bufsize);
 	  cout<<"CLI Conexion terminada. Programa finalizado\n\n";
-	  close(cliente);
+	  close(cliente);*/
+
+	Client* jorge = new Client("127.0.0.1",7841);
+	jorge->connectToServer();
 	  return 0;
 }
 
