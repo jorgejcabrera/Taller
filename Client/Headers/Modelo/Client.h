@@ -11,7 +11,7 @@
 #define ERROR -1
 #define OK 0
 
-#include "../../Headers/Utils/Socket/Socket.h"
+#include "../Utils/Socket/SocketUtils.h"
 #include <string.h>
 #include <iostream>
 
@@ -23,6 +23,7 @@ using namespace std;
 
 class Client {
 private:
+	SocketUtils* socketUtils;
 	int port;
 	int sockfd;
 	int status;

@@ -10,13 +10,13 @@
 Client::Client(string ip, int port) {
 	this->ip = ip;
 	this->port = port;
-	this->sockfd = 0;
+	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = -1;										//desconected
+	this->socketUtils = new SocketUtils(this->sockfd);
 }
 
 int Client::connectToServer(){
 	int error;
-	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	if ( this->sockfd < 0) {
 		cout << "Error initialising socket: "<< gai_strerror(this->sockfd)<< endl;
 		return -1;
@@ -33,48 +33,35 @@ int Client::connectToServer(){
 		cout << "Error en la direccion IP"<< gai_strerror(s_addr.sin_addr.s_addr)<< endl;
 		return ERROR;
 	}
-	//set server's in another way :=) --> inet_pton converts addresses to binary.
-	/*if ( inet_pton(AF_INET, this->ip.c_str(),&(s_addr.sin_addr)) < 0){
-		cout << "Error inet_pton" << endl;
-		this->status = -1;
-		return -1;
-	}*/
+
 	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
 		cout << "Error connecting to server: "<< gai_strerror(error) << endl;
 		this->status = -1;
 		return ERROR;
-	}else {
-		cout << "Conexion con el servidor "<<inet_ntoa(s_addr.sin_addr)<<endl;
+	}else{
+		cout << "Conexion con el servidor "<< inet_ntoa(s_addr.sin_addr)<<endl;
 		this->status = 0; // conectado :)
 	}
 	return OK;
 }
 
 bool Client::sendMessage(char* buffer,const char* msg){
-	strcpy(buffer,msg);
+	/*strcpy(buffer,msg);
 	ssize_t n = write(this->sockfd,buffer,1024);				//bufsize hoy en dia esta hardcodeado a 1024
 	if(n < 0)
 		cout<<"ERROR writing to socket: "<< gai_strerror(n)<<endl;
-	return (n<0);
+	return (n<0);*/
 
 }
 
 void Client::communicateWithServer(){
-	Socket *socketClient = new Socket(this->sockfd);
-	Message *mensaje = new Message("");
-	socketClient->readMessage(mensaje);
-	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->getBody()<< endl;
+	Message* mensaje = new Message("");
+	this->socketUtils->readMessage(mensaje);
+	cout << "CLI Mensaje recibido CLIENT: "<< mensaje->getBody() << endl;
 	mensaje->setBody("CLI mensaje del CLIENTE AGE OF EMPIRES");
-	socketClient->writeMessage(mensaje);
-	socketClient->readMessage(mensaje);
+	this->socketUtils->writeMessage(mensaje);
+	this->socketUtils->readMessage(mensaje);
 	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->getBody()<< endl;
-	socketClient->~Socket();
-	/*
-	 * readFull(cliente,buffer,bufsize);
-	  writeFull(cliente,buffer,bufsize,"CLI mensaje del CLIENTE AGE OF EMPIRES");
-	  readFull(cliente,buffer,bufsize);
-	  cout<<"CLI Conexion terminada. Programa finalizado\n\n";
-	  */
 }
 
 
@@ -83,6 +70,7 @@ int Client::getStatus(){
 }
 
 Client::~Client() {
+	this->socketUtils->~SocketUtils();
 	shutdown(this->sockfd, 2); //2 blocks recv and sending
 	close(this->sockfd);
 }
