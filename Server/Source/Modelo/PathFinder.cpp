@@ -9,13 +9,13 @@
 
 PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 
+	gameSettings = GameSettings::GetInstance();
+	this->map = unMap;
+
 	this->posX = x;
 	this->posY = y;
-
 	this->destinoX = dX;
 	this->destinoY = dY;
-
-	this->map = unMap;
 
 	this->candidatos = new list<candidato>();
 
@@ -24,11 +24,16 @@ PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 int PathFinder::dManhattan(int x,int y){
 
 	int dist = 0;
+
 	if(this->destinoX > x) dist += (destinoX - x);
 	else dist += (x - destinoX);
 
 	if(this->destinoY > y) dist += (destinoY - y);
 	else dist += (y - destinoY);
+
+	//pongo distancia muy grande si esta afuera del mapa
+	if(x < 1 || y < 1) dist = 5000;
+	if(x > gameSettings->MAP_WIDTH || y > gameSettings->MAP_HEIGHT) dist = 5000;
 
 	return dist;
 }
@@ -97,35 +102,35 @@ void PathFinder::getCandidatosAdyacentes(candidato actual){
 	int y = oY;
 
 	candidato cand1 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand1) ) candidatos->push_front(cand1);
+	if( ! candidatoExiste(cand1) && positionAvailable(x,y) ) candidatos->push_front(cand1);
 
 	y = oY - 1;
 	candidato cand2 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand2) ) candidatos->push_front(cand2);
+	if( ! candidatoExiste(cand2) && positionAvailable(x,y)) candidatos->push_front(cand2);
 
 	x = oX;
 	candidato cand3 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand3) ) candidatos->push_front(cand3);
+	if( ! candidatoExiste(cand3) && positionAvailable(x,y) ) candidatos->push_front(cand3);
 
 	x = oX - 1;
 	candidato cand4 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand4) ) candidatos->push_front(cand4);
+	if( ! candidatoExiste(cand4) && positionAvailable(x,y)) candidatos->push_front(cand4);
 
 	y = oY;
 	candidato cand5 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand5) ) candidatos->push_front(cand5);
+	if( ! candidatoExiste(cand5) && positionAvailable(x,y) ) candidatos->push_front(cand5);
 
 	y = oY + 1;
 	candidato cand6 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand6) ) candidatos->push_front(cand6);
+	if( ! candidatoExiste(cand6) && positionAvailable(x,y) ) candidatos->push_front(cand6);
 
 	x = oX;
 	candidato cand7 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand7) ) candidatos->push_front(cand7);
+	if( ! candidatoExiste(cand7) && positionAvailable(x,y)) candidatos->push_front(cand7);
 
 	x = oX + 1;
 	candidato cand8 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand8) ) candidatos->push_front(cand8);
+	if( ! candidatoExiste(cand8) && positionAvailable(x,y)) candidatos->push_front(cand8);
 }
 
 bool PathFinder::positionAvailable(int x,int y){
@@ -146,7 +151,9 @@ void PathFinder::buscarCamino(){
 		getCandidatosAdyacentes(actual);
 
 		actual = getMinimoNoRecorrido();
+		this->candidatos->remove(actual);
 		actual.recorrido = true;
+		this->candidatos->push_front(actual);
 		if(actual.dist == 0) encontrado = true;
 	}
 

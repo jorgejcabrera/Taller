@@ -11,6 +11,7 @@
 #include <list>
 #include <iostream>
 #include "Mapa.h"
+#include "../Modelo/GameSettings.h"
 
 using namespace std;
 
@@ -22,6 +23,12 @@ struct candidato {
   int origenY;
   bool recorrido;
 
+  bool operator==(const candidato& otro) const{
+	  if( (posX == otro.posX) && (posY == otro.posY) && (recorrido == otro.recorrido))
+		  return true;
+	  else return false;
+  }
+
 } ;
 
 class PathFinder {
@@ -29,6 +36,7 @@ class PathFinder {
 private:
 	int dManhattan(int x,int y);
 	void setInicio();
+	GameSettings* gameSettings;
 
 	candidato inicio;
 	Mapa* map;
