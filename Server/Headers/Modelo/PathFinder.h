@@ -10,6 +10,7 @@
 
 #include <list>
 #include <iostream>
+#include "Mapa.h"
 
 using namespace std;
 
@@ -30,18 +31,21 @@ private:
 	void setInicio();
 
 	candidato inicio;
+	Mapa* map;
 	list<candidato>* candidatos;
 	bool candidatoExiste(candidato unCandidato);
 	candidato getMinimoNoRecorrido();
 	candidato getCandidato(int x,int y);
+	//bool positionAvailable(int x,int y);
 
 	int destinoX;
 	int destinoY;
 	int posX;
 	int posY;
 public:
-	PathFinder(int x,int y,int dX,int dY);
+	PathFinder(int x,int y,int dX,int dY,Mapa* map);
 	candidato getAdyacente(int oX,int oY,int x,int y);
+	bool positionAvailable(int x,int y);
 	void buscarCamino();
 	virtual ~PathFinder();
 };

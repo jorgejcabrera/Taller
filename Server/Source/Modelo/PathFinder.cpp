@@ -7,15 +7,15 @@
 
 #include "../../Headers/Modelo/PathFinder.h"
 
-using namespace std;
-
-PathFinder::PathFinder(int x,int y,int dX,int dY) {
+PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 
 	this->posX = x;
 	this->posY = y;
 
 	this->destinoX = dX;
 	this->destinoY = dY;
+
+	this->map = unMap;
 
 	this->candidatos = new list<candidato>();
 
@@ -88,34 +88,64 @@ candidato PathFinder::getCandidato(int x,int y){
 	return cand;
 }
 
+bool PathFinder::positionAvailable(int x,int y){
+
+	return this->map->getTileAt(x,y)->isAvailable();
+}
+
 void PathFinder::buscarCamino(){
+
 	this->setInicio();
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
 
-	int minimo = actual.dist; //me parece que no sirve
+	int oX;
+	int oY;
+	int x;
+	int y;
+
 	bool encontrado = false;
 
 	while( !encontrado ){
 
-		candidato cand1 = getAdyacente(actual.posX,actual.posY,actual.posX + 1,actual.posY);
+		oX = actual.posX;
+		oY = actual.posY;
+
+		x = actual.posX + 1;
+		y = actual.posY;
+		candidato cand1 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand1) ) candidatos->push_front(cand1);
-		candidato cand2 = getAdyacente(actual.posX,actual.posY,actual.posX + 1,actual.posY - 1);
+
+		y = actual.posY - 1;
+		candidato cand2 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand2) ) candidatos->push_front(cand2);
-		candidato cand3 = getAdyacente(actual.posX,actual.posY,actual.posX,actual.posY - 1);
+
+		x = actual.posX;
+		candidato cand3 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand3) ) candidatos->push_front(cand3);
-		candidato cand4 = getAdyacente(actual.posX,actual.posY,actual.posX - 1,actual.posY - 1);
+
+		x = actual.posX - 1;
+		candidato cand4 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand4) ) candidatos->push_front(cand4);
-		candidato cand5 = getAdyacente(actual.posX,actual.posY,actual.posX - 1,actual.posY);
+
+		y = actual.posY;
+		candidato cand5 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand5) ) candidatos->push_front(cand5);
-		candidato cand6 = getAdyacente(actual.posX,actual.posY,actual.posX - 1,actual.posY + 1);
+
+		y = actual.posY + 1;
+		candidato cand6 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand6) ) candidatos->push_front(cand6);
-		candidato cand7 = getAdyacente(actual.posX,actual.posY,actual.posX,actual.posY + 1);
+
+		x = actual.posX;
+		candidato cand7 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand7) ) candidatos->push_front(cand7);
-		candidato cand8 = getAdyacente(actual.posX,actual.posY,actual.posX + 1,actual.posY + 1);
+
+		x = actual.posX + 1;
+		candidato cand8 = getAdyacente(oX,oY,x,y);
 		if( ! candidatoExiste(cand8) ) candidatos->push_front(cand8);
 
 		actual = getMinimoNoRecorrido();
+		actual.recorrido = true;
 		if(actual.dist == 0) encontrado = true;
 
 	}
