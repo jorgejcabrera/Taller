@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) {
 			reiniciar = gController->reiniciarJuego();
 		}
 
-		PathFinder* pf = new PathFinder(2,2,0,1,gController->getJuego()->getMap());
-		pf->buscarCamino();
+		//PathFinder* pf = new PathFinder(5,1,1,3,gController->getJuego()->getMap());
+		//pf->buscarCamino();
 
 //		juegoVista->~JuegoVista();
 //		gController->~GameController();

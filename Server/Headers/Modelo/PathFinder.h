@@ -36,7 +36,9 @@ private:
 	bool candidatoExiste(candidato unCandidato);
 	candidato getMinimoNoRecorrido();
 	candidato getCandidato(int x,int y);
-	//bool positionAvailable(int x,int y);
+	bool positionAvailable(int x,int y);
+	candidato getAdyacente(int oX,int oY,int x,int y);
+	void getCandidatosAdyacentes(candidato actual);
 
 	int destinoX;
 	int destinoY;
@@ -44,8 +46,6 @@ private:
 	int posY;
 public:
 	PathFinder(int x,int y,int dX,int dY,Mapa* map);
-	candidato getAdyacente(int oX,int oY,int x,int y);
-	bool positionAvailable(int x,int y);
 	void buscarCamino();
 	virtual ~PathFinder();
 };

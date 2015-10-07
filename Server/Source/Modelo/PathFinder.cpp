@@ -88,6 +88,46 @@ candidato PathFinder::getCandidato(int x,int y){
 	return cand;
 }
 
+void PathFinder::getCandidatosAdyacentes(candidato actual){
+
+	int oX = actual.posX;
+	int oY = actual.posY;
+
+	int x = oX + 1;
+	int y = oY;
+
+	candidato cand1 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand1) ) candidatos->push_front(cand1);
+
+	y = oY - 1;
+	candidato cand2 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand2) ) candidatos->push_front(cand2);
+
+	x = oX;
+	candidato cand3 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand3) ) candidatos->push_front(cand3);
+
+	x = oX - 1;
+	candidato cand4 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand4) ) candidatos->push_front(cand4);
+
+	y = oY;
+	candidato cand5 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand5) ) candidatos->push_front(cand5);
+
+	y = oY + 1;
+	candidato cand6 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand6) ) candidatos->push_front(cand6);
+
+	x = oX;
+	candidato cand7 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand7) ) candidatos->push_front(cand7);
+
+	x = oX + 1;
+	candidato cand8 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand8) ) candidatos->push_front(cand8);
+}
+
 bool PathFinder::positionAvailable(int x,int y){
 
 	return this->map->getTileAt(x,y)->isAvailable();
@@ -99,55 +139,15 @@ void PathFinder::buscarCamino(){
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
 
-	int oX;
-	int oY;
-	int x;
-	int y;
-
 	bool encontrado = false;
 
 	while( !encontrado ){
 
-		oX = actual.posX;
-		oY = actual.posY;
-
-		x = actual.posX + 1;
-		y = actual.posY;
-		candidato cand1 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand1) ) candidatos->push_front(cand1);
-
-		y = actual.posY - 1;
-		candidato cand2 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand2) ) candidatos->push_front(cand2);
-
-		x = actual.posX;
-		candidato cand3 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand3) ) candidatos->push_front(cand3);
-
-		x = actual.posX - 1;
-		candidato cand4 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand4) ) candidatos->push_front(cand4);
-
-		y = actual.posY;
-		candidato cand5 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand5) ) candidatos->push_front(cand5);
-
-		y = actual.posY + 1;
-		candidato cand6 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand6) ) candidatos->push_front(cand6);
-
-		x = actual.posX;
-		candidato cand7 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand7) ) candidatos->push_front(cand7);
-
-		x = actual.posX + 1;
-		candidato cand8 = getAdyacente(oX,oY,x,y);
-		if( ! candidatoExiste(cand8) ) candidatos->push_front(cand8);
+		getCandidatosAdyacentes(actual);
 
 		actual = getMinimoNoRecorrido();
 		actual.recorrido = true;
 		if(actual.dist == 0) encontrado = true;
-
 	}
 
 	cout<<"quiero ir de "<<this->inicio.posX<<","<<this->inicio.posY;
