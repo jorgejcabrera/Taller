@@ -32,8 +32,8 @@ int PathFinder::dManhattan(int x,int y){
 	else dist += (y - destinoY);
 
 	//pongo distancia muy grande si esta afuera del mapa
-	if(x < 1 || y < 1) dist = 5000;
-	if(x > gameSettings->MAP_WIDTH || y > gameSettings->MAP_HEIGHT) dist = 5000;
+	if(x < 0 || y < 0) dist = 5000;
+	if(x > (gameSettings->MAP_WIDTH -1) || y > (gameSettings->MAP_HEIGHT -1)) dist = 5000;
 
 	return dist;
 }
@@ -134,6 +134,9 @@ void PathFinder::getCandidatosAdyacentes(candidato actual){
 }
 
 bool PathFinder::positionAvailable(int x,int y){
+
+	if(x < 0 || y < 0) return false;
+	if(x > gameSettings->MAP_HEIGHT - 1 || y > gameSettings->MAP_WIDTH -1) return false;
 
 	return this->map->getTileAt(x,y)->isAvailable();
 }
