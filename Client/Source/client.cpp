@@ -43,7 +43,8 @@ int main(int argc, char* argv[]) {
 
 	Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
-	jorge->communicateWithServer();
+	jorge->sendMessage(new Message("hola"));
+	//jorge->communicateWithServer();
 	  return 0;
 }
 

@@ -34,5 +34,5 @@ int SocketQueue::getSize(){
 }
 
 SocketQueue::~SocketQueue() {
-	// TODO Auto-generated destructor stub
+	SDL_DestroyMutex(this->lock);
 }

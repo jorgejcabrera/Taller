@@ -11,7 +11,7 @@ Client::Client(string ip, int port) {
 	this->ip = ip;
 	this->port = port;
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
-	this->status = -1;										//desconected
+	this->status = DISCONECTED;								//desconected
 	this->socketUtils = new SocketUtils(this->sockfd);
 	this->writeQueue = new SocketQueue();
 }
@@ -20,7 +20,7 @@ int Client::connectToServer(){
 	int error;
 	if ( this->sockfd < 0) {
 		cout << "Error initialising socket: "<< gai_strerror(this->sockfd)<< endl;
-		return -1;
+		return ERROR;
 	}
 
 	//SOCKET
@@ -37,17 +37,18 @@ int Client::connectToServer(){
 
 	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
 		cout << "Error connecting to server: "<< gai_strerror(error) << endl;
-		this->status = -1;
+		this->status = DISCONECTED;
 		return ERROR;
 	}else{
 		cout << "Conexion con el servidor "<< inet_ntoa(s_addr.sin_addr)<<endl;
-		this->status = 0; // conectado :)
+		this->status = CONECTED; // conectado :)
 	}
 	return OK;
 }
 
-bool Client::sendMessage(Message* msg){
-
+void Client::sendMessage(Message* msg){
+	if ( this->status == CONECTED)
+		this->writeQueue->queuing(msg);
 }
 
 void Client::communicateWithServer(){
@@ -67,6 +68,7 @@ int Client::getStatus(){
 
 Client::~Client() {
 	this->socketUtils->~SocketUtils();
+	this->writeQueue->~SocketQueue();
 	shutdown(this->sockfd, 2); //2 blocks recv and sending
 	close(this->sockfd);
 }
