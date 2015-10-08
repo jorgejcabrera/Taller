@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
 			reiniciar = gController->reiniciarJuego();
 		}
 
-		PathFinder* pf = new PathFinder(1,1,10,10,gController->getJuego()->getMap());
+		PathFinder* pf = new PathFinder(0,0,0,5,gController->getJuego()->getMap());
 		pf->buscarCamino();
 
 		juegoVista->~JuegoVista();
