@@ -12,9 +12,9 @@
 #define OK 0
 
 #include "../Utils/Socket/SocketUtils.h"
+#include "../Utils/Socket/SocketQueue.h"
 #include <string.h>
 #include <iostream>
-
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -23,6 +23,7 @@ using namespace std;
 
 class Client {
 private:
+	SocketQueue* writeQueue;
 	SocketUtils* socketUtils;
 	int port;
 	int sockfd;
@@ -34,7 +35,7 @@ public:
 	Client(string ip, int port);
 	int connectToServer();
 	int getStatus();
-	bool sendMessage(char* buffer,const char* msg);
+	bool sendMessage(Message* msg);
 	void communicateWithServer();
 	virtual ~Client();
 };

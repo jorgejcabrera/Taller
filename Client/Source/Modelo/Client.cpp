@@ -13,6 +13,7 @@ Client::Client(string ip, int port) {
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = -1;										//desconected
 	this->socketUtils = new SocketUtils(this->sockfd);
+	this->writeQueue = new SocketQueue();
 }
 
 int Client::connectToServer(){
@@ -45,23 +46,18 @@ int Client::connectToServer(){
 	return OK;
 }
 
-bool Client::sendMessage(char* buffer,const char* msg){
-	/*strcpy(buffer,msg);
-	ssize_t n = write(this->sockfd,buffer,1024);				//bufsize hoy en dia esta hardcodeado a 1024
-	if(n < 0)
-		cout<<"ERROR writing to socket: "<< gai_strerror(n)<<endl;
-	return (n<0);*/
+bool Client::sendMessage(Message* msg){
 
 }
 
 void Client::communicateWithServer(){
 	Message* mensaje = new Message("");
 	this->socketUtils->readMessage(mensaje);
-	cout << "CLI Mensaje recibido CLIENT: "<< mensaje->getBody() << endl;
+	cout << "CLI Mensaje recibido CLIENT: "<< mensaje->toString() << endl;
 	mensaje->setBody("CLI mensaje del CLIENTE AGE OF EMPIRES");
 	this->socketUtils->writeMessage(mensaje);
 	this->socketUtils->readMessage(mensaje);
-	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->getBody()<< endl;
+	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->toString()<< endl;
 }
 
 

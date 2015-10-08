@@ -12,7 +12,7 @@ Message::Message(string msg) {
 	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
 }
 
-string Message::getBody(){
+string Message::toString(){
 	return this->body;
 }
 

@@ -9,11 +9,9 @@
 #define SOURCE_UTILS_SOCKET_SOCKETQUEUE_H_
 
 #include <queue>
-//#include <stdint.h>
 #include <string>
-//#include <iostream>
 #include "SDL2/SDL.h"
-
+#include "Message.h"
 
 using namespace std;
 class SocketQueue {
@@ -24,7 +22,7 @@ public:
 	SocketQueue();
 
 	/*si la cola esta lockeada por algun thread no podemos encolar*/
-	void queuing(string message);
+	void queuing(Message* msg);
 	/*TODO al momento del sacar el mensaje de la cola lo sacamos serializado*/
 	string pullTail();
 	int getSize();

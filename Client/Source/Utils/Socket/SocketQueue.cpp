@@ -11,11 +11,11 @@ SocketQueue::SocketQueue() {
 	this->lock = SDL_CreateMutex();
 }
 
-void SocketQueue::queuing(string message){
+void SocketQueue::queuing(Message* msg){
 	/*If the mutex is already locked by another thread, then SDL_LockMutex
 	 *will not return until the thread that locked it unlocks it */
 	SDL_LockMutex(lock);
-	this->queue.push(message);
+	this->queue.push(msg->toString());
 	SDL_UnlockMutex(lock);
 }
 

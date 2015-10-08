@@ -22,7 +22,7 @@ private:
 public:
 	Message(string msg);
 	virtual ~Message();
-	string getBody();
+	string toString();
 	char * getBodyToWrite();
 	int getBodySize();
 	void setBody(char* bodyReceived);
