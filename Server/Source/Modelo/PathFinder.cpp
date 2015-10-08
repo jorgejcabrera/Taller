@@ -7,13 +7,13 @@
 
 #include "../../Headers/Modelo/PathFinder.h"
 
-using namespace std;
+PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 
-PathFinder::PathFinder(int x,int y,int dX,int dY) {
+	gameSettings = GameSettings::GetInstance();
+	this->map = unMap;
 
 	this->posX = x;
 	this->posY = y;
-
 	this->destinoX = dX;
 	this->destinoY = dY;
 
@@ -24,11 +24,16 @@ PathFinder::PathFinder(int x,int y,int dX,int dY) {
 int PathFinder::dManhattan(int x,int y){
 
 	int dist = 0;
+
 	if(this->destinoX > x) dist += (destinoX - x);
 	else dist += (x - destinoX);
 
 	if(this->destinoY > y) dist += (destinoY - y);
 	else dist += (y - destinoY);
+
+	//pongo distancia muy grande si esta afuera del mapa
+	if(x < 1 || y < 1) dist = 5000;
+	if(x > gameSettings->MAP_WIDTH || y > gameSettings->MAP_HEIGHT) dist = 5000;
 
 	return dist;
 }
@@ -88,36 +93,68 @@ candidato PathFinder::getCandidato(int x,int y){
 	return cand;
 }
 
+void PathFinder::getCandidatosAdyacentes(candidato actual){
+
+	int oX = actual.posX;
+	int oY = actual.posY;
+
+	int x = oX + 1;
+	int y = oY;
+
+	candidato cand1 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand1) && positionAvailable(x,y) ) candidatos->push_front(cand1);
+
+	y = oY - 1;
+	candidato cand2 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand2) && positionAvailable(x,y)) candidatos->push_front(cand2);
+
+	x = oX;
+	candidato cand3 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand3) && positionAvailable(x,y) ) candidatos->push_front(cand3);
+
+	x = oX - 1;
+	candidato cand4 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand4) && positionAvailable(x,y)) candidatos->push_front(cand4);
+
+	y = oY;
+	candidato cand5 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand5) && positionAvailable(x,y) ) candidatos->push_front(cand5);
+
+	y = oY + 1;
+	candidato cand6 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand6) && positionAvailable(x,y) ) candidatos->push_front(cand6);
+
+	x = oX;
+	candidato cand7 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand7) && positionAvailable(x,y)) candidatos->push_front(cand7);
+
+	x = oX + 1;
+	candidato cand8 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand8) && positionAvailable(x,y)) candidatos->push_front(cand8);
+}
+
+bool PathFinder::positionAvailable(int x,int y){
+
+	return this->map->getTileAt(x,y)->isAvailable();
+}
+
 void PathFinder::buscarCamino(){
+
 	this->setInicio();
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
 
-	int minimo = actual.dist; //me parece que no sirve
 	bool encontrado = false;
 
 	while( !encontrado ){
 
-		candidato cand1 = getAdyacente(actual.posX,actual.posY,actual.posX + 1,actual.posY);
-		if( ! candidatoExiste(cand1) ) candidatos->push_front(cand1);
-		candidato cand2 = getAdyacente(actual.posX,actual.posY,actual.posX + 1,actual.posY - 1);
-		if( ! candidatoExiste(cand2) ) candidatos->push_front(cand2);
-		candidato cand3 = getAdyacente(actual.posX,actual.posY,actual.posX,actual.posY - 1);
-		if( ! candidatoExiste(cand3) ) candidatos->push_front(cand3);
-		candidato cand4 = getAdyacente(actual.posX,actual.posY,actual.posX - 1,actual.posY - 1);
-		if( ! candidatoExiste(cand4) ) candidatos->push_front(cand4);
-		candidato cand5 = getAdyacente(actual.posX,actual.posY,actual.posX - 1,actual.posY);
-		if( ! candidatoExiste(cand5) ) candidatos->push_front(cand5);
-		candidato cand6 = getAdyacente(actual.posX,actual.posY,actual.posX - 1,actual.posY + 1);
-		if( ! candidatoExiste(cand6) ) candidatos->push_front(cand6);
-		candidato cand7 = getAdyacente(actual.posX,actual.posY,actual.posX,actual.posY + 1);
-		if( ! candidatoExiste(cand7) ) candidatos->push_front(cand7);
-		candidato cand8 = getAdyacente(actual.posX,actual.posY,actual.posX + 1,actual.posY + 1);
-		if( ! candidatoExiste(cand8) ) candidatos->push_front(cand8);
+		getCandidatosAdyacentes(actual);
 
 		actual = getMinimoNoRecorrido();
+		this->candidatos->remove(actual);
+		actual.recorrido = true;
+		this->candidatos->push_front(actual);
 		if(actual.dist == 0) encontrado = true;
-
 	}
 
 	cout<<"quiero ir de "<<this->inicio.posX<<","<<this->inicio.posY;

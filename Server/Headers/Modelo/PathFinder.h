@@ -10,6 +10,8 @@
 
 #include <list>
 #include <iostream>
+#include "Mapa.h"
+#include "../Modelo/GameSettings.h"
 
 using namespace std;
 
@@ -21,6 +23,12 @@ struct candidato {
   int origenY;
   bool recorrido;
 
+  bool operator==(const candidato& otro) const{
+	  if( (posX == otro.posX) && (posY == otro.posY) && (recorrido == otro.recorrido))
+		  return true;
+	  else return false;
+  }
+
 } ;
 
 class PathFinder {
@@ -28,20 +36,24 @@ class PathFinder {
 private:
 	int dManhattan(int x,int y);
 	void setInicio();
+	GameSettings* gameSettings;
 
 	candidato inicio;
+	Mapa* map;
 	list<candidato>* candidatos;
 	bool candidatoExiste(candidato unCandidato);
 	candidato getMinimoNoRecorrido();
 	candidato getCandidato(int x,int y);
+	bool positionAvailable(int x,int y);
+	candidato getAdyacente(int oX,int oY,int x,int y);
+	void getCandidatosAdyacentes(candidato actual);
 
 	int destinoX;
 	int destinoY;
 	int posX;
 	int posY;
 public:
-	PathFinder(int x,int y,int dX,int dY);
-	candidato getAdyacente(int oX,int oY,int x,int y);
+	PathFinder(int x,int y,int dX,int dY,Mapa* map);
 	void buscarCamino();
 	virtual ~PathFinder();
 };

@@ -34,9 +34,6 @@ int main(int argc, char* argv[]) {
 	/*POR AHORA NO NOS INTERESA EL JUEGO SINO LA CONEXION DE SOCKET*/
 	/*bool reiniciar = true;
 
-	PathFinder* pf = new PathFinder(2,2,5,7);
-	pf->buscarCamino();
-
 	while(reiniciar){
 		reiniciar = false;
 		GameController* gController = new GameController();
@@ -51,6 +48,12 @@ int main(int argc, char* argv[]) {
 			gController->delay();
 			reiniciar = gController->reiniciarJuego();
 		}
+
+		PathFinder* pf = new PathFinder(1,1,10,10,gController->getJuego()->getMap());
+		pf->buscarCamino();
+
+		juegoVista->~JuegoVista();
+		gController->~GameController();
 		delete(juegoVista);
 		delete(gController);
 		juegoVista=NULL;
