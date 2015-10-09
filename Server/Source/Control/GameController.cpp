@@ -10,6 +10,7 @@
 GameController::GameController(){
 	gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
+	this->camino = new list<pair<int,int> >;
 	this->salirDelJuego = false;
 	this->reiniciar = false;
 	this->juego = new Juego();

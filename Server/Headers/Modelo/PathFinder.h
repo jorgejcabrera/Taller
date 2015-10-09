@@ -54,7 +54,7 @@ private:
 	int posY;
 public:
 	PathFinder(int x,int y,int dX,int dY,Mapa* map);
-	void buscarCamino();
+	list<pair<int,int> >* buscarCamino();
 	virtual ~PathFinder();
 };
 

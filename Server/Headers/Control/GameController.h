@@ -22,6 +22,7 @@ private:
 	UtilsController* utils;
 	SDL_Event* event;
 	Juego* juego;
+	list<pair<int,int> >* camino;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;

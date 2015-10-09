@@ -141,8 +141,10 @@ bool PathFinder::positionAvailable(int x,int y){
 	return this->map->getTileAt(x,y)->isAvailable();
 }
 
-void PathFinder::buscarCamino(){
+list<pair<int,int> >* PathFinder::buscarCamino(){
 
+	pair<int,int> unPar;
+	list<pair<int,int> >* camino = new list<pair<int,int> >();
 	this->setInicio();
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
@@ -163,11 +165,17 @@ void PathFinder::buscarCamino(){
 	cout<<"quiero ir de "<<this->inicio.posX<<","<<this->inicio.posY;
 	cout<<" a "<<this->destinoX<<","<<this->destinoY<<endl;
 	cout<<"el camino es: "<<endl;
-	cout<<actual.posX<<","<<actual.posY<<endl;
 	while(actual.origenX != -1){
-		cout<<actual.posX<<","<<actual.posY<<endl;
+		unPar.first = actual.posX;
+		unPar.second = actual.posY;
+		camino->push_front(unPar);
 		actual = getCandidato(actual.origenX,actual.origenY);
 	}
+
+	for (std::list<pair<int,int> >::iterator it=camino->begin(); it != camino->end(); ++it)
+		cout<<(*it).first<<","<<(*it).second<<endl;
+
+	return camino;
 
 }
 
