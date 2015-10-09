@@ -273,7 +273,7 @@ void GameSettings::createEntidades(){
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
 					if(anchoBase>0 and altoBase>0){
 						if(tipoEntidad == "edificios"){
-							EntidadEstatica* edificioCreado = new EntidadEstatica(anchoBase,altoBase,nombre,true,imagen);
+							EntidadEstaticaVista* edificioCreado = new EntidadEstaticaVista(anchoBase,altoBase,nombre,true,imagen);
 							edificioCreado->setPosition(posX,posY);
 							this->edificios.push_back(edificioCreado);
 						}else if (tipoEntidad=="semiestaticos"){

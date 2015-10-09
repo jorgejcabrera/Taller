@@ -10,18 +10,14 @@
 GameController::GameController(){
 	gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
+	this->juegoVista = new JuegoVista();
 	this->salirDelJuego = false;
 	this->reiniciar = false;
-	this->juego = new Juego();
 	this->event = new SDL_Event();
 	this->posMouseX = 0;
 	this->posMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
-}
-
-Juego* GameController::getJuego(){
-	return this->juego;
 }
 
 void GameController::obtenerMouseInput(){
@@ -41,9 +37,10 @@ void GameController::obtenerMouseInput(){
 }
 
 void GameController::actualizarJuego(){
-	juego->actualizarProtagonista();
-	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
-	juego->actualizarOffset(offset.first,offset.second);
+	//TODO: esto deberia actualizar el juegoVista?
+	//juego->actualizarProtagonista();
+	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
+	//juego->actualizarOffset(offset.first,offset.second);
 }
 
 bool GameController::reiniciarJuego(){
@@ -107,7 +104,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 }
 
 void GameController::moveCharacter(int xScreen,int yScreen){
-	pair<int,int>* offset = this->juego->getOffset();
+	pair<int,int>* offset = this->juegoVista->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
 	bool correctPosition = false;
 
@@ -135,23 +132,21 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	}
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
-	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+	//TODO: Aca deberia actualizar la posicion del protagonsita?
+	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
 	return;
 }
 
 void GameController::delay(){
-	//if((SDL_GetTicks()-this->inicioDeCiclo) < 1000 / this->juego->getProtagonista()->getFramesPerSecond()){
-		//int valor = ((1000 / this->juego->getProtagonista()->getFramesPerSecond()) - (SDL_GetTicks()-this->inicioDeCiclo));
-		//SDL_Delay(valor);
 	this->runCycles++;
-	//if(this->runCycles % this->maxFramesPerSecond == 0){ this->runCycles = 0; }
 
 	SDL_Delay(50); // para que sean 50 frames x segundos
 	//}
 }
 GameController::~GameController() {
+	//TODO: ver si no es necesario ejecutar el destructor de juego Vista
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
-	this->juego=NULL;
+	this->juegoVista=NULL;
 //	this->utils->~UtilsController();
 	delete(this->utils);
 	this->utils = NULL;

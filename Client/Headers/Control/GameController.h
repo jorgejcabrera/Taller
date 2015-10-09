@@ -10,7 +10,6 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "../Modelo/Juego.h"
 #include "../Vista/JuegoVista.h"
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
@@ -21,7 +20,7 @@ class GameController {
 private:
 	UtilsController* utils;
 	SDL_Event* event;
-	Juego* juego;
+	JuegoVista* juegoVista;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
@@ -35,7 +34,6 @@ private:
 
 public:
 	GameController();
-	Juego* getJuego();
 	bool reiniciarJuego();
 	void actualizarJuego();
 	void render();

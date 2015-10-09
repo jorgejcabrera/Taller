@@ -9,11 +9,12 @@
 
 using namespace std;
 
-class Socket {
+class SocketUtils {
 	private:
 		int socket;
 	public:
-        Socket(int socketId);
+        SocketUtils(int socketId);
+        void setSocket(int socket);
         int writeMessage(Message *msg);
         int readMessage(Message *msg);
 
@@ -25,7 +26,7 @@ class Socket {
         int getSocket();
         void socketShutdown();
         void closeConnection();
-        virtual ~Socket();
+        virtual ~SocketUtils();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_SOCKET_H_ */

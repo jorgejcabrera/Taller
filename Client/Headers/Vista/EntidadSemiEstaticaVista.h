@@ -1,19 +1,19 @@
 /*
- * EntidadSemiEstatica.h
+ * EntidadSemiEstaticaVista.h
  *
  *  Created on: 22 de set. de 2015
  *      Author: jorge
  */
 
-#ifndef SOURCE_MODELO_ENTIDADSEMIESTATICA_H_
-#define SOURCE_MODELO_ENTIDADSEMIESTATICA_H_
+#ifndef SOURCE_VISTA_ENTIDADSEMIESTATICAVISTA_H_
+#define SOURCE_VISTA_ENTIDADSEMIESTATICAVISTA_H_
 
-#include "EntidadPartida.h"
 #include "SDL2/SDL.h"
+#include "EntidadPartidaVista.h"
 
 namespace std {
 
-class EntidadSemiEstatica: public EntidadPartida {
+class EntidadSemiEstaticaVista: public EntidadPartidaVista {
 private:
 	int widthPixel;
 	int lengthPixel;
@@ -29,12 +29,11 @@ private:
 	// indice de segundo del delay por el cual voy
 	int delayIndex;
 public:
-	EntidadSemiEstatica();
-	EntidadSemiEstatica(int width, int length,float widthPixel,float lengthPixels, int fps,const string &tipoEntidad,const string &pathImage);
+	EntidadSemiEstaticaVista();
+	EntidadSemiEstaticaVista(int width, int length,float widthPixel,float lengthPixels, int fps,const string &pathImage);
 
 	int getWidthPixel();
 	int getLengthPixel();
-	pair<int,int>* getPosition();
 	void setFramesInLineFile(int qty);
 	int getFramesInLineFile();
 	int getFramesPerSecond();
@@ -42,9 +41,9 @@ public:
 	SDL_Rect getPositionOfSprite(int ciclos);
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 
-	virtual ~EntidadSemiEstatica();
+	virtual ~EntidadSemiEstaticaVista();
 };
 
 } /* namespace std */
 
-#endif /* SOURCE_MODELO_ENTIDADSEMIESTATICA_H_ */
+#endif /* SOURCE_VISTA_ENTIDADSEMIESTATICAVISTA_H_ */

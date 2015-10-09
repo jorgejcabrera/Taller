@@ -11,8 +11,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../../Headers/Modelo/DefaultSettings.h"
-#include "../../Headers/Modelo/Juego.h"
-#include "../../Headers/Modelo/EntidadEstatica.h"
+#include "EntidadEstaticaVista.h"
 #include "../../Headers/Modelo/GameSettings.h"
 #include "../../Headers/Modelo/PicassoHelper.h"
 #include "../../Headers/Control/UtilsController.h"
@@ -25,16 +24,18 @@ using namespace std;
 
 class JuegoVista {
 private:
-	Juego* juego;
 	GameSettings* gameSettings;
 	PicassoHelper* picassoHelper;
+	pair<int,int> offset;
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);
 public:
 	void render(int ciclos);
-	JuegoVista(Juego* juego);
+	JuegoVista();
 	~JuegoVista();
+	void actualizarOffset(int offsetX,int offsetY);
+	pair<int,int>* getOffset();
 
 };
 
