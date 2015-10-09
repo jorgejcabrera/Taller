@@ -147,6 +147,9 @@ list<pair<int,int> >* PathFinder::buscarCamino(){
 	list<pair<int,int> >* camino = new list<pair<int,int> >();
 	this->setInicio();
 
+	if(inicio.posX == destinoX && inicio.posY == destinoY)
+		return camino;
+
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
 

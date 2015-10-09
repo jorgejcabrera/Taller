@@ -162,10 +162,12 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	camino = pf->buscarCamino();
 	delete pf;
 
-	pair<int,int> primerElemento = camino->front();
-	cartesianPosition.first = primerElemento.first;
-	cartesianPosition.second = primerElemento.second;
-	camino->pop_front();
+	if(! camino->empty()){
+		pair<int,int> primerElemento = camino->front();
+		cartesianPosition.first = primerElemento.first;
+		cartesianPosition.second = primerElemento.second;
+		camino->pop_front();
+	}
 	pair<int,int> isom = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
 	posMouseX = isom.first+offset->first;
 	posMouseY = isom.second+offset->second;
