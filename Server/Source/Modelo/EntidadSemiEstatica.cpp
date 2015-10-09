@@ -27,7 +27,7 @@ EntidadSemiEstatica::EntidadSemiEstatica() {
 }
 
 
-EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel, float lengthPixels,int fps,const string &tipoEntidad,const string &pathImage) {
+EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel, float lengthPixels,int fps,const string &pathImage) {
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = width;
 	this->length = length;
@@ -36,7 +36,6 @@ EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel
 	this->framesPerSecond = fps;
 	this->pathImage = pathImage;
 	this->frame = 0;
-	this->inDelayPeriod = false;
 	this->sizeString = getStringSize(this);
 }
 
@@ -63,44 +62,6 @@ void EntidadSemiEstatica::setFramesInLineFile(int qty){
 
 int EntidadSemiEstatica::getFramesInLineFile(){
 	return this->framesInLineFile;
-}
-
-pair<int,int>* EntidadSemiEstatica::getPosition(){
-	return &this->position;
-}
-
-SDL_Rect EntidadSemiEstatica::getPositionOfSprite(int ciclos){
-		SDL_Rect srcrect = { this->frame * this->widthPixel, 0, this->widthPixel, this->lengthPixel };
-		// solo de prueba los 50 fps del ciclo principal
-		int ciclosPerFrame = 50 / framesPerSecond;
-
-		if(this->inDelayPeriod){
-			if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
-				this->inDelayPeriod = false;
-			}
-		}else{
-			if( ciclos % ciclosPerFrame == 0){
-				this->frame++;
-				if( (this->frame % this->getFramesInLineFile()) == 0){
-					this->frame = 0;
-					if(this->delay>0){
-						this->delayIndex = SDL_GetTicks();
-						this->inDelayPeriod = true;
-					}
-				}
-			}
-		}
-
-		return srcrect;
-}
-
-void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
-	//primero tenemos que centrar la entidad semiestatica
-	int widthScreen = this->widthPixel * this->width;
-	int lengthScreen = this->lengthPixel*this->length;
-	int posXScreen = (isometricPosition.first + offSetX) - this->widthPixel / 2 + DefaultSettings::getTileSize();
-	int posYScreen = (isometricPosition.second + offSetY) - this->widthPixel / 2 - DefaultSettings::getTileSize() /2;
-	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),posXScreen,posYScreen,widthScreen,lengthScreen, this->getPositionOfSprite(ciclos));
 }
 
 EntidadSemiEstatica::~EntidadSemiEstatica() {

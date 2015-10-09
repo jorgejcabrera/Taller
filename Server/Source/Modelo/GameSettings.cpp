@@ -173,9 +173,6 @@ int GameSettings::getVelocidadPersonaje	(){
 }
 
 void GameSettings::SetGameSettings(){
-//	map<string,int>* mapSI = new map<string,int>();
-//	map< string, string> * mapSS = new map< string, string>();
-
 	map<string,int>* mapSI;
 	map< string, string> * mapSS;
 
@@ -273,7 +270,7 @@ void GameSettings::createEntidades(){
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
 					if(anchoBase>0 and altoBase>0){
 						if(tipoEntidad == "edificios"){
-							EntidadEstaticaVista* edificioCreado = new EntidadEstaticaVista(anchoBase,altoBase,nombre,true,imagen);
+							EntidadEstatica* edificioCreado = new EntidadEstatica(anchoBase,altoBase,true,imagen);
 							edificioCreado->setPosition(posX,posY);
 							this->edificios.push_back(edificioCreado);
 						}else if (tipoEntidad=="semiestaticos"){
@@ -282,7 +279,7 @@ void GameSettings::createEntidades(){
 							int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 							int total_frames = (total_frames_line > 0) ? total_frames_line : 1;
 							if(fps > 50) fps = 50;
-							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,nombre,imagen);
+							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,imagen);
 							molino->setPosition(posX,posY);
 							molino->setDelay(delay);
 							molino->setFramesInLineFile(total_frames);
@@ -349,14 +346,6 @@ bool GameSettings::isFileExist(const string fileName){
 }
 
 GameSettings::~GameSettings() {
-//	for (list<EntidadPartida*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
-//			(*it)->~EntidadPartida();
-//		}
-//	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
-//		this->tiles.erase(it);
-//		}
-	//this->edificios = NULL;
-//	this->loader->~Loader();
 	delete(this->loader);
 	this->loader = NULL;
 	this->instance =NULL;

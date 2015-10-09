@@ -12,18 +12,16 @@
 
 using namespace std;
 
-class EntidadEstaticaVista: public EntidadPartida {
+class EntidadEstatica: public EntidadPartida {
 private:
 	bool edificable;
-	string tipo;
 
 public:
-	EntidadEstaticaVista();
+	EntidadEstatica();
 	void destruir();
-	EntidadEstaticaVista(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage);
-	EntidadEstaticaVista(int width,int length,string tipoEntidad, bool esEdificable);
-	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
-	virtual ~EntidadEstaticaVista();
+	EntidadEstatica(int width,int length, bool esEdificable, const string &sourceImage);
+	EntidadEstatica(int width,int length, bool esEdificable);
+	virtual ~EntidadEstatica();
 };
 
 #endif /* SOURCE_MODELO_ENTIDADESTATICA_H_ */

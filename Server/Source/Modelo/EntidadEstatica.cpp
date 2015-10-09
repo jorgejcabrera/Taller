@@ -23,37 +23,27 @@ string getStringSize(EntidadPartida* entidad){
 	}
 }
 
-EntidadEstaticaVista::EntidadEstaticaVista() {
+EntidadEstatica::EntidadEstatica() {
 }
 
-EntidadEstaticaVista::EntidadEstaticaVista(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage){
+EntidadEstatica::EntidadEstatica(int width,int length, bool esEdificable, const string &sourceImage){
 	this->width = width;
 	this->length = length;
 	this->edificable = esEdificable;
-	this->tipo = tipoEntidad;
 	this->pathImage = sourceImage;
 	this->sizeString = getStringSize(this);
 }
 
-EntidadEstaticaVista::EntidadEstaticaVista(int width,int length,string tipoEntidad, bool esEdificable){
+EntidadEstatica::EntidadEstatica(int width,int length, bool esEdificable){
 	this->width = width;
 	this->length = length;
 	this->edificable = esEdificable;
-	this->tipo = tipoEntidad;
 	this->sizeString = getStringSize(this);
 }
 
-void EntidadEstaticaVista::destruir(){
-	this->~EntidadEstaticaVista();
+void EntidadEstatica::destruir(){
+	this->~EntidadEstatica();
 }
 
-void EntidadEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
-	if(this->sizeString == "standarSmallSize"){
-		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,this->getWidth() * 2 * DefaultSettings::getTileSize(), this->getLength() * DefaultSettings::getTileSize() * 2);
-	}else{
-		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,this->getWidth() * 2 * DefaultSettings::getTileSize(), (this->getLength()-1) * DefaultSettings::getTileSize() * 2);
-	}
-}
-
-EntidadEstaticaVista::~EntidadEstaticaVista() {
+EntidadEstatica::~EntidadEstatica() {
 }

@@ -9,9 +9,7 @@
 #define GAMECONTROLLER_H_
 
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
 #include "../Modelo/Juego.h"
-#include "../Vista/JuegoVista.h"
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
@@ -20,7 +18,6 @@ class GameController {
 
 private:
 	UtilsController* utils;
-	SDL_Event* event;
 	Juego* juego;
 	int posMouseX;
 	int posMouseY;
@@ -38,11 +35,8 @@ public:
 	Juego* getJuego();
 	bool reiniciarJuego();
 	void actualizarJuego();
-	void render();
-	void obtenerMouseInput();
 	int getRunCycles();
 	int getMaxFramesPerSecond();
-	bool finDeJuego();
 	virtual ~GameController();
 	void delay();
 };

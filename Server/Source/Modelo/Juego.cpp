@@ -15,8 +15,7 @@ Juego::Juego() {
 	this->mapa = new Mapa();
 
 	this->currentAge = gameSettings->getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
-			gameSettings->getVelocidadPersonaje(),
+	this->protagonista = new EntidadDinamica(gameSettings->getVelocidadPersonaje(),
 			gameSettings->getPosXProtagonista(),
 			gameSettings->getPosYProtagonista(),
 			gameSettings->getProtagonistaPixelDimension(),
@@ -26,14 +25,8 @@ Juego::Juego() {
 	this->protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
 	this->protagonista->setPathImage(gameSettings->getProtagonistaPath());
 	this->protagonista->setDelay(gameSettings->getProtagonistaDelay());
-	this->offset.first = 0;
-	this->offset.second = 0;
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
-}
-
-pair<int,int>* Juego::getOffset(){
-	return &this->offset;
 }
 
 Mapa* Juego::getMap(){
@@ -52,16 +45,15 @@ string Juego::getCurrentAge(){
 	return this->currentAge;
 }
 
-void Juego::actualizarOffset(int offsetX,int offsetY){
-	this->offset.first = offsetX;
-	this->offset.second = offsetY;
-}
 
 void Juego::setDestinoProtagonista(int x,int y, int screenPosX, int screenPosY){
+	//TODO: aca deberiamos setear las coordenadas de panatalla? eso no deberia solo hacerse en la vista?
+	/*
 	//Actualiza las coordenadas cartesianas del protagonista
 	this->protagonista->setPosition(x,y);
 	//Actualizo las coordenadas de pantalla del protagonista
 	this->protagonista->setScreenPosition(screenPosX - this->offset.first,screenPosY - this->offset.second);
+	*/
 }
 
 void Juego::terminarJuego(){
@@ -84,12 +76,9 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 }
 
 Juego::~Juego() {
-//	this->protagonista->~EntidadDinamica();
 	delete(this->protagonista);
-//	this->mapa->~Mapa();
 	delete(this->mapa);
 	this->protagonista = NULL;
 	this->mapa = NULL;
 	this->gameSettings=NULL;
-	//this->gameSettings->~GameSettings();
 }

@@ -10,7 +10,6 @@
 #define NUM_DOTS 1024
 
 /* Includes */
-#include "../Headers/Vista/JuegoVista.h"
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Server.h"
 #include "../Headers/Modelo/PathFinder.h"
