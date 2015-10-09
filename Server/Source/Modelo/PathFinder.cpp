@@ -74,7 +74,7 @@ bool PathFinder::candidatoExiste(candidato can){
 
 candidato PathFinder::getMinimoNoRecorrido(){
 
-	int minimo = this->inicio.dist;
+	int minimo = (this->gameSettings->MAP_HEIGHT * 3);
 	candidato candidatoMinimo;
 	for (std::list<candidato>::iterator it=this->candidatos->begin(); it != this->candidatos->end(); ++it)
 		if( (*it).dist < minimo &&  ! (*it).recorrido){
@@ -146,6 +146,7 @@ list<pair<int,int> >* PathFinder::buscarCamino(){
 	pair<int,int> unPar;
 	list<pair<int,int> >* camino = new list<pair<int,int> >();
 	this->setInicio();
+
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
 
@@ -162,18 +163,12 @@ list<pair<int,int> >* PathFinder::buscarCamino(){
 		if(actual.dist == 0) encontrado = true;
 	}
 
-	cout<<"quiero ir de "<<this->inicio.posX<<","<<this->inicio.posY;
-	cout<<" a "<<this->destinoX<<","<<this->destinoY<<endl;
-	cout<<"el camino es: "<<endl;
 	while(actual.origenX != -1){
 		unPar.first = actual.posX;
 		unPar.second = actual.posY;
 		camino->push_front(unPar);
 		actual = getCandidato(actual.origenX,actual.origenY);
 	}
-
-	for (std::list<pair<int,int> >::iterator it=camino->begin(); it != camino->end(); ++it)
-		cout<<(*it).first<<","<<(*it).second<<endl;
 
 	return camino;
 

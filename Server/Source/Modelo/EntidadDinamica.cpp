@@ -68,6 +68,10 @@ SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
 	return srcrect;
 }
 
+bool EntidadDinamica::estaCaminando(){
+	return this->caminando;
+}
+
 void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	// no borrar por favor
 	this->screenPosition.first = x;

@@ -15,6 +15,7 @@
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
+#include "../Modelo/PathFinder.h"
 
 class GameController {
 
@@ -32,6 +33,7 @@ private:
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
 	void moveCharacter(int xScreen,int yScreen);
+	void setNextPath();
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:

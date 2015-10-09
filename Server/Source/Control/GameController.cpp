@@ -25,6 +25,20 @@ Juego* GameController::getJuego(){
 	return this->juego;
 }
 
+void GameController::setNextPath(){
+
+	pair<int,int>* offset = this->juego->getOffset();
+	pair<int,int> primerElemento = camino->front();
+	int cartesianPositionX = primerElemento.first;
+	int cartesianPositionY = primerElemento.second;
+	camino->pop_front();
+	pair<int,int> isom = this->utils->getIsometricPosition(cartesianPositionX,cartesianPositionY);
+	posMouseX = isom.first+offset->first;
+	posMouseY = isom.second+offset->second;
+
+	juego->setDestinoProtagonista(cartesianPositionX,cartesianPositionY,posMouseX,posMouseY);
+}
+
 void GameController::obtenerMouseInput(){
 
 	while(SDL_PollEvent(event)){
@@ -42,6 +56,10 @@ void GameController::obtenerMouseInput(){
 }
 
 void GameController::actualizarJuego(){
+
+	if(! juego->getProtagonista()->estaCaminando() && (! camino->empty()) ){
+		this->setNextPath();
+	}
 	juego->actualizarProtagonista();
 	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
 	juego->actualizarOffset(offset.first,offset.second);
@@ -108,6 +126,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 }
 
 void GameController::moveCharacter(int xScreen,int yScreen){
+
 	pair<int,int>* offset = this->juego->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
 	bool correctPosition = false;
@@ -134,6 +153,22 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 		posMouseX = isometricPosition.first+offset->first;
 		posMouseY = isometricPosition.second+offset->second;
 	}
+
+	int posActualX = this->getJuego()->getProtagonista()->getPosition()->first;
+	int posActualY = this->getJuego()->getProtagonista()->getPosition()->second;
+
+	PathFinder* pf = new PathFinder(posActualX,posActualY,cartesianPosition.first,cartesianPosition.second,this->getJuego()->getMap());
+	camino->clear();
+	camino = pf->buscarCamino();
+	delete pf;
+
+	pair<int,int> primerElemento = camino->front();
+	cartesianPosition.first = primerElemento.first;
+	cartesianPosition.second = primerElemento.second;
+	camino->pop_front();
+	pair<int,int> isom = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
+	posMouseX = isom.first+offset->first;
+	posMouseY = isom.second+offset->second;
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
