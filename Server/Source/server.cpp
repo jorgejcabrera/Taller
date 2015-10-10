@@ -14,6 +14,9 @@
 #include "../Headers/Modelo/Server.h"
 #include "../Headers/Modelo/PathFinder.h"
 
+//#include "../Headers/Utils/Socket/MessageUpdate.h"
+//#include "../Headers/Utils/Socket/MessageConfiguration.h"
+
 
 /*#include <iostream>
 #include <string.h>
@@ -63,6 +66,14 @@ int main(int argc, char* argv[]) {
 	if( server->initSocketServer() == ERROR)
 		cout<<"Error al inicializar socket"<<endl;
 	server->listenClients();
+
+
+	/*MessageUpdate* msgC = new MessageUpdate(1111,"miTipo",5,7);
+	string mensaje = msgC->toString();
+	cout << "mensaje: " << mensaje << endl;
+	MessageConfiguration* msgConf = new MessageConfiguration("casa","path/a/la/imagen.png", 2, 8);
+	cout << "mensaje: " << msgConf->toString()<< endl;
+	*/
 
 	return 0;
 }

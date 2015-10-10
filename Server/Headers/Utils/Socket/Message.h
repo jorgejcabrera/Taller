@@ -9,6 +9,8 @@
 #define SOURCE_UTILS_SOCKET_MESSAGE_H_
 
 #include <string>
+#include <sstream>
+#include <iostream>
 #include <arpa/inet.h>
 
 using namespace std;
@@ -20,6 +22,7 @@ private:
 	string body;
 
 public:
+	Message();
 	Message(string msg);
 	virtual ~Message();
 	string toString();

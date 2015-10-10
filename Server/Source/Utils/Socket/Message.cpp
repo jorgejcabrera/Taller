@@ -7,6 +7,10 @@
 
 #include "../../../Headers/Utils/Socket/Message.h"
 
+//TODO: esta clase solo deberia ser Abstracta? ahora tenemos dos tipos de mesanjes.
+//No la borro porque sive para hacer pruebas
+Message::Message() {}
+
 Message::Message(string msg) {
 	this->body = msg;
 	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
