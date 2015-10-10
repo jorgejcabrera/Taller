@@ -5,7 +5,7 @@
  *      Author: jorge
  */
 
-#include "../../Headers/Modelo/TileVista.h"
+#include "../../Headers/Vista/TileVista.h"
 
 using namespace std;
 

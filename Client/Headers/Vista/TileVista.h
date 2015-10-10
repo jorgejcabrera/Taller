@@ -5,8 +5,8 @@
  *      Author: jorge
  */
 
-#ifndef SOURCE_MODELO_TILEVISTA_H_
-#define SOURCE_MODELO_TILEVISTA_H_
+#ifndef SOURCE_VISTA_TILEVISTA_H_
+#define SOURCE_VISTA_TILEVISTA_H_
 
 #include <string>
 #include <iostream>
@@ -27,4 +27,4 @@ public:
 	string getPathImage();
 };
 
-#endif /* SOURCE_MODELO_TILEVISTA_H_ */
+#endif /* SOURCE_VISTA_TILEVISTA_H_ */
