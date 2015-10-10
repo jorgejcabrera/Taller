@@ -25,6 +25,7 @@ Juego::Juego() {
 	this->protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
 	this->protagonista->setPathImage(gameSettings->getProtagonistaPath());
 	this->protagonista->setDelay(gameSettings->getProtagonistaDelay());
+	//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas
 	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
 	protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
 }
@@ -64,6 +65,8 @@ bool Juego::getStatusPartida(){
 }
 
 pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
+	//TODO: esto no deberia estar solo en la vista?
+
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
 	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;

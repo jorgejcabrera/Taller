@@ -56,8 +56,6 @@ public:
 	string IMAGE_TILES_PATH;
 	string IMAGE_PERSONAJES_PATH;
 	int MEDIUM_SIZE;
-	int VELOCIDAD_SCROLL_UNO;
-	int VELOCIDAD_SCROLL_DOS;
 
 	int FPS_PROTAGONISTA;
 	string PATH_PROTAGONISTA;
@@ -73,7 +71,6 @@ public:
 	int getScreenWidth();
 	int getScreenHeight();
 	int getTileSize();
-	int getLongMargenScroll();
 	string getNombreEscenario();
 	int getMapWidth();
 	int getMapHeight();
@@ -85,20 +82,6 @@ public:
 
 	string defaultImage();
 	bool isEntityTypeValid(const string &type);
-	int getVelocidadScrollUno();
-	int getVelocidadScrollDos();
-	int getLimiteDerecho();
-	int getLimiteIzquierdo();
-	int getLimiteInferior();
-	int getLimiteSuperior();
-	int getMargenDerechoUno();
-	int getMargenDerechoDos();
-	int getMargenIzquierdoUno();
-	int getMargenIzquierdoDos();
-	int getMargenSuperiorUno();
-	int getMargenSuperiorDos();
-	int getMargenInferiorUno();
-	int getMargenInferiorDos();
 	void createEntidades();
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);

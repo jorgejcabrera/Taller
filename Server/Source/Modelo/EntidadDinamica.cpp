@@ -40,6 +40,7 @@ EntidadDinamica::EntidadDinamica(int vel,float x,float y, float widthPixel, floa
 
 
 void EntidadDinamica::setInitialScreenPosition(float x,float y){
+	//TODO: esto no deberia estar en la VISTA nada mas?
 	// no borrar por favor
 	this->screenPosition.first = x;
 	this->screenPosition.second = y;
@@ -55,6 +56,7 @@ int EntidadDinamica::getFramesInLineFile(){
 }
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){
+	//TODO: esto no deberia estar en la VISTA nada mas?
 	return &this->screenPosition;
 }
 
@@ -147,6 +149,9 @@ int EntidadDinamica::getLineSprite(Direccion dir){
 }
 
 void EntidadDinamica::setScreenPosition(float x,float y){
+	/*TODO: esto no deberia estar en la VISTA nada mas?
+	 * No deberia usar la posicion fisica en lugar de la de pantalla?
+	*/
 	this->destinoX = x;
 	this->destinoY = y;
 

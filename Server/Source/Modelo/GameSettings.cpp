@@ -17,12 +17,14 @@ GameSettings::GameSettings() {
 }
 
 int GameSettings::getScreenWidth(){
+	//TODO: esto deberia estar solo en la vista
 	if((SCREEN_WIDTH<=0) or (SCREEN_WIDTH>DefaultSettings::getScreenWidth()))
 		return DefaultSettings::getScreenWidth();
 	return this->SCREEN_WIDTH;
 }
 
 int GameSettings::getScreenHeight(){
+	//TODO: esto deberia estar solo en la vista
 	if((SCREEN_HEIGHT<=0) or (SCREEN_HEIGHT>DefaultSettings::getScreenHeight()))
 		return DefaultSettings::getScreenHeight();
 	return this->SCREEN_HEIGHT;
@@ -30,10 +32,6 @@ int GameSettings::getScreenHeight(){
 
 int GameSettings::getTileSize(){
 	return DefaultSettings::getTileSize();
-}
-
-int GameSettings::getLongMargenScroll(){
-	return (LONG_MARGEN_SCROLL > 1) ? LONG_MARGEN_SCROLL : DefaultSettings::getLongMargenScroll();
 }
 
 string GameSettings::getNombreEscenario(){
@@ -51,87 +49,6 @@ int GameSettings::getMapHeight(){
 int GameSettings::getMediumSize(){
 	return (MEDIUM_SIZE > 0 ) ? MEDIUM_SIZE : DefaultSettings::getMediumSize();
 }
-
-int GameSettings::getVelocidadScrollUno(){
-	//return (VELOCIDAD_SCROLL_UNO > 0) ? VELOCIDAD_SCROLL_UNO : DefaultSettings::getVelocidadScrollUno();
-	return DefaultSettings::getVelocidadScrollUno();
-}
-
-int GameSettings::getVelocidadScrollDos(){
-	//return (VELOCIDAD_SCROLL_DOS > 0) ? VELOCIDAD_SCROLL_DOS : DefaultSettings::getVelocidadScrollDos();
-	return DefaultSettings::getVelocidadScrollDos();
-}
-
-int GameSettings::getLimiteDerecho() {
-	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
-	int altura = sqrt(factor);
-	int widthMapaIsometric = altura * 2 * this->getMapWidth();
-	if (widthMapaIsometric > this->getScreenWidth()) {
-		return ((this->getScreenWidth() - widthMapaIsometric) / 2) - this->getTileSize();
-	} else {
-		return 0;
-	}
-}
-
-int GameSettings::getLimiteIzquierdo() {
-	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
-	int altura = sqrt(factor);
-	int widthMapaIsometric = altura * 2 * this->getMapWidth();
-	if (widthMapaIsometric > this->getScreenWidth()) {
-		return ((widthMapaIsometric - this->getScreenWidth()) / 2) - this->getTileSize();
-	} else {
-		return 0;
-	}
-}
-
-int GameSettings::getLimiteInferior() {
-	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
-	int altura = sqrt(factor);
-	int heightMapaIsometric = altura * this->getMapHeight();
-	if (heightMapaIsometric > this->getScreenHeight()) {
-		return (this->getScreenHeight() - heightMapaIsometric);
-	} else {
-		return this->getTileSize()/2;
-	}
-}
-
-int GameSettings::getLimiteSuperior() {
-	return DefaultSettings::getLimiteSuperior();
-}
-
-int GameSettings::getMargenDerechoUno(){
-	return ( this->getScreenWidth() - this->getLongMargenScroll() * 2);
-}
-
-int GameSettings::getMargenDerechoDos(){
-	return (this->getScreenWidth() - this->getLongMargenScroll());
-}
-
-int GameSettings::getMargenIzquierdoUno(){
-	return this->getLongMargenScroll() * 2;
-}
-
-int GameSettings::getMargenIzquierdoDos(){
-	return this->getLongMargenScroll();
-}
-
-int GameSettings::getMargenSuperiorUno(){
-	return this->getLongMargenScroll() * 2;
-}
-
-int GameSettings::getMargenSuperiorDos(){
-	return this->getLongMargenScroll() * 2;
-}
-
-int GameSettings::getMargenInferiorUno(){
-	return (this->getScreenHeight() - 2 * this->getLongMargenScroll());
-}
-
-
-int GameSettings::getMargenInferiorDos(){
-	return (this->getScreenHeight() - this->getLongMargenScroll());
-}
-
 
 bool GameSettings::isEntityTypeValid(const string &type){
 	return DefaultSettings::isEntityTypeValid(type);
@@ -158,6 +75,7 @@ string GameSettings::getAgeOfEmpires(){
 }
 
 string GameSettings::getTipoProtagonista(){
+	//TODO: esto no se usa para nada, lo dejo por si mas adelant queremos tener mucho protagonistas.
 	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
 }
 
