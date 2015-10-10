@@ -29,7 +29,7 @@ pair<int,int> UtilsController::convertToCartesian(int xScreen,int yScreen){
 	return cartesianPosition;
 }
 
-pair<int,int> UtilsController::getIsometricPosition(EntidadPartida* entidad){
+pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
 	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;

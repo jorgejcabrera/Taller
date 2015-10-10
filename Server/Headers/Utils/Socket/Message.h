@@ -9,19 +9,20 @@
 #define SOURCE_UTILS_SOCKET_MESSAGE_H_
 
 #include <string>
+#include <arpa/inet.h>
 
 using namespace std;
 
 class Message {
 
 private:
-	int sizeBody=1024;
+	int length;
 	string body;
 
 public:
 	Message(string msg);
 	virtual ~Message();
-	string getBody();
+	string toString();
 	char * getBodyToWrite();
 	int getBodySize();
 	void setBody(char* bodyReceived);

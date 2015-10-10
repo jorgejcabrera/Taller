@@ -62,16 +62,16 @@ void Server::listenClients(){
 	int client;
 	socklen_t tamano = sizeof(serverAddress);
 	while((client = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){ //aceptamos la conexion retorna negativo si falla
-		Socket *socketClient = new Socket(client);
+		SocketUtils *socketClient = new SocketUtils(client);
 		Message *mensaje = new Message("SRV Servidor Conectado");
 		socketClient->writeMessage(mensaje);
 	    cout<<"SRV Conexion con el cliente EXITOSA"<<endl;
 	    socketClient->readMessage(mensaje);
-	    cout << "SRV Mensaje recibido SERVER: "<<mensaje->getBody()<< endl;
+	    cout << "SRV Mensaje recibido SERVER: "<<mensaje->toString()<< endl;
 	    mensaje->setBody("SRV mensaje del SERVER");
 	    socketClient->writeMessage(mensaje);
 	    cout << "SRV El servidor termino la conexion"<<endl;
-		socketClient->~Socket();
+		socketClient->~SocketUtils();
 	    close(client);
 	    cout << "SRV Conecte nuevo cliente."<<endl;
 	  }

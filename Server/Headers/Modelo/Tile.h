@@ -31,7 +31,6 @@ class Tile {
 public:
 	void setPathImage(string path);
 	Tile(int x,int y);
-	void show();
 	void changeStatusAvailable();
 	bool isAvailable();
 	int getPosX();

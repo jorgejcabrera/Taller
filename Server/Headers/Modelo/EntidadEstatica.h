@@ -15,14 +15,12 @@ using namespace std;
 class EntidadEstatica: public EntidadPartida {
 private:
 	bool edificable;
-	string tipo;
 
 public:
 	EntidadEstatica();
 	void destruir();
-	EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable, const string &sourceImage);
-	EntidadEstatica(int width,int length,string tipoEntidad, bool esEdificable);
-	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
+	EntidadEstatica(int width,int length, bool esEdificable, const string &sourceImage);
+	EntidadEstatica(int width,int length, bool esEdificable);
 	virtual ~EntidadEstatica();
 };
 

@@ -29,7 +29,6 @@ private:
 	GameSettings* gameSettings;
 public:
 	Mapa();
-	void show();
 	Tile* getTileAt(int x,int y);
 	void pushEntity(EntidadPartida* entidad);
 	bool positionAvailable(EntidadPartida* entidad);

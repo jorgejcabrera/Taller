@@ -1,21 +1,21 @@
 /*
- * EntidadPartida.h
+ * EntidadPartidaVista.h
  *
  *  Created on: 30 de ago. de 2015
  *      Author: jorge
  */
 
-#ifndef SOURCE_MODELO_ENTIDADPARTIDA_H_
-#define SOURCE_MODELO_ENTIDADPARTIDA_H_
+#ifndef SOURCE_VISTA_ENTIDADPARTIDAVISTA_H_
+#define SOURCE_VISTA_ENTIDADPARTIDAVISTA_H_
 
 #include <string>
 #include <iostream>
 #include <typeinfo>
-#include "PicassoHelper.h"
+#include "../../Headers/Modelo/PicassoHelper.h"
 
 namespace std {
 
-class EntidadPartida {
+class EntidadPartidaVista {
 protected:
 	int salud;
 	pair<int,int> position;
@@ -25,8 +25,8 @@ protected:
 	string pathImage;
 
 public:
-	EntidadPartida();
-	virtual ~EntidadPartida();
+	EntidadPartidaVista();
+	virtual ~EntidadPartidaVista();
 	void destruir();
 	int getWidth();
 	int getLength();
@@ -44,4 +44,4 @@ public:
 
 } /* namespace std */
 
-#endif /* SOURCE_MODELO_ENTIDADPARTIDA_H_ */
+#endif /* SOURCE_MODELO_ENTIDADPARTIDAVISTA_H_ */

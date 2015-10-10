@@ -44,10 +44,6 @@ int Tile::getPosY(){
 	return this->position.second;
 }
 
-void Tile::show(){
-	cout << "x:" << this->position.first << ", y:" << this->position.second << "\n";
-}
-
 string Tile::getPathImage(){
 	return pathImage;
 }

@@ -8,22 +8,19 @@
 #ifndef GAMESETTINGS_H_
 #define GAMESETTINGS_H_
 
-#include "Loader.h"
 #include "DefaultSettings.h"
-#include "EntidadPartida.h"
-#include "EntidadEstatica.h"
-#include "EntidadSemiEstatica.h"
 #include <list>
 #include <fstream>
 #include <map>
-#include <list>
+#include <vector>
+#include "../../Headers/Vista/EntidadEstaticaVista.h"
+#include "../../Headers/Vista/EntidadPartidaVista.h"
+#include "../../Headers/Vista/EntidadSemiEstaticaVista.h"
 
 namespace std {
 
 class GameSettings {
 private:
-
-	Loader* loader;
 	static GameSettings* instance;
 	GameSettings();
 	bool isFileExist(const string fileName);
@@ -65,9 +62,8 @@ public:
 	int PIXEL_DIMENSION_PROTAGONISTA;
 	int DELAY_PROTAGONISTA;
 
-	list<EntidadPartida*> edificios;
+	list<EntidadPartidaVista*> edificios;
 	map<pair<int,int>,string> tiles;
-	void SetGameSettings();
 	static GameSettings* GetInstance();
 	virtual ~GameSettings();
 	int getScreenWidth();
@@ -99,10 +95,9 @@ public:
 	int getMargenSuperiorDos();
 	int getMargenInferiorUno();
 	int getMargenInferiorDos();
-	void createEntidades();
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
-	list<EntidadPartida*> getEntidadesEstaticas();
+	list<EntidadPartidaVista*> getEntidadesEstaticas();
 	string getTipoProtagonista();
 	int getPosXProtagonista();
 	int getPosYProtagonista();

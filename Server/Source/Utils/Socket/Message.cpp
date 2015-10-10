@@ -9,26 +9,26 @@
 
 Message::Message(string msg) {
 	this->body = msg;
+	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
 }
 
-string Message::getBody(){
+string Message::toString(){
 	return this->body;
 }
 
 int Message::getBodySize(){
-	return this->sizeBody;
+	return this->length;
 }
 
 void Message::setBody(char* bodyReceived){
 	this->body.clear();
 	this->body.append(bodyReceived);
 }
-
 Message::~Message(){
 }
 
 char * Message::getBodyToWrite(){
-	char* bodyToWrite = new char[this->sizeBody];
+	char* bodyToWrite = new char[this->length];
 	for(int idx = 0; idx < this->body.length(); idx++){
 		bodyToWrite[idx] = body[idx];
 	}

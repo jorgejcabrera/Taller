@@ -83,13 +83,6 @@ map<pair<int,int>,EntidadPartida*>* Mapa::getEntities(){
 	return &this->entidades;
 }
 
-void Mapa::show(){
-	for (std::map<pair<int,int>,Tile*>::iterator it = tiles.begin(); it != tiles.end();++it){
-		  (*it).second->show();
-	}
-	return;
-}
-
 Mapa::~Mapa() {
 	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
 		delete((*it).second);

@@ -25,7 +25,7 @@ public:
 
 	/** Encuentra la posición de pantalla en donde se debería deibujar una entidad que esta en las coordenadas cartesianas
 	 * (x,y). Luego la centra con los tiles, y retorna la posicion.**/
-	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
+	pair<int,int> getIsometricPosition(EntidadPartidaVista* entidad);
 	pair<int,int> getIsometricPosition(int x,int y);
 
 	virtual ~UtilsController();

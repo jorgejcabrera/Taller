@@ -21,7 +21,7 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->length = 50;
 }
 
-EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
+EntidadDinamica::EntidadDinamica(int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
 	this->caminando = false;
 	this->position.first = x;
 	this->position.second = y;
@@ -36,37 +36,8 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	this->lengthPixel = lengthPixels;
 	if(fps > 50) fps = 50;
 	this->framesPerSecond = fps;
-	this->inDelayPeriod = false;
 }
 
-SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
-	int ciclesPerFrame = 50 / this->framesPerSecond;
-
-	int lineaSprite = this->getLineSprite(this->getDireccion());
-	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
-	if(this->inDelayPeriod){
-		if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
-			this->inDelayPeriod = false;
-		}
-	}else{
-			if(!this->caminando){
-				this->frame = 0;
-			}else{
-				if(ciclos % ciclesPerFrame == 0){
-					this->frame++;
-					if( (this->frame % this->getFramesInLineFile()) == 0){
-						this->frame = 0;
-						if(this->delay>0){
-							this->delayIndex = SDL_GetTicks();
-							this->inDelayPeriod = true;
-						}
-					}
-				}
-			}
-	}
-
-	return srcrect;
-}
 
 void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	// no borrar por favor
@@ -225,7 +196,4 @@ void EntidadDinamica::destruir(){
 }
 
 EntidadDinamica::~EntidadDinamica() {
-}
-
-void EntidadDinamica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
 }

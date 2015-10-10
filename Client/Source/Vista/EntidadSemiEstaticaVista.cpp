@@ -1,15 +1,15 @@
 /*
- * EntidadSemiEstatica.cpp
+ * EntidadSemiEstaticaVista.cpp
  *
  *  Created on: 22 de set. de 2015
  *      Author: jorge
  */
 
-#include "../../Headers/Modelo/EntidadSemiEstatica.h"
+#include "../../Headers/Vista/EntidadSemiEstaticaVista.h"
 
 namespace std {
 
-string getStringSize(EntidadPartida* entidad){
+string getStringSize(EntidadPartidaVista* entidad){
 	if(entidad->getWidth() == 3 && entidad->getLength() == 3){
 		return "standarMediumSize";
 	}else if(entidad->getWidth() == 4 && entidad->getLength() == 4){
@@ -23,11 +23,11 @@ string getStringSize(EntidadPartida* entidad){
 	}
 }
 
-EntidadSemiEstatica::EntidadSemiEstatica() {
+EntidadSemiEstaticaVista::EntidadSemiEstaticaVista() {
 }
 
 
-EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel, float lengthPixels,int fps,const string &tipoEntidad,const string &pathImage) {
+EntidadSemiEstaticaVista::EntidadSemiEstaticaVista(int width, int length, float widthPixel, float lengthPixels,int fps,const string &pathImage) {
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = width;
 	this->length = length;
@@ -40,36 +40,32 @@ EntidadSemiEstatica::EntidadSemiEstatica(int width, int length, float widthPixel
 	this->sizeString = getStringSize(this);
 }
 
-int EntidadSemiEstatica::getFramesPerSecond(){
+int EntidadSemiEstaticaVista::getFramesPerSecond(){
 	return this->framesPerSecond;
 }
 
-void EntidadSemiEstatica::setDelay(int delayFrames){
+void EntidadSemiEstaticaVista::setDelay(int delayFrames){
 	this->delay = delayFrames;
 }
 
-int EntidadSemiEstatica::getWidthPixel(){
+int EntidadSemiEstaticaVista::getWidthPixel(){
 	return this->widthPixel;
 }
 
-int EntidadSemiEstatica::getLengthPixel(){
+int EntidadSemiEstaticaVista::getLengthPixel(){
 	return this->lengthPixel;
 }
 
 //seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
-void EntidadSemiEstatica::setFramesInLineFile(int qty){
+void EntidadSemiEstaticaVista::setFramesInLineFile(int qty){
 	this->framesInLineFile = qty;
 }
 
-int EntidadSemiEstatica::getFramesInLineFile(){
+int EntidadSemiEstaticaVista::getFramesInLineFile(){
 	return this->framesInLineFile;
 }
 
-pair<int,int>* EntidadSemiEstatica::getPosition(){
-	return &this->position;
-}
-
-SDL_Rect EntidadSemiEstatica::getPositionOfSprite(int ciclos){
+SDL_Rect EntidadSemiEstaticaVista::getPositionOfSprite(int ciclos){
 		SDL_Rect srcrect = { this->frame * this->widthPixel, 0, this->widthPixel, this->lengthPixel };
 		// solo de prueba los 50 fps del ciclo principal
 		int ciclosPerFrame = 50 / framesPerSecond;
@@ -94,7 +90,7 @@ SDL_Rect EntidadSemiEstatica::getPositionOfSprite(int ciclos){
 		return srcrect;
 }
 
-void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
+void EntidadSemiEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
 	//primero tenemos que centrar la entidad semiestatica
 	int widthScreen = this->widthPixel * this->width;
 	int lengthScreen = this->lengthPixel*this->length;
@@ -103,7 +99,7 @@ void EntidadSemiEstatica::drawMe(pair<int,int> isometricPosition, int offSetX, i
 	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),posXScreen,posYScreen,widthScreen,lengthScreen, this->getPositionOfSprite(ciclos));
 }
 
-EntidadSemiEstatica::~EntidadSemiEstatica() {
+EntidadSemiEstaticaVista::~EntidadSemiEstaticaVista() {
 }
 
 } /* namespace std */

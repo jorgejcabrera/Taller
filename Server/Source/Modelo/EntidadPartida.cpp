@@ -45,8 +45,5 @@ string EntidadPartida::getSizeString(){
 	return this->sizeString;
 }
 
-void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
-}
-
 EntidadPartida::~EntidadPartida() {
 }

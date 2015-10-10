@@ -9,7 +9,6 @@
 #define SOURCE_MODELO_ENTIDADDINAMICA_H_
 
 #include "EntidadPartida.h"
-#include "SDL2/SDL.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
@@ -44,10 +43,6 @@ class EntidadDinamica: public EntidadPartida {
 
 		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
 		int delay;
-		//variable de control para indicar si estoy en medio del periodo de delay
-		bool inDelayPeriod;
-		// indice de segundo del delay por el cual voy
-		int delayIndex;
 
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
@@ -63,12 +58,11 @@ class EntidadDinamica: public EntidadPartida {
 		int getFramesInLineFile();
 		EntidadDinamica();
 		EntidadDinamica(int vel,int posX,int posY);
-		EntidadDinamica(string typeEntity, int vel,float posX,float posY, float width, float length, int fps);
+		EntidadDinamica(int vel,float posX,float posY, float width, float length, int fps);
 		void setInitialScreenPosition(float x,float y);
 		int getWidthPixel();
 		int getLengthPixel();
 		virtual ~EntidadDinamica();
-		SDL_Rect getPositionOfSprite(int runCycles);
 		string getEntityType();
 		int getFramesPerSecond();
 		void setDelay(int delayFrames);
@@ -80,7 +74,6 @@ class EntidadDinamica: public EntidadPartida {
 
 		void setScreenPosition(float x, float y);
 		void trasladarse();
-		void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */
