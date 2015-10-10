@@ -14,10 +14,11 @@
 #include "../Headers/Modelo/Server.h"
 #include "../Headers/Modelo/PathFinder.h"
 
-//#include "../Headers/Utils/Socket/MessageUpdate.h"
-//#include "../Headers/Utils/Socket/MessageConfiguration.h"
+#include "../Headers/Utils/Socket/Message.h"
+#include "../Headers/Utils/Socket/MessageUpdate.h"
+#include "../Headers/Utils/Socket/MessageConfiguration.h"
 
-
+#include <list>
 /*#include <iostream>
 #include <string.h>
 #include <sys/types.h>
@@ -68,12 +69,16 @@ int main(int argc, char* argv[]) {
 	server->listenClients();
 
 
-	/*MessageUpdate* msgC = new MessageUpdate(1111,"miTipo",5,7);
-	string mensaje = msgC->toString();
-	cout << "mensaje: " << mensaje << endl;
-	MessageConfiguration* msgConf = new MessageConfiguration("casa","path/a/la/imagen.png", 2, 8);
-	cout << "mensaje: " << msgConf->toString()<< endl;
-	*/
+	/*
+	list<Message*> unaLista;
+	MessageUpdate *msgC = new MessageUpdate(1111,"miTipo",5,7);
+	MessageConfiguration *msgConf = new MessageConfiguration("casa","path/a/la/imagen.png", 2, 8);
+	unaLista.push_front(msgC);
+	unaLista.push_front(msgConf);
+	for(list<Message*>::iterator it=unaLista.begin(); it!=unaLista.end(); ++it){
+
+		cout << "mensaje: " << (*it)->toString()<<endl;
+	}*/
 
 	return 0;
 }

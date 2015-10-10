@@ -25,7 +25,7 @@ public:
 	Message();
 	Message(string msg);
 	virtual ~Message();
-	string toString();
+	virtual string toString();
 	char * getBodyToWrite();
 	int getBodySize();
 	void setBody(char* bodyReceived);

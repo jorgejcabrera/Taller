@@ -17,6 +17,7 @@ Message::Message(string msg) {
 }
 
 string Message::toString(){
+	//TODO: esto no se ejecuta nunca porque defini el metodo como virtual en la clase header
 	return this->body;
 }
 
