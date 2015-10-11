@@ -12,6 +12,8 @@
 #include <sstream>
 #include <iostream>
 #include <arpa/inet.h>
+#include <stdint.h>
+
 
 using namespace std;
 
@@ -20,14 +22,17 @@ class Message {
 private:
 	int length;
 	string body;
+	char * serialized_message;
+	void serializedMessage(const char * msg, uint32_t messageSize);
 
 public:
 	Message();
 	Message(string msg);
 	virtual ~Message();
 	virtual string toString();
-	char * getBodyToWrite();
-	int getBodySize();
+	char* getBodyToWrite();
+	char* getSerializeMessage();
+	int getLength();
 	void setBody(char* bodyReceived);
 };
 
