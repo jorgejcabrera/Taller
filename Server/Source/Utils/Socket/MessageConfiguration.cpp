@@ -22,6 +22,17 @@ MessageConfiguration::MessageConfiguration(string name, string path, int width, 
 	this->msg.pixels_dimension = 0;
 }
 
+MessageConfiguration::MessageConfiguration(string name, string path, int width, int heigth, int fpsParam, int delayParam, int totalFramesLine, int pixelConfig){
+	this->msg.nombre = name;
+	this->msg.imagen = path;
+	this->msg.ancho_base = width;
+	this->msg.alto_base = heigth;
+	this->msg.fps = fpsParam;
+	this->msg.delay = delayParam;
+	this->msg.total_frames_line = totalFramesLine;
+	this->msg.pixels_dimension = pixelConfig;
+}
+
 void MessageConfiguration::setFPS(int fpsToSet){
 	this->msg.fps = fpsToSet;
 }

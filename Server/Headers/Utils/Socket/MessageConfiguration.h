@@ -32,6 +32,7 @@ private:
 public:
 	MessageConfiguration();
 	MessageConfiguration(string name, string path, int width, int heigth);
+	MessageConfiguration(string name, string path, int width, int heigth, int fpsParam, int delayParam, int totalFramesLine, int pixelConfig);
 	void setFPS(int fpsToSet);
 	void setDelay(int delayToSet);
 	void setTotalFramesLine(int totalFramesInLine);

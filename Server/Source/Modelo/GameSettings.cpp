@@ -90,6 +90,26 @@ int GameSettings::getVelocidadPersonaje	(){
 	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
 }
 
+void GameSettings::generateListMessageConfiguration(){
+	//Genero una lista de mensajes de configuracion para mandarle a cada cliente
+	vector< map< string, string> > *listaDeTipos = loader->getTypes();
+	for(vector< map< string, string> >::iterator it=listaDeTipos->begin(); it!=listaDeTipos->end(); ++it){
+		string name = getValueInMap(*it, "nombre");
+		string path = getValueInMap(*it, "imagen");
+		int anchoBase =  atoi(getValueInMap(*it, "ancho_base").c_str());
+		int altoBase = atoi(getValueInMap(*it, "alto_base").c_str());
+		int fps = atoi(getValueInMap(*it, "fps").c_str());
+		int delay = atoi(getValueInMap(*it, "delay").c_str());
+		int total_frames_line = atoi(getValueInMap(*it, "total_frames_line").c_str());
+		int pixels_dimension = atoi(getValueInMap(*it, "pixels_dimension").c_str());
+		this->messageConfigList.push_back(new MessageConfiguration(name,path,anchoBase,altoBase,fps,delay,total_frames_line,pixels_dimension));
+	}
+}
+
+list<MessageConfiguration*> GameSettings::getListMessageConfiguration(){
+	return this->messageConfigList;
+}
+
 void GameSettings::SetGameSettings(){
 	map<string,int>* mapSI;
 	map< string, string> * mapSS;
@@ -162,6 +182,7 @@ GameSettings* GameSettings::GetInstance() {
 		instance = new GameSettings();
 		instance->SetGameSettings();
 		instance->createEntidades();
+		instance->generateListMessageConfiguration();
 	}
 	return instance;
 }
@@ -264,6 +285,8 @@ bool GameSettings::isFileExist(const string fileName){
 }
 
 GameSettings::~GameSettings() {
+	//TODO: borrar la lista de mensajes de configuracion
+
 	delete(this->loader);
 	this->loader = NULL;
 	this->instance =NULL;

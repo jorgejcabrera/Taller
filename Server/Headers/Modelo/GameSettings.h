@@ -13,10 +13,10 @@
 #include "EntidadPartida.h"
 #include "EntidadEstatica.h"
 #include "EntidadSemiEstatica.h"
+#include "../Utils/Socket/MessageConfiguration.h"
 #include <list>
 #include <fstream>
 #include <map>
-#include <list>
 
 namespace std {
 
@@ -29,6 +29,7 @@ private:
 	bool isFileExist(const string fileName);
 
 public:
+	list<MessageConfiguration*> messageConfigList;
 	//pantalla:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -47,7 +48,6 @@ public:
 	//vector< map< string, string> >* tipos;
 	//entidades
 	//vector< map< string, string> >* entidades;
-
 
 	int TILE_SIZE;
 	int CONF_VEL_PERSONAJE;
@@ -96,6 +96,9 @@ public:
 	int getProtagonistaFramesInFile();
 	int getProtagonistaPixelDimension();
 	int getProtagonistaDelay();
+
+	void generateListMessageConfiguration();
+	list<MessageConfiguration*> getListMessageConfiguration();
 };
 
 } /* namespace std */

@@ -69,16 +69,11 @@ int main(int argc, char* argv[]) {
 	server->listenClients();
 
 
-	/*
-	list<Message*> unaLista;
-	MessageUpdate *msgC = new MessageUpdate(1111,"miTipo",5,7);
-	MessageConfiguration *msgConf = new MessageConfiguration("casa","path/a/la/imagen.png", 2, 8);
-	unaLista.push_front(msgC);
-	unaLista.push_front(msgConf);
-	for(list<Message*>::iterator it=unaLista.begin(); it!=unaLista.end(); ++it){
-
-		cout << "mensaje: " << (*it)->toString()<<endl;
+	/*list<MessageConfiguration*> lista = GameSettings::GetInstance()->getListMessageConfiguration();
+	for(list<MessageConfiguration*>::iterator it=lista.begin(); it!=lista.end();++it){
+		cout << "mensaje: " << (*it)->toString() <<endl;
 	}*/
+
 
 	return 0;
 }

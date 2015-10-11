@@ -89,6 +89,15 @@ tipos:
   imagen: path/a/imagen.png
   fps: 10
 
+- nombre: tierra
+  imagen: ../Taller/Images/Tiles/tierra.png
+
+- nombre: agua
+  imagen: ../Taller/Images/Tiles/agua.png
+
+- nombre: pasto
+  imagen: ../Taller/Images/Tiles/pasto.png
+
 escenario:
   nombre: orleans
   size_x: 30
