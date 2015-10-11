@@ -90,19 +90,21 @@ tipos:
   fps: 10
 
 - nombre: tierra
-  imagen: ../Taller/Images/Tiles/tierra.png
+  imagen: ../../Taller/Images/Tiles/tierra.png
 
 - nombre: agua
-  imagen: ../Taller/Images/Tiles/agua.png
+  imagen: ../../Taller/Images/Tiles/agua.png
 
 - nombre: pasto
-  imagen: ../Taller/Images/Tiles/pasto.png
+  imagen: ../../Taller/Images/Tiles/pasto.png
 
 escenario:
   nombre: orleans
   size_x: 30
   size_y: 30
   entidades:
+  - {x: 8, y: 10, tipo: agua}
+  - {x: 12, y: 12, tipo: tierra}
   - {x: 3, y: 17, tipo: AdvancedChurch}
   - {x: 0, y: 12, tipo: Consulate}
   - {x: 0, y: 7, tipo: Town_Hall}

@@ -14,7 +14,8 @@ Mapa::Mapa() {
 		//barrido horizontal del mapa
 		for(int j = 0; j < gameSettings->getMapWidth(); j++){
 			Tile* newTile =  new Tile(j,i);
-			newTile->setPathImage(gameSettings->imagePathTilesByType("pasto"));
+			//TODO: ya no es necesario setear el path de la imagen, ademas borre el metodo y el atributo
+			//newTile->setPathImage(gameSettings->imagePathTilesByType("pasto"));
 			this->tiles.insert(std::make_pair(std::make_pair(j,i),newTile));
 		}
 	}
@@ -28,7 +29,9 @@ Mapa::Mapa() {
 	for (std::map<pair<int,int>,string>::iterator it = tilesToSetImage.begin(); it != tilesToSetImage.end();++it){
 		int posX = (*it).first.first;
 		int posY = (*it).first.second;
-		this->getTileAt(posX,posY)->setPathImage((*it).second);
+		cout << "TILE " << (*it).second <<endl;
+		this->getTileAt(posX,posY)->setSuperficie((*it).second);
+		//this->getTileAt(posX,posY)->setPathImage((*it).second);
 	}
 }
 

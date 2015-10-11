@@ -25,8 +25,9 @@ enum surface_type{
 class Tile {
 	bool available;
 	pair<int,int> position;
+	//TODO: no usamos para nada la superficie
 	surface_type superficie;	//por default la superficie es pasto
-	string pathImage;
+	string superficieStr;
 
 public:
 	void setPathImage(string path);
@@ -38,6 +39,8 @@ public:
 	pair<int,int>* getPosition();
 	void pushSurface(surface_type surface);
 	int getSurfaceSpeed();
+	string getSuperficie();
+	void setSuperficie(string superficieNueva);
 	virtual ~Tile();
 	string getPathImage();
 };

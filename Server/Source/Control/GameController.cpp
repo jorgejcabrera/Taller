@@ -23,6 +23,19 @@ Juego* GameController::getJuego(){
 	return this->juego;
 }
 
+list<MessageUpdate*> GameController::getTilesMessages(){
+	list<MessageUpdate*> listaDeTiles;
+	map<pair<int,int>,Tile*>* tilesList = this->juego->getMap()->getTiles();
+	for(map<pair<int,int>,Tile*>::iterator it=tilesList->begin(); it!=tilesList->end(); ++it){
+		MessageUpdate *tileMessage = new MessageUpdate("tile",it->second->getSuperficie(),it->first.first,it->first.second);
+		listaDeTiles.push_back(tileMessage);
+		//cout << "TILE2: " <<tileMessage->toString()<<endl;
+		//TODO: falta mandar mensajes a la cola
+	}
+	return listaDeTiles;
+
+}
+
 void GameController::actualizarJuego(){
 	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
 	juego->actualizarProtagonista();

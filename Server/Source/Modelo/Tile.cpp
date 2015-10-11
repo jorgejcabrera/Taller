@@ -14,6 +14,15 @@ Tile::Tile(int x, int y ) {
 	this->position.second = y;
 	this->available = true;
 	this->superficie = grass;
+	this->superficieStr ="pasto";
+}
+
+string Tile::getSuperficie(){
+	return this->superficieStr;
+}
+
+void Tile::setSuperficie(string superficieNueva){
+	this->superficieStr = superficieNueva;
 }
 
 void Tile::changeStatusAvailable(){
@@ -42,14 +51,6 @@ int Tile::getPosX(){
 
 int Tile::getPosY(){
 	return this->position.second;
-}
-
-string Tile::getPathImage(){
-	return pathImage;
-}
-
-void Tile::setPathImage(string path){
-	this->pathImage = path;
 }
 
 Tile::~Tile() {

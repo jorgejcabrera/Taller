@@ -226,7 +226,8 @@ void GameSettings::createEntidades(){
 						}
 					}
 				}else if (tipoEntidad=="tiles" && posX < this->getMapHeight() && posY < this->getMapHeight()){
-					this->tiles.insert(make_pair(make_pair(posX,posY),imagen));
+					//TODO: modifico lo que hay en la cola, ahora solo guardo que tipo de tile es, antes mandaba el path. Eso deberia resolverlo la vista
+					this->tiles.insert(make_pair(make_pair(posX,posY),nombre));
 				}
 			}
 	}

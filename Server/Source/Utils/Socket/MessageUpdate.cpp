@@ -11,7 +11,7 @@
 MessageUpdate::MessageUpdate() {
 }
 
-MessageUpdate::MessageUpdate(int identifier, string typeEntity, int xPosition, int yPosition){
+MessageUpdate::MessageUpdate(string identifier, string typeEntity, int xPosition, int yPosition){
 	this->msg.id = identifier;
 	this->msg.tipo = typeEntity;
 	this->msg.x = xPosition;

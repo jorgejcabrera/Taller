@@ -11,7 +11,7 @@
 #include "../../../Headers/Utils/Socket/Message.h"
 
 struct messageUpt {
-	int id;
+	string id;
 	string tipo;
 	int x;
 	int y;
@@ -25,7 +25,7 @@ private:
 
 public:
 	MessageUpdate();
-	MessageUpdate(int identifier, string typeEntity, int xPosition, int yPosition);
+	MessageUpdate(string identifier, string typeEntity, int xPosition, int yPosition);
 	virtual ~MessageUpdate();
 	string toString();
 };
