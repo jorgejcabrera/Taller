@@ -14,7 +14,8 @@ Message::Message() {}
 
 Message::Message(string msg) {
 	this->body = msg;
-	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
+	this->length = sizeof(char) * msg.length() + sizeof(uint64_t);
+	this->serialized_message = new char[length];
 	this->serializedMessage(msg.c_str(),msg.length());
 }
 
@@ -28,7 +29,7 @@ void Message::serializedMessage(const char * msg, uint32_t size){
 
 	//SET CONTENT
 	for (unsigned i = sizeof(uint32_t); i < size + sizeof(uint32_t); i++){
-		serialized_message[i] = msg[i - sizeof(uint32_t)];
+		this->serialized_message[i] = msg[i - sizeof(uint32_t)];
 	}
 }
 

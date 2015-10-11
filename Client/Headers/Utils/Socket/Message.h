@@ -22,7 +22,7 @@ class Message {
 private:
 	int length;
 	string body;
-	char* serialized_message;
+	char * serialized_message;
 	void serializedMessage(const char * msg, uint32_t messageSize);
 
 public:
