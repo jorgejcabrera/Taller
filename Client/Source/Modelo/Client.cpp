@@ -12,18 +12,17 @@ Client::Client(string ip, int port) {
 	this->port = port;
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = DISCONECTED;								//desconected
-	this->socketUtils = new SocketUtils(this->sockfd);
-	this->writeQueue = new SocketQueue();
+	//this->socketUtils = new SocketUtils(this->sockfd);
 }
 
 int Client::connectToServer(){
 	int error;
 	if ( this->sockfd < 0) {
 		cout << "Error initialising socket: "<< gai_strerror(this->sockfd)<< endl;
-		return ERROR;
+		//return ERROR;
 	}
 
-	//SOCKET
+	//CREATE SOCKET
 	struct sockaddr_in s_addr;
 	memset(&s_addr, 0, sizeof(s_addr));
 	s_addr.sin_family = AF_INET;							//address family internet
@@ -32,40 +31,43 @@ int Client::connectToServer(){
 
 	if ( s_addr.sin_addr.s_addr < 0 ){
 		cout << "Error en la direccion IP"<< gai_strerror(s_addr.sin_addr.s_addr)<< endl;
-		return ERROR;
+		//return ERROR;
 	}
-
 	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
 		cout << "Error connecting to server: "<< gai_strerror(error) << endl;
 		this->status = DISCONECTED;
-		return ERROR;
+		//return ERROR;
 	}else{
 		cout << "Conexion con el servidor "<< inet_ntoa(s_addr.sin_addr)<<endl;
 		this->status = CONECTED; // conectado :)
 	}
 
 	//INITIALIZE THREAD
-	this->readThread = new MessageReader();
-	this->writeThread = new MessageWriter();
-
-	//TODO le decimos al servidor que les avise a todos que me conecte
+	this->readThread = new MessageSocketReader();
+	this->writeThread = new MessageSocketWriter(this->sockfd);
+	this->readThread->start((MessageSocketReader*) this->readThread );
+	this->writeThread->start((MessageSocketWriter*) this->writeThread);
 
 	return OK;
 }
 
-void Client::sendMessage(Message* msg){
+void Client::sendMessage(Message msg){
 	if (this->status == CONECTED)
-		this->writeQueue->queuing(msg);
+		this->writeThread->sendMessage(msg);
+}
+
+void Client::readReceivedMessage(Message msg){
+
 }
 
 void Client::communicateWithServer(){
-	Message* mensaje = new Message("");
+	/*Message* mensaje = new Message("");
 	this->socketUtils->readMessage(mensaje);
 	cout << "CLI Mensaje recibido CLIENT: "<< mensaje->toString() << endl;
 	mensaje->setBody("CLI mensaje del CLIENTE AGE OF EMPIRES");
-	this->socketUtils->writeMessage(mensaje);
+	this->socketUtils->writeQueue->->writeMessage(mensaje);
 	this->socketUtils->readMessage(mensaje);
-	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->toString()<< endl;
+	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->toString()<< endl;*/
 }
 
 int Client::getStatus(){
@@ -73,8 +75,7 @@ int Client::getStatus(){
 }
 
 Client::~Client() {
-	this->socketUtils->~SocketUtils();
-	this->writeQueue->~SocketQueue();
-	shutdown(this->sockfd, 2); //2 blocks recv and sending
+	//this->socketUtils->~SocketUtils();
+	shutdown(this->sockfd, 2);	//2 blocks recv and sending
 	close(this->sockfd);
 }

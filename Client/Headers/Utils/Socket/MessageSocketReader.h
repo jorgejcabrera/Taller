@@ -5,18 +5,18 @@
  *      Author: jorge
  */
 
-#ifndef SOURCE_UTILS_SOCKET_MESSAGEREADER_H_
-#define SOURCE_UTILS_SOCKET_MESSAGEREADER_H_
+#ifndef SOURCE_UTILS_SOCKET_MESSAGESOCKETREADER_H_
+#define SOURCE_UTILS_SOCKET_MESSAGESOCKETREADER_H_
 
 #include "../Thread.h"
 
 using namespace std;
 
-class MessageReader: public Thread {
+class MessageSocketReader: public Thread {
 public:
-	MessageReader();
+	MessageSocketReader();
 	int run(void* data);
-	virtual ~MessageReader();
+	virtual ~MessageSocketReader();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEREADER_H_ */

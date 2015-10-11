@@ -14,9 +14,8 @@
 #define CONECTED 0
 
 #include "../Utils/Socket/SocketUtils.h"
-#include "../Utils/Socket/SocketQueue.h"
-#include "../Utils/Socket/MessageWriter.h"
-#include "../Utils/Socket/MessageReader.h"
+#include "../Utils/Socket/MessageSocketWriter.h"
+#include "../Utils/Socket/MessageSocketReader.h"
 #include <string.h>
 #include <iostream>
 #include <unistd.h>
@@ -27,21 +26,20 @@ using namespace std;
 
 class Client {
 private:
-	MessageWriter* writeThread;
-	MessageReader* readThread;
-	SocketQueue* writeQueue;
+	MessageSocketWriter* writeThread;
+	MessageSocketReader* readThread;
 	SocketUtils* socketUtils;
 	int port;
 	int sockfd;
 	int status;
 	string ip;
 	string name;
-	void interpretReceivedMessage(string* msg);
+	void readReceivedMessage(Message msg);
 public:
 	Client(string ip, int port);
 	int connectToServer();
 	int getStatus();
-	void sendMessage(Message* msg);
+	void sendMessage(Message msg);
 	void communicateWithServer();
 	virtual ~Client();
 };

@@ -11,23 +11,29 @@ SocketQueue::SocketQueue() {
 	this->lock = SDL_CreateMutex();
 }
 
-void SocketQueue::queuing(Message* msg){
-	/*If the mutex is already locked by another thread, then SDL_LockMutex
-	 *will not return until the thread that locked it unlocks it */
-	SDL_LockMutex(lock);
-	this->queue.push(msg->toString());
+void SocketQueue::queuing(Message msg){
+	/*
+	 *If the mutex is already locked by another thread, then SDL_LockMutex
+	 *will not return until the thread that locked it unlocks it
+	 **/
+	//SDL_LockMutex(lock);
+	this->queue.push(msg);
 	SDL_UnlockMutex(lock);
 }
 
-string SocketQueue::pullTail(){
+Message SocketQueue::pullTail(){
 	SDL_LockMutex(lock);
-	string message = this->queue.front();
+	Message message = this->queue.front();
 	this->queue.pop();
 	SDL_UnlockMutex(lock);
 
 	/*aca deberia serializar el mensaje y devolverlo serializado*/
 	return message;
 
+}
+
+bool SocketQueue::isEmpty(){
+	return this->queue.size() <= 0;
 }
 int SocketQueue::getSize(){
 	return this->queue.size();
