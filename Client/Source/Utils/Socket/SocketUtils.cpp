@@ -6,11 +6,10 @@ SocketUtils::SocketUtils(int socket) {
 
 void SocketUtils::setSocket(int socket){
     this->socket = socket;
-
 }
 
 int SocketUtils::writeMessage(Message *msg){
-    int wroteBytes = write(this->socket, msg->getBodyToWrite(), msg->getBodySize());
+    int wroteBytes = write(this->socket, msg->getSerializeMessage(), msg->getLength());
     if( wroteBytes < 0)
     	cout <<"ERROR writing to SocketUtils" << endl;
     return wroteBytes;
@@ -47,7 +46,7 @@ int SocketUtils::recvMsg(string & msg, size_t length){
 
 int SocketUtils::readMessage(Message *msg)
 {
-	int size = msg->getBodySize();
+	int size = msg->getLength();
 	char * buffer = new char[size+1]();
 	//Hasta que no leo el total de bytes no paro.
 	size_t bytesReceived = 0;
