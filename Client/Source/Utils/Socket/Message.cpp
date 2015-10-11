@@ -21,7 +21,7 @@ Message::Message(string msg) {
 void Message::serializedMessage(const char * msg, uint32_t size){
 	//SET MESSAGE SIZE
 	uint32_t be_nro = htonl(size);
-	char* ptr_nro = (char *)&be_nro;
+	char* ptr_nro = (char*)&be_nro;
 	for (unsigned i = 0; i < sizeof(uint32_t); i++){
 		this->serialized_message[i] = ptr_nro[i];
 	}
@@ -30,7 +30,6 @@ void Message::serializedMessage(const char * msg, uint32_t size){
 	for (unsigned i = sizeof(uint32_t); i < size + sizeof(uint32_t); i++){
 		serialized_message[i] = msg[i - sizeof(uint32_t)];
 	}
-
 }
 
 string Message::toString(){

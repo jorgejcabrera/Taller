@@ -13,6 +13,7 @@
 #include "../Headers/Vista/JuegoVista.h"
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Client.h"
+#include "../Headers/Utils/Socket/Message.h"
 #include "../Headers/Utils/Socket/MessageUpdate.h"
 
 
@@ -43,10 +44,11 @@ int main(int argc, char* argv[]) {
 		//delete server;
 	}*/
 
+	//Message* mesage = new Message("este es mi mensaje");
+
 	Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
 	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));
-	//jorge->communicateWithServer();
 	  return 0;
 }
 
