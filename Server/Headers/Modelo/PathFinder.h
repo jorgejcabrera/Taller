@@ -36,17 +36,21 @@ class PathFinder {
 private:
 	int dManhattan(int x,int y);
 	void setInicio();
+	void setDestino();
 	GameSettings* gameSettings;
 
 	candidato inicio;
+	candidato destino;
 	Mapa* map;
 	list<candidato>* candidatos;
 	bool candidatoExiste(candidato unCandidato);
+	pair<int,int> getClosestAvailable(int x,int y);
 	candidato getMinimoNoRecorrido();
 	candidato getCandidato(int x,int y);
 	bool positionAvailable(int x,int y);
 	candidato getAdyacente(int oX,int oY,int x,int y);
 	void getCandidatosAdyacentes(candidato actual);
+	void getTodosLosAdyacentes(candidato actual);
 
 	int destinoX;
 	int destinoY;

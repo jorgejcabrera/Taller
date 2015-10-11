@@ -16,8 +16,13 @@ PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 	this->posY = y;
 	this->destinoX = dX;
 	this->destinoY = dY;
-
 	this->candidatos = new list<candidato>();
+
+	if( ! positionAvailable(destinoX,destinoY)){
+		pair<int,int> nuevoDestino = getClosestAvailable(destinoX,destinoY);
+		this->destinoX = nuevoDestino.first;
+		this->destinoY = nuevoDestino.second;
+	}
 
 }
 
@@ -51,6 +56,37 @@ candidato PathFinder::getAdyacente(int oX,int oY,int x,int y){
 	return ady;
 }
 
+pair<int,int> PathFinder::getClosestAvailable(int x,int y){
+
+	this->setDestino();
+
+	candidato nuevoDestino;
+	nuevoDestino.posX = destino.posX;
+	nuevoDestino.posY = destino.posY;
+	cout<<"destino original: "<<destino.posX<<","<<destino.posY<<endl;
+	nuevoDestino.recorrido = true;
+
+
+	while(destino.posX == destinoX && destino.posY == destinoY){
+		this->getTodosLosAdyacentes(nuevoDestino);
+		for (std::list<candidato>::iterator it=this->candidatos->begin(); it != this->candidatos->end(); ++it)
+				if( this->positionAvailable((*it).posX,(*it).posY) )
+					destino = (*it);
+		if( (destino.posX == destinoX && destino.posY == destinoY)){
+			nuevoDestino.posX++;
+			cout<<"nuevo: "<<nuevoDestino.posX<<","<<nuevoDestino.posY<<endl;
+		}
+	}
+
+	this->candidatos->clear();
+	pair<int,int> nDest;
+	nDest.first = destino.posX;
+	nDest.second = destino.posY;
+	cout<<"destino nuevo: "<<nDest.first<<","<<nDest.second<<endl;
+
+	return nDest;
+}
+
 void PathFinder::setInicio(){
 
 	this->inicio.posX = this->posX;
@@ -59,6 +95,17 @@ void PathFinder::setInicio(){
 	this->inicio.origenX = -1;
 	this->inicio.origenY = -1;
 	this->inicio.recorrido = true;
+
+}
+
+void PathFinder::setDestino(){
+
+	this->destino.posX = this->destinoX;
+	this->destino.posY = this->destinoY;
+	this->destino.dist = 0;
+	this->destino.origenX = -1;
+	this->destino.origenY = -1;
+	this->destino.recorrido = true;
 
 }
 
@@ -131,6 +178,47 @@ void PathFinder::getCandidatosAdyacentes(candidato actual){
 	x = oX + 1;
 	candidato cand8 = getAdyacente(oX,oY,x,y);
 	if( ! candidatoExiste(cand8) && positionAvailable(x,y)) candidatos->push_front(cand8);
+}
+
+void PathFinder::getTodosLosAdyacentes(candidato actual){
+// la diferencia con getCandidatosAdyacentes es que este acepta posiciones no disponibles
+
+	int oX = actual.posX;
+	int oY = actual.posY;
+
+	int x = oX + 1;
+	int y = oY;
+
+	candidato cand1 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand1)) candidatos->push_front(cand1);
+
+	y = oY - 1;
+	candidato cand2 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand2)) candidatos->push_front(cand2);
+
+	x = oX;
+	candidato cand3 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand3)) candidatos->push_front(cand3);
+
+	x = oX - 1;
+	candidato cand4 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand4)) candidatos->push_front(cand4);
+
+	y = oY;
+	candidato cand5 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand5)) candidatos->push_front(cand5);
+
+	y = oY + 1;
+	candidato cand6 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand6)) candidatos->push_front(cand6);
+
+	x = oX;
+	candidato cand7 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand7)) candidatos->push_front(cand7);
+
+	x = oX + 1;
+	candidato cand8 = getAdyacente(oX,oY,x,y);
+	if( ! candidatoExiste(cand8)) candidatos->push_front(cand8);
 }
 
 bool PathFinder::positionAvailable(int x,int y){
