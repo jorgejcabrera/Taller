@@ -29,9 +29,7 @@ Mapa::Mapa() {
 	for (std::map<pair<int,int>,string>::iterator it = tilesToSetImage.begin(); it != tilesToSetImage.end();++it){
 		int posX = (*it).first.first;
 		int posY = (*it).first.second;
-		cout << "TILE " << (*it).second <<endl;
 		this->getTileAt(posX,posY)->setSuperficie((*it).second);
-		//this->getTileAt(posX,posY)->setPathImage((*it).second);
 	}
 }
 
