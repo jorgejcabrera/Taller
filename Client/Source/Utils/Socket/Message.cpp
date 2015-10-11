@@ -7,12 +7,17 @@
 
 #include "../../../Headers/Utils/Socket/Message.h"
 
+//TODO: esta clase solo deberia ser Abstracta? ahora tenemos dos tipos de mesanjes.
+//No la borro porque sive para hacer pruebas
+Message::Message() {}
+
 Message::Message(string msg) {
 	this->body = msg;
 	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
 }
 
 string Message::toString(){
+	//TODO: esto no se ejecuta nunca porque defini el metodo como virtual en la clase header
 	return this->body;
 }
 

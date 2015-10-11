@@ -15,6 +15,8 @@
 
 #include "../Utils/Socket/SocketUtils.h"
 #include "../Utils/Socket/SocketQueue.h"
+#include "../Utils/Socket/MessageWriter.h"
+#include "../Utils/Socket/MessageReader.h"
 #include <string.h>
 #include <iostream>
 #include <unistd.h>
@@ -25,6 +27,8 @@ using namespace std;
 
 class Client {
 private:
+	MessageWriter* writeThread;
+	MessageReader* readThread;
 	SocketQueue* writeQueue;
 	SocketUtils* socketUtils;
 	int port;

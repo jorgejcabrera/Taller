@@ -43,11 +43,18 @@ int Client::connectToServer(){
 		cout << "Conexion con el servidor "<< inet_ntoa(s_addr.sin_addr)<<endl;
 		this->status = CONECTED; // conectado :)
 	}
+
+	//INITIALIZE THREAD
+	this->readThread = new MessageReader();
+	this->writeThread = new MessageWriter();
+
+	//TODO le decimos al servidor que les avise a todos que me conecte
+
 	return OK;
 }
 
 void Client::sendMessage(Message* msg){
-	if ( this->status == CONECTED)
+	if (this->status == CONECTED)
 		this->writeQueue->queuing(msg);
 }
 
@@ -61,7 +68,6 @@ void Client::communicateWithServer(){
 	cout << "CLI Mensaje recibido CLIENT: "<<mensaje->toString()<< endl;
 }
 
-
 int Client::getStatus(){
 	return this->status;
 }
@@ -72,5 +78,3 @@ Client::~Client() {
 	shutdown(this->sockfd, 2); //2 blocks recv and sending
 	close(this->sockfd);
 }
-
-
