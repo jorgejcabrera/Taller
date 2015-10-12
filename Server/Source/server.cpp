@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 	server->listenClients();
 */
 	GameController *gController = new GameController();
-	gController->generateTilesMessages();
+	gController->getTilesMessages();
 
 	/*list<MessageConfiguration*> lista = GameSettings::GetInstance()->getListMessageConfiguration();
 	for(list<MessageConfiguration*>::iterator it=lista.begin(); it!=lista.end();++it){
