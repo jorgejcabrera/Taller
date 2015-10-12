@@ -167,13 +167,15 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 		cartesianPosition.first = primerElemento.first;
 		cartesianPosition.second = primerElemento.second;
 		camino->pop_front();
-	}
-	pair<int,int> isom = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-	posMouseX = isom.first+offset->first;
-	posMouseY = isom.second+offset->second;
 
-	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
-	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+		pair<int,int> isom = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
+		posMouseX = isom.first+offset->first;
+		posMouseY = isom.second+offset->second;
+
+		//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
+		juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
+	}
+
 	return;
 }
 

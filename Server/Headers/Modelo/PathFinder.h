@@ -50,7 +50,6 @@ private:
 	bool positionAvailable(int x,int y);
 	candidato getAdyacente(int oX,int oY,int x,int y);
 	void getCandidatosAdyacentes(candidato actual);
-	void getTodosLosAdyacentes(candidato actual);
 
 	int destinoX;
 	int destinoY;

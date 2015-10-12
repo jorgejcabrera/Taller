@@ -58,32 +58,25 @@ candidato PathFinder::getAdyacente(int oX,int oY,int x,int y){
 
 pair<int,int> PathFinder::getClosestAvailable(int x,int y){
 
-	this->setDestino();
-
-	candidato nuevoDestino;
-	nuevoDestino.posX = destino.posX;
-	nuevoDestino.posY = destino.posY;
-	cout<<"destino original: "<<destino.posX<<","<<destino.posY<<endl;
-	nuevoDestino.recorrido = true;
-
-
-	while(destino.posX == destinoX && destino.posY == destinoY){
-		this->getTodosLosAdyacentes(nuevoDestino);
-		for (std::list<candidato>::iterator it=this->candidatos->begin(); it != this->candidatos->end(); ++it)
-				if( this->positionAvailable((*it).posX,(*it).posY) )
-					destino = (*it);
-		if( (destino.posX == destinoX && destino.posY == destinoY)){
-			nuevoDestino.posX++;
-			cout<<"nuevo: "<<nuevoDestino.posX<<","<<nuevoDestino.posY<<endl;
-		}
+	candidato cand;
+	cand.posX = this->destinoX;
+	cand.posY = this->destinoY;
+	int i = 1;
+	cout<<"destino O: "<<destinoX<<","<<destinoY<<endl;
+	while(cand.posX == this->destinoX && cand.posY == this->destinoY){
+		cout<<"ciclo"<<i<<endl;
+		if(positionAvailable(this->destinoX - i,this->destinoY)) cand = getAdyacente(-1,-1,destinoX - i,destinoY);
+		if(positionAvailable(this->destinoX,this->destinoY - i)) cand = getAdyacente(-1,-1,destinoX,destinoY - i);
+		if(positionAvailable(this->destinoX,this->destinoY + 1)) cand = getAdyacente(-1,-1,destinoX,destinoY + 1);
+		if(positionAvailable(this->destinoX + 1,this->destinoY)) cand = getAdyacente(-1,-1,destinoX + 1,destinoY);
+		i++;
+		cout<<"ndest"<<cand.posX<<","<<cand.posY<<endl;
 	}
 
-	this->candidatos->clear();
+	cout<<"salio del while"<<endl;
 	pair<int,int> nDest;
-	nDest.first = destino.posX;
-	nDest.second = destino.posY;
-	cout<<"destino nuevo: "<<nDest.first<<","<<nDest.second<<endl;
-
+	nDest.first = cand.posX;
+	nDest.second = cand.posY;
 	return nDest;
 }
 
@@ -180,47 +173,6 @@ void PathFinder::getCandidatosAdyacentes(candidato actual){
 	if( ! candidatoExiste(cand8) && positionAvailable(x,y)) candidatos->push_front(cand8);
 }
 
-void PathFinder::getTodosLosAdyacentes(candidato actual){
-// la diferencia con getCandidatosAdyacentes es que este acepta posiciones no disponibles
-
-	int oX = actual.posX;
-	int oY = actual.posY;
-
-	int x = oX + 1;
-	int y = oY;
-
-	candidato cand1 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand1)) candidatos->push_front(cand1);
-
-	y = oY - 1;
-	candidato cand2 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand2)) candidatos->push_front(cand2);
-
-	x = oX;
-	candidato cand3 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand3)) candidatos->push_front(cand3);
-
-	x = oX - 1;
-	candidato cand4 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand4)) candidatos->push_front(cand4);
-
-	y = oY;
-	candidato cand5 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand5)) candidatos->push_front(cand5);
-
-	y = oY + 1;
-	candidato cand6 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand6)) candidatos->push_front(cand6);
-
-	x = oX;
-	candidato cand7 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand7)) candidatos->push_front(cand7);
-
-	x = oX + 1;
-	candidato cand8 = getAdyacente(oX,oY,x,y);
-	if( ! candidatoExiste(cand8)) candidatos->push_front(cand8);
-}
-
 bool PathFinder::positionAvailable(int x,int y){
 
 	if(x < 0 || y < 0) return false;
@@ -231,8 +183,10 @@ bool PathFinder::positionAvailable(int x,int y){
 
 list<pair<int,int> >* PathFinder::buscarCamino(){
 
+	cout<<"BUSCAR CAMINO"<<endl;
 	pair<int,int> unPar;
 	list<pair<int,int> >* camino = new list<pair<int,int> >();
+	camino->clear();
 	this->setInicio();
 
 	if(inicio.posX == destinoX && inicio.posY == destinoY)
