@@ -18,14 +18,17 @@ MessageUpdate::MessageUpdate(int identifier, string typeEntity, int xPosition, i
 	this->msg.set_y(yPosition);
 }
 
-
-MessageUpdate::~MessageUpdate(){
-}
-
-
 string MessageUpdate::toString(){
 	stringstream ss;
 	ss << "id:" << this->msg.id() <<";tipo:"<< this->msg.tipo()<<";x:" << this->msg.x()<<";y:"<<this->msg.y()<<";";
 	return ss.str();
 }
+
+string MessageUpdate::getSerializeAsString(){
+	return this->msg.SerializeAsString();
+}
+
+MessageUpdate::~MessageUpdate(){
+}
+
 

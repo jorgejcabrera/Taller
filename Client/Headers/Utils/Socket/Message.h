@@ -17,20 +17,11 @@
 using namespace std;
 
 class Message {
-
-private:
-	/*int length;
-	string body;
-	char* serialized_message;
-	void serializedMessage();*/
-
 public:
 	Message();
-	//Message(string msg);
 	virtual ~Message();
+	string getSerializeAsString();
 	virtual string toString();
-	char* getBodyToWrite();
-	char* getSerializeMessage();
 	int getLength();
 	void setBody(char* bodyReceived);
 };

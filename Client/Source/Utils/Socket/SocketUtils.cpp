@@ -9,10 +9,11 @@ void SocketUtils::setSocket(int socket){
 }
 
 int SocketUtils::writeMessage(Message *msg){
-    int wroteBytes = write(this->socket, msg->getSerializeMessage(), msg->getLength());
+  /*  int wroteBytes = write(this->socket, msg->getSerializeAsString(), msg->getLength());
     if( wroteBytes < 0)
     	cout <<"ERROR writing to SocketUtils" << endl;
-    return wroteBytes;
+    return wroteBytes;*/
+	return 0;
 }
 
 int SocketUtils::recvMsgSize(size_t size_length){

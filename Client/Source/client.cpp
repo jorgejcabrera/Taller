@@ -50,12 +50,16 @@ int main(int argc, char* argv[]) {
 		//delete server;
 	}*/
 
-	//Message* message = new Message("este es mi mensaje");
-	//char* messageRead = message->getSerializeMessage();
+	MessageUpdate* message = new MessageUpdate(1,"DinamicEntity",0,1);
+	string messageRead = message->getSerializeAsString();
+	//cout << messageRead << endl;
 
-	Client* jorge = new Client("127.0.0.1",7841);
+	messageUpdate msg;
+	msg.ParseFromString(messageRead);
+	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
+	/*Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
-	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));
+	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));*/
 	return 0;
 }
 
