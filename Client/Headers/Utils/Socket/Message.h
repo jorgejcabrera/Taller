@@ -19,14 +19,14 @@ using namespace std;
 class Message {
 
 private:
-	int length;
+	/*int length;
 	string body;
 	char* serialized_message;
-	void serializedMessage();
+	void serializedMessage();*/
 
 public:
 	Message();
-	Message(string msg);
+	//Message(string msg);
 	virtual ~Message();
 	virtual string toString();
 	char* getBodyToWrite();

@@ -12,16 +12,16 @@
 //No la borro porque sive para hacer pruebas
 Message::Message() {}
 
-Message::Message(string msg) {
+/*Message::Message(string msg) {
 	this->body = msg;
 	//TODO verificar al momento de leetura del lado del servidor si es necesario que lea un poco demas
 	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
 	this->serialized_message = new char[length];
 	this->serializedMessage();
-}
+}*/
 
 //TODO es posible que esto no lo tengos que usar mas
-void Message::serializedMessage(){
+/*void Message::serializedMessage(){
 	//clear memory
 	memset(serialized_message, NULL, length);
 
@@ -39,34 +39,35 @@ void Message::serializedMessage(){
 		this->serialized_message[i] = this->body.c_str()[i - sizeof(uint32_t)];
 		cout << this->serialized_message[i]<<endl;
 	}
-
-}
+}*/
 
 string Message::toString(){
 	//TODO: esto no se ejecuta nunca porque defini el metodo como virtual en la clase header
-	return this->body;
+	return NULL;
 }
 
 int Message::getLength(){
-	return this->length;
+	//return this->length;
+	return 0;
 }
 
 void Message::setBody(char* bodyReceived){
-	this->body.clear();
-	this->body.append(bodyReceived);
+/*	this->body.clear();
+	this->body.append(bodyReceived);*/
 }
 
 char* Message::getSerializeMessage(){
-	return this->serialized_message;
+	//return this->serialized_message;
+	return NULL;
 }
 
-char* Message::getBodyToWrite(){
+/*char* Message::getBodyToWrite(){
 	char* bodyToWrite = new char[this->length];
 	for(int idx = 0; idx < this->body.length(); idx++){
 		bodyToWrite[idx] = body[idx];
 	}
 	return bodyToWrite;
-}
+}*/
 
 Message::~Message(){
 }
