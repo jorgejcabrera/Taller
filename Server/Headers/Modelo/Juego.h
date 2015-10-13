@@ -13,13 +13,14 @@
 #include "../Modelo/DefaultSettings.h"
 #include "GameSettings.h"
 #include <map>
+#include <list>
 
 using namespace std ;
 
 class Juego {
 private:
 	Mapa* mapa;
-	EntidadDinamica* protagonista;
+	list<EntidadDinamica*> protagonistas;
 	string currentAge;
 	bool juegoFinalizado;
 	GameSettings* gameSettings;
@@ -34,9 +35,11 @@ public:
 	string getCurrentAge();
 	void setProtagonistaAt(int velocidad,int x,int y);
 	void setDestinoProtagonista(int x,int y, int screenPositionX, int screenPositionY);
-	void actualizarProtagonista();
+	void actualizarProtagonistas();
 	bool getStatusPartida();
-	EntidadDinamica* getProtagonista();
+	list<EntidadDinamica*> getProtagonistas();
+
+	void agregarProtagonista(int owner);
 };
 
 #endif /* SOURCE_MODELO_JUEGO_H_ */

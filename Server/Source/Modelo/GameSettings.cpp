@@ -106,7 +106,7 @@ void GameSettings::generateListMessageConfiguration(){
 	}
 }
 
-list<MessageConfiguration*> GameSettings::getListMessageConfiguration(){
+list<Message*> GameSettings::getListMessageConfiguration(){
 	return this->messageConfigList;
 }
 

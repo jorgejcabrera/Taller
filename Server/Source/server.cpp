@@ -63,18 +63,11 @@ int main(int argc, char* argv[]) {
 		gController=NULL;
 	}*/
 
-	/*Server* server = new Server(7841);
+
+	Server* server = new Server(7841);
 	if( server->initSocketServer() == ERROR)
 		cout<<"Error al inicializar socket"<<endl;
 	server->listenClients();
-*/
-	GameController *gController = new GameController();
-	gController->getTilesMessages();
-
-	/*list<MessageConfiguration*> lista = GameSettings::GetInstance()->getListMessageConfiguration();
-	for(list<MessageConfiguration*>::iterator it=lista.begin(); it!=lista.end();++it){
-		cout << "mensaje: " << (*it)->toString() <<endl;
-	}*/
 
 
 	return 0;
