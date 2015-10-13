@@ -3,7 +3,7 @@ Taller de Programacion - 2do cuatrimestre 2015
 
 El objetivo del trabajo práctico es la implementación de un juego de estrategia, similar al [***Age of Empires***](http://www.ageofempires.com/).
 
-##Librerías
+###Librerías
 Para la interfaz gráfica usamos la librería [**SDL**](https://www.libsdl.org/download-2.0.php)
 ```	
 Ubuntu/Debian/MacOs
@@ -49,14 +49,14 @@ La librería funciona de la siguiente manera:
 	DST_DIR: directorio a donde queremos enviar los archivos generados
 4- se van a autogenerar dos archivos Persona.pb.h y Persona.pb.cc
 ```
-Para más imformación [**aquí**](https://developers.google.com/protocol-buffers/docs/cpptutorial).
+Para más imformación [**aquí**](https://developers.google.com/protocol-buffers/docs/cpptutorial)
 Una vez instaladas todas las librerías las agregamos al IDE
 ```
 Eclipse
 	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / yaml / protobuf
 ```
 
-##Valgrind
+###Valgrind
 Instalación
 ```
 sudo apt-get install valgrind
@@ -67,7 +67,7 @@ http://download.eclipse.org/linuxtools/update
 ```
 enter, seleccionar linux tools (valgrind tools)  next ->finish
 
-##FAQ
+###FAQ
 Si al correr el programa, aparece el error: "error while loading shared libraries:
 libSDL2_image-2.0.so.0: cannot open shared object file: No such file or directory", en eclipse ir a:
 ```
