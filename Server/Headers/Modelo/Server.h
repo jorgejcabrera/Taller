@@ -15,6 +15,12 @@
 #include <iostream>
 #include <string.h>
 #include "../Utils/Socket/SocketUtils.h"
+#include "../Utils/Socket/Message.h"
+#include "Client.h"
+#include <map>
+#include "GameSettings.h"
+#include "EntidadPartida.h"
+#include "../../Headers/Control/GameController.h"
 
 using namespace std;
 
@@ -23,7 +29,8 @@ class Server{
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;
-		//bool accept_connections;
+		map<int,Client*> clients;
+		GameController *gController;
 
 	public:
 		Server(int port);

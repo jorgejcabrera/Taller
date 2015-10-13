@@ -10,8 +10,7 @@
 Server::Server(int port) {
 	this->port = port;
 	this->serverSocket = 0;
-	//this->accept_1onnections = true;
-
+	this->gController = new GameController();
 }
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
@@ -59,25 +58,25 @@ int Server::run(void * data){
 }*/
 
 void Server::listenClients(){
-	int client;
+	//TODO: esto deberia ser un tread corriendo, escuchando si hay nuevas conexiones
+	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
-	while((client = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){ //aceptamos la conexion retorna negativo si falla
-		SocketUtils *socketClient = new SocketUtils(client);
-		Message *mensaje = new Message("SRV Servidor Conectado");
-		socketClient->writeMessage(mensaje);
-	    cout<<"SRV Conexion con el cliente EXITOSA"<<endl;
-	    socketClient->readMessage(mensaje);
-	    cout << "SRV Mensaje recibido SERVER: "<<mensaje->toString()<< endl;
-	    mensaje->setBody("SRV mensaje del SERVER");
-	    socketClient->writeMessage(mensaje);
-	    cout << "SRV El servidor termino la conexion"<<endl;
-		socketClient->~SocketUtils();
-	    close(client);
-	    cout << "SRV Conecte nuevo cliente."<<endl;
-	  }
+
+	if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
+		Client *newClient = new Client(cliente);
+		int cantidadDeClients = this->clients.size();
+		int clienteActual = cantidadDeClients+1;
+		this->clients[clienteActual] = newClient;
+		newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
+		newClient->writeMessagesInQueue(this->gController->getTilesMessages());
+		//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
+		this->gController->getJuego()->agregarProtagonista(clienteActual);
+	}
 }
 
 Server::~Server() {
-	//this->accept_connections = false;
+	for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
+		it->second->~Client();
+	}
 	close(this->serverSocket);
 }

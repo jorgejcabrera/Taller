@@ -19,6 +19,7 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->velocidad = vel;
 	this->width = 50;
 	this->length = 50;
+	this->owner = 0;
 }
 
 EntidadDinamica::EntidadDinamica(int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
@@ -36,8 +37,16 @@ EntidadDinamica::EntidadDinamica(int vel,float x,float y, float widthPixel, floa
 	this->lengthPixel = lengthPixels;
 	if(fps > 50) fps = 50;
 	this->framesPerSecond = fps;
+	this->owner = 0;
 }
 
+void EntidadDinamica::setOwner(int ownerId){
+	this->owner = ownerId;
+}
+
+int EntidadDinamica::getOwner(){
+	return this->owner;
+}
 
 void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	//TODO: esto no deberia estar en la VISTA nada mas?

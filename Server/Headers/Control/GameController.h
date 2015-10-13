@@ -13,6 +13,7 @@
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
+#include "../Utils/Socket/Message.h"
 #include "../Utils/Socket/MessageUpdate.h"
 
 class GameController {
@@ -40,7 +41,7 @@ public:
 	int getMaxFramesPerSecond();
 	virtual ~GameController();
 	void delay();
-	list<MessageUpdate*> getTilesMessages();
+	list<Message*> getTilesMessages();
 };
 
 #endif /* GAMECONTROLLER_H_ */

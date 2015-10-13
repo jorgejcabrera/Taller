@@ -13,33 +13,39 @@ Juego::Juego() {
 	gameSettings = GameSettings::GetInstance();
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
-
 	this->currentAge = gameSettings->getAgeOfEmpires();
-	this->protagonista = new EntidadDinamica(gameSettings->getVelocidadPersonaje(),
-			gameSettings->getPosXProtagonista(),
-			gameSettings->getPosYProtagonista(),
-			gameSettings->getProtagonistaPixelDimension(),
-			gameSettings->getProtagonistaPixelDimension(),
-			gameSettings->getProtagonistaFPS());
+}
 
-	this->protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
-	this->protagonista->setPathImage(gameSettings->getProtagonistaPath());
-	this->protagonista->setDelay(gameSettings->getProtagonistaDelay());
-	//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas
-	pair<float,float> isometricas = this->getIsometricPosition(protagonista);
-	protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
+void Juego::agregarProtagonista(int owner){
+	EntidadDinamica *protagonista = new EntidadDinamica(gameSettings->getVelocidadPersonaje(),
+				gameSettings->getPosXProtagonista(),
+				gameSettings->getPosYProtagonista(),
+				gameSettings->getProtagonistaPixelDimension(),
+				gameSettings->getProtagonistaPixelDimension(),
+				gameSettings->getProtagonistaFPS());
+
+		protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
+		protagonista->setPathImage(gameSettings->getProtagonistaPath());
+		protagonista->setDelay(gameSettings->getProtagonistaDelay());
+		protagonista->setOwner(owner);
+		//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas
+		pair<float,float> isometricas = this->getIsometricPosition(protagonista);
+		protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
+		this->protagonistas.push_back(protagonista);
 }
 
 Mapa* Juego::getMap(){
 	return this->mapa;
 }
 
-EntidadDinamica* Juego::getProtagonista(){
-	return this->protagonista;
+list<EntidadDinamica*> Juego::getProtagonistas(){
+	return this->protagonistas;
 }
 
-void Juego::actualizarProtagonista(){
-	protagonista->trasladarse();
+void Juego::actualizarProtagonistas(){
+	for(list<EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
+		(*it)->trasladarse();
+	}
 }
 
 string Juego::getCurrentAge(){
@@ -79,9 +85,10 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 }
 
 Juego::~Juego() {
-	delete(this->protagonista);
+	for(list<EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
+			delete(*it);
+	}
 	delete(this->mapa);
-	this->protagonista = NULL;
 	this->mapa = NULL;
 	this->gameSettings=NULL;
 }

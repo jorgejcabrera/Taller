@@ -50,10 +50,10 @@ int main(int argc, char* argv[]) {
 		//delete server;
 	}*/
 
-	Message* message = new Message("este es mi mensaje");
-	char* messageRead = message->getSerializeMessage();
+	//Message* message = new Message("este es mi mensaje");
+	//char* messageRead = message->getSerializeMessage();
 
-	/*Client* jorge = new Client("127.0.0.1",7841);
+	Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
 	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));*/
 	return 0;

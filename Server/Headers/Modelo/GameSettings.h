@@ -13,6 +13,7 @@
 #include "EntidadPartida.h"
 #include "EntidadEstatica.h"
 #include "EntidadSemiEstatica.h"
+#include "../Utils/Socket/Message.h"
 #include "../Utils/Socket/MessageConfiguration.h"
 #include <list>
 #include <fstream>
@@ -29,7 +30,7 @@ private:
 	bool isFileExist(const string fileName);
 
 public:
-	list<MessageConfiguration*> messageConfigList;
+	list<Message*> messageConfigList;
 	//pantalla:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -98,7 +99,7 @@ public:
 	int getProtagonistaDelay();
 
 	void generateListMessageConfiguration();
-	list<MessageConfiguration*> getListMessageConfiguration();
+	list<Message*> getListMessageConfiguration();
 };
 
 } /* namespace std */
