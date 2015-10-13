@@ -12,7 +12,6 @@ Client::Client(string ip, int port) {
 	this->port = port;
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = DISCONECTED;								//desconected
-	//this->socketUtils = new SocketUtils(this->sockfd);
 }
 
 int Client::connectToServer(){

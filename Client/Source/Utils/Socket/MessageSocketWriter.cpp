@@ -12,6 +12,7 @@ MessageSocketWriter::MessageSocketWriter(int sockfd) {
 }
 
 void MessageSocketWriter::sendMessage(Message msg){
+
 	this->queue.queuing(msg);
 }
 

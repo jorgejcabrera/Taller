@@ -14,23 +14,32 @@ Message::Message() {}
 
 Message::Message(string msg) {
 	this->body = msg;
-	this->length = sizeof(char) * msg.length() + sizeof(uint64_t);
+	//TODO verificar al momento de leetura del lado del servidor si es necesario que lea un poco demas
+	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
 	this->serialized_message = new char[length];
-	this->serializedMessage(msg.c_str(),msg.length());
+	this->serializedMessage();
 }
 
-void Message::serializedMessage(const char * msg, uint32_t size){
-	//SET MESSAGE SIZE
-	uint32_t be_nro = htonl(size);
+//TODO es posible que esto no lo tengos que usar mas
+void Message::serializedMessage(){
+	//clear memory
+	memset(serialized_message, NULL, length);
+
+	//set message size
+	uint32_t be_nro = htonl(this->body.size());
 	char* ptr_nro = (char*)&be_nro;
 	for (unsigned i = 0; i < sizeof(uint32_t); i++){
 		this->serialized_message[i] = ptr_nro[i];
+		cout << this->serialized_message[i]<<endl;
 	}
 
-	//SET CONTENT
-	for (unsigned i = sizeof(uint32_t); i < size + sizeof(uint32_t); i++){
-		this->serialized_message[i] = msg[i - sizeof(uint32_t)];
+	//set content
+	const char* msg = this->body.c_str();
+	for (unsigned i = sizeof(uint32_t); i < this->body.size() + sizeof(uint32_t); i++){
+		this->serialized_message[i] = this->body.c_str()[i - sizeof(uint32_t)];
+		cout << this->serialized_message[i]<<endl;
 	}
+
 }
 
 string Message::toString(){

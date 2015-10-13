@@ -8,12 +8,13 @@
 #ifndef SOURCE_UTILS_SOCKET_MESSAGE_H_
 #define SOURCE_UTILS_SOCKET_MESSAGE_H_
 
-#include <string>
+#include <string.h>
 #include <sstream>
 #include <iostream>
 #include <arpa/inet.h>
 #include <stdint.h>
 
+#include <google/protobuf/message.h>
 
 using namespace std;
 
@@ -22,8 +23,8 @@ class Message {
 private:
 	int length;
 	string body;
-	char * serialized_message;
-	void serializedMessage(const char * msg, uint32_t messageSize);
+	char* serialized_message;
+	void serializedMessage();
 
 public:
 	Message();

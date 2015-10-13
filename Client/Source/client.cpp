@@ -16,6 +16,12 @@
 #include "../Headers/Utils/Socket/Message.h"
 #include "../Headers/Utils/Socket/MessageUpdate.h"
 
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <arpa/inet.h>
+#include <stdint.h>
+
 
 using namespace std;
 
@@ -50,6 +56,6 @@ int main(int argc, char* argv[]) {
 	/*Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
 	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));*/
-	  return 0;
+	return 0;
 }
 
