@@ -14,8 +14,6 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 
-#include <google/protobuf/message.h>
-
 using namespace std;
 
 class Message {

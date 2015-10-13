@@ -9,19 +9,20 @@
 #define HEADERS_UTILS_SOCKET_MESSAGEUPDATE_H_
 
 #include "../../../Headers/Utils/Socket/Message.h"
+#include "messageUpdate.pb.h"
 
-struct messageUpt {
+/*struct messageUpt {
 	int id;
 	string tipo;
 	int x;
 	int y;
-};
+};*/
 
 
 class MessageUpdate: public Message {
 
 private:
-	messageUpt msg;
+	messageUpdate msg;
 
 public:
 	MessageUpdate();

@@ -1,0 +1,6 @@
+message messageUpdate{
+	required int32 id = 1;
+	required string tipo = 2;
+	optional int32 x = 3;
+	optional int32 y = 4;
+}
