@@ -13,7 +13,6 @@
 #define OK 0
 #define CONECTED 0
 
-#include "../Utils/Socket/SocketUtils.h"
 #include "../Utils/Socket/MessageSocketWriter.h"
 #include "../Utils/Socket/MessageSocketReader.h"
 #include <string.h>
@@ -28,13 +27,12 @@ class Client {
 private:
 	MessageSocketWriter* writeThread;
 	MessageSocketReader* readThread;
-	SocketUtils* socketUtils;
 	int port;
 	int sockfd;
 	int status;
 	string ip;
 	string name;
-	void readReceivedMessage(Message msg);
+	void readMessage(Message msg);
 public:
 	Client(string ip, int port);
 	int connectToServer();

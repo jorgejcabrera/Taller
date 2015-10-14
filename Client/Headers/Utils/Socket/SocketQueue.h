@@ -21,12 +21,12 @@ private:
 public:
 	SocketQueue();
 	/*
-	 * si la cola esta lockeada por algun thread no podemos encolar
-	 **/
+	 *intenta encolar mensajes en la cola, sí no está lockeada
+	 */
 	void queuing(Message msg);
 	/*
-	 * TODO al momento del sacar el mensaje de la cola lo sacamos serializado
-	 * */
+	 *devuelve mensajes de la cola
+	 */
 	Message pullTail();
 	bool isEmpty();
 	int getSize();

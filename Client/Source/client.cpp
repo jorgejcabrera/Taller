@@ -14,7 +14,6 @@
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Client.h"
 #include "../Headers/Utils/Socket/Message.h"
-#include "../Headers/Utils/Socket/MessageUpdate.h"
 
 #include <string>
 #include <sstream>
@@ -50,16 +49,23 @@ int main(int argc, char* argv[]) {
 		//delete server;
 	}*/
 
-	MessageUpdate* message = new MessageUpdate(1,"DinamicEntity",0,1);
+	/*MessageUpdate* message = new MessageUpdate(1,"DinamicEntity",0,1);
 	string messageRead = message->getSerializeAsString();
-	//cout << messageRead << endl;
-
 	messageUpdate msg;
 	msg.ParseFromString(messageRead);
-	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
+	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;*/
+
 	/*Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
 	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));*/
+
+
+	Message* message = new Message(1,"DinamicEntity",0,1);
+	char* serialize = message->serializeToArray();
+
+	messageUpdate msg;
+	msg.ParseFromArray(serialize,message->getLength());
+	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
 	return 0;
 }
 

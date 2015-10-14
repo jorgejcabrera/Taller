@@ -8,20 +8,38 @@
 #include "../../../Headers/Utils/Socket/Message.h"
 
 Message::Message() {}
+	
+Message::Message(int identifier, string typeEntity, int xPosition, int yPosition){
+	this->msg.set_id(identifier);
+	this->msg.set_tipo(typeEntity);
+	this->msg.set_x(xPosition);
+	this->msg.set_y(yPosition);
+}
 
 string Message::toString(){
-	return NULL;
+	stringstream ss;
+	ss << "id:" << this->msg.id() <<";tipo:"<< this->msg.tipo()<<";x:" << this->msg.x()<<";y:"<<this->msg.y()<<";";
+	return ss.str();
 }
 
 int Message::getLength(){
-	return 0;
+	return this->msg.ByteSize();
+}
+
+char* Message::serializeToArray(){
+	int size = this->msg.ByteSize();
+	char* array = new char[size];
+	if( this->msg.SerializePartialToArray(array,size) )
+		return array;
+	else
+		return NULL;
 }
 
 void Message::setBody(char* bodyReceived){
 }
 
-string Message::getSerializeAsString(){
-	return NULL;
+string Message::serializeAsString(){
+	return this->msg.SerializeAsString();
 }
 
 Message::~Message(){

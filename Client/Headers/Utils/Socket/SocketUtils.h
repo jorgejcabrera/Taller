@@ -15,8 +15,8 @@ class SocketUtils {
 	public:
         SocketUtils(int socketId);
         void setSocket(int socket);
-        int writeMessage(Message *msg);
-        int readMessage(Message *msg);
+        int writeMessage(Message* msg);
+        int readMessage(Message* msg);
 
         //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);

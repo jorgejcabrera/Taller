@@ -14,16 +14,24 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 
+#include "messageUpdate.pb.h"
+
 using namespace std;
 
 class Message {
+private:
+	messageUpdate msg;
+
 public:
 	Message();
+	Message(int identifier, string typeEntity, int xPosition, int yPosition);
 	virtual ~Message();
-	string getSerializeAsString();
-	virtual string toString();
 	int getLength();
-	void setBody(char* bodyReceived);
+	char* serializeToArray();
+	string serializeAsString();
+	string toString();
+	//TODO borrar este metodo
+	void setBody(char* body);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

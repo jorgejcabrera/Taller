@@ -55,7 +55,7 @@ void Client::sendMessage(Message msg){
 		this->writeThread->sendMessage(msg);
 }
 
-void Client::readReceivedMessage(Message msg){
+void Client::readMessage(Message msg){
 
 }
 

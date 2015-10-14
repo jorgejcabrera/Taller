@@ -16,16 +16,16 @@ void SocketQueue::queuing(Message msg){
 	 *If the mutex is already locked by another thread, then SDL_LockMutex
 	 *will not return until the thread that locked it unlocks it
 	 **/
-	SDL_LockMutex(lock);
+	//SDL_LockMutex(lock);
 	this->queue.push(msg);
-	SDL_UnlockMutex(lock);
+	//SDL_UnlockMutex(lock);
 }
 
 Message SocketQueue::pullTail(){
-	SDL_LockMutex(lock);
+	//SDL_LockMutex(lock);
 	Message message = this->queue.front();
 	this->queue.pop();
-	SDL_UnlockMutex(lock);
+	//SDL_UnlockMutex(lock);
 
 	/*aca deberia serializar el mensaje y devolverlo serializado*/
 	return message;

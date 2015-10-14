@@ -22,7 +22,7 @@ private:
 public:
 	MessageSocketWriter(int sockfd);
 	/*
-	*Sacamos los mensajes de la cola de novedades y los mandamos por el socket
+	*Saca los mensajes de la cola, los serializa, y los envia por el socket
 	*/
 	int run(void* data);
 	/*
