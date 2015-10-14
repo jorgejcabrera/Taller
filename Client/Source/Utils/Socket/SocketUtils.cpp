@@ -8,19 +8,35 @@ void SocketUtils::setSocket(int socket){
     this->socket = socket;
 }
 
-int SocketUtils::writeMessage(Message* msg){
-	char* buffer = msg->serializeToArray();
-	if ( buffer != NULL ){
-		int wroteBytes = write(this->socket, buffer, msg->getLength());
-		cout << "Imprimio el numero" << wroteBytes;
-		if( wroteBytes < 0)
-			cout <<"ERROR writing to SocketUtils" << endl;
-		return wroteBytes;
-	}else{
-		cout << "Error al serializar menajes"<< endl;
-		return -1;
-	}
+bool SocketUtils::writeMessage(char* message,int size){
+	int wroteBytes = write(this->socket, message, size);
+	if( wroteBytes < 0)
+		cout <<"ERROR writing to SocketUtils" << endl;
+	return wroteBytes<0;
 }
+
+Message* SocketUtils::readMessage(char* buffer,int size){
+	/*int size = msg->getLength();
+	char * buffer = new char[size+1];
+	//Hasta que no leo el total de bytes no paro.
+	size_t bytesReceived = 0;
+	while (bytesReceived < size){
+		int partialReadBytes = read(this->socket, buffer + bytesReceived, size - bytesReceived);
+		if (partialReadBytes <= 0) break;
+		bytesReceived += partialReadBytes;
+	}
+	// modifico el mensaje con recibido en el buffer
+	//cout<<"SocketUtils Respuesta recibida: "<<buffer<<endl;
+	//msg->setCon(buffer);
+	delete[] buffer;
+	return bytesReceived;*/
+	msg_game msg;
+	msg.ParseFromArray(buffer,size);
+	Message* message = new Message();
+	message->setContent(msg);
+	return message;
+}
+
 
 int SocketUtils::recvMsgSize(size_t size_length){
 	string size;
@@ -49,24 +65,6 @@ int SocketUtils::recvMsg(string & msg, size_t length){
     msg.append(c_msg, length);
     delete[] c_msg;
     return r;
-}
-
-int SocketUtils::readMessage(Message* msg)
-{
-	int size = msg->getLength();
-	char * buffer = new char[size+1]();
-	//Hasta que no leo el total de bytes no paro.
-	size_t bytesReceived = 0;
-	while (bytesReceived < size){
-		int partialReadBytes = read(this->socket, buffer + bytesReceived, size - bytesReceived);
-		if (partialReadBytes <= 0) break;
-		bytesReceived += partialReadBytes;
-	}
-	// modifico el mensaje con recibido en el buffer
-	//cout<<"SocketUtils Respuesta recibida: "<<buffer<<endl;
-	msg->setBody(buffer);
-	delete[] buffer;
-	return bytesReceived;
 }
 
 int SocketUtils::getSocket(){

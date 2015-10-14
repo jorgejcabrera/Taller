@@ -26,12 +26,12 @@ public:
 	Message();
 	Message(int identifier, string typeEntity, int xPosition, int yPosition);
 	virtual ~Message();
-	int getLength();
+	int getSize();
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
 	//TODO borrar este metodo
-	void setBody(char* body);
+	void setContent(msg_game body);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

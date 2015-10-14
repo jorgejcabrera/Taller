@@ -60,11 +60,17 @@ int main(int argc, char* argv[]) {
 	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));*/
 
 
-	Message* message = new Message(1,"DinamicEntity",0,1);
-	char* serialize = message->serializeToArray();
+	Message* message1 = new Message(1,"DinamicEntity",0,1);
+	cout << "El tamaño del mensaje1 es:" << message1->getSize()<<endl;
+	Message* message2 = new Message(1,"Primer mensage de longitud va",0,1);
+	cout << "El tamaño del mensaje2 es:" << message2->getSize()<<endl;
 
+	//serializo
+	char* serialize = message1->serializeToArray();
+
+	//parseo
 	msg_game msg;
-	msg.ParseFromArray(serialize,message->getLength());
+	msg.ParseFromArray(serialize,message1->getSize());
 	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
 	return 0;
 }
