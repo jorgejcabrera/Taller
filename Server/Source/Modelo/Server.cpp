@@ -11,6 +11,8 @@ Server::Server(int port) {
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = new GameController();
+
+
 }
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
@@ -37,6 +39,9 @@ int Server::initSocketServer(){
 		cout << "Error en el listen"<<endl;
 		return ERROR;
 	}
+
+	this->readThread = new MessageSocketReader(this->serverSocket);
+	this->readThread->start((MessageSocketReader*) this->readThread);
 	return OK;
 }
 /*

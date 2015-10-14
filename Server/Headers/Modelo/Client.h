@@ -8,14 +8,14 @@
 #ifndef SOURCE_MODELO_CLIENT_H_
 #define SOURCE_MODELO_CLIENT_H_
 
-#include "../Utils/Socket/SocketQueue.h"
+#include "../Utils/Socket/MessageSocketWriter.h"
 #include "../Utils/Socket/Message.h"
 
 #include <list>
 
 class Client {
 	int clientId;
-	SocketQueue queue;
+	MessageSocketWriter* writeThread;
 
 public:
 	Client(int identifier);
