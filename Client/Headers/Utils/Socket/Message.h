@@ -14,13 +14,13 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 
-#include "messageUpdate.pb.h"
+#include "messageGame.pb.h"
 
 using namespace std;
 
 class Message {
 private:
-	messageUpdate msg;
+	msg_game msg;
 
 public:
 	Message();

@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 	Message* message = new Message(1,"DinamicEntity",0,1);
 	char* serialize = message->serializeToArray();
 
-	messageUpdate msg;
+	msg_game msg;
 	msg.ParseFromArray(serialize,message->getLength());
 	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
 	return 0;
