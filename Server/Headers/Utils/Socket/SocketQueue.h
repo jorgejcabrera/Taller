@@ -16,15 +16,19 @@
 using namespace std;
 class SocketQueue {
 private:
-	std::queue<std::string> queue;
+	std::queue<Message> queue;
 	SDL_mutex* lock;
 public:
 	SocketQueue();
-
-	/*si la cola esta lockeada por algun thread no podemos encolar*/
-	void queuing(Message* msg);
-	/*TODO al momento del sacar el mensaje de la cola lo sacamos serializado*/
-	string pullTail();
+	/*
+	 * si la cola esta lockeada por algun thread no podemos encolar
+	 **/
+	void queuing(Message msg);
+	/*
+	 * TODO al momento del sacar el mensaje de la cola lo sacamos serializado
+	 * */
+	Message pullTail();
+	bool isEmpty();
 	int getSize();
 	virtual ~SocketQueue();
 };

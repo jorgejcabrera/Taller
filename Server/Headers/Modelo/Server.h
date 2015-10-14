@@ -21,6 +21,7 @@
 #include "GameSettings.h"
 #include "EntidadPartida.h"
 #include "../../Headers/Control/GameController.h"
+#include "../../Headers/Utils/Socket/MessageSocketReader.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ class Server{
 		struct sockaddr_in serverAddress;
 		map<int,Client*> clients;
 		GameController *gController;
+		MessageSocketReader* readThread;
 
 	public:
 		Server(int port);
