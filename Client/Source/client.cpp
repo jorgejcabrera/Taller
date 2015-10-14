@@ -66,12 +66,21 @@ int main(int argc, char* argv[]) {
 	cout << "El tamaño del mensaje2 es:" << message2->getSize()<<endl;
 
 	//serializo
-	char* serialize = message1->serializeToArray();
+	char* buffer = message1->serializeToArray();
+	//*(&buffer[message1->getSize()]) = message2->serializeToArray();
 
 	//parseo
 	msg_game msg;
-	msg.ParseFromArray(serialize,message1->getSize());
+	msg.ParseFromArray(buffer,message1->getSize());
 	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
+	//muevo el puntero del buffer hasta donde empieza el proximo mensaje
+	*buffer = buffer[message1->getSize()];
+	buffer = message2->serializeToArray();
+	msg.ParseFromArray(buffer,message2->getSize());
+	Message mensage;
+	mensage.setContent(msg);
+	string elMensaje = mensage.toString();
+	cout << elMensaje << endl;
 	return 0;
 }
 
