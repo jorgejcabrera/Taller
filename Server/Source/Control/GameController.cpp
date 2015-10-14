@@ -27,7 +27,7 @@ list<Message*> GameController::getTilesMessages(){
 	list<Message*> listaDeTiles;
 	map<pair<int,int>,Tile*>* tilesList = this->juego->getMap()->getTiles();
 	for(map<pair<int,int>,Tile*>::iterator it=tilesList->begin(); it!=tilesList->end(); ++it){
-		MessageUpdate *tileMessage = new MessageUpdate("tile",it->second->getSuperficie(),it->first.first,it->first.second);
+		Message *tileMessage = new Message("tile",it->second->getSuperficie(),it->first.first,it->first.second);
 		listaDeTiles.push_back(tileMessage);
 	}
 	return listaDeTiles;

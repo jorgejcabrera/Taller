@@ -14,7 +14,6 @@
 #include "EntidadEstatica.h"
 #include "EntidadSemiEstatica.h"
 #include "../Utils/Socket/Message.h"
-#include "../Utils/Socket/MessageConfiguration.h"
 #include <list>
 #include <fstream>
 #include <map>

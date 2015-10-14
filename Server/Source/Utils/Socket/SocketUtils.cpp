@@ -9,11 +9,17 @@ void SocketUtils::setSocket(int socket){
 
 }
 
-int SocketUtils::writeMessage(Message *msg){
-    int wroteBytes = write(this->socket, msg->getBodyToWrite(), msg->getBodySize());
-    if( wroteBytes < 0)
-    	cout <<"ERROR writing to SocketUtils" << endl;
-    return wroteBytes;
+int SocketUtils::writeMessage(Message* msg){
+	char* buffer = msg->serializeToArray();
+	if ( buffer != NULL ){
+		int wroteBytes = write(this->socket, buffer, msg->getLength());
+		if( wroteBytes < 0)
+			cout <<"ERROR writing to SocketUtils" << endl;
+		return wroteBytes;
+	}else{
+		cout << "Error al serializar menajes"<< endl;
+		return -1;
+	}
 }
 
 int SocketUtils::recvMsgSize(size_t size_length){
@@ -45,9 +51,9 @@ int SocketUtils::recvMsg(string & msg, size_t length){
     return r;
 }
 
-int SocketUtils::readMessage(Message *msg)
+int SocketUtils::readMessage(Message* msg)
 {
-	int size = msg->getBodySize();
+	int size = msg->getLength();
 	char * buffer = new char[size+1]();
 	//Hasta que no leo el total de bytes no paro.
 	size_t bytesReceived = 0;

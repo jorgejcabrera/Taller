@@ -14,7 +14,6 @@
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
-#include "../Utils/Socket/MessageUpdate.h"
 
 class GameController {
 

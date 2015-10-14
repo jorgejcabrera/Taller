@@ -7,35 +7,66 @@
 
 #include "../../../Headers/Utils/Socket/Message.h"
 
-//TODO: esta clase solo deberia ser Abstracta? ahora tenemos dos tipos de mesanjes.
-//No la borro porque sive para hacer pruebas
 Message::Message() {}
 
-Message::Message(string msg) {
-	this->body = msg;
-	this->length = sizeof(char) * msg.length() + sizeof(uint32_t);
+//Mensaje usado para novedad de movimiento
+Message::Message(int identifier, string nombreEntity, int xPosition, int yPosition){
+	this->msg.set_id(identifier);
+	this->msg.set_tipo("update");
+	this->msg.set_nombre(nombreEntity);
+	this->msg.set_x(xPosition);
+	this->msg.set_y(yPosition);
+}
+
+//Mensaje usado para configuracion
+Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension){
+	this->msg.set_id(0);
+	this->msg.set_tipo("config");
+	this->msg.set_nombre(nameEntity);
+	this->msg.set_imagen(thePath);
+	this->msg.set_ancho_base(anchoBase);
+	this->msg.set_alto_base(altoBase);
+	this->msg.set_fps(fps);
+	this->msg.set_delay(delay);
+	this->msg.set_total_frames_line(totalFramesLine);
+	this->msg.set_pixels_dimension(pixelDimension);
+}
+
+//Mensaje utilizado para mandar tiles o dimension de la ventana
+Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition){
+	this->msg.set_id(0);
+	this->msg.set_tipo(tipo);
+	this->msg.set_nombre(nombreEntity);
+	this->msg.set_x(xPosition);
+	this->msg.set_y(yPosition);
 }
 
 string Message::toString(){
-	//TODO: esto no se ejecuta nunca porque defini el metodo como virtual en la clase header
-	return this->body;
+	stringstream ss;
+	ss << "id:" << this->msg.id() <<";tipo:"<< this->msg.tipo()<<";x:" << this->msg.x()<<";y:"<<this->msg.y()<<";";
+	return ss.str();
 }
 
-int Message::getBodySize(){
-	return this->length;
+int Message::getLength(){
+	return this->msg.ByteSize();
+}
+
+char* Message::serializeToArray(){
+	int size = this->msg.ByteSize();
+	char* array = new char[size];
+	if( this->msg.SerializePartialToArray(array,size) )
+		return array;
+	else
+		return NULL;
 }
 
 void Message::setBody(char* bodyReceived){
-	this->body.clear();
-	this->body.append(bodyReceived);
 }
+
+string Message::serializeAsString(){
+	return this->msg.SerializeAsString();
+}
+
 Message::~Message(){
 }
 
-char * Message::getBodyToWrite(){
-	char* bodyToWrite = new char[this->length];
-	for(int idx = 0; idx < this->body.length(); idx++){
-		bodyToWrite[idx] = body[idx];
-	}
-	return bodyToWrite;
-}

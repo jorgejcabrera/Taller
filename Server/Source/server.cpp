@@ -15,9 +15,6 @@
 #include "../Headers/Modelo/PathFinder.h"
 
 #include "../Headers/Utils/Socket/Message.h"
-#include "../Headers/Utils/Socket/MessageUpdate.h"
-#include "../Headers/Utils/Socket/MessageConfiguration.h"
-
 #include <list>
 /*#include <iostream>
 #include <string.h>

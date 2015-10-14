@@ -8,27 +8,32 @@
 #ifndef SOURCE_UTILS_SOCKET_MESSAGE_H_
 #define SOURCE_UTILS_SOCKET_MESSAGE_H_
 
-#include <string>
+#include <string.h>
 #include <sstream>
 #include <iostream>
 #include <arpa/inet.h>
+#include <stdint.h>
+
+#include "messageGame.pb.h"
 
 using namespace std;
 
 class Message {
-
 private:
-	int length;
-	string body;
+	msg_game msg;
 
 public:
 	Message();
-	Message(string msg);
+	Message(int identifier, string nameEntity, int xPosition, int yPosition);
 	virtual ~Message();
-	virtual string toString();
-	char * getBodyToWrite();
-	int getBodySize();
-	void setBody(char* bodyReceived);
+	int getLength();
+	char* serializeToArray();
+	string serializeAsString();
+	string toString();
+	//TODO borrar este metodo
+	void setBody(char* body);
+	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
+	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */
