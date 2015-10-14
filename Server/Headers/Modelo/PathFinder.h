@@ -36,7 +36,6 @@ class PathFinder {
 private:
 	int dManhattan(int x,int y);
 	void setInicio();
-	void setDestino();
 	GameSettings* gameSettings;
 
 	candidato inicio;

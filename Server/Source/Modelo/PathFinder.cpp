@@ -62,18 +62,14 @@ pair<int,int> PathFinder::getClosestAvailable(int x,int y){
 	cand.posX = this->destinoX;
 	cand.posY = this->destinoY;
 	int i = 1;
-	cout<<"destino O: "<<destinoX<<","<<destinoY<<endl;
 	while(cand.posX == this->destinoX && cand.posY == this->destinoY){
-		cout<<"ciclo"<<i<<endl;
 		if(positionAvailable(this->destinoX - i,this->destinoY)) cand = getAdyacente(-1,-1,destinoX - i,destinoY);
 		if(positionAvailable(this->destinoX,this->destinoY - i)) cand = getAdyacente(-1,-1,destinoX,destinoY - i);
 		if(positionAvailable(this->destinoX,this->destinoY + 1)) cand = getAdyacente(-1,-1,destinoX,destinoY + 1);
 		if(positionAvailable(this->destinoX + 1,this->destinoY)) cand = getAdyacente(-1,-1,destinoX + 1,destinoY);
 		i++;
-		cout<<"ndest"<<cand.posX<<","<<cand.posY<<endl;
 	}
 
-	cout<<"salio del while"<<endl;
 	pair<int,int> nDest;
 	nDest.first = cand.posX;
 	nDest.second = cand.posY;
@@ -88,17 +84,6 @@ void PathFinder::setInicio(){
 	this->inicio.origenX = -1;
 	this->inicio.origenY = -1;
 	this->inicio.recorrido = true;
-
-}
-
-void PathFinder::setDestino(){
-
-	this->destino.posX = this->destinoX;
-	this->destino.posY = this->destinoY;
-	this->destino.dist = 0;
-	this->destino.origenX = -1;
-	this->destino.origenY = -1;
-	this->destino.recorrido = true;
 
 }
 
@@ -183,7 +168,6 @@ bool PathFinder::positionAvailable(int x,int y){
 
 list<pair<int,int> >* PathFinder::buscarCamino(){
 
-	cout<<"BUSCAR CAMINO"<<endl;
 	pair<int,int> unPar;
 	list<pair<int,int> >* camino = new list<pair<int,int> >();
 	camino->clear();
