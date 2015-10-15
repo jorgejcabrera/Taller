@@ -16,6 +16,7 @@
 #include <string.h>
 #include "../Utils/Socket/SocketUtils.h"
 #include "../Utils/Socket/Message.h"
+#include "../Utils/Thread.h"
 #include "Client.h"
 #include <map>
 #include "GameSettings.h"
@@ -25,7 +26,7 @@
 
 using namespace std;
 
-class Server{
+class Server : public Thread{
 	private:
 		int serverSocket;
 		int port;
@@ -35,10 +36,10 @@ class Server{
 		MessageSocketReader* readThread;
 
 	public:
-		Server(int port);
+		Server(int port, GameController *myController);
 		int initSocketServer();
 		//int run(void* data);
-		void listenClients();
+		int run(void * data);
 		~Server();
 };
 
