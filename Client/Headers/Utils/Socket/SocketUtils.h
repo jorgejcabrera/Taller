@@ -20,10 +20,9 @@ public:
         */
         bool writeMessage(char* message,int size);
         /*
-        *lee del buffer la cantidad de bytes pasada como parametros y devuelve el
-        *mensaje, o null en caso de error
+        *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
         */
-        Message* readMessage(char* buffer,int size);
+        Message* readMessage(char* buffer);
 
         //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);
