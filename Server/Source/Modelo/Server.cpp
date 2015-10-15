@@ -7,10 +7,10 @@
 
 #include "../../Headers/Modelo/Server.h"
 
-Server::Server(int port) {
+Server::Server(int port, GameController *myController) {
 	this->port = port;
 	this->serverSocket = 0;
-	this->gController = new GameController();
+	this->gController = myController;
 
 
 }
@@ -62,11 +62,12 @@ int Server::run(void * data){
 	return 0;
 }*/
 
-void Server::listenClients(){
+int Server::run(void * data){
+	cout << "RUN" <<endl;
 	//TODO: esto deberia ser un tread corriendo, escuchando si hay nuevas conexiones
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
-
+	cout << "RUN 2" <<endl;
 	if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
 		Client *newClient = new Client(cliente);
 		int cantidadDeClients = this->clients.size();
@@ -74,9 +75,11 @@ void Server::listenClients(){
 		this->clients[clienteActual] = newClient;
 		newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
 		newClient->writeMessagesInQueue(this->gController->getTilesMessages());
+		//TODO: esto hay que cambiarlo porque tiene que tener una forma de identificarlo y si se vuelve a conectar un cliente levantar la data
 		//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
 		this->gController->getJuego()->agregarProtagonista(clienteActual);
 	}
+	cout << "FIN RUN" <<endl;
 }
 
 Server::~Server() {
