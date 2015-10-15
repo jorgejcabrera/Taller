@@ -204,6 +204,6 @@ list<pair<int,int> >* PathFinder::buscarCamino(){
 }
 
 PathFinder::~PathFinder() {
-	// TODO Auto-generated destructor stub
+	delete candidatos;
 }
 

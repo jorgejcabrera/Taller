@@ -46,7 +46,7 @@ tipos:
   alto_base: 3
 
 - nombre: Banana
-  imagen: ../../Taller/Images/Vegetacion/Banana.jpg
+  imagen: ../../Taller/Images/Vegetacion/Banana.png
   ancho_base: 1
   alto_base: 1
   fps: 20
@@ -116,7 +116,6 @@ escenario:
   - {x: 6, y: 14, tipo: House1}
   - {x: 0, y: 3, tipo: molino}
   - {x: 13, y: 3, tipo: Factory}
-  - {x: 0, y: 0, tipo: Banana}
 
   protagonista: 
    tipo: soldado 
