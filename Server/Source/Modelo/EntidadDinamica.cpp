@@ -10,7 +10,7 @@
 EntidadDinamica::EntidadDinamica(){
 }
 
-EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
+/*EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->caminando = false;
 	//son las coordenadas cartesianas de donde se va a posicionar el chabon
 	this->position.first = x;
@@ -19,9 +19,9 @@ EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
 	this->width = 50;
 	this->length = 50;
 	this->owner = 0;
-}
+}*/
 
-EntidadDinamica::EntidadDinamica(int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
+EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
 	this->caminando = false;
 	this->position.first = x;
 	this->position.second = y;
@@ -37,6 +37,7 @@ EntidadDinamica::EntidadDinamica(int vel,float x,float y, float widthPixel, floa
 	if(fps > 50) fps = 50;
 	this->framesPerSecond = fps;
 	this->owner = 0;
+	this->name = nameEntity;
 }
 
 void EntidadDinamica::setOwner(int ownerId){

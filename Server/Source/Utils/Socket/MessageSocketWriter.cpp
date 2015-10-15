@@ -9,6 +9,7 @@
 
 MessageSocketWriter::MessageSocketWriter(int sockfd) {
 	this->socket = new SocketUtils(sockfd);
+	this->isAlive = true;
 }
 
 void MessageSocketWriter::writeMessage(Message msg){
@@ -16,13 +17,14 @@ void MessageSocketWriter::writeMessage(Message msg){
 }
 
 int MessageSocketWriter::run(void* data){
-	while(!this->queue.isEmpty()){
-		Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
-		//TODO: agregar el escribir
-		/*if( this->socket->writeMessage(&msg) < 0){
-			cout << "ERROR: No se puedieron enviar mensajes al servidor"<< endl;
-			return ERROR;
-		}*/
+	while(this->isAlive){
+		while(!this->queue.isEmpty()){
+			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
+			if( this->socket->writeMessage(&msg) < 0){
+				cout << "ERROR: No se puedieron enviar mensajes al servidor"<< endl;
+				return ERROR;
+			 }
+		}
 	}
 	return OK;
 }
@@ -31,4 +33,6 @@ MessageSocketWriter::~MessageSocketWriter() {
 	// TODO Auto-generated destructor stub
 }
 
-
+void MessageSocketWriter::stopWrite(){
+	this->isAlive = false;
+}

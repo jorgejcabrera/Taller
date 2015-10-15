@@ -60,8 +60,8 @@ class EntidadDinamica: public EntidadPartida {
 		void setFramesInLineFile(int qty);
 		int getFramesInLineFile();
 		EntidadDinamica();
-		EntidadDinamica(int vel,int posX,int posY);
-		EntidadDinamica(int vel,float posX,float posY, float width, float length, int fps);
+		//EntidadDinamica(int vel,int posX,int posY);
+		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length, int fps);
 		void setInitialScreenPosition(float x,float y);
 		int getWidthPixel();
 		int getLengthPixel();

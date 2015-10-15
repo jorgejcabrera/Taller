@@ -25,7 +25,7 @@ private:
 	int delay;
 public:
 	EntidadSemiEstatica();
-	EntidadSemiEstatica(int width, int length,float widthPixel,float lengthPixels, int fps,const string &pathImage);
+	EntidadSemiEstatica(string nameEntity, int width, int length, float widthPixel, float lengthPixels,int fps);
 
 	int getWidthPixel();
 	int getLengthPixel();

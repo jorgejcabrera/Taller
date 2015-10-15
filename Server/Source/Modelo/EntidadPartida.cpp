@@ -34,12 +34,12 @@ int EntidadPartida::getLength(){
 	return this->length;
 }
 
-string EntidadPartida::getPathImage(){
-	return pathImage;
+string EntidadPartida::getName(){
+	return this->name;
 }
 
-void EntidadPartida::setPathImage(string path){
-	this->pathImage = path;
+void EntidadPartida::setName(string nameImage){
+	this->name = nameImage;
 }
 
 void EntidadPartida::destruir(){

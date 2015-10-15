@@ -8,6 +8,7 @@
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
 MessageSocketReader::MessageSocketReader(int sockfd) {
+	this->isAlive = true;
 	this->socket = new SocketUtils(sockfd);
 }
 
@@ -16,13 +17,16 @@ void MessageSocketReader::writeMessage(Message msg){
 }
 
 int MessageSocketReader::run(void *data){
-	Message *mensaje = new Message();
-	//TODO: agregar el readMessage
-	//this->socket->readMessage(mensaje);
-	this->writeMessage(*mensaje);
+	while(this->isAlive){
+		Message *mensaje = this->socket->readMessage();
+		this->writeMessage(*mensaje);
+	}
 	return OK;
 }
 
 MessageSocketReader::~MessageSocketReader() {
-	// TODO Auto-generated destructor stub
+}
+
+void MessageSocketReader::stopWrite(){
+	this->isAlive = false;
 }

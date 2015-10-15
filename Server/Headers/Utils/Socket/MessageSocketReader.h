@@ -20,9 +20,12 @@ class MessageSocketReader: public Thread {
 private:
 	SocketQueue queue;
 	SocketUtils* socket;
+	bool isAlive;
+
 public:
 	MessageSocketReader(int sockfd);
 	int run(void* data);
+	void stopWrite();
 	virtual ~MessageSocketReader();
 	void writeMessage(Message msg);
 };

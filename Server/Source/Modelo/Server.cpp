@@ -11,9 +11,8 @@ Server::Server(int port, GameController *myController) {
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
-
-
 }
+
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
 	if ( this->serverSocket < 0) {
@@ -64,7 +63,7 @@ int Server::run(void * data){
 
 int Server::run(void * data){
 	cout << "RUN" <<endl;
-	//TODO: esto deberia ser un tread corriendo, escuchando si hay nuevas conexiones
+	//TODO: esto deberia ser while true?
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
 	cout << "RUN 2" <<endl;
@@ -80,6 +79,11 @@ int Server::run(void * data){
 		this->gController->getJuego()->agregarProtagonista(clienteActual);
 	}
 	cout << "FIN RUN" <<endl;
+	return 0;
+}
+
+void Server::processReceivedMessages(){
+
 }
 
 Server::~Server() {
