@@ -18,7 +18,7 @@ public:
         /*
         *recibe el mensaje serializado como parametro y lo manda por el socket
         */
-        bool writeMessage(char* message,int size);
+        bool writeMessage(Message* message);
         /*
         *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
         */
