@@ -18,7 +18,7 @@ void MessageSocketWriter::sendMessage(Message msg){
 int MessageSocketWriter::run(void* data){
 	while(!this->queue.isEmpty()){
 		Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
-		if( this->socket->writeMessage(msg.serializeToArray(),msg.getSize()) < 0){
+		if( this->socket->writeMessage(&msg) < 0){
 			cout << "ERROR: No se puedieron enviar mensajes al servidor"<< endl;
 			return ERROR;
 		}

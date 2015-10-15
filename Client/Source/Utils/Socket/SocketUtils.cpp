@@ -8,16 +8,21 @@ void SocketUtils::setSocket(int socket){
     this->socket = socket;
 }
 
-bool SocketUtils::writeMessage(char* message,int size){
-	//escribimos en el scoket la cantidad de bytes del mensaje
-	int wroteBytes = write(this->socket,(int*)size, 4);
+bool SocketUtils::writeMessage(Message* message){
+
+
+	//escribimos en el socket el tamaño en bytes del mensaje
+	int* size = new int;
+	*size = message->getSize();
+	int wroteBytes = write(this->socket,size, 4);
 	if ( wroteBytes < 0){
 		cout <<"ERROR writing to SocketUtils" << endl;
 		return false;
 	}
 
+	char* serializedMessage = message->serializeToArray();
 	//escribimos el mensaje
-	wroteBytes = write(this->socket, message, size);
+	wroteBytes = write(this->socket, serializedMessage, *size);
 	if( wroteBytes < 0) cout <<"ERROR writing to SocketUtils" << endl;
 	return wroteBytes < 0;
 }
@@ -25,8 +30,12 @@ bool SocketUtils::writeMessage(char* message,int size){
 Message* SocketUtils::readMessage(){
 
 	//obtenemos la cantidad de bytes a leer
-	int* size;
-	int readBytes = read(this->socket, size,4);
+	int* size = new int;
+	int readBytes = read(this->socket,size,4);
+	if (readBytes < 0 ){
+		cout << "Error reading socket"<<endl;
+		return NULL;
+	}
 	char* buffer = new char[*size]();
 
 	//Hasta que no leo el total de bytes no paro.
