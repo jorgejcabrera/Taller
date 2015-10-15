@@ -10,6 +10,11 @@
 using namespace std;
 
 EntidadPartida::EntidadPartida() {
+	this->id=SequenceUtils::GetInstance()->getSequence();
+}
+
+int EntidadPartida::getId(){
+	return this->id;
 }
 
 void EntidadPartida::setPosition(int x,int y){

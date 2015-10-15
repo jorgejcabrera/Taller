@@ -17,7 +17,8 @@ void MessageSocketReader::writeMessage(Message msg){
 
 int MessageSocketReader::run(void *data){
 	Message *mensaje = new Message();
-	this->socket->readMessage(mensaje);
+	//TODO: agregar el readMessage
+	//this->socket->readMessage(mensaje);
 	this->writeMessage(*mensaje);
 	return OK;
 }

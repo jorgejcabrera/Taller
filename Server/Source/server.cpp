@@ -12,19 +12,6 @@
 /* Includes */
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Server.h"
-#include "../Headers/Modelo/PathFinder.h"
-
-#include "../Headers/Utils/Socket/Message.h"
-#include <list>
-/*#include <iostream>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>*/
 
 
 using namespace std;
@@ -66,6 +53,18 @@ int main(int argc, char* argv[]) {
 		cout<<"Error al inicializar socket"<<endl;
 	server->start((void *) &server);
 	cout << " YA START " <<endl;
+
+	bool reiniciar = true;
+	/*while(true){
+		//TODO: obtener las novedades de la cola del server
+
+		//TODO: actualizar el modelo? esto se podria hacer dentro del server que tiene una referencia al gController
+		gController->actualizarJuego();
+		//TODO: notificar a los clientes
+
+		gController->delay();
+		//reiniciar = gController->reiniciarJuego();
+	}*/
 
 	return 0;
 }

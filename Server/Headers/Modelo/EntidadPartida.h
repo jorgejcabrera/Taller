@@ -11,6 +11,7 @@
 #include <string>
 #include <iostream>
 #include <typeinfo>
+#include "../Utils/SequenceUtils.h"
 
 namespace std {
 
@@ -22,6 +23,7 @@ protected:
 	int length;
 	string sizeString;
 	string pathImage;
+	int id;
 
 public:
 	EntidadPartida();
@@ -34,6 +36,7 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	pair<int,int>* getPosition();
+	int getId();
 
 	/*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 2x2,3x3,4x4,
 	 *ya que el render depende de este factor*/

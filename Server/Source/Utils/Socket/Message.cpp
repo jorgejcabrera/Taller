@@ -40,14 +40,13 @@ Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition)
 	this->msg.set_x(xPosition);
 	this->msg.set_y(yPosition);
 }
-
 string Message::toString(){
 	stringstream ss;
 	ss << "id:" << this->msg.id() <<";tipo:"<< this->msg.tipo()<<";x:" << this->msg.x()<<";y:"<<this->msg.y()<<";";
 	return ss.str();
 }
 
-int Message::getLength(){
+int Message::getSize(){
 	return this->msg.ByteSize();
 }
 
@@ -60,7 +59,8 @@ char* Message::serializeToArray(){
 		return NULL;
 }
 
-void Message::setBody(char* bodyReceived){
+void Message::setContent(msg_game message){
+	this->msg = message;
 }
 
 string Message::serializeAsString(){
@@ -69,4 +69,3 @@ string Message::serializeAsString(){
 
 Message::~Message(){
 }
-

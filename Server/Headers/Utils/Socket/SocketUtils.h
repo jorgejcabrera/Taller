@@ -10,13 +10,19 @@
 using namespace std;
 
 class SocketUtils {
-	private:
-		int socket;
-	public:
+private:
+	int socket;
+public:
         SocketUtils(int socketId);
         void setSocket(int socket);
-        int writeMessage(Message *msg);
-        int readMessage(Message *msg);
+        /*
+        *recibe el mensaje serializado como parametro y lo manda por el socket
+        */
+        bool writeMessage(char* message,int size);
+        /*
+        *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
+        */
+        Message* readMessage(char* buffer);
 
         //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);

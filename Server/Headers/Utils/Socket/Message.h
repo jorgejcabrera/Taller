@@ -25,15 +25,16 @@ private:
 public:
 	Message();
 	Message(int identifier, string nameEntity, int xPosition, int yPosition);
+	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
+	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
+
 	virtual ~Message();
-	int getLength();
+	int getSize();
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
 	//TODO borrar este metodo
-	void setBody(char* body);
-	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
-	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
+	void setContent(msg_game body);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */
