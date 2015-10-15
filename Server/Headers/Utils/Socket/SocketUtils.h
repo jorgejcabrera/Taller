@@ -18,16 +18,11 @@ public:
         /*
         *recibe el mensaje serializado como parametro y lo manda por el socket
         */
-        bool writeMessage(char* message,int size);
+        bool writeMessage(Message* message);
         /*
         *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
         */
         Message* readMessage();
-
-        //TODO: ver que hacer con estos metodos.
-        int recvMsg(string & msg, size_t length);
-        int recvMsgSize(size_t size_length);
-
 
         int getSocket();
         void socketShutdown();

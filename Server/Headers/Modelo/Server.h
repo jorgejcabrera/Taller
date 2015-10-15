@@ -40,6 +40,7 @@ class Server : public Thread{
 		int initSocketServer();
 		//int run(void* data);
 		int run(void * data);
+		void processReceivedMessages();
 		~Server();
 };
 
