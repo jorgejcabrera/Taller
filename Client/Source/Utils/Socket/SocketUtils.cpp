@@ -30,6 +30,8 @@ Message* SocketUtils::readMessage(char* buffer,int size){
 	//msg->setCon(buffer);
 	delete[] buffer;
 	return bytesReceived;*/
+
+	//TODO manejar los casos de error --> cuando no podemos parsear el mensaje del buffer
 	msg_game msg;
 	msg.ParseFromArray(buffer,size);
 	Message* message = new Message();
