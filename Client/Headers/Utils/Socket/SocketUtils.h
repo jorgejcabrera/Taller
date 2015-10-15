@@ -23,7 +23,10 @@ public:
         *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
         */
         Message* readMessage();
-
+        /*
+        *retorna el id del socket
+        */
+        int getSocket();
         //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);
         int recvMsgSize(size_t size_length);

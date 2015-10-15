@@ -7,12 +7,19 @@
 
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
-MessageSocketReader::MessageSocketReader() {
+MessageSocketReader::MessageSocketReader(int sockfd) {
+	this->socket = new SocketUtils(sockfd);
 	this->isAlive = true;
 }
 
 int MessageSocketReader::run(void *data){
-	return 1;
+	while(this->isAlive){
+		Message* message = this->socket->readMessage();
+		cout << message->toString() << endl;
+		//TODO interpretar mensaje
+		if (!message)
+			shutdown(this->socket->getSocket(),0);
+	}
 }
 
 MessageSocketReader::~MessageSocketReader() {

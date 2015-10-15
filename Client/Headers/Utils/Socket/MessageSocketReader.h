@@ -20,7 +20,7 @@ private:
 	SocketUtils* socket;
 	bool isAlive;
 public:
-	MessageSocketReader();
+	MessageSocketReader(int sockfd);
 	int run(void* data);
 	virtual ~MessageSocketReader();
 };
