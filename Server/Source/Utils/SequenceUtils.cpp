@@ -10,6 +10,7 @@
 SequenceUtils* SequenceUtils::instance = NULL;
 
 SequenceUtils::SequenceUtils(){
+	//arranco la secuencia en 100 para que no tenga el mismo numero que los clientes, no se si eso puede llegar a afectar en algo
 	this->id = 100;
 }
 

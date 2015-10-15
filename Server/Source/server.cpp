@@ -66,6 +66,10 @@ int main(int argc, char* argv[]) {
 		//reiniciar = gController->reiniciarJuego();
 	}*/
 
+	gController->~GameController();
+	delete(gController);
+	gController=NULL;
+
 	return 0;
 }
 
