@@ -60,12 +60,55 @@ int main(int argc, char* argv[]) {
 	jorge->sendMessage(*(new MessageUpdate(1,"DinamicEntity",0,1)));*/
 
 
-	Message* message = new Message(1,"DinamicEntity",0,1);
-	char* serialize = message->serializeToArray();
+	/*Message* message1 = new Message(1,"DinamicEntity",0,1);
+	cout << "El tamaño del mensaje1 es:" << message1->getSize()<<endl;
+	Message* message2 = new Message(1,"Primer mensage de longitud va",0,1);
+	cout << "El tamaño del mensaje2 es:" << message2->getSize()<<endl;
 
+	//serializo
+	char* buffer = message1->serializeToArray();
+	//*(&buffer[message1->getSize()]) = message2->serializeToArray();
+
+	//parseo
 	msg_game msg;
-	msg.ParseFromArray(serialize,message->getLength());
+	msg.ParseFromArray(buffer,message1->getSize());
 	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
+	//muevo el puntero del buffer hasta donde empieza el proximo mensaje
+	*buffer = buffer[message1->getSize()];
+	buffer = message2->serializeToArray();
+	msg.ParseFromArray(buffer,message2->getSize());
+	Message mensage;
+	mensage.setContent(msg);
+	string elMensaje = mensage.toString();
+	cout << elMensaje << endl;*/
+
+	/*******creamos varios mensajes*******/
+	Message* message1 = new Message(134,"DinamicEntity",1,23234);
+	Message* message2 = new Message(1456,"Primer mensage de con una longitud",0213,1123421);
+	Message* message3 = new Message(21,"Segundo mensaje con otra longitud variable",023,32421);
+
+	/*******pongo los mensajes serializados en el buffer*******/
+	char* buffer;
+	buffer = message1->serializeToArray();
+	buffer[message1->getSize()] = *message2->serializeToArray();
+	buffer[message2->getSize()] = *message3->serializeToArray();
+
+	/*******me fijo que es lo que guardo el buffer*******/
+	/*int tamanio = message1->getSize()+message1->getSize()+message3->getSize();
+	for(int i=0; i<tamanio;i++)
+		cout << buffer[i] <<endl;*/
+
+	/*******una vez que los mensajes estan serializados en el buffer, los voy leyendo*******/
+	msg_game msg;
+	msg.ParseFromArray(buffer,message1->getSize());
+	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;
+
+	msg_game msg1;
+	buffer = &buffer[message1->getSize()];
+	msg1.ParseFromArray(buffer,message2->getSize());
+	cout << msg1.id()<< msg1.tipo()<< msg1.x()<<msg1.y()<<endl;
+
+
 	return 0;
 }
 

@@ -22,7 +22,7 @@ string Message::toString(){
 	return ss.str();
 }
 
-int Message::getLength(){
+int Message::getSize(){
 	return this->msg.ByteSize();
 }
 
@@ -35,7 +35,8 @@ char* Message::serializeToArray(){
 		return NULL;
 }
 
-void Message::setBody(char* bodyReceived){
+void Message::setContent(msg_game message){
+	this->msg = message;
 }
 
 string Message::serializeAsString(){
