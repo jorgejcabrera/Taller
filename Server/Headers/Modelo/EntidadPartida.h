@@ -22,7 +22,7 @@ protected:
 	int width;
 	int length;
 	string sizeString;
-	string pathImage;
+	string name;
 	int id;
 
 public:
@@ -31,10 +31,10 @@ public:
 	void destruir();
 	int getWidth();
 	int getLength();
-	string getPathImage();
+	string getName();
 	string getSizeString();
 	void setPosition(int x,int y);
-	void setPathImage(string path);
+	void setName(string name);
 	pair<int,int>* getPosition();
 	int getId();
 

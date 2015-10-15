@@ -17,7 +17,9 @@ Juego::Juego() {
 }
 
 void Juego::agregarProtagonista(int owner){
-	EntidadDinamica *protagonista = new EntidadDinamica(gameSettings->getVelocidadPersonaje(),
+	//TODO revisar que le ponemos en tipo
+	EntidadDinamica *protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
+				gameSettings->getVelocidadPersonaje(),
 				gameSettings->getPosXProtagonista(),
 				gameSettings->getPosYProtagonista(),
 				gameSettings->getProtagonistaPixelDimension(),
@@ -25,7 +27,6 @@ void Juego::agregarProtagonista(int owner){
 				gameSettings->getProtagonistaFPS());
 
 		protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
-		protagonista->setPathImage(gameSettings->getProtagonistaPath());
 		protagonista->setDelay(gameSettings->getProtagonistaDelay());
 		protagonista->setOwner(owner);
 		//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas

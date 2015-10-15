@@ -75,7 +75,6 @@ string GameSettings::getAgeOfEmpires(){
 }
 
 string GameSettings::getTipoProtagonista(){
-	//TODO: esto no se usa para nada, lo dejo por si mas adelant queremos tener mucho protagonistas.
 	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
 }
 
@@ -199,17 +198,18 @@ void GameSettings::createEntidades(){
 			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<this->MAP_WIDTH and posY<this->MAP_HEIGHT){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
-				string imagen = this->getValueInMap(entidadObjeto, "imagen");
+				//TODO: este es un control que debe hacer el cliente
+				/*string imagen = this->getValueInMap(entidadObjeto, "imagen");
 				if(!(isFileExist(imagen))){
 					cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
 					imagen = DefaultSettings::defaultImage();
-				}
+				}*/
 				if((tipoEntidad == "edificios") or (tipoEntidad=="semiestaticos")){
 					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
 					if(anchoBase>0 and altoBase>0){
 						if(tipoEntidad == "edificios"){
-							EntidadEstatica* edificioCreado = new EntidadEstatica(anchoBase,altoBase,true,imagen);
+							EntidadEstatica* edificioCreado = new EntidadEstatica(nombre,anchoBase,altoBase,true);
 							edificioCreado->setPosition(posX,posY);
 							this->edificios.push_back(edificioCreado);
 						}else if (tipoEntidad=="semiestaticos"){
@@ -218,7 +218,7 @@ void GameSettings::createEntidades(){
 							int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 							int total_frames = (total_frames_line > 0) ? total_frames_line : 1;
 							if(fps > 50) fps = 50;
-							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,imagen);
+							EntidadSemiEstatica* molino = new EntidadSemiEstatica(nombre, anchoBase,altoBase,150,150,fps);
 							molino->setPosition(posX,posY);
 							molino->setDelay(delay);
 							molino->setFramesInLineFile(total_frames);

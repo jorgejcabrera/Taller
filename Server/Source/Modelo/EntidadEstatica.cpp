@@ -26,18 +26,11 @@ string getStringSize(EntidadPartida* entidad){
 EntidadEstatica::EntidadEstatica() {
 }
 
-EntidadEstatica::EntidadEstatica(int width,int length, bool esEdificable, const string &sourceImage){
+EntidadEstatica::EntidadEstatica(string nameEntity, int width,int length, bool esEdificable){
 	this->width = width;
 	this->length = length;
 	this->edificable = esEdificable;
-	this->pathImage = sourceImage;
-	this->sizeString = getStringSize(this);
-}
-
-EntidadEstatica::EntidadEstatica(int width,int length, bool esEdificable){
-	this->width = width;
-	this->length = length;
-	this->edificable = esEdificable;
+	this->name = nameEntity;
 	this->sizeString = getStringSize(this);
 }
 

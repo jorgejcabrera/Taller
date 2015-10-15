@@ -22,7 +22,7 @@ public:
         /*
         *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
         */
-        Message* readMessage(char* buffer);
+        Message* readMessage();
 
         //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);
