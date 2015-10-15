@@ -21,6 +21,8 @@ class MessageSocketWriter: public Thread {
 private:
 	SocketQueue queue;
 	SocketUtils* socket;
+	bool isAlive;
+
 public:
 	MessageSocketWriter(int sockfd);
 	/*
@@ -31,6 +33,7 @@ public:
 	*Ponemos los mensajes en la cola de novedades
 	*/
 	void writeMessage(Message msg);
+	void stopWrite();
 	virtual ~MessageSocketWriter();
 };
 
