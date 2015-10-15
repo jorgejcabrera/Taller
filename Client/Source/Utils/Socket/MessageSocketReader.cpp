@@ -8,6 +8,7 @@
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
 MessageSocketReader::MessageSocketReader() {
+	this->isAlive = true;
 }
 
 int MessageSocketReader::run(void *data){
