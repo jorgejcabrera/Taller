@@ -8,7 +8,6 @@
 #include "../../Headers/Modelo/EntidadDinamica.h"
 
 EntidadDinamica::EntidadDinamica(){
-	//esto no sirve, hay que borrarlo
 }
 
 EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
