@@ -18,6 +18,7 @@ class MessageSocketReader: public Thread {
 private:
 	SocketQueue queue;
 	SocketUtils* socket;
+	bool isAlive;
 public:
 	MessageSocketReader();
 	int run(void* data);
