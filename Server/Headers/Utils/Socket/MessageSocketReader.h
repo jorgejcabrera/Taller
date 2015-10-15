@@ -25,6 +25,7 @@ private:
 public:
 	MessageSocketReader(int sockfd);
 	int run(void* data);
+	void stopWrite();
 	virtual ~MessageSocketReader();
 	void writeMessage(Message msg);
 };

@@ -17,10 +17,16 @@ void MessageSocketReader::writeMessage(Message msg){
 }
 
 int MessageSocketReader::run(void *data){
-	Message *mensaje = this->socket->readMessage();
-	this->writeMessage(*mensaje);
+	while(this->isAlive){
+		Message *mensaje = this->socket->readMessage();
+		this->writeMessage(*mensaje);
+	}
 	return OK;
 }
 
 MessageSocketReader::~MessageSocketReader() {
+}
+
+void MessageSocketReader::stopWrite(){
+	this->isAlive = false;
 }
