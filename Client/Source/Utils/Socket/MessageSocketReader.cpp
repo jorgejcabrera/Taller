@@ -12,8 +12,9 @@ MessageSocketReader::MessageSocketReader(int sockfd) {
 	this->isAlive = true;
 }
 
-int MessageSocketReader::run(void *data){
+void MessageSocketReader::run(void *data){
 	while(this->isAlive){
+		cout << "Running thread client reader "<<endl;
 		Message* message = this->socket->readMessage();
 		cout << message->toString() << endl;
 		//TODO interpretar mensaje

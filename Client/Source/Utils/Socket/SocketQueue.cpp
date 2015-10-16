@@ -26,10 +26,7 @@ Message SocketQueue::pullTail(){
 	Message message = this->queue.front();
 	this->queue.pop();
 	//SDL_UnlockMutex(lock);
-
-	/*aca deberia serializar el mensaje y devolverlo serializado*/
 	return message;
-
 }
 
 bool SocketQueue::isEmpty(){

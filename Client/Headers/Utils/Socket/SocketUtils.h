@@ -30,9 +30,6 @@ public:
         //TODO: ver que hacer con estos metodos.
         int recvMsg(string & msg, size_t length);
         int recvMsgSize(size_t size_length);
-
-
-        int getSocket();
         void socketShutdown();
         void closeConnection();
         virtual ~SocketUtils();

@@ -8,6 +8,9 @@
 #ifndef SOURCE_UTILS_SOCKET_MESSAGESOCKETREADER_H_
 #define SOURCE_UTILS_SOCKET_MESSAGESOCKETREADER_H_
 
+#define OK 0
+#define ERROR -1
+
 #include "../Thread.h"
 #include "SocketQueue.h"
 #include "SocketUtils.h"

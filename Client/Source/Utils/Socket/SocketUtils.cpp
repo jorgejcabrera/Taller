@@ -8,10 +8,6 @@ void SocketUtils::setSocket(int socket){
     this->socket = socket;
 }
 
-int SocketUtils::getSocket(){
-	return this->socket;
-}
-
 bool SocketUtils::writeMessage(Message* message){
 	//escribimos en el socket el tamaño en bytes del mensaje
 	int* size = new int;

@@ -42,7 +42,7 @@ int Client::connectToServer(){
 	}
 
 	//INITIALIZE THREAD
-	this->readThread = new MessageSocketReader();
+	this->readThread = new MessageSocketReader(this->sockfd);
 	this->writeThread = new MessageSocketWriter(this->sockfd);
 	this->readThread->start((MessageSocketReader*) this->readThread );
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
