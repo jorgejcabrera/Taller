@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
 	}*/
 
 	GameController* gController = new GameController();
-	Server* server = new Server(7841,gController);
+	Server* server = new Server(7843,gController);
 	if( server->initSocketServer() == ERROR)
 		cout<<"Error al inicializar socket"<<endl;
 	server->start((void *) &server);

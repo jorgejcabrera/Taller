@@ -18,8 +18,8 @@ int MessageSocketReader::run(void *data){
 		Message* message = this->socket->readMessage();
 		cout << message->toString() << endl;
 		//TODO interpretar mensaje
-		if (!message)
-			shutdown(this->socket->getSocket(),0);
+		//if (!message)
+			//shutdown(this->socket->getSocket(),0);
 	}
 }
 
