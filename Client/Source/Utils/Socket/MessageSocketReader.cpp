@@ -12,7 +12,7 @@ MessageSocketReader::MessageSocketReader(int sockfd) {
 	this->isAlive = true;
 }
 
-void MessageSocketReader::run(void *data){
+int MessageSocketReader::run(void *data){
 	while(this->isAlive){
 		cout << "Running thread client reader "<<endl;
 		Message* message = this->socket->readMessage();
