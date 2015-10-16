@@ -20,7 +20,7 @@ int MessageSocketWriter::run(void* data){
 	while(this->isAlive){
 		while(!this->queue.isEmpty()){
 			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
-			if( this->socket->writeMessage(&msg) < 0){
+			if( this->socket->writeMessage(&msg)){
 				cout << "ERROR: No se puedieron enviar mensajes al servidor"<< endl;
 				return ERROR;
 			 }

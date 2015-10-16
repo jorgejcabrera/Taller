@@ -12,8 +12,8 @@ Client::Client(int identifier, SocketQueue *queueUnique) {
 	this->writeThread = new MessageSocketWriter(identifier);
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
 
-	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
-	this->readThread->start((MessageSocketReader*) this->readThread);
+	//this->readThread = new MessageSocketReader(this->clientId, queueUnique);
+	//this->readThread->start((MessageSocketReader*) this->readThread);
 }
 
 Client::~Client() {
