@@ -23,7 +23,7 @@ Client::~Client() {
 void Client::writeMessagesInQueue(list<Message*> messagesList){
 	for(list<Message*>::iterator it=messagesList.begin(); it!=messagesList.end(); ++it){
 		//TODO: borrar este cout
-		cout << "Messages: " << (*it)->toString()<<endl;
+		//cout << "Messages: " << (*it)->toString()<<endl;
 		this->writeThread->writeMessage((**it));
 	}
 }

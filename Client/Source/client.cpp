@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 	msg.ParseFromString(messageRead);
 	cout << msg.id()<< msg.tipo()<< msg.x()<<msg.y()<<endl;*/
 
-	Client* jorge = new Client("127.0.0.1",7841);
+	Client* jorge = new Client("127.0.0.1",7843);
 	jorge->connectToServer();
 	int count = 0;
 

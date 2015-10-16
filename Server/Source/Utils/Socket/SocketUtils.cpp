@@ -14,8 +14,9 @@ bool SocketUtils::writeMessage(Message* message){
 	//escribimos en el socket el tamaño en bytes del mensaje
 	int *size = new int;
 	*size =message->getSize();
-	char* buff= new char[4];
+	char* buff= new char[1];
 	buff[0]=message->getSize();
+	cout << "MENSAJE: "<<message->toString()<<endl;
 
 	int wroteBytes = write(this->socket,buff, 4);
 	if ( wroteBytes < 0){
@@ -26,7 +27,8 @@ bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	//escribimos el mensaje
 	wroteBytes = write(this->socket, serializedMessage, *size);
-	if( wroteBytes < 0) cout <<"ERROR writing to SocketUtils" << endl;
+	cout << "wroteBytes "<<wroteBytes<<endl;
+	if( wroteBytes < 0) cout <<"ERROR writing to SocketUtils, size " <<*size << " mensaje "<<serializedMessage<< endl;
 	return wroteBytes < 0;
 }
 
