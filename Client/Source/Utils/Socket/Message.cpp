@@ -18,7 +18,7 @@ Message::Message(int identifier, string typeEntity, int xPosition, int yPosition
 
 string Message::toString(){
 	stringstream ss;
-	ss << "id:" << this->msg.id() <<";tipo:"<< this->msg.tipo()<<";x:" << this->msg.x()<<";y:"<<this->msg.y()<<";";
+	ss << " id: " << this->msg.id() << " tipo: " << this->msg.tipo() << " nombre: " << this->msg.nombre() << " imagen: " << this->msg.imagen() << " base: " << this->msg.ancho_base() << " base: " << this->msg.alto_base() << " fps: " << this->msg.fps() << " delay: " << this->msg.delay() << " line: " << this->msg.total_frames_line() << " dimension: " << this->msg.pixels_dimension();
 	return ss.str();
 }
 
