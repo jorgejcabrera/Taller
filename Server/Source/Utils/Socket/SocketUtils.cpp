@@ -14,7 +14,9 @@ bool SocketUtils::writeMessage(Message* message){
 	//escribimos en el socket el tamaño en bytes del mensaje
 	int *size = new int;
 	*size =message->getSize();
-	char* buff= new char[1];
+	char* buff= new char[4];
+	memset(&buff, 0, 4);
+
 	buff[0]=message->getSize();
 	cout << "MENSAJE: "<<message->toString()<<endl;
 

@@ -29,7 +29,9 @@ Message* SocketUtils::readMessage(){
 
 	//obtenemos la cantidad de bytes a leer
 	int* size = new int;
-	char* buff= new char[1];
+	char* buff= new char[4];
+	memset(&buff, 0, 4);
+
 
 	int readBytes = read(this->socket,buff,4);
 	if (readBytes < 0 ){
