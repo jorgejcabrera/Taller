@@ -37,6 +37,7 @@ public:
 	Client(string ip, int port);
 	int connectToServer();
 	int getStatus();
+	bool isConected();
 	void sendMessage(Message msg);
 	void communicateWithServer();
 	virtual ~Client();

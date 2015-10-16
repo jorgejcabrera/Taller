@@ -57,8 +57,13 @@ int main(int argc, char* argv[]) {
 
 	Client* jorge = new Client("127.0.0.1",7841);
 	jorge->connectToServer();
-	//jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
+	int count = 0;
 
+	while(jorge->isConected() && count < 4){
+		cout << "Client is sending message"<<endl;
+		jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
+		count++;
+	}
 	return 0;
 }
 

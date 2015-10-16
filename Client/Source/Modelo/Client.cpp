@@ -73,6 +73,10 @@ int Client::getStatus(){
 	return this->status;
 }
 
+bool Client::isConected(){
+	return this->status == CONECTED;
+}
+
 Client::~Client() {
 	//this->socketUtils->~SocketUtils();
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending
