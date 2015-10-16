@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string.h>
 #include "../Utils/Socket/SocketUtils.h"
+#include "../Utils/Socket/SocketQueue.h"
 #include "../Utils/Socket/Message.h"
 #include "../Utils/Thread.h"
 #include "Client.h"
@@ -28,6 +29,7 @@ using namespace std;
 
 class Server : public Thread{
 	private:
+		SocketQueue* queue;
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;

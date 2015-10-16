@@ -28,14 +28,16 @@ bool SocketUtils::writeMessage(Message* message){
 }
 
 Message* SocketUtils::readMessage(){
+	cout << "socket "<< this->socket<< " LISTO"<< endl;
 
 	//obtenemos la cantidad de bytes a leer
-	int* size = new int;
-	int readBytes = read(this->socket,size,4);
+	int *size = new int;
+	int readBytes = read(this->socket,size,1);
 	if (readBytes < 0 ){
-		cout << "Error reading socket"<<endl;
+		cout << "Error reading socket "<< readBytes<< " size "<< *size<<endl;
 		return NULL;
 	}
+	cout << "PASE "<< endl;
 	char* buffer = new char[*size]();
 
 	//Hasta que no leo el total de bytes no paro.

@@ -55,20 +55,21 @@ int main(int argc, char* argv[]) {
 	cout << " YA START " <<endl;
 
 	bool reiniciar = true;
-	/*while(true){
+	while(true){
 		//TODO: obtener las novedades de la cola del server
 
 		//TODO: actualizar el modelo? esto se podria hacer dentro del server que tiene una referencia al gController
-		gController->actualizarJuego();
+		//gController->actualizarJuego();
 		//TODO: notificar a los clientes
 
 		gController->delay();
 		//reiniciar = gController->reiniciarJuego();
-	}*/
+	}
 
 	gController->~GameController();
 	delete(gController);
 	gController=NULL;
+	cout << " YA TERMINE " <<endl;
 
 	return 0;
 }

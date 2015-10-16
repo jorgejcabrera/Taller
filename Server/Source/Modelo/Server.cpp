@@ -11,6 +11,7 @@ Server::Server(int port, GameController *myController) {
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
+	this->queue = new SocketQueue();
 }
 
 int Server::initSocketServer(){
@@ -38,28 +39,8 @@ int Server::initSocketServer(){
 		cout << "Error en el listen"<<endl;
 		return ERROR;
 	}
-
-	this->readThread = new MessageSocketReader(this->serverSocket);
-	this->readThread->start((MessageSocketReader*) this->readThread);
 	return OK;
 }
-/*
-int Server::run(void * data){
-
-	while (((Server*) data)->accept_connections){
-		socklen_t size = sizeof(struct sockaddr_in);
-		int client_socket = accept(((Server*) data)->serverSocket, (struct sockaddr*) &((Server*) data)->remote, &size);
-		if (client_socket < 0 ){
-			cout << "Error al aceptar cliente"<<endl;
-			return -1;
-		}else{
-			return 0;
-		}
-	}
-	cout << "El servidor dejo de escuchar nuevas conexiones"<<endl;
-
-	return 0;
-}*/
 
 int Server::run(void * data){
 	cout << "RUN" <<endl;
@@ -68,7 +49,7 @@ int Server::run(void * data){
 	socklen_t tamano = sizeof(serverAddress);
 	cout << "RUN 2" <<endl;
 	if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
-		Client *newClient = new Client(cliente);
+		Client *newClient = new Client(cliente, this->queue);
 		int cantidadDeClients = this->clients.size();
 		int clienteActual = cantidadDeClients+1;
 		this->clients[clienteActual] = newClient;

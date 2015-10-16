@@ -7,13 +7,14 @@
 
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
-MessageSocketReader::MessageSocketReader(int sockfd) {
+MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue *queueUnique) {
 	this->isAlive = true;
 	this->socket = new SocketUtils(sockfd);
+	this->queue = queueUnique;
 }
 
 void MessageSocketReader::writeMessage(Message msg){
-	this->queue.queuing(msg);
+	this->queue->queuing(msg);
 }
 
 int MessageSocketReader::run(void *data){
@@ -33,11 +34,11 @@ void MessageSocketReader::stopWrite(){
 
 list<Message*> MessageSocketReader::getMessagePendingProcess(){
 	list<Message*> listaPendientes;
-	this->queue.lockQueue();
-	while(!this->queue.isEmpty()){
-		Message msg = this->queue.pullTailWithoutLock();
+	this->queue->lockQueue();
+	while(!this->queue->isEmpty()){
+		Message msg = this->queue->pullTailWithoutLock();
 		listaPendientes.push_back(&msg);
 	}
-	this->queue.unlockQueue();
+	this->queue->unlockQueue();
 	return listaPendientes;
 }

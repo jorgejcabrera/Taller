@@ -19,12 +19,12 @@ using namespace std;
 
 class MessageSocketReader: public Thread {
 private:
-	SocketQueue queue;
+	SocketQueue* queue;
 	SocketUtils* socket;
 	bool isAlive;
 
 public:
-	MessageSocketReader(int sockfd);
+	MessageSocketReader(int sockfd, SocketQueue *queueUnique);
 	int run(void* data);
 	void stopWrite();
 	virtual ~MessageSocketReader();
