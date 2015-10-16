@@ -13,6 +13,7 @@
 #include "SocketQueue.h"
 #include "SocketUtils.h"
 #include "Message.h"
+#include <list>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
 	void stopWrite();
 	virtual ~MessageSocketReader();
 	void writeMessage(Message msg);
+	list<Message*> getMessagePendingProcess();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEREADER_H_ */
