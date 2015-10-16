@@ -54,7 +54,7 @@ int Server::run(void * data){
 		int clienteActual = cantidadDeClients+1;
 		this->clients[clienteActual] = newClient;
 		newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
-		newClient->writeMessagesInQueue(this->gController->getTilesMessages());
+		//newClient->writeMessagesInQueue(this->gController->getTilesMessages());
 		//TODO falta mandar todas las entidades que tiene el mapa hasta el momento
 		//TODO: esto hay que cambiarlo porque tiene que tener una forma de identificarlo y si se vuelve a conectar un cliente levantar la data
 		//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner

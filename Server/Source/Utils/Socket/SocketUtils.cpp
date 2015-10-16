@@ -12,11 +12,11 @@ bool SocketUtils::writeMessage(Message* message){
 
 
 	//escribimos en el socket el tamaño en bytes del mensaje
-	int* size = new int;
-	*size = message->getSize();
+	int *size = new int;
+	*size =message->getSize();
 	int wroteBytes = write(this->socket,size, 4);
 	if ( wroteBytes < 0){
-		cout <<"ERROR writing to SocketUtils" << endl;
+		cout <<"ERROR writing to SocketUtils, size: " <<*size << " wroteBytes "<<wroteBytes<< " Socket "<< this->socket<<endl;
 		return false;
 	}
 
@@ -28,16 +28,21 @@ bool SocketUtils::writeMessage(Message* message){
 }
 
 Message* SocketUtils::readMessage(){
-	cout << "socket "<< this->socket<< " LISTO"<< endl;
-
+	//cout << "socket "<< this->socket<< " LISTO"<< endl;
+	msg_game msg;
+	Message* message = new Message();
 	//obtenemos la cantidad de bytes a leer
 	int *size = new int;
-	int readBytes = read(this->socket,size,1);
+
+	int readBytes = 0;
+	while(readBytes==0){
+		readBytes = read(this->socket,size,1);
+	}
+
 	if (readBytes < 0 ){
 		cout << "Error reading socket "<< readBytes<< " size "<< *size<<endl;
 		return NULL;
 	}
-	cout << "PASE "<< endl;
 	char* buffer = new char[*size]();
 
 	//Hasta que no leo el total de bytes no paro.
@@ -49,9 +54,9 @@ Message* SocketUtils::readMessage(){
 	}
 
 	//TODO manejar los casos de error --> cuando no podemos parsear el mensaje del buffer
-	msg_game msg;
+
 	msg.ParseFromArray(buffer,*size);
-	Message* message = new Message();
+
 	message->setContent(msg);
 	delete[] buffer;
 	return message;
