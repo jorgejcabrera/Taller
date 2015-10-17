@@ -37,7 +37,6 @@ char* Message::serializeToArray(){
 	sprintf(integer_string,"%d",size);
 
 	// coloco el int en el buffer
-	//strcat(buffer, integer_string);
 	memcpy(buffer,integer_string,sizeof(int));
 
 	if( this->msg.SerializePartialToArray(&buffer[sizeof(int)],size)){
