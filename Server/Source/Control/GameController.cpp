@@ -33,6 +33,17 @@ list<Message*> GameController::getTilesMessages(){
 	return listaDeTiles;
 }
 
+list<Message*> GameController::getEntitiesMessages(){
+	list<Message*> listaDeEntities;
+	list<EntidadPartida*>* entidades = this->getJuego()->getMap()->getEntities();
+	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
+		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
+		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second);
+		listaDeEntities.push_back(entityMessage);
+	}
+	return listaDeEntities;
+}
+
 void GameController::actualizarJuego(){
 	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
 	juego->actualizarProtagonistas();

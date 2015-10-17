@@ -10,9 +10,17 @@
 Message::Message() {}
 
 //Mensaje usado para novedad de movimiento
-Message::Message(int identifier, string nombreEntity, int xPosition, int yPosition){
+Message::Message(int identifier, int xPosition, int yPosition){
 	this->msg.set_id(identifier);
 	this->msg.set_tipo("update");
+	this->msg.set_x(xPosition);
+	this->msg.set_y(yPosition);
+}
+
+//Mesaje utilizado para mandar por primera vez una entidad
+Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition){
+	this->msg.set_id(identifier);
+	this->msg.set_tipo(tipoMessage);
 	this->msg.set_nombre(nombreEntity);
 	this->msg.set_x(xPosition);
 	this->msg.set_y(yPosition);
@@ -42,7 +50,18 @@ Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition)
 }
 string Message::toString(){
 	stringstream ss;
-	ss << " id: " << this->msg.id() << " tipo: " << this->msg.tipo() << " nombre: " << this->msg.nombre() << " imagen: " << this->msg.imagen() << " base: " << this->msg.ancho_base() << " base: " << this->msg.alto_base() << " fps: " << this->msg.fps() << " delay: " << this->msg.delay() << " line: " << this->msg.total_frames_line() << " dimension: " << this->msg.pixels_dimension();
+	ss << " id: " << this->msg.id();
+	ss << " tipo: " << this->msg.tipo();
+	ss <<  " x: " << this->msg.x();
+	ss <<  " y: " << this->msg.y();
+	ss <<  " nombre: " << this->msg.nombre();
+	ss << " imagen: " << this->msg.imagen();
+	ss << " base: " << this->msg.ancho_base();
+	ss << " base: " << this->msg.alto_base();
+	ss << " fps: " << this->msg.fps();
+	ss << " delay: " << this->msg.delay();
+	ss << " line: " << this->msg.total_frames_line();
+	ss << " dimension: " << this->msg.pixels_dimension();
 	return ss.str();
 }
 

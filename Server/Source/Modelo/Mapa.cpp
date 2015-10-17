@@ -39,9 +39,13 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 		return;
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first+ entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
-		int i=entidad->getPosition()->first;
-		int j= entidad->getPosition()->second;
-		this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
+		/*
+		 * TODO revisar si no falla, se cambio la estructura de entidades, ahora es una lista y antes un mapa con las posiciones
+		 * int i=entidad->getPosition()->first;
+		 * int j= entidad->getPosition()->second;
+		 * this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
+		 */
+		this->entidades.push_back(entidad);
 
 		//le cambiamos el estado a los tiles que ocupa
 		for(int j=entidad->getPosition()->second; j<lowerVertex.second; j++)
@@ -68,10 +72,10 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	}
 	return true;
 }
-EntidadPartida* Mapa::getEntityAt(int x,int y){
+/*EntidadPartida* Mapa::getEntityAt(int x,int y){
 	return this->entidades.at(make_pair(x,y));
 }
-
+*/
 Tile* Mapa::getTileAt(int x,int y){
 	return this->tiles.at(make_pair(x,y));
 }
@@ -80,15 +84,24 @@ map<pair<int,int>,Tile*>* Mapa::getTiles(){
 	return &this->tiles;
 }
 
+/*
 map<pair<int,int>,EntidadPartida*>* Mapa::getEntities(){
+	return &this->entidades;
+}*/
+
+list<EntidadPartida*>* Mapa::getEntities(){
 	return &this->entidades;
 }
 
 Mapa::~Mapa() {
-	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
-		delete((*it).second);
-//		(*it).second = NULL;
+	/*for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
+			delete((*it).second);
+	//		(*it).second = NULL;
+	}*/
+	for (list<EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
+		delete((*it));
 	}
+
 	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
 //		(*it).second->~Tile();
 		delete((*it).second);

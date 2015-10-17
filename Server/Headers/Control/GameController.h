@@ -14,6 +14,8 @@
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
+#include "../Modelo/EntidadPartida.h"
+#include <list>
 
 class GameController {
 
@@ -41,6 +43,7 @@ public:
 	virtual ~GameController();
 	void delay();
 	list<Message*> getTilesMessages();
+	list<Message*> getEntitiesMessages();
 };
 
 #endif /* GAMECONTROLLER_H_ */
