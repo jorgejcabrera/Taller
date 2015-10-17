@@ -22,15 +22,19 @@ string Message::toString(){
 	return ss.str();
 }
 
+//Mas cuatro bytes que es lo que ocupa el int del tamaño
+//del mensaje que se concaten, al serializar el mensaje
 int Message::getSize(){
-	return this->msg.ByteSize();
+	return this->msg.ByteSize() + 4;
 }
 
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
-	char* array = new char[size];
-	if( this->msg.SerializePartialToArray(array,size) )
-		return array;
+	char* buffer = new char[size+4];
+	memset(&buffer, 0,size+4);
+	buffer[0]=size;
+	if( this->msg.SerializePartialToArray(&buffer[1],size) )
+		return buffer;
 	else
 		return NULL;
 }

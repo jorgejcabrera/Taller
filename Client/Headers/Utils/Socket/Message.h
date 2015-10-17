@@ -26,7 +26,13 @@ public:
 	Message();
 	Message(int identifier, string typeEntity, int xPosition, int yPosition);
 	virtual ~Message();
+	/*
+	 *Develve el tamaño en bytes del mensaje + 4 bytes
+	 * */
 	int getSize();
+	/*
+	 *Devuelve el tamaño del mensaje concatenado con el mensaje serializado
+	 * */
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
