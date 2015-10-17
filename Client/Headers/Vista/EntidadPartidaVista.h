@@ -23,6 +23,7 @@ protected:
 	int length;
 	string sizeString;
 	string pathImage;
+	int id;
 
 public:
 	EntidadPartidaVista();

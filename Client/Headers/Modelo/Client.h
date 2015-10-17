@@ -21,6 +21,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include "../Utils/Socket/Message.h"
+#include "EntidadConfig.h"
+#include "GameSettings.h"
 
 using namespace std;
 
@@ -44,6 +46,7 @@ public:
 	virtual ~Client();
 
 	void processReceivedMessages();
+	void saveEntitiesConfig(Message* msg);
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */

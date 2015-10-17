@@ -86,12 +86,13 @@ Client::~Client() {
 void Client::processReceivedMessages(){
 	list<Message*> pendingMessages = this->readThread->getMessagePendingProcess();
 	for(list<Message*>::iterator it=pendingMessages.begin(); it!=pendingMessages.end(); ++it){
-		string tipoMensaje = (**it).getTipo();
+		string tipoMensaje = (*it)->getTipo();
 		if(tipoMensaje=="window"){
 			//Seteo la dimension de la ventana
-			GameSettings::GetInstance()->setScreenDimension((**it).getPositionX(),(**it).getPositionY());
+			GameSettings::GetInstance()->setScreenDimension((*it)->getPositionX(),(*it)->getPositionY());
 		}else if (tipoMensaje=="config"){
-			//TODO agregar comportamiento para mensajes de configuracion
+			//Genero una entidad de configuracion y lo envio al GameSettings
+			saveEntitiesConfig((*it));
 		}else if (tipoMensaje=="update"){
 			//TODO agregar comportamiento para mensajes de cambios de posicion
 		}else if (tipoMensaje=="tile"){
@@ -106,4 +107,16 @@ void Client::processReceivedMessages(){
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 		}
 	}
+}
+
+void Client::saveEntitiesConfig(Message* msg){
+	EntidadConfig* entidad = new EntidadConfig(msg->getNombre(),
+												msg->getImagen(),
+												msg->getAnchoBase(),
+												msg->getAltoBase(),
+												msg->getFps(),
+												msg->getDelay(),
+												msg->getTotalFramesLine(),
+												msg->getPixelsDimension());
+	GameSettings::GetInstance()->addEntitisConfig(entidad);
 }

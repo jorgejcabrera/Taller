@@ -66,3 +66,35 @@ int Message::getPositionY(){
 	return this->msg.y();
 }
 
+string Message::getNombre(){
+	return this->msg.nombre();
+}
+
+string Message::getImagen(){
+	return this->msg.imagen();
+}
+
+int Message::getAnchoBase(){
+	return this->msg.ancho_base();
+}
+
+int Message::getAltoBase(){
+	return this->msg.alto_base();
+}
+
+int Message::getFps(){
+	return this->msg.fps();
+}
+
+int Message::getDelay(){
+	return this->msg.delay();
+}
+
+int Message::getTotalFramesLine(){
+	return this->msg.total_frames_line();
+}
+
+int Message::getPixelsDimension(){
+	return this->msg.pixels_dimension();
+}
+

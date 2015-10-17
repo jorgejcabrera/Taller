@@ -16,6 +16,7 @@
 #include "../../Headers/Vista/EntidadEstaticaVista.h"
 #include "../../Headers/Vista/EntidadPartidaVista.h"
 #include "../../Headers/Vista/EntidadSemiEstaticaVista.h"
+#include "EntidadConfig.h"
 
 namespace std {
 
@@ -24,6 +25,7 @@ private:
 	static GameSettings* instance;
 	GameSettings();
 	bool isFileExist(const string fileName);
+	list<EntidadConfig*> entitiesConfig;
 
 public:
 	//pantalla:
@@ -111,6 +113,7 @@ public:
 
 	//AGREGADO EN CLIENTE UNICAMENTE
 	void setScreenDimension(int width, int heigth);
+	void addEntitisConfig(EntidadConfig *entity);
 };
 
 } /* namespace std */
