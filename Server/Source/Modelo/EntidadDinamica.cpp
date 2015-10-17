@@ -73,6 +73,7 @@ int EntidadDinamica::getFramesInLineFile(){
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){
 	//TODO: esto no deberia estar en la VISTA nada mas?
+	// OJO!! se usa para notificar a los clientes.
 	return &this->screenPosition;
 }
 

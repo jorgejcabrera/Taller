@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
 		server->processReceivedMessages();
 		//Los protagonistas se trasladan a su posicion destino
 		gController->actualizarJuego();
-		//TODO: notificar a los clientes
-
+		//Se le manda a los clientes las novedades
+		server->notifyClients();
 		gController->delay();
 		//reiniciar = gController->reiniciarJuego();
 	}

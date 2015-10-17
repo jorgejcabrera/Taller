@@ -86,8 +86,14 @@ void Server::processReceivedMessages(){
 }
 
 void Server::notifyClients(){
-	for(list<int>::iterator it=this->idEntitiesUpdated.begin(); it!=this->idEntitiesUpdated.end(); ++it){
-		//TODO NOTIFICAR!!!
+	for(list<int>::iterator idProtagonistaIterate=this->idEntitiesUpdated.begin(); idProtagonistaIterate!=this->idEntitiesUpdated.end(); ++idProtagonistaIterate){
+		for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
+			pair<float,float>* position = this->gController->getJuego()->getPositionOfProtagonistaById(*idProtagonistaIterate);
+			Message *messageUpdate = new Message(*idProtagonistaIterate, position->first, position->second);
+			//TODO revisar que se mande bien el mensaje
+			//cout << "Novedad: "<< messageUpdate->toString() <<endl;
+			it->second->writeMessagesInQueue(messageUpdate);
+		}
 	}
 	this->idEntitiesUpdated.clear();
 }

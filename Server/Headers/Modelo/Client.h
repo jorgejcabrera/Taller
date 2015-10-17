@@ -24,6 +24,7 @@ public:
 	Client(int identifier, SocketQueue *queueUnique);
 	~Client();
 	void writeMessagesInQueue(list<Message*> messagesList);
+	void writeMessagesInQueue(Message* message);
 };
 
 #endif /* SOURCE_MODELO_CLIENTHANDLER_H_ */

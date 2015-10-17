@@ -38,6 +38,7 @@ public:
 	void actualizarProtagonistas();
 	bool getStatusPartida();
 	map<int,EntidadDinamica*> getProtagonistas();
+	pair<float,float>* getPositionOfProtagonistaById(int idBuscado);
 
 	void agregarProtagonista(int owner);
 };
