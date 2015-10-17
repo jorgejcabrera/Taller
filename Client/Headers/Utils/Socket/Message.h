@@ -13,6 +13,9 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #include "messageGame.pb.h"
 
@@ -27,7 +30,7 @@ public:
 	Message(int identifier, string typeEntity, int xPosition, int yPosition);
 	virtual ~Message();
 	/*
-	 *Develve el tamaño en bytes del mensaje + 4 bytes
+	 *Develve el tamaño en bytes del mensaje
 	 * */
 	int getSize();
 	/*

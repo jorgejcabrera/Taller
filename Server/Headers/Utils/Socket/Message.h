@@ -13,6 +13,8 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "messageGame.pb.h"
 
