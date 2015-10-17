@@ -18,30 +18,29 @@ bool SocketUtils::writeMessage(Message* message){
 Message* SocketUtils::readMessage(){
 
 	//obtenemos la cantidad de bytes a leer
-	int* size = new int;
-	char* buff= new char[4];
-	memset(&buff, 0, 4);
+	char* buff= new char[sizeof(int)];
+	memset(&buff, 0, sizeof(int));
 
-
-	int readBytes = read(this->socket,buff,4);
+	int readBytes = read(this->socket,buff,sizeof(int));
 	if (readBytes < 0 ){
 		cout << "Error reading socket"<<endl;
 		return NULL;
 	}
-	*size=buff[0];
-	char* buffer = new char[*size]();
+	int size = atoi(buff);
+	char* buffer = new char[size]();
 
 	//Hasta que no leo el total de bytes no paro.
 	size_t bytesReceived = 0;
-	while ( bytesReceived < *size){
-		int partialReadBytes = read(this->socket, buffer, *size);
+	while ( bytesReceived < size){
+		//int partialReadBytes = read(this->socket, buffer,size);
+		int partialReadBytes = read(this->socket, &buffer[bytesReceived], size - bytesReceived);
 		if (partialReadBytes <= 0) break;
 		bytesReceived += partialReadBytes;
 	}
 
 	//TODO manejar los casos de error --> cuando no podemos parsear el mensaje del buffer
 	msg_game msg;
-	msg.ParseFromArray(buffer,*size);
+	msg.ParseFromArray(buffer,size);
 	Message* message = new Message();
 	message->setContent(msg);
 	delete[] buffer;

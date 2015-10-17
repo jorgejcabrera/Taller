@@ -25,15 +25,16 @@ string Message::toString(){
 //Mas cuatro bytes que es lo que ocupa el int del tamaño
 //del mensaje que se concaten, al serializar el mensaje
 int Message::getSize(){
-	return this->msg.ByteSize() + 4;
+	return this->msg.ByteSize() + sizeof(int);
 }
 
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
-	char* buffer = new char[size+4];
-	memset(&buffer, 0,size+4);
+	char* buffer = new char[ size + sizeof(int) ];
+	memset(&buffer, size , sizeof(int));
 	buffer[0]=size;
-	if( this->msg.SerializePartialToArray(&buffer[1],size) )
+	cout<<"Lo que guarda el buffer en la primera posicion es "<<buffer[0]<<endl;
+	if( this->msg.SerializePartialToArray(&buffer[sizeof(int)],size))
 		return buffer;
 	else
 		return NULL;
