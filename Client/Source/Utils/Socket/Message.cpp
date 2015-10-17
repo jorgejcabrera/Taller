@@ -31,12 +31,18 @@ int Message::getSize(){
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
 	char* buffer = new char[ size + sizeof(int) ];
-	memset(&buffer, size , sizeof(int));
-	buffer[0]=size;
-	cout<<"Lo que guarda el buffer en la primera posicion es "<<buffer[0]<<endl;
-	if( this->msg.SerializePartialToArray(&buffer[sizeof(int)],size))
+
+	// convert int to char*
+	char integer_string[sizeof(int)];
+	sprintf(integer_string,"%d",size);
+
+	// coloco el int en el buffer
+	//strcat(buffer, integer_string);
+	memcpy(buffer,integer_string,sizeof(int));
+
+	if( this->msg.SerializePartialToArray(&buffer[sizeof(int)],size)){
 		return buffer;
-	else
+	}else
 		return NULL;
 }
 

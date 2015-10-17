@@ -52,15 +52,23 @@ int main(int argc, char* argv[]) {
 	Message* unMensaje = new Message();
 	msg_game msg;
 	msg.set_id(1);
-	msg.set_tipo("unTipo");
+	msg.set_tipo("unTipo de loa saadsgasdgfdgdgdgdfgadafg ");
 	msg.set_x(10);
 	msg.set_y(10);
 	unMensaje->setContent(msg);
-
 	cout << "El tamaño del mensaje es: "<< unMensaje->getSize()-4 << endl;
 
 	char* msgSerializado = unMensaje->serializeToArray();
-	cout <<"Del buffer obtuve: "<< msgSerializado[0]<<endl;
+	char* buff= new char[sizeof(int)];
+	memcpy(buff,msgSerializado,sizeof(int));
+	int size = atoi(buff);
+	cout << "El tamaño a leer es: "<<size<<endl;
+
+	msg_game msg_new;
+	msg_new.ParseFromArray(&msgSerializado[sizeof(int)],size);
+	cout << msg_new.id()<<" "<<msg_new.tipo()<<" "<<msg_new.x()<<" "<< msg_new.y()<<endl;
+	//for(int i = 0; i < size + sizeof(int); i++)
+	//	cout << buff[i]<<endl;
 
 
 

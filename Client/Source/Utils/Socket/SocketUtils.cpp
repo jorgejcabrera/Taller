@@ -16,11 +16,8 @@ bool SocketUtils::writeMessage(Message* message){
 }
 
 Message* SocketUtils::readMessage(){
-
 	//obtenemos la cantidad de bytes a leer
 	char* buff= new char[sizeof(int)];
-	memset(&buff, 0, sizeof(int));
-
 	int readBytes = read(this->socket,buff,sizeof(int));
 	if (readBytes < 0 ){
 		cout << "Error reading socket"<<endl;
