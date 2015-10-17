@@ -73,8 +73,8 @@ int Message::getSize(){
 
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
-	char* buffer = new char[size+4];
-	memset(&buffer, 0,size+4);
+	char* buffer = new char[size+sizeof(int)];
+	memset(&buffer, 0,size+sizeof(int));
 	buffer[0]=size;
 	if( this->msg.SerializePartialToArray(&buffer[1],size) )
 		return buffer;

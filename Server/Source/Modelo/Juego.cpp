@@ -50,6 +50,10 @@ map<int,EntidadDinamica*> Juego::getProtagonistas(){
 	return this->protagonistas;
 }
 
+pair<float,float>* Juego::getPositionOfProtagonistaById(int idBuscado){
+	return this->protagonistas.at(idBuscado)->getScreenPosition();
+}
+
 void Juego::actualizarProtagonistas(){
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
 		(*it).second->trasladarse();

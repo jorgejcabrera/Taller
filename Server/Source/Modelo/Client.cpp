@@ -28,3 +28,6 @@ void Client::writeMessagesInQueue(list<Message*> messagesList){
 	}
 }
 
+void Client::writeMessagesInQueue(Message* message){
+		this->writeThread->writeMessage(*message);
+}

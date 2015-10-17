@@ -16,16 +16,15 @@ void SocketQueue::queuing(Message msg){
 	 *If the mutex is already locked by another thread, then SDL_LockMutex
 	 *will not return until the thread that locked it unlocks it
 	 **/
-	SDL_LockMutex(lock);
+	this->lockQueue();
 	this->queue.push(msg);
-	SDL_UnlockMutex(lock);
+	this->unlockQueue();
 }
 
 Message SocketQueue::pullTail(){
-	SDL_LockMutex(lock);
-	Message message = this->queue.front();
-	this->queue.pop();
-	SDL_UnlockMutex(lock);
+	this->lockQueue();
+	Message message = this->pullTailWithoutLock();
+	this->unlockQueue();
 	return message;
 }
 
@@ -38,4 +37,18 @@ int SocketQueue::getSize(){
 
 SocketQueue::~SocketQueue() {
 	SDL_DestroyMutex(this->lock);
+}
+
+Message SocketQueue::pullTailWithoutLock(){
+	Message message = this->queue.front();
+	this->queue.pop();
+	return message;
+}
+
+void SocketQueue::lockQueue(){
+	SDL_LockMutex(lock);
+}
+
+void SocketQueue::unlockQueue(){
+	SDL_UnlockMutex(lock);
 }

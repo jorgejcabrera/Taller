@@ -57,11 +57,18 @@ int Server::run(void * data){
 				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
 				this->gController->getJuego()->agregarProtagonista(clienteActual);
 
+				//Mando la dimension de la ventana
+				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
+
+				//Mando la informacion que está en el YAML
 				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
+
 				//Mando los tiles para dibujarlos en la vista
 				//newClient->writeMessagesInQueue(this->gController->getTilesMessages());
+
 				//Mando las entidades que tiene el mapa
 				//newClient->writeMessagesInQueue(gController->getEntitiesMessages());
+
 				//Mando los protagonistas hasta el momento
 				//newClient->writeMessagesInQueue(gController->getProtagonistasMessages());
 			}
@@ -86,8 +93,14 @@ void Server::processReceivedMessages(){
 }
 
 void Server::notifyClients(){
-	for(list<int>::iterator it=this->idEntitiesUpdated.begin(); it!=this->idEntitiesUpdated.end(); ++it){
-		//TODO NOTIFICAR!!!
+	for(list<int>::iterator idProtagonistaIterate=this->idEntitiesUpdated.begin(); idProtagonistaIterate!=this->idEntitiesUpdated.end(); ++idProtagonistaIterate){
+		for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
+			pair<float,float>* position = this->gController->getJuego()->getPositionOfProtagonistaById(*idProtagonistaIterate);
+			Message *messageUpdate = new Message(*idProtagonistaIterate, position->first, position->second);
+			//TODO revisar que se mande bien el mensaje
+			//cout << "Novedad: "<< messageUpdate->toString() <<endl;
+			it->second->writeMessagesInQueue(messageUpdate);
+		}
 	}
 	this->idEntitiesUpdated.clear();
 }
