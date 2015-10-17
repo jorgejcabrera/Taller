@@ -234,5 +234,10 @@ GameSettings::~GameSettings() {
 	this->instance =NULL;
 }
 
+void GameSettings::setScreenDimension(int width, int heigth){
+	this->SCREEN_WIDTH = width;
+	this->SCREEN_HEIGHT = heigth;
+}
+
 
 } /* namespace std */

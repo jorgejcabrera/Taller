@@ -108,6 +108,9 @@ public:
 	int getProtagonistaFramesInFile();
 	int getProtagonistaPixelDimension();
 	int getProtagonistaDelay();
+
+	//AGREGADO EN CLIENTE UNICAMENTE
+	void setScreenDimension(int width, int heigth);
 };
 
 } /* namespace std */

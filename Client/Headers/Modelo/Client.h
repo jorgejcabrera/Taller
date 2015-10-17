@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include "../Utils/Socket/Message.h"
 
 using namespace std;
 
@@ -41,6 +42,8 @@ public:
 	void sendMessage(Message msg);
 	void communicateWithServer();
 	virtual ~Client();
+
+	void processReceivedMessages();
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */
