@@ -17,10 +17,12 @@ int MessageSocketReader::run(void *data){
 		cout << "Running thread client reader "<<endl;
 		Message* message = this->socket->readMessage();
 		cout << message->toString() << endl;
+		this->queue->queuing(*message);
 		//TODO interpretar mensaje
 		//if (!message)
 			//shutdown(this->socket->getSocket(),0);
 	}
+	return OK;
 }
 
 MessageSocketReader::~MessageSocketReader() {
