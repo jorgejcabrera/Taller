@@ -88,3 +88,15 @@ string Message::serializeAsString(){
 
 Message::~Message(){
 }
+
+int Message::getId(){
+	return this->msg.id();
+}
+
+int Message::getPositionX(){
+	return this->msg.x();
+}
+
+int Message::getPositionY(){
+	return this->msg.y();
+}

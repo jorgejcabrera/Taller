@@ -46,11 +46,11 @@ list<Message*> GameController::getEntitiesMessages(){
 
 list<Message*> GameController::getProtagonistasMessages(){
 	list<Message*> listaDeProtagonistas;
-		list<EntidadDinamica*> protagonistas = this->getJuego()->getProtagonistas();
-		for(list<EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
-			string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
+		map<int,EntidadDinamica*> protagonistas = this->getJuego()->getProtagonistas();
+		for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+			string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 			//TODO ver como hacemos para mandar el nombre porque hoy en dia si le ponemos "Cliente 1" va a romper porque no va a encontrar el tipo de entidad
-			Message *protagonistaMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second);
+			Message *protagonistaMessage = new Message((*it).second->getId(), tipoEntidad, (*it).second->getName(), (*it).second->getPosition()->first, (*it).second->getPosition()->second);
 			listaDeProtagonistas.push_back(protagonistaMessage);
 		}
 		return listaDeProtagonistas;

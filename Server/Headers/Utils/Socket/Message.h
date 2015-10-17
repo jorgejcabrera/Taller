@@ -34,8 +34,12 @@ public:
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
-	//TODO borrar este metodo
 	void setContent(msg_game body);
+
+	//Defino metodos para poder sacar la informacion del mensaje desde afuera de la clase
+	int getId();
+	int getPositionX();
+	int getPositionY();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

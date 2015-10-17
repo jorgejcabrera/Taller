@@ -71,12 +71,31 @@ int Server::run(void * data){
 }
 
 void Server::processReceivedMessages(){
+	this->queue->lockQueue();
+	/* 1- Bajo todos los mansajes de la cola
+	 * 2- actualizo la posicion de los protagonistas
+	 * 3- armo una lista de los protagonistas que actualice para solo notificar esos  los clientes*/
+	this->idEntitiesUpdated.clear();
+	while(!this->queue->isEmpty()){
+		Message messageUpdate = this->queue->pullTailWithoutLock();
+		int idUpdate = messageUpdate.getId();
+		this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate.getPositionX(), messageUpdate.getPositionY());
+		this->idEntitiesUpdated.push_back(idUpdate);
+	}
+	this->queue->unlockQueue();
+}
 
+void Server::notifyClients(){
+	for(list<int>::iterator it=this->idEntitiesUpdated.begin(); it!=this->idEntitiesUpdated.end(); ++it){
+		//TODO NOTIFICAR!!!
+	}
+	this->idEntitiesUpdated.clear();
 }
 
 Server::~Server() {
 	for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
 	}
+	delete(this->queue);
 	close(this->serverSocket);
 }

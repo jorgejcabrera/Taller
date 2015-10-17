@@ -26,26 +26,33 @@ void Juego::agregarProtagonista(int owner){
 				gameSettings->getProtagonistaPixelDimension(),
 				gameSettings->getProtagonistaFPS());
 
-		protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
-		protagonista->setDelay(gameSettings->getProtagonistaDelay());
-		protagonista->setOwner(owner);
+	protagonista->setOwner(owner);
+
+		//TODO no deberiamos setear los frams del file aca, solo en la vista, al modelo no le importa
+		//protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
+		//TODO no deberiamos setear el delay aca, solo en la vista, al modelo no le importa si tiene delay
+		//protagonista->setDelay(gameSettings->getProtagonistaDelay());
+
 		//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas
-		pair<float,float> isometricas = this->getIsometricPosition(protagonista);
-		protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
-		this->protagonistas.push_back(protagonista);
+		//TODO Lo modifico para pasarle coordenadas cartesianas y SUERTE!
+		//pair<float,float> isometricas = this->getIsometricPosition(protagonista);
+		//protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
+		protagonista->setInitialScreenPosition(gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista());
+
+		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
 }
 
 Mapa* Juego::getMap(){
 	return this->mapa;
 }
 
-list<EntidadDinamica*> Juego::getProtagonistas(){
+map<int,EntidadDinamica*> Juego::getProtagonistas(){
 	return this->protagonistas;
 }
 
 void Juego::actualizarProtagonistas(){
-	for(list<EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
-		(*it)->trasladarse();
+	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
+		(*it).second->trasladarse();
 	}
 }
 
@@ -54,14 +61,13 @@ string Juego::getCurrentAge(){
 }
 
 
-void Juego::setDestinoProtagonista(int x,int y, int screenPosX, int screenPosY){
-	//TODO: aca deberiamos setear las coordenadas de panatalla? eso no deberia solo hacerse en la vista?
-	/*
-	//Actualiza las coordenadas cartesianas del protagonista
-	this->protagonista->setPosition(x,y);
-	//Actualizo las coordenadas de pantalla del protagonista
-	this->protagonista->setScreenPosition(screenPosX - this->offset.first,screenPosY - this->offset.second);
-	*/
+void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
+	/*TODO: seteo solo las coordenadas fisicas, antes seteaba las de pantalla tambien,
+	 * revisar si esto no rompe nada ya que las coordenadas de pantalla deberian setearse solo en la vista*/
+	EntidadDinamica *protagonistaToUpdate = this->protagonistas.at(idProtagonista);
+	protagonistaToUpdate->setPosition(x,y);
+	//TODO setScreenPosition puede llegar a traer problemas, antes le pasabamos coordeadas isometricas y ahora cartesianas
+	protagonistaToUpdate->setScreenPosition(x,y);
 }
 
 void Juego::terminarJuego(){
@@ -86,8 +92,8 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 }
 
 Juego::~Juego() {
-	for(list<EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
-			delete(*it);
+	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
+			delete(it->second);
 	}
 	delete(this->mapa);
 	this->mapa = NULL;

@@ -36,6 +36,7 @@ class Server : public Thread{
 		map<int,Client*> clients;
 		GameController *gController;
 		MessageSocketReader* readThread;
+		list<int> idEntitiesUpdated;
 
 	public:
 		Server(int port, GameController *myController);
@@ -43,6 +44,7 @@ class Server : public Thread{
 		//int run(void* data);
 		int run(void * data);
 		void processReceivedMessages();
+		void notifyClients();
 		~Server();
 };
 

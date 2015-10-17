@@ -56,10 +56,10 @@ int main(int argc, char* argv[]) {
 
 	bool reiniciar = true;
 	while(true){
-		//TODO: obtener las novedades de la cola del server
-
-		//TODO: actualizar el modelo? esto se podria hacer dentro del server que tiene una referencia al gController
-		//gController->actualizarJuego();
+		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados
+		server->processReceivedMessages();
+		//Los protagonistas se trasladan a su posicion destino
+		gController->actualizarJuego();
 		//TODO: notificar a los clientes
 
 		gController->delay();

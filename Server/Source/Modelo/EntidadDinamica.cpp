@@ -21,6 +21,7 @@ EntidadDinamica::EntidadDinamica(){
 	this->owner = 0;
 }*/
 
+//TODO sacar los fps y el tamaño en pixel
 EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
 	this->caminando = false;
 	this->position.first = x;
@@ -32,10 +33,13 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = 1;
 	this->length = 1;
-	this->widthPixel = widthPixel;
-	this->lengthPixel = lengthPixels;
-	if(fps > 50) fps = 50;
-	this->framesPerSecond = fps;
+	/*
+	 * TODO esto va en la vista
+	 * this->widthPixel = widthPixel;
+	 * this->lengthPixel = lengthPixels;
+	 * if(fps > 50) fps = 50;
+	 * this->framesPerSecond = fps;
+	 */
 	this->owner = 0;
 	this->name = nameEntity;
 }
@@ -55,6 +59,8 @@ void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	this->screenPosition.second = y;
 }
 
+/*
+ * TODO esto va en la VISTA!
 //seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
 void EntidadDinamica::setFramesInLineFile(int qty){
 	this->framesInLineFile = qty;
@@ -63,6 +69,7 @@ void EntidadDinamica::setFramesInLineFile(int qty){
 int EntidadDinamica::getFramesInLineFile(){
 	return this->framesInLineFile;
 }
+*/
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){
 	//TODO: esto no deberia estar en la VISTA nada mas?
@@ -80,13 +87,15 @@ float EntidadDinamica::distanciaEnX(float x){
 	return res;
 }
 
+/*
+ * TODO esto va en la VISTA!!!
 int EntidadDinamica::getWidthPixel(){
 	return this->widthPixel;
 }
 
 int EntidadDinamica::getLengthPixel(){
 	return this->lengthPixel;
-}
+}*/
 
 float EntidadDinamica::distanciaEnY(float y){
 	float res;
@@ -176,6 +185,7 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 }
 
 void EntidadDinamica::trasladarse(){
+	//TODO porque se llama screenPosition? es de pantalla o es donde se va moviendo?
 	if(distanciaEnX(destinoX) <= vecVelocity.first)
 			screenPosition.first = destinoX;
 
@@ -197,6 +207,8 @@ void EntidadDinamica::trasladarse(){
 	}
 }
 
+/*
+ * TODO esto va en la VISTA!!
 int EntidadDinamica::getFramesPerSecond(){
 	return this->framesPerSecond;
 }
@@ -204,6 +216,7 @@ int EntidadDinamica::getFramesPerSecond(){
 void EntidadDinamica::setDelay(int delayFrames){
 	this->delay = delayFrames;
 }
+*/
 
 void EntidadDinamica::destruir(){
 	this->~EntidadDinamica();
