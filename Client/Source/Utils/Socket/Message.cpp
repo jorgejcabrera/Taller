@@ -50,3 +50,19 @@ string Message::serializeAsString(){
 Message::~Message(){
 }
 
+string Message::getTipo(){
+	return this->msg.tipo();
+}
+
+int Message::getId(){
+	return this->msg.id();
+}
+
+int Message::getPositionX(){
+	return this->msg.x();
+}
+
+int Message::getPositionY(){
+	return this->msg.y();
+}
+

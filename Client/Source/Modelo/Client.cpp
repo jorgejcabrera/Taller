@@ -82,3 +82,28 @@ Client::~Client() {
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending
 	close(this->sockfd);
 }
+
+void Client::processReceivedMessages(){
+	list<Message*> pendingMessages = this->readThread->getMessagePendingProcess();
+	for(list<Message*>::iterator it=pendingMessages.begin(); it!=pendingMessages.end(); ++it){
+		string tipoMensaje = (**it).getTipo();
+		if(tipoMensaje=="window"){
+			//Seteo la dimension de la ventana
+			GameSettings::GetInstance()->setScreenDimension((**it).getPositionX(),(**it).getPositionY());
+		}else if (tipoMensaje=="config"){
+			//TODO agregar comportamiento para mensajes de configuracion
+		}else if (tipoMensaje=="update"){
+			//TODO agregar comportamiento para mensajes de cambios de posicion
+		}else if (tipoMensaje=="tile"){
+			//TODO agregar comportamiento para mensajes de creacion de tile
+		}else if (tipoMensaje=="edificios"){
+			//TODO agregar comportamiento para mensajes de creacion de edificios/estaticos
+		}else if (tipoMensaje=="semiestaticos"){
+			//TODO agregar comportamiento para mensajes de creacion de semiestaticos
+		}else if (tipoMensaje=="personajes"){
+			//TODO agregar comportamiento para mensajes de creacion de personajes/dinamicos
+		}else{
+			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
+		}
+	}
+}

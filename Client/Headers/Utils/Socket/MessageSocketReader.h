@@ -14,6 +14,7 @@
 #include "../Thread.h"
 #include "SocketQueue.h"
 #include "SocketUtils.h"
+#include <list>
 
 using namespace std;
 
@@ -26,6 +27,7 @@ public:
 	MessageSocketReader(int sockfd);
 	int run(void* data);
 	virtual ~MessageSocketReader();
+	list<Message*> getMessagePendingProcess();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEREADER_H_ */
