@@ -15,6 +15,7 @@
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
 #include "../Modelo/EntidadPartida.h"
+#include "../Modelo/EntidadDinamica.h"
 #include <list>
 
 class GameController {
@@ -42,8 +43,11 @@ public:
 	int getMaxFramesPerSecond();
 	virtual ~GameController();
 	void delay();
+
+	//Generadores de mensajes para cuando se conecta un cliente nuevo
 	list<Message*> getTilesMessages();
 	list<Message*> getEntitiesMessages();
+	list<Message*> getProtagonistasMessages();
 };
 
 #endif /* GAMECONTROLLER_H_ */

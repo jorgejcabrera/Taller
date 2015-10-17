@@ -47,21 +47,24 @@ int Server::run(void * data){
 	//TODO: esto deberia ser while true?
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
-	cout << "RUN 2" <<endl;
-	if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
-		Client *newClient = new Client(cliente, this->queue);
-		int cantidadDeClients = this->clients.size();
-		int clienteActual = cantidadDeClients+1;
-		this->clients[clienteActual] = newClient;
-		newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
-		//Mando los tiles para dibujarlos en la vista
-		//newClient->writeMessagesInQueue(this->gController->getTilesMessages());
-		//Mando las entidades que tiene el mapa
-		//newClient->writeMessagesInQueue(gController->getEntitiesMessages());
+	while(true){
+			if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
+				Client *newClient = new Client(cliente, this->queue);
+				int cantidadDeClients = this->clients.size();
+				int clienteActual = cantidadDeClients+1;
+				this->clients[clienteActual] = newClient;
+				//TODO: esto hay que cambiarlo porque tiene que tener una forma de identificarlo y si se vuelve a conectar un cliente levantar la data
+				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
+				this->gController->getJuego()->agregarProtagonista(clienteActual);
 
-		//TODO: esto hay que cambiarlo porque tiene que tener una forma de identificarlo y si se vuelve a conectar un cliente levantar la data
-		//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-		this->gController->getJuego()->agregarProtagonista(clienteActual);
+				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
+				//Mando los tiles para dibujarlos en la vista
+				//newClient->writeMessagesInQueue(this->gController->getTilesMessages());
+				//Mando las entidades que tiene el mapa
+				//newClient->writeMessagesInQueue(gController->getEntitiesMessages());
+				//Mando los protagonistas hasta el momento
+				//newClient->writeMessagesInQueue(gController->getProtagonistasMessages());
+			}
 	}
 	cout << "FIN RUN" <<endl;
 	return 0;

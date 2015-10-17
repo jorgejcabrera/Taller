@@ -44,6 +44,18 @@ list<Message*> GameController::getEntitiesMessages(){
 	return listaDeEntities;
 }
 
+list<Message*> GameController::getProtagonistasMessages(){
+	list<Message*> listaDeProtagonistas;
+		list<EntidadDinamica*> protagonistas = this->getJuego()->getProtagonistas();
+		for(list<EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+			string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
+			//TODO ver como hacemos para mandar el nombre porque hoy en dia si le ponemos "Cliente 1" va a romper porque no va a encontrar el tipo de entidad
+			Message *protagonistaMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second);
+			listaDeProtagonistas.push_back(protagonistaMessage);
+		}
+		return listaDeProtagonistas;
+}
+
 void GameController::actualizarJuego(){
 	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
 	juego->actualizarProtagonistas();
