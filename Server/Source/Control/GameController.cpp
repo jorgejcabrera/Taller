@@ -64,10 +64,6 @@ void GameController::actualizarJuego(){
 	int y = (*position).second;
 
 	if(! juego->getProtagonista()->estaCaminando() && resourceManager->resourceAt(x,y)){
-		/*std::map<pair<int,int>,EntidadPartida*>::iterator it;
-		it = juego->getMap()->getEntities()->find(*position);
-		if( it != juego->getMap()->getEntities()->end())
-			juego->getMap()->getEntities()->erase(it);*/
 		this->resourceManager->collectResourceAt(position);
 	}
 	if(! juego->getProtagonista()->estaCaminando() && (! camino->empty()) ){

@@ -9,7 +9,7 @@
 
 ResourceManager::ResourceManager(Mapa* map){
 	this->map = map;
-	this->resource = new Resource(15,8);
+	this->resource = new Resource("gold",15,8);
 	this->map->pushEntity(this->resource);
 }
 

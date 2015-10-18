@@ -12,7 +12,7 @@
 
 class Resource: public EntidadEstatica {
 public:
-	Resource(int x,int y);
+	Resource(string tipo,int x,int y);
 	void drawMe(pair<int,int> isometricPosition,int offX,int offY,int ciclos);
 	virtual ~Resource();
 };

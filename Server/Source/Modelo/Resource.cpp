@@ -9,12 +9,17 @@
 
 using namespace std;
 
-Resource::Resource(int x,int y) {
+Resource::Resource(string tipo,int x,int y) {
 	this->position.first = x;
 	this->position.second = y;
 	this->width = 1;
 	this->length = 1;
-	this->pathImage = "../../Taller/Images/Resources/Wood.png";
+	if(tipo == "chori")
+		this->pathImage = "../../Taller/Images/Resources/chori.png";
+	if(tipo == "wood")
+		this->pathImage = "../../Taller/Images/Resources/Wood.png";
+	if(tipo == "gold")
+		this->pathImage = "../../Taller/Images/Resources/gold.png";
 	this->sizeString = "standarSmallSize";
 
 }
