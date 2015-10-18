@@ -16,6 +16,7 @@
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
 #include "../Modelo/PathFinder.h"
+#include "../Modelo/ResourceManager.h"
 
 class GameController {
 
@@ -24,6 +25,7 @@ private:
 	SDL_Event* event;
 	Juego* juego;
 	list<pair<int,int> >* camino;
+	ResourceManager* resourceManager;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;

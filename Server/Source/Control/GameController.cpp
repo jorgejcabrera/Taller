@@ -19,6 +19,8 @@ GameController::GameController(){
 	this->posMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
+
+	this->resourceManager = new ResourceManager(this->juego->getMap());
 }
 
 Juego* GameController::getJuego(){
@@ -57,6 +59,16 @@ void GameController::obtenerMouseInput(){
 
 void GameController::actualizarJuego(){
 
+	pair<int,int>* position = juego->getProtagonista()->getPosition();
+	int x = (*position).first;
+	int y = (*position).second;
+
+	if(! juego->getProtagonista()->estaCaminando() && resourceManager->resourceAt(x,y)){
+		std::map<pair<int,int>,EntidadPartida*>::iterator it;
+		it = juego->getMap()->getEntities()->find(*position);
+		if( it != juego->getMap()->getEntities()->end())
+			juego->getMap()->getEntities()->erase(it);
+	}
 	if(! juego->getProtagonista()->estaCaminando() && (! camino->empty()) ){
 		this->setNextPath();
 	}
@@ -157,7 +169,7 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	int posActualX = this->getJuego()->getProtagonista()->getPosition()->first;
 	int posActualY = this->getJuego()->getProtagonista()->getPosition()->second;
 
-	PathFinder* pf = new PathFinder(posActualX,posActualY,cartesianPosition.first,cartesianPosition.second,this->getJuego()->getMap());
+	PathFinder* pf = new PathFinder(posActualX,posActualY,cartesianPosition.first,cartesianPosition.second,this->getJuego()->getMap(),this->resourceManager);
 	camino->clear();
 	camino = pf->buscarCamino();
 	delete pf;
@@ -192,6 +204,7 @@ void GameController::delay(){
 GameController::~GameController() {
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
 	this->juego=NULL;
+	delete resourceManager;
 //	this->utils->~UtilsController();
 	delete(this->utils);
 	this->utils = NULL;

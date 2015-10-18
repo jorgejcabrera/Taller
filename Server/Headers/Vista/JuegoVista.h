@@ -16,6 +16,7 @@
 #include "../../Headers/Modelo/GameSettings.h"
 #include "../../Headers/Modelo/PicassoHelper.h"
 #include "../../Headers/Control/UtilsController.h"
+#include "../../Headers/Modelo/Resource.h"
 
 #include <string>
 #include <iostream>
@@ -28,6 +29,7 @@ private:
 	Juego* juego;
 	GameSettings* gameSettings;
 	PicassoHelper* picassoHelper;
+	Resource* unRecurso;
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);

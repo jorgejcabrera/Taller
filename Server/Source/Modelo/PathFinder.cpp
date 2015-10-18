@@ -7,7 +7,7 @@
 
 #include "../../Headers/Modelo/PathFinder.h"
 
-PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
+PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap,ResourceManager* rm) {
 
 	gameSettings = GameSettings::GetInstance();
 	this->map = unMap;
@@ -17,8 +17,9 @@ PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 	this->destinoX = dX;
 	this->destinoY = dY;
 	this->candidatos = new list<candidato>();
+	this->resourceManager = rm;
 
-	if( ! positionAvailable(destinoX,destinoY)){
+	if( ! positionAvailable(destinoX,destinoY) && ! resourceManager->resourceAt(dX,dY)){
 		pair<int,int> nuevoDestino = getClosestAvailable(destinoX,destinoY);
 		this->destinoX = nuevoDestino.first;
 		this->destinoY = nuevoDestino.second;
@@ -163,7 +164,7 @@ bool PathFinder::positionAvailable(int x,int y){
 	if(x < 0 || y < 0) return false;
 	if(x > gameSettings->MAP_HEIGHT - 1 || y > gameSettings->MAP_WIDTH -1) return false;
 
-	return this->map->getTileAt(x,y)->isAvailable();
+	return (this->map->getTileAt(x,y)->isAvailable() || resourceManager->resourceAt(x,y));
 }
 
 list<pair<int,int> >* PathFinder::buscarCamino(){

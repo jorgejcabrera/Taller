@@ -48,5 +48,9 @@ string EntidadPartida::getSizeString(){
 void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
 }
 
+bool EntidadPartida::isCollectable(){
+	return false;
+}
+
 EntidadPartida::~EntidadPartida() {
 }

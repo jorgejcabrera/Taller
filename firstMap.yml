@@ -45,14 +45,6 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
-- nombre: Banana
-  imagen: ../../Taller/Images/Vegetacion/Banana.png
-  ancho_base: 1
-  alto_base: 1
-  fps: 20
-  delay: 0
-  total_frames_line: 12
-
 - nombre: Smithy
   imagen: ../../Taller/Images/Industrial_Age/Smithy-3x3.png
   ancho_base: 3

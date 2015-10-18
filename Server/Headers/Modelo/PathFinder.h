@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Mapa.h"
 #include "../Modelo/GameSettings.h"
+#include "../Modelo/ResourceManager.h"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ private:
 	int dManhattan(int x,int y);
 	void setInicio();
 	GameSettings* gameSettings;
+	ResourceManager* resourceManager;
 
 	candidato inicio;
 	candidato destino;
@@ -55,7 +57,7 @@ private:
 	int posX;
 	int posY;
 public:
-	PathFinder(int x,int y,int dX,int dY,Mapa* map);
+	PathFinder(int x,int y,int dX,int dY,Mapa* map,ResourceManager* rm);
 	list<pair<int,int> >* buscarCamino();
 	virtual ~PathFinder();
 };
