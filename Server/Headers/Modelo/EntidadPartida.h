@@ -30,7 +30,6 @@ public:
 	void destruir();
 	int getWidth();
 	int getLength();
-	bool isCollectable();
 	string getPathImage();
 	string getSizeString();
 	void setPosition(int x,int y);

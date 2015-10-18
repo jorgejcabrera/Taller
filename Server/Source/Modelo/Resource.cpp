@@ -24,10 +24,6 @@ void Resource::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY,
 	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX + 15) , (isometricPosition.second+ offSetY + 55) ,this->getWidth() * DefaultSettings::getTileSize(), this->getLength() * DefaultSettings::getTileSize());
 }
 
-bool Resource::isCollectable(){
-	return true;
-}
-
 Resource::~Resource() {
 	// TODO Auto-generated destructor stub
 }
