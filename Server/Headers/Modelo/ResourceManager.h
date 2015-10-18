@@ -10,13 +10,14 @@
 
 #include "../Modelo/Mapa.h"
 #include "../Modelo/Resource.h"
+#include <list>
 using namespace std;
 
 class ResourceManager {
 
 private:
 	Mapa* map;
-	Resource* resource;
+	list<Resource*>* resources;
 public:
 	void collectResourceAt(pair<int,int>* pos);
 	ResourceManager(Mapa* map);
