@@ -18,7 +18,7 @@ private:
 	Mapa* map;
 	Resource* resource;
 public:
-	ResourceManager();
+	void collectResourceAt(pair<int,int>* pos);
 	ResourceManager(Mapa* map);
 	bool resourceAt(int x,int y);
 	virtual ~ResourceManager();

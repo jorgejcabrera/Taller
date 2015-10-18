@@ -5,12 +5,7 @@
  *      Author: juan
  */
 
-#include "ResourceManager.h"
-
-ResourceManager::ResourceManager() {
-	// TODO Auto-generated constructor stub
-
-}
+#include "../../Headers/Modelo/ResourceManager.h"
 
 ResourceManager::ResourceManager(Mapa* map){
 	this->map = map;
@@ -23,6 +18,13 @@ bool ResourceManager::resourceAt(int x,int y){
 	if(resource->getPosition()->first == x && resource->getPosition()->second == y)
 		hay = true;
 	return hay;
+}
+
+void ResourceManager::collectResourceAt(pair<int,int>* pos){
+	std::map<pair<int,int>,EntidadPartida*>::iterator it;
+	it = map->getEntities()->find(*pos);
+	if( it != map->getEntities()->end())
+		map->getEntities()->erase(it);
 }
 
 ResourceManager::~ResourceManager() {
