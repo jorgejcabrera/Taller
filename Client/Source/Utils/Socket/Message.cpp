@@ -28,6 +28,7 @@ int Message::getSize(){
 	return this->msg.ByteSize() + sizeof(int);
 }
 
+//TODO ver si hay que hacer un delete de integer_string
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
 	char* buffer = new char[ size + sizeof(int) ];

@@ -49,10 +49,10 @@ int main(int argc, char* argv[]) {
 		//delete server;
 	}*/
 
-	Message* unMensaje = new Message();
+	/*Message* unMensaje = new Message();
 	msg_game msg;
 	msg.set_id(1);
-	msg.set_tipo("unTipo de loa sdfdsfdsfdsfsdfafaf saadsgasdgfdgdgdgdfgadafg ");
+	msg.set_tipo("Primer mensaje de longitud variable");
 	msg.set_x(10);
 	msg.set_y(10);
 	unMensaje->setContent(msg);
@@ -66,9 +66,9 @@ int main(int argc, char* argv[]) {
 
 	msg_game msg_new;
 	msg_new.ParseFromArray(&msgSerializado[sizeof(int)],size);
-	cout << msg_new.id()<<" "<<msg_new.tipo()<<" "<<msg_new.x()<<" "<< msg_new.y()<<endl;
+	cout << msg_new.id()<<" "<<msg_new.tipo()<<" "<<msg_new.x()<<" "<< msg_new.y()<<endl;*/
 
-	/*Client* jorge = new Client("127.0.0.1",7843);
+	Client* jorge = new Client("127.0.0.1",7843);
 	jorge->connectToServer();
 	int count = 0;
 
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
 		cout << "Client is sending message"<<endl;
 		jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
 		count++;
-	}*/
+	}
 	return 0;
 }
 

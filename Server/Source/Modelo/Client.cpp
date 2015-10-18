@@ -30,4 +30,5 @@ void Client::writeMessagesInQueue(list<Message*> messagesList){
 
 void Client::writeMessagesInQueue(Message* message){
 		this->writeThread->writeMessage(*message);
+		cout << "[Client] writeMessagesInQueue: "<< message->getSize() - 4 <<" bytes"<<endl;
 }
