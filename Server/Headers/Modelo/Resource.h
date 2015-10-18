@@ -11,8 +11,11 @@
 #include "EntidadEstatica.h"
 
 class Resource: public EntidadEstatica {
+private:
+	string tipo;
 public:
 	Resource(string tipo,int x,int y);
+	string getTipo();
 	void drawMe(pair<int,int> isometricPosition,int offX,int offY,int ciclos);
 	virtual ~Resource();
 };

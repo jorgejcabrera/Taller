@@ -8,6 +8,11 @@
 #include "../../Headers/Modelo/ResourceManager.h"
 
 ResourceManager::ResourceManager(Mapa* map){
+	int cantidadInicial = 10;
+	this->alimento = cantidadInicial;
+	this->madera = cantidadInicial;
+	this->oro = cantidadInicial;
+
 	this->map = map;
 	this->resources = new list<Resource*>();
 	Resource* oro = new Resource("gold",15,8);
@@ -32,10 +37,37 @@ bool ResourceManager::resourceAt(int x,int y){
 }
 
 void ResourceManager::collectResourceAt(pair<int,int>* pos){
-	std::map<pair<int,int>,EntidadPartida*>::iterator it;
-	it = map->getEntities()->find(*pos);
-	if( it != map->getEntities()->end())
-		map->getEntities()->erase(it);
+	bool collected = false;
+	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
+		if((*it)->getPosition()->first == pos->first && (*it)->getPosition()->second == pos->second){
+			if((*it)->getTipo() == "chori") this->alimento++;
+			if((*it)->getTipo() == "gold") this->oro++;
+			if((*it)->getTipo() == "wood") this->madera++;
+			this->resources->erase(it);
+			collected = true;
+		}
+
+	std::map<pair<int,int>,EntidadPartida*>::iterator it2;
+	it2 = map->getEntities()->find(*pos);
+	if( it2 != map->getEntities()->end())
+		map->getEntities()->erase(it2);
+
+	cout<<"madera: "<<madera<<endl;
+	cout<<"oro: "<<oro<<endl;
+	cout<<"alimento: "<<alimento<<endl;
+
+}
+
+int ResourceManager::getFood(){
+	return this->alimento;
+}
+
+int ResourceManager::getGold(){
+	return this->oro;
+}
+
+int ResourceManager::getWood(){
+	return this->madera;
 }
 
 ResourceManager::~ResourceManager() {

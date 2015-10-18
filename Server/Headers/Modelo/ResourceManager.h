@@ -18,10 +18,16 @@ class ResourceManager {
 private:
 	Mapa* map;
 	list<Resource*>* resources;
+	int oro;
+	int madera;
+	int alimento;
 public:
 	void collectResourceAt(pair<int,int>* pos);
 	ResourceManager(Mapa* map);
 	bool resourceAt(int x,int y);
+	int getGold();
+	int getWood();
+	int getFood();
 	virtual ~ResourceManager();
 };
 
