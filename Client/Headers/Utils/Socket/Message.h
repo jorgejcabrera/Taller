@@ -55,6 +55,7 @@ public:
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
+
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

@@ -31,9 +31,11 @@ int Message::getSize(){
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
 	char* buffer = new char[ size + sizeof(int) ];
+	memset(buffer, 0, size + sizeof(int));
 
 	// convert int to char*
 	char integer_string[sizeof(int)];
+	memset(integer_string, 0, sizeof(int));
 	sprintf(integer_string,"%d",size);
 
 	// coloco el int en el buffer
