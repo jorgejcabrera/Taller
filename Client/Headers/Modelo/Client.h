@@ -15,6 +15,7 @@
 
 #include "../Utils/Socket/MessageSocketWriter.h"
 #include "../Utils/Socket/MessageSocketReader.h"
+#include "../Control/GameController.h"
 #include <string.h>
 #include <iostream>
 #include <unistd.h>
@@ -30,6 +31,7 @@ class Client {
 private:
 	MessageSocketWriter* writeThread;
 	MessageSocketReader* readThread;
+	GameController* gameController;
 	int port;
 	int sockfd;
 	int status;

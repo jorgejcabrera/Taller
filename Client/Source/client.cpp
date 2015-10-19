@@ -28,7 +28,6 @@ int main(int argc, char* argv[]) {
 
 	Client* jorge = new Client("127.0.0.1",7843);
 	jorge->connectToServer();
-	GameController* gController = new GameController();
 
 	//ESPERO 10 segundos
 	SDL_Delay(10000);
@@ -38,9 +37,9 @@ int main(int argc, char* argv[]) {
 		jorge->processReceivedMessages();
 
 		//dibujammos el juego actualizado
-		gController->actualizarJuego();
 
-		//mandamos eventos al server
+
+		//escuchamos eventos y los mandamos al server
 		jorge->sendEvents();
 	}
 	return 0;

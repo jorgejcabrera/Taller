@@ -55,6 +55,7 @@ int Client::connectToServer(){
 	this->writeThread = new MessageSocketWriter(this->sockfd);
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
 
+	this->gameController = new GameController();
 	return OK;
 }
 
@@ -114,7 +115,9 @@ void Client::saveEntitiesConfig(Message* msg){
 }
 
 void Client::sendEvents(){
-
+	Message* newMessage = this->gameController->getMessageFromEvent(this->name);
+	if(newMessage)
+		this->writeThread->writeMessage(newMessage);
 }
 
 

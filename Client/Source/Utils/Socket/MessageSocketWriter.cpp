@@ -18,15 +18,10 @@ void MessageSocketWriter::writeMessage(Message *msg){
 }
 
 int MessageSocketWriter::run(void* data){
-	cout << "MessageSocketWriter running! "<<endl;
+	Logger::get()->logDebug("MessageSocketWriter","run","thread socket writter is running");
 	while(this->isAlive){
-		stringstream ss;
 		while(!this->queue.isEmpty()){
-			ss.str("");
-			ss << "Queue size "<< this->queue.getSize();
-			//Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
-			Message *msg = ((MessageSocketWriter*)data)->queue.pullTail();
-			Logger::get()->logDebug("MessageSocketWriter","run",msg->toString());
+			Message* msg = ((MessageSocketWriter*)data)->queue.pullTail();
 			if(!this->socket->writeMessage(msg)){
 			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
 			 }
