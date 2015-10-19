@@ -24,6 +24,7 @@ int MessageSocketWriter::run(void* data){
 			ss << "Queue size "<< this->queue.getSize();
 			Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
 			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
+			//Logger::get()->logDebug("MessageSocketWriter","run",msg.toString());
 			if(!this->socket->writeMessage(&msg)){
 			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
 			 }

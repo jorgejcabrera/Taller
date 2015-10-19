@@ -68,6 +68,9 @@ Message* SocketUtils::readMessage(){
 	msg.ParseFromArray(buffer,size);
 	Message* message = new Message();
 	message->setContent(msg);
+	ss.str("");
+	ss << "message read " << message->toString();
+	Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 	delete[] buffer;
 	delete[] buff;
 	return message;
