@@ -22,7 +22,7 @@ EntidadDinamica::EntidadDinamica(){
 }*/
 
 //TODO sacar los fps y el tamaño en pixel
-EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
+EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels){
 	this->caminando = false;
 	this->position.first = x;
 	this->position.second = y;
@@ -33,13 +33,6 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = 1;
 	this->length = 1;
-	/*
-	 * TODO esto va en la vista
-	 * this->widthPixel = widthPixel;
-	 * this->lengthPixel = lengthPixels;
-	 * if(fps > 50) fps = 50;
-	 * this->framesPerSecond = fps;
-	 */
 	this->owner = 0;
 	this->name = nameEntity;
 }
