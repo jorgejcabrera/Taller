@@ -5,6 +5,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <stdio.h>
+#include <sstream>
 #include "../../../Headers/Utils/Socket/Message.h"
 
 using namespace std;

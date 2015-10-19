@@ -44,7 +44,7 @@ public:
 	void sendMessage(Message msg);
 	void communicateWithServer();
 	virtual ~Client();
-
+	int getCountMessageToRead();
 	void processReceivedMessages();
 	void saveEntitiesConfig(Message* msg);
 };

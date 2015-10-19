@@ -12,21 +12,14 @@ MessageSocketReader::MessageSocketReader(int sockfd) {
 	this->isAlive = true;
 }
 
+//TODO borrar este log es para debbugear
 int MessageSocketReader::run(void *data){
-	while(this->isAlive){
-		cout << "Running thread client reader "<<endl;
+	Logger::get()->log("MessageSocketReader","run","running thread client reader");
+	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
-		cout << message->toString() << endl;
 		this->queue->queuing(*message);
-		//TODO interpretar mensaje
-		//if (!message)
-			//shutdown(this->socket->getSocket(),0);
 	}
 	return OK;
-}
-
-MessageSocketReader::~MessageSocketReader() {
-	// TODO Auto-generated destructor stub
 }
 
 list<Message*> MessageSocketReader::getMessagePendingProcess(){
@@ -38,4 +31,12 @@ list<Message*> MessageSocketReader::getMessagePendingProcess(){
 	}
 	this->queue->unlockQueue();
 	return listaPendientes;
+}
+
+int MessageSocketReader::getCountMessages(){
+	return this->queue->getSize();
+}
+
+MessageSocketReader::~MessageSocketReader() {
+	// TODO Auto-generated destructor stub
 }

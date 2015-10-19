@@ -12,6 +12,7 @@
 #define ERROR -1
 
 #include "../Thread.h"
+#include "../Logger.h"
 #include "SocketQueue.h"
 #include "SocketUtils.h"
 #include <list>
@@ -27,6 +28,7 @@ public:
 	MessageSocketReader(int sockfd);
 	int run(void* data);
 	virtual ~MessageSocketReader();
+	int getCountMessages();
 	list<Message*> getMessagePendingProcess();
 };
 

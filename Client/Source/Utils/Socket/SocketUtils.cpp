@@ -9,33 +9,40 @@ void SocketUtils::setSocket(int socket){
 }
 
 bool SocketUtils::writeMessage(Message* message){
+	int intSize = sizeof(int);
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
-	if( wroteBytes < 0) cout <<"[SocketUtils] writeMessage: ERROR writing to SocketUtils" << endl;
-	return wroteBytes == ( message->getSize() - sizeof(int) );
+	if( wroteBytes < 0) Logger::get()->log("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
+	return wroteBytes == ( message->getSize() - intSize );
 }
 
+//TODO borrar la variable ss es para debuggear y ver los logs
 Message* SocketUtils::readMessage(){
 	int bytesRead = 0;
 	int intSize = sizeof(int);
 	int bytesToRead = intSize;
 	int currentBytesRead = 0;
+	stringstream ss;
 
 	/***obtenemos la cantidad de bytes a leer***/
 	char* buff = new char[sizeof(int)];
 	memset(buff, 0, sizeof(int));
 	while( bytesRead < intSize ){
 		currentBytesRead = read(this->socket, &buff[bytesRead], bytesToRead);
+		ss << currentBytesRead << " was read";
+		Logger::get()->log("SocketUtils","readMessage",ss.str());
 		bytesRead = currentBytesRead + bytesRead;
 		if ( currentBytesRead < 0 ){
-			cout << "[SocketUtils] readMessage: Error reading message size from socket"<<endl;
+			Logger::get()->log("SocketUtils","readMessage","Error reading message size from socket");
 			delete[] buff;
 			return NULL;
 		}
 		bytesToRead = intSize - bytesRead;
 	}
 	int size = atoi(buff);
-	cout << "La cantidad de bytes a leer es: "<< size <<endl;
+	ss.str("");
+	ss << "reading "<< size << " bytes";
+	Logger::get()->log("SocketUtils","readMessage",ss.str());
 
 	/***creamos el buffer para leer el mensaje***/
 	char* buffer = new char[size];
@@ -44,9 +51,12 @@ Message* SocketUtils::readMessage(){
 	bytesToRead = size;
 	while ( bytesRead < size ){
 		currentBytesRead = read(this->socket, &buffer[bytesRead], bytesToRead);
+		ss.str("");
+		ss << currentBytesRead << " was read";
+		Logger::get()->log("SocketUtils","readMessage",ss.str());
 		bytesRead =  currentBytesRead + bytesRead;
-		if (currentBytesRead < 0){
-			cout << "[SocketUtils] readMessage: Error reading from socket" << endl;
+		if ( currentBytesRead < 0 ){
+			Logger::get()->log("SocketUtils","readMessage","Error reading from socket");
 			delete[] buffer;
 			delete[] buff;
 			return NULL;
@@ -59,6 +69,7 @@ Message* SocketUtils::readMessage(){
 	msg.ParseFromArray(buffer,size);
 	Message* message = new Message();
 	message->setContent(msg);
+	Logger::get()->log("SocketUtils","readMessage",message->toString());
 	delete[] buffer;
 	delete[] buff;
 	return message;

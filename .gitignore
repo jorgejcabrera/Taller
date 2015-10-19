@@ -40,3 +40,4 @@ logAge
 *logAge
 *.log
 *.yml~
+*.txt

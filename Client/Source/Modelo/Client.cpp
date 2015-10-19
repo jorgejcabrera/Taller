@@ -16,9 +16,12 @@ Client::Client(string ip, int port) {
 
 int Client::connectToServer(){
 	int error;
+	stringstream ss;
 	if ( this->sockfd < 0) {
-		cout << "Error initialising socket: "<< gai_strerror(this->sockfd)<< endl;
-		//return ERROR;
+		ss.clear();
+		ss << "Error initializing socket ." << gai_strerror(this->sockfd) << endl;
+		Logger::get()->log("Client","connectToServer",ss.str());
+		return ERROR;
 	}
 
 	//CREATE SOCKET
@@ -29,13 +32,17 @@ int Client::connectToServer(){
 	s_addr.sin_addr.s_addr = inet_addr(this->ip.c_str());	//set server's IP
 
 	if ( s_addr.sin_addr.s_addr < 0 ){
-		cout << "Error en la direccion IP"<< gai_strerror(s_addr.sin_addr.s_addr)<< endl;
-		//return ERROR;
+		ss.clear();
+		ss << "IP connection error ." << gai_strerror(s_addr.sin_addr.s_addr) << endl;
+		Logger::get()->log("Client","connectToServer",ss.str());
+		return ERROR;
 	}
 	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
-		cout << "Error connecting to server: "<< gai_strerror(error) << endl;
+		ss.clear();
+		ss << "Error connecting to server ." << gai_strerror(error) << endl;
+		Logger::get()->log("Client","connectToServer",ss.str());
 		this->status = DISCONECTED;
-		//return ERROR;
+		return ERROR;
 	}else{
 		cout << "Conexion con el servidor "<< inet_ntoa(s_addr.sin_addr)<<endl;
 		this->status = CONECTED; // conectado :)
@@ -119,4 +126,8 @@ void Client::saveEntitiesConfig(Message* msg){
 												msg->getTotalFramesLine(),
 												msg->getPixelsDimension());
 	GameSettings::GetInstance()->addEntitisConfig(entidad);
+}
+
+int Client::getCountMessageToRead(){
+	return this->readThread->getCountMessages();
 }
