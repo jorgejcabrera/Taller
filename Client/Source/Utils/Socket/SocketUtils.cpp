@@ -28,7 +28,7 @@ Message* SocketUtils::readMessage(){
 	memset(buff, 0, sizeof(int));
 	while( bytesRead < intSize ){
 		currentBytesRead = read(this->socket, &buff[bytesRead], bytesToRead);
-		ss << currentBytesRead << " was read";
+		ss << currentBytesRead << " bytes was read";
 		Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 		bytesRead = currentBytesRead + bytesRead;
 		if ( currentBytesRead < 0 ){
@@ -40,7 +40,7 @@ Message* SocketUtils::readMessage(){
 	}
 	int size = atoi(buff);
 	ss.str("");
-	ss << "reading "<< size << " bytes";
+	ss << "going to read "<< size << " message bytes";
 	Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 
 	/***creamos el buffer para leer el mensaje***/
@@ -51,7 +51,7 @@ Message* SocketUtils::readMessage(){
 	while ( bytesRead < size ){
 		currentBytesRead = read(this->socket, &buffer[bytesRead], bytesToRead);
 		ss.str("");
-		ss << currentBytesRead << " was read";
+		ss << currentBytesRead << " bytes was read";
 		Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 		bytesRead =  currentBytesRead + bytesRead;
 		if ( currentBytesRead < 0 ){
@@ -68,7 +68,6 @@ Message* SocketUtils::readMessage(){
 	msg.ParseFromArray(buffer,size);
 	Message* message = new Message();
 	message->setContent(msg);
-	Logger::get()->logDebug("SocketUtils","readMessage",message->toString());
 	delete[] buffer;
 	delete[] buff;
 	return message;

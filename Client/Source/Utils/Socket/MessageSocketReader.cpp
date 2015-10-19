@@ -16,6 +16,9 @@ int MessageSocketReader::run(void *data){
 	Logger::get()->logDebug("MessageSocketReader","run","running thread client reader");
 	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
+		stringstream ss;
+		ss << "message read " << message->toString();
+		Logger::get()->logDebug("MessageSocketReader","run",ss.str());
 		this->queue->queuing(*message);
 	}
 	return OK;

@@ -22,7 +22,6 @@ int MessageSocketWriter::run(void* data){
 			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
 			if( !this->socket->writeMessage(&msg) < 0){
 				Logger::get()->logError("MessageSocketWriter","run","Cant send message to server");
-				return ERROR;
 			}
 		}
 	}
