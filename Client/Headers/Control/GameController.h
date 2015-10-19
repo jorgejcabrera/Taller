@@ -14,6 +14,7 @@
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
+#include "../Utils/Socket/Message.h"
 
 class GameController {
 
@@ -29,7 +30,7 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
-	void moveCharacter(int xScreen,int yScreen);
+	pair<int,int> moveCharacter(int xScreen,int yScreen);
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:
@@ -37,7 +38,7 @@ public:
 	bool reiniciarJuego();
 	void actualizarJuego();
 	void render();
-	void obtenerMouseInput();
+	Message* getMessageFromEvent(string userId);
 	int getRunCycles();
 	int getMaxFramesPerSecond();
 	bool finDeJuego();

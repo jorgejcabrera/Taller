@@ -20,20 +20,42 @@ GameController::GameController(){
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 }
 
-void GameController::obtenerMouseInput(){
+Message* GameController::getMessageFromEvent(string userId){
 
 	while(SDL_PollEvent(event)){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			this->moveCharacter(posMouseX,posMouseY);
+			/*TODO esto nose si está bien. Lo que hacemos es cliquear en la pantalla, transformar esa posicion
+			 *en cartesiana, que es la que le vamos a enviar al server,y dejamos seteado también la posicion
+			 *en donde se debería dibujar el chabonsito*/
+			pair<int,int> cartesianPosition = this->moveCharacter(posMouseX,posMouseY);
+			Message* message = new Message();
+			msg_game body;
+			body.set_nombre(userId);
+			body.set_tipo("update");
+			body.set_x(posMouseX);
+			body.set_y(posMouseY);
+			message->setContent(body);
+			return message;
 		}
-		if( event->type == SDL_QUIT)
+		if( event->type == SDL_QUIT){
 			this->salirDelJuego = true;
-		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r)
+			Message* message = new Message();
+			msg_game body;
+			body.set_nombre(userId);
+			body.set_tipo("exit");
+			message->setContent(body);
+			return message;
+		}
+		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r){
 			this->reiniciar = true;
-
+			/*TODO esto parece que no va mas asique lo podriamos ir sacando
+			 **/
+			return NULL;
+		}
 	}
+	return NULL;
 }
 
 JuegoVista* GameController::getJuegoVista(){
@@ -107,7 +129,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	return curretOffset;
 }
 
-void GameController::moveCharacter(int xScreen,int yScreen){
+pair<int,int> GameController::moveCharacter(int xScreen,int yScreen){
 	pair<int,int>* offset = this->juegoVista->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
 	bool correctPosition = false;
@@ -138,7 +160,7 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	//TODO: Aca deberia actualizar la posicion del protagonsita?
 	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
-	return;
+	return cartesianPosition;
 }
 
 void GameController::delay(){
