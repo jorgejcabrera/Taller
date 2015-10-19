@@ -36,6 +36,10 @@ void GameController::obtenerMouseInput(){
 	}
 }
 
+JuegoVista* GameController::getJuegoVista(){
+	return this->juegoVista;
+}
+
 void GameController::actualizarJuego(){
 	//TODO: esto deberia actualizar el juegoVista?
 	//juego->actualizarProtagonista();

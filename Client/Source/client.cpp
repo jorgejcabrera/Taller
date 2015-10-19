@@ -26,9 +26,10 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	Client* jorge = new Client("127.0.0.1",7843);
-	jorge->connectToServer();
 	GameController* gController = new GameController();
+	Client* jorge = new Client("127.0.0.1",7843, gController);
+	jorge->connectToServer();
+
 
 	//ESPERO 10 segundos
 	SDL_Delay(10000);

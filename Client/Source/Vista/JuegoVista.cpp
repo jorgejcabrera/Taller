@@ -9,6 +9,9 @@
 
 JuegoVista::JuegoVista() {
 	gameSettings = GameSettings::GetInstance();
+}
+
+void JuegoVista::createView(){
 	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
 
@@ -75,6 +78,16 @@ JuegoVista::~JuegoVista() {
 	delete(this->picassoHelper);
 	this->picassoHelper=NULL;
 	this->gameSettings=NULL;
+}
+
+void JuegoVista::addTile(string surface, int x, int y){
+	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
+	//TODO falta agregar el offset para dibujar
+	int posY = (x+y) * gameSettings->getTileSize() / 2;
+	int posX = (x-y) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
+	TileVista *newtile = new TileVista(posX,posY);
+	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
+	this->tiles.push_back(newtile);
 }
 
 

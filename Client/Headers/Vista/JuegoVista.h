@@ -18,6 +18,8 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h>
+#include <list>
+#include "TileVista.h"
 
 using namespace std;
 
@@ -29,12 +31,16 @@ private:
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);
+	list<TileVista*> tiles;
+
 public:
 	void render(int ciclos);
 	JuegoVista();
 	~JuegoVista();
+	void createView();
 	void actualizarOffset(int offsetX,int offsetY);
 	pair<int,int>* getOffset();
+	void addTile(string surface, int x, int y);
 
 };
 

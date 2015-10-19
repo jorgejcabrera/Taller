@@ -23,6 +23,8 @@
 #include "../Utils/Socket/Message.h"
 #include "EntidadConfig.h"
 #include "GameSettings.h"
+#include "../Vista/JuegoVista.h"
+#include "../Control/GameController.h"
 
 using namespace std;
 
@@ -37,8 +39,9 @@ private:
 	string name;
 	void readMessage(Message msg);
 	void sendMessage(Message* msg);
+	GameController *gController;
 public:
-	Client(string ip, int port);
+	Client(string ip, int port, GameController *gController);
 	int connectToServer();
 	int getStatus();
 	bool isConected();
