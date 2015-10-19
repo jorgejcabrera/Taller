@@ -18,9 +18,6 @@ void SocketQueue::queuing(Message* msg){
 	 **/
 	this->lockQueue();
 	this->myQueue.push(msg);
-	stringstream ss;
-		ss << " QUEUE size " << this->myQueue.size();
-		Logger::get()->logDebug("SocketQueue","queuing",ss.str());
 	this->unlockQueue();
 }
 
