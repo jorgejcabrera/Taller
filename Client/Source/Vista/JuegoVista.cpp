@@ -43,12 +43,29 @@ void JuegoVista::drawStaticEntities(int runCycles){
 void JuegoVista::render(int runCycles){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();
-	//this->drawDinamicEntities(runCycles);
+	this->drawDinamicEntities(runCycles);
 	this->drawStaticEntities(runCycles);
 	this->picassoHelper->renderView();
 }
 
 void JuegoVista::drawDinamicEntities(int runCycles){
+	pair<int,int> isometricPosition;
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
+		int offSetX = this->getOffset()->first;
+		int offSetY = this->getOffset()->second;
+		EntidadDinamicaVista* entidad = (*itDinamicos).second;
+		//pair<int,int>* screenPosition = entidad->getPosition();
+
+		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
+		cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
+		this->picassoHelper->renderObject(entidad->getPathImage(),
+											isometricPosition.first - gameSettings->getTileSize()/2 + offSetX,
+											isometricPosition.second - entidad->getLengthPixel() / 2 + offSetY,
+											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
+
+	}
 	//TODO: Juego vista no deberia contener la lista de soldados?
 	/*
 	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
@@ -77,9 +94,6 @@ JuegoVista::~JuegoVista() {
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
 	//TODO falta agregar el offset para dibujar
-	//TODO lo guardo en posiciones cartecianas, despues lo voy a convertir cuando lo tenga que dibujar
-	//int posY =(x+y) * gameSettings->getTileSize() / 2;
-	//int posX =(x-y) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
 	TileVista *newtile = new TileVista(x,y);
 	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
 	this->tiles.push_back(newtile);
