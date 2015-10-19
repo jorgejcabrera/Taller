@@ -8,6 +8,7 @@
 #ifndef SOURCE_UTILS_SOCKET_MESSAGE_H_
 #define SOURCE_UTILS_SOCKET_MESSAGE_H_
 
+#include "../Logger.h"
 #include <string.h>
 #include <sstream>
 #include <iostream>

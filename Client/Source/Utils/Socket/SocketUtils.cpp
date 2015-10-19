@@ -9,11 +9,10 @@ void SocketUtils::setSocket(int socket){
 }
 
 bool SocketUtils::writeMessage(Message* message){
-	int intSize = sizeof(int);
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
 	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
-	return wroteBytes == ( message->getSize() - intSize );
+	return wroteBytes == message->getSize();
 }
 
 //TODO borrar la variable ss es para debuggear y ver los logs

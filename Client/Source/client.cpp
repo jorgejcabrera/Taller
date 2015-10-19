@@ -35,7 +35,6 @@ int main(int argc, char* argv[]) {
 		jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
 		count++;
 	}
-	//Logger::get()->log("[SocketUtils]","writeMessage"," ERROR writing to SocketUtils");
 
 	return 0;
 }

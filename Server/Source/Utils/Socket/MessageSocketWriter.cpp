@@ -18,11 +18,14 @@ void MessageSocketWriter::writeMessage(Message msg){
 
 int MessageSocketWriter::run(void* data){
 	while(this->isAlive){
+		stringstream ss;
 		while(!this->queue.isEmpty()){
+			ss.str("");
+			ss << "Queue size "<< this->queue.getSize();
+			Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
 			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
-			if( this->socket->writeMessage(&msg)){
-				cout << "ERROR: No se puedieron enviar mensajes al servidor"<< endl;
-				return ERROR;
+			if(!this->socket->writeMessage(&msg)){
+			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
 			 }
 		}
 	}
