@@ -26,10 +26,16 @@ private:
 	bool isAlive;
 public:
 	MessageSocketReader(int sockfd);
+	/*
+	*leemos los mensajes del socket y los mandamos a la cola de novedades
+	**/
 	int run(void* data);
+	/*
+	*devuelve la lista de mensajes que se leyeron del socket y deben ser procesados
+	**/
+	list<Message*> getMessagesToProcess();
 	virtual ~MessageSocketReader();
-	int getCountMessages();
-	list<Message*> getMessagePendingProcess();
+
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEREADER_H_ */

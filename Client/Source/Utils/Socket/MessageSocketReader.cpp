@@ -22,19 +22,15 @@ int MessageSocketReader::run(void *data){
 	return OK;
 }
 
-list<Message*> MessageSocketReader::getMessagePendingProcess(){
+list<Message*> MessageSocketReader::getMessagesToProcess(){
 	list<Message*> listaPendientes;
 	this->queue->lockQueue();
 	while(!this->queue->isEmpty()){
-		Message *msg = this->queue->pullTailWithoutLock();
+		Message* msg = this->queue->pullTailWithoutLock();
 		listaPendientes.push_back(msg);
 	}
 	this->queue->unlockQueue();
 	return listaPendientes;
-}
-
-int MessageSocketReader::getCountMessages(){
-	return this->queue->getSize();
 }
 
 MessageSocketReader::~MessageSocketReader() {

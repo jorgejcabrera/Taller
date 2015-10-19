@@ -43,7 +43,7 @@ SocketQueue::~SocketQueue() {
 }
 
 Message* SocketQueue::pullTailWithoutLock(){
-	Message *message = this->myQueue.front();
+	Message* message = this->myQueue.front();
 	this->myQueue.pop();
 	return message;
 }

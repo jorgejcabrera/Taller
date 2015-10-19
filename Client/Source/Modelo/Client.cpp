@@ -14,6 +14,7 @@ Client::Client(string ip, int port) {
 	this->status = DISCONECTED;								//desconected
 }
 
+//TODO habilitar el socket que escribe al servidor
 int Client::connectToServer(){
 	int error;
 	stringstream ss;
@@ -74,22 +75,15 @@ bool Client::isConected(){
 	return this->status == CONECTED;
 }
 
-Client::~Client() {
-	//this->socketUtils->~SocketUtils();
-	shutdown(this->sockfd, 2);	//2 blocks recv and sending
-	close(this->sockfd);
-}
-
 void Client::processReceivedMessages(){
-	list<Message*> pendingMessages = this->readThread->getMessagePendingProcess();
+	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
 	for(list<Message*>::iterator it=pendingMessages.begin(); it!=pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
 		if(tipoMensaje=="window"){
-			//Seteo la dimension de la ventana
 			GameSettings::GetInstance()->setScreenDimension((*it)->getPositionX(),(*it)->getPositionY());
 		}else if (tipoMensaje=="config"){
 			//Genero una entidad de configuracion y lo envio al GameSettings
-			saveEntitiesConfig((*it));
+			saveEntitiesConfig(*it);
 		}else if (tipoMensaje=="update"){
 			//TODO agregar comportamiento para mensajes de cambios de posicion
 		}else if (tipoMensaje=="tile"){
@@ -121,3 +115,10 @@ void Client::saveEntitiesConfig(Message* msg){
 void Client::sendEvents(){
 
 }
+
+
+Client::~Client() {
+	shutdown(this->sockfd, 2);	//2 blocks recv and sending
+	close(this->sockfd);
+}
+
