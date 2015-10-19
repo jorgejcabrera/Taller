@@ -11,44 +11,49 @@ SocketQueue::SocketQueue() {
 	this->lock = SDL_CreateMutex();
 }
 
-void SocketQueue::queuing(Message msg){
+void SocketQueue::queuing(Message* msg){
 	/*
 	 *If the mutex is already locked by another thread, then SDL_LockMutex
 	 *will not return until the thread that locked it unlocks it
 	 **/
 	this->lockQueue();
-	this->queue.push(msg);
+	this->myQueue.push(msg);
+	stringstream ss;
+		ss << " QUEUE size " << this->myQueue.size();
+		Logger::get()->logDebug("SocketQueue","queuing",ss.str());
 	this->unlockQueue();
 }
 
-Message SocketQueue::pullTail(){
+Message* SocketQueue::pullTail(){
 	this->lockQueue();
-	Message message = this->pullTailWithoutLock();
+	Message *message = this->pullTailWithoutLock();
 	this->unlockQueue();
 	return message;
 }
 
 bool SocketQueue::isEmpty(){
-	return this->queue.size() <= 0;
+	return this->myQueue.empty();
 }
 int SocketQueue::getSize(){
-	return this->queue.size();
+	return this->myQueue.size();
 }
 
 SocketQueue::~SocketQueue() {
 	SDL_DestroyMutex(this->lock);
 }
 
-Message SocketQueue::pullTailWithoutLock(){
-	Message message = this->queue.front();
-	this->queue.pop();
+Message* SocketQueue::pullTailWithoutLock(){
+	Message *message = this->myQueue.front();
+	this->myQueue.pop();
 	return message;
 }
 
 void SocketQueue::lockQueue(){
-	SDL_LockMutex(lock);
+	//SDL_LockMutex(lock);
+	SDL_mutexP(lock);
 }
 
 void SocketQueue::unlockQueue(){
-	SDL_UnlockMutex(lock);
+	//SDL_UnlockMutex(lock);
+	SDL_mutexV(lock);
 }

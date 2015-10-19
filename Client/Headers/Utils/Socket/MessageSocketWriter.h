@@ -30,7 +30,7 @@ public:
 	*Ponemos los mensajes en la cola de novedades
 	*/
 	void stopWrite();
-	void sendMessage(Message msg);
+	void sendMessage(Message *msg);
 	virtual ~MessageSocketWriter();
 };
 

@@ -12,15 +12,15 @@ MessageSocketWriter::MessageSocketWriter(int sockfd) {
 	this->isAlive = true;
 }
 
-void MessageSocketWriter::sendMessage(Message msg){
+void MessageSocketWriter::sendMessage(Message* msg){
 	this->queue.queuing(msg);
 }
 
 int MessageSocketWriter::run(void* data){
 	while(this->isAlive){
 		while(!this->queue.isEmpty()){
-			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
-			if( !this->socket->writeMessage(&msg) < 0){
+			Message *msg = ((MessageSocketWriter*)data)->queue.pullTail();
+			if( !this->socket->writeMessage(msg) < 0){
 				Logger::get()->logError("MessageSocketWriter","run","Cant send message to server");
 			}
 		}

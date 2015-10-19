@@ -30,11 +30,14 @@ int main(int argc, char* argv[]) {
 	jorge->connectToServer();
 	int count = 0;
 
-	while( jorge->isConected() && count < 4 ){
+	//ESPERO 10 segundos
+	SDL_Delay(10000);
+
+	/*while( jorge->isConected() && count < 4 ){
 		cout << "cliente conectado"<<endl;
-		jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
+		//jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
 		count++;
-	}
+	}*/
 
 	return 0;
 }

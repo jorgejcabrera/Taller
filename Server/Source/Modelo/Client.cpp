@@ -25,6 +25,7 @@ void Client::writeMessagesInQueue(list<Message*> messagesList){
 		//TODO: borrar este cout
 		//cout << "Messages: " << (*it)->toString()<<endl;
 		this->writeThread->writeMessage((**it));
+		cout << "[Client] writeMessagesInQueue: "<< (**it).getSize() - 4 <<" bytes"<<endl;
 	}
 }
 
