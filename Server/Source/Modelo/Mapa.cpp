@@ -80,6 +80,17 @@ Tile* Mapa::getTileAt(int x,int y){
 	return this->tiles.at(make_pair(x,y));
 }
 
+//Busco una posicion disponible para poner un personaje cuando se crea un cliente
+pair<int,int> Mapa::getAvailablePosition(){
+	for(map<pair<int,int>,Tile*>::iterator tilesIterator=this->tiles.begin(); tilesIterator!=this->tiles.end(); ++tilesIterator){
+		if(tilesIterator->second->isAvailable()){
+			//TODO ver como hacer para que cuando se mueva el personaje se vuelva a habilitar el tile
+			tilesIterator->second->changeStatusAvailable();
+			return tilesIterator->first;
+		}
+	}
+	return make_pair(-1,-1);
+}
 map<pair<int,int>,Tile*>* Mapa::getTiles(){
 	return &this->tiles;
 }

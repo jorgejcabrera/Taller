@@ -39,6 +39,9 @@ public:
 	//map<pair<int,int>,EntidadPartida*>* getEntities();
 	//EntidadPartida* getEntityAt(int x,int y);
 	~Mapa();
+
+	//Busco una posicion disponible para poner un personaje cuando se crea un cliente
+	pair<int,int> getAvailablePosition();
 };
 
 

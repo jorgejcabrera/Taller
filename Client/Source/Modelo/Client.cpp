@@ -60,11 +60,8 @@ int Client::connectToServer(){
 
 void Client::sendMessage(Message *msg){
 	if (this->status == CONECTED){
-		Logger::get()->logError("Client","sendMessage","ANTES de escribir");
 		this->writeThread->writeMessage(msg);
-		Logger::get()->logError("Client","sendMessage","DESPUES de escribir");
 	}
-
 }
 
 void Client::readMessage(Message msg){

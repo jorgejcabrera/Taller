@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 	gController->~GameController();
 	delete(gController);
 	gController=NULL;
-	cout << " YA TERMINE " <<endl;
+	//cout << " YA TERMINE " <<endl;
 	return 0;
 }
 
