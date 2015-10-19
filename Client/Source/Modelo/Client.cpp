@@ -98,7 +98,8 @@ void Client::processReceivedMessages(){
 			//Agrego al JuegoVista un nuevo edificio/estatico
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "semiestaticos"){
-			//TODO agregar comportamiento para mensajes de creacion de semiestaticos
+			//Agrego al JuegoVista un nuevo semiestatico/molino
+			this->gController->getJuegoVista()->addSemiEstatico((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
 			//TODO agregar comportamiento para mensajes de creacion de personajes/dinamicos
 		}else{

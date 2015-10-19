@@ -92,9 +92,26 @@ void JuegoVista::addTile(string surface, int x, int y){
 }
 
 void JuegoVista::addBuilding(int id, string type, int x, int y){
-	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(x,y);
+	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),gameSettings->getEntityConfig(type)->getAlto());
+	newBuilding->setPosition(x,y);
 	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newBuilding->setId(id);
 	this->buildings.insert(make_pair(id,newBuilding));
 	//cout << "EDIFICIO: "<< id << " nombre " << type << " x " << x << " y " << y << " path " << newBuilding->getPathImage()<< endl;
+}
+
+void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
+	//TODO revisar!! dejo hardcodeado el tamaño en pixels
+	EntidadSemiEstaticaVista *newSemiStatic = new EntidadSemiEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),
+																			gameSettings->getEntityConfig(type)->getAlto(),
+																			150,
+																			150,
+																			gameSettings->getEntityConfig(type)->getFps());
+	newSemiStatic->setPosition(x,y);
+	newSemiStatic->setPathImage(gameSettings->getEntityConfig(type)->getPath());
+	newSemiStatic->setDelay(gameSettings->getEntityConfig(type)->getDelay());
+	newSemiStatic->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
+	newSemiStatic->setId(id);
+	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
+	//cout << "SEMI ESTATICO: "<< id << " nombre " << type << " x " << x << " y " << y << " path " << newSemiStatic->getPathImage()<< endl;
 }

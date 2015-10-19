@@ -27,14 +27,13 @@ EntidadSemiEstaticaVista::EntidadSemiEstaticaVista() {
 }
 
 
-EntidadSemiEstaticaVista::EntidadSemiEstaticaVista(int width, int length, float widthPixel, float lengthPixels,int fps,const string &pathImage) {
+EntidadSemiEstaticaVista::EntidadSemiEstaticaVista(int width, int length, float widthPixel, float lengthPixels,int fps) {
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = width;
 	this->length = length;
 	this->widthPixel = widthPixel;
 	this->lengthPixel = lengthPixels;
 	this->framesPerSecond = fps;
-	this->pathImage = pathImage;
 	this->frame = 0;
 	this->inDelayPeriod = false;
 	this->sizeString = getStringSize(this);

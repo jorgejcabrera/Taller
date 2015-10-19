@@ -33,6 +33,7 @@ private:
 	void drawDinamicEntities(int runCycles);
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
+	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
 
 public:
 	void render(int ciclos);
@@ -43,6 +44,7 @@ public:
 	pair<int,int>* getOffset();
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y);
+	void addSemiEstatico(int id, string type, int x, int y);
 
 };
 
