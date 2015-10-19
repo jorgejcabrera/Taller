@@ -17,13 +17,15 @@ using namespace std;
 
 class Logger {
 private:
-	Logger(string path);
+	Logger();
 	static Logger* instance;
-	std::ofstream logger;
+	std::ofstream logToError;
+	std::ofstream logToDebug;
 public:
 	static Logger* get();
 	virtual ~Logger();
-	void log(string className, string method,string message);
+	void logError(string className, string method,string message);
+	void logDebug(string className, string method,string message);
 };
 
 #endif /* SOURCE_UTILS_LOGGER_H_ */

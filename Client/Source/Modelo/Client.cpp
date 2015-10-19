@@ -20,7 +20,7 @@ int Client::connectToServer(){
 	if ( this->sockfd < 0) {
 		ss.clear();
 		ss << "Error initializing socket ." << gai_strerror(this->sockfd) << endl;
-		Logger::get()->log("Client","connectToServer",ss.str());
+		Logger::get()->logError("Client","connectToServer",ss.str());
 		return ERROR;
 	}
 
@@ -34,13 +34,13 @@ int Client::connectToServer(){
 	if ( s_addr.sin_addr.s_addr < 0 ){
 		ss.clear();
 		ss << "IP connection error ." << gai_strerror(s_addr.sin_addr.s_addr) << endl;
-		Logger::get()->log("Client","connectToServer",ss.str());
+		Logger::get()->logError("Client","connectToServer",ss.str());
 		return ERROR;
 	}
 	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
 		ss.clear();
 		ss << "Error connecting to server ." << gai_strerror(error) << endl;
-		Logger::get()->log("Client","connectToServer",ss.str());
+		Logger::get()->logError("Client","connectToServer",ss.str());
 		this->status = DISCONECTED;
 		return ERROR;
 	}else{

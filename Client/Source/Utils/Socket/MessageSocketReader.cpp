@@ -12,9 +12,8 @@ MessageSocketReader::MessageSocketReader(int sockfd) {
 	this->isAlive = true;
 }
 
-//TODO borrar este log es para debbugear
 int MessageSocketReader::run(void *data){
-	Logger::get()->log("MessageSocketReader","run","running thread client reader");
+	Logger::get()->logDebug("MessageSocketReader","run","running thread client reader");
 	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
 		this->queue->queuing(*message);
