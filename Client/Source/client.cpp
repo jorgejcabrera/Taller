@@ -25,32 +25,18 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-
-<<<<<<< HEAD
-	Client* jorge = new Client("127.0.0.1",7843);
-	jorge->connectToServer();
-=======
 	GameController* gController = new GameController();
 	Client* jorge = new Client("127.0.0.1",7843, gController);
 	jorge->connectToServer();
-
->>>>>>> e5d667730aa364a5fe8fbbb75d9ed66d8a4dc774
-
+	
 	//ESPERO 10 segundos
 	SDL_Delay(5000);
 
 	while( jorge->isConected() ){
 		//leemos las novedades del server
 		jorge->processReceivedMessages();
-
-		//dibujammos el juego actualizado
-<<<<<<< HEAD
-=======
 		gController->actualizarJuego();
 		gController->getJuegoVista()->render(gController->getRunCycles());
->>>>>>> e5d667730aa364a5fe8fbbb75d9ed66d8a4dc774
-
-
 		//escuchamos eventos y los mandamos al server
 		jorge->sendEvents();
 		gController->delay();
