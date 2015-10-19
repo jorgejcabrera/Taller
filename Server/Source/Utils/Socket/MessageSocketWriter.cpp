@@ -12,7 +12,7 @@ MessageSocketWriter::MessageSocketWriter(int sockfd) {
 	this->isAlive = true;
 }
 
-void MessageSocketWriter::writeMessage(Message msg){
+void MessageSocketWriter::writeMessage(Message *msg){
 	this->queue.queuing(msg);
 }
 
@@ -23,10 +23,10 @@ int MessageSocketWriter::run(void* data){
 		while(!this->queue.isEmpty()){
 			ss.str("");
 			ss << "Queue size "<< this->queue.getSize();
-			Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
-			Message msg = ((MessageSocketWriter*)data)->queue.pullTail();
+			//Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
+			Message *msg = ((MessageSocketWriter*)data)->queue.pullTail();
 			//Logger::get()->logDebug("MessageSocketWriter","run",msg.toString());
-			if(!this->socket->writeMessage(&msg)){
+			if(!this->socket->writeMessage(msg)){
 			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
 			 }
 		}
@@ -35,7 +35,6 @@ int MessageSocketWriter::run(void* data){
 }
 
 MessageSocketWriter::~MessageSocketWriter() {
-	// TODO Auto-generated destructor stub
 }
 
 void MessageSocketWriter::stopWrite(){

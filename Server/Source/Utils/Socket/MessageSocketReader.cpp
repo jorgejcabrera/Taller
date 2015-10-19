@@ -13,14 +13,11 @@ MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue *queueUnique) {
 	this->queue = queueUnique;
 }
 
-void MessageSocketReader::writeMessage(Message msg){
-	this->queue->queuing(msg);
-}
-
 int MessageSocketReader::run(void *data){
-	while(this->isAlive){
-		Message *mensaje = this->socket->readMessage();
-		this->writeMessage(*mensaje);
+	Logger::get()->logDebug("MessageSocketReader","run","running thread server reader");
+	while( this->isAlive ){
+		Message *message = this->socket->readMessage();
+		this->queue->queuing(message);
 	}
 	return OK;
 }
@@ -34,11 +31,12 @@ void MessageSocketReader::stopWrite(){
 
 list<Message*> MessageSocketReader::getMessagePendingProcess(){
 	list<Message*> listaPendientes;
-	this->queue->lockQueue();
+	/*this->queue->lockQueue();
 	while(!this->queue->isEmpty()){
-		Message msg = this->queue->pullTailWithoutLock();
-		listaPendientes.push_back(&msg);
+		Message *msg = this->queue->pullTailWithoutLock();
+		listaPendientes.push_back(msg);
 	}
 	this->queue->unlockQueue();
+	*/
 	return listaPendientes;
 }

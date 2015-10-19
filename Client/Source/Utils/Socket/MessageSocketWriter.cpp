@@ -1,8 +1,8 @@
 /*
- * MessageWriter.cpp
+ * MessageSocketWritter.cpp
  *
- *  Created on: 11 de oct. de 2015
- *      Author: jorge
+ *  Created on: 13 de oct. de 2015
+ *      Author: jorlando
  */
 
 #include "../../../Headers/Utils/Socket/MessageSocketWriter.h"
@@ -12,26 +12,32 @@ MessageSocketWriter::MessageSocketWriter(int sockfd) {
 	this->isAlive = true;
 }
 
-void MessageSocketWriter::sendMessage(Message* msg){
+void MessageSocketWriter::writeMessage(Message *msg){
+	//Logger::get()->logDebug("MessageSocketWriter","writeMessage",msg->toString());
 	this->queue.queuing(msg);
 }
 
 int MessageSocketWriter::run(void* data){
+	cout << "MessageSocketWriter running! "<<endl;
 	while(this->isAlive){
+		stringstream ss;
 		while(!this->queue.isEmpty()){
+			ss.str("");
+			ss << "Queue size "<< this->queue.getSize();
+			//Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
 			Message *msg = ((MessageSocketWriter*)data)->queue.pullTail();
-			if( !this->socket->writeMessage(msg) < 0){
-				Logger::get()->logError("MessageSocketWriter","run","Cant send message to server");
-			}
+			Logger::get()->logDebug("MessageSocketWriter","run",msg->toString());
+			if(!this->socket->writeMessage(msg)){
+			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
+			 }
 		}
 	}
 	return OK;
 }
 
-void MessageSocketWriter::stopWrite(){
-	this->isAlive = false;
+MessageSocketWriter::~MessageSocketWriter() {
 }
 
-MessageSocketWriter::~MessageSocketWriter() {
-	// TODO Auto-generated destructor stub
+void MessageSocketWriter::stopWrite(){
+	this->isAlive = false;
 }

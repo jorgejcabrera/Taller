@@ -43,7 +43,6 @@ int main(int argc, char* argv[]) {
 		//mandamos eventos al server
 		jorge->sendEvents();
 	}
-
 	return 0;
 }
 

@@ -29,7 +29,7 @@ using namespace std;
 
 class Server : public Thread{
 	private:
-		SocketQueue* queue;
+		SocketQueue* readQueue;
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;

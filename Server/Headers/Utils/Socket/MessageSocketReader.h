@@ -28,7 +28,6 @@ public:
 	int run(void* data);
 	void stopWrite();
 	virtual ~MessageSocketReader();
-	void writeMessage(Message msg);
 	list<Message*> getMessagePendingProcess();
 };
 

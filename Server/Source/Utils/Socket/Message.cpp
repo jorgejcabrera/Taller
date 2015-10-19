@@ -71,12 +71,15 @@ int Message::getSize(){
 	return this->msg.ByteSize() + sizeof(int);
 }
 
+//TODO ver si hay que hacer un delete de integer_string
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
 	char* buffer = new char[ size + sizeof(int) ];
+	memset(buffer, 0, size + sizeof(int));
 
 	// convert int to char*
 	char integer_string[sizeof(int)];
+	memset(integer_string, 0, sizeof(int));
 	sprintf(integer_string,"%d",size);
 
 	// coloco el int en el buffer
@@ -110,3 +113,36 @@ int Message::getPositionX(){
 int Message::getPositionY(){
 	return this->msg.y();
 }
+
+string Message::getNombre(){
+	return this->msg.nombre();
+}
+
+string Message::getImagen(){
+	return this->msg.imagen();
+}
+
+int Message::getAnchoBase(){
+	return this->msg.ancho_base();
+}
+
+int Message::getAltoBase(){
+	return this->msg.alto_base();
+}
+
+int Message::getFps(){
+	return this->msg.fps();
+}
+
+int Message::getDelay(){
+	return this->msg.delay();
+}
+
+int Message::getTotalFramesLine(){
+	return this->msg.total_frames_line();
+}
+
+int Message::getPixelsDimension(){
+	return this->msg.pixels_dimension();
+}
+
