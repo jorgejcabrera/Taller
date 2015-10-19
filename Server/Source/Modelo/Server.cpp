@@ -59,6 +59,7 @@ int Server::run(void * data){
 
 				//Mando la dimension de la ventana
 				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
+				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
 
 				//Mando la informacion que está en el YAML
 				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
