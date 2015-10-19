@@ -12,9 +12,6 @@ bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
 	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
-	stringstream ss;
-	ss << wroteBytes << "/" << message->getSize() << " write";
-	//Logger::get()->logDebug("SocketUtils","writeMessage",ss.str());
 	return wroteBytes == message->getSize();
 }
 
@@ -24,7 +21,6 @@ Message* SocketUtils::readMessage(){
 	int intSize = sizeof(int);
 	int bytesToRead = intSize;
 	int currentBytesRead = 0;
-	stringstream ss;
 
 	/***obtenemos la cantidad de bytes a leer***/
 	char* buff = new char[sizeof(int)];
@@ -32,8 +28,6 @@ Message* SocketUtils::readMessage(){
 	while( bytesRead < intSize ){
 		currentBytesRead = read(this->socket, &buff[bytesRead], bytesToRead);
 		if(currentBytesRead!=0){
-			ss << currentBytesRead << " bytes was read";
-			Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 			bytesRead = currentBytesRead + bytesRead;
 			if ( currentBytesRead < 0 ){
 				Logger::get()->logDebug("SocketUtils","readMessage","Error reading message size from socket");
@@ -44,9 +38,6 @@ Message* SocketUtils::readMessage(){
 		}
 	}
 	int size = atoi(buff);
-	ss.str("");
-	ss << "going to read "<< size << " message bytes";
-	Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 
 	/***creamos el buffer para leer el mensaje***/
 	char* buffer = new char[size];
@@ -55,9 +46,6 @@ Message* SocketUtils::readMessage(){
 	bytesToRead = size;
 	while ( bytesRead < size ){
 		currentBytesRead = read(this->socket, &buffer[bytesRead], bytesToRead);
-		ss.str("");
-		ss << currentBytesRead << " bytes was read";
-		Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 		bytesRead =  currentBytesRead + bytesRead;
 		if ( currentBytesRead < 0 ){
 			Logger::get()->logDebug("SocketUtils","readMessage","Error reading from socket");
@@ -73,9 +61,6 @@ Message* SocketUtils::readMessage(){
 	msg.ParseFromArray(buffer,size);
 	Message* message = new Message();
 	message->setContent(msg);
-	ss.str("");
-	ss << "message read " << message->toString();
-	Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
 	delete[] buffer;
 	delete[] buff;
 	return message;
