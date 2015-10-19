@@ -36,7 +36,7 @@ private:
 	string ip;
 	string name;
 	void readMessage(Message msg);
-	void sendMessage(Message msg);
+	void sendMessage(Message* msg);
 public:
 	Client(string ip, int port);
 	int connectToServer();
