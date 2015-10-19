@@ -36,17 +36,16 @@ private:
 	string ip;
 	string name;
 	void readMessage(Message msg);
+	void sendMessage(Message msg);
 public:
 	Client(string ip, int port);
 	int connectToServer();
 	int getStatus();
 	bool isConected();
-	void sendMessage(Message msg);
-	void communicateWithServer();
-	virtual ~Client();
-	int getCountMessageToRead();
 	void processReceivedMessages();
+	void sendEvents();
 	void saveEntitiesConfig(Message* msg);
+	virtual ~Client();
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */

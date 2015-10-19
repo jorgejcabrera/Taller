@@ -28,16 +28,21 @@ int main(int argc, char* argv[]) {
 
 	Client* jorge = new Client("127.0.0.1",7843);
 	jorge->connectToServer();
-	int count = 0;
+	GameController* gController = new GameController();
 
 	//ESPERO 10 segundos
 	SDL_Delay(10000);
 
-	/*while( jorge->isConected() && count < 4 ){
-		cout << "cliente conectado"<<endl;
-		//jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
-		count++;
-	}*/
+	while( jorge->isConected() ){
+		//leemos las novedades del server
+		jorge->processReceivedMessages();
+
+		//dibujammos el juego actualizado
+		gController->actualizarJuego();
+
+		//mandamos eventos al server
+		jorge->sendEvents();
+	}
 
 	return 0;
 }
