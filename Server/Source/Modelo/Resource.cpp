@@ -27,7 +27,7 @@ Resource::Resource(string tipo,int x,int y) {
 
 void Resource::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
 
-	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX + 15) , (isometricPosition.second+ offSetY + 55) ,this->getWidth() * DefaultSettings::getTileSize(), this->getLength() * DefaultSettings::getTileSize());
+	PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX + 30) , (isometricPosition.second+ offSetY + 65) ,this->getWidth() * DefaultSettings::getTileSize() / 2, this->getLength() * DefaultSettings::getTileSize() / 2);
 }
 
 string Resource::getTipo(){

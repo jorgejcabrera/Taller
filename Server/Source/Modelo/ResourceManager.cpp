@@ -52,6 +52,8 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	if( it2 != map->getEntities()->end())
 		map->getEntities()->erase(it2);
 
+	map->getTileAt(pos->first,pos->second)->changeStatusAvailable();
+
 	cout<<"madera: "<<madera<<endl;
 	cout<<"oro: "<<oro<<endl;
 	cout<<"alimento: "<<alimento<<endl;
