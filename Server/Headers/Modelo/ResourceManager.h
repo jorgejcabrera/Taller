@@ -10,6 +10,7 @@
 
 #include "../Modelo/Mapa.h"
 #include "../Modelo/Resource.h"
+#include "../Modelo/GameSettings.h"
 #include <list>
 using namespace std;
 
@@ -25,6 +26,7 @@ public:
 	void collectResourceAt(pair<int,int>* pos);
 	ResourceManager(Mapa* map);
 	bool resourceAt(int x,int y);
+	void actualizar();
 	int getGold();
 	int getWood();
 	int getFood();

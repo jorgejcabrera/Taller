@@ -63,6 +63,8 @@ void GameController::actualizarJuego(){
 	int x = (*position).first;
 	int y = (*position).second;
 
+	this->resourceManager->actualizar();
+
 	if(! juego->getProtagonista()->estaCaminando() && resourceManager->resourceAt(x,y)){
 		this->resourceManager->collectResourceAt(position);
 	}

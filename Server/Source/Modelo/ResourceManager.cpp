@@ -58,6 +58,33 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 
 }
 
+void ResourceManager::actualizar(){
+
+	int nRandom = rand() % 18;
+
+	//posicion random para el nuevo rescurso
+	GameSettings* gs = GameSettings::GetInstance();
+	int size = gs->getMapHeight();
+	int x = rand() % size;
+	int y = rand() % size;
+
+	//tipo de recurso random
+	int tipo = (rand()%3 + 1);
+
+	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0){
+		Resource* nuevoRecurso;
+		if(tipo == 1)
+			nuevoRecurso = new Resource("gold",x,y);
+		if(tipo == 2)
+			nuevoRecurso = new Resource("chori",x,y);
+		if(tipo == 3)
+			nuevoRecurso = new Resource("wood",x,y);
+
+		this->resources->push_front(nuevoRecurso);
+		this->map->pushEntity(nuevoRecurso);
+	}
+}
+
 int ResourceManager::getFood(){
 	return this->alimento;
 }
