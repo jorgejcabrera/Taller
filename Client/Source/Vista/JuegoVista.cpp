@@ -83,12 +83,18 @@ JuegoVista::~JuegoVista() {
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
 	//TODO falta agregar el offset para dibujar
-	int posY = (x+y) * gameSettings->getTileSize() / 2;
-	int posX = (x-y) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
-	TileVista *newtile = new TileVista(posX,posY);
+	//TODO lo guardo en posiciones cartecianas, despues lo voy a convertir cuando lo tenga que dibujar
+	//int posY =(x+y) * gameSettings->getTileSize() / 2;
+	//int posX =(x-y) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
+	TileVista *newtile = new TileVista(x,y);
 	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
 	this->tiles.push_back(newtile);
 }
 
-
-
+void JuegoVista::addBuilding(int id, string type, int x, int y){
+	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(x,y);
+	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
+	newBuilding->setId(id);
+	this->buildings.insert(make_pair(id,newBuilding));
+	//cout << "EDIFICIO: "<< id << " nombre " << type << " x " << x << " y " << y << " path " << newBuilding->getPathImage()<< endl;
+}

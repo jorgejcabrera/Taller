@@ -32,6 +32,7 @@ private:
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);
 	list<TileVista*> tiles;
+	map<int, EntidadEstaticaVista*> buildings;
 
 public:
 	void render(int ciclos);
@@ -41,6 +42,7 @@ public:
 	void actualizarOffset(int offsetX,int offsetY);
 	pair<int,int>* getOffset();
 	void addTile(string surface, int x, int y);
+	void addBuilding(int id, string type, int x, int y);
 
 };
 
