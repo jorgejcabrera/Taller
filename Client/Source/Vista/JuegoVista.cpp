@@ -7,6 +7,11 @@
 
 #include "../../Headers/Vista/JuegoVista.h"
 
+JuegoVista::JuegoVista() {
+	gameSettings = GameSettings::GetInstance();
+	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
+}
+
 void JuegoVista::drawIsometricMap(){
 	int posX = 0;
 	int posY = 0;
@@ -56,9 +61,13 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 	*/
 }
 
-JuegoVista::JuegoVista() {
-	gameSettings = GameSettings::GetInstance();
-	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
+void JuegoVista::actualizarOffset(int offsetX,int offsetY){
+	this->offset.first = offsetX;
+	this->offset.second = offsetY;
+}
+
+pair<int,int>* JuegoVista::getOffset(){
+	return &this->offset;
 }
 
 JuegoVista::~JuegoVista() {
@@ -68,13 +77,5 @@ JuegoVista::~JuegoVista() {
 	this->gameSettings=NULL;
 }
 
-void JuegoVista::actualizarOffset(int offsetX,int offsetY){
-	this->offset.first = offsetX;
-	this->offset.second = offsetY;
-}
-
-pair<int,int>* JuegoVista::getOffset(){
-	return &this->offset;
-}
 
 

@@ -113,7 +113,7 @@ public:
 
 	//AGREGADO EN CLIENTE UNICAMENTE
 	void setScreenDimension(int width, int heigth);
-	void addEntitisConfig(EntidadConfig *entity);
+	void addEntityConfig(EntidadConfig* entity);
 };
 
 } /* namespace std */

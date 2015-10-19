@@ -10,12 +10,11 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "../../Headers/Modelo/DefaultSettings.h"
 #include "EntidadEstaticaVista.h"
 #include "../../Headers/Modelo/GameSettings.h"
 #include "../../Headers/Modelo/PicassoHelper.h"
 #include "../../Headers/Control/UtilsController.h"
-
+#include "../../Headers/Modelo/DefaultSettings.h"
 #include <string>
 #include <iostream>
 #include <stdlib.h>

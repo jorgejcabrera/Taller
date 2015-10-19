@@ -239,7 +239,7 @@ void GameSettings::setScreenDimension(int width, int heigth){
 	this->SCREEN_HEIGHT = heigth;
 }
 
-void GameSettings::addEntitisConfig(EntidadConfig *entidad){
+void GameSettings::addEntityConfig(EntidadConfig* entidad){
 	this->entitiesConfig.push_back(entidad);
 
 }
