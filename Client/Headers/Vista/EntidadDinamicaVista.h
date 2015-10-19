@@ -30,6 +30,7 @@ enum Direccion{
 
 class EntidadDinamicaVista: public EntidadPartidaVista {
 	private:
+		string name;
 		bool caminando;
 		pair<float,float> screenPosition;
 		int widthPixel;
@@ -54,8 +55,8 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 		void setFramesInLineFile(int qty);
 		int getFramesInLineFile();
 		//EntidadDinamicaVista();
-		EntidadDinamicaVista(int posX,int posY);
-		EntidadDinamicaVista(float posX,float posY, float width, float length, int fps);
+		EntidadDinamicaVista();
+		EntidadDinamicaVista(string myName, float width, float length, int fps);
 		void setInitialScreenPosition(float x,float y);
 		int getWidthPixel();
 		int getLengthPixel();

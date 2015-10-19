@@ -10,19 +10,15 @@
 /*EntidadDinamicaVista::EntidadDinamicaVista(){
 }*/
 
-EntidadDinamicaVista::EntidadDinamicaVista(int x,int y) {
+EntidadDinamicaVista::EntidadDinamicaVista() {
 	this->caminando = false;
-	//son las coordenadas cartesianas de donde se va a posicionar el chabon
-	this->position.first = x;
-	this->position.first = x = y;
 	this->width = 50;
 	this->length = 50;
 }
 
-EntidadDinamicaVista::EntidadDinamicaVista(float x,float y, float widthPixel, float lengthPixels, int fps){
+EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, float lengthPixels, int fps){
+	this->name = myName;
 	this->caminando = false;
-	this->position.first = x;
-	this->position.second = y;
 	this->width = 1;
 	this->length = 1;
 	this->widthPixel = widthPixel;

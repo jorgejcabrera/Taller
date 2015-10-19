@@ -101,7 +101,8 @@ void Client::processReceivedMessages(){
 			//Agrego al JuegoVista un nuevo semiestatico/molino
 			this->gController->getJuegoVista()->addSemiEstatico((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
-			//TODO agregar comportamiento para mensajes de creacion de personajes/dinamicos
+			//Agrego al JuegoVista personajes/dinamicos
+			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 		}

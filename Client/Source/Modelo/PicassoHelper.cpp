@@ -44,6 +44,7 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 		}else{
 			textureExists = loadTexture(file);
 		}
+		//cout << "X: " <<x<<" Y: "<<y<<" W: "<<w<<" H: "<< h<<endl;
 		renderTexture(textureExists,x,y,w,h);
 }
 

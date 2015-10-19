@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 
 
 	//ESPERO 10 segundos
-	SDL_Delay(10000);
+	SDL_Delay(5000);
 
 	while( jorge->isConected() ){
 		//leemos las novedades del server
@@ -40,9 +40,11 @@ int main(int argc, char* argv[]) {
 
 		//dibujammos el juego actualizado
 		gController->actualizarJuego();
+		gController->getJuegoVista()->render(gController->getRunCycles());
 
 		//mandamos eventos al server
 		jorge->sendEvents();
+		gController->delay();
 	}
 	return 0;
 }

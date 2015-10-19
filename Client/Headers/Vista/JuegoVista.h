@@ -10,7 +10,6 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "EntidadEstaticaVista.h"
 #include "../../Headers/Modelo/GameSettings.h"
 #include "../../Headers/Modelo/PicassoHelper.h"
 #include "../../Headers/Control/UtilsController.h"
@@ -20,6 +19,9 @@
 #include <stdlib.h>
 #include <list>
 #include "TileVista.h"
+#include "EntidadEstaticaVista.h"
+#include "EntidadSemiEstaticaVista.h"
+#include "EntidadDinamicaVista.h"
 
 using namespace std;
 
@@ -34,6 +36,7 @@ private:
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
+	map<int, EntidadDinamicaVista*> personajes;
 
 public:
 	void render(int ciclos);
@@ -45,6 +48,7 @@ public:
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y);
 	void addSemiEstatico(int id, string type, int x, int y);
+	void addPersonaje(int id, string type, int x, int y);
 
 };
 
