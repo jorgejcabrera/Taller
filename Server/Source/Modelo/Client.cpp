@@ -12,8 +12,8 @@ Client::Client(int identifier, SocketQueue *queueUnique) {
 	this->writeThread = new MessageSocketWriter(identifier);
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
 
-	//this->readThread = new MessageSocketReader(this->clientId, queueUnique);
-	//this->readThread->start((MessageSocketReader*) this->readThread);
+	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
+	this->readThread->start((MessageSocketReader*) this->readThread);
 }
 
 Client::~Client() {
@@ -22,14 +22,10 @@ Client::~Client() {
 
 void Client::writeMessagesInQueue(list<Message*> messagesList){
 	for(list<Message*>::iterator it=messagesList.begin(); it!=messagesList.end(); ++it){
-		//TODO: borrar este cout
-		//cout << "Messages: " << (*it)->toString()<<endl;
-		this->writeThread->writeMessage((**it));
-		cout << "[Client] writeMessagesInQueue: "<< (**it).getSize() - 4 <<" bytes"<<endl;
+		this->writeThread->writeMessage((*it));
 	}
 }
 
 void Client::writeMessagesInQueue(Message* message){
-		this->writeThread->writeMessage(*message);
-		cout << "[Client] writeMessagesInQueue: "<< message->getSize() - 4 <<" bytes"<<endl;
+		this->writeThread->writeMessage(message);
 }

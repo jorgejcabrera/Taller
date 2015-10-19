@@ -225,3 +225,7 @@ void EntidadDinamica::destruir(){
 
 EntidadDinamica::~EntidadDinamica() {
 }
+
+bool EntidadDinamica::isWalking(){
+	return this->caminando;
+}

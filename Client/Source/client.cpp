@@ -28,16 +28,11 @@ int main(int argc, char* argv[]) {
 
 	Client* jorge = new Client("127.0.0.1",7843);
 	jorge->connectToServer();
-	int count = 0;
+	jorge->sendMessage(new Message(115,"personajes",20,20));
 
-	//ESPERO 10 segundos
-	SDL_Delay(10000);
-
-	/*while( jorge->isConected() && count < 4 ){
-		cout << "cliente conectado"<<endl;
-		//jorge->sendMessage(*(new Message(1,"DinamicEntity",0,1)));
-		count++;
-	}*/
+	//ESPERO 25 segundos
+	SDL_Delay(25000);
+	cout << "YA TERMINE" << endl;
 
 	return 0;
 }

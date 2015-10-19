@@ -77,6 +77,7 @@ class EntidadDinamica: public EntidadPartida {
 
 		void setScreenPosition(float x, float y);
 		void trasladarse();
+		bool isWalking();
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */

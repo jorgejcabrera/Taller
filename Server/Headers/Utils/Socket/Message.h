@@ -40,9 +40,18 @@ public:
 	void setContent(msg_game body);
 
 	//Defino metodos para poder sacar la informacion del mensaje desde afuera de la clase
+	string getTipo();
 	int getId();
 	int getPositionX();
 	int getPositionY();
+	string getNombre();
+	string getImagen();
+	int getAnchoBase();
+	int getAltoBase();
+	int getFps();
+	int getDelay();
+	int getTotalFramesLine();
+	int getPixelsDimension();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

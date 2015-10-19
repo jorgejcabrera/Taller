@@ -52,15 +52,19 @@ int Client::connectToServer(){
 	this->readThread = new MessageSocketReader(this->sockfd);
 	this->readThread->start((MessageSocketReader*) this->readThread );
 
-	//this->writeThread = new MessageSocketWriter(this->sockfd);
-	//this->writeThread->start((MessageSocketWriter*) this->writeThread);
+	this->writeThread = new MessageSocketWriter(this->sockfd);
+	this->writeThread->start((MessageSocketWriter*) this->writeThread);
 
 	return OK;
 }
 
-void Client::sendMessage(Message msg){
-	if (this->status == CONECTED)
-		this->writeThread->sendMessage(&msg);
+void Client::sendMessage(Message *msg){
+	if (this->status == CONECTED){
+		Logger::get()->logError("Client","sendMessage","ANTES de escribir");
+		this->writeThread->writeMessage(msg);
+		Logger::get()->logError("Client","sendMessage","DESPUES de escribir");
+	}
+
 }
 
 void Client::readMessage(Message msg){

@@ -1,9 +1,10 @@
 /*
- * MessageWriter.h
+ * MessageSocketWriter.h
  *
- *  Created on: 11 de oct. de 2015
- *      Author: jorge
+ *  Created on: 13 de oct. de 2015
+ *      Author: jorlando
  */
+
 
 #ifndef SOURCE_UTILS_SOCKET_MESSAGESOCKETWRITER_H_
 #define SOURCE_UTILS_SOCKET_MESSAGESOCKETWRITER_H_
@@ -12,6 +13,7 @@
 #include "../Thread.h"
 #include "SocketQueue.h"
 #include "SocketUtils.h"
+#include "Message.h"
 
 using namespace std;
 
@@ -20,18 +22,21 @@ private:
 	SocketQueue queue;
 	SocketUtils* socket;
 	bool isAlive;
+
 public:
 	MessageSocketWriter(int sockfd);
 	/*
-	*Saca los mensajes de la cola, los serializa, y los envia por el socket
+	*Sacamos los mensajes de la cola de novedades y los mandamos por el socket
 	*/
 	int run(void* data);
 	/*
 	*Ponemos los mensajes en la cola de novedades
 	*/
+	void writeMessage(Message *msg);
 	void stopWrite();
-	void sendMessage(Message *msg);
 	virtual ~MessageSocketWriter();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEWRITER_H_ */
+
+

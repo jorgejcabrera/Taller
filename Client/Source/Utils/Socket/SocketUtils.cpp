@@ -12,6 +12,9 @@ bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
 	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
+	stringstream ss;
+	ss << wroteBytes << "/" << message->getSize() << " write";
+	//Logger::get()->logDebug("SocketUtils","writeMessage",ss.str());
 	return wroteBytes == message->getSize();
 }
 
@@ -28,15 +31,17 @@ Message* SocketUtils::readMessage(){
 	memset(buff, 0, sizeof(int));
 	while( bytesRead < intSize ){
 		currentBytesRead = read(this->socket, &buff[bytesRead], bytesToRead);
-		ss << currentBytesRead << " bytes was read";
-		Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
-		bytesRead = currentBytesRead + bytesRead;
-		if ( currentBytesRead < 0 ){
-			Logger::get()->logDebug("SocketUtils","readMessage","Error reading message size from socket");
-			delete[] buff;
-			return NULL;
+		if(currentBytesRead!=0){
+			ss << currentBytesRead << " bytes was read";
+			Logger::get()->logDebug("SocketUtils","readMessage",ss.str());
+			bytesRead = currentBytesRead + bytesRead;
+			if ( currentBytesRead < 0 ){
+				Logger::get()->logDebug("SocketUtils","readMessage","Error reading message size from socket");
+				delete[] buff;
+				return NULL;
+			}
+			bytesToRead = intSize - bytesRead;
 		}
-		bytesToRead = intSize - bytesRead;
 	}
 	int size = atoi(buff);
 	ss.str("");

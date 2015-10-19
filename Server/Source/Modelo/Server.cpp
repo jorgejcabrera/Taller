@@ -11,7 +11,7 @@ Server::Server(int port, GameController *myController) {
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
-	this->queue = new SocketQueue();
+	this->readQueue = new SocketQueue();
 }
 
 int Server::initSocketServer(){
@@ -49,7 +49,7 @@ int Server::run(void * data){
 	socklen_t tamano = sizeof(serverAddress);
 	while(true){
 			if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
-				Client *newClient = new Client(cliente, this->queue);
+				Client *newClient = new Client(cliente, this->readQueue);
 				int cantidadDeClients = this->clients.size();
 				int clienteActual = cantidadDeClients+1;
 				this->clients[clienteActual] = newClient;
@@ -78,37 +78,38 @@ int Server::run(void * data){
 }
 
 void Server::processReceivedMessages(){
-	this->queue->lockQueue();
+	this->readQueue->lockQueue();
 	/* 1- Bajo todos los mansajes de la cola
 	 * 2- actualizo la posicion de los protagonistas
-	 * 3- armo una lista de los protagonistas que actualice para solo notificar esos  los clientes*/
+	 * */
+	//TODO revisar, hoy no usamos la lista idEntitiesUpdated porque notificamos lo que se este "moviendo"
 	this->idEntitiesUpdated.clear();
-	while(!this->queue->isEmpty()){
-		Message messageUpdate = this->queue->pullTailWithoutLock();
-		int idUpdate = messageUpdate.getId();
-		this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate.getPositionX(), messageUpdate.getPositionY());
+	while(!this->readQueue->isEmpty()){
+		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
+		int idUpdate = messageUpdate->getId();
+		this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
 		this->idEntitiesUpdated.push_back(idUpdate);
 	}
-	this->queue->unlockQueue();
+	this->readQueue->unlockQueue();
 }
 
 void Server::notifyClients(){
-	for(list<int>::iterator idProtagonistaIterate=this->idEntitiesUpdated.begin(); idProtagonistaIterate!=this->idEntitiesUpdated.end(); ++idProtagonistaIterate){
-		for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
-			pair<float,float>* position = this->gController->getJuego()->getPositionOfProtagonistaById(*idProtagonistaIterate);
-			Message *messageUpdate = new Message(*idProtagonistaIterate, position->first, position->second);
-			//TODO revisar que se mande bien el mensaje
-			//cout << "Novedad: "<< messageUpdate->toString() <<endl;
-			it->second->writeMessagesInQueue(messageUpdate);
+	map<int,EntidadDinamica*> protagonistas = this->gController->getJuego()->getProtagonistas();
+	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+		if (it->second->isWalking()){
+			Message *messageUpdate = new Message(it->second->getId(), it->second->getScreenPosition()->first, it->second->getScreenPosition()->second);
+			Logger::get()->logDebug("Server","notifyClients",messageUpdate->toString());
+			for(map<int,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
+				clientIterator->second->writeMessagesInQueue(messageUpdate);
+			}
 		}
 	}
-	this->idEntitiesUpdated.clear();
 }
 
 Server::~Server() {
 	for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
 	}
-	delete(this->queue);
+	delete(this->readQueue);
 	close(this->serverSocket);
 }

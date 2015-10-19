@@ -16,24 +16,24 @@
 using namespace std;
 class SocketQueue {
 private:
-	std::queue<Message> queue;
+	queue<Message*> myQueue;
 	SDL_mutex* lock;
 public:
 	SocketQueue();
 	/*
-	 * si la cola esta lockeada por algun thread no podemos encolar
-	 **/
-	void queuing(Message msg);
+	 *intenta encolar mensajes en la cola, sí no está lockeada
+	 */
+	void queuing(Message *msg);
 	/*
-	 * TODO al momento del sacar el mensaje de la cola lo sacamos serializado
-	 * */
-	Message pullTail();
+	 *devuelve mensajes de la cola
+	 */
+	Message* pullTail();
 	bool isEmpty();
 	int getSize();
 	virtual ~SocketQueue();
 	void lockQueue();
 	void unlockQueue();
-	Message pullTailWithoutLock();
+	Message* pullTailWithoutLock();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_SOCKETQUEUE_H_ */

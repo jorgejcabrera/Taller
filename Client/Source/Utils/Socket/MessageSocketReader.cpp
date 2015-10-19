@@ -8,8 +8,8 @@
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
 MessageSocketReader::MessageSocketReader(int sockfd) {
-	this->socket = new SocketUtils(sockfd);
 	this->isAlive = true;
+	this->socket = new SocketUtils(sockfd);
 	this->queue = new SocketQueue();
 }
 

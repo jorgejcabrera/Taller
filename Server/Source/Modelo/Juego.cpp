@@ -57,6 +57,7 @@ pair<float,float>* Juego::getPositionOfProtagonistaById(int idBuscado){
 void Juego::actualizarProtagonistas(){
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
 		(*it).second->trasladarse();
+		(*it).second->getScreenPosition();
 	}
 }
 
