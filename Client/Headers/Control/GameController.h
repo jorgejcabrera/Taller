@@ -44,6 +44,7 @@ public:
 	bool finDeJuego();
 	virtual ~GameController();
 	void delay();
+	JuegoVista* getJuegoVista();
 };
 
 #endif /* GAMECONTROLLER_H_ */

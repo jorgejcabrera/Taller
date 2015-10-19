@@ -7,11 +7,12 @@
 
 #include "../../Headers/Modelo/Client.h"
 
-Client::Client(string ip, int port) {
+Client::Client(string ip, int port, GameController *gControllerNew) {
 	this->ip = ip;
 	this->port = port;
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = DISCONECTED;								//desconected
+	this->gController = gControllerNew;
 }
 
 //TODO habilitar el socket que escribe al servidor
@@ -84,18 +85,25 @@ void Client::processReceivedMessages(){
 
 		if( tipoMensaje == "window" ){
 			GameSettings::GetInstance()->setScreenDimension((*it)->getPositionX(),(*it)->getPositionY());
+			//instancio el picassoHelper con el tamaño de la ventana;
+			this->gController->getJuegoVista()->createView();
+
 		}else if ( tipoMensaje == "config" ){
 			saveEntitiesConfig(*it);
 		}else if ( tipoMensaje == "update"){
 			//TODO agregar comportamiento para mensajes de cambios de posicion
 		}else if ( tipoMensaje == "tile" ){
-			//TODO agregar comportamiento para mensajes de creacion de tile
+			//Agrego al JuegoVista un nuevo tile
+			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "edificios"){
-			//TODO agregar comportamiento para mensajes de creacion de edificios/estaticos
+			//Agrego al JuegoVista un nuevo edificio/estatico
+			this->gController->getJuegoVista()->addBuilding((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "semiestaticos"){
-			//TODO agregar comportamiento para mensajes de creacion de semiestaticos
+			//Agrego al JuegoVista un nuevo semiestatico/molino
+			this->gController->getJuegoVista()->addSemiEstatico((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
-			//TODO agregar comportamiento para mensajes de creacion de personajes/dinamicos
+			//Agrego al JuegoVista personajes/dinamicos
+			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 		}

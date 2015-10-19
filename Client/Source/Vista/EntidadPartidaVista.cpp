@@ -10,6 +10,7 @@
 using namespace std;
 
 EntidadPartidaVista::EntidadPartidaVista() {
+	this->id = 0;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){
@@ -49,4 +50,12 @@ void EntidadPartidaVista::drawMe(pair<int,int> isometricPosition, int offSetX, i
 }
 
 EntidadPartidaVista::~EntidadPartidaVista() {
+}
+
+void EntidadPartidaVista::setId(int identifier){
+	this->id = identifier;
+}
+
+int EntidadPartidaVista::getId(){
+		return this->id;
 }

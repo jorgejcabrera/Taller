@@ -19,8 +19,7 @@ private:
 public:
 	EntidadEstaticaVista();
 	void destruir();
-	EntidadEstaticaVista(int width,int length, bool esEdificable, const string &sourceImage);
-	EntidadEstaticaVista(int width,int length, bool esEdificable);
+	EntidadEstaticaVista(int width,int length);
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 	virtual ~EntidadEstaticaVista();
 };

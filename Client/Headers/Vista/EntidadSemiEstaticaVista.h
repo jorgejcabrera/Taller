@@ -30,7 +30,7 @@ private:
 	int delayIndex;
 public:
 	EntidadSemiEstaticaVista();
-	EntidadSemiEstaticaVista(int width, int length,float widthPixel,float lengthPixels, int fps,const string &pathImage);
+	EntidadSemiEstaticaVista(int width, int length,float widthPixel,float lengthPixels, int fps);
 
 	int getWidthPixel();
 	int getLengthPixel();

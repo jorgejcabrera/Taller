@@ -25,7 +25,7 @@ private:
 	static GameSettings* instance;
 	GameSettings();
 	bool isFileExist(const string fileName);
-	list<EntidadConfig*> entitiesConfig;
+	map<string,EntidadConfig*> entitiesConfig;
 
 public:
 	//pantalla:
@@ -114,6 +114,7 @@ public:
 	//AGREGADO EN CLIENTE UNICAMENTE
 	void setScreenDimension(int width, int heigth);
 	void addEntityConfig(EntidadConfig* entity);
+	EntidadConfig* getEntityConfig(string nameEntity);
 };
 
 } /* namespace std */

@@ -77,6 +77,7 @@ tipos:
   fps: 20
   delay: 0
   total_frames_line: 23
+  pixels_dimension: 150
 
 - nombre: soldado
   imagen: ../../Taller/Images/Personajes/soldado.png

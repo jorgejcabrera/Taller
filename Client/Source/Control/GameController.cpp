@@ -58,6 +58,10 @@ Message* GameController::getMessageFromEvent(string userId){
 	return NULL;
 }
 
+JuegoVista* GameController::getJuegoVista(){
+	return this->juegoVista;
+}
+
 void GameController::actualizarJuego(){
 	//TODO: esto deberia actualizar el juegoVista?
 	//juego->actualizarProtagonista();

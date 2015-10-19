@@ -240,8 +240,11 @@ void GameSettings::setScreenDimension(int width, int heigth){
 }
 
 void GameSettings::addEntityConfig(EntidadConfig* entidad){
-	this->entitiesConfig.push_back(entidad);
+	this->entitiesConfig.insert(make_pair(entidad->getName(),entidad));
+}
 
+EntidadConfig* GameSettings::getEntityConfig(string nameEntity){
+	return this->entitiesConfig.at(nameEntity);
 }
 
 
