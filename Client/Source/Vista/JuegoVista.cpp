@@ -33,20 +33,18 @@ void JuegoVista::drawStaticEntities(int runCycles){
 	int offSetX = this->getOffset()->first;
 	int offSetY = this->getOffset()->second;
 
-	//TODO: Juego vista no deberia contener la listade Entidades??
-	/*
-	for(map<pair<int,int>,EntidadPartidaVista*>::iterator it=this->juego->getMap()->getEntities()->begin();it!=this->juego->getMap()->getEntities()->end();++it){
-		EntidadPartidaVista* entidad = (*it).second;
+	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
+		EntidadEstaticaVista* entidad = (*itEstaticos).second;
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-		entidad->drawMe(isometricPosition,offSetX,offSetY,runCycles );
-	}*/
+		entidad->drawMe(isometricPosition,offSetX,offSetY,runCycles);
+	}
 }
 
 void JuegoVista::render(int runCycles){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();
 	//this->drawDinamicEntities(runCycles);
-	//this->drawStaticEntities(runCycles);
+	this->drawStaticEntities(runCycles);
 	this->picassoHelper->renderView();
 }
 
