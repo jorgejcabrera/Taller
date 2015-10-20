@@ -103,7 +103,8 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addSemiEstatico((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
 			//Agrego al JuegoVista personajes/dinamicos
-			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
+			bool imTheOwner= ((*it)->getOwner()==this->userName);
+			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY(), imTheOwner);
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 		}

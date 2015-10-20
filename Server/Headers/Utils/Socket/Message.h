@@ -53,6 +53,9 @@ public:
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
+
+	void setOwner(string userName);
+	string getOwner();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

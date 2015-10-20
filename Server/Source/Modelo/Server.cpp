@@ -53,10 +53,7 @@ int Server::run(void * data){
 				Client *newClient = new Client(cliente, this->readQueue);
 				readClientUserName(newClient);
 				newClient->startCommunication();
-				//int cantidadDeClients = this->clients.size();
-				//int clienteActual = cantidadDeClients+1;
 				this->clients.insert(make_pair(newClient->getUserName(),newClient));
-				//TODO: esto hay que cambiarlo porque tiene que tener una forma de identificarlo y si se vuelve a conectar un cliente levantar la data
 
 				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
 				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());

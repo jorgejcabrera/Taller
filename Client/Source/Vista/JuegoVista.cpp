@@ -52,18 +52,32 @@ void JuegoVista::render(int runCycles){
 void JuegoVista::drawDinamicEntities(int runCycles){
 	pair<int,int> isometricPosition;
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		int offSetX = this->getOffset()->first;
-		int offSetY = this->getOffset()->second;
-		EntidadDinamicaVista* entidad = (*itDinamicos).second;
-		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-		this->picassoHelper->renderObject(	entidad->getPathImage(),
-											isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
-											isometricPosition.second + offSetY,
-											entidad->getWidthPixel(),
-											entidad->getLengthPixel(),
-											entidad->getPositionOfSprite(runCycles));
+			int offSetX = this->getOffset()->first;
+			int offSetY = this->getOffset()->second;
+			EntidadDinamicaVista* entidad = (*itDinamicos).second;
+			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
+			this->picassoHelper->renderObject(	entidad->getPathImage(),
+												isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
+												isometricPosition.second + offSetY,
+												entidad->getWidthPixel(),
+												entidad->getLengthPixel(),
+												entidad->getPositionOfSprite(runCycles));
 
 	}
+	//MIS PERSONAJES
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+			int offSetX = this->getOffset()->first;
+			int offSetY = this->getOffset()->second;
+			EntidadDinamicaVista* entidad = (*itDinamicos).second;
+			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
+			this->picassoHelper->renderObject(	entidad->getPathImage(),
+												isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
+												isometricPosition.second + offSetY,
+												entidad->getWidthPixel(),
+												entidad->getLengthPixel(),
+												entidad->getPositionOfSprite(runCycles));
+
+		}
 }
 
 void JuegoVista::drawSemiStaticsEntities(int runCycles){
@@ -130,7 +144,7 @@ void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 }
 
-void JuegoVista::addPersonaje(int id, string type, int x, int y){
+void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner){
 	EntidadDinamicaVista *newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -140,5 +154,11 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y){
 	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newPersonaje->setId(id);
-	this->personajes.insert(make_pair(id,newPersonaje));
+	if(imTheOwner){
+		//Logger::get()->logDebug("JuegoVista","addPersonaje","RECIBI MI PERSONAJE");
+		this->misPersonajes.insert(make_pair(id,newPersonaje));
+	}else{
+		//Logger::get()->logDebug("JuegoVista","addPersonaje","NO es mi personaje");
+		this->personajes.insert(make_pair(id,newPersonaje));
+	}
 }

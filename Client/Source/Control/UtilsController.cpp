@@ -37,10 +37,10 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad
 
 	//Centramos la entidad segun la cantidad de tiles que ocupa
 	string stringSize = entidad->getSizeString();
-	if ( entidad->getPathImage() == "../../Taller/Images/Personajes/soldado.png"){
+	/*if ( entidad->getPathImage() == "../../Taller/Images/Personajes/soldado.png"){
 			cout << "El tamaño es: "<< stringSize <<endl;
 			cout << isometricPosition.first << " "<< isometricPosition.second << endl;
-	}
+	}*/
 	//3x3
 	if ( stringSize == "standarMediumSize"){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();

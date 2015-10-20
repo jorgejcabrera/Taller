@@ -70,6 +70,7 @@ string Message::toString(){
 	ss << " delay: " << this->msg.delay();
 	ss << " line: " << this->msg.total_frames_line();
 	ss << " dimension: " << this->msg.pixels_dimension();
+	ss << " owner: "<< this->msg.owner();
 	return ss.str();
 }
 
@@ -154,3 +155,10 @@ int Message::getPixelsDimension(){
 	return this->msg.pixels_dimension();
 }
 
+void Message::setOwner(string userName){
+	this->msg.set_owner(userName);
+}
+
+string Message::getOwner(){
+	return this->msg.owner();
+}

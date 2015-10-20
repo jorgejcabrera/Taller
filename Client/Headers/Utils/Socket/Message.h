@@ -57,6 +57,8 @@ public:
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
+	void setOwner(string userName);
+	string getOwner();
 
 };
 
