@@ -33,6 +33,7 @@ private:
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);
+	void drawSemiStaticsEntities(int runCycles);
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
