@@ -19,7 +19,7 @@ using namespace std;
 
 class MessageSocketWriter: public Thread {
 private:
-	SocketQueue queue;
+	SocketQueue* queue;
 	SocketUtils* socket;
 	bool isAlive;
 
