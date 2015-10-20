@@ -49,13 +49,17 @@ int Server::run(void * data){
 	socklen_t tamano = sizeof(serverAddress);
 	while(true){
 			if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
+
 				Client *newClient = new Client(cliente, this->readQueue);
-				int cantidadDeClients = this->clients.size();
-				int clienteActual = cantidadDeClients+1;
-				this->clients[clienteActual] = newClient;
+				readClientUserName(newClient);
+				newClient->startCommunication();
+				//int cantidadDeClients = this->clients.size();
+				//int clienteActual = cantidadDeClients+1;
+				this->clients.insert(make_pair(newClient->getUserName(),newClient));
 				//TODO: esto hay que cambiarlo porque tiene que tener una forma de identificarlo y si se vuelve a conectar un cliente levantar la data
+
 				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-				this->gController->getJuego()->agregarProtagonista(clienteActual);
+				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
 
 				//Mando la dimension de la ventana
 				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
@@ -99,7 +103,7 @@ void Server::notifyClients(){
 		if (it->second->isWalking()){
 			Message *messageUpdate = new Message(it->second->getId(), it->second->getScreenPosition()->first, it->second->getScreenPosition()->second);
 			Logger::get()->logDebug("Server","notifyClients",messageUpdate->toString());
-			for(map<int,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
+			for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
 				clientIterator->second->writeMessagesInQueue(messageUpdate);
 			}
 		}
@@ -107,9 +111,27 @@ void Server::notifyClients(){
 }
 
 Server::~Server() {
-	for(map<int,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
+	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
 	}
 	delete(this->readQueue);
 	close(this->serverSocket);
+}
+
+void Server::readClientUserName(Client *newClient){
+	bool validUserName=false;
+	while(!validUserName){
+		string userName=newClient->readUserName();
+			Logger::get()->logDebug("Server","run",userName);
+			map<string,Client*>::iterator it = this->clients.find(userName);
+			if(it != this->clients.end()){
+				Logger::get()->logDebug("Server","readClientUserName","YA EXISTE EL CLIENTE");
+				newClient->responseUserName("FAIL");
+			}else{
+				newClient->responseUserName("OK");
+				newClient->setUserName(userName);
+				validUserName=true;
+				Logger::get()->logDebug("Server","readClientUserName","NO EXISTE EL CLIENTE");
+			}
+	}
 }

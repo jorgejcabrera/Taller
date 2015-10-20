@@ -31,6 +31,7 @@ public:
 	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition);
 	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
+	Message(string nombre);
 
 	virtual ~Message();
 	int getSize();

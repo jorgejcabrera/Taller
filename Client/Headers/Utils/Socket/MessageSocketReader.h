@@ -35,6 +35,7 @@ public:
 	**/
 	list<Message*> getMessagesToProcess();
 	virtual ~MessageSocketReader();
+	Message* readMessageNow();
 
 };
 

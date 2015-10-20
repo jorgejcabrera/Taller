@@ -36,3 +36,9 @@ MessageSocketWriter::~MessageSocketWriter() {
 void MessageSocketWriter::stopWrite(){
 	this->isAlive = false;
 }
+
+//Este metodo se usa para notificar el nombre de usuario que tiene que ser en el momento, no puede seguir el ciclo normal
+void MessageSocketWriter::writeMessageNow(Message *msg){
+	this->socket->writeMessage(msg);
+	Logger::get()->logDebug("MessageSocketWriter","writeMessageNow",msg->toString());
+}

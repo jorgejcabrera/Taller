@@ -40,3 +40,8 @@ MessageSocketWriter::~MessageSocketWriter() {
 void MessageSocketWriter::stopWrite(){
 	this->isAlive = false;
 }
+
+void MessageSocketWriter::writeMessageNow(Message *msg){
+	this->socket->writeMessage(msg);
+	Logger::get()->logDebug("MessageSocketWriter","writeMessageNow",msg->toString());
+}

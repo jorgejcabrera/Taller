@@ -16,6 +16,13 @@ Message::Message(int identifier, string typeEntity, int xPosition, int yPosition
 	this->msg.set_y(yPosition);
 }
 
+//Mensaje Utilizado para notificar el nombre de usuario
+Message::Message(string nombre){
+	this->msg.set_id(0);
+	this->msg.set_tipo("username");
+	this->msg.set_nombre(nombre);
+}
+
 string Message::toString(){
 	stringstream ss;
 	ss << " id: " << this->msg.id();

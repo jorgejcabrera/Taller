@@ -40,7 +40,7 @@ class EntidadDinamica: public EntidadPartida {
 		float destinoY;
 		int frame;
 		int framesInLineFile;
-		int owner;
+		string owner;
 
 		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
 		int delay;
@@ -55,8 +55,8 @@ class EntidadDinamica: public EntidadPartida {
 
 	public:
 		void destruir();
-		void setOwner(int owner);
-		int getOwner();
+		void setOwner(string owner);
+		string getOwner();
 		//void setFramesInLineFile(int qty);
 		//int getFramesInLineFile();
 		EntidadDinamica();

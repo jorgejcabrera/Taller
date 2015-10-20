@@ -29,6 +29,7 @@ private:
 public:
 	Message();
 	Message(int identifier, string typeEntity, int xPosition, int yPosition);
+	Message(string nombre);
 	virtual ~Message();
 	/*
 	 *Develve el tamaño en bytes del mensaje

@@ -29,6 +29,7 @@ public:
 	void stopWrite();
 	virtual ~MessageSocketReader();
 	list<Message*> getMessagePendingProcess();
+	Message* readMessageNow();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEREADER_H_ */

@@ -8,6 +8,7 @@
 #include "../../Headers/Modelo/Client.h"
 
 Client::Client(string ip, int port, GameController *gControllerNew) {
+	this->userName = "goku";
 	this->ip = ip;
 	this->port = port;
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
@@ -51,9 +52,10 @@ int Client::connectToServer(){
 
 	//INITIALIZE THREAD
 	this->readThread = new MessageSocketReader(this->sockfd);
-	this->readThread->start((MessageSocketReader*) this->readThread );
-
 	this->writeThread = new MessageSocketWriter(this->sockfd);
+	notifyUserName();
+
+	this->readThread->start((MessageSocketReader*) this->readThread );
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
 	return OK;
 }
@@ -130,5 +132,22 @@ void Client::sendEvents(){
 Client::~Client() {
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending
 	close(this->sockfd);
+}
+
+//TODO aca mando el nombre de usuario, cambiarlo para que acepte ingresar por teclado
+void Client::notifyUserName(){
+	cout << "Ingrese un nombre de usuario";
+	bool valid = false;
+	while(!valid){
+		getline (std::cin,this->userName);
+		this->writeThread->writeMessageNow(new Message(this->userName));
+		Message *response = this->readThread->readMessageNow();
+		if(response->getNombre()=="OK"){
+			valid=true;
+		}else{
+			cout<<"El nombre de usuario" << this->userName <<" ya está en uso, por favor ingrese otro"<<endl;
+		}
+	}
+
 }
 
