@@ -161,3 +161,7 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 		this->personajes.insert(make_pair(id,newPersonaje));
 	}
 }
+
+map<int,EntidadDinamicaVista*>* JuegoVista::getMisPersonajes(){
+	return &this->misPersonajes;
+}

@@ -52,6 +52,7 @@ public:
 	void addBuilding(int id, string type, int x, int y);
 	void addSemiEstatico(int id, string type, int x, int y);
 	void addPersonaje(int id, string type, int x, int y, bool imTheOwner);
+	map<int,EntidadDinamicaVista*>* getMisPersonajes();
 
 };
 

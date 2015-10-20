@@ -30,6 +30,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			 *en cartesiana, que es la que le vamos a enviar al server,y dejamos seteado también la posicion
 			 *en donde se debería dibujar el chabonsito*/
 			pair<int,int> cartesianPosition = this->moveCharacter(posMouseX,posMouseY);
+			//map<int,EntidadDinamicaVista*>* misPersonajes =this->juegoVista->getMisPersonajes();
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(0);
