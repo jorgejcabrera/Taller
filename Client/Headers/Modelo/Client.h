@@ -33,7 +33,6 @@ class Client {
 private:
 	MessageSocketWriter* writeThread;
 	MessageSocketReader* readThread;
-	GameController* gameController;
 	int port;
 	int sockfd;
 	int status;
