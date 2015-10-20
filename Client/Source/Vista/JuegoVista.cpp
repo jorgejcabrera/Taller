@@ -57,10 +57,11 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		//pair<int,int>* screenPosition = entidad->getPosition();
 
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-//		cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
-		this->picassoHelper->renderObject(entidad->getPathImage(),
-											isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
-											isometricPosition.second + offSetY,
+		if ( entidad->getPathImage() == "../../Taller/Images/Personajes/soldado.png")
+			cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											isometricPosition.first + gameSettings->getTileSize()/2 + offSetX,
+											isometricPosition.second - gameSettings->getTileSize()/5 + offSetY,
 											gameSettings->getTileSize(),
 											gameSettings->getTileSize(),
 											entidad->getPositionOfSprite(runCycles));
