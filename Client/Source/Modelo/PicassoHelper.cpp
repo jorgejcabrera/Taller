@@ -56,7 +56,6 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 		}else{
 			textureExists = loadTexture(file);
 		}
-		//cout << "X: " <<x<<" Y: "<<y<<" W: "<<w<<" H: "<< h<< " RECTANGULO: "<<endl;
 		renderTexture(textureExists,x,y,w,h,rectObject);
 }
 
@@ -81,7 +80,6 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 }
 
 void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject){
-	//Setup the destination rectangle to be at the position we want
 	SDL_Rect dst;
 	dst.x = x;
 	dst.y = y;

@@ -32,7 +32,7 @@ void protobuf_AssignDesc_messageGame_2eproto() {
       "messageGame.proto");
   GOOGLE_CHECK(file != NULL);
   msg_game_descriptor_ = file->message_type(0);
-  static const int msg_game_offsets_[12] = {
+  static const int msg_game_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, tipo_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, x_),
@@ -45,6 +45,7 @@ void protobuf_AssignDesc_messageGame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, delay_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, total_frames_line_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, pixels_dimension_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, owner_),
   };
   msg_game_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -87,12 +88,13 @@ void protobuf_AddDesc_messageGame_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\021messageGame.proto\"\322\001\n\010msg_game\022\n\n\002id\030\001"
+    "\n\021messageGame.proto\"\341\001\n\010msg_game\022\n\n\002id\030\001"
     " \002(\005\022\014\n\004tipo\030\002 \002(\t\022\t\n\001x\030\003 \001(\005\022\t\n\001y\030\004 \001(\005"
     "\022\016\n\006nombre\030\005 \001(\t\022\016\n\006imagen\030\006 \001(\t\022\022\n\nanch"
     "o_base\030\007 \001(\005\022\021\n\talto_base\030\010 \001(\005\022\013\n\003fps\030\t"
     " \001(\005\022\r\n\005delay\030\n \001(\005\022\031\n\021total_frames_line"
-    "\030\013 \001(\005\022\030\n\020pixels_dimension\030\014 \001(\005", 232);
+    "\030\013 \001(\005\022\030\n\020pixels_dimension\030\014 \001(\005\022\r\n\005owne"
+    "r\030\r \001(\t", 247);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "messageGame.proto", &protobuf_RegisterTypes);
   msg_game::default_instance_ = new msg_game();
@@ -122,6 +124,7 @@ const int msg_game::kFpsFieldNumber;
 const int msg_game::kDelayFieldNumber;
 const int msg_game::kTotalFramesLineFieldNumber;
 const int msg_game::kPixelsDimensionFieldNumber;
+const int msg_game::kOwnerFieldNumber;
 #endif  // !_MSC_VER
 
 msg_game::msg_game()
@@ -155,6 +158,7 @@ void msg_game::SharedCtor() {
   delay_ = 0;
   total_frames_line_ = 0;
   pixels_dimension_ = 0;
+  owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -172,6 +176,9 @@ void msg_game::SharedDtor() {
   }
   if (imagen_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete imagen_;
+  }
+  if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete owner_;
   }
   if (this != default_instance_) {
   }
@@ -229,7 +236,15 @@ void msg_game::Clear() {
     }
     alto_base_ = 0;
   }
-  ZR_(fps_, pixels_dimension_);
+  if (_has_bits_[8 / 32] & 7936) {
+    ZR_(fps_, total_frames_line_);
+    pixels_dimension_ = 0;
+    if (has_owner()) {
+      if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        owner_->clear();
+      }
+    }
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -429,6 +444,23 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(106)) goto parse_owner;
+        break;
+      }
+
+      // optional string owner = 13;
+      case 13: {
+        if (tag == 106) {
+         parse_owner:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_owner()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->owner().data(), this->owner().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "owner");
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -533,6 +565,16 @@ void msg_game::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->pixels_dimension(), output);
   }
 
+  // optional string owner = 13;
+  if (has_owner()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->owner().data(), this->owner().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "owner");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      13, this->owner(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -619,6 +661,17 @@ void msg_game::SerializeWithCachedSizes(
   // optional int32 pixels_dimension = 12;
   if (has_pixels_dimension()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->pixels_dimension(), target);
+  }
+
+  // optional string owner = 13;
+  if (has_owner()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->owner().data(), this->owner().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "owner");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        13, this->owner(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -719,6 +772,13 @@ int msg_game::ByteSize() const {
           this->pixels_dimension());
     }
 
+    // optional string owner = 13;
+    if (has_owner()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->owner());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -784,6 +844,9 @@ void msg_game::MergeFrom(const msg_game& from) {
     if (from.has_pixels_dimension()) {
       set_pixels_dimension(from.pixels_dimension());
     }
+    if (from.has_owner()) {
+      set_owner(from.owner());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -820,6 +883,7 @@ void msg_game::Swap(msg_game* other) {
     std::swap(delay_, other->delay_);
     std::swap(total_frames_line_, other->total_frames_line_);
     std::swap(pixels_dimension_, other->pixels_dimension_);
+    std::swap(owner_, other->owner_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

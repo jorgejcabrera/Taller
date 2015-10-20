@@ -187,6 +187,18 @@ class msg_game : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 pixels_dimension() const;
   inline void set_pixels_dimension(::google::protobuf::int32 value);
 
+  // optional string owner = 13;
+  inline bool has_owner() const;
+  inline void clear_owner();
+  static const int kOwnerFieldNumber = 13;
+  inline const ::std::string& owner() const;
+  inline void set_owner(const ::std::string& value);
+  inline void set_owner(const char* value);
+  inline void set_owner(const char* value, size_t size);
+  inline ::std::string* mutable_owner();
+  inline ::std::string* release_owner();
+  inline void set_allocated_owner(::std::string* owner);
+
   // @@protoc_insertion_point(class_scope:msg_game)
  private:
   inline void set_has_id();
@@ -213,6 +225,8 @@ class msg_game : public ::google::protobuf::Message {
   inline void clear_has_total_frames_line();
   inline void set_has_pixels_dimension();
   inline void clear_has_pixels_dimension();
+  inline void set_has_owner();
+  inline void clear_has_owner();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -229,6 +243,7 @@ class msg_game : public ::google::protobuf::Message {
   ::google::protobuf::int32 fps_;
   ::google::protobuf::int32 delay_;
   ::google::protobuf::int32 total_frames_line_;
+  ::std::string* owner_;
   ::google::protobuf::int32 pixels_dimension_;
   friend void  protobuf_AddDesc_messageGame_2eproto();
   friend void protobuf_AssignDesc_messageGame_2eproto();
@@ -686,6 +701,82 @@ inline void msg_game::set_pixels_dimension(::google::protobuf::int32 value) {
   set_has_pixels_dimension();
   pixels_dimension_ = value;
   // @@protoc_insertion_point(field_set:msg_game.pixels_dimension)
+}
+
+// optional string owner = 13;
+inline bool msg_game::has_owner() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void msg_game::set_has_owner() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void msg_game::clear_has_owner() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void msg_game::clear_owner() {
+  if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    owner_->clear();
+  }
+  clear_has_owner();
+}
+inline const ::std::string& msg_game::owner() const {
+  // @@protoc_insertion_point(field_get:msg_game.owner)
+  return *owner_;
+}
+inline void msg_game::set_owner(const ::std::string& value) {
+  set_has_owner();
+  if (owner_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    owner_ = new ::std::string;
+  }
+  owner_->assign(value);
+  // @@protoc_insertion_point(field_set:msg_game.owner)
+}
+inline void msg_game::set_owner(const char* value) {
+  set_has_owner();
+  if (owner_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    owner_ = new ::std::string;
+  }
+  owner_->assign(value);
+  // @@protoc_insertion_point(field_set_char:msg_game.owner)
+}
+inline void msg_game::set_owner(const char* value, size_t size) {
+  set_has_owner();
+  if (owner_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    owner_ = new ::std::string;
+  }
+  owner_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:msg_game.owner)
+}
+inline ::std::string* msg_game::mutable_owner() {
+  set_has_owner();
+  if (owner_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    owner_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:msg_game.owner)
+  return owner_;
+}
+inline ::std::string* msg_game::release_owner() {
+  clear_has_owner();
+  if (owner_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = owner_;
+    owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void msg_game::set_allocated_owner(::std::string* owner) {
+  if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete owner_;
+  }
+  if (owner) {
+    set_has_owner();
+    owner_ = owner;
+  } else {
+    clear_has_owner();
+    owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:msg_game.owner)
 }
 
 

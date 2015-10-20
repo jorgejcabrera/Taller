@@ -56,8 +56,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetY = this->getOffset()->second;
 		EntidadDinamicaVista* entidad = (*itDinamicos).second;
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-//		cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
-		this->picassoHelper->renderObject(entidad->getPathImage(),
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
 											isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
 											isometricPosition.second + offSetY,
 											entidad->getWidthPixel(),
@@ -74,10 +73,9 @@ void JuegoVista::drawSemiStaticsEntities(int runCycles){
 		int offSetY = this->getOffset()->second;
 		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-		//cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
-		this->picassoHelper->renderObject(entidad->getPathImage(),
-											isometricPosition.first+ offSetX,
-											isometricPosition.second + offSetY,
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											isometricPosition.first + offSetX - entidad->getWidthPixel() / 2 + DefaultSettings::getTileSize(),
+											isometricPosition.second + offSetY - entidad->getWidthPixel() / 2 - DefaultSettings::getTileSize() /2,
 											entidad->getWidthPixel(),
 											entidad->getLengthPixel(),
 											entidad->getPositionOfSprite(runCycles));
@@ -119,7 +117,7 @@ void JuegoVista::addBuilding(int id, string type, int x, int y){
 }
 
 void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
-	EntidadSemiEstaticaVista *newSemiStatic = new EntidadSemiEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),
+	EntidadSemiEstaticaVista *newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																			gameSettings->getEntityConfig(type)->getAlto(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -130,11 +128,10 @@ void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
 	newSemiStatic->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newSemiStatic->setId(id);
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
-	//cout << "SEMI ESTATICO: "<< id << " nombre " << type << " x " << x << " y " << y << " path " << newSemiStatic->getPathImage()<< endl;
 }
 
 void JuegoVista::addPersonaje(int id, string type, int x, int y){
-	EntidadDinamicaVista *newPersonaje = new EntidadDinamicaVista(gameSettings->getEntityConfig(type)->getName(),
+	EntidadDinamicaVista *newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getFps());
