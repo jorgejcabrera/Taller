@@ -45,6 +45,7 @@ void JuegoVista::render(int runCycles){
 	this->drawIsometricMap();
 	this->drawDinamicEntities(runCycles);
 	this->drawStaticEntities(runCycles);
+	this->drawSemiStaticsEntities(runCycles);
 	this->picassoHelper->renderView();
 }
 
@@ -54,25 +55,34 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		EntidadDinamicaVista* entidad = (*itDinamicos).second;
-		//pair<int,int>* screenPosition = entidad->getPosition();
-
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
 //		cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
 		this->picassoHelper->renderObject(entidad->getPathImage(),
 											isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
 											isometricPosition.second + offSetY,
-											gameSettings->getTileSize(),
-											gameSettings->getTileSize(),
+											entidad->getWidthPixel(),
+											entidad->getLengthPixel(),
 											entidad->getPositionOfSprite(runCycles));
 
 	}
-	//TODO: Juego vista no deberia contener la lista de soldados?
-	/*
-	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
-	int offSetX = this->juego->getOffset()->first;
-	int offSetY = this->juego->getOffset()->second;
-	this->picassoHelper->renderObject(this->juego->getProtagonista()->getPathImage(), screenPosition->first - gameSettings->getTileSize()/2 + offSetX, screenPosition->second - juego->getProtagonista()->getLengthPixel() / 2 + offSetY, gameSettings->getTileSize(), gameSettings->getTileSize(), this->juego->getProtagonista()->getPositionOfSprite(runCycles));
-	*/
+}
+
+void JuegoVista::drawSemiStaticsEntities(int runCycles){
+	pair<int,int> isometricPosition;
+	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
+		int offSetX = this->getOffset()->first;
+		int offSetY = this->getOffset()->second;
+		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
+		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
+		//cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
+		this->picassoHelper->renderObject(entidad->getPathImage(),
+											isometricPosition.first+ offSetX,
+											isometricPosition.second + offSetY,
+											entidad->getWidthPixel(),
+											entidad->getLengthPixel(),
+											entidad->getPositionOfSprite(runCycles));
+
+	}
 }
 
 void JuegoVista::actualizarOffset(int offsetX,int offsetY){
