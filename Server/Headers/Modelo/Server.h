@@ -21,6 +21,7 @@
 #include "Client.h"
 #include <map>
 #include "GameSettings.h"
+#include "DefaultSettings.h"
 #include "EntidadPartida.h"
 #include "../../Headers/Control/GameController.h"
 

@@ -21,6 +21,7 @@ class Juego {
 private:
 	Mapa* mapa;
 	map<int,EntidadDinamica*> protagonistas;
+	list<EntidadDinamica*> newProtagonistas;
 	string currentAge;
 	bool juegoFinalizado;
 	GameSettings* gameSettings;
@@ -38,6 +39,7 @@ public:
 	void actualizarProtagonistas();
 	bool getStatusPartida();
 	map<int,EntidadDinamica*> getProtagonistas();
+	list<EntidadDinamica*>* getNewProtagonistasToNotify();
 	pair<float,float>* getPositionOfProtagonistaById(int idBuscado);
 
 	void agregarProtagonista(string owner);
