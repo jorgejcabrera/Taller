@@ -105,6 +105,19 @@ void Server::notifyClients(){
 			}
 		}
 	}
+	//MANDO los nuevos personajes
+	list<EntidadDinamica*> *nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
+	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
+		Message *protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()), (*it)->getName(), (*it)->getPosition()->first, (*it)->getPosition()->second);
+		protagonistaMessage->setOwner((*it)->getOwner());
+		for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
+			if(clientIterator->first!=(*it)->getOwner()){
+				//no notifico al dueño del personaje porque ya lo recibio
+				clientIterator->second->writeMessagesInQueue(protagonistaMessage);
+			}
+		}
+	}
+	nuevosProtagonistas->clear();
 }
 
 Server::~Server() {

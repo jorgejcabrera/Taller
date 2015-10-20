@@ -28,13 +28,10 @@ void Juego::agregarProtagonista(string owner){
 				gameSettings->getProtagonistaPixelDimension());
 
 	protagonista->setOwner(owner);
-		//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas
-		//TODO Lo modifico para pasarle coordenadas cartesianas y SUERTE!
-		//pair<float,float> isometricas = this->getIsometricPosition(protagonista);
-		//protagonista->setInitialScreenPosition(isometricas.first + gameSettings->getTileSize() ,isometricas.second);
-		protagonista->setInitialScreenPosition(gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista());
-
-		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
+	protagonista->setInitialScreenPosition(gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista());
+	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
+	//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
+	this->newProtagonistas.push_back(protagonista);
 }
 
 Mapa* Juego::getMap(){
@@ -43,6 +40,10 @@ Mapa* Juego::getMap(){
 
 map<int,EntidadDinamica*> Juego::getProtagonistas(){
 	return this->protagonistas;
+}
+
+list<EntidadDinamica*>* Juego::getNewProtagonistasToNotify(){
+	return &this->newProtagonistas;
 }
 
 pair<float,float>* Juego::getPositionOfProtagonistaById(int idBuscado){
