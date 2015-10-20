@@ -16,7 +16,7 @@ Juego::Juego() {
 	this->currentAge = gameSettings->getAgeOfEmpires();
 }
 
-void Juego::agregarProtagonista(int owner){
+void Juego::agregarProtagonista(string owner){
 	//TODO revisar que le ponemos en tipo
 	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition();
 	cout << "Posicion del protagonista: X: "<< positionOfProtagonista.first << " Y: " <<positionOfProtagonista.second << endl;
@@ -28,12 +28,6 @@ void Juego::agregarProtagonista(int owner){
 				gameSettings->getProtagonistaPixelDimension());
 
 	protagonista->setOwner(owner);
-
-		//TODO no deberiamos setear los frams del file aca, solo en la vista, al modelo no le importa
-		//protagonista->setFramesInLineFile(gameSettings->getProtagonistaFramesInFile());
-		//TODO no deberiamos setear el delay aca, solo en la vista, al modelo no le importa si tiene delay
-		//protagonista->setDelay(gameSettings->getProtagonistaDelay());
-
 		//TODO: esto creo que no deberia ser asi. Deberia setear solo posiciones en tiles y  las posiciones de pantalla deberia estar en la vista nada mas
 		//TODO Lo modifico para pasarle coordenadas cartesianas y SUERTE!
 		//pair<float,float> isometricas = this->getIsometricPosition(protagonista);
@@ -58,7 +52,6 @@ pair<float,float>* Juego::getPositionOfProtagonistaById(int idBuscado){
 void Juego::actualizarProtagonistas(){
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
 		(*it).second->trasladarse();
-		(*it).second->getScreenPosition();
 	}
 }
 

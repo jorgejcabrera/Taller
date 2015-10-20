@@ -36,3 +36,8 @@ list<Message*> MessageSocketReader::getMessagesToProcess(){
 MessageSocketReader::~MessageSocketReader() {
 	// TODO Auto-generated destructor stub
 }
+
+Message* MessageSocketReader::readMessageNow(){
+	Message *userName = this->socket->readMessage();
+	return userName;
+}

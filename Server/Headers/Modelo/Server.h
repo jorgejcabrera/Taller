@@ -23,7 +23,6 @@
 #include "GameSettings.h"
 #include "EntidadPartida.h"
 #include "../../Headers/Control/GameController.h"
-#include "../../Headers/Utils/Socket/MessageSocketReader.h"
 
 using namespace std;
 
@@ -33,9 +32,8 @@ class Server : public Thread{
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;
-		map<int,Client*> clients;
+		map<string,Client*> clients;
 		GameController *gController;
-		MessageSocketReader* readThread;
 		list<int> idEntitiesUpdated;
 
 	public:
@@ -46,6 +44,7 @@ class Server : public Thread{
 		void processReceivedMessages();
 		void notifyClients();
 		~Server();
+		void readClientUserName(Client *newClient);
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

@@ -33,15 +33,15 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = 1;
 	this->length = 1;
-	this->owner = 0;
+	this->owner = "";
 	this->name = nameEntity;
 }
 
-void EntidadDinamica::setOwner(int ownerId){
+void EntidadDinamica::setOwner(string ownerId){
 	this->owner = ownerId;
 }
 
-int EntidadDinamica::getOwner(){
+string EntidadDinamica::getOwner(){
 	return this->owner;
 }
 

@@ -35,6 +35,7 @@ public:
 	void writeMessage(Message *msg);
 	void stopWrite();
 	virtual ~MessageSocketWriter();
+	void writeMessageNow(Message *msg);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEWRITER_H_ */

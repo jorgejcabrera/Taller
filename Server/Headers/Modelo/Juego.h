@@ -40,7 +40,7 @@ public:
 	map<int,EntidadDinamica*> getProtagonistas();
 	pair<float,float>* getPositionOfProtagonistaById(int idBuscado);
 
-	void agregarProtagonista(int owner);
+	void agregarProtagonista(string owner);
 };
 
 #endif /* SOURCE_MODELO_JUEGO_H_ */

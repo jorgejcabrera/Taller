@@ -22,6 +22,7 @@
 #include "EntidadEstaticaVista.h"
 #include "EntidadSemiEstaticaVista.h"
 #include "EntidadDinamicaVista.h"
+#include "../Utils/Logger.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ private:
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
 	map<int, EntidadDinamicaVista*> personajes;
+	map<int, EntidadDinamicaVista*> misPersonajes;
 
 public:
 	void render(int ciclos);
@@ -49,7 +51,7 @@ public:
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y);
 	void addSemiEstatico(int id, string type, int x, int y);
-	void addPersonaje(int id, string type, int x, int y);
+	void addPersonaje(int id, string type, int x, int y, bool imTheOwner);
 
 };
 

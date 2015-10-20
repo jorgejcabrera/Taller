@@ -42,6 +42,7 @@ private:
 	void sendMessage(Message* msg);
 	GameController *gController;
 public:
+	string userName;
 	Client(string ip, int port, GameController *gController);
 	int connectToServer();
 	int getStatus();
@@ -50,6 +51,8 @@ public:
 	void sendEvents();
 	void saveEntitiesConfig(Message* msg);
 	virtual ~Client();
+
+	void notifyUserName();
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */

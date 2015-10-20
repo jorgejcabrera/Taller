@@ -31,6 +31,7 @@ public:
 	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition);
 	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
+	Message(string nombre);
 
 	virtual ~Message();
 	int getSize();
@@ -52,6 +53,9 @@ public:
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
+
+	void setOwner(string userName);
+	string getOwner();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

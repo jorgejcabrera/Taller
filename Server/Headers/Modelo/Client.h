@@ -19,12 +19,18 @@ class Client {
 	int clientId;
 	MessageSocketWriter* writeThread;
 	MessageSocketReader* readThread;
+	string userName;
 
 public:
 	Client(int identifier, SocketQueue *queueUnique);
 	~Client();
 	void writeMessagesInQueue(list<Message*> messagesList);
 	void writeMessagesInQueue(Message* message);
+	void startCommunication();
+	string readUserName();
+	string getUserName();
+	void setUserName(string myName);
+	void responseUserName(string status);
 };
 
 #endif /* SOURCE_MODELO_CLIENTHANDLER_H_ */
