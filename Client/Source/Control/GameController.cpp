@@ -32,7 +32,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			pair<int,int> cartesianPosition = this->moveCharacter(posMouseX,posMouseY);
 			Message* message = new Message();
 			msg_game body;
-			body.set_nombre(userId);
+			body.set_id(0);
 			body.set_tipo("update");
 			body.set_x(posMouseX);
 			body.set_y(posMouseY);
