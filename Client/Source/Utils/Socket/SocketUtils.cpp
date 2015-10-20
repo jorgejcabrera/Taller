@@ -11,11 +11,10 @@ void SocketUtils::setSocket(int socket){
 bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
-	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
+	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage","ERROR writing to SocketUtils");
 	return wroteBytes == message->getSize();
 }
 
-//TODO borrar la variable ss es para debuggear y ver los logs
 Message* SocketUtils::readMessage(){
 	int bytesRead = 0;
 	int intSize = sizeof(int);
