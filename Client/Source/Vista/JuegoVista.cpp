@@ -56,8 +56,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetY = this->getOffset()->second;
 		EntidadDinamicaVista* entidad = (*itDinamicos).second;
 		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-//		cout << "X: "<<isometricPosition.first << " OFSETX: " <<offSetX<< " Y: "<<isometricPosition.second << " OFSETY: "<<offSetY<<endl;
-		this->picassoHelper->renderObject(entidad->getPathImage(),
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
 											isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
 											isometricPosition.second + offSetY,
 											entidad->getWidthPixel(),
