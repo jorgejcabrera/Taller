@@ -7,7 +7,7 @@
 
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
-MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue *queueUnique) {
+MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue* queueUnique) {
 	this->isAlive = true;
 	this->socket = new SocketUtils(sockfd);
 	this->queue = queueUnique;
@@ -16,13 +16,13 @@ MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue *queueUnique) {
 int MessageSocketReader::run(void *data){
 	Logger::get()->logDebug("MessageSocketReader","run","running thread server reader");
 	while( this->isAlive ){
-		Message *message = this->socket->readMessage();
+		Message* message = this->socket->readMessage();
+		stringstream ss;
+		ss << "El servidor leyo del socket: "<< message->toString();
+		Logger::get()->logDebug("MessageSocketReader","run",ss.str());
 		this->queue->queuing(message);
 	}
 	return OK;
-}
-
-MessageSocketReader::~MessageSocketReader() {
 }
 
 void MessageSocketReader::stopWrite(){
@@ -46,4 +46,7 @@ Message* MessageSocketReader::readMessageNow(){
 	Message *userName = this->socket->readMessage();
 	cout << userName->toString();
 	return userName;
+}
+
+MessageSocketReader::~MessageSocketReader() {
 }

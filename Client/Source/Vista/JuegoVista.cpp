@@ -127,7 +127,6 @@ void JuegoVista::addBuilding(int id, string type, int x, int y){
 	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newBuilding->setId(id);
 	this->buildings.insert(make_pair(id,newBuilding));
-	//cout << "EDIFICIO: "<< id << " nombre " << type << " x " << x << " y " << y << " path " << newBuilding->getPathImage()<< endl;
 }
 
 void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
