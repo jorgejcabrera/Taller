@@ -125,10 +125,7 @@ void Client::saveEntitiesConfig(Message* msg){
 
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->name);
-	stringstream ss;
 	if(newMessage){
-		ss << "client is trying to send "<< newMessage->toString();
-		Logger::get()->logDebug("Client","sendEvents",ss.str());
 		this->writeThread->writeMessage(newMessage);
 	}
 }

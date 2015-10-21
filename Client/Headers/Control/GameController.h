@@ -30,7 +30,8 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
-	pair<int,int> moveCharacter(int xScreen,int yScreen);
+	//pair<int,int> moveCharacter(int xScreen,int yScreen);
+	pair<int,int> moveCharacter(EntidadDinamicaVista* entidad);
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:
