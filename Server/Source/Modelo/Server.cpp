@@ -99,7 +99,7 @@ void Server::notifyClients(){
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
 		if (it->second->isWalking()){
 			Message *messageUpdate = new Message(it->second->getId(), it->second->getScreenPosition()->first, it->second->getScreenPosition()->second);
-			Logger::get()->logDebug("Server","notifyClients",messageUpdate->toString());
+			//Logger::get()->logDebug("Server","notifyClients",messageUpdate->toString());
 			for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
 				clientIterator->second->writeMessagesInQueue(messageUpdate);
 			}

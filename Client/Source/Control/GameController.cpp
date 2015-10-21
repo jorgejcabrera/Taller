@@ -28,21 +28,22 @@ Message* GameController::getMessageFromEvent(string userId){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			int id;
 			pair<int,int> cartesianPosition = this->moveCharacter(posMouseX,posMouseY);
+			cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
 			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMisPersonajes();
-			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin();
-					it != misPersonajes->end(); ++it){
+			//TODO identidicar cual es la entidad del cliente que se desea mover
+			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
 				id = (*it).first;
 			}
-
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(id);
 			body.set_tipo("update");
-			body.set_x(posMouseX);
-			body.set_y(posMouseY);
+			body.set_x(cartesianPosition.first);
+			body.set_y(cartesianPosition.second);
 			message->setContent(body);
 			return message;
 		}
+
 		if( event->type == SDL_QUIT){
 			this->salirDelJuego = true;
 			Message* message = new Message();

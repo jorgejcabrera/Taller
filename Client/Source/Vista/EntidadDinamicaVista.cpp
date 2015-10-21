@@ -130,8 +130,8 @@ void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, 
 
 string EntidadDinamicaVista::toString(){
 	stringstream ss;
-	ss << "name: "<<this->name <<";screenPosition: ["<<screenPosition.first
-	<<","<<screenPosition.second<<"]"<<";destino: ["<<this->destinoX<<","<<this->destinoY<<"];";
+	ss << "name: "<<this->name <<"; screenPosition: ["<<screenPosition.first
+	<<";"<<screenPosition.second<<"]"<<"; destino: ["<<this->destinoX<<";"<<this->destinoY<<"];";
 	return ss.str();
 }
 
