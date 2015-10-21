@@ -154,15 +154,16 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	}
 
 	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
+	pair<int,int> isometricPosition;
 	if(correctPosition){
-		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-		/*TODO esta mierda es lo que estaba antes no va mas
-		posMouseX = isometricPosition.first + offset->first;
-		posMouseY = isometricPosition.second + offset->second;*/
-		entidad->setScreenPosition(	isometricPosition.first + offset->first,
-									isometricPosition.second + offset->second);
+		isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
+		isometricPosition.first = isometricPosition.first + offset->first;
+		isometricPosition.second= isometricPosition.second + offset->second;
+		entidad->setScreenPosition(isometricPosition);
 	}else{
-		entidad->setScreenPosition(posMouseX,posMouseY);
+		isometricPosition.first = posMouseX;
+		isometricPosition.second= posMouseY;
+		entidad->setScreenPosition(isometricPosition);
 	}
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize

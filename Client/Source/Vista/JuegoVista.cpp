@@ -15,6 +15,15 @@ void JuegoVista::createView(){
 	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
 
+void JuegoVista::render(int runCycles){
+	this->picassoHelper->clearView();
+	this->drawIsometricMap();
+	this->drawDinamicEntities(runCycles);
+	this->drawStaticEntities(runCycles);
+	this->drawSemiStaticsEntities(runCycles);
+	this->picassoHelper->renderView();
+}
+
 void JuegoVista::drawIsometricMap(){
 	int posX = 0;
 	int posY = 0;
@@ -40,45 +49,36 @@ void JuegoVista::drawStaticEntities(int runCycles){
 	}
 }
 
-void JuegoVista::render(int runCycles){
-	this->picassoHelper->clearView();
-	this->drawIsometricMap();
-	this->drawDinamicEntities(runCycles);
-	this->drawStaticEntities(runCycles);
-	this->drawSemiStaticsEntities(runCycles);
-	this->picassoHelper->renderView();
-}
-
 void JuegoVista::drawDinamicEntities(int runCycles){
 	pair<int,int> isometricPosition;
+	EntidadDinamicaVista* entidad;
 
 	//deberia dibujar los personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-			int offSetX = this->getOffset()->first;
-			int offSetY = this->getOffset()->second;
-			EntidadDinamicaVista* entidad = (*itDinamicos).second;
-			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												isometricPosition.first + gameSettings->getTileSize() / 2 + offSetX,
-												isometricPosition.second + offSetY,
-												entidad->getWidthPixel(),
-												entidad->getLengthPixel(),
-												entidad->getPositionOfSprite(runCycles));
+		pair<float,float>* screenPosition = (*itDinamicos).second->getScreenPosition();
+		entidad = (*itDinamicos).second;
+		int offSetX = this->getOffset()->first;
+		int offSetY = this->getOffset()->second;
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											screenPosition->first - gameSettings->getTileSize() / 2 + offSetX,
+											screenPosition->second - entidad->getLengthPixel() + offSetY,
+											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
 	}
 
 	//dibujo los personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
-			int offSetX = this->getOffset()->first;
-			int offSetY = this->getOffset()->second;
-			EntidadDinamicaVista* entidad = (*itDinamicos).second;
-			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												isometricPosition.first + gameSettings->getTileSize() / 2 + offSetX,
-												isometricPosition.second + offSetY,
-												entidad->getWidthPixel(),
-												entidad->getLengthPixel(),
-												entidad->getPositionOfSprite(runCycles));
-
+		pair<float,float>* screenPosition = (*itDinamicos).second->getScreenPosition();
+		entidad = (*itDinamicos).second;
+		int offSetX = this->getOffset()->first;
+		int offSetY = this->getOffset()->second;
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											screenPosition->first /*- gameSettings->getTileSize() / 2*/ + offSetX,
+											screenPosition->second /*- entidad->getLengthPixel()*/ + offSetY,
+											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
 	}
 }
 
@@ -150,16 +150,23 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getFps());
+	//paso la posicion cartesiana a isometrica, y la centro
+	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(newPersonaje);
+	isometricPosition.first = isometricPosition.first + gameSettings->getTileSize() / 2 + this->getOffset()->first;
+	isometricPosition.second = isometricPosition.second + this->offset.second;
+
+	//seteo atributos
 	newPersonaje->setPosition(x,y);
+	newPersonaje->setScreenPosition(isometricPosition);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newPersonaje->setId(id);
 	if(imTheOwner){
-		//Logger::get()->logDebug("JuegoVista","addPersonaje","RECIBI MI PERSONAJE");
+		cout << "lo inserte en misPersonajes"<<endl;
 		this->misPersonajes.insert(make_pair(id,newPersonaje));
 	}else{
-		//Logger::get()->logDebug("JuegoVista","addPersonaje","NO es mi personaje");
+		cout << "lo inserte en personajes"<<endl;
 		this->personajes.insert(make_pair(id,newPersonaje));
 	}
 }
