@@ -117,7 +117,7 @@ void Client::processReceivedMessages(){
 }
 
 void Client::saveEntitiesConfig(Message* msg){
-	EntidadConfig* entidad = new EntidadConfig(msg->getNombre(),
+	EntidadConfig* entidad = new EntidadConfig(	msg->getNombre(),
 												msg->getImagen(),
 												msg->getAnchoBase(),
 												msg->getAltoBase(),

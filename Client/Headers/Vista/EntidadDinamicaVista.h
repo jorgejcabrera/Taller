@@ -71,7 +71,9 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 
 		Direccion getDireccion();
 
-		void setScreenPosition(float x, float y);
+		//TODO esta porqueria estaba antes
+		//void setScreenPosition(float x, float y);
+		void setScreenPosition(pair<float,float> screenPosition);
 		void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 };
 
