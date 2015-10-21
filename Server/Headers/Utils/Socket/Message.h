@@ -56,6 +56,7 @@ public:
 
 	void setOwner(string userName);
 	string getOwner();
+	void pingMessage(string nombre);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

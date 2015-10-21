@@ -14,6 +14,8 @@ Client::Client(string ip, int port, GameController *gControllerNew) {
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = DISCONECTED;								//desconected
 	this->gController = gControllerNew;
+	this->lastReportedClient = time(0);
+	this->lastReportedServer = time(0);
 }
 
 //TODO habilitar el socket que escribe al servidor
@@ -105,6 +107,9 @@ void Client::processReceivedMessages(){
 			//Agrego al JuegoVista personajes/dinamicos
 			bool imTheOwner= ((*it)->getOwner()==this->userName);
 			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY(), imTheOwner);
+		}else if ( tipoMensaje == "ping"){
+			//El Servidor avisa que sigue arriba
+			this->lastReportedServer = time(0);
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 		}
@@ -128,8 +133,28 @@ void Client::sendEvents(){
 	if(newMessage){
 		this->writeThread->writeMessage(newMessage);
 	}
+	pingMessage();
 }
 
+void Client::pingMessage(){
+	//Si hace mas de X segundos notifico que estoy conectado
+	if((time(0)-this->lastReportedClient)>=DefaultSettings::getTimeOut()){
+			Message* ping = new Message();
+			ping->pingMessage(this->userName);
+			this->writeThread->writeMessage(ping);
+			this->lastReportedClient = time(0);
+		}
+}
+
+void Client::verifyServerAlive(){
+	if(isConected()){
+		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()+5)){
+			this->status = DISCONECTED;
+			//TODO mostrar un mejor mensaje cuando pierdo conectividad
+			Logger::get()->logDebug("Client","verifyServerAlive","SERVIDOR DESCONECTADO");
+		}
+	}
+}
 
 Client::~Client() {
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending

@@ -12,6 +12,7 @@ Server::Server(int port, GameController *myController) {
 	this->serverSocket = 0;
 	this->gController = myController;
 	this->readQueue = new SocketQueue();
+	this->lastReportedServer = time(0);
 }
 
 int Server::initSocketServer(){
@@ -87,9 +88,17 @@ void Server::processReceivedMessages(){
 	this->idEntitiesUpdated.clear();
 	while(!this->readQueue->isEmpty()){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
-		int idUpdate = messageUpdate->getId();
-		this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
-		this->idEntitiesUpdated.push_back(idUpdate);
+		if(messageUpdate->getTipo()=="ping"){
+			/*stringstream ss;
+			ss << "recibi ping del cliente: "<< messageUpdate->getNombre();
+			Logger::get()->logDebug("Server","processReceivedMessages", ss.str());
+			*/
+			this->clients.at(messageUpdate->getNombre())->reporting();
+		}else{
+			int idUpdate = messageUpdate->getId();
+			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
+			this->idEntitiesUpdated.push_back(idUpdate);
+		}
 	}
 	this->readQueue->unlockQueue();
 }
@@ -118,6 +127,19 @@ void Server::notifyClients(){
 		}
 	}
 	nuevosProtagonistas->clear();
+	pingMessage();
+}
+
+void Server::pingMessage(){
+	//Si hace mas de X segundos notifico que estoy conectado
+	if((time(0)-this->lastReportedServer)>=(DefaultSettings::getTimeOut()-5)){
+			Message* ping = new Message();
+			ping->pingMessage("server");
+			for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
+				clientIterator->second->writeMessagesInQueue(ping);
+			}
+			this->lastReportedServer = time(0);
+		}
 }
 
 Server::~Server() {

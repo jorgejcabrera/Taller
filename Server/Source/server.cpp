@@ -12,7 +12,7 @@
 /* Includes */
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Server.h"
-
+#include <ctime>
 
 using namespace std;
 

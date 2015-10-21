@@ -17,6 +17,10 @@ const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 DefaultSettings::DefaultSettings() {
 }
 
+int DefaultSettings::getTimeOut(){
+	return TIMEOUT;
+}
+
 int DefaultSettings::getScreenWidth(){
 	return SCREEN_WIDTH;
 }

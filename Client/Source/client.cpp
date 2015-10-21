@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 	Client* jorge = new Client("127.0.0.1",7843, gController);
 	jorge->connectToServer();
 	
-	//ESPERO 10 segundos
+	//ESPERO 5 segundos
 	SDL_Delay(5000);
 
 	while( jorge->isConected() ){
@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
 		gController->getJuegoVista()->render(gController->getRunCycles());
 		//escuchamos eventos y los mandamos al server
 		jorge->sendEvents();
+		jorge->verifyServerAlive();
 		gController->delay();
 	}
 	return 0;
