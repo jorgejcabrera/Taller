@@ -11,6 +11,7 @@
 #include "SDL2/SDL.h"
 #include <math.h>
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include "EntidadPartidaVista.h"
 
@@ -64,7 +65,7 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 		SDL_Rect getPositionOfSprite(int runCycles);
 		int getFramesPerSecond();
 		void setDelay(int delayFrames);
-
+		string toString();
 		pair<float,float>* getScreenPosition();
 		pair<int,int>* getPosition();
 

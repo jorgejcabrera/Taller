@@ -23,9 +23,6 @@ string getStringSize(EntidadPartidaVista* entidad){
 	}
 }
 
-EntidadEstaticaVista::EntidadEstaticaVista() {
-}
-
 EntidadEstaticaVista::EntidadEstaticaVista(int width,int length){
 	this->width = width;
 	this->length = length;

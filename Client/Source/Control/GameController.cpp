@@ -26,14 +26,17 @@ Message* GameController::getMessageFromEvent(string userId){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			/*TODO esto nose si está bien. Lo que hacemos es cliquear en la pantalla, transformar esa posicion
-			 *en cartesiana, que es la que le vamos a enviar al server,y dejamos seteado también la posicion
-			 *en donde se debería dibujar el chabonsito*/
+			int id;
 			pair<int,int> cartesianPosition = this->moveCharacter(posMouseX,posMouseY);
-			//map<int,EntidadDinamicaVista*>* misPersonajes =this->juegoVista->getMisPersonajes();
+			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMisPersonajes();
+			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin();
+					it != misPersonajes->end(); ++it){
+				id = (*it).first;
+			}
+
 			Message* message = new Message();
 			msg_game body;
-			body.set_id(0);
+			body.set_id(id);
 			body.set_tipo("update");
 			body.set_x(posMouseX);
 			body.set_y(posMouseY);

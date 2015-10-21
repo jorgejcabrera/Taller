@@ -51,7 +51,7 @@ void JuegoVista::render(int runCycles){
 
 void JuegoVista::drawDinamicEntities(int runCycles){
 	pair<int,int> isometricPosition;
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
+	/*for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 			int offSetX = this->getOffset()->first;
 			int offSetY = this->getOffset()->second;
 			EntidadDinamicaVista* entidad = (*itDinamicos).second;
@@ -63,13 +63,14 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 												entidad->getLengthPixel(),
 												entidad->getPositionOfSprite(runCycles));
 
-	}
+	}*/
 	//MIS PERSONAJES
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 			int offSetX = this->getOffset()->first;
 			int offSetY = this->getOffset()->second;
 			EntidadDinamicaVista* entidad = (*itDinamicos).second;
 			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
+			Logger::get()->logDebug("JuegoVista","drawDinamicEntities",entidad->toString());
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
 												isometricPosition.first+gameSettings->getTileSize() / 2+ offSetX,
 												isometricPosition.second + offSetY,

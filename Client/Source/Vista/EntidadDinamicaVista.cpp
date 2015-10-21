@@ -125,8 +125,15 @@ void EntidadDinamicaVista::destruir(){
 	this->~EntidadDinamicaVista();
 }
 
-EntidadDinamicaVista::~EntidadDinamicaVista() {
+void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
 }
 
-void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
+string EntidadDinamicaVista::toString(){
+	stringstream ss;
+	ss << "name: "<<this->name <<";screenPosition: ["<<screenPosition.first
+	<<","<<screenPosition.second<<"]"<<";destino: ["<<this->destinoX<<","<<this->destinoY<<"];";
+	return ss.str();
+}
+
+EntidadDinamicaVista::~EntidadDinamicaVista() {
 }
