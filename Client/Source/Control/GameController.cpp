@@ -26,20 +26,29 @@ Message* GameController::getMessageFromEvent(string userId){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			/*TODO esto nose si está bien. Lo que hacemos es cliquear en la pantalla, transformar esa posicion
-			 *en cartesiana, que es la que le vamos a enviar al server,y dejamos seteado también la posicion
-			 *en donde se debería dibujar el chabonsito*/
-			pair<int,int> cartesianPosition = this->moveCharacter(posMouseX,posMouseY);
-			//map<int,EntidadDinamicaVista*>* misPersonajes =this->juegoVista->getMisPersonajes();
+			int id;
+			pair<int,int> cartesianPosition;
+			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMisPersonajes();
+
+			//TODO identidicar cual es la entidad del cliente que se desea mover, hoy esto anda porque tenemos un unico
+			//personaje
+			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
+				id = (*it).first;
+				cartesianPosition = this->moveCharacter((*it).second);
+				cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
+			}
+
+			//creamos el mensaje que vamos a enviar al server
 			Message* message = new Message();
 			msg_game body;
-			body.set_id(0);
+			body.set_id(id);
 			body.set_tipo("update");
-			body.set_x(posMouseX);
-			body.set_y(posMouseY);
+			body.set_x(cartesianPosition.first);
+			body.set_y(cartesianPosition.second);
 			message->setContent(body);
 			return message;
 		}
+
 		if( event->type == SDL_QUIT){
 			this->salirDelJuego = true;
 			Message* message = new Message();
@@ -95,31 +104,24 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	if (posicionX >= gameSettings->getMargenDerechoUno()	&& posicionX < gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
 			offSetX -= gameSettings->getVelocidadScrollUno();
 	}
-
 	if (posicionX >= gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
 			offSetX -= 1 * gameSettings->getVelocidadScrollDos();
 	}
-
 	if ((posicionX > gameSettings->getMargenIzquierdoDos()) && (posicionX <= gameSettings->getMargenIzquierdoUno()) && !(offSetX > gameSettings->getLimiteIzquierdo())) {
 			offSetX += gameSettings->getVelocidadScrollUno();
 	}
-
 	if (posicionX <= gameSettings->getMargenIzquierdoDos() && !(offSetX > gameSettings->getLimiteIzquierdo())) {
 			offSetX += gameSettings->getVelocidadScrollDos();
 	}
-
 	if ((posicionY <= gameSettings->getMargenSuperiorUno()) && (posicionY > gameSettings->getMargenSuperiorDos()) && !((offSetY > gameSettings->getLimiteSuperior()))) {
 			offSetY += gameSettings->getVelocidadScrollUno();
 	}
-
 	if (posicionY <= gameSettings->getMargenSuperiorDos() && !((offSetY > gameSettings->getLimiteSuperior()))) {
 		offSetY += gameSettings->getVelocidadScrollDos();
 	}
-
 	if (posicionY >= gameSettings->getMargenInferiorUno() && (posicionY < gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
 			offSetY -= gameSettings->getVelocidadScrollUno();
 	}
-
 	if ((posicionY >= gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
 		offSetY -= gameSettings->getVelocidadScrollDos();
 	}
@@ -130,9 +132,9 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	return curretOffset;
 }
 
-pair<int,int> GameController::moveCharacter(int xScreen,int yScreen){
+pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	pair<int,int>* offset = this->juegoVista->getOffset();
-	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
+	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 	bool correctPosition = false;
 
 	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
@@ -154,8 +156,11 @@ pair<int,int> GameController::moveCharacter(int xScreen,int yScreen){
 	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
 	if(correctPosition){
 		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-		posMouseX = isometricPosition.first+offset->first;
-		posMouseY = isometricPosition.second+offset->second;
+		/*TODO esta mierda es lo que estaba antes no va mas
+		posMouseX = isometricPosition.first + offset->first;
+		posMouseY = isometricPosition.second + offset->second;*/
+		entidad->setScreenPosition(	isometricPosition.first + offset->first,
+									isometricPosition.second + offset->second);
 	}
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
