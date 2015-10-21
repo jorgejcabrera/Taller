@@ -23,6 +23,12 @@ Message::Message(string nombre){
 	this->msg.set_nombre(nombre);
 }
 
+void Message::pingMessage(string nombre){
+	this->msg.set_id(0);
+	this->msg.set_tipo("ping");
+	this->msg.set_nombre(nombre);
+}
+
 string Message::toString(){
 	stringstream ss;
 	ss << " id: " << this->msg.id();

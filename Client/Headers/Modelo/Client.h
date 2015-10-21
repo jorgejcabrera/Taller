@@ -26,6 +26,7 @@
 #include "GameSettings.h"
 #include "../Vista/JuegoVista.h"
 #include "../Control/GameController.h"
+#include <ctime>
 
 using namespace std;
 
@@ -41,6 +42,9 @@ private:
 	void readMessage(Message msg);
 	void sendMessage(Message* msg);
 	GameController *gController;
+	time_t lastReportedClient;
+	time_t lastReportedServer;
+
 public:
 	string userName;
 	Client(string ip, int port, GameController *gController);
@@ -53,6 +57,8 @@ public:
 	virtual ~Client();
 
 	void notifyUserName();
+	void pingMessage();
+	void verifyServerAlive();
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */

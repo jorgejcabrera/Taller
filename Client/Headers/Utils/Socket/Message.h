@@ -59,6 +59,7 @@ public:
 	int getPixelsDimension();
 	void setOwner(string userName);
 	string getOwner();
+	void pingMessage(string nombre);
 
 };
 

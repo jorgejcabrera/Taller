@@ -24,6 +24,7 @@
 #include "DefaultSettings.h"
 #include "EntidadPartida.h"
 #include "../../Headers/Control/GameController.h"
+#include <ctime>
 
 using namespace std;
 
@@ -36,6 +37,7 @@ class Server : public Thread{
 		map<string,Client*> clients;
 		GameController *gController;
 		list<int> idEntitiesUpdated;
+		time_t lastReportedServer;
 
 	public:
 		Server(int port, GameController *myController);
@@ -46,6 +48,7 @@ class Server : public Thread{
 		void notifyClients();
 		~Server();
 		void readClientUserName(Client *newClient);
+		void pingMessage();
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

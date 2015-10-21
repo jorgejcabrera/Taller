@@ -12,6 +12,8 @@
 #include "../Utils/Socket/MessageSocketReader.h"
 #include "../Utils/Socket/Message.h"
 #include "../Utils/Socket/SocketQueue.h"
+#include "DefaultSettings.h"
+#include <ctime>
 
 #include <list>
 
@@ -20,6 +22,7 @@ class Client {
 	MessageSocketWriter* writeThread;
 	MessageSocketReader* readThread;
 	string userName;
+	time_t lastReported;
 
 public:
 	Client(int identifier, SocketQueue *queueUnique);
@@ -31,6 +34,8 @@ public:
 	string getUserName();
 	void setUserName(string myName);
 	void responseUserName(string status);
+	void reporting();
+	bool isActive();
 };
 
 #endif /* SOURCE_MODELO_CLIENTHANDLER_H_ */

@@ -37,6 +37,7 @@ class DefaultSettings {
 		static const int POS_X_PROTAGONISTA = 5;
 		static const int POS_Y_PROTAGONISTA = 5;
 		static const int VELOCIDAD_PERSONAJE = 10;
+		static const int TIMEOUT = 15;
 
 	public:
 		DefaultSettings();
@@ -77,6 +78,7 @@ class DefaultSettings {
 		static int getPosXProtagonista();
 		static int getPosYProtagonista();
 		static int getVelocidadPersonaje();
+		static int getTimeOut();
 };
 
 

@@ -11,10 +11,20 @@ Client::Client(int identifier, SocketQueue *queueUnique) {
 	this->clientId = identifier;
 	this->writeThread = new MessageSocketWriter(identifier);
 	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
+	this->lastReported = time(0);
 }
 
 Client::~Client() {
 	shutdown(this->clientId, 2);
+}
+
+void Client::reporting(){
+	this->lastReported = time(0);
+}
+
+bool Client::isActive(){
+	//Si no recibo novedades por 15 segundos lo marco como inactivo;
+	return((time(0)-this->lastReported)<DefaultSettings::getTimeOut());
 }
 
 void Client::writeMessagesInQueue(list<Message*> messagesList){
