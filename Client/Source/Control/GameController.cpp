@@ -161,6 +161,8 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 		posMouseY = isometricPosition.second + offset->second;*/
 		entidad->setScreenPosition(	isometricPosition.first + offset->first,
 									isometricPosition.second + offset->second);
+	}else{
+		entidad->setScreenPosition(posMouseX,posMouseY);
 	}
 
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize

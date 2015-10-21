@@ -30,7 +30,10 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
-	//pair<int,int> moveCharacter(int xScreen,int yScreen);
+	/*
+	*retorna la posicion cartesiana de donde se hizo click, y le setea la entidad la posicion
+	*de pantalla donde debería ser dibujado.
+	**/
 	pair<int,int> moveCharacter(EntidadDinamicaVista* entidad);
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
