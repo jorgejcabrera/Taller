@@ -94,6 +94,9 @@ void Server::processReceivedMessages(){
 			Logger::get()->logDebug("Server","processReceivedMessages", ss.str());
 			*/
 			this->clients.at(messageUpdate->getNombre())->reporting();
+		}else if(messageUpdate->getTipo()=="exit"){
+			//TODO desconectar al cliente? hoy deberia hacerlo cuando no detecta novedades
+			Logger::get()->logDebug("Server","processReceivedMessages", "RECIBI MESAJE DE DESCONEXION");
 		}else{
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
@@ -109,9 +112,16 @@ void Server::notifyClients(){
 		if (it->second->isWalking()){
 			Message *messageUpdate = new Message(it->second->getId(), it->second->getScreenPosition()->first, it->second->getScreenPosition()->second);
 			//Logger::get()->logDebug("Server","notifyClients",messageUpdate->toString());
-			for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
-				clientIterator->second->writeMessagesInQueue(messageUpdate);
+			Logger::get()->logDebug("Server","notifyClients","ANTES 1");
+			list<Client*> activeClients= getActiveClients();
+			Logger::get()->logDebug("Server","notifyClients","DESPUES 1");
+			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+				(*clientIterator)->writeMessagesInQueue(messageUpdate);
 			}
+			/*for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
+				clientIterator->second->writeMessagesInQueue(messageUpdate);
+			}*/
+			Logger::get()->logDebug("Server","notifyClients","FIN 1");
 		}
 	}
 	//MANDO los nuevos personajes
@@ -119,14 +129,15 @@ void Server::notifyClients(){
 	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
 		Message *protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()), (*it)->getName(), (*it)->getPosition()->first, (*it)->getPosition()->second);
 		protagonistaMessage->setOwner((*it)->getOwner());
-		for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
-			if(clientIterator->first!=(*it)->getOwner()){
+		list<Client*> activeClients= getActiveClients();
+		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+			if((*clientIterator)->getUserName()!=(*it)->getOwner()){
 				//no notifico al dueño del personaje porque ya lo recibio
-				clientIterator->second->writeMessagesInQueue(protagonistaMessage);
+				(*clientIterator)->writeMessagesInQueue(protagonistaMessage);
 			}
 		}
 	}
-	nuevosProtagonistas->clear();
+	this->gController->getJuego()->cleanNewProtagonistas();
 	pingMessage();
 }
 
@@ -135,11 +146,35 @@ void Server::pingMessage(){
 	if((time(0)-this->lastReportedServer)>=(DefaultSettings::getTimeOut()-5)){
 			Message* ping = new Message();
 			ping->pingMessage("server");
-			for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
-				clientIterator->second->writeMessagesInQueue(ping);
+			list<Client*> activeClients= getActiveClients();
+			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+				(*clientIterator)->writeMessagesInQueue(ping);
 			}
 			this->lastReportedServer = time(0);
 		}
+}
+
+void Server::verifyClientsConections(){
+	list<Client*> activeClients= getActiveClients();
+	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+		if((*clientIterator)->getTimeSinceLastReport()>= DefaultSettings::getTimeOut()){
+			(*clientIterator)->disconect();
+			stringstream ss;
+			ss<< "CLIENTE se deconecto: "<< (*clientIterator)->getUserName();
+			Logger::get()->logDebug("Server","verifyClientsConections",ss.str());
+		}
+	}
+}
+
+list<Client*> Server::getActiveClients(){
+	list<Client*> activeClients;
+	for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
+		//cout <<"STATUS: "<< clientIterator->second->getStatus() << endl;
+		if(clientIterator->second->getStatus()==0){
+			activeClients.push_back(clientIterator->second);
+		}
+	}
+	return activeClients;
 }
 
 Server::~Server() {

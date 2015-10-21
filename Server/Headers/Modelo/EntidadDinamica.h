@@ -57,18 +57,12 @@ class EntidadDinamica: public EntidadPartida {
 		void destruir();
 		void setOwner(string owner);
 		string getOwner();
-		//void setFramesInLineFile(int qty);
-		//int getFramesInLineFile();
 		EntidadDinamica();
 		//EntidadDinamica(int vel,int posX,int posY);
 		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 		void setInitialScreenPosition(float x,float y);
-		//int getWidthPixel();
-		//int getLengthPixel();
 		virtual ~EntidadDinamica();
 		string getEntityType();
-		//int getFramesPerSecond();
-		//void setDelay(int delayFrames);
 
 		pair<float,float>* getScreenPosition();
 		pair<int,int>* getPosition();

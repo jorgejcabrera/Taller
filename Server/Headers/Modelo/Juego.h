@@ -41,6 +41,7 @@ public:
 	map<int,EntidadDinamica*> getProtagonistas();
 	list<EntidadDinamica*>* getNewProtagonistasToNotify();
 	pair<float,float>* getPositionOfProtagonistaById(int idBuscado);
+	void cleanNewProtagonistas();
 
 	void agregarProtagonista(string owner);
 };

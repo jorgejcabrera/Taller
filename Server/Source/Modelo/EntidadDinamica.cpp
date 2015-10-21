@@ -201,17 +201,6 @@ void EntidadDinamica::trasladarse(){
 	}
 }
 
-/*
- * TODO esto va en la VISTA!!
-int EntidadDinamica::getFramesPerSecond(){
-	return this->framesPerSecond;
-}
-
-void EntidadDinamica::setDelay(int delayFrames){
-	this->delay = delayFrames;
-}
-*/
-
 void EntidadDinamica::destruir(){
 	this->~EntidadDinamica();
 }

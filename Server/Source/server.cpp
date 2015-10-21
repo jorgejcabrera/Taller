@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
 		//Se le manda a los clientes las novedades
 		server->notifyClients();
 		gController->delay();
+		server->verifyClientsConections();
 		//reiniciar = gController->reiniciarJuego();
 	}
 

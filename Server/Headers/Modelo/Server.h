@@ -25,6 +25,7 @@
 #include "EntidadPartida.h"
 #include "../../Headers/Control/GameController.h"
 #include <ctime>
+#include <list>
 
 using namespace std;
 
@@ -49,6 +50,8 @@ class Server : public Thread{
 		~Server();
 		void readClientUserName(Client *newClient);
 		void pingMessage();
+		void verifyClientsConections();
+		list<Client*> getActiveClients();
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

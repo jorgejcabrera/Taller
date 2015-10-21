@@ -53,6 +53,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			this->salirDelJuego = true;
 			Message* message = new Message();
 			msg_game body;
+			body.set_id(0);
 			body.set_nombre(userId);
 			body.set_tipo("exit");
 			message->setContent(body);

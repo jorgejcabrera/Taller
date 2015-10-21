@@ -8,6 +8,9 @@
 #ifndef SOURCE_MODELO_CLIENT_H_
 #define SOURCE_MODELO_CLIENT_H_
 
+#define DISCONECTED -1
+#define CONECTED 0
+
 #include "../Utils/Socket/MessageSocketWriter.h"
 #include "../Utils/Socket/MessageSocketReader.h"
 #include "../Utils/Socket/Message.h"
@@ -23,6 +26,7 @@ class Client {
 	MessageSocketReader* readThread;
 	string userName;
 	time_t lastReported;
+	int status;
 
 public:
 	Client(int identifier, SocketQueue *queueUnique);
@@ -36,6 +40,9 @@ public:
 	void responseUserName(string status);
 	void reporting();
 	bool isActive();
+	int getTimeSinceLastReport();
+	void disconect();
+	int getStatus();
 };
 
 #endif /* SOURCE_MODELO_CLIENTHANDLER_H_ */

@@ -12,6 +12,7 @@ Client::Client(int identifier, SocketQueue *queueUnique) {
 	this->writeThread = new MessageSocketWriter(identifier);
 	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
 	this->lastReported = time(0);
+	this->status = CONECTED;
 }
 
 Client::~Client() {
@@ -20,6 +21,18 @@ Client::~Client() {
 
 void Client::reporting(){
 	this->lastReported = time(0);
+}
+
+void Client::disconect(){
+	this->status =DISCONECTED;
+}
+
+int Client::getStatus(){
+	return this->status;
+}
+
+int Client::getTimeSinceLastReport(){
+	return (time(0)-this->lastReported);
 }
 
 bool Client::isActive(){
