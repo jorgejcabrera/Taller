@@ -32,6 +32,7 @@ void Juego::agregarProtagonista(string owner){
 	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
 	//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
 	this->newProtagonistas.push_back(protagonista);
+	//cout << "creo un personaje en: "<< owner<< " "<< positionOfProtagonista.first << " y: " << positionOfProtagonista.second << endl;
 }
 
 Mapa* Juego::getMap(){
