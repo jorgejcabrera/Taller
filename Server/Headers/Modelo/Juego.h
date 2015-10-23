@@ -12,6 +12,7 @@
 #include "EntidadDinamica.h"
 #include "../Modelo/DefaultSettings.h"
 #include "GameSettings.h"
+#include "ResourceManager.h"
 #include <map>
 #include <list>
 
@@ -22,6 +23,7 @@ private:
 	Mapa* mapa;
 	map<int,EntidadDinamica*> protagonistas;
 	list<EntidadDinamica*> newProtagonistas;
+	ResourceManager* resourseManager;
 	string currentAge;
 	bool juegoFinalizado;
 	GameSettings* gameSettings;

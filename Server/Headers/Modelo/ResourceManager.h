@@ -1,16 +1,35 @@
 /*
  * ResourceManager.h
  *
- *  Created on: Oct 23, 2015
+ *  Created on: Oct 17, 2015
  *      Author: juan
  */
 
 #ifndef RESOURCEMANAGER_H_
 #define RESOURCEMANAGER_H_
 
+#include "../Modelo/Mapa.h"
+#include "../Modelo/Resource.h"
+#include "../Modelo/GameSettings.h"
+#include <list>
+using namespace std;
+
 class ResourceManager {
+
+private:
+	Mapa* map;
+	list<Resource*>* resources;
+	int oro;
+	int madera;
+	int alimento;
 public:
-	ResourceManager();
+	void collectResourceAt(pair<int,int>* pos);
+	ResourceManager(Mapa* map);
+	bool resourceAt(int x,int y);
+	//void actualizar();
+	int getGold();
+	int getWood();
+	int getFood();
 	virtual ~ResourceManager();
 };
 

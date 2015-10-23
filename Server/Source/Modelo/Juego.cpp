@@ -14,6 +14,7 @@ Juego::Juego() {
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
 	this->currentAge = gameSettings->getAgeOfEmpires();
+	this->resourseManager = new ResourceManager(this->mapa);
 }
 
 void Juego::agregarProtagonista(string owner){

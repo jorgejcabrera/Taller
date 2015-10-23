@@ -57,18 +57,18 @@ tipos:
 
 - nombre: chori
   imagen: ../../Taller/Images/Resources/chori.png
-  ancho_base: 1
-  alto_base: 1
+  ancho_base: 2
+  alto_base: 2
 
 - nombre: gold
   imagen: ../../Taller/Images/Resources/gold.png
-  ancho_base: 1
-  alto_base: 1
+  ancho_base: 2
+  alto_base: 2
 
 - nombre: wood
   imagen: ../../Taller/Images/Resources/Wood.png
-  ancho_base: 1
-  alto_base: 1
+  ancho_base: 2
+  alto_base: 2
 
 - nombre: House1
   imagen: ../../Taller/Images/Industrial_Age/House1-2x2.png
