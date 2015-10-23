@@ -108,7 +108,10 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "personajes"){
 			//Agrego al JuegoVista personajes/dinamicos
 			bool imTheOwner= ((*it)->getOwner()==this->userName);
-			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY(), imTheOwner);
+			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
+			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY(), imTheOwner, (*it)->getFps());
+		}else if ( tipoMensaje == "disconnect"){
+			disconnectCharacter((*it)->getId());
 		}else if ( tipoMensaje == "ping"){
 			//El Servidor avisa que sigue arriba
 			this->lastReportedServer = time(0);
@@ -116,6 +119,13 @@ void Client::processReceivedMessages(){
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 		}
 	}
+}
+
+void Client::disconnectCharacter(int id){
+	//TODO cambiar el path a buscar por algo que no este hardcodeado
+	//cambio el path de la imagen por otro grisado y que se note que está desconectado
+	this->gController->getJuegoVista()->getPersonajeById(id)->setPathImage(GameSettings::GetInstance()->getEntityConfig("soldadoDesconectado")->getPath());
+
 }
 
 void Client::saveEntitiesConfig(Message* msg){

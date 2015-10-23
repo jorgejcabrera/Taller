@@ -47,7 +47,7 @@ public:
 	//Generadores de mensajes para cuando se conecta un cliente nuevo
 	list<Message*> getTilesMessages();
 	list<Message*> getEntitiesMessages();
-	list<Message*> getProtagonistasMessages();
+	list<int> getEntitiesOfClient(string userName);
 };
 
 #endif /* GAMECONTROLLER_H_ */

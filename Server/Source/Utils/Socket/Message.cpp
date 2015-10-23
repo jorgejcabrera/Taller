@@ -18,12 +18,14 @@ Message::Message(int identifier, int xPosition, int yPosition){
 }
 
 //Mesaje utilizado para mandar por primera vez una entidad
-Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition){
+Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected){
 	this->msg.set_id(identifier);
 	this->msg.set_tipo(tipoMessage);
 	this->msg.set_nombre(nombreEntity);
 	this->msg.set_x(xPosition);
 	this->msg.set_y(yPosition);
+	//Utilizo el campo FPS para mandar 0: el cliente está conectado, -1: el cliente está DESCONECTADO
+	this->msg.set_fps(clientConnected);
 }
 
 //Mensaje usado para configuracion
@@ -70,6 +72,11 @@ void Message::pingMessage(string nombre){
 	this->msg.set_id(0);
 	this->msg.set_tipo("ping");
 	this->msg.set_nombre(nombre);
+}
+
+void Message::clientDisconect(int identifier){
+	this->msg.set_id(identifier);
+	this->msg.set_tipo("disconnect");
 }
 
 string Message::toString(){

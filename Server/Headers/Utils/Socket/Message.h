@@ -28,7 +28,7 @@ private:
 public:
 	Message();
 	Message(int identifier, int xPosition, int yPosition);
-	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition);
+	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected);
 	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
@@ -58,6 +58,7 @@ public:
 	void setOwner(string userName);
 	string getOwner();
 	void pingMessage(string nombre);
+	void clientDisconect(int id);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

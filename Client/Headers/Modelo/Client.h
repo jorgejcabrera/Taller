@@ -59,6 +59,7 @@ public:
 	void notifyUserName();
 	void pingMessage();
 	void verifyServerAlive();
+	void disconnectCharacter(int id);
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */

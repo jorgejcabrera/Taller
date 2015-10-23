@@ -150,7 +150,7 @@ void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 }
 
-void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner){
+void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner, int active){
 	EntidadDinamicaVista *newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -158,6 +158,10 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 	//seteo atributos
 	newPersonaje->setPosition(x,y);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
+	if(active<0){
+		newPersonaje->setPathImage(gameSettings->getEntityConfig("soldadoDesconectado")->getPath());
+	}
+
 	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newPersonaje->setId(id);
@@ -179,4 +183,8 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 
 map<int,EntidadDinamicaVista*>* JuegoVista::getMisPersonajes(){
 	return &this->misPersonajes;
+}
+
+EntidadDinamicaVista* JuegoVista::getPersonajeById(int id){
+	return this->personajes.at(id);
 }

@@ -52,6 +52,7 @@ class Server : public Thread{
 		void pingMessage();
 		void verifyClientsConections();
 		list<Client*> getActiveClients();
+		list<Message*> getProtagonistasMessages();
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

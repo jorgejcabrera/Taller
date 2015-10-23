@@ -38,9 +38,6 @@ class EntidadDinamica: public EntidadPartida {
 		int frame;
 		string owner;
 
-		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
-		int delay;
-
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
 		float distanciaEnY(float y);
@@ -57,12 +54,9 @@ class EntidadDinamica: public EntidadPartida {
 		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 		void setInitialScreenPosition(float x,float y);
 		virtual ~EntidadDinamica();
-
 		pair<float,float>* getScreenPosition();
 		pair<int,int>* getPosition();
-
 		Direccion getDireccion();
-
 		void setScreenPosition(float x, float y);
 		void trasladarse();
 		bool isWalking();

@@ -73,11 +73,27 @@ int Server::run(void * data){
 				newClient->writeMessagesInQueue(gController->getEntitiesMessages());
 
 				//Mando los protagonistas hasta el momento
-				newClient->writeMessagesInQueue(gController->getProtagonistasMessages());
+				newClient->writeMessagesInQueue(getProtagonistasMessages());
 			}
 	}
 	cout << "FIN RUN" <<endl;
 	return 0;
+}
+
+
+list<Message*> Server::getProtagonistasMessages(){
+	list<Message*> listaDeProtagonistas;
+			map<int,EntidadDinamica*> protagonistas = this->gController->getJuego()->getProtagonistas();
+			for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+				string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
+				//0 : conectado, -1 Desconectado
+				int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
+				Message *protagonistaMessage = new Message((*it).second->getId(), tipoEntidad, (*it).second->getName(), (*it).second->getPosition()->first, (*it).second->getPosition()->second,clientConnected);
+				protagonistaMessage->setOwner((*it).second->getOwner());
+				listaDeProtagonistas.push_back(protagonistaMessage);
+			}
+			return listaDeProtagonistas;
+
 }
 
 void Server::processReceivedMessages(){
@@ -121,7 +137,8 @@ void Server::notifyClients(){
 	//MANDO los nuevos personajes
 	list<EntidadDinamica*> *nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
 	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
-		Message *protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()), (*it)->getName(), (*it)->getPosition()->first, (*it)->getPosition()->second);
+		int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
+		Message *protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()), (*it)->getName(), (*it)->getPosition()->first, (*it)->getPosition()->second, clientConnected);
 		protagonistaMessage->setOwner((*it)->getOwner());
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
@@ -156,6 +173,15 @@ void Server::verifyClientsConections(){
 			stringstream ss;
 			ss<< "CLIENTE se deconecto: "<< (*clientIterator)->getUserName();
 			Logger::get()->logDebug("Server","verifyClientsConections",ss.str());
+
+			list<int> entitiesToDisconect = gController->getEntitiesOfClient((*clientIterator)->getUserName());
+			for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
+				Message* messageDisconnect = new Message();
+				messageDisconnect->clientDisconect(*it);
+				for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
+						(*clientIt)->writeMessagesInQueue(messageDisconnect);
+				}
+			}
 		}
 	}
 }
@@ -163,7 +189,6 @@ void Server::verifyClientsConections(){
 list<Client*> Server::getActiveClients(){
 	list<Client*> activeClients;
 	for(map<string,Client*>::iterator clientIterator=this->clients.begin(); clientIterator!=this->clients.end(); ++clientIterator){
-		//cout <<"STATUS: "<< clientIterator->second->getStatus() << endl;
 		if(clientIterator->second->getStatus()==0){
 			activeClients.push_back(clientIterator->second);
 		}

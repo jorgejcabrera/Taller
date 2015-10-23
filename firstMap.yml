@@ -99,6 +99,9 @@ tipos:
 - nombre: pasto
   imagen: ../../Taller/Images/Tiles/pasto.png
 
+- nombre: soldadoDesconectado
+  imagen: ../../Taller/Images/Personajes/soldadoDesconectado.png
+
 escenario:
   nombre: orleans
   size_x: 50

@@ -38,25 +38,24 @@ list<Message*> GameController::getEntitiesMessages(){
 	list<EntidadPartida*>* entidades = this->getJuego()->getMap()->getEntities();
 	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
-		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second);
+		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado
+		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second, 0);
 		listaDeEntities.push_back(entityMessage);
 	}
 	return listaDeEntities;
 }
 
-list<Message*> GameController::getProtagonistasMessages(){
-	list<Message*> listaDeProtagonistas;
-		map<int,EntidadDinamica*> protagonistas = this->getJuego()->getProtagonistas();
-		for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
-			string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
-			//TODO ver como hacemos para mandar el nombre porque hoy en dia si le ponemos "Cliente 1" va a romper porque no va a encontrar el tipo de entidad
-			Message *protagonistaMessage = new Message((*it).second->getId(), tipoEntidad, (*it).second->getName(), (*it).second->getPosition()->first, (*it).second->getPosition()->second);
-			protagonistaMessage->setOwner((*it).second->getOwner());
-			//cout << "ENTIDAD: " << protagonistaMessage->toString()<<endl;
-			listaDeProtagonistas.push_back(protagonistaMessage);
+list<int> GameController::getEntitiesOfClient(string userName){
+	list<int> idOfEntities;
+	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
+	for(map<int,EntidadDinamica*>::iterator iteratePersonajes= listaPersonajes.begin(); iteratePersonajes!=listaPersonajes.end();++iteratePersonajes){
+		if(iteratePersonajes->second->getOwner()==userName){
+			idOfEntities.push_back(iteratePersonajes->first);
 		}
-		return listaDeProtagonistas;
+	}
+	return idOfEntities;
 }
+
 
 void GameController::actualizarJuego(){
 	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
