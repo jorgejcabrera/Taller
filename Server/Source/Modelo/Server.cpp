@@ -60,7 +60,8 @@ int Server::run(void * data){
 				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
 
 				//Mando la dimension de la ventana
-				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
+				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight(),  GameSettings::GetInstance()->getMapWidth(),  GameSettings::GetInstance()->getMapHeight()));
+				//cout << "AMCHO: " << GameSettings::GetInstance()->getMapWidth() << "ALTO" <<GameSettings::GetInstance()->getMapHeight()<<endl;
 
 				//Mando la informacion que está en el YAML
 				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());

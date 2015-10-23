@@ -41,6 +41,16 @@ Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase,
 }
 
 //Mensaje utilizado para mandar tiles o dimension de la ventana
+Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto){
+	this->msg.set_id(0);
+	this->msg.set_tipo(tipo);
+	this->msg.set_nombre(nombreEntity);
+	this->msg.set_x(xPosition);
+	this->msg.set_y(yPosition);
+	this->msg.set_ancho_base(mapaAncho);
+	this->msg.set_alto_base(mapaAlto);
+}
+
 Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition){
 	this->msg.set_id(0);
 	this->msg.set_tipo(tipo);

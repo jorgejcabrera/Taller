@@ -33,11 +33,11 @@ public:
 	int SCREEN_HEIGHT;
 	//configuracion:
 	int VELOCIDAD_PERSONAJE;
-	int LONG_MARGEN_SCROLL;
+	int LONG_MARGEN_SCROLL=30;
 	//escenario
 	string NOMBRE_ESCENARIO;
-	int MAP_WIDTH;
-	int MAP_HEIGHT;
+	int MAP_WIDTH=30;
+	int MAP_HEIGHT=30;
 	//protagonista
 	string TIPO_PROTAGONISTA;
 	int POS_X_PROTAGONISTA;
@@ -115,6 +115,7 @@ public:
 	void setScreenDimension(int width, int heigth);
 	void addEntityConfig(EntidadConfig* entity);
 	EntidadConfig* getEntityConfig(string nameEntity);
+	void setMapDimention(int ancho, int alto);
 };
 
 } /* namespace std */

@@ -30,6 +30,7 @@ public:
 	Message(int identifier, int xPosition, int yPosition);
 	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition);
 	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
+	Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
 	Message(string nombre);
 

@@ -126,7 +126,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	if ((posicionY >= gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
 		offSetY -= gameSettings->getVelocidadScrollDos();
 	}
-
+	//cout << "1.1: "<<gameSettings->getMargenInferiorUno()<< "1.2: "<<gameSettings->getMargenInferiorDos()<< " 2.1: " <<gameSettings->getMargenSuperiorUno() << " 2.2: " << gameSettings->getMargenSuperiorDos()<<endl;
 	pair<int,int> curretOffset;
 	curretOffset.first = offSetX;
 	curretOffset.second = offSetY;

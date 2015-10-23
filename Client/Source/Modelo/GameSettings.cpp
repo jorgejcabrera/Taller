@@ -247,5 +247,11 @@ EntidadConfig* GameSettings::getEntityConfig(string nameEntity){
 	return this->entitiesConfig.at(nameEntity);
 }
 
+void GameSettings::setMapDimention(int ancho, int alto){
+	this->MAP_WIDTH=ancho;
+	this->MAP_HEIGHT=alto;
+
+}
+
 
 } /* namespace std */
