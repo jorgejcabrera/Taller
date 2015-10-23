@@ -7,7 +7,7 @@
 
 #include "../../Headers/Modelo/PathFinder.h"
 
-PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
+PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap,ResourceManager* rm) {
 
 	gameSettings = GameSettings::GetInstance();
 	this->map = unMap;
@@ -16,8 +16,15 @@ PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 	this->posY = y;
 	this->destinoX = dX;
 	this->destinoY = dY;
-
 	this->candidatos = new list<candidato>();
+	this->resourceManager = rm;
+
+	// DESCOMENTAR CUANDO ESTE RESOURCE MANAGER
+	if( ! positionAvailable(destinoX,destinoY) /*&& ! resourceManager->resourceAt(dX,dY)*/){
+		pair<int,int> nuevoDestino = getClosestAvailable(destinoX,destinoY);
+		this->destinoX = nuevoDestino.first;
+		this->destinoY = nuevoDestino.second;
+	}
 
 }
 
@@ -51,6 +58,26 @@ candidato PathFinder::getAdyacente(int oX,int oY,int x,int y){
 	return ady;
 }
 
+pair<int,int> PathFinder::getClosestAvailable(int x,int y){
+
+	candidato cand;
+	cand.posX = this->destinoX;
+	cand.posY = this->destinoY;
+	int i = 1;
+	while(cand.posX == this->destinoX && cand.posY == this->destinoY){
+		if(positionAvailable(this->destinoX - i,this->destinoY)) cand = getAdyacente(-1,-1,destinoX - i,destinoY);
+		if(positionAvailable(this->destinoX,this->destinoY - i)) cand = getAdyacente(-1,-1,destinoX,destinoY - i);
+		if(positionAvailable(this->destinoX,this->destinoY + 1)) cand = getAdyacente(-1,-1,destinoX,destinoY + 1);
+		if(positionAvailable(this->destinoX + 1,this->destinoY)) cand = getAdyacente(-1,-1,destinoX + 1,destinoY);
+		i++;
+	}
+
+	pair<int,int> nDest;
+	nDest.first = cand.posX;
+	nDest.second = cand.posY;
+	return nDest;
+}
+
 void PathFinder::setInicio(){
 
 	this->inicio.posX = this->posX;
@@ -74,7 +101,7 @@ bool PathFinder::candidatoExiste(candidato can){
 
 candidato PathFinder::getMinimoNoRecorrido(){
 
-	int minimo = this->inicio.dist;
+	int minimo = (this->gameSettings->MAP_HEIGHT * 3);
 	candidato candidatoMinimo;
 	for (std::list<candidato>::iterator it=this->candidatos->begin(); it != this->candidatos->end(); ++it)
 		if( (*it).dist < minimo &&  ! (*it).recorrido){
@@ -138,12 +165,21 @@ bool PathFinder::positionAvailable(int x,int y){
 	if(x < 0 || y < 0) return false;
 	if(x > gameSettings->MAP_HEIGHT - 1 || y > gameSettings->MAP_WIDTH -1) return false;
 
-	return this->map->getTileAt(x,y)->isAvailable();
+
+	//ACA HAY QUE DESCOMENTAR resourceAt cuando este lo del resourcemanager
+	return (this->map->getTileAt(x,y)->isAvailable() /*|| resourceManager->resourceAt(x,y)*/);
 }
 
-void PathFinder::buscarCamino(){
+list<pair<int,int> >* PathFinder::buscarCamino(){
 
+	pair<int,int> unPar;
+	list<pair<int,int> >* camino = new list<pair<int,int> >();
+	camino->clear();
 	this->setInicio();
+
+	if(inicio.posX == destinoX && inicio.posY == destinoY)
+		return camino;
+
 	candidato actual = this->inicio;
 	this->candidatos->push_front(inicio);
 
@@ -160,18 +196,18 @@ void PathFinder::buscarCamino(){
 		if(actual.dist == 0) encontrado = true;
 	}
 
-	cout<<"quiero ir de "<<this->inicio.posX<<","<<this->inicio.posY;
-	cout<<" a "<<this->destinoX<<","<<this->destinoY<<endl;
-	cout<<"el camino es: "<<endl;
-	cout<<actual.posX<<","<<actual.posY<<endl;
 	while(actual.origenX != -1){
-		cout<<actual.posX<<","<<actual.posY<<endl;
+		unPar.first = actual.posX;
+		unPar.second = actual.posY;
+		camino->push_front(unPar);
 		actual = getCandidato(actual.origenX,actual.origenY);
 	}
+
+	return camino;
 
 }
 
 PathFinder::~PathFinder() {
-	// TODO Auto-generated destructor stub
+	delete candidatos;
 }
 

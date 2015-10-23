@@ -182,6 +182,13 @@ void GameController::updatePostion(int id,int x,int y){
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
 
 	entity->setPosition(x,y);
+	//paso x y a isometricas
+	pair<float,float> isometricPos = this->utils->getIsometricPosition(x,y);
+	pair<int,int>* offset = this->juegoVista->getOffset();
+	//le sumo el offset a la posicion isometrica
+	isometricPos.first = isometricPos.first + offset->first;
+	isometricPos.second = isometricPos.second + offset->second;
+	entity->setScreenPosition(isometricPos);
 
 	ss << "La posicion actualizada de: "<< id <<" es "<<x<<" "<<y;
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
