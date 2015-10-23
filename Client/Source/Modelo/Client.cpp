@@ -89,7 +89,7 @@ void Client::processReceivedMessages(){
 			GameSettings::GetInstance()->setScreenDimension((*it)->getPositionX(),(*it)->getPositionY());
 			//instancio el picassoHelper con el tamaño de la ventana;
 			GameSettings::GetInstance()->setMapDimention((*it)->getAnchoBase(), (*it)->getAltoBase());
-			cout << "ANCHO MAPA "<<(*it)->getAnchoBase() << "ALTO MAPA " <<  (*it)->getAltoBase()<<endl;
+			//cout << "ANCHO MAPA "<<(*it)->getAnchoBase() << "ALTO MAPA " <<  (*it)->getAltoBase()<<endl;
 			this->gController->getJuegoVista()->createView();
 
 		}else if ( tipoMensaje == "config" ){
