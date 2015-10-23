@@ -137,7 +137,7 @@ void JuegoVista::addBuilding(int id, string type, int x, int y){
 }
 
 void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
-	EntidadSemiEstaticaVista *newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
+	EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																			gameSettings->getEntityConfig(type)->getAlto(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -168,15 +168,14 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 
 	//paso la posicion cartesiana a isometrica, y la centro
 	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(newPersonaje);
+	//TODO esta logica no tiene que estar aca
 	isometricPosition.first = isometricPosition.first + gameSettings->getTileSize() + this->getOffset()->first;
-	isometricPosition.second = isometricPosition.second + newPersonaje->getLengthPixel()/2+ this->offset.second;
+	isometricPosition.second = isometricPosition.second + newPersonaje->getLengthPixel()/2 + this->offset.second;
 	newPersonaje->setScreenPosition(isometricPosition);
 
 	if(imTheOwner){
-		cout << "lo inserte en misPersonajes"<<endl;
 		this->misPersonajes.insert(make_pair(id,newPersonaje));
 	}else{
-		cout << "lo inserte en personajes"<<endl;
 		this->personajes.insert(make_pair(id,newPersonaje));
 	}
 }

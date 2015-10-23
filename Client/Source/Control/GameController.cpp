@@ -173,6 +173,21 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	return cartesianPosition;
 }
 
+void GameController::updatePostion(int id,int x,int y){
+	map<int,EntidadDinamicaVista*>* myEntities = this->juegoVista->getMisPersonajes();
+	EntidadDinamicaVista* entity = myEntities->at(id);
+
+	stringstream ss;
+	ss << "La posicion vieja de: "<< id <<" es "<<entity->getPosition()->first<<" "<<entity->getPosition()->first;
+	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
+
+	entity->setPosition(x,y);
+
+	ss << "La posicion actualizada de: "<< id <<" es "<<x<<" "<<y;
+	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
+
+}
+
 void GameController::delay(){
 	this->runCycles++;
 

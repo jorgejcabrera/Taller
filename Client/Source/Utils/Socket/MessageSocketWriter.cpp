@@ -21,9 +21,6 @@ int MessageSocketWriter::run(void* data){
 	while(this->isAlive){
 		while(!this->queue->isEmpty()){
 			Message* msg = ((MessageSocketWriter*)data)->queue->pullTail();
-			stringstream ss;
-			ss << "client is sending message to server." << msg->toString();
-			Logger::get()->logDebug("MessageSocketWriter","run",ss.str());
 			if(!this->socket->writeMessage(msg)){
 			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
 			 }
