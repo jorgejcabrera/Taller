@@ -10,17 +10,6 @@
 EntidadDinamica::EntidadDinamica(){
 }
 
-/*EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
-	this->caminando = false;
-	//son las coordenadas cartesianas de donde se va a posicionar el chabon
-	this->position.first = x;
-	this->position.first = x = y;
-	this->velocidad = vel;
-	this->width = 50;
-	this->length = 50;
-	this->owner = 0;
-}*/
-
 //TODO sacar los fps y el tamaño en pixel
 EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels){
 	this->caminando = false;
@@ -47,22 +36,9 @@ string EntidadDinamica::getOwner(){
 
 void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	//TODO: esto no deberia estar en la VISTA nada mas?
-	// no borrar por favor
 	this->screenPosition.first = x;
 	this->screenPosition.second = y;
 }
-
-/*
- * TODO esto va en la VISTA!
-//seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
-void EntidadDinamica::setFramesInLineFile(int qty){
-	this->framesInLineFile = qty;
-}
-
-int EntidadDinamica::getFramesInLineFile(){
-	return this->framesInLineFile;
-}
-*/
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){
 	//TODO: esto no deberia estar en la VISTA nada mas?
@@ -80,16 +56,6 @@ float EntidadDinamica::distanciaEnX(float x){
 	else res = x - screenPosition.first;
 	return res;
 }
-
-/*
- * TODO esto va en la VISTA!!!
-int EntidadDinamica::getWidthPixel(){
-	return this->widthPixel;
-}
-
-int EntidadDinamica::getLengthPixel(){
-	return this->lengthPixel;
-}*/
 
 float EntidadDinamica::distanciaEnY(float y){
 	float res;

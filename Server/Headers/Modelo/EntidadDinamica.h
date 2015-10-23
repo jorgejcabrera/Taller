@@ -33,13 +33,9 @@ class EntidadDinamica: public EntidadPartida {
 		bool caminando;
 		pair<float,float> vecVelocity;
 		pair<float,float> screenPosition;
-		int widthPixel;
-		int lengthPixel;
-		int framesPerSecond;
 		float destinoX;
 		float destinoY;
 		int frame;
-		int framesInLineFile;
 		string owner;
 
 		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
@@ -58,11 +54,9 @@ class EntidadDinamica: public EntidadPartida {
 		void setOwner(string owner);
 		string getOwner();
 		EntidadDinamica();
-		//EntidadDinamica(int vel,int posX,int posY);
 		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 		void setInitialScreenPosition(float x,float y);
 		virtual ~EntidadDinamica();
-		string getEntityType();
 
 		pair<float,float>* getScreenPosition();
 		pair<int,int>* getPosition();
