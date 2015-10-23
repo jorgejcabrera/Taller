@@ -30,24 +30,49 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
+	
 	/*
-	*retorna la posicion cartesiana de donde se hizo click, y le setea la entidad la posicion
-	*de pantalla donde debería ser dibujado.
+	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
+	*le setea a la
+	*entidad la posicion de pantalla donde debería ser dibujado.
 	**/
 	pair<int,int> moveCharacter(EntidadDinamicaVista* entidad);
+	
+	/*
+	*devuelve el offset coorespondiente al scroll de la pantalla
+	**/
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:
 	GameController();
+	
 	bool reiniciarJuego();
+	
 	void actualizarJuego();
+
+	/*
+	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
+	**/
+	void updatePostion(int id,int x,int y);
+	
 	void render();
+	
+	/*
+	*transforma eventos de la partida del cliente en mensajes para ser 
+	*enviados alservidor
+	**/
 	Message* getMessageFromEvent(string userId);
+	
 	int getRunCycles();
+	
 	int getMaxFramesPerSecond();
+	
 	bool finDeJuego();
+	
 	virtual ~GameController();
+	
 	void delay();
+	
 	JuegoVista* getJuegoVista();
 };
 

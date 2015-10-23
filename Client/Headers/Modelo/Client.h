@@ -32,8 +32,6 @@ using namespace std;
 
 class Client {
 private:
-	MessageSocketWriter* writeThread;
-	MessageSocketReader* readThread;
 	int port;
 	int sockfd;
 	int status;
@@ -45,17 +43,40 @@ private:
 	time_t lastReportedClient;
 	time_t lastReportedServer;
 
+	/*
+	*thread que se encarga de enviar al servidor los mensajes encolados al servidor
+	**/
+	MessageSocketWriter* writeThread;
+	
+	/*
+	*thread que se encarga de leer los mensajes enviados por el servidor
+	**/
+	MessageSocketReader* readThread;
+
 public:
 	string userName;
+	/*
+	*ip y puerto al cual se va a conectar
+	**/
 	Client(string ip, int port, GameController *gController);
+	
+	/*
+	*intenta conectar al servidor, en caso de error devuelve -1
+	**/
 	int connectToServer();
-	int getStatus();
-	bool isConected();
+	
+	/*
+	*lee la cola de novedades a procesar, y transforma las novedades en eventos
+	**/
 	void processReceivedMessages();
+	
+	/*
+	*genera los mensajes de los eventos, y los envia al servidor
+	**/
 	void sendEvents();
+	bool isConected();
 	void saveEntitiesConfig(Message* msg);
 	virtual ~Client();
-
 	void notifyUserName();
 	void pingMessage();
 	void verifyServerAlive();

@@ -19,23 +19,27 @@ using namespace std;
 
 class MessageSocketWriter: public Thread {
 private:
+	/*
+	*cola de novedades que se van a enviar al servidor
+	**/
 	SocketQueue* queue;
 	SocketUtils* socket;
 	bool isAlive;
 
 public:
 	MessageSocketWriter(int sockfd);
+	
 	/*
 	*Sacamos los mensajes de la cola de novedades y los mandamos por el socket
-	*/
+	**/
 	int run(void* data);
+	
 	/*
 	*Ponemos los mensajes en la cola de novedades
-	*/
+	**/
 	void writeMessage(Message* msg);
 	void stopWrite();
 	virtual ~MessageSocketWriter();
-
 	void writeMessageNow(Message *msg);
 };
 

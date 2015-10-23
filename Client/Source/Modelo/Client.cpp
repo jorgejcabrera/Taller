@@ -68,14 +68,6 @@ void Client::sendMessage(Message *msg){
 	}
 }
 
-void Client::readMessage(Message msg){
-
-}
-
-int Client::getStatus(){
-	return this->status;
-}
-
 bool Client::isConected(){
 	return this->status == CONECTED;
 }
@@ -95,7 +87,7 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "config" ){
 			saveEntitiesConfig(*it);
 		}else if ( tipoMensaje == "update"){
-			//TODO agregar comportamiento para mensajes de cambios de posicion
+			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 		}else if ( tipoMensaje == "tile" ){
 			//Agrego al JuegoVista un nuevo tile
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
