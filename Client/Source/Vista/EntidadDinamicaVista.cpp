@@ -28,6 +28,10 @@ EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, floa
 	this->inDelayPeriod = false;
 }
 
+string EntidadDinamicaVista::getName(){
+	return this->name;
+}
+
 SDL_Rect EntidadDinamicaVista::getPositionOfSprite(int ciclos){
 	int ciclesPerFrame = 50 / this->framesPerSecond;
 

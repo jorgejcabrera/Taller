@@ -177,6 +177,13 @@ string DefaultSettings::getTypeEntity(const string &type){
 	tiles.push_back("agua");
 	if(isInList(tiles,type))
 		return "tiles";
+
+	list<string> resources;
+	resources.push_back("gold");
+	resources.push_back("chori");
+	resources.push_back("wood");
+	if(isInList(resources,type))
+			return "resources";
 	return "";
 }
 

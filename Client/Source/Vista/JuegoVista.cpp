@@ -157,6 +157,9 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 																	gameSettings->getEntityConfig(type)->getFps());
 	//seteo atributos
 	newPersonaje->setPosition(x,y);
+	//cout << "type: "<< type<<endl;
+	//cout << "name: "<< gameSettings->getEntityConfig(type)->getName()<<endl;
+	//cout << "path: "<< gameSettings->getEntityConfig(type)->getPath()<<endl;
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	if(active<0){
 		newPersonaje->setPathImage(gameSettings->getEntityConfig("soldadoDesconectado")->getPath());

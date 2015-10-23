@@ -42,9 +42,9 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	//borro el recurso de la lista de recursos y sumo al contador
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
 		if((*it)->getPosition()->first == pos->first && (*it)->getPosition()->second == pos->second){
-			if((*it)->getTipo() == "chori") this->alimento++;
-			if((*it)->getTipo() == "gold") this->oro++;
-			if((*it)->getTipo() == "wood") this->madera++;
+			if((*it)->getName() == "chori") this->alimento++;
+			if((*it)->getName() == "gold") this->oro++;
+			if((*it)->getName() == "wood") this->madera++;
 			this->resources->erase(it);
 			collected = true;
 		}

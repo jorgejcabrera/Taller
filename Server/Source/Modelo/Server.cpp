@@ -52,12 +52,7 @@ int Server::run(void * data){
 			if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
 
 				Client *newClient = new Client(cliente, this->readQueue);
-				readClientUserName(newClient);
-				newClient->startCommunication();
-				this->clients.insert(make_pair(newClient->getUserName(),newClient));
-
-				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
+				initConnection(newClient);
 
 				//Mando la dimension de la ventana
 				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight(),  GameSettings::GetInstance()->getMapWidth(),  GameSettings::GetInstance()->getMapHeight()));
@@ -204,20 +199,53 @@ Server::~Server() {
 	close(this->serverSocket);
 }
 
-void Server::readClientUserName(Client *newClient){
+void Server::initConnection(Client *newClient){
 	bool validUserName=false;
 	while(!validUserName){
 		string userName=newClient->readUserName();
 			Logger::get()->logDebug("Server","run",userName);
 			map<string,Client*>::iterator it = this->clients.find(userName);
 			if(it != this->clients.end()){
+				//El cliente ya existia
 				Logger::get()->logDebug("Server","readClientUserName","YA EXISTE EL CLIENTE");
-				newClient->responseUserName("FAIL");
+				if(it->second->getStatus()==0){
+					//El cliente ya existia y ademas está conectado
+					newClient->responseUserName("FAIL");
+				}else{
+					//El cliente ya existia pero estaba desconectado y se vuelve a conectar
+					newClient->responseUserName("OK");
+					newClient->setUserName(userName);
+					validUserName=true;
+					Logger::get()->logDebug("Server","readClientUserName","El Cliente se volvio a conectar");
+					//asigno el cliente
+					this->clients.at(newClient->getUserName()) = newClient;
+					notifyClientReconect(newClient->getUserName());
+				}
 			}else{
+				//El cliente no exitia
 				newClient->responseUserName("OK");
 				newClient->setUserName(userName);
 				validUserName=true;
 				Logger::get()->logDebug("Server","readClientUserName","NO EXISTE EL CLIENTE");
+				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
+				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
+				this->clients.insert(make_pair(newClient->getUserName(),newClient));
 			}
+	}
+	newClient->startCommunication();
+
+}
+
+void Server::notifyClientReconect(string userName){
+	list<Client*> activeClients= getActiveClients();
+	list<int> entitiesToDisconect = gController->getEntitiesOfClient(userName);
+	for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
+		Message* messageReconnect = new Message();
+		messageReconnect->clientReconnect(*it);
+		for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
+			if((*clientIt)->getUserName()!=userName){
+			(*clientIt)->writeMessagesInQueue(messageReconnect);
+			}
+		}
 	}
 }

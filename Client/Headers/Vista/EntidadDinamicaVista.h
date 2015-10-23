@@ -75,6 +75,7 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 		//void setScreenPosition(float x, float y);
 		void setScreenPosition(pair<float,float> screenPosition);
 		void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
+		string getName();
 };
 
 #endif /* SOURCE_VISTA_ENTIDADDINAMICAVISTA_H_ */

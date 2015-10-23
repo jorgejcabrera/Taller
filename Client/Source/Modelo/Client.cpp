@@ -81,7 +81,6 @@ void Client::processReceivedMessages(){
 			GameSettings::GetInstance()->setScreenDimension((*it)->getPositionX(),(*it)->getPositionY());
 			//instancio el picassoHelper con el tamaño de la ventana;
 			GameSettings::GetInstance()->setMapDimention((*it)->getAnchoBase(), (*it)->getAltoBase());
-			//cout << "ANCHO MAPA "<<(*it)->getAnchoBase() << "ALTO MAPA " <<  (*it)->getAltoBase()<<endl;
 			this->gController->getJuegoVista()->createView();
 
 		}else if ( tipoMensaje == "config" ){
@@ -104,11 +103,16 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY(), imTheOwner, (*it)->getFps());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectCharacter((*it)->getId());
+		}else if ( tipoMensaje == "reconnect"){
+			EntidadDinamicaVista* personaje=this->gController->getJuegoVista()->getPersonajeById((*it)->getId());
+			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
 		}else if ( tipoMensaje == "ping"){
 			//El Servidor avisa que sigue arriba
 			this->lastReportedServer = time(0);
 		}else{
+			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
+			cout << (*it)->toString()<<endl;
 		}
 	}
 }
@@ -117,7 +121,6 @@ void Client::disconnectCharacter(int id){
 	//TODO cambiar el path a buscar por algo que no este hardcodeado
 	//cambio el path de la imagen por otro grisado y que se note que está desconectado
 	this->gController->getJuegoVista()->getPersonajeById(id)->setPathImage(GameSettings::GetInstance()->getEntityConfig("soldadoDesconectado")->getPath());
-
 }
 
 void Client::saveEntitiesConfig(Message* msg){

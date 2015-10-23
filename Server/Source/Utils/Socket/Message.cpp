@@ -79,6 +79,11 @@ void Message::clientDisconect(int identifier){
 	this->msg.set_tipo("disconnect");
 }
 
+void Message::clientReconnect(int identifier){
+	this->msg.set_id(identifier);
+	this->msg.set_tipo("reconnect");
+}
+
 string Message::toString(){
 	stringstream ss;
 	ss << " id: " << this->msg.id();

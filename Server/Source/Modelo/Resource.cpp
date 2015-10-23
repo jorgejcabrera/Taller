@@ -14,14 +14,14 @@ Resource::Resource(string tipo,int x,int y) {
 	this->position.second = y;
 	this->width = 1;
 	this->length = 1;
-	this->tipo = tipo;
-
+	this->name = tipo;
 	//Aca estaban los path de los recursos, hay que crear vistaResource en el cliente y ponerlos ahi
 }
 
-string Resource::getTipo(){
+//Saco este metodo para usar el name de la clase entidad Partida para que funcione el envio de novedades a los clientes
+/*string Resource::getTipo(){
 	return this->tipo;
-}
+}*/
 
 Resource::~Resource() {
 	// TODO Auto-generated destructor stub

@@ -59,6 +59,7 @@ public:
 	string getOwner();
 	void pingMessage(string nombre);
 	void clientDisconect(int id);
+	void clientReconnect(int identifier);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

@@ -48,11 +48,15 @@ class Server : public Thread{
 		void processReceivedMessages();
 		void notifyClients();
 		~Server();
-		void readClientUserName(Client *newClient);
+
+		//inicia la conexion con el cliente, pide el usuario y se fija si es nuevo o si tiene que levantar data de antes porque se reconecto
+		void initConnection(Client *newClient);
 		void pingMessage();
 		void verifyClientsConections();
 		list<Client*> getActiveClients();
 		list<Message*> getProtagonistasMessages();
+		//Levanto todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
+		void notifyClientReconect(string userName);
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */
