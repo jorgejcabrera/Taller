@@ -9,6 +9,8 @@
 
 JuegoVista::JuegoVista() {
 	gameSettings = GameSettings::GetInstance();
+	this->offset.first = 0;
+	this->offset.second = 0;
 }
 
 void JuegoVista::createView(){
