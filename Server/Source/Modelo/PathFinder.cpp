@@ -60,6 +60,8 @@ candidato PathFinder::getAdyacente(int oX,int oY,int x,int y){
 
 pair<int,int> PathFinder::getClosestAvailable(int x,int y){
 
+	//este metodo es para cuando intento moverme a un lugar ocupado
+
 	candidato cand;
 	cand.posX = this->destinoX;
 	cand.posY = this->destinoY;
