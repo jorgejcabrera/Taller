@@ -131,6 +131,7 @@ void JuegoVista::addTile(string surface, int x, int y){
 
 void JuegoVista::addBuilding(int id, string type, int x, int y){
 	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),gameSettings->getEntityConfig(type)->getAlto());
+	newBuilding->setName(type);
 	newBuilding->setPosition(x,y);
 	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newBuilding->setId(id);
@@ -143,6 +144,7 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y){
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																			gameSettings->getEntityConfig(type)->getFps());
+	newSemiStatic->setName(type);
 	newSemiStatic->setPosition(x,y);
 	newSemiStatic->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newSemiStatic->setDelay(gameSettings->getEntityConfig(type)->getDelay());
@@ -157,6 +159,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getFps());
 	//seteo atributos
+	newPersonaje->setName(type);
 	newPersonaje->setPosition(x,y);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	if(active<0){
@@ -263,6 +266,44 @@ EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	if(itMisPersonajes!=this->misPersonajes.end()){
 		return itMisPersonajes->second;
 	}
+}
+
+EntidadPartidaVista* JuegoVista::entityInThisPosition(int x, int y){
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
+		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
+		if(entityPosition->first==x && entityPosition->second==y){
+			//cout << "1- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
+			return (*itDinamicos).second;
+		}
+	}
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
+		if(entityPosition->first==x && entityPosition->second==y){
+			//cout << "2- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
+			return (*itDinamicos).second;
+		}
+	}
+
+	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
+		pair<int,int>* entityPosition = (*itEstaticos).second->getPosition();
+		int width = (*itEstaticos).second->getWidth();
+		int length = (*itEstaticos).second->getLength();
+		if(entityPosition->first<=x and (entityPosition->first+width-1)>=x){
+			if(entityPosition->second<=y and (entityPosition->second+length-1)>=y){
+				//cout << "3- juegoVista first "<< entityPosition->first << (entityPosition->first+width-1) << " x "<< x << " second " << entityPosition->second << (entityPosition->second+length-1)<< " y " <<y<<endl;
+				return (*itEstaticos).second;
+			}
+		}
+	}
+
+	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiDinamicos = this->semiEstaticos.begin(); itSemiDinamicos!=this->semiEstaticos.end(); ++itSemiDinamicos){
+		pair<int,int>* entityPosition = (*itSemiDinamicos).second->getPosition();
+		if(entityPosition->first==x && entityPosition->second==y){
+			//cout << "4- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
+			return (*itSemiDinamicos).second;
+		}
+	}
+	return new EntidadPartidaVista();
 }
 
 

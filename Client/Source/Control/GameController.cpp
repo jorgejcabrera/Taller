@@ -53,6 +53,18 @@ Message* GameController::getMessageFromEvent(string userId){
 			}
 		}
 
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
+			SDL_GetMouseState(&posMouseX,&posMouseY);
+			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+				pair<int,int>* offset = this->juegoVista->getOffset();
+				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
+				cout << "COORDENADA: x: " << cartesianPosition.first<< " y: "<<cartesianPosition.second<<endl;
+				EntidadPartidaVista* entidad = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
+				cout << "ENTIDAD: "<< entidad->getPathImage()<< " id: "<< entidad->getId()<<endl;
+
+			}
+		}
+
 		if( event->type == SDL_QUIT){
 			this->salirDelJuego = true;
 			Message* message = new Message();

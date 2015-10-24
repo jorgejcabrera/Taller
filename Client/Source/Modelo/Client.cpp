@@ -118,7 +118,7 @@ void Client::processReceivedMessages(){
 			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getEntityById((*it)->getId());
 			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
 		}else if ( tipoMensaje == "ping"){
-			this->lastReportedServer = time(0);								//servidor avisa que sigue arriba
+			this->lastReportedServer = time(0);	//servidor avisa que sigue arriba
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;

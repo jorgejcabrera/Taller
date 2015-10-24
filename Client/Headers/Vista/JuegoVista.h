@@ -66,6 +66,7 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	EntidadDinamicaVista* getEntityById(int id);
 	~JuegoVista();
+	EntidadPartidaVista* entityInThisPosition(int x, int y);
 
 
 };
