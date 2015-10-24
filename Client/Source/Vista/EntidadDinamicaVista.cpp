@@ -107,11 +107,6 @@ int EntidadDinamicaVista::getLineSprite(Direccion dir){
 	}
 }
 
-//TODO esta MIERDA estaba antes setScreenPosition seteaba el destino
-/*void EntidadDinamicaVista::setScreenPosition(float x,float y){
-	this->destinoX = x;
-	this->destinoY = y;
-}*/
 void EntidadDinamicaVista::setScreenPosition(pair<float,float> screenPosition){
 	this->screenPosition = screenPosition;
 }
@@ -119,6 +114,19 @@ void EntidadDinamicaVista::setScreenPosition(pair<float,float> screenPosition){
 pair<float,float>* EntidadDinamicaVista::getScreenPosition(){
 	return &this->screenPosition;
 }
+
+void EntidadDinamicaVista::setNextScreenPosition(pair<float,float> nextScreenPosition){
+	this->nextScreenPosition = nextScreenPosition;
+}
+
+pair<float,float>* EntidadDinamicaVista::getNextScreenPosition(){
+	return &this->nextScreenPosition;
+}
+
+void EntidadDinamicaVista::updateScreenPosition(){
+	this->screenPosition = this->nextScreenPosition;
+}
+
 
 int EntidadDinamicaVista::getFramesPerSecond(){
 	return this->framesPerSecond;
