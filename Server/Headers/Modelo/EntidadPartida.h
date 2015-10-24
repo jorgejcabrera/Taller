@@ -12,6 +12,7 @@
 #include <iostream>
 #include <typeinfo>
 #include "../Utils/SequenceUtils.h"
+#include "DefaultSettings.h"
 
 namespace std {
 

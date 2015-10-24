@@ -60,10 +60,8 @@ void GameController::setNextPaths(){
 
 	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
 	for(map<int,EntidadDinamica*>::iterator it= listaPersonajes.begin(); it!=listaPersonajes.end();++it){
-		if( ! (*it).second->isWalking() && ! (*it).second->getCamino()->empty()){
-			(*it).second->nextPosition();
-			Logger::get()->logDebug("GameController","setNextPaths","SETEO UN TILE");
-		}
+		(*it).second->nextPosition();
+		Logger::get()->logDebug("GameController","setNextPaths","SETEO UN TILE");
 	}
 }
 
@@ -71,7 +69,7 @@ void GameController::setNextPaths(){
 void GameController::actualizarJuego(){
 	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
 	this->setNextPaths();
-	juego->actualizarProtagonistas();
+	//juego->actualizarProtagonistas();
 	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
 	//juego->actualizarOffset(offset.first,offset.second);
 }

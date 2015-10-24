@@ -13,6 +13,7 @@ EntidadDinamica::EntidadDinamica(){
 //TODO sacar los fps y el tamaño en pixel
 EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels){
 	this->caminando = false;
+	this->notifiable = false;
 	this->position.first = x;
 	this->position.second = y;
 	this->velocidad = vel;
@@ -25,6 +26,8 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->owner = "";
 	this->name = nameEntity;
 	this->camino = new list<pair<int,int> >();
+	this->ciclos = DefaultSettings::getTileSize() / vel;
+	this->cicloActual = 0;
 }
 
 void EntidadDinamica::setOwner(string ownerId){
@@ -43,19 +46,17 @@ void EntidadDinamica::setInitialScreenPosition(float x,float y){
 
 void EntidadDinamica::nextPosition(){
 
+	this->setNotifiable(false);
 	if(! camino->empty()){
+		if(cicloActual % ciclos == 0){
 			pair<int,int> nextTile = camino->front();
 			camino->pop_front();
+			this->setNotifiable(true);
 
 			this->setPosition(nextTile.first,nextTile.second);
-			this->setScreenPosition(nextTile.first,nextTile.second);
+		}
+		cicloActual++;
 	}
-}
-
-pair<float,float>* EntidadDinamica::getScreenPosition(){
-	//TODO: esto no deberia estar en la VISTA nada mas?
-	// OJO!! se usa para notificar a los clientes.
-	return &this->screenPosition;
 }
 
 pair<int,int>* EntidadDinamica::getPosition(){
@@ -74,6 +75,14 @@ float EntidadDinamica::distanciaEnY(float y){
 	if(screenPosition.second > y) res = screenPosition.second - y;
 	else res = y - screenPosition.second;
 	return res;
+}
+
+void EntidadDinamica::setNotifiable(bool noti){
+	this->notifiable = noti;
+}
+
+bool EntidadDinamica::hasToNotify(){
+	return notifiable;
 }
 
 float EntidadDinamica::distanciaA(float x, float y){
@@ -167,7 +176,7 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 
 void EntidadDinamica::trasladarse(){
 	//TODO porque se llama screenPosition? es de pantalla o es donde se va moviendo?
-	if(distanciaEnX(destinoX) <= vecVelocity.first){
+	/*if(distanciaEnX(destinoX) <= vecVelocity.first){
 			screenPosition.first = destinoX;
 			//Logger::get()->logDebug("a","b","mira como me ajusto X");
 	}
@@ -191,6 +200,7 @@ void EntidadDinamica::trasladarse(){
 		if(screenPosition.second < destinoY)
 			screenPosition.second += vecVelocity.second;
 	}
+	*/
 }
 
 void EntidadDinamica::destruir(){

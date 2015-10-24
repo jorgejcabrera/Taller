@@ -171,7 +171,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 
 	//TODO aca lo que se tiene que seteear es la proxima posicion de pantalla del personaje
 	//entidad->setNextScreenPosition(isometricPosition);
-	entidad->setScreenPosition(isometricPosition);
+	//entidad->setScreenPosition(isometricPosition);
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	//TODO: Aca deberia actualizar la posicion del protagonsita?
 	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);

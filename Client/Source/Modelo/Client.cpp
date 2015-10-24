@@ -72,6 +72,7 @@ bool Client::isConected(){
 }
 
 void Client::processReceivedMessages(){
+	cout<<"un ciclo"<<endl;
 	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
 	for(list<Message*>::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
@@ -85,6 +86,7 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 		}else if ( tipoMensaje == "update"){
 			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			cout<<"me llega esto: "<<(*it)->getPositionX()<<","<<(*it)->getPositionY()<<endl;
 		}else if ( tipoMensaje == "tile" ){
 			//Agrego al JuegoVista un nuevo tile
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());

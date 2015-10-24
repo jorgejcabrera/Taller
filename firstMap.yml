@@ -3,7 +3,7 @@ pantalla:
  alto: 600
 
 configuracion: 
- vel_personaje : 1
+ vel_personaje : 10
  margen_scroll : 30
 
 

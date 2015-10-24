@@ -52,8 +52,8 @@ void Juego::cleanNewProtagonistas(){
 	this->newProtagonistas.clear();
 }
 
-pair<float,float>* Juego::getPositionOfProtagonistaById(int idBuscado){
-	return this->protagonistas.at(idBuscado)->getScreenPosition();
+pair<int,int>* Juego::getPositionOfProtagonistaById(int idBuscado){
+	return this->protagonistas.at(idBuscado)->getPosition();
 }
 
 void Juego::actualizarProtagonistas(){
