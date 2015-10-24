@@ -27,6 +27,8 @@ public:
 	 * (x,y). Luego la centra con los tiles, y retorna la posicion.**/
 	pair<int,int> getIsometricPosition(EntidadPartidaVista* entidad);
 	pair<int,int> getIsometricPosition(int x,int y);
+//	pair<int,int> getMiniIsometricPosition(EntidadPartidaVista* entidad);
+
 
 	virtual ~UtilsController();
 

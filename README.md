@@ -26,6 +26,9 @@ Ubuntu/Debian/MacOs
 make
 sudo make install
 ```
+
+Para poder escribir en pantalla primero debemos ir a http://download.savannah.gnu.org/releases/freetype/ y descargar e instalar freetype-2.4.0.tar.gz . Luego debemos agregar SDL2_ttf desde https://www.libsdl.org/projects/SDL_ttf/
+
 Para la serialización de mensajes usamos la librería [Protocol Buffers](https://developers.google.com/protocol-buffers/). La versión utilizada es la 2.6.1, y la podemos descargar de [aquí](https://developers.google.com/protocol-buffers/docs/downloads). Una vez descargada y descomprimido el .tar:
 ```
 ./configure
@@ -52,7 +55,7 @@ Para más imformación [aquí](https://developers.google.com/protocol-buffers/do
 Una vez instaladas todas las librerías las agregamos al IDE
 ```
 Eclipse
-	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / yaml / protobuf
+	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / SDL2_ttf / yaml / protobuf
 ```
 
 ###Valgrind

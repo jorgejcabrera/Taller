@@ -253,5 +253,9 @@ void GameSettings::setMapDimention(int ancho, int alto){
 
 }
 
+int GameSettings::getAlturaMenuInferior() {
+	return DefaultSettings::getAlturaMenuInferior();
+}
+
 
 } /* namespace std */

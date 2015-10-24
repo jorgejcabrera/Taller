@@ -38,6 +38,10 @@ class DefaultSettings {
 		static const int POS_Y_PROTAGONISTA = 5;
 		static const int VELOCIDAD_PERSONAJE = 10;
 		static const int TIMEOUT = 10;
+		static const int ALTURA_MENU_INFERIOR= 120;
+		static const int ALTURA_MENU_SUPERIOR= 20;
+		static const int ALTURA_BANDA_MENU= 10;
+		static const int VIEW_DISTANCE = 4;
 
 	public:
 		DefaultSettings();
@@ -79,6 +83,10 @@ class DefaultSettings {
 		static int getPosYProtagonista();
 		static int getVelocidadPersonaje();
 		static int getTimeOut();
+		static int getViewDistance();
+		static int getAlturaMenuInferior();
+		static int getAlturaMenuSuperior();
+		static int getAlturaBandaMenu();
 };
 
 

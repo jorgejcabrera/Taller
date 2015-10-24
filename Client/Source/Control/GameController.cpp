@@ -26,6 +26,9 @@ Message* GameController::getMessageFromEvent(string userId){
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
+			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+				// aca iria algo en caso de que el menu sea interactivo
+			} else {
 			int id;
 			pair<int,int> cartesianPosition;
 			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMyEntities();
@@ -47,6 +50,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			body.set_y(cartesianPosition.second);
 			message->setContent(body);
 			return message;
+			}
 		}
 
 		if( event->type == SDL_QUIT){
