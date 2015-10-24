@@ -99,6 +99,7 @@ public:
 
 	void generateListMessageConfiguration();
 	list<Message*> getListMessageConfiguration();
+	int getRangeVisibility();
 };
 
 } /* namespace std */

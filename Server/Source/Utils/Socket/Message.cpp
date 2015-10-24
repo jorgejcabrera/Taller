@@ -196,3 +196,9 @@ string Message::getOwner(){
 	return this->msg.owner();
 }
 
+void Message::activeTile( int x, int y) {
+	this->msg.set_x(x);
+	this->msg.set_y(y);
+	this->msg.set_id(0);
+	this->msg.set_tipo("fog");
+}

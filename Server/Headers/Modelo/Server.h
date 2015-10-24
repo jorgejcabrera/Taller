@@ -39,6 +39,7 @@ class Server : public Thread{
 		GameController *gController;
 		list<int> idEntitiesUpdated;
 		time_t lastReportedServer;
+		GameSettings* gameSettings;
 
 	public:
 		Server(int port, GameController *myController);
@@ -57,6 +58,8 @@ class Server : public Thread{
 		list<Message*> getProtagonistasMessages();
 		//Levanto todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
 		void notifyClientReconect(string userName);
+		//setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
+		void setSeenTiles();
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

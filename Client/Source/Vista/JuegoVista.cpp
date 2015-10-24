@@ -40,9 +40,11 @@ void JuegoVista::drawIsometricMap(){
 	int offsetY = this->getOffset()->second;
 
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-		posY = ((*itTiles)->getPosX()+(*itTiles)->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
-		posX = ((*itTiles)->getPosX()-(*itTiles)->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
-		this->picassoHelper->renderObject((*itTiles)->getPathImage(),posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
+		if ((*itTiles)->getSeen()){
+			posY = ((*itTiles)->getPosX()+(*itTiles)->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
+			posX = ((*itTiles)->getPosX()-(*itTiles)->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
+			this->picassoHelper->renderObject((*itTiles)->getPathImage(),posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
+		}
 	}
 }
 
@@ -256,6 +258,14 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 
 EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	return this->personajes.at(id);
+}
+
+void JuegoVista::setVisibleTile(int x,int y) {
+	for (list<TileVista* >::iterator it = tiles.begin(); it != tiles.end(); ++it) {
+		if ( (x == (*it)->getPosX()) && (y == (*it)->getPosY())) {
+			(*it)->saw();
+		}
+	}
 }
 
 JuegoVista::~JuegoVista() {
