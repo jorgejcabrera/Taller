@@ -147,6 +147,9 @@ void Client::saveEntitiesConfig(Message* msg){
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->name);
 	if(newMessage){
+		if(newMessage->getTipo()=="exit"){
+			this->status = DISCONECTED;
+		}
 		this->writeThread->writeMessage(newMessage);
 	}
 	pingMessage();
