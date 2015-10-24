@@ -30,6 +30,9 @@ class JuegoVista {
 private:
 	GameSettings* gameSettings;
 	PicassoHelper* picassoHelper;
+	/*
+	*offset correspondiente al desplazamiento por el offset
+	**/
 	pair<int,int> offset;
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
@@ -42,9 +45,11 @@ private:
 	map<int, EntidadDinamicaVista*> misPersonajes;
 
 public:
-	void render(int ciclos);
 	JuegoVista();
-	~JuegoVista();
+	/*
+	*metodo que se encarga de dibujar mapa y todas las entidades
+	**/
+	void render(int ciclos);
 	void createView();
 	void actualizarOffset(int offsetX,int offsetY);
 	pair<int,int>* getOffset();
@@ -52,8 +57,10 @@ public:
 	void addBuilding(int id, string type, int x, int y);
 	void addSemiEstatico(int id, string type, int x, int y);
 	void addPersonaje(int id, string type, int x, int y, bool imTheOwner, int active);
-	map<int,EntidadDinamicaVista*>* getMisPersonajes();
-	EntidadDinamicaVista* getPersonajeById(int id);
+	map<int,EntidadDinamicaVista*>* getMyEntities();
+	EntidadDinamicaVista* getEntityById(int id);
+	~JuegoVista();
+
 
 };
 

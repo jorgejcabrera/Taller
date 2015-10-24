@@ -39,15 +39,13 @@ private:
 	string name;
 	void readMessage(Message msg);
 	void sendMessage(Message* msg);
-	GameController *gController;
+	GameController* gController;
 	time_t lastReportedClient;
 	time_t lastReportedServer;
-
 	/*
 	*thread que se encarga de enviar al servidor los mensajes encolados al servidor
 	**/
 	MessageSocketWriter* writeThread;
-	
 	/*
 	*thread que se encarga de leer los mensajes enviados por el servidor
 	**/
@@ -59,28 +57,40 @@ public:
 	*ip y puerto al cual se va a conectar
 	**/
 	Client(string ip, int port, GameController *gController);
-	
 	/*
 	*intenta conectar al servidor, en caso de error devuelve -1
 	**/
 	int connectToServer();
-	
 	/*
 	*lee la cola de novedades a procesar, y transforma las novedades en eventos
 	**/
 	void processReceivedMessages();
-	
 	/*
 	*genera los mensajes de los eventos, y los envia al servidor
 	**/
 	void sendEvents();
-	bool isConected();
+	/*
+	*
+	**/
 	void saveEntitiesConfig(Message* msg);
-	virtual ~Client();
+	/*
+	*?
+	**/
 	void notifyUserName();
+	/*
+	*?
+	**/
 	void pingMessage();
+	/*
+	*?
+	**/
 	void verifyServerAlive();
-	void disconnectCharacter(int id);
+	/*
+	*?
+	**/
+	void disconnectPlayer(int id);
+	bool isConected();
+	virtual ~Client();
 };
 
 #endif /* SOURCE_MODELO_CLIENT_H_ */

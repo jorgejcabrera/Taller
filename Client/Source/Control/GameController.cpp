@@ -28,7 +28,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			int id;
 			pair<int,int> cartesianPosition;
-			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMisPersonajes();
+			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMyEntities();
 
 			//TODO identidicar cual es la entidad del cliente que se desea mover, hoy esto anda porque tenemos un unico
 			//personaje
@@ -175,7 +175,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 
 void GameController::updatePostion(int id,int x,int y){
 
-	map<int,EntidadDinamicaVista*>* myEntities = this->juegoVista->getMisPersonajes();
+	map<int,EntidadDinamicaVista*>* myEntities = this->juegoVista->getMyEntities();
 	EntidadDinamicaVista* entity = myEntities->at(id);
 
 	stringstream ss;
