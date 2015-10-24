@@ -60,6 +60,7 @@ public:
 	void pingMessage(string nombre);
 	void clientDisconect(int id);
 	void clientReconnect(int identifier);
+	void activeTile( int x, int y);
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

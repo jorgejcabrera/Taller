@@ -25,6 +25,7 @@ protected:
 	string sizeString;
 	string name;
 	int id;
+	int rangeVisibility;
 
 public:
 	EntidadPartida();
@@ -38,6 +39,8 @@ public:
 	void setName(string name);
 	pair<int,int>* getPosition();
 	int getId();
+	void setRangeVisibility ( int range);
+	int getRangeVisibility();
 
 	/*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 2x2,3x3,4x4,
 	 *ya que el render depende de este factor*/

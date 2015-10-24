@@ -13,6 +13,7 @@ Server::Server(int port, GameController *myController) {
 	this->gController = myController;
 	this->readQueue = new SocketQueue();
 	this->lastReportedServer = time(0);
+	this->gameSettings = GameSettings::GetInstance();
 }
 
 int Server::initSocketServer(){
@@ -50,6 +51,7 @@ int Server::run(void * data){
 	socklen_t tamano = sizeof(serverAddress);
 	while(true){
 			if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
+
 
 				Client *newClient = new Client(cliente, this->readQueue);
 				initConnection(newClient);
@@ -109,7 +111,10 @@ void Server::processReceivedMessages(){
 		}else if(messageUpdate->getTipo()=="exit"){
 			//TODO desconectar al cliente? hoy deberia hacerlo cuando no detecta novedades
 			Logger::get()->logDebug("Server","processReceivedMessages", "RECIBI MESAJE DE DESCONEXION");
-		}else{
+//		}else if(messageUpdate->getTipo()=="fog"){
+//			this->setSeenTiles();
+
+		} else {
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
 			this->idEntitiesUpdated.push_back(idUpdate);
@@ -195,6 +200,7 @@ Server::~Server() {
 	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
 	}
+	this->gameSettings = NULL;
 	delete(this->readQueue);
 	close(this->serverSocket);
 }
@@ -249,3 +255,41 @@ void Server::notifyClientReconect(string userName){
 		}
 	}
 }
+
+//TODO : (FOG)EL SERVER LE MANDA AL CLIENTE LA NUEVA POSICION DE LA ENTIDAD, EL CLIENTE CALCULA LOS NUEVOS TILES, Y SE LOS DEVUELVE AL SERVER
+void Server::setSeenTiles() {
+	map<string,list<pair<int,int> > > newTilesByClient;
+	map<int,EntidadDinamica*> protagonistas =this->gController->getJuego()->getProtagonistas();
+
+	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+		EntidadDinamica * entidad = (*it).second;
+		pair<int,int>* position = entidad->getPosition();
+		int rangeEntity = entidad->getRangeVisibility();
+		string owner = (*it).second->getOwner();
+		for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
+			if ( (x>=0) && (x < gameSettings->getMapWidth())) {
+				for (int y = position->second-rangeEntity ; y <= position->second+rangeEntity ; y++) {
+					if ((y>=0) && (y < this->gameSettings->getMapHeight())) {
+						if((x+y >= position->first + position->second - rangeEntity) && (x+y <= position->first + position->second + rangeEntity)
+						&& (x-y >= position->first - position->second - rangeEntity) && (x-y <= position->first - position->second + rangeEntity)) {
+							newTilesByClient[owner].push_back(std::make_pair(x,y));
+						}
+					}
+				}
+			}
+		}
+	}
+
+	for( map<string,list<pair<int,int> > >::iterator it = newTilesByClient.begin() ; it!=newTilesByClient.end() ; ++it) {
+		Client* client = this->clients[(*it).first];
+		if (client->getStatus() == CONECTED) {
+			list<pair<int,int> > newTiles = client->setSeenTiles((*it).second);
+			for (list<pair<int,int> >::iterator itNewList = newTiles.begin(); itNewList != newTiles.end(); ++itNewList) {
+				Message* msg = new Message();
+				msg->activeTile((*itNewList).first,(*itNewList).second);
+				client->writeMessagesInQueue(msg);
+			}
+		}
+	}
+}
+

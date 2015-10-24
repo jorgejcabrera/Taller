@@ -247,5 +247,9 @@ int DefaultSettings::getVelocidadPersonaje	(){
 	return VELOCIDAD_PERSONAJE;
 }
 
+int DefaultSettings::getRangeVisibility() {
+	return RANGE_VISIBILITY;
+}
+
 DefaultSettings::~DefaultSettings() {
 }

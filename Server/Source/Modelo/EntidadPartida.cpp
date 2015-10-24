@@ -50,5 +50,13 @@ string EntidadPartida::getSizeString(){
 	return this->sizeString;
 }
 
+void EntidadPartida::setRangeVisibility ( int range) {
+	this->rangeVisibility = range;
+}
+
+int EntidadPartida::getRangeVisibility() {
+	return this->rangeVisibility;
+}
+
 EntidadPartida::~EntidadPartida() {
 }

@@ -26,6 +26,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	GameController* gController = new GameController();
+	//Client* jorge = new Client("192.168.1.1",7843, gController);
 	Client* jorge = new Client("127.0.0.1",7843, gController);
 	jorge->connectToServer();
 	

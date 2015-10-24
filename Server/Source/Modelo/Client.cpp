@@ -13,6 +13,7 @@ Client::Client(int identifier, SocketQueue *queueUnique) {
 	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
 	this->lastReported = time(0);
 	this->status = CONECTED;
+	// TODO settear los primeros lugares vistos en el mapa segun las entitis del cliente
 }
 
 Client::~Client() {
@@ -71,4 +72,31 @@ string Client::getUserName(){
 
 void Client::setUserName(string myName){
 	this->userName = myName;
+}
+
+//recibe una lista con los tiles vistos
+list<pair<int,int> > Client::setSeenTiles( list<pair<int,int> > newTiles) {
+	list<pair<int,int> > newSeenTiles;
+	if (seenTiles.empty()) {
+		for (list<pair<int,int> >::iterator itNewList = newTiles.begin(); itNewList != newTiles.end(); ++itNewList) {
+			seenTiles.push_back((*itNewList));
+			newSeenTiles.push_back((*itNewList));
+		}
+	} else {
+		for (list<pair<int,int> >::iterator itNewList = newTiles.begin(); itNewList != newTiles.end(); ++itNewList) {
+			bool isPairInList = false;
+	 		for (list<pair<int,int> >::iterator itSeenTiles = seenTiles.begin(); itSeenTiles != seenTiles.end(); ++itSeenTiles) {
+				if ( ( (*itNewList).first == (*itSeenTiles).first) && ( (*itNewList).second == (*itSeenTiles).second) ) {
+					isPairInList = true;
+				}
+			}
+	 		if (!isPairInList) {
+	 			newSeenTiles.push_back((*itNewList));
+	 		}
+		}
+ 		for (list<pair<int,int> >::iterator it = newSeenTiles.begin(); it != newSeenTiles.end(); ++it) {
+ 			seenTiles.push_back((*it));
+ 		}
+	}
+	return newSeenTiles;
 }

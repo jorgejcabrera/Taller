@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 #include <sstream>
+#include <netdb.h>
 #include "../../../Headers/Utils/Socket/Message.h"
 
 using namespace std;
