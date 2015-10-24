@@ -15,8 +15,8 @@ ResourceManager::ResourceManager(Mapa* map){
 
 	this->map = map;
 	this->resources = new list<Resource*>();
-	Resource* oro = new Resource("gold",15,8);
-	Resource* chori = new Resource("chori",11,9);
+	Resource* oro = new Resource("gold",0,1);
+	Resource* chori = new Resource("chori",1,0);
 	Resource* madera = new Resource("wood",20,15);
 
 	this->resources->push_front(oro);

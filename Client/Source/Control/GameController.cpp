@@ -27,7 +27,7 @@ Message* GameController::getMessageFromEvent(string userId){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-				// aca iria algo en caso de que el menu sea interactivo
+				// TODO aca iria algo en caso de que el menu sea interactivo
 			} else {
 			int id;
 			pair<int,int> cartesianPosition;
@@ -80,8 +80,8 @@ JuegoVista* GameController::getJuegoVista(){
 void GameController::actualizarJuego(){
 	//TODO: esto deberia actualizar el juegoVista?
 	//juegoVista->actualizarProtagonista();
-	/*pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
-	juegoVista->actualizarOffset(offset.first,offset.second);*/
+	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
+	juegoVista->actualizarOffset(offset.first,offset.second);
 }
 
 bool GameController::reiniciarJuego(){
@@ -164,13 +164,14 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 		isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
 		isometricPosition.first = isometricPosition.first + offset->first;
 		isometricPosition.second= isometricPosition.second + offset->second;
-		entidad->setScreenPosition(isometricPosition);
 	}else{
 		isometricPosition.first = posMouseX;
 		isometricPosition.second= posMouseY;
-		entidad->setScreenPosition(isometricPosition);
 	}
 
+	//TODO aca lo que se tiene que seteear es la proxima posicion de pantalla del personaje
+	//entidad->setNextScreenPosition(isometricPosition);
+	entidad->setScreenPosition(isometricPosition);
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	//TODO: Aca deberia actualizar la posicion del protagonsita?
 	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
@@ -187,6 +188,9 @@ void GameController::updatePostion(int id,int x,int y){
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
 
 	entity->setPosition(x,y);
+
+	//cuando le llega la novedad del servidor de actualizarse cambia la posicion de pantalla a dibujar
+	//entity->updateScreenPosition();
 
 	//esto no se si va aca
 	/*

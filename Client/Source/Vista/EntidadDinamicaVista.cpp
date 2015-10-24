@@ -7,9 +7,6 @@
 
 #include "../../Headers/Vista/EntidadDinamicaVista.h"
 
-/*EntidadDinamicaVista::EntidadDinamicaVista(){
-}*/
-
 EntidadDinamicaVista::EntidadDinamicaVista() {
 	this->caminando = false;
 	this->width = 50;
@@ -61,12 +58,11 @@ SDL_Rect EntidadDinamicaVista::getPositionOfSprite(int ciclos){
 	return srcrect;
 }
 
-void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
-	this->screenPosition.first = x;
-	this->screenPosition.second = y;
-}
+/*void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
+	this->currentScreenPosition.first = x;
+	this->currentScreenPosition.second = y;
+}*/
 
-//seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
 void EntidadDinamicaVista::setFramesInLineFile(int qty){
 	this->framesInLineFile = qty;
 }
@@ -107,18 +103,26 @@ int EntidadDinamicaVista::getLineSprite(Direccion dir){
 	}
 }
 
-//TODO esta MIERDA estaba antes setScreenPosition seteaba el destino
-/*void EntidadDinamicaVista::setScreenPosition(float x,float y){
-	this->destinoX = x;
-	this->destinoY = y;
-}*/
 void EntidadDinamicaVista::setScreenPosition(pair<float,float> screenPosition){
-	this->screenPosition = screenPosition;
+	this->currentScreenPosition = screenPosition;
 }
 
 pair<float,float>* EntidadDinamicaVista::getScreenPosition(){
-	return &this->screenPosition;
+	return &this->currentScreenPosition;
 }
+
+void EntidadDinamicaVista::setNextScreenPosition(pair<float,float> nextScreenPosition){
+	this->nextScreenPosition = nextScreenPosition;
+}
+
+pair<float,float>* EntidadDinamicaVista::getNextScreenPosition(){
+	return &this->nextScreenPosition;
+}
+
+void EntidadDinamicaVista::updateScreenPosition(){
+	this->currentScreenPosition = this->nextScreenPosition;
+}
+
 
 int EntidadDinamicaVista::getFramesPerSecond(){
 	return this->framesPerSecond;
@@ -137,8 +141,8 @@ void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, 
 
 string EntidadDinamicaVista::toString(){
 	stringstream ss;
-	ss << "name: "<<this->name <<"; screenPosition: ["<<screenPosition.first
-	<<";"<<screenPosition.second<<"]"<<"; destino: ["<<this->destinoX<<";"<<this->destinoY<<"];";
+	ss << "name: "<<this->name <<"; screenPosition: ["<<currentScreenPosition.first
+	<<";"<<currentScreenPosition.second<<"]"<<"; destino: ["<<this->destinoX<<";"<<this->destinoY<<"];";
 	return ss.str();
 }
 
