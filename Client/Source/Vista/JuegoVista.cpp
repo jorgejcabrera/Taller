@@ -55,7 +55,7 @@ void JuegoVista::drawStaticEntities(int runCycles){
 
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
 		EntidadEstaticaVista* entidad = (*itEstaticos).second;
-		if (isEntitySeen(entidad->getPosition())) {
+		if (isEntitySeen(entidad->getPosition(),entidad->getLength())) {
 			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
 			entidad->drawMe(isometricPosition,offSetX,offSetY,runCycles);
 		}
@@ -282,19 +282,33 @@ void JuegoVista::setVisibleTile(int x,int y) {
 	}
 }
 
-bool JuegoVista::isEntitySeen(pair<int,int>* entityPos) {
+bool JuegoVista::isEntitySeen(pair<int,int>* entityPos, int lenght) {
+	int verticesVistos = 0;
 	for (list<TileVista* >::iterator it = tiles.begin(); it != tiles.end(); ++it) {
 		if ((*it)->getSeen()) {
 			if ( ( entityPos->first == (*it)->getPosX()) && (entityPos->second == (*it)->getPosY())) {
-				return true;
+				verticesVistos++;
+			}else if ( (entityPos->first + lenght == (*it)->getPosX()) && (entityPos->second == (*it)->getPosY())) {
+				verticesVistos++;
+			}else if ( (entityPos->first + lenght == (*it)->getPosX()) && (entityPos->second + lenght == (*it)->getPosY())) {
+				verticesVistos++;
+			}else if ( (entityPos->first == (*it)->getPosX()) && (entityPos->second + lenght == (*it)->getPosY())) {
+			verticesVistos++;
 			}
 		}
+	}
+	if (verticesVistos == 4){
+		return true;
 	}
 	return false;
 }
 
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
+	delete(this->menuVista);
+	this->menuVista=NULL;
+	delete(this->miniMapVista);
+	this->miniMapVista=NULL;
 	delete(this->picassoHelper);
 	this->picassoHelper=NULL;
 	this->gameSettings=NULL;
