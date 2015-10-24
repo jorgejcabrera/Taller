@@ -16,6 +16,7 @@ using namespace std;
 class TileVista {
 	pair<int,int> position;
 	string pathImage;
+	bool seen;
 
 public:
 	void setPathImage(string path);
@@ -25,6 +26,8 @@ public:
 	pair<int,int>* getPosition();
 	virtual ~TileVista();
 	string getPathImage();
+	bool getSeen();
+	void saw();
 };
 
 #endif /* SOURCE_VISTA_TILEVISTA_H_ */

@@ -12,6 +12,7 @@ using namespace std;
 TileVista::TileVista(int x, int y ) {
 	this->position.first = x;
 	this->position.second = y;
+	this->seen = 0;
 }
 
 pair<int,int>* TileVista::getPosition(){
@@ -32,6 +33,14 @@ string TileVista::getPathImage(){
 
 void TileVista::setPathImage(string path){
 	this->pathImage = path;
+}
+
+bool TileVista::getSeen() {
+	return this->seen;
+}
+
+void TileVista::saw() {
+	this->seen = true;
 }
 
 TileVista::~TileVista() {

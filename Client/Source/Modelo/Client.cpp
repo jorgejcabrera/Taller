@@ -72,6 +72,7 @@ bool Client::isConected(){
 }
 
 void Client::processReceivedMessages(){
+	cout<<"un ciclo"<<endl;
 	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
 	for(list<Message*>::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
@@ -86,6 +87,7 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "update"){
 			cout << (*it)->toString()<<endl;
 			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			cout<<"me llega esto: "<<(*it)->getPositionX()<<","<<(*it)->getPositionY()<<endl;
 		}else if ( tipoMensaje == "tile" ){
 			//Agrego al JuegoVista un nuevo tile
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
@@ -118,7 +120,9 @@ void Client::processReceivedMessages(){
 			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getEntityById((*it)->getId());
 			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
 		}else if ( tipoMensaje == "ping"){
-			this->lastReportedServer = time(0);	//servidor avisa que sigue arriba
+			this->lastReportedServer = time(0);								//servidor avisa que sigue arriba
+		}else if (tipoMensaje == "fog"){
+			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;

@@ -293,5 +293,8 @@ GameSettings::~GameSettings() {
 	this->instance =NULL;
 }
 
+int GameSettings::getRangeVisibility() {
+	return DefaultSettings::getRangeVisibility(); // TODO que cada entidad tenga su propia visibilidad, y que esto se obtenga del yaml
+}
 
 } /* namespace std */

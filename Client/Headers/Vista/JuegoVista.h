@@ -65,6 +65,7 @@ public:
 	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active);
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	EntidadDinamicaVista* getEntityById(int id);
+	void setVisibleTile(int x,int y);
 	~JuegoVista();
 	EntidadPartidaVista* entityInThisPosition(int x, int y);
 

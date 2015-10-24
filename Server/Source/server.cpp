@@ -54,12 +54,14 @@ int main(int argc, char* argv[]) {
 	server->start((void *) &server);
 	cout << " YA START " <<endl;
 
+
 	bool reiniciar = true;
 	while(true){
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados
 		server->processReceivedMessages();
 		//Los protagonistas se trasladan a su posicion destino
 		gController->actualizarJuego();
+		server->setSeenTiles();
 		//Se le manda a los clientes las novedades
 		server->notifyClients();
 		gController->delay();

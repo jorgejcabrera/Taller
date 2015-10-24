@@ -13,6 +13,7 @@
 #include "../Modelo/DefaultSettings.h"
 #include "GameSettings.h"
 #include "ResourceManager.h"
+#include "PathFinder.h"
 #include <map>
 #include <list>
 
@@ -42,7 +43,7 @@ public:
 	bool getStatusPartida();
 	map<int,EntidadDinamica*> getProtagonistas();
 	list<EntidadDinamica*>* getNewProtagonistasToNotify();
-	pair<float,float>* getPositionOfProtagonistaById(int idBuscado);
+	pair<int,int>* getPositionOfProtagonistaById(int idBuscado);
 	void cleanNewProtagonistas();
 
 	void agregarProtagonista(string owner);

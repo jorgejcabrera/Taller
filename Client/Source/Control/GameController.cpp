@@ -38,7 +38,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
 				id = (*it).first;
 				cartesianPosition = this->moveCharacter((*it).second);
-				cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
+				//cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
 			}
 
 			//creamos el mensaje que vamos a enviar al server
@@ -183,7 +183,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 
 	//TODO aca lo que se tiene que seteear es la proxima posicion de pantalla del personaje
 	//entidad->setNextScreenPosition(isometricPosition);
-	entidad->setScreenPosition(isometricPosition);
+	//entidad->setScreenPosition(isometricPosition);
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	//TODO: Aca deberia actualizar la posicion del protagonsita?
 	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
@@ -223,6 +223,7 @@ void GameController::delay(){
 	SDL_Delay(50); // para que sean 50 frames x segundos
 	//}
 }
+
 GameController::~GameController() {
 	//TODO: ver si no es necesario ejecutar el destructor de juego Vista
 	//No ejecuto el destructor de juego porque lo hace el juegoVista

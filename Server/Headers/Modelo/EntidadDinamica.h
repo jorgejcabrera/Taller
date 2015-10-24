@@ -9,9 +9,11 @@
 #define SOURCE_MODELO_ENTIDADDINAMICA_H_
 
 #include "EntidadPartida.h"
+#include "../Utils/Logger.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include <list>
 
 using namespace std;
 
@@ -37,6 +39,10 @@ class EntidadDinamica: public EntidadPartida {
 		float destinoY;
 		int frame;
 		string owner;
+		list<pair<int,int> >* camino;
+		bool notifiable;
+		int ciclos;
+		int cicloActual;
 
 		float distanciaA(float x, float y);
 		float distanciaEnX(float x);
@@ -48,18 +54,22 @@ class EntidadDinamica: public EntidadPartida {
 
 	public:
 		void destruir();
+		void setCamino(list<pair<int,int> >* camino);
 		void setOwner(string owner);
+		void nextPosition();
 		string getOwner();
 		EntidadDinamica();
 		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 		void setInitialScreenPosition(float x,float y);
 		virtual ~EntidadDinamica();
-		pair<float,float>* getScreenPosition();
 		pair<int,int>* getPosition();
+		list<pair<int,int> >* getCamino();
 		Direccion getDireccion();
 		void setScreenPosition(float x, float y);
 		void trasladarse();
 		bool isWalking();
+		void setNotifiable(bool notifiable);
+		bool hasToNotify();
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */
