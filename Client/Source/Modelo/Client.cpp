@@ -84,6 +84,7 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "config" ){
 			saveEntitiesConfig(*it);
 		}else if ( tipoMensaje == "update"){
+			cout << (*it)->toString()<<endl;
 			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 		}else if ( tipoMensaje == "tile" ){
 			//Agrego al JuegoVista un nuevo tile
@@ -101,6 +102,7 @@ void Client::processReceivedMessages(){
 																	(*it)->getPositionX(),
 																	(*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
+			cout << (*it)->toString()<<endl;
 			//Agrego al JuegoVista personajes/dinamicos
 			bool imTheOwner= ((*it)->getOwner()==this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso

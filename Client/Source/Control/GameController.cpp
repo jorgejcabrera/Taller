@@ -179,10 +179,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 }
 
 void GameController::updatePostion(int id,int x,int y){
-
-	map<int,EntidadDinamicaVista*>* myEntities = this->juegoVista->getMyEntities();
-	EntidadDinamicaVista* entity = myEntities->at(id);
-
+	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
 	stringstream ss;
 	ss << "La posicion vieja de: "<< id <<" es "<<entity->getPosition()->first<<" "<<entity->getPosition()->first;
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
