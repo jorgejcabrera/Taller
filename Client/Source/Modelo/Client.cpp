@@ -90,15 +90,26 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 		}else if ( tipoMensaje == "edificios"){
 			//Agrego al JuegoVista un nuevo edificio/estatico
-			this->gController->getJuegoVista()->addBuilding((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
+			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
+															(*it)->getNombre(),
+															(*it)->getPositionX(),
+															(*it)->getPositionY());
 		}else if ( tipoMensaje == "semiestaticos"){
 			//Agrego al JuegoVista un nuevo semiestatico/molino
-			this->gController->getJuegoVista()->addSemiEstatico((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
+			this->gController->getJuegoVista()->addSemiEstaticEntity((*it)->getId(),
+																	(*it)->getNombre(),
+																	(*it)->getPositionX(),
+																	(*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
 			//Agrego al JuegoVista personajes/dinamicos
 			bool imTheOwner= ((*it)->getOwner()==this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
-			this->gController->getJuegoVista()->addPersonaje((*it)->getId(),(*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY(), imTheOwner, (*it)->getFps());
+			this->gController->getJuegoVista()->addDinamicEntity((*it)->getId(),
+																(*it)->getNombre(),
+																(*it)->getPositionX(),
+																(*it)->getPositionY(),
+																imTheOwner,
+																(*it)->getFps());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getId());
 		}else if ( tipoMensaje == "reconnect"){

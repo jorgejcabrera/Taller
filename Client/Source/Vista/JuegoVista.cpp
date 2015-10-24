@@ -78,6 +78,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		//cout << "Dibujo los mios en: " << (screenPosition->first - gameSettings->getTileSize() / 2 + offSetX) << " " <<(screenPosition->second + offSetY)<<endl;
+		//cout << "Se esta dibujando en : "<<screenPosition->first<<" "<<screenPosition->second<<endl;
 		this->picassoHelper->renderObject(	entidad->getPathImage(),
 											screenPosition->first - entidad->getWidthPixel()/2/*- gameSettings->getTileSize() / 2*/ + offSetX,
 											screenPosition->second  - entidad->getLengthPixel()/2/* - entidad->getLengthPixel()*/ + offSetY,
@@ -113,13 +114,6 @@ pair<int,int>* JuegoVista::getOffset(){
 	return &this->offset;
 }
 
-JuegoVista::~JuegoVista() {
-//	this->picassoHelper()->~PicassoHelper();
-	delete(this->picassoHelper);
-	this->picassoHelper=NULL;
-	this->gameSettings=NULL;
-}
-
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
 	//TODO falta agregar el offset para dibujar
@@ -136,7 +130,7 @@ void JuegoVista::addBuilding(int id, string type, int x, int y){
 	this->buildings.insert(make_pair(id,newBuilding));
 }
 
-void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
+void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y){
 	EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																			gameSettings->getEntityConfig(type)->getAlto(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -150,8 +144,8 @@ void JuegoVista::addSemiEstatico(int id, string type, int x, int y){
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 }
 
-void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner, int active){
-	EntidadDinamicaVista *newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
+void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active){
+	EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getFps());
@@ -166,10 +160,9 @@ void JuegoVista::addPersonaje(int id, string type, int x, int y, bool imTheOwner
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newPersonaje->setId(id);
 
-	//paso la posicion cartesiana a isometrica, y la centro
-	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(newPersonaje);
-	//TODO esta logica no tiene que estar aca
-	isometricPosition.first = isometricPosition.first + gameSettings->getTileSize() + this->getOffset()->first;
+	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(newPersonaje);			//paso la posicion cartesiana a isometrica
+	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
+	isometricPosition.first = isometricPosition.first + gameSettings->getTileSize() + this->getOffset()->first;		//la primera vez que creamos la entidad tenemos que centrarla
 	isometricPosition.second = isometricPosition.second + newPersonaje->getLengthPixel()/2 + this->offset.second;
 	newPersonaje->setScreenPosition(isometricPosition);
 
@@ -186,4 +179,11 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 
 EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	return this->personajes.at(id);
+}
+
+JuegoVista::~JuegoVista() {
+//	this->picassoHelper()->~PicassoHelper();
+	delete(this->picassoHelper);
+	this->picassoHelper=NULL;
+	this->gameSettings=NULL;
 }

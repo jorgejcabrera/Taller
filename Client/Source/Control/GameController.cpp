@@ -76,8 +76,8 @@ JuegoVista* GameController::getJuegoVista(){
 void GameController::actualizarJuego(){
 	//TODO: esto deberia actualizar el juegoVista?
 	//juegoVista->actualizarProtagonista();
-	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
-	juegoVista->actualizarOffset(offset.first,offset.second);
+	/*pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
+	juegoVista->actualizarOffset(offset.first,offset.second);*/
 }
 
 bool GameController::reiniciarJuego(){
