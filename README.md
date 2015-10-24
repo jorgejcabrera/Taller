@@ -83,3 +83,11 @@ En tal caso ejecutamos
 ```
 sudo ldconfig 
 ```
+En caso de aparecer errores del tipo 
+```
+referencia a `google::protobuf::internal::empty_string_' sin definir
+```
+agregar
+```
+Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> LibrarieSearchPath -> add -> /usr/local/lib
+```
