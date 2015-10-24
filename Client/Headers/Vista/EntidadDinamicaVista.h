@@ -33,7 +33,14 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 	private:
 		string name;
 		bool caminando;
-		pair<float,float> screenPosition;
+		/*
+		*posicion actual en donde se encuentra el personaje
+		**/
+		pair<float,float> currentScreenPosition;
+		/*
+		*corresponde a la proxima posicion de pantalla a dibujarse
+		**/
+		pair<float,float> nextScreenPosition;
 		int widthPixel;
 		int lengthPixel;
 		int framesPerSecond;
@@ -42,40 +49,50 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 		int frame;
 		int framesInLineFile;
 
-		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+		/*
+		*Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+		**/
 		int delay;
-		//variable de control para indicar si estoy en medio del periodo de delay
+		/*
+		*variable de control para indicar si estoy en medio del periodo de delay
+		**/
 		bool inDelayPeriod;
-		// indice de segundo del delay por el cual voy
+		/*
+		*indice de segundo del delay por el cual voy
+		**/
 		int delayIndex;
 
 		int getLineSprite(Direccion dir);
 
 	public:
-		void destruir();
-		void setFramesInLineFile(int qty);
-		int getFramesInLineFile();
-		//EntidadDinamicaVista();
 		EntidadDinamicaVista();
 		EntidadDinamicaVista(string myName, float width, float length, int fps);
-		void setInitialScreenPosition(float x,float y);
+		void destruir();
+		/*
+		*seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
+		**/
+		void setFramesInLineFile(int qty);
+		int getFramesInLineFile();
 		int getWidthPixel();
 		int getLengthPixel();
-		virtual ~EntidadDinamicaVista();
 		SDL_Rect getPositionOfSprite(int runCycles);
 		int getFramesPerSecond();
 		void setDelay(int delayFrames);
 		string toString();
-		pair<float,float>* getScreenPosition();
-		pair<int,int>* getPosition();
-
-		Direccion getDireccion();
-
-		//TODO esta porqueria estaba antes
-		//void setScreenPosition(float x, float y);
 		void setScreenPosition(pair<float,float> screenPosition);
+		pair<float,float>* getScreenPosition();
+		void setNextScreenPosition(pair<float,float> nextScreenPosition);
+		pair<float,float>* getNextScreenPosition();
+		/*
+		*setea la proxima posicion de pantalla como la actual
+		**/
+		void updateScreenPosition();
+		pair<int,int>* getPosition();
+		Direccion getDireccion();
 		void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 		string getName();
+		virtual ~EntidadDinamicaVista();
+
 };
 
 #endif /* SOURCE_VISTA_ENTIDADDINAMICAVISTA_H_ */

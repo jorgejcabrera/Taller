@@ -84,11 +84,12 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "config" ){
 			saveEntitiesConfig(*it);
 		}else if ( tipoMensaje == "update"){
+			cout << (*it)->toString()<<endl;
 			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 		}else if ( tipoMensaje == "tile" ){
 			//Agrego al JuegoVista un nuevo tile
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
-		}else if ( tipoMensaje == "edificios"){
+		}else if ( tipoMensaje == "edificios" || tipoMensaje=="resources"){
 			//Agrego al JuegoVista un nuevo edificio/estatico
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
@@ -101,6 +102,7 @@ void Client::processReceivedMessages(){
 																	(*it)->getPositionX(),
 																	(*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
+			cout << (*it)->toString()<<endl;
 			//Agrego al JuegoVista personajes/dinamicos
 			bool imTheOwner= ((*it)->getOwner()==this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
@@ -149,6 +151,9 @@ void Client::saveEntitiesConfig(Message* msg){
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->name);
 	if(newMessage){
+		if(newMessage->getTipo()=="exit"){
+			this->status = DISCONECTED;
+		}
 		this->writeThread->writeMessage(newMessage);
 	}
 	pingMessage();

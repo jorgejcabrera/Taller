@@ -54,7 +54,12 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad
 	}else if( stringSize == "mediumSize"){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
 		isometricPosition.second =isometricPosition.second - entidad->getLength() * gameSettings->getTileSize()/2 - DefaultSettings::getTileSize();
+	//1x1
+	}else if( stringSize == "standarMiniSize"){
+		isometricPosition.first = isometricPosition.first + gameSettings->getTileSize()*2/3;
+		isometricPosition.second =isometricPosition.second + gameSettings->getTileSize()/4;// - DefaultSettings::getTileSize();
 	}
+
 	//TODO centrar entidades de 4x2
 	return isometricPosition;
 }

@@ -126,7 +126,7 @@ pair<int,int>* JuegoVista::getOffset(){
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
 	//TODO falta agregar el offset para dibujar
-	TileVista *newtile = new TileVista(x,y);
+	TileVista* newtile = new TileVista(x,y);
 	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
 	this->tiles.push_back(newtile);
 }
@@ -257,7 +257,14 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 }
 
 EntidadDinamicaVista* JuegoVista::getEntityById(int id){
-	return this->personajes.at(id);
+	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
+	if(itPersonajes!=this->personajes.end()){
+		return itPersonajes->second;
+	}
+	map<int,EntidadDinamicaVista*>::iterator itMisPersonajes = this->misPersonajes.find(id);
+	if(itMisPersonajes!=this->misPersonajes.end()){
+		return itMisPersonajes->second;
+	}
 }
 
 void JuegoVista::setVisibleTile(int x,int y) {
