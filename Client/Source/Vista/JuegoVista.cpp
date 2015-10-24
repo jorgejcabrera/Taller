@@ -255,8 +255,16 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 }
 
 EntidadDinamicaVista* JuegoVista::getEntityById(int id){
-	return this->personajes.at(id);
+	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
+	if(itPersonajes!=this->personajes.end()){
+		return itPersonajes->second;
+	}
+	map<int,EntidadDinamicaVista*>::iterator itMisPersonajes = this->misPersonajes.find(id);
+	if(itMisPersonajes!=this->misPersonajes.end()){
+		return itMisPersonajes->second;
+	}
 }
+
 
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
