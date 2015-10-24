@@ -20,7 +20,7 @@ Message* SocketUtils::readMessage(){
 	int intSize = sizeof(int);
 	int bytesToRead = intSize;
 	int currentBytesRead = 0;
-
+	stringstream ss;
 	/***obtenemos la cantidad de bytes a leer***/
 	char* buff = new char[sizeof(int)];
 	memset(buff, 0, sizeof(int));
@@ -29,7 +29,8 @@ Message* SocketUtils::readMessage(){
 		if(currentBytesRead!=0){
 			bytesRead = currentBytesRead + bytesRead;
 			if ( currentBytesRead < 0 ){
-				Logger::get()->logDebug("SocketUtils","readMessage","Error reading message size from socket");
+				ss << "Error reading message size from socket " << gai_strerror(currentBytesRead);
+				Logger::get()->logError("SocketUtils","readMessage",ss.str());
 				delete[] buff;
 				return NULL;
 			}
@@ -47,7 +48,7 @@ Message* SocketUtils::readMessage(){
 		currentBytesRead = read(this->socket, &buffer[bytesRead], bytesToRead);
 		bytesRead =  currentBytesRead + bytesRead;
 		if ( currentBytesRead < 0 ){
-			Logger::get()->logDebug("SocketUtils","readMessage","Error reading from socket");
+			Logger::get()->logError("SocketUtils","readMessage","Error reading from socket");
 			delete[] buffer;
 			delete[] buff;
 			return NULL;
