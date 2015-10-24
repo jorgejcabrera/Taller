@@ -23,6 +23,8 @@
 #include "EntidadSemiEstaticaVista.h"
 #include "EntidadDinamicaVista.h"
 #include "../Utils/Logger.h"
+#include "MenuVista.h"
+#include "MiniMapVista.h"
 
 using namespace std;
 
@@ -30,6 +32,8 @@ class JuegoVista {
 private:
 	GameSettings* gameSettings;
 	PicassoHelper* picassoHelper;
+	MenuVista* menuVista;
+	MiniMapVista* miniMapVista;
 	/*
 	*offset correspondiente al desplazamiento por el offset
 	**/
@@ -38,6 +42,8 @@ private:
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);
 	void drawSemiStaticsEntities(int runCycles);
+	void drawMenu();
+	void drawMiniMap();
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;

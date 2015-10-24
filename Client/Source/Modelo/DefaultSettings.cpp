@@ -247,5 +247,21 @@ int DefaultSettings::getVelocidadPersonaje	(){
 	return VELOCIDAD_PERSONAJE;
 }
 
+int DefaultSettings::getViewDistance() {
+	return VIEW_DISTANCE;
+}
+
+int DefaultSettings::getAlturaMenuInferior(){
+	return ALTURA_MENU_INFERIOR;
+}
+
+int DefaultSettings::getAlturaMenuSuperior(){
+	return ALTURA_MENU_SUPERIOR;
+}
+
+int DefaultSettings::getAlturaBandaMenu(){
+	return ALTURA_BANDA_MENU;
+}
+
 DefaultSettings::~DefaultSettings() {
 }

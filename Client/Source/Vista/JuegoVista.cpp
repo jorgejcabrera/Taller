@@ -11,6 +11,7 @@ JuegoVista::JuegoVista() {
 	gameSettings = GameSettings::GetInstance();
 	this->offset.first = 0;
 	this->offset.second = 0;
+	this->menuVista = new MenuVista();
 }
 
 void JuegoVista::createView(){
@@ -23,7 +24,13 @@ void JuegoVista::render(int runCycles){
 	this->drawDinamicEntities(runCycles);
 	this->drawStaticEntities(runCycles);
 	this->drawSemiStaticsEntities(runCycles);
+	this->drawMenu();
+	this->drawMiniMap();
 	this->picassoHelper->renderView();
+}
+
+void JuegoVista::drawMenu() {
+	this->menuVista->drawMe();
 }
 
 void JuegoVista::drawIsometricMap(){
@@ -171,6 +178,76 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	}else{
 		this->personajes.insert(make_pair(id,newPersonaje));
 	}
+}
+
+void JuegoVista::drawMiniMap() {
+	this->miniMapVista = new MiniMapVista();
+	//dibujo el minimap
+
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		this->miniMapVista->makeMiniTilePos((*itTiles)->getPosX(), (*itTiles)->getPosY());
+		this->picassoHelper->renderObject(this->miniMapVista->getTilePath(),this->miniMapVista->getTilePosX(),this->miniMapVista->getTilePosY(),this->miniMapVista->getMiniTileSize(),this->miniMapVista->getMiniTileSize());
+		}
+
+	//dibujo las entidades estaticas
+	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
+		pair<int,int>* position;
+		EntidadEstaticaVista* entidad = (*itEstaticos).second;
+		position = entidad->getPosition();
+		int x = position->first;
+		int y =  position->second;
+		this->miniMapVista->makeMiniEntityPos(x,y);
+		this->picassoHelper->renderObject(this->miniMapVista->getEntityPath(),this->miniMapVista->getEntityPosX(),this->miniMapVista->getEntityPosY(),this->miniMapVista->getMiniEntitySize(),this->miniMapVista->getMiniEntitySize());
+	}
+
+	//dibujo las entidades dinamicas
+	pair<int,int> isometricPosition;
+	EntidadDinamicaVista* entidad;
+
+	//deberia dibujar los personajes que son del cliente
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
+		pair<float,float>* screenPosition = (*itDinamicos).second->getScreenPosition();
+		this->miniMapVista->makeMiniCharacterPos(screenPosition->first, screenPosition->second);
+		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
+	}
+	//dibujo los personajes que son del cliente
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+		pair<float,float>* screenPosition = (*itDinamicos).second->getScreenPosition();
+		this->miniMapVista->makeMiniCharacterPos(screenPosition->first, screenPosition->second);
+		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
+	}
+
+/*
+		entidad = (*itDinamicos).second;
+		int offSetX = this->getOffset()->first;
+		int offSetY = this->getOffset()->second;
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											screenPosition->first - entidad->getWidthPixel()/2/*- gameSettings->getTileSize() / 2*/// + offSetX,
+//											screenPosition->second  - entidad->getLengthPixel()/2/* - entidad->getLengthPixel()*/ + offSetY,
+/*											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
+	}
+
+	//dibujo los personajes que son del cliente
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+		pair<float,float>* screenPosition = (*itDinamicos).second->getScreenPosition();
+		entidad = (*itDinamicos).second;
+		int offSetX = this->getOffset()->first;
+		int offSetY = this->getOffset()->second;
+		//cout << "Dibujo los mios en: " << (screenPosition->first - gameSettings->getTileSize() / 2 + offSetX) << " " <<(screenPosition->second + offSetY)<<endl;
+		//cout << "Se esta dibujando en : "<<screenPosition->first<<" "<<screenPosition->second<<endl;
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+//											screenPosition->first - entidad->getWidthPixel()/2/*- gameSettings->getTileSize() / 2*/ //+ offSetX,
+//											screenPosition->second  - entidad->getLengthPixel()/2/* - entidad->getLengthPixel()*/ + offSetY,
+/*											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
+	}
+	/*	pair<float,float>* screenPosition = juego->getProtagonista()->getScreenPosition();
+	this->miniMap->makeMiniCharacterPos(screenPosition->first, screenPosition->second);
+	this->picassoHelper->renderObject(this->miniMap->getCharacterPath(),this->miniMap->getCharacterPosX() , this->miniMap->getCharacterPosY(), this->miniMap->getMiniCharacterSize(), this->miniMap->getMiniCharacterSize());
+*/
 }
 
 map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){

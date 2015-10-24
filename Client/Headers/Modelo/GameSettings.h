@@ -110,6 +110,7 @@ public:
 	int getProtagonistaFramesInFile();
 	int getProtagonistaPixelDimension();
 	int getProtagonistaDelay();
+	int getAlturaMenuInferior();
 
 	//AGREGADO EN CLIENTE UNICAMENTE
 	void setScreenDimension(int width, int heigth);
