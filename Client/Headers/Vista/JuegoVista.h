@@ -66,6 +66,7 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	EntidadDinamicaVista* getEntityById(int id);
 	void setVisibleTile(int x,int y);
+	bool isEntitySeen(pair<int,int>* entityPos);
 	~JuegoVista();
 
 
