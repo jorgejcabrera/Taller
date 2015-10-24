@@ -13,6 +13,7 @@
 #include "../Modelo/DefaultSettings.h"
 #include "GameSettings.h"
 #include "ResourceManager.h"
+#include "PathFinder.h"
 #include <map>
 #include <list>
 

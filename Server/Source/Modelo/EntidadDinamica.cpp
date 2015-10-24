@@ -24,6 +24,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->length = 1;
 	this->owner = "";
 	this->name = nameEntity;
+	this->camino = new list<pair<int,int> >();
 }
 
 void EntidadDinamica::setOwner(string ownerId){
@@ -38,6 +39,17 @@ void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	//TODO: esto no deberia estar en la VISTA nada mas?
 	this->screenPosition.first = x;
 	this->screenPosition.second = y;
+}
+
+void EntidadDinamica::nextPosition(){
+
+	if(! camino->empty()){
+			pair<int,int> nextTile = camino->front();
+			camino->pop_front();
+
+			this->setPosition(nextTile.first,nextTile.second);
+			this->setScreenPosition(nextTile.first,nextTile.second);
+	}
 }
 
 pair<float,float>* EntidadDinamica::getScreenPosition(){
@@ -68,6 +80,15 @@ float EntidadDinamica::distanciaA(float x, float y){
 	float distY = (screenPosition.second - y);
 	float distX = (screenPosition.first - x);
 	return sqrt((distX * distX) +  (distY * distY));
+}
+
+list<pair<int,int> >* EntidadDinamica::getCamino(){
+	return this->camino;
+}
+
+void EntidadDinamica::setCamino(list<pair<int,int> >* caminito){
+	this->camino->clear();
+	this->camino = caminito;
 }
 
 Direccion EntidadDinamica::getDireccionVertical(){
@@ -146,16 +167,21 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 
 void EntidadDinamica::trasladarse(){
 	//TODO porque se llama screenPosition? es de pantalla o es donde se va moviendo?
-	if(distanciaEnX(destinoX) <= vecVelocity.first)
+	if(distanciaEnX(destinoX) <= vecVelocity.first){
 			screenPosition.first = destinoX;
+			//Logger::get()->logDebug("a","b","mira como me ajusto X");
+	}
 
-	if(distanciaEnY(destinoY) <= vecVelocity.second)
+	if(distanciaEnY(destinoY) <= vecVelocity.second){
 			screenPosition.second = destinoY;
+			//Logger::get()->logDebug("a","b","mira como me ajusto Y");
+	}
 
 	if(distanciaEnX(destinoX) <= vecVelocity.first && distanciaEnY(destinoY) <= vecVelocity.first)
 		caminando = false;
 
 	if(caminando){
+		//Logger::get()->logDebug("a","b","mira como camino");
 		if(screenPosition.first > destinoX)
 			screenPosition.first -= vecVelocity.first;
 		if(screenPosition.first < destinoX)

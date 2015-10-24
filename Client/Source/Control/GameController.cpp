@@ -38,7 +38,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
 				id = (*it).first;
 				cartesianPosition = this->moveCharacter((*it).second);
-				cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
+				//cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
 			}
 
 			//creamos el mensaje que vamos a enviar al server

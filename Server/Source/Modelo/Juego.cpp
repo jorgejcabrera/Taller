@@ -71,9 +71,26 @@ void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
 	/*TODO: seteo solo las coordenadas fisicas, antes seteaba las de pantalla tambien,
 	 * revisar si esto no rompe nada ya que las coordenadas de pantalla deberian setearse solo en la vista*/
 	EntidadDinamica *protagonistaToUpdate = this->protagonistas.at(idProtagonista);
-	protagonistaToUpdate->setPosition(x,y);
-	//TODO setScreenPosition puede llegar a traer problemas, antes le pasabamos coordeadas isometricas y ahora cartesianas
-	protagonistaToUpdate->setScreenPosition(x,y);
+
+	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition()->first,
+									  protagonistaToUpdate->getPosition()->second,
+									  x,y,this->mapa,this->resourseManager);
+
+	//calculo el camino minimo para llegar a destino
+	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
+	stringstream ss;
+	for(list<pair<int,int> >::iterator it = caminoMinimo->begin();it != caminoMinimo->end();++it){
+		ss.str("");
+		ss<<(*it).first<<","<<(*it).second<<endl;
+		Logger::get()->logDebug("Juego","setDestinoProtagonista",ss.str());
+	}
+	delete pathF;
+	protagonistaToUpdate->setCamino(caminoMinimo);
+
+	protagonistaToUpdate->nextPosition();
+
+	//TODO aca le tiene que pasar la screen position en isometricas
+	//protagonistaToUpdate->setScreenPosition(x,y);
 }
 
 void Juego::terminarJuego(){
