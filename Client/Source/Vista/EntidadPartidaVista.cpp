@@ -59,3 +59,12 @@ void EntidadPartidaVista::setId(int identifier){
 int EntidadPartidaVista::getId(){
 		return this->id;
 }
+
+void EntidadPartidaVista::setName(string nameEnt){
+	this->name=nameEnt;
+
+}
+
+string EntidadPartidaVista::getName(){
+	return this->name;
+}

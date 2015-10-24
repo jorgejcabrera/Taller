@@ -33,6 +33,7 @@ private:
 	GameSettings* gameSettings;
 	void moveCharacter(int xScreen,int yScreen);
 	pair<int,int> getOffset(int mouseX,int mouseY);
+	void setNextPaths();
 
 public:
 	GameController();

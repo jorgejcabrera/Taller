@@ -68,6 +68,7 @@ public:
 	void setVisibleTile(int x,int y);
 	bool isEntitySeen(pair<int,int>* entityPos);
 	~JuegoVista();
+	EntidadPartidaVista* entityInThisPosition(int x, int y);
 
 
 };

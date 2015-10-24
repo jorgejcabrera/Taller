@@ -54,6 +54,7 @@ int main(int argc, char* argv[]) {
 	server->start((void *) &server);
 	cout << " YA START " <<endl;
 
+
 	bool reiniciar = true;
 	while(true){
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados

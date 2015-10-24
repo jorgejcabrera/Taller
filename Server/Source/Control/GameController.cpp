@@ -56,10 +56,20 @@ list<int> GameController::getEntitiesOfClient(string userName){
 	return idOfEntities;
 }
 
+void GameController::setNextPaths(){
+
+	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
+	for(map<int,EntidadDinamica*>::iterator it= listaPersonajes.begin(); it!=listaPersonajes.end();++it){
+		(*it).second->nextPosition();
+		Logger::get()->logDebug("GameController","setNextPaths","SETEO UN TILE");
+	}
+}
+
 
 void GameController::actualizarJuego(){
 	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
-	juego->actualizarProtagonistas();
+	this->setNextPaths();
+	//juego->actualizarProtagonistas();
 	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
 	//juego->actualizarOffset(offset.first,offset.second);
 }

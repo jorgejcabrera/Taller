@@ -38,7 +38,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
 				id = (*it).first;
 				cartesianPosition = this->moveCharacter((*it).second);
-				cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
+				//cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
 			}
 
 			//creamos el mensaje que vamos a enviar al server
@@ -50,6 +50,18 @@ Message* GameController::getMessageFromEvent(string userId){
 			body.set_y(cartesianPosition.second);
 			message->setContent(body);
 			return message;
+			}
+		}
+
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
+			SDL_GetMouseState(&posMouseX,&posMouseY);
+			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+				pair<int,int>* offset = this->juegoVista->getOffset();
+				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
+				cout << "COORDENADA: x: " << cartesianPosition.first<< " y: "<<cartesianPosition.second<<endl;
+				EntidadPartidaVista* entidad = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
+				cout << "ENTIDAD: "<< entidad->getPathImage()<< " id: "<< entidad->getId()<<endl;
+
 			}
 		}
 
@@ -171,7 +183,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 
 	//TODO aca lo que se tiene que seteear es la proxima posicion de pantalla del personaje
 	//entidad->setNextScreenPosition(isometricPosition);
-	entidad->setScreenPosition(isometricPosition);
+	//entidad->setScreenPosition(isometricPosition);
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	//TODO: Aca deberia actualizar la posicion del protagonsita?
 	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);

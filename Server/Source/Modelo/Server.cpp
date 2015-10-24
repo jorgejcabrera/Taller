@@ -126,8 +126,8 @@ void Server::processReceivedMessages(){
 void Server::notifyClients(){
 	map<int,EntidadDinamica*> protagonistas = this->gController->getJuego()->getProtagonistas();
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
-		if (it->second->isWalking()){
-			Message *messageUpdate = new Message(it->second->getId(), it->second->getScreenPosition()->first, it->second->getScreenPosition()->second);
+		if (it->second->hasToNotify()){
+			Message *messageUpdate = new Message(it->second->getId(), it->second->getPosition()->first, it->second->getPosition()->second);
 			list<Client*> activeClients= getActiveClients();
 			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 				(*clientIterator)->writeMessagesInQueue(messageUpdate);

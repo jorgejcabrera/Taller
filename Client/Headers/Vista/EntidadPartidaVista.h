@@ -24,6 +24,7 @@ protected:
 	string sizeString;
 	string pathImage;
 	int id;
+	string name;
 
 public:
 	EntidadPartidaVista();
@@ -38,6 +39,8 @@ public:
 	pair<int,int>* getPosition();
 	void setId(int identifier);
 	int getId();
+	void setName(string name);
+	string getName();
 
 	/*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 2x2,3x3,4x4,
 	 *ya que el render depende de este factor*/
