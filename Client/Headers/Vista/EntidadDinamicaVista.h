@@ -49,11 +49,17 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 		int frame;
 		int framesInLineFile;
 
-		//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+		/*
+		*Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+		**/
 		int delay;
-		//variable de control para indicar si estoy en medio del periodo de delay
+		/*
+		*variable de control para indicar si estoy en medio del periodo de delay
+		**/
 		bool inDelayPeriod;
-		// indice de segundo del delay por el cual voy
+		/*
+		*indice de segundo del delay por el cual voy
+		**/
 		int delayIndex;
 
 		int getLineSprite(Direccion dir);
@@ -62,9 +68,11 @@ class EntidadDinamicaVista: public EntidadPartidaVista {
 		EntidadDinamicaVista();
 		EntidadDinamicaVista(string myName, float width, float length, int fps);
 		void destruir();
+		/*
+		*seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
+		**/
 		void setFramesInLineFile(int qty);
 		int getFramesInLineFile();
-		void setInitialScreenPosition(float x,float y);
 		int getWidthPixel();
 		int getLengthPixel();
 		SDL_Rect getPositionOfSprite(int runCycles);
