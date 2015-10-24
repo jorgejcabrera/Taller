@@ -124,7 +124,7 @@ pair<int,int>* JuegoVista::getOffset(){
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
 	//TODO falta agregar el offset para dibujar
-	TileVista *newtile = new TileVista(x,y);
+	TileVista* newtile = new TileVista(x,y);
 	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
 	this->tiles.push_back(newtile);
 }
