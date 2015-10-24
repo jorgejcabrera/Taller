@@ -88,7 +88,7 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "tile" ){
 			//Agrego al JuegoVista un nuevo tile
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
-		}else if ( tipoMensaje == "edificios"){
+		}else if ( tipoMensaje == "edificios" || tipoMensaje=="resources"){
 			//Agrego al JuegoVista un nuevo edificio/estatico
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
