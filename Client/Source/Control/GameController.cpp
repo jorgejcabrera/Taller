@@ -76,8 +76,8 @@ JuegoVista* GameController::getJuegoVista(){
 void GameController::actualizarJuego(){
 	//TODO: esto deberia actualizar el juegoVista?
 	//juegoVista->actualizarProtagonista();
-	/*pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
-	juegoVista->actualizarOffset(offset.first,offset.second);*/
+	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
+	juegoVista->actualizarOffset(offset.first,offset.second);
 }
 
 bool GameController::reiniciarJuego(){
@@ -160,13 +160,12 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 		isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
 		isometricPosition.first = isometricPosition.first + offset->first;
 		isometricPosition.second= isometricPosition.second + offset->second;
-		entidad->setScreenPosition(isometricPosition);
 	}else{
 		isometricPosition.first = posMouseX;
 		isometricPosition.second= posMouseY;
-		entidad->setScreenPosition(isometricPosition);
 	}
 
+	entidad->setScreenPosition(isometricPosition);
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	//TODO: Aca deberia actualizar la posicion del protagonsita?
 	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
