@@ -231,7 +231,8 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 	return &this->misPersonajes;
 }
 
-EntidadDinamicaVista* JuegoVista::getEntityById(int id){
+EntidadDinamicaVista* JuegoVista::		//escuchamos eventos y los mandamos al server
+getEntityById(int id){
 	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
 	if(itPersonajes!=this->personajes.end()){
 		return itPersonajes->second;
@@ -256,7 +257,8 @@ EntidadPartidaVista* JuegoVista::entityInThisPosition(int x, int y){
 			//cout << "2- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
 			return (*itDinamicos).second;
 		}
-	}
+	}		//escuchamos eventos y los mandamos al server
+
 
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
 		pair<int,int>* entityPosition = (*itEstaticos).second->getPosition();
@@ -307,6 +309,10 @@ bool JuegoVista::isEntitySeen(pair<int,int>* entityPos, int lenght) {
 		return true;
 	}
 	return false;
+}
+
+void JuegoVista::actualizarProtagonista(){
+	
 }
 
 JuegoVista::~JuegoVista() {

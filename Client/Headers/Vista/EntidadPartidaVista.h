@@ -28,7 +28,6 @@ protected:
 
 public:
 	EntidadPartidaVista();
-	virtual ~EntidadPartidaVista();
 	void destruir();
 	int getWidth();
 	int getLength();
@@ -41,11 +40,13 @@ public:
 	int getId();
 	void setName(string name);
 	string getName();
-
-	/*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 2x2,3x3,4x4,
-	 *ya que el render depende de este factor*/
+	/*
+	*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 1x1,2x2,3x3,
+	*4x4 ya que el render depende de este factor
+	**/
 	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 	void restarSalud();
+	virtual ~EntidadPartidaVista();
 };
 
 } /* namespace std */

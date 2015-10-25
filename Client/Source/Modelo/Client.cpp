@@ -85,7 +85,6 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update"){
-			cout << (*it)->toString()<<endl;
 			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){

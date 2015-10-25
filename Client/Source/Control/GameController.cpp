@@ -88,8 +88,7 @@ JuegoVista* GameController::getJuegoVista(){
 }
 
 void GameController::actualizarJuego(){
-	//TODO: esto deberia actualizar el juegoVista?
-	//juegoVista->actualizarProtagonista();
+	juegoVista->actualizarProtagonista();
 	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
 	juegoVista->actualizarOffset(offset.first,offset.second);
 }
@@ -173,6 +172,9 @@ void GameController::updatePostion(int id,int x,int y){
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
 
 	entity->setPosition(x,y);
+	pair<int,int> destinity = this->utils->GetInstance()->getIsometricPosition(x,y);
+	//ojo en realidad esto setea el destino!
+	entity->setScreenPosition(destinity.first,destinity.second);
 
 	ss.str("");
 	ss << "La posicion actualizada de: "<< id <<" es "<<x<<" "<<y;

@@ -58,11 +58,6 @@ SDL_Rect EntidadDinamicaVista::getPositionOfSprite(int ciclos){
 	return srcrect;
 }
 
-/*void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
-	this->currentScreenPosition.first = x;
-	this->currentScreenPosition.second = y;
-}*/
-
 void EntidadDinamicaVista::setFramesInLineFile(int qty){
 	this->framesInLineFile = qty;
 }
@@ -83,12 +78,6 @@ int EntidadDinamicaVista::getLengthPixel(){
 	return this->lengthPixel;
 }
 
-Direccion EntidadDinamicaVista::getDireccion(){
-	//TODO: decidir la direccion en base a lo que dice el mensaje
-	Direccion dir = Sindireccion;
-	return dir;
-}
-
 int EntidadDinamicaVista::getLineSprite(Direccion dir){
 	switch(dir){
 	case Norte: return 1; break;
@@ -103,11 +92,22 @@ int EntidadDinamicaVista::getLineSprite(Direccion dir){
 	}
 }
 
-/*void EntidadDinamicaVista::setScreenPosition(pair<float,float> screenPosition){
-	this->currentScreenPosition = screenPosition;
+void EntidadDinamicaVista::setScreenPosition(float x,float y){
+	this->destinoX = x;
+	this->destinoY = y;
+
+	//calcula la velocidad en cada eje para ir al destino
+	float distanciaDest = distanciaA(x,y);
+	if(distanciaDest > 0) this->caminando = true;
+
+	float seno = distanciaEnY(y) / distanciaDest;
+	float coseno = distanciaEnX(x) / distanciaDest;
+
+	this->vecVelocity.first = velocidad * coseno;
+	this->vecVelocity.second = velocidad * seno;
 }
 
-pair<float,float>* EntidadDinamicaVista::getScreenPosition(){
+/*pair<float,float>* EntidadDinamicaVista::getScreenPosition(){
 	return &this->currentScreenPosition;
 }
 
@@ -123,6 +123,67 @@ void EntidadDinamicaVista::updateScreenPosition(){
 	this->currentScreenPosition = this->nextScreenPosition;
 }*/
 
+float EntidadDinamicaVista::distanciaA(float x, float y){
+	float distY = (screenPosition.second - y);
+	float distX = (screenPosition.first - x);
+	return sqrt((distX * distX) +  (distY * distY));
+}
+
+float EntidadDinamicaVista::distanciaEnY(float y){
+	float res;
+	if(screenPosition.second > y) res = screenPosition.second - y;
+	else res = y - screenPosition.second;
+	return res;
+}
+
+float EntidadDinamicaVista::distanciaEnX(float x){
+	float res;
+	if(screenPosition.first > x) res = screenPosition.first - x;
+	else res = x - screenPosition.first;
+	return res;
+}
+
+Direccion EntidadDinamicaVista::getDireccionHorizontal(){
+	Direccion dHorizontal = Sindireccion;
+	if(caminando && (vecVelocity.first / this->velocidad > 0.38)){
+		if(screenPosition.first > destinoX) dHorizontal = Oeste;
+		else dHorizontal = Este;
+	}
+	return dHorizontal;
+}
+Direccion EntidadDinamicaVista::getDireccionVertical(){
+	//para que la direccion sea norte/sur el seno del angulo tiene que ser mayor a 0.38
+	// equivale a un angulo de 22,5 grados o mas
+
+	Direccion dVertical = Sindireccion;
+	if(caminando && (vecVelocity.second / velocidad > 0.38 )){
+		if(screenPosition.second > destinoY) dVertical = Norte;
+		else dVertical = Sur;
+	}
+	return dVertical;
+}
+
+
+Direccion EntidadDinamicaVista::getDireccion(){
+	Direccion dir = Sindireccion;
+	Direccion dVertical = getDireccionVertical();
+	Direccion dHorizontal = getDireccionHorizontal();
+
+	switch(dVertical){
+	case Sindireccion: dir = dHorizontal; break;
+	case Norte: switch(dHorizontal){
+				case Sindireccion: dir = Norte;break;
+				case Este: dir = Noreste;break;
+				case Oeste: dir = Noroeste;
+				} break;
+	case Sur: switch(dHorizontal){
+			  case Sindireccion: dir = Sur;break;
+			  case Este: dir = Sureste;break;
+			  case Oeste: dir = Suroeste;break;
+			  }
+	}
+	return dir;
+}
 
 int EntidadDinamicaVista::getFramesPerSecond(){
 	return this->framesPerSecond;
