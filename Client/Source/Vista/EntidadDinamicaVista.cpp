@@ -103,7 +103,7 @@ int EntidadDinamicaVista::getLineSprite(Direccion dir){
 	}
 }
 
-void EntidadDinamicaVista::setScreenPosition(pair<float,float> screenPosition){
+/*void EntidadDinamicaVista::setScreenPosition(pair<float,float> screenPosition){
 	this->currentScreenPosition = screenPosition;
 }
 
@@ -121,7 +121,7 @@ pair<float,float>* EntidadDinamicaVista::getNextScreenPosition(){
 
 void EntidadDinamicaVista::updateScreenPosition(){
 	this->currentScreenPosition = this->nextScreenPosition;
-}
+}*/
 
 
 int EntidadDinamicaVista::getFramesPerSecond(){
@@ -141,8 +141,7 @@ void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, 
 
 string EntidadDinamicaVista::toString(){
 	stringstream ss;
-	ss << "name: "<<this->name <<"; screenPosition: ["<<currentScreenPosition.first
-	<<";"<<currentScreenPosition.second<<"]"<<"; destino: ["<<this->destinoX<<";"<<this->destinoY<<"];";
+	ss << "name: "<< this->name <<"; position:["<< this->position.first<<";"<<this->position.second<<"]"<<"; destino: ["<<this->destinoX<<";"<<this->destinoY<<"];";
 	return ss.str();
 }
 

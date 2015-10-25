@@ -38,10 +38,8 @@ Message* GameController::getMessageFromEvent(string userId){
 			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
 				id = (*it).first;
 				cartesianPosition = this->moveCharacter((*it).second);
-				//cout << "La nueva posicion es: "<<cartesianPosition.first<<";"<<cartesianPosition.second<<endl;
 			}
 
-			//creamos el mensaje que vamos a enviar al server
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(id);
@@ -58,9 +56,9 @@ Message* GameController::getMessageFromEvent(string userId){
 			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				pair<int,int>* offset = this->juegoVista->getOffset();
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
-				cout << "COORDENADA: x: " << cartesianPosition.first<< " y: "<<cartesianPosition.second<<endl;
+				//cout << "COORDENADA: x: " << cartesianPosition.first<< " y: "<<cartesianPosition.second<<endl;
 				EntidadPartidaVista* entidad = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
-				cout << "ENTIDAD: "<< entidad->getPathImage()<< " id: "<< entidad->getId()<<endl;
+				//cout << "ENTIDAD: "<< entidad->getPathImage()<< " id: "<< entidad->getId()<<endl;
 
 			}
 		}
@@ -152,26 +150,21 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	pair<int,int>* offset = this->juegoVista->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
-	bool correctPosition = false;
 
 	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
 	if( cartesianPosition.first < 0 ){
 		cartesianPosition.first = 0;
-		correctPosition = true;
 	}else if( cartesianPosition.first >= gameSettings->getMapWidth()){
 		cartesianPosition.first = gameSettings->getMapWidth() - 1 ;
-		correctPosition = true;
 	}
 	if( cartesianPosition.second < 0){
 		cartesianPosition.second = 0;
-		correctPosition = true;
 	}else if( cartesianPosition.second >= gameSettings->getMapHeight()){
 		cartesianPosition.second = gameSettings->getMapHeight() - 1;
-		correctPosition = true;
 	}
 
 	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
-	pair<int,int> isometricPosition;
+	/*pair<int,int> isometricPosition;
 	if(correctPosition){
 		isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
 		isometricPosition.first = isometricPosition.first + offset->first;
@@ -179,7 +172,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	}else{
 		isometricPosition.first = posMouseX;
 		isometricPosition.second= posMouseY;
-	}
+	}*/
 
 	//TODO aca lo que se tiene que seteear es la proxima posicion de pantalla del personaje
 	//entidad->setNextScreenPosition(isometricPosition);
