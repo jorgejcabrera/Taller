@@ -72,7 +72,6 @@ bool Client::isConected(){
 }
 
 void Client::processReceivedMessages(){
-	cout<<"un ciclo"<<endl;
 	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
 	for(list<Message*>::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
@@ -84,29 +83,26 @@ void Client::processReceivedMessages(){
 
 		}else if ( tipoMensaje == "config" ){
 			saveEntitiesConfig(*it);
+
 		}else if ( tipoMensaje == "update"){
 			cout << (*it)->toString()<<endl;
 			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
-			cout<<"me llega esto: "<<(*it)->getPositionX()<<","<<(*it)->getPositionY()<<endl;
+
 		}else if ( tipoMensaje == "tile" ){
-			//Agrego al JuegoVista un nuevo tile
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
-		}else if ( tipoMensaje == "edificios" || tipoMensaje=="resources"){
-			//Agrego al JuegoVista un nuevo edificio/estatico
+
+		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources"){
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY());
 		}else if ( tipoMensaje == "semiestaticos"){
-			//Agrego al JuegoVista un nuevo semiestatico/molino
 			this->gController->getJuegoVista()->addSemiEstaticEntity((*it)->getId(),
 																	(*it)->getNombre(),
 																	(*it)->getPositionX(),
 																	(*it)->getPositionY());
 		}else if ( tipoMensaje == "personajes"){
-			cout << (*it)->toString()<<endl;
-			//Agrego al JuegoVista personajes/dinamicos
-			bool imTheOwner= ((*it)->getOwner()==this->userName);
+			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
 			this->gController->getJuegoVista()->addDinamicEntity((*it)->getId(),
 																(*it)->getNombre(),
@@ -116,13 +112,17 @@ void Client::processReceivedMessages(){
 																(*it)->getFps());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getId());
+
 		}else if ( tipoMensaje == "reconnect"){
 			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getEntityById((*it)->getId());
 			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
+
 		}else if ( tipoMensaje == "ping"){
 			this->lastReportedServer = time(0);								//servidor avisa que sigue arriba
+
 		}else if (tipoMensaje == "fog"){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
+
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
@@ -175,8 +175,7 @@ void Client::verifyServerAlive(){
 	if(isConected()){
 		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()+5)){
 			this->status = DISCONECTED;
-			//TODO mostrar un mejor mensaje cuando pierdo conectividad
-			Logger::get()->logDebug("Client","verifyServerAlive","SERVIDOR DESCONECTADO");
+			Logger::get()->logDebug("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
 		}
 	}
 }
@@ -186,18 +185,18 @@ Client::~Client() {
 	close(this->sockfd);
 }
 
-//TODO aca mando el nombre de usuario, cambiarlo para que acepte ingresar por teclado
+//TODO usar un menu de sdl
 void Client::notifyUserName(){
-	cout << "Ingrese un nombre de usuario";
+	cout << "Ingrese un nombre de usuario ";
 	bool valid = false;
 	while(!valid){
 		getline (std::cin,this->userName);
 		this->writeThread->writeMessageNow(new Message(this->userName));
-		Message *response = this->readThread->readMessageNow();
+		Message* response = this->readThread->readMessageNow();
 		if(response->getNombre()=="OK"){
 			valid=true;
 		}else{
-			cout<<"El nombre de usuario" << this->userName <<" ya está en uso, por favor ingrese otro"<<endl;
+			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro"<<endl;
 		}
 	}
 

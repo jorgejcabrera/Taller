@@ -140,7 +140,6 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	if ((posicionY >= gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
 		offSetY -= gameSettings->getVelocidadScrollDos();
 	}
-	//cout << "1.1: "<<gameSettings->getMargenInferiorUno()<< "1.2: "<<gameSettings->getMargenInferiorDos()<< " 2.1: " <<gameSettings->getMargenSuperiorUno() << " 2.2: " << gameSettings->getMargenSuperiorDos()<<endl;
 	pair<int,int> curretOffset;
 	curretOffset.first = offSetX;
 	curretOffset.second = offSetY;
@@ -163,48 +162,19 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 		cartesianPosition.second = gameSettings->getMapHeight() - 1;
 	}
 
-	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
-	/*pair<int,int> isometricPosition;
-	if(correctPosition){
-		isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-		isometricPosition.first = isometricPosition.first + offset->first;
-		isometricPosition.second= isometricPosition.second + offset->second;
-	}else{
-		isometricPosition.first = posMouseX;
-		isometricPosition.second= posMouseY;
-	}*/
-
-	//TODO aca lo que se tiene que seteear es la proxima posicion de pantalla del personaje
-	//entidad->setNextScreenPosition(isometricPosition);
-	//entidad->setScreenPosition(isometricPosition);
-	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
-	//TODO: Aca deberia actualizar la posicion del protagonsita?
-	//juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
 	return cartesianPosition;
 }
 
 void GameController::updatePostion(int id,int x,int y){
 	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+
 	stringstream ss;
 	ss << "La posicion vieja de: "<< id <<" es "<<entity->getPosition()->first<<" "<<entity->getPosition()->first;
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
 
 	entity->setPosition(x,y);
 
-	//cuando le llega la novedad del servidor de actualizarse cambia la posicion de pantalla a dibujar
-	//entity->updateScreenPosition();
-
-	//esto no se si va aca
-	/*
-	//paso x y a isometricas
-	pair<float,float> isometricPos = this->utils->getIsometricPosition(x,y);
-	pair<int,int>* offset = this->juegoVista->getOffset();
-	//le sumo el offset a la posicion isometrica
-	isometricPos.first = isometricPos.first + offset->first;
-	isometricPos.second = isometricPos.second + offset->second;
-	entity->setScreenPosition(isometricPos);
-	*/
-
+	ss.str("");
 	ss << "La posicion actualizada de: "<< id <<" es "<<x<<" "<<y;
 	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
 
@@ -212,7 +182,6 @@ void GameController::updatePostion(int id,int x,int y){
 
 void GameController::delay(){
 	this->runCycles++;
-
 	SDL_Delay(50); // para que sean 50 frames x segundos
 	//}
 }

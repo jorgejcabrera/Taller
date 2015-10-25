@@ -17,6 +17,10 @@ Logger::Logger() {
 	this->logToError.open("log_error.txt",ios::app);
 	if(!this->logToDebug.is_open())
 		cout << "[Logger] Logger: Can't open log_error.txt"<<endl;
+
+	this->logToDebug.open("log_info.txt",ios::app);
+	if(!this->logToDebug.is_open())
+		cout << "[Logger] Logger: Can't open log_error.txt"<<endl;
 }
 
 Logger* Logger::get(){
@@ -27,23 +31,25 @@ Logger* Logger::get(){
 }
 
 void Logger::logDebug(string className, string method,string message){
-	time_t     now = time(0);
-	struct tm  tstruct;
-	char       time[80];
-	tstruct = *localtime(&now);
-	strftime(time, sizeof(time), "%m-%d-%X", &tstruct);
-
-	logToDebug <<"[" << time <<"] "<<"["<<className<<"]"<<" "<<"["<<method<<"]"<<" :"<<message << std::endl;
+	logToDebug <<"[" <<  getTimeStamp() <<"] "<<"["<<className<<"]"<<" "<<"["<<method<<"]"<<" :"<<message << std::endl;
 }
 
 void Logger::logError(string className, string method,string message){
+	logToError << "[" <<  getTimeStamp() <<"] "<<"["<<className<<"]"<<" "<<"["<<method<<"]"<<" :"<<message << std::endl;
+}
+
+void Logger::logInfo(string className, string method, string message){
+	logToInfo << "[" <<  getTimeStamp() <<"] "<<"["<<className<<"]"<<" "<<"["<<method<<"]"<<" :"<<message << std::endl;
+}
+
+string Logger::getTimeStamp(){
 	time_t     now = time(0);
 	struct tm  tstruct;
 	char       time[80];
 	tstruct = *localtime(&now);
 	strftime(time, sizeof(time), "%m-%d-%X", &tstruct);
-
-	logToError << "[" << time <<"] "<<"["<<className<<"]"<<" "<<"["<<method<<"]"<<" :"<<message << std::endl;
+	std::string stringTime(time);
+	return stringTime;
 }
 
 Logger::~Logger() {

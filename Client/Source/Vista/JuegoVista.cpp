@@ -66,7 +66,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 	pair<int,int> isometricPosition;
 	EntidadDinamicaVista* entidad;
 
-	//deberia dibujar los personajes que son del cliente
+	//personajes que no son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		entidad = (*itDinamicos).second;
@@ -81,7 +81,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 											entidad->getPositionOfSprite(runCycles));
 	}
 
-	//dibujo los personajes que son del cliente
+	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		entidad = (*itDinamicos).second;
@@ -171,12 +171,6 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newPersonaje->setId(id);
-
-	/*pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(newPersonaje);			//paso la posicion cartesiana a isometrica
-	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
-	isometricPosition.first = isometricPosition.first + gameSettings->getTileSize() + this->getOffset()->first;		//la primera vez que creamos la entidad tenemos que centrarla
-	isometricPosition.second = isometricPosition.second + newPersonaje->getLengthPixel()/2 + this->offset.second;
-	newPersonaje->setScreenPosition(isometricPosition);*/
 
 	if(imTheOwner){
 		this->misPersonajes.insert(make_pair(id,newPersonaje));
