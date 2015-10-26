@@ -18,6 +18,8 @@ private:
 	int miniTilePosX;
 	int miniTilePosY;
 	string miniTilePath;
+	string miniUnseenTilePath;
+	string miniFoggedTilePath;
 	int alturaMenu;
 	int diagonal;
 	int offsetY ;
@@ -37,7 +39,9 @@ public:
 	MiniMapVista();
 	virtual ~MiniMapVista();
 	void makeMiniTilePos(int posX, int posY);
-	string getTilePath();
+	string getMiniTilePath();
+	string getMiniUnseenTilePath();
+	string getMiniFoggedTilePath();
 	int getTilePosX();
 	int getTilePosY();
 	int getMiniTileSize();
