@@ -83,11 +83,10 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
-		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		entidad = (*itDinamicos).second;
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
-		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
+		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
 		
 		if( entidad->isWalking() ){
 			//do{
