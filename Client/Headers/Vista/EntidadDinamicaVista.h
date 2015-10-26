@@ -85,6 +85,7 @@ public:
 	void setDelay(int delayFrames);
 	string toString();
 	void setScreenPosition(float x,float y);
+	pair<float,float> getScreenPosition();
 	pair<int,int>* getPosition();
 	Direccion getDireccion();
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);

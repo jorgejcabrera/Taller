@@ -92,6 +92,9 @@ int EntidadDinamicaVista::getLineSprite(Direccion dir){
 	}
 }
 
+pair<float,float> EntidadDinamicaVista::getScreenPosition(){
+	return this->screenPosition;
+}
 void EntidadDinamicaVista::setScreenPosition(float x,float y){
 	this->destinoX = x;
 	this->destinoY = y;

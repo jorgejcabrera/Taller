@@ -91,14 +91,16 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		
 		if( entidad->isWalking() ){
 			do{
-				//TODO: aca deberia ir actualizando de a pequeños tramos el screenPosition mientras screen position sea distinto
-				//del destino al que queria llegar.
+				//TODO: aca deberia ir actualizando de a pequeños tramos el screenPosition mientras screen position
+				//sea distintodel destino al que queria llegar.
+				//entidad->trasladarse();
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
 													gameSettings->getTileSize(),
 													gameSettings->getTileSize(),
 													entidad->getPositionOfSprite(runCycles));
+				//screenPosition = entidad->getScreenPosition();
 				entidad->stopWalk();
 			}while( entidad->isWalking() );
 		}else{
