@@ -107,22 +107,6 @@ void EntidadDinamicaVista::setScreenPosition(float x,float y){
 	this->vecVelocity.second = velocidad * seno;
 }
 
-/*pair<float,float>* EntidadDinamicaVista::getScreenPosition(){
-	return &this->currentScreenPosition;
-}
-
-void EntidadDinamicaVista::setNextScreenPosition(pair<float,float> nextScreenPosition){
-	this->nextScreenPosition = nextScreenPosition;
-}
-
-pair<float,float>* EntidadDinamicaVista::getNextScreenPosition(){
-	return &this->nextScreenPosition;
-}
-
-void EntidadDinamicaVista::updateScreenPosition(){
-	this->currentScreenPosition = this->nextScreenPosition;
-}*/
-
 float EntidadDinamicaVista::distanciaA(float x, float y){
 	float distY = (screenPosition.second - y);
 	float distX = (screenPosition.first - x);
@@ -163,7 +147,6 @@ Direccion EntidadDinamicaVista::getDireccionVertical(){
 	return dVertical;
 }
 
-
 Direccion EntidadDinamicaVista::getDireccion(){
 	Direccion dir = Sindireccion;
 	Direccion dVertical = getDireccionVertical();
@@ -184,6 +167,42 @@ Direccion EntidadDinamicaVista::getDireccion(){
 	}
 	return dir;
 }
+
+void EntidadDinamicaVista::walk(){
+	this->caminando = true;
+}
+
+void EntidadDinamicaVista::stopWalk(){
+	this->caminando = false;
+}
+
+bool EntidadDinamicaVista::isWalking(){
+	return caminando;
+}
+
+void EntidadDinamicaVista::trasladarse(){
+	if(distanciaEnX(destinoX) <= vecVelocity.first)
+			screenPosition.first = destinoX;
+
+	if(distanciaEnY(destinoY) <= vecVelocity.second)
+			screenPosition.second = destinoY;
+
+	if(distanciaEnX(destinoX) <= vecVelocity.first && distanciaEnY(destinoY) <= vecVelocity.first)
+		caminando = false;
+
+	if(caminando){
+		if(screenPosition.first > destinoX)
+			screenPosition.first -= vecVelocity.first;
+		if(screenPosition.first < destinoX)
+			screenPosition.first += vecVelocity.first;
+		if(screenPosition.second > destinoY)
+			screenPosition.second -= vecVelocity.second;
+		if(screenPosition.second < destinoY)
+			screenPosition.second += vecVelocity.second;
+	}
+}
+
+
 
 int EntidadDinamicaVista::getFramesPerSecond(){
 	return this->framesPerSecond;

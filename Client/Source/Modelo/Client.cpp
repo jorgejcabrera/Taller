@@ -85,7 +85,7 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update"){
-			this->gController->updatePostion((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			this->gController->updatePosition((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());

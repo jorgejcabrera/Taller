@@ -18,7 +18,7 @@ Logger::Logger() {
 	if(!this->logToDebug.is_open())
 		cout << "[Logger] Logger: Can't open log_error.txt"<<endl;
 
-	this->logToDebug.open("log_info.txt",ios::app);
+	this->logToInfo.open("log_info.txt",ios::app);
 	if(!this->logToDebug.is_open())
 		cout << "[Logger] Logger: Can't open log_error.txt"<<endl;
 }

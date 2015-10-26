@@ -18,6 +18,7 @@ void MessageSocketWriter::writeMessage(Message *msg){
 }
 
 int MessageSocketWriter::run(void* data){
+	Logger::get()->logInfo("MessageSocketWriter","run","running thread client writer");
 	while(this->isAlive){
 		while(!this->queue->isEmpty()){
 			Message* msg = ((MessageSocketWriter*)data)->queue->pullTail();
@@ -36,7 +37,7 @@ void MessageSocketWriter::stopWrite(){
 //Este metodo se usa para notificar el nombre de usuario que tiene que ser en el momento, no puede seguir el ciclo normal
 void MessageSocketWriter::writeMessageNow(Message *msg){
 	this->socket->writeMessage(msg);
-	Logger::get()->logDebug("MessageSocketWriter","writeMessageNow",msg->toString());
+	Logger::get()->logInfo("MessageSocketWriter","writeMessageNow",msg->toString());
 }
 
 MessageSocketWriter::~MessageSocketWriter() {

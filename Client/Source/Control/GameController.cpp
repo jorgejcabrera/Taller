@@ -88,7 +88,7 @@ JuegoVista* GameController::getJuegoVista(){
 }
 
 void GameController::actualizarJuego(){
-	juegoVista->actualizarProtagonista();
+	//juegoVista->actualizarProtagonista();
 	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
 	juegoVista->actualizarOffset(offset.first,offset.second);
 }
@@ -164,22 +164,12 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	return cartesianPosition;
 }
 
-void GameController::updatePostion(int id,int x,int y){
+void GameController::updatePosition(int id,int x,int y){
 	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
-
-	stringstream ss;
-	ss << "La posicion vieja de: "<< id <<" es "<<entity->getPosition()->first<<" "<<entity->getPosition()->first;
-	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
-
 	entity->setPosition(x,y);
 	pair<int,int> destinity = this->utils->GetInstance()->getIsometricPosition(x,y);
-	//ojo en realidad esto setea el destino!
 	entity->setScreenPosition(destinity.first,destinity.second);
-
-	ss.str("");
-	ss << "La posicion actualizada de: "<< id <<" es "<<x<<" "<<y;
-	Logger::get()->get()->logDebug("GameController","updatePostion",ss.str());
-
+	entity->walk();
 }
 
 void GameController::delay(){

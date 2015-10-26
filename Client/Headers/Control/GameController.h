@@ -53,7 +53,7 @@ public:
 	/*
 	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
 	**/
-	void updatePostion(int id,int x,int y);
+	void updatePosition(int id,int x,int y);
 	
 	void render();
 	

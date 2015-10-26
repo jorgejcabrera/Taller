@@ -85,13 +85,14 @@ public:
 	void setDelay(int delayFrames);
 	string toString();
 	void setScreenPosition(float x,float y);
-	/*pair<float,float>* getScreenPosition();
-	void setNextScreenPosition(pair<float,float> nextScreenPosition);
-	pair<float,float>* getNextScreenPosition();*/
 	pair<int,int>* getPosition();
 	Direccion getDireccion();
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
 	string getName();
+	void trasladarse();
+	void walk();
+	void stopWalk();
+	bool isWalking();
 	virtual ~EntidadDinamicaVista();
 
 };
