@@ -90,19 +90,19 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
 		
 		if( entidad->isWalking() ){
-			do{
+			//do{
 				//TODO: aca deberia ir actualizando de a pequeños tramos el screenPosition mientras screen position
 				//sea distintodel destino al que queria llegar.
-				//entidad->trasladarse();
+				entidad->trasladarse();
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
 													gameSettings->getTileSize(),
 													gameSettings->getTileSize(),
 													entidad->getPositionOfSprite(runCycles));
-				//screenPosition = entidad->getScreenPosition();
-				entidad->stopWalk();
-			}while( entidad->isWalking() );
+				screenPosition = entidad->getScreenPosition();
+				//entidad->stopWalk();
+			//}while( entidad->isWalking() );
 		}else{
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
 												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
@@ -180,6 +180,9 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	//seteo atributos
 	newPersonaje->setName(type);
 	newPersonaje->setPosition(x,y);
+	//agrego la posicion inicial de pantalla
+	pair<float,float> initialScreenPos = UtilsController::GetInstance()->getIsometricPosition(x,y);
+	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 
 	if(active<0){
