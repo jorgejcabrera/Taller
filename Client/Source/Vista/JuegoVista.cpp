@@ -204,7 +204,7 @@ void JuegoVista::drawMiniMap() {
 	//dibujo el minimap
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
 		this->miniMapVista->makeMiniTilePos((*itTiles)->getPosX(), (*itTiles)->getPosY());
-		this->picassoHelper->renderObject(	this->miniMapVista->getTilePath(),
+		this->picassoHelper->renderObject(	this->miniMapVista->getMiniTilePath(),
 											this->miniMapVista->getTilePosX(),
 											this->miniMapVista->getTilePosY(),
 											this->miniMapVista->getMiniTileSize(),
@@ -244,6 +244,24 @@ void JuegoVista::drawMiniMap() {
 		this->miniMapVista->makeMiniCharacterPos(screenPosition.first, screenPosition.second);
 		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
 	}
+
+	list<pair<int,int> > unseenTiles;
+		for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+			if (!(*itTiles)->getSeen()) {
+				unseenTiles.push_front(make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY()));
+			}
+		}
+
+		for(list<pair<int,int> >::iterator it = unseenTiles.begin(); it!=unseenTiles.end(); ++it){
+			this->miniMapVista->makeMiniTilePos((*it).first, (*it).second);
+					this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
+														this->miniMapVista->getTilePosX(),
+														this->miniMapVista->getTilePosY(),
+														this->miniMapVista->getMiniTileSize(),
+														this->miniMapVista->getMiniTileSize());
+		}
+
+
 }
 
 map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
