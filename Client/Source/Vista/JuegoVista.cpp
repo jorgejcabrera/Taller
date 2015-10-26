@@ -73,12 +73,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		/*this->picassoHelper->renderObject(	entidad->getPathImage(),
-											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-											screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-											gameSettings->getTileSize(),
-											gameSettings->getTileSize(),
-											entidad->getPositionOfSprite(runCycles));*/
+		
 		if( entidad->isWalking() ){
 			entidad->trasladarse();
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
