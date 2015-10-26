@@ -109,20 +109,12 @@ void EntidadDinamicaVista::setScreenPosition(float x,float y){
 	float distanciaDest = distanciaA(x,y);
 	if(distanciaDest > 0) this->caminando = true;
 	else this->caminando = false;
-	cout<<"caminando: "<<this->caminando<<endl;
 
 	float seno = distanciaEnY(y) / distanciaDest;
 	float coseno = distanciaEnX(x) / distanciaDest;
 
-	cout<<"coseno:"<<coseno<<endl;
-	cout<<"seno: "<<seno<<endl;
-
 	this->vecVelocity.first = velocidad * coseno;
 	this->vecVelocity.second = velocidad * seno;
-
-	cout<<"velocidad"<<velocidad<<endl;
-	cout<<"VelX: "<<vecVelocity.first<<endl;
-	cout<<"vely: "<<vecVelocity.second<<endl;
 }
 
 float EntidadDinamicaVista::distanciaA(float x, float y){
@@ -204,10 +196,6 @@ void EntidadDinamicaVista::setPosition(int x,int y){
 }
 
 void EntidadDinamicaVista::trasladarse(){
-	//cout<<"se translada INI"<<endl;
-	//cout<<"screenP inicial"<<screenPosition.first<<","<<screenPosition.second<<endl;
-	//cout<<"destino: "<<destinoX<<","<<destinoY<<endl;
-	//cout<<"velocidad"<<vecVelocity.first<<","<<vecVelocity.second<<endl;
 
 	if(distanciaEnX(destinoX) <= vecVelocity.first)
 			screenPosition.first = destinoX;
@@ -228,8 +216,6 @@ void EntidadDinamicaVista::trasladarse(){
 		if(screenPosition.second < destinoY)
 			screenPosition.second += vecVelocity.second;
 	}
-
-	//cout<<"screenP final"<<screenPosition.first<<","<<screenPosition.second<<endl;
 }
 
 
