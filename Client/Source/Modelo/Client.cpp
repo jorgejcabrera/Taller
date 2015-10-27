@@ -200,8 +200,8 @@ void Client::notifyUserName(){
 Client::~Client() {
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending
 	close(this->sockfd);
-	this->writeThread->~MessageSocketWriter();
-	this->readThread->~MessageSocketReader();
-	delete writeThread;
-	delete readThread;
+	//this->writeThread->~MessageSocketWriter();
+	//this->readThread->~MessageSocketReader();
+	//delete writeThread;
+	//delete readThread;
 }
