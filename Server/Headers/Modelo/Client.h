@@ -29,7 +29,6 @@ class Client {
 	int status;
 public:
 	Client(int identifier, SocketQueue *queueUnique);
-	~Client();
 	void writeMessagesInQueue(list<Message*> messagesList);
 	void writeMessagesInQueue(Message* message);
 	void startCommunication();
@@ -42,8 +41,12 @@ public:
 	int getTimeSinceLastReport();
 	void disconect();
 	int getStatus();
-	//agrega los nuevos tiles en la lista de tiles vistos, y luego los devuelve
+	/*
+	*agrega los nuevos tiles en la lista de tiles vistos, y luego los devuelve
+	* */
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
+	~Client();
+
 };
 
 #endif /* SOURCE_MODELO_CLIENTHANDLER_H_ */
