@@ -54,7 +54,8 @@ public:
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
-
+	void setAsNewPath(bool value);
+	bool isNewPath();
 	void setOwner(string userName);
 	string getOwner();
 	void pingMessage(string nombre);

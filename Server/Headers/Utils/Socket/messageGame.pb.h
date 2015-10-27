@@ -199,6 +199,13 @@ class msg_game : public ::google::protobuf::Message {
   inline ::std::string* release_owner();
   inline void set_allocated_owner(::std::string* owner);
 
+  // optional bool newPath = 14;
+  inline bool has_newpath() const;
+  inline void clear_newpath();
+  static const int kNewPathFieldNumber = 14;
+  inline bool newpath() const;
+  inline void set_newpath(bool value);
+
   // @@protoc_insertion_point(class_scope:msg_game)
  private:
   inline void set_has_id();
@@ -227,6 +234,8 @@ class msg_game : public ::google::protobuf::Message {
   inline void clear_has_pixels_dimension();
   inline void set_has_owner();
   inline void clear_has_owner();
+  inline void set_has_newpath();
+  inline void clear_has_newpath();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -245,6 +254,7 @@ class msg_game : public ::google::protobuf::Message {
   ::google::protobuf::int32 total_frames_line_;
   ::std::string* owner_;
   ::google::protobuf::int32 pixels_dimension_;
+  bool newpath_;
   friend void  protobuf_AddDesc_messageGame_2eproto();
   friend void protobuf_AssignDesc_messageGame_2eproto();
   friend void protobuf_ShutdownFile_messageGame_2eproto();
@@ -777,6 +787,30 @@ inline void msg_game::set_allocated_owner(::std::string* owner) {
     owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:msg_game.owner)
+}
+
+// optional bool newPath = 14;
+inline bool msg_game::has_newpath() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void msg_game::set_has_newpath() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void msg_game::clear_has_newpath() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void msg_game::clear_newpath() {
+  newpath_ = false;
+  clear_has_newpath();
+}
+inline bool msg_game::newpath() const {
+  // @@protoc_insertion_point(field_get:msg_game.newPath)
+  return newpath_;
+}
+inline void msg_game::set_newpath(bool value) {
+  set_has_newpath();
+  newpath_ = value;
+  // @@protoc_insertion_point(field_set:msg_game.newPath)
 }
 
 

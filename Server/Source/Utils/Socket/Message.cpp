@@ -196,6 +196,14 @@ string Message::getOwner(){
 	return this->msg.owner();
 }
 
+void Message::setAsNewPath(bool value){
+	this->msg.set_newpath(value);
+}
+
+bool Message::isNewPath(){
+	this->msg.newpath();
+}
+
 void Message::activeTile( int x, int y) {
 	this->msg.set_x(x);
 	this->msg.set_y(y);

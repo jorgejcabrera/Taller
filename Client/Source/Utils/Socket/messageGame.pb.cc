@@ -4,6 +4,7 @@
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
 #include "../../../Headers/Utils/Socket/messageGame.pb.h"
 
+
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
@@ -32,7 +33,7 @@ void protobuf_AssignDesc_messageGame_2eproto() {
       "messageGame.proto");
   GOOGLE_CHECK(file != NULL);
   msg_game_descriptor_ = file->message_type(0);
-  static const int msg_game_offsets_[13] = {
+  static const int msg_game_offsets_[14] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, tipo_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, x_),
@@ -46,6 +47,7 @@ void protobuf_AssignDesc_messageGame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, total_frames_line_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, pixels_dimension_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, owner_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, newpath_),
   };
   msg_game_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -88,13 +90,13 @@ void protobuf_AddDesc_messageGame_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\021messageGame.proto\"\341\001\n\010msg_game\022\n\n\002id\030\001"
+    "\n\021messageGame.proto\"\362\001\n\010msg_game\022\n\n\002id\030\001"
     " \002(\005\022\014\n\004tipo\030\002 \002(\t\022\t\n\001x\030\003 \001(\005\022\t\n\001y\030\004 \001(\005"
     "\022\016\n\006nombre\030\005 \001(\t\022\016\n\006imagen\030\006 \001(\t\022\022\n\nanch"
     "o_base\030\007 \001(\005\022\021\n\talto_base\030\010 \001(\005\022\013\n\003fps\030\t"
     " \001(\005\022\r\n\005delay\030\n \001(\005\022\031\n\021total_frames_line"
     "\030\013 \001(\005\022\030\n\020pixels_dimension\030\014 \001(\005\022\r\n\005owne"
-    "r\030\r \001(\t", 247);
+    "r\030\r \001(\t\022\017\n\007newPath\030\016 \001(\010", 264);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "messageGame.proto", &protobuf_RegisterTypes);
   msg_game::default_instance_ = new msg_game();
@@ -125,6 +127,7 @@ const int msg_game::kDelayFieldNumber;
 const int msg_game::kTotalFramesLineFieldNumber;
 const int msg_game::kPixelsDimensionFieldNumber;
 const int msg_game::kOwnerFieldNumber;
+const int msg_game::kNewPathFieldNumber;
 #endif  // !_MSC_VER
 
 msg_game::msg_game()
@@ -159,6 +162,7 @@ void msg_game::SharedCtor() {
   total_frames_line_ = 0;
   pixels_dimension_ = 0;
   owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  newpath_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -236,9 +240,9 @@ void msg_game::Clear() {
     }
     alto_base_ = 0;
   }
-  if (_has_bits_[8 / 32] & 7936) {
+  if (_has_bits_[8 / 32] & 16128) {
     ZR_(fps_, total_frames_line_);
-    pixels_dimension_ = 0;
+    ZR_(pixels_dimension_, newpath_);
     if (has_owner()) {
       if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         owner_->clear();
@@ -461,6 +465,21 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(112)) goto parse_newPath;
+        break;
+      }
+
+      // optional bool newPath = 14;
+      case 14: {
+        if (tag == 112) {
+         parse_newPath:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &newpath_)));
+          set_has_newpath();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -575,6 +594,11 @@ void msg_game::SerializeWithCachedSizes(
       13, this->owner(), output);
   }
 
+  // optional bool newPath = 14;
+  if (has_newpath()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(14, this->newpath(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -672,6 +696,11 @@ void msg_game::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         13, this->owner(), target);
+  }
+
+  // optional bool newPath = 14;
+  if (has_newpath()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(14, this->newpath(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -779,6 +808,11 @@ int msg_game::ByteSize() const {
           this->owner());
     }
 
+    // optional bool newPath = 14;
+    if (has_newpath()) {
+      total_size += 1 + 1;
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -847,6 +881,9 @@ void msg_game::MergeFrom(const msg_game& from) {
     if (from.has_owner()) {
       set_owner(from.owner());
     }
+    if (from.has_newpath()) {
+      set_newpath(from.newpath());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -884,6 +921,7 @@ void msg_game::Swap(msg_game* other) {
     std::swap(total_frames_line_, other->total_frames_line_);
     std::swap(pixels_dimension_, other->pixels_dimension_);
     std::swap(owner_, other->owner_);
+    std::swap(newpath_, other->newpath_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

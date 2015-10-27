@@ -12,4 +12,5 @@ message msg_game{
 	optional int32 total_frames_line = 11;
 	optional int32 pixels_dimension = 12;
 	optional string owner = 13;
+	optional bool newPath = 14;
 }
