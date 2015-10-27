@@ -26,7 +26,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->owner = "";
 	this->name = nameEntity;
 	this->camino = new list<pair<int,int> >();
-	this->ciclos = (DefaultSettings::getTileSize() / vel) + 4;
+	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
 	this->cicloActual = 0;
 }
 

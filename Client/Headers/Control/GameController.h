@@ -50,10 +50,12 @@ public:
 	
 	void actualizarJuego();
 
+	void addTileToCharacter(int id,int x,int y);
+
 	/*
 	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
 	**/
-	void updatePosition(int id,int x,int y);
+	void updatePosition(int id);
 	
 	void render();
 	
