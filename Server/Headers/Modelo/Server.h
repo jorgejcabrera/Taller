@@ -44,22 +44,24 @@ class Server : public Thread{
 	public:
 		Server(int port, GameController *myController);
 		int initSocketServer();
-		//int run(void* data);
 		int run(void * data);
 		void processReceivedMessages();
 		void notifyClients();
-		~Server();
-
 		//inicia la conexion con el cliente, pide el usuario y se fija si es nuevo o si tiene que levantar data de antes porque se reconecto
 		void initConnection(Client *newClient);
 		void pingMessage();
 		void verifyClientsConections();
 		list<Client*> getActiveClients();
 		list<Message*> getProtagonistasMessages();
-		//Levanto todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
+		/*
+		*levanta todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
+		* */
 		void notifyClientReconect(string userName);
-		//setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
+		/*
+		*setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
+		* */ 
 		void setSeenTiles();
+		~Server();
 };
 
 #endif /* SOURCE_MODELO_SERVER_H_ */

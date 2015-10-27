@@ -17,6 +17,7 @@ class TileVista {
 	pair<int,int> position;
 	string pathImage;
 	bool seen;
+	bool fogged;
 
 public:
 	void setPathImage(string path);
@@ -28,6 +29,8 @@ public:
 	string getPathImage();
 	bool getSeen();
 	void saw();
+	bool getFogged();
+	void setFogged(bool state);
 };
 
 #endif /* SOURCE_VISTA_TILEVISTA_H_ */

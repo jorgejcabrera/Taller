@@ -19,7 +19,7 @@ Server::Server(int port, GameController *myController) {
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
 	if ( this->serverSocket < 0) {
-		cout << "Error al crear el socket" << endl;
+		Logger::get()->logError("Server","initSocketServer","Error al crear el socket");
 		return ERROR;
 	}
 	memset(&this->serverAddress, 0, sizeof(this->serverAddress));
@@ -27,18 +27,14 @@ int Server::initSocketServer(){
 	this->serverAddress.sin_addr.s_addr = htons(INADDR_ANY);
 	this->serverAddress.sin_port = htons(this->port);
 
-
-	//int opt = 1;
-	//setsockopt(this->serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(int));
-
 	//Bindeamos el socket
 	if ( bind(this->serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0 ) {
-		cout << "Error en la conexion bind.." << endl;
+		Logger::get()->logError("Server","initSocketServer","Error en la conexion bind..");
 		return ERROR;
 	}
 	// Listen socket Clients
 	if (listen(this->serverSocket, 2) < 0) {
-		cout << "Error en el listen"<<endl;
+		Logger::get()->logError("Server","initSocketServer","Error en el listen");
 		return ERROR;
 	}
 	return OK;
@@ -192,15 +188,6 @@ list<Client*> Server::getActiveClients(){
 	return activeClients;
 }
 
-Server::~Server() {
-	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
-		it->second->~Client();
-	}
-	this->gameSettings = NULL;
-	delete(this->readQueue);
-	close(this->serverSocket);
-}
-
 void Server::initConnection(Client *newClient){
 	bool validUserName=false;
 	stringstream ss;
@@ -290,11 +277,25 @@ void Server::setSeenTiles() {
 		if (client->getStatus() == CONECTED) {
 			list<pair<int,int> > newTiles = client->setSeenTiles((*it).second);
 			for (list<pair<int,int> >::iterator itNewList = newTiles.begin(); itNewList != newTiles.end(); ++itNewList) {
+//				stringstream ss;
+//				ss << "posX =" << (*itNewList).first << "posY =" << (*itNewList).second;;
+//				string str = ss.str();
+//				Logger::get()->logInfo("server","seetSeenTiles", str);
+
 				Message* msg = new Message();
 				msg->activeTile((*itNewList).first,(*itNewList).second);
 				client->writeMessagesInQueue(msg);
 			}
 		}
 	}
+}
+
+Server::~Server() {
+	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
+		it->second->~Client();
+	}
+	this->gameSettings = NULL;
+	delete(this->readQueue);
+	close(this->serverSocket);
 }
 

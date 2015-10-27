@@ -40,6 +40,7 @@ public:
 	void clearView();
 	void renderObject(const string &file, int x, int y, int w, int h);
 	void renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject);
+	void renderFogOfWar(const string &file, int x, int y, int w, int h);
 	static PicassoHelper* GetInstance();
 	static PicassoHelper* GetInstance(int width, int high);
 };

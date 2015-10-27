@@ -257,5 +257,15 @@ int GameSettings::getAlturaMenuInferior() {
 	return DefaultSettings::getAlturaMenuInferior();
 }
 
+string GameSettings::getPathOfFoggedTile(){
+	return DefaultSettings::getPathOfFoggedTile();
+}
 
+string GameSettings::getPathOfCoveredTile(){
+	return DefaultSettings::getPathOfCoveredTile();
+}
+
+int GameSettings::getRangeVisibility() {
+	return DefaultSettings::getRangeVisibility(); // TODO que cada entidad tenga su propia visibilidad, y que esto se obtenga del yaml
+}
 } /* namespace std */

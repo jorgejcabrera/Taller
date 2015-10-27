@@ -21,12 +21,34 @@ void JuegoVista::createView(){
 void JuegoVista::render(int runCycles){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();
+	this->setFoggedTiles();
 	this->drawDinamicEntities(runCycles);
 	this->drawStaticEntities(runCycles);
 	this->drawSemiStaticsEntities(runCycles);
+	this->drawFog();
 	this->drawMenu();
 	this->drawMiniMap();
 	this->picassoHelper->renderView();
+}
+
+void JuegoVista::drawFog() {
+	int posX = 0;
+	int posY = 0;
+	int offsetX = this->getOffset()->first;
+	int offsetY = this->getOffset()->second;
+
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		posY = ((*itTiles)->getPosX()+(*itTiles)->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
+		posX = ((*itTiles)->getPosX()-(*itTiles)->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
+
+		if ((*itTiles)->getSeen()){
+			if ( (*itTiles)->getFogged()) {
+				this->picassoHelper->renderFogOfWar(this->gameSettings->getPathOfFoggedTile(),posX,posY, gameSettings->getTileSize() * 2+2, gameSettings->getTileSize()+1);
+			}
+		} else {
+			this->picassoHelper->renderObject(this->gameSettings->getPathOfCoveredTile(),posX,posY, gameSettings->getTileSize() * 2+2, gameSettings->getTileSize()+1);
+		}
+	}
 }
 
 void JuegoVista::drawMenu() {
@@ -44,6 +66,12 @@ void JuegoVista::drawIsometricMap(){
 			posY = ((*itTiles)->getPosX()+(*itTiles)->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
 			posX = ((*itTiles)->getPosX()-(*itTiles)->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
 			this->picassoHelper->renderObject((*itTiles)->getPathImage(),posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
+			for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
+				pair<int,int>* posicionEstaticos = (*itEstaticos).second->getPosition();
+				if ( ( posicionEstaticos->first == (*itTiles)->getPosX() ) && ( posicionEstaticos->second == (*itTiles)->getPosY() ) ){
+					(*itEstaticos).second->saw();
+				}
+			}
 		}
 	}
 }
@@ -55,7 +83,7 @@ void JuegoVista::drawStaticEntities(int runCycles){
 
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
 		EntidadEstaticaVista* entidad = (*itEstaticos).second;
-		if (isEntitySeen(entidad->getPosition(),entidad->getLength())) {
+		if (entidad->getSeen()) {
 			isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
 			entidad->drawMe(isometricPosition,offSetX,offSetY,runCycles);
 		}
@@ -73,24 +101,26 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		
-		if( entidad->isWalking() ){
-			entidad->trasladarse();
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-			screenPosition = entidad->getScreenPosition();
-		}else{
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-		}				
+		if ( isEnemyEntityVisible(*cartesianPosition) ) {
+
+			if( entidad->isWalking() ){
+				entidad->trasladarse();
+				this->picassoHelper->renderObject(	entidad->getPathImage(),
+													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+													gameSettings->getTileSize(),
+													gameSettings->getTileSize(),
+													entidad->getPositionOfSprite(runCycles));
+				screenPosition = entidad->getScreenPosition();
+			}else{
+				this->picassoHelper->renderObject(	entidad->getPathImage(),
+													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+													gameSettings->getTileSize(),
+													gameSettings->getTileSize(),
+													entidad->getPositionOfSprite(runCycles));
+			}
+		}
 	}
 
 	//personajes que son del cliente
@@ -333,29 +363,45 @@ void JuegoVista::setVisibleTile(int x,int y) {
 	}
 }
 
-bool JuegoVista::isEntitySeen(pair<int,int>* entityPos, int lenght) {
-	int verticesVistos = 0;
-	for (list<TileVista* >::iterator it = tiles.begin(); it != tiles.end(); ++it) {
-		if ((*it)->getSeen()) {
-			if ( ( entityPos->first == (*it)->getPosX()) && (entityPos->second == (*it)->getPosY())) {
-				verticesVistos++;
-			}else if ( (entityPos->first + lenght == (*it)->getPosX()) && (entityPos->second == (*it)->getPosY())) {
-				verticesVistos++;
-			}else if ( (entityPos->first + lenght == (*it)->getPosX()) && (entityPos->second + lenght == (*it)->getPosY())) {
-				verticesVistos++;
-			}else if ( (entityPos->first == (*it)->getPosX()) && (entityPos->second + lenght == (*it)->getPosY())) {
-			verticesVistos++;
+void JuegoVista::actualizarProtagonista(){
+	
+}
+
+void JuegoVista::setFoggedTiles() {
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		if ((*itTiles)->getSeen()) {
+			(*itTiles)->setFogged(true);
+		}
+	}
+
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+		EntidadDinamicaVista * entidad = (*itDinamicos).second;
+		pair<int,int>* position = entidad->getPosition();
+		int rangeEntity = this->gameSettings->getRangeVisibility();// TODO aca se deberia usar entidad->getRangeVisibility(), para esto cada entidad deberia saber su rango de visibilidad
+		for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
+			if ( (x>=0) && (x < gameSettings->getMapWidth())) {
+				for (int y = position->second-rangeEntity ; y <= position->second+rangeEntity ; y++) {
+					if ((y>=0) && (y < this->gameSettings->getMapHeight())) {
+						if((x+y >= position->first + position->second - rangeEntity) && (x+y <= position->first + position->second + rangeEntity)
+						&& (x-y >= position->first - position->second - rangeEntity) && (x-y <= position->first - position->second + rangeEntity)) {
+							for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+								if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == x && (*itTiles)->getPosY() == y) {
+									(*itTiles)->setFogged(false);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
-	if (verticesVistos == 4){
-		return true;
-	}
-	return false;
 }
 
-void JuegoVista::actualizarProtagonista(){
-	
+bool JuegoVista::isEnemyEntityVisible(pair< int, int> pos) {
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == pos.first && (*itTiles)->getPosY() == pos.second) return false;
+	}
+	return true;
 }
 
 JuegoVista::~JuegoVista() {

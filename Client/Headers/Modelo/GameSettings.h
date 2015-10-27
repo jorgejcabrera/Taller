@@ -117,6 +117,9 @@ public:
 	void addEntityConfig(EntidadConfig* entity);
 	EntidadConfig* getEntityConfig(string nameEntity);
 	void setMapDimention(int ancho, int alto);
+	string getPathOfFoggedTile();
+	string getPathOfCoveredTile();
+	int getRangeVisibility();
 };
 
 } /* namespace std */

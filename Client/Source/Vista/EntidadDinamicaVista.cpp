@@ -254,6 +254,10 @@ string EntidadDinamicaVista::toString(){
 	return ss.str();
 }
 
+int EntidadDinamicaVista::getRangeVisibility() {
+	return this->rangeVisibility;
+}
+
 EntidadDinamicaVista::~EntidadDinamicaVista() {
 	delete this->camino;
 }
