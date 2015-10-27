@@ -277,6 +277,11 @@ void Server::setSeenTiles() {
 		if (client->getStatus() == CONECTED) {
 			list<pair<int,int> > newTiles = client->setSeenTiles((*it).second);
 			for (list<pair<int,int> >::iterator itNewList = newTiles.begin(); itNewList != newTiles.end(); ++itNewList) {
+//				stringstream ss;
+//				ss << "posX =" << (*itNewList).first << "posY =" << (*itNewList).second;;
+//				string str = ss.str();
+//				Logger::get()->logInfo("server","seetSeenTiles", str);
+
 				Message* msg = new Message();
 				msg->activeTile((*itNewList).first,(*itNewList).second);
 				client->writeMessagesInQueue(msg);
