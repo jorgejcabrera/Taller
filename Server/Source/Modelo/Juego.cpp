@@ -82,7 +82,7 @@ void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
 	stringstream ss;
 	for(list<pair<int,int> >::iterator it = caminoMinimo->begin();it != caminoMinimo->end();++it){
 		ss.str("");
-		ss<<(*it).first<<","<<(*it).second<<endl;
+		ss<<(*it).first<<","<<(*it).second;
 		Logger::get()->logDebug("Juego","setDestinoProtagonista",ss.str());
 	}
 	delete pathF;

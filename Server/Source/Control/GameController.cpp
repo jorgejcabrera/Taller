@@ -61,7 +61,6 @@ void GameController::setNextPaths(){
 	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
 	for(map<int,EntidadDinamica*>::iterator it= listaPersonajes.begin(); it!=listaPersonajes.end();++it){
 		(*it).second->nextPosition();
-		Logger::get()->logDebug("GameController","setNextPaths","SETEO UN TILE");
 	}
 }
 
