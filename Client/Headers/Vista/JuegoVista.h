@@ -44,6 +44,7 @@ private:
 	void drawSemiStaticsEntities(int runCycles);
 	void drawMenu();
 	void drawMiniMap();
+	void drawFog();
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
@@ -69,6 +70,7 @@ public:
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
 	EntidadPartidaVista* entityInThisPosition(int x, int y);
 	void actualizarProtagonista();
+	void setFoggedTiles();
 	~JuegoVista();
 
 

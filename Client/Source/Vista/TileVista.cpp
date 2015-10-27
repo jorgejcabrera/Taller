@@ -43,5 +43,13 @@ void TileVista::saw() {
 	this->seen = true;
 }
 
+bool TileVista::getFogged() {
+	return this->fogged;
+}
+
+void TileVista::setFogged(bool state) {
+	this->fogged = state;
+}
+
 TileVista::~TileVista() {
 }

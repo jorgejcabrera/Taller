@@ -64,6 +64,7 @@ private:
 	*indice de segundo del delay por el cual voy
 	**/
 	int delayIndex;
+	int rangeVisibility;
 
 	Direccion getDireccionVertical();
 	Direccion getDireccionHorizontal();
@@ -96,6 +97,7 @@ public:
 	void walk();
 	void stopWalk();
 	bool isWalking();
+	int getRangeVisibility();
 	virtual ~EntidadDinamicaVista();
 
 };

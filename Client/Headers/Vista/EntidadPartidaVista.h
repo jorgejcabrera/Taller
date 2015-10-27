@@ -25,6 +25,7 @@ protected:
 	string pathImage;
 	int id;
 	string name;
+	bool seen;
 
 public:
 	EntidadPartidaVista();
@@ -47,6 +48,8 @@ public:
 	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 	void restarSalud();
 	virtual ~EntidadPartidaVista();
+	bool getSeen();
+	void saw();
 };
 
 } /* namespace std */
