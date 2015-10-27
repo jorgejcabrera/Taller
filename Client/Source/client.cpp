@@ -43,7 +43,8 @@ int main(int argc, char* argv[]) {
 		jorge->verifyServerAlive();
 		gController->delay();
 	}
-	delete(jorge);
+	jorge->~Client();
+	//delete(jorge);
 	delete(gController);
 	return 0;
 }

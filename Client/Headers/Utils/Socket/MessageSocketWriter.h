@@ -38,7 +38,7 @@ public:
 	*ponemos los mensajes en la cola de novedades
 	* */
 	void writeMessage(Message* msg);
-	void stopWrite();
+	void shutDown();
 	virtual ~MessageSocketWriter();
 	/*
 	*notifica el nombre de usuario,y tiene que ser en el momento, no puede seguir el ciclo normal

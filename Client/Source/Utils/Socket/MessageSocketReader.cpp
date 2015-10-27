@@ -38,6 +38,10 @@ Message* MessageSocketReader::readMessageNow(){
 	return userName;
 }
 
+void MessageSocketReader::shutDown(){
+	this->isAlive = false;
+}
+
 MessageSocketReader::~MessageSocketReader() {
 	this->queue->~SocketQueue();
 	delete socket;

@@ -19,7 +19,7 @@ void MessageSocketWriter::writeMessage(Message *msg){
 
 int MessageSocketWriter::run(void* data){
 	Logger::get()->logInfo("MessageSocketWriter","run","running thread client writer");
-	while(this->isAlive){
+	while( this->isAlive ){
 		while(!this->queue->isEmpty()){
 			Message* msg = ((MessageSocketWriter*)data)->queue->pullTail();
 			if(!this->socket->writeMessage(msg)){
@@ -30,7 +30,7 @@ int MessageSocketWriter::run(void* data){
 	return OK;
 }
 
-void MessageSocketWriter::stopWrite(){
+void MessageSocketWriter::shutDown(){
 	this->isAlive = false;
 }
 

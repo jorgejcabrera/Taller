@@ -33,6 +33,7 @@ public:
 	/*
 	*devuelve la lista de mensajes que se leyeron del socket y deben ser procesados
 	**/
+	void shutDown();
 	list<Message*> getMessagesToProcess();
 	virtual ~MessageSocketReader();
 	Message* readMessageNow();
