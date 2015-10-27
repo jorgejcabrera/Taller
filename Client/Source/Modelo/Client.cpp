@@ -175,7 +175,7 @@ void Client::verifyServerAlive(){
 	if(isConected()){
 		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()+5)){
 			this->status = DISCONECTED;
-			Logger::get()->logDebug("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
+			Logger::get()->logError("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
 		}
 	}
 }

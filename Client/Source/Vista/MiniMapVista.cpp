@@ -19,6 +19,8 @@ MiniMapVista::MiniMapVista() {
 	miniEntityPosY = 0;
 
 	miniTilePath = "../../Taller/Images/Tiles/tileVerde.png";
+	miniUnseenTilePath = "../../Taller/Images/Tiles/tileNegro.png";
+	miniFoggedTilePath = "../../Taller/Images/Tiles/tilefog.png";
 	miniCharacterPath = "../../Taller/Images/Tiles/tileAzul.png";
 	miniEntityPath = "../../Taller/Images/Tiles/tileAzul.png";
 
@@ -38,8 +40,16 @@ void MiniMapVista::makeMiniTilePos(int posX, int posY) {
 	this->miniTilePosX = (posX-posY)*miniTileWidth/3+ offsetX;
 }
 
-string MiniMapVista::getTilePath() {
+string MiniMapVista::getMiniTilePath() {
 	return this->miniTilePath;
+}
+
+string MiniMapVista::getMiniUnseenTilePath() {
+	return this->miniUnseenTilePath;
+}
+
+string MiniMapVista::getMiniFoggedTilePath() {
+	return this->miniFoggedTilePath;
 }
 
 int MiniMapVista::getTilePosX() {
@@ -97,7 +107,7 @@ void MiniMapVista::makeMiniCharacterPos(int posX, int posY) {
 }
 
 MiniMapVista::~MiniMapVista() {
-	// TODO Auto-generated destructor stub
+	this->gameSettings = NULL;
 }
 
 } /* namespace std */

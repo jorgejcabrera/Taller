@@ -21,11 +21,14 @@ private:
 	static Logger* instance;
 	std::ofstream logToError;
 	std::ofstream logToDebug;
+	std::ofstream logToInfo;
+	string getTimeStamp();
 public:
 	static Logger* get();
 	virtual ~Logger();
 	void logError(string className, string method,string message);
 	void logDebug(string className, string method,string message);
+	void logInfo(string className, string method,string message);
 };
 
 #endif /* SOURCE_UTILS_LOGGER_H_ */

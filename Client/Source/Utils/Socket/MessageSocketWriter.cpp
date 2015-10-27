@@ -34,10 +34,11 @@ void MessageSocketWriter::stopWrite(){
 	this->isAlive = false;
 }
 
-//Este metodo se usa para notificar el nombre de usuario que tiene que ser en el momento, no puede seguir el ciclo normal
-void MessageSocketWriter::writeMessageNow(Message *msg){
+void MessageSocketWriter::writeMessageNow(Message* msg){
 	this->socket->writeMessage(msg);
-	Logger::get()->logInfo("MessageSocketWriter","writeMessageNow",msg->toString());
+	stringstream ss;
+	ss << "player "<< msg->getNombre()<<" is connected";
+	Logger::get()->logInfo("MessageSocketWriter","writeMessageNow",ss.str());
 }
 
 MessageSocketWriter::~MessageSocketWriter() {
