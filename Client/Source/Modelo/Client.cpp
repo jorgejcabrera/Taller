@@ -86,6 +86,7 @@ void Client::processReceivedMessages(){
 
 		}else if ( tipoMensaje == "update"){
 			this->gController->updatePosition((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			cout<<"me llega la pos"<<(*it)->getPositionX()<<","<<(*it)->getPositionY()<<endl;
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
