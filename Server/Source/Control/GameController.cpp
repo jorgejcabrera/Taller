@@ -64,13 +64,8 @@ void GameController::setNextPaths(){
 	}
 }
 
-
 void GameController::actualizarJuego(){
-	//TODO: el offset no deberia necesitarlo porqeu es un tema de la vista
 	this->setNextPaths();
-	//juego->actualizarProtagonistas();
-	//pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
-	//juego->actualizarOffset(offset.first,offset.second);
 }
 
 bool GameController::reiniciarJuego(){
@@ -83,39 +78,6 @@ int GameController::getRunCycles(){
 
 int GameController::getMaxFramesPerSecond(){
 	return this->maxFramesPerSecond;
-}
-
-
-void GameController::moveCharacter(int xScreen,int yScreen){
-	//TODO: aca deberiamos actualizar la posicion del personaje con las coordenadas que me llegan. Deberian llegar sin el offset
-	/*pair<int,int>* offset = this->juego->getOffset();
-	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
-	bool correctPosition = false;
-	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
-	if( cartesianPosition.first < 0 ){
-		cartesianPosition.first = 0;
-		correctPosition = true;
-	}else if( cartesianPosition.first >= gameSettings->getMapWidth()){
-		cartesianPosition.first = gameSettings->getMapWidth() - 1 ;
-		correctPosition = true;
-	}
-	if( cartesianPosition.second < 0){
-		cartesianPosition.second = 0;
-		correctPosition = true;
-	}else if( cartesianPosition.second >= gameSettings->getMapHeight()){
-		cartesianPosition.second = gameSettings->getMapHeight() - 1;
-		correctPosition = true;
-	}
-	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
-	if(correctPosition){
-		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-		posMouseX = isometricPosition.first+offset->first;
-		posMouseY = isometricPosition.second+offset->second;
-	}
-	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
-	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
-	return;
-	*/
 }
 
 void GameController::delay(){

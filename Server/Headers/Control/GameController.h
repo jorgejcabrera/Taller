@@ -26,18 +26,18 @@ private:
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
+	//TODO reiniciar juego no va mas
 	bool reiniciar;
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
-	void moveCharacter(int xScreen,int yScreen);
-	pair<int,int> getOffset(int mouseX,int mouseY);
 	void setNextPaths();
 
 public:
 	GameController();
 	Juego* getJuego();
+	//TODO reiniciar juego no va mas
 	bool reiniciarJuego();
 	void actualizarJuego();
 	int getRunCycles();
@@ -45,7 +45,9 @@ public:
 	virtual ~GameController();
 	void delay();
 
-	//Generadores de mensajes para cuando se conecta un cliente nuevo
+	/*
+	* generadores de mensajes para cuando se conecta un cliente nuevo
+	* */
 	list<Message*> getTilesMessages();
 	list<Message*> getEntitiesMessages();
 	list<int> getEntitiesOfClient(string userName);

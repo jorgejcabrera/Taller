@@ -16,10 +16,6 @@ Client::Client(int identifier, SocketQueue *queueUnique) {
 	// TODO settear los primeros lugares vistos en el mapa segun las entitis del cliente
 }
 
-Client::~Client() {
-	shutdown(this->clientId, 2);
-}
-
 void Client::reporting(){
 	this->lastReported = time(0);
 }
@@ -99,4 +95,8 @@ list<pair<int,int> > Client::setSeenTiles( list<pair<int,int> > newTiles) {
  		}
 	}
 	return newSeenTiles;
+}
+
+Client::~Client() {
+	shutdown(this->clientId, 2);
 }
