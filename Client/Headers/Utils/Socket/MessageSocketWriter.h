@@ -21,7 +21,7 @@ class MessageSocketWriter: public Thread {
 private:
 	/*
 	*cola de novedades que se van a enviar al servidor
-	**/
+	* */
 	SocketQueue* queue;
 	SocketUtils* socket;
 	bool isAlive;
@@ -30,16 +30,19 @@ public:
 	MessageSocketWriter(int sockfd);
 	
 	/*
-	*Sacamos los mensajes de la cola de novedades y los mandamos por el socket
-	**/
+	*sacamos los mensajes de la cola de novedades y los mandamos por el socket
+	* */
 	int run(void* data);
 	
 	/*
-	*Ponemos los mensajes en la cola de novedades
-	**/
+	*ponemos los mensajes en la cola de novedades
+	* */
 	void writeMessage(Message* msg);
 	void stopWrite();
 	virtual ~MessageSocketWriter();
+	/*
+	*notifica el nombre de usuario,y tiene que ser en el momento, no puede seguir el ciclo normal
+	* */
 	void writeMessageNow(Message *msg);
 };
 

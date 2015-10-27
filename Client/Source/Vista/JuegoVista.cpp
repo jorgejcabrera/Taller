@@ -275,8 +275,7 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 	return &this->misPersonajes;
 }
 
-EntidadDinamicaVista* JuegoVista::		//escuchamos eventos y los mandamos al server
-getEntityById(int id){
+EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
 	if(itPersonajes!=this->personajes.end()){
 		return itPersonajes->second;
