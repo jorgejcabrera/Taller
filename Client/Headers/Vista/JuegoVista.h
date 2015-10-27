@@ -71,6 +71,7 @@ public:
 	EntidadPartidaVista* entityInThisPosition(int x, int y);
 	void actualizarProtagonista();
 	void setFoggedTiles();
+	bool isEnemyEntityVisible(pair< int, int> pos);
 	~JuegoVista();
 
 

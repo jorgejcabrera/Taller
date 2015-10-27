@@ -21,6 +21,7 @@ void JuegoVista::createView(){
 void JuegoVista::render(int runCycles){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();
+	this->setFoggedTiles();
 	this->drawDinamicEntities(runCycles);
 	this->drawStaticEntities(runCycles);
 	this->drawSemiStaticsEntities(runCycles);
@@ -35,7 +36,6 @@ void JuegoVista::drawFog() {
 	int posY = 0;
 	int offsetX = this->getOffset()->first;
 	int offsetY = this->getOffset()->second;
-	this->setFoggedTiles();
 
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
 		posY = ((*itTiles)->getPosX()+(*itTiles)->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
@@ -101,24 +101,26 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		
-		if( entidad->isWalking() ){
-			entidad->trasladarse();
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-			screenPosition = entidad->getScreenPosition();
-		}else{
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-		}				
+		if ( isEnemyEntityVisible(*cartesianPosition) ) {
+
+			if( entidad->isWalking() ){
+				entidad->trasladarse();
+				this->picassoHelper->renderObject(	entidad->getPathImage(),
+													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+													gameSettings->getTileSize(),
+													gameSettings->getTileSize(),
+													entidad->getPositionOfSprite(runCycles));
+				screenPosition = entidad->getScreenPosition();
+			}else{
+				this->picassoHelper->renderObject(	entidad->getPathImage(),
+													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+													gameSettings->getTileSize(),
+													gameSettings->getTileSize(),
+													entidad->getPositionOfSprite(runCycles));
+			}
+		}
 	}
 
 	//personajes que son del cliente
@@ -393,6 +395,13 @@ void JuegoVista::setFoggedTiles() {
 			}
 		}
 	}
+}
+
+bool JuegoVista::isEnemyEntityVisible(pair< int, int> pos) {
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == pos.first && (*itTiles)->getPosY() == pos.second) return false;
+	}
+	return true;
 }
 
 JuegoVista::~JuegoVista() {
