@@ -8,7 +8,6 @@
 #include "../../Headers/Modelo/PathFinder.h"
 
 PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap,ResourceManager* rm) {
-
 	gameSettings = GameSettings::GetInstance();
 	this->map = unMap;
 
@@ -25,7 +24,6 @@ PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap,ResourceManager* rm
 		this->destinoX = nuevoDestino.first;
 		this->destinoY = nuevoDestino.second;
 	}
-
 }
 
 int PathFinder::dManhattan(int x,int y){
@@ -59,7 +57,6 @@ candidato PathFinder::getAdyacente(int oX,int oY,int x,int y){
 }
 
 pair<int,int> PathFinder::getClosestAvailable(int x,int y){
-
 	//este metodo es para cuando intento moverme a un lugar ocupado
 
 	candidato cand;
@@ -69,8 +66,8 @@ pair<int,int> PathFinder::getClosestAvailable(int x,int y){
 	while(cand.posX == this->destinoX && cand.posY == this->destinoY){
 		if(positionAvailable(this->destinoX - i,this->destinoY)) cand = getAdyacente(-1,-1,destinoX - i,destinoY);
 		if(positionAvailable(this->destinoX,this->destinoY - i)) cand = getAdyacente(-1,-1,destinoX,destinoY - i);
-		if(positionAvailable(this->destinoX,this->destinoY + 1)) cand = getAdyacente(-1,-1,destinoX,destinoY + 1);
-		if(positionAvailable(this->destinoX + 1,this->destinoY)) cand = getAdyacente(-1,-1,destinoX + 1,destinoY);
+		if(positionAvailable(this->destinoX,this->destinoY + i)) cand = getAdyacente(-1,-1,destinoX,destinoY + i);
+		if(positionAvailable(this->destinoX + i,this->destinoY)) cand = getAdyacente(-1,-1,destinoX + i,destinoY);
 		i++;
 	}
 
@@ -166,7 +163,6 @@ bool PathFinder::positionAvailable(int x,int y){
 
 	if(x < 0 || y < 0) return false;
 	if(x > gameSettings->MAP_HEIGHT - 1 || y > gameSettings->MAP_WIDTH -1) return false;
-
 
 	//ACA HAY QUE DESCOMENTAR resourceAt cuando este lo del resourcemanager
 	return (this->map->getTileAt(x,y)->isAvailable() /*|| resourceManager->resourceAt(x,y)*/);
