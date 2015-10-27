@@ -39,6 +39,9 @@ Message* GameController::getMessageFromEvent(string userId){
 				id = (*it).first;
 				cartesianPosition = this->moveCharacter((*it).second);
 			}
+			stringstream ss;
+			ss << "hicimos click en " << cartesianPosition.first << " "<<cartesianPosition.second;
+			Logger::get()->logDebug("GameController","getMessageFromEvent",ss.str());
 
 			Message* message = new Message();
 			msg_game body;

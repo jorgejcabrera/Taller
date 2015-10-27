@@ -103,14 +103,10 @@ void Server::processReceivedMessages(){
 	while(!this->readQueue->isEmpty()){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
 		if(messageUpdate->getTipo()=="ping"){
-			/*stringstream ss;
-			ss << "recibi ping del cliente: "<< messageUpdate->getNombre();
-			Logger::get()->logDebug("Server","processReceivedMessages", ss.str());
-			*/
 			this->clients.at(messageUpdate->getNombre())->reporting();
 		}else if(messageUpdate->getTipo()=="exit"){
 			//TODO desconectar al cliente? hoy deberia hacerlo cuando no detecta novedades
-			Logger::get()->logDebug("Server","processReceivedMessages", "RECIBI MESAJE DE DESCONEXION");
+			Logger::get()->logInfo("Server","processReceivedMessages", "RECIBI MESAJE DE DESCONEXION");
 //		}else if(messageUpdate->getTipo()=="fog"){
 //			this->setSeenTiles();
 
@@ -172,7 +168,7 @@ void Server::verifyClientsConections(){
 			(*clientIterator)->disconect();
 			stringstream ss;
 			ss<< "CLIENTE se deconecto: "<< (*clientIterator)->getUserName();
-			Logger::get()->logDebug("Server","verifyClientsConections",ss.str());
+			Logger::get()->logInfo("Server","verifyClientsConections",ss.str());
 
 			list<int> entitiesToDisconect = gController->getEntitiesOfClient((*clientIterator)->getUserName());
 			for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
@@ -207,22 +203,29 @@ Server::~Server() {
 
 void Server::initConnection(Client *newClient){
 	bool validUserName=false;
+	stringstream ss;
 	while(!validUserName){
 		string userName=newClient->readUserName();
-			Logger::get()->logDebug("Server","run",userName);
 			map<string,Client*>::iterator it = this->clients.find(userName);
 			if(it != this->clients.end()){
 				//El cliente ya existia
-				Logger::get()->logDebug("Server","readClientUserName","YA EXISTE EL CLIENTE");
+				ss << "player " << userName << " already exists...";
+				Logger::get()->logInfo("Server","readClientUserName",ss.str());
+				
 				if(it->second->getStatus()==0){
 					//El cliente ya existia y ademas está conectado
+					ss.str("");
+					ss << userName << " is being used by another player";
+					Logger::get()->logInfo("Server","readClientUserName",ss.str());
 					newClient->responseUserName("FAIL");
 				}else{
 					//El cliente ya existia pero estaba desconectado y se vuelve a conectar
 					newClient->responseUserName("OK");
 					newClient->setUserName(userName);
 					validUserName=true;
-					Logger::get()->logDebug("Server","readClientUserName","El Cliente se volvio a conectar");
+					ss.str("");
+					ss << "player "<< userName << " has reconnected";
+					Logger::get()->logInfo("Server","readClientUserName",ss.str());
 					//asigno el cliente
 					this->clients.at(newClient->getUserName()) = newClient;
 					notifyClientReconect(newClient->getUserName());
@@ -232,7 +235,9 @@ void Server::initConnection(Client *newClient){
 				newClient->responseUserName("OK");
 				newClient->setUserName(userName);
 				validUserName=true;
-				Logger::get()->logDebug("Server","readClientUserName","NO EXISTE EL CLIENTE");
+				ss.str("");
+				ss << "player "<< userName << " has joined the game";
+				Logger::get()->logInfo("Server","readClientUserName",ss.str());
 				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
 				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
 				this->clients.insert(make_pair(newClient->getUserName(),newClient));

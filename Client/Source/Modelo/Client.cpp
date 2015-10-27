@@ -86,6 +86,7 @@ void Client::processReceivedMessages(){
 
 		}else if ( tipoMensaje == "update"){
 			this->gController->updatePosition((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			cout<<"me llega la pos"<<(*it)->getPositionX()<<","<<(*it)->getPositionY()<<endl;
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
@@ -174,7 +175,7 @@ void Client::verifyServerAlive(){
 	if(isConected()){
 		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()+5)){
 			this->status = DISCONECTED;
-			Logger::get()->logDebug("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
+			Logger::get()->logError("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
 		}
 	}
 }

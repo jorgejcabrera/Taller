@@ -61,7 +61,6 @@ void GameController::setNextPaths(){
 	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
 	for(map<int,EntidadDinamica*>::iterator it= listaPersonajes.begin(); it!=listaPersonajes.end();++it){
 		(*it).second->nextPosition();
-		Logger::get()->logDebug("GameController","setNextPaths","SETEO UN TILE");
 	}
 }
 
@@ -92,7 +91,6 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 	/*pair<int,int>* offset = this->juego->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
 	bool correctPosition = false;
-
 	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
 	if( cartesianPosition.first < 0 ){
 		cartesianPosition.first = 0;
@@ -108,14 +106,12 @@ void GameController::moveCharacter(int xScreen,int yScreen){
 		cartesianPosition.second = gameSettings->getMapHeight() - 1;
 		correctPosition = true;
 	}
-
 	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
 	if(correctPosition){
 		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
 		posMouseX = isometricPosition.first+offset->first;
 		posMouseY = isometricPosition.second+offset->second;
 	}
-
 	//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
 	juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
 	return;
@@ -137,4 +133,3 @@ GameController::~GameController() {
 	delete(this->gameSettings);
 	this->gameSettings = NULL;
 }
-
