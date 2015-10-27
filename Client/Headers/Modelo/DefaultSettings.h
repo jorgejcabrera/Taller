@@ -42,6 +42,9 @@ class DefaultSettings {
 		static const int ALTURA_MENU_SUPERIOR= 20;
 		static const int ALTURA_BANDA_MENU= 10;
 		static const int VIEW_DISTANCE = 4;
+		static const string PATH_OF_FOGGED_TILE;
+		static const string PATH_OF_COVERED_TILE;
+		static const int RANGE_VISIBILITY = 4;
 
 	public:
 		DefaultSettings();
@@ -87,6 +90,9 @@ class DefaultSettings {
 		static int getAlturaMenuInferior();
 		static int getAlturaMenuSuperior();
 		static int getAlturaBandaMenu();
+		static string getPathOfFoggedTile();
+		static string getPathOfCoveredTile();
+		static int getRangeVisibility();
 };
 
 

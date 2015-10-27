@@ -13,6 +13,8 @@ const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
+const string DefaultSettings::PATH_OF_FOGGED_TILE = "tileFog";
+const string DefaultSettings::PATH_OF_COVERED_TILE = "tileNegro";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -261,6 +263,18 @@ int DefaultSettings::getAlturaMenuSuperior(){
 
 int DefaultSettings::getAlturaBandaMenu(){
 	return ALTURA_BANDA_MENU;
+}
+
+string DefaultSettings::getPathOfFoggedTile() {
+	return IMAGE_BASE_PATH +"/Tiles/" + PATH_OF_FOGGED_TILE + ".png";
+}
+
+string DefaultSettings::getPathOfCoveredTile() {
+	return IMAGE_BASE_PATH +"/Tiles/" + PATH_OF_COVERED_TILE + ".png";
+}
+
+int DefaultSettings::getRangeVisibility() {
+	return RANGE_VISIBILITY;
 }
 
 DefaultSettings::~DefaultSettings() {

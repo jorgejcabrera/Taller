@@ -11,6 +11,7 @@ using namespace std;
 
 EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
+	this->seen = false;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){
@@ -67,4 +68,12 @@ void EntidadPartidaVista::setName(string nameEnt){
 
 string EntidadPartidaVista::getName(){
 	return this->name;
+}
+
+bool EntidadPartidaVista::getSeen() {
+	return this->seen;
+}
+
+void EntidadPartidaVista::saw() {
+	this->seen = true;
 }

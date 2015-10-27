@@ -118,6 +118,18 @@ PicassoHelper* PicassoHelper::GetInstance(int width, int high) {
 	return instance;
 }
 
+void PicassoHelper::renderFogOfWar(const string &file, int x, int y, int w, int h) {
+	SDL_Texture* textureExists;
+	map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+	if(it != mapByImagePath.end()){
+		textureExists = (*it).second;
+	}else{
+		textureExists = loadTexture(file);
+	}
+	SDL_SetTextureAlphaMod(textureExists,150);
+	renderTexture(textureExists,x,y,w,h);
+}
+
 PicassoHelper::~PicassoHelper() {
 	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
 		SDL_DestroyTexture(it->second);
