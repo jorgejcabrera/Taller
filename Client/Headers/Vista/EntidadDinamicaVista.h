@@ -52,6 +52,7 @@ private:
 	float distanciaA(float x, float y);
 	float distanciaEnX(float x);
 	float distanciaEnY(float y);
+	list<pair<int,int> >* camino;
 	/*
 	*Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
 	**/
@@ -80,6 +81,7 @@ public:
 	int getFramesInLineFile();
 	int getWidthPixel();
 	int getLengthPixel();
+	list<pair<int,int> >* getCamino();
 	SDL_Rect getPositionOfSprite(int runCycles);
 	int getFramesPerSecond();
 	void setDelay(int delayFrames);
@@ -87,6 +89,7 @@ public:
 	void setScreenPosition(float x,float y);
 	void setInitialScreenPosition(float x,float y);
 	void setPosition(int x,int y);
+	void addTileToPath(int x,int y);
 	pair<float,float> getScreenPosition();
 	pair<int,int>* getPosition();
 	Direccion getDireccion();

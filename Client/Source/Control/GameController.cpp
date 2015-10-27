@@ -92,6 +92,11 @@ JuegoVista* GameController::getJuegoVista(){
 
 void GameController::actualizarJuego(){
 	//juegoVista->actualizarProtagonista();
+	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getMyEntities();
+	for(map<int,EntidadDinamicaVista*>::iterator it = entidades->begin(); it !=entidades->end(); ++it){
+		updatePosition((*it).second->getId());
+	}
+
 	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
 	juegoVista->actualizarOffset(offset.first,offset.second);
 }
@@ -167,15 +172,21 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 	return cartesianPosition;
 }
 
-void GameController::updatePosition(int id,int x,int y){
+void GameController::updatePosition(int id){
 	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
-	//cout<<"posici"<<x<<","<<y<<endl;
-	entity->setPosition(x,y);
-	pair<int,int> destinity = this->utils->GetInstance()->getIsometricPosition(x,y);
-	entity->setScreenPosition(destinity.first,destinity.second);
-	//cout<<"screen "<<destinity.first<<","<<destinity.second<<endl;
+	if(! entity->getCamino()->empty() && ! entity->isWalking()){
+		pair<int,int> nuevaPos = entity->getCamino()->front();
+		entity->getCamino()->pop_front();
 
-	entity->walk();
+		entity->setPosition(nuevaPos.first,nuevaPos.second);
+		pair<int,int> destinoIsometrico = this->utils->GetInstance()->getIsometricPosition(nuevaPos.first,nuevaPos.second);
+		entity->setScreenPosition(destinoIsometrico.first,destinoIsometrico.second);
+	}
+}
+
+void GameController::addTileToCharacter(int id,int x,int y){
+	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+	entity->addTileToPath(x,y);
 }
 
 void GameController::delay(){

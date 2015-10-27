@@ -24,6 +24,7 @@ EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, floa
 	this->framesPerSecond = fps;
 	this->inDelayPeriod = false;
 	this->velocidad = 10;
+	this->camino = new list<pair<int,int> >();
 }
 
 string EntidadDinamicaVista::getName(){
@@ -224,6 +225,18 @@ int EntidadDinamicaVista::getFramesPerSecond(){
 	return this->framesPerSecond;
 }
 
+void EntidadDinamicaVista::addTileToPath(int x,int y){
+	pair<int,int> newTile;
+	newTile.first = x;
+	newTile.second = y;
+
+	this->camino->push_back(newTile);
+}
+
+list<pair<int,int> >* EntidadDinamicaVista::getCamino(){
+	return this->camino;
+}
+
 void EntidadDinamicaVista::setDelay(int delayFrames){
 	this->delay = delayFrames;
 }
@@ -242,4 +255,5 @@ string EntidadDinamicaVista::toString(){
 }
 
 EntidadDinamicaVista::~EntidadDinamicaVista() {
+	delete this->camino;
 }

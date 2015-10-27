@@ -85,8 +85,7 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update"){
-			this->gController->updatePosition((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
-			cout<<"me llega la pos"<<(*it)->getPositionX()<<","<<(*it)->getPositionY()<<endl;
+			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
