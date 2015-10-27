@@ -94,7 +94,7 @@ public:
 	string getName();
 	void trasladarse();
 	void walk();
-	void stopWalk();
+	//void stopWalk();
 	bool isWalking();
 	virtual ~EntidadDinamicaVista();
 

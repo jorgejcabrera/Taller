@@ -182,9 +182,9 @@ void EntidadDinamicaVista::walk(){
 	this->caminando = true;
 }
 
-void EntidadDinamicaVista::stopWalk(){
+/*void EntidadDinamicaVista::stopWalk(){
 	this->caminando = false;
-}
+}*/
 
 bool EntidadDinamicaVista::isWalking(){
 	return caminando;

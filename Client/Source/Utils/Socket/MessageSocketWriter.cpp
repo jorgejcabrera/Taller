@@ -42,6 +42,7 @@ void MessageSocketWriter::writeMessageNow(Message* msg){
 }
 
 MessageSocketWriter::~MessageSocketWriter() {
-	this->socket->~SocketUtils();
 	this->queue->~SocketQueue();
+	delete socket;
+	//delete queue;
 }

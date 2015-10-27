@@ -81,9 +81,6 @@ string Message::serializeAsString(){
 	return this->msg.SerializeAsString();
 }
 
-Message::~Message(){
-}
-
 string Message::getTipo(){
 	return this->msg.tipo();
 }
@@ -138,5 +135,9 @@ void Message::setOwner(string userName){
 
 string Message::getOwner(){
 	return this->msg.owner();
+}
+
+Message::~Message(){
+	this->msg.~msg_game();
 }
 

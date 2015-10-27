@@ -30,10 +30,11 @@ public:
 	Message* pullTail();
 	bool isEmpty();
 	int getSize();
-	virtual ~SocketQueue();
 	void lockQueue();
 	void unlockQueue();
 	Message* pullTailWithoutLock();
+	virtual ~SocketQueue();
+
 };
 
 #endif /* SOURCE_UTILS_SOCKET_SOCKETQUEUE_H_ */

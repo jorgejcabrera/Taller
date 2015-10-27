@@ -33,11 +33,14 @@ list<Message*> MessageSocketReader::getMessagesToProcess(){
 	return listaPendientes;
 }
 
-MessageSocketReader::~MessageSocketReader() {
-	// TODO Auto-generated destructor stub
-}
-
 Message* MessageSocketReader::readMessageNow(){
 	Message *userName = this->socket->readMessage();
 	return userName;
 }
+
+MessageSocketReader::~MessageSocketReader() {
+	this->queue->~SocketQueue();
+	delete socket;
+	//delete queue;
+}
+

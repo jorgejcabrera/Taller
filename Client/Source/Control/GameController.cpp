@@ -169,12 +169,9 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 
 void GameController::updatePosition(int id,int x,int y){
 	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
-	//cout<<"posici"<<x<<","<<y<<endl;
 	entity->setPosition(x,y);
 	pair<int,int> destinity = this->utils->GetInstance()->getIsometricPosition(x,y);
 	entity->setScreenPosition(destinity.first,destinity.second);
-	//cout<<"screen "<<destinity.first<<","<<destinity.second<<endl;
-
 	entity->walk();
 }
 
