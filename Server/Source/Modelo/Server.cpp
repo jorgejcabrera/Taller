@@ -156,6 +156,19 @@ void Server::notifyClients(){
 		}
 	}
 
+	//mando los nuevos recursos que se crean
+	if(rm->hasNewResource()){
+		pair<int,int> pos = rm->getPosNuevoRecurso();
+		Message* newResourceMessege = new Message(rm->getIdNuevoRecurso(),"newResource",rm->getUltimoTipoCreado(),pos.first,pos.second,0);
+		rm->newResourceSent();
+
+		list<Client*> activeClients= getActiveClients();
+		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+			(*clientIterator)->writeMessagesInQueue(newResourceMessege);
+		}
+
+	}
+
 
 	this->gController->getJuego()->cleanNewProtagonistas();
 	pingMessage();

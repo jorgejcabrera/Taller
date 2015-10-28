@@ -14,6 +14,7 @@ ResourceManager::ResourceManager(Mapa* map){
 	this->oro = cantidadInicial;
 
 	this->notify = false;
+	this->newResource = false;
 
 	this->map = map;
 	this->resources = new list<Resource*>();
@@ -41,7 +42,6 @@ bool ResourceManager::resourceAt(int x,int y){
 
 void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	bool collected = false;
-	this->posRecursoConsumido = *pos;
 
 	//borro el recurso de la lista de recursos y sumo al contador
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
@@ -85,15 +85,27 @@ void ResourceManager::actualizar(){
 
 	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0 && this->resources->size() < maxResources){
 		Resource* nuevoRecurso;
-		if(tipo == 1)
+		if(tipo == 1){
 			nuevoRecurso = new Resource("gold",x,y);
-		if(tipo == 2)
+			this->tipoUltimoCreado = "gold";
+		}
+		if(tipo == 2){
 			nuevoRecurso = new Resource("chori",x,y);
-		if(tipo == 3)
+			this->tipoUltimoCreado = "chori";
+		}
+		if(tipo == 3){
 			nuevoRecurso = new Resource("wood",x,y);
+			this->tipoUltimoCreado = "wood";
+		}
+
+		this->posNuevoRecurso.first = x;
+		this->posNuevoRecurso.second = y;
+		this->IdNuevoRecurso = nuevoRecurso->getId();
+
 
 		this->resources->push_front(nuevoRecurso);
 		this->map->pushEntity(nuevoRecurso);
+		newResource = true;
 	}
 }
 
@@ -121,6 +133,10 @@ int ResourceManager::getIdAEliminar(){
 	return this->IdRecursoAEliminar;
 }
 
+int ResourceManager::getIdNuevoRecurso(){
+	return this->IdNuevoRecurso;
+}
+
 void ResourceManager::setUltimoEnConsumir(string owner){
 	this->ultimoEnConsumir = owner;
 }
@@ -135,6 +151,22 @@ void ResourceManager::setUltimoTipoConsumido(string tipo){
 
 string ResourceManager::getUltimoTipoConsumido(){
 	return this->ultimoTipoConsumido;
+}
+
+bool ResourceManager::hasNewResource(){
+	return this->newResource;
+}
+
+pair<int,int> ResourceManager::getPosNuevoRecurso(){
+	return this->posNuevoRecurso;
+}
+
+string ResourceManager::getUltimoTipoCreado(){
+	return this->tipoUltimoCreado;
+}
+
+void ResourceManager::newResourceSent(){
+	this->newResource = false;
 }
 
 ResourceManager::~ResourceManager() {
