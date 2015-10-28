@@ -26,6 +26,7 @@
 #include "GameSettings.h"
 #include "../Vista/JuegoVista.h"
 #include "../Control/GameController.h"
+#include "../Modelo/ResourceCounter.h"
 #include <ctime>
 
 using namespace std;
@@ -42,6 +43,7 @@ private:
 	GameController* gController;
 	time_t lastReportedClient;
 	time_t lastReportedServer;
+	ResourceCounter* resourceCounter;
 	/*
 	*thread que se encarga de enviar al servidor los mensajes encolados al servidor
 	**/

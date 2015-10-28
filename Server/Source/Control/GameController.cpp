@@ -78,6 +78,7 @@ void GameController::setNextPaths(){
 
 void GameController::actualizarJuego(){
 	this->setNextPaths();
+	//this->juego->getResourceManager()->actualizar();
 }
 
 bool GameController::reiniciarJuego(){

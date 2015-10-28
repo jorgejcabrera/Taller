@@ -16,6 +16,8 @@ Client::Client(string ip, int port, GameController *gControllerNew) {
 	this->gController = gControllerNew;
 	this->lastReportedClient = time(0);
 	this->lastReportedServer = time(0);
+	this->resourceCounter = new ResourceCounter();
+
 }
 
 int Client::connectToServer(){
@@ -128,14 +130,16 @@ void Client::processReceivedMessages(){
 			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			if(imTheOwner){
 				if((*it)->getNombre() == "gold"){
-					this->gController->getResourceCounter()->recolectarOro();
+					this->resourceCounter->recolectarOro();
 				}
 				if((*it)->getNombre() == "wood"){
-					this->gController->getResourceCounter()->recolectarMadera();
+					this->resourceCounter->recolectarMadera();
 				}
 				if((*it)->getNombre() == "chori"){
-					this->gController->getResourceCounter()->recolectarAlimento();
+					this->resourceCounter->recolectarAlimento();
 				}
+
+				cout<<"oro"<<resourceCounter->getOro()<<endl;
 			}
 			
 		}else{
