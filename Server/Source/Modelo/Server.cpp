@@ -74,6 +74,7 @@ int Server::run(void * data){
 
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
+				newClient->writeMessagesInQueue(newClient->getListSeenTilesAsMessages());
 				newClient->connect();
 			}
 	}
@@ -141,6 +142,18 @@ void Server::notifyClients(){
 			}
 		}
 	}
+	//mando que se consumio un recurso
+	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
+	if(rm->hasToNotify()){
+		//el primer y ultimo parametro de este mensaje no me importan
+		Message* resourceMessege = new Message(rm->getIdAEliminar(),"deleteResource","",0,0,0);
+		list<Client*> activeClients= getActiveClients();
+		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+			(*clientIterator)->writeMessagesInQueue(resourceMessege);
+		}
+	}
+
+
 	this->gController->getJuego()->cleanNewProtagonistas();
 	pingMessage();
 }
@@ -215,7 +228,9 @@ void Server::initConnection(Client *newClient){
 					ss << "player "<< userName << " has reconnected";
 					Logger::get()->logInfo("Server","readClientUserName",ss.str());
 					//asigno el cliente
+					list<pair<int,int> > listaTiles = this->clients.at(newClient->getUserName())->getSeenTiles();
 					this->clients.at(newClient->getUserName()) = newClient;
+					newClient->setSeenTiles(listaTiles);
 					notifyClientReconect(newClient->getUserName());
 				}
 			}else{

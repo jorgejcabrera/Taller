@@ -12,6 +12,11 @@ using namespace std;
 EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
 	this->seen = false;
+	this->salud=100;
+}
+
+int EntidadPartidaVista::getSalud(){
+	return this->salud;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){

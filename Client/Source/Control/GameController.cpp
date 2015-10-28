@@ -59,10 +59,8 @@ Message* GameController::getMessageFromEvent(string userId){
 			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				pair<int,int>* offset = this->juegoVista->getOffset();
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
-				//cout << "COORDENADA: x: " << cartesianPosition.first<< " y: "<<cartesianPosition.second<<endl;
-				EntidadPartidaVista* entidad = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
-				//cout << "ENTIDAD: "<< entidad->getPathImage()<< " id: "<< entidad->getId()<<endl;
-
+				map<string,string> entidadMap = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
+				//cout << "CLICKKKK "<< entidadMap.size()<<endl;
 			}
 		}
 
@@ -203,6 +201,10 @@ void GameController::delay(){
 	this->runCycles++;
 	SDL_Delay(50); // para que sean 50 frames x segundos
 	//}
+}
+
+void GameController::deleteEntity(int entityId){
+	this->juegoVista->deleteStaticEntityById(entityId);
 }
 
 GameController::~GameController() {

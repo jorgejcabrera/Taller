@@ -13,9 +13,11 @@ ResourceManager::ResourceManager(Mapa* map){
 	this->madera = cantidadInicial;
 	this->oro = cantidadInicial;
 
+	this->notify = false;
+
 	this->map = map;
 	this->resources = new list<Resource*>();
-	/*Resource* oro = new Resource("gold",9,9);
+	Resource* oro = new Resource("gold",9,9);
 	Resource* chori = new Resource("chori",0,20);
 	Resource* madera = new Resource("wood",20,15);
 
@@ -24,7 +26,7 @@ ResourceManager::ResourceManager(Mapa* map){
 	this->resources->push_front(chori);
 	this->map->pushEntity(chori);
 	this->resources->push_front(madera);
-	this->map->pushEntity(madera);*/
+	this->map->pushEntity(madera);
 }
 
 bool ResourceManager::resourceAt(int x,int y){
@@ -39,10 +41,12 @@ bool ResourceManager::resourceAt(int x,int y){
 
 void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	bool collected = false;
+	this->posRecursoConsumido = *pos;
 
 	//borro el recurso de la lista de recursos y sumo al contador
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
 		if((*it)->getPosition()->first == pos->first && (*it)->getPosition()->second == pos->second){
+			this->IdRecursoAEliminar = (*it)->getId();
 			if((*it)->getName() == "chori") this->alimento++;
 			if((*it)->getName() == "gold") this->oro++;
 			if((*it)->getName() == "wood") this->madera++;
@@ -52,14 +56,17 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 
 	//borro el recurso del mapa
 	list<EntidadPartida*>::iterator it2;
-	for( it2 = this->map->getEntities()->begin(); it2 != this->map->getEntities()->end(); ++it2){
+	bool borrado = false;
+	for( it2 = this->map->getEntities()->begin(); it2 != this->map->getEntities()->end() && ! borrado; ++it2){
 		if((*it2)->getPosition()->first == pos->first && (*it2)->getPosition()->second == pos->second){
 			this->map->getEntities()->erase(it2);
+			borrado = true;
 		}
 	}
 
 	//marco el tile como disponible
 	map->getTileAt(pos->first,pos->second)->changeStatusAvailable();
+	this->notify = true;
 
 	cout<<"madera: "<<madera<<endl;
 	cout<<"oro: "<<oro<<endl;
@@ -67,11 +74,10 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 
 }
 
-//despues lo ponemos
-/*
 void ResourceManager::actualizar(){
 
-	int nRandom = rand() % 18;
+	unsigned int maxResources = 12;
+	int nRandom = rand() % 30;
 
 	//posicion random para el nuevo rescurso
 	GameSettings* gs = GameSettings::GetInstance();
@@ -82,7 +88,7 @@ void ResourceManager::actualizar(){
 	//tipo de recurso random
 	int tipo = (rand()%3 + 1);
 
-	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0){
+	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0 && this->resources->size() < maxResources){
 		Resource* nuevoRecurso;
 		if(tipo == 1)
 			nuevoRecurso = new Resource("gold",x,y);
@@ -94,7 +100,7 @@ void ResourceManager::actualizar(){
 		this->resources->push_front(nuevoRecurso);
 		this->map->pushEntity(nuevoRecurso);
 	}
-}*/
+}
 
 int ResourceManager::getFood(){
 	return this->alimento;
@@ -106,6 +112,18 @@ int ResourceManager::getGold(){
 
 int ResourceManager::getWood(){
 	return this->madera;
+}
+
+bool ResourceManager::hasToNotify(){
+	return this->notify;
+}
+
+void ResourceManager::yaNotifique(){
+	this->notify = false;
+}
+
+int ResourceManager::getIdAEliminar(){
+	return this->IdRecursoAEliminar;
 }
 
 ResourceManager::~ResourceManager() {

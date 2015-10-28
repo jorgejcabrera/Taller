@@ -47,6 +47,7 @@ public:
 	* */
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
 	list<pair<int,int> >getSeenTiles();
+	list<Message*> getListSeenTilesAsMessages();
 	~Client();
 
 };
