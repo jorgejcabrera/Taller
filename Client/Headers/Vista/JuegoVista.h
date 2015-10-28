@@ -40,7 +40,14 @@ private:
 	pair<int,int> offset;
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
+	/*
+	*dibuja todas las entidades dinamicas
+	* */
 	void drawDinamicEntities(int runCycles);
+	/*
+	*dibuja una entidad dinamica
+	* */
+	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles);
 	void drawSemiStaticsEntities(int runCycles);
 	void drawMenu();
 	void drawMiniMap();
@@ -67,9 +74,11 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
+	void deleteStaticEntityById(int id);
 	void setVisibleTile(int x,int y);
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
-	EntidadPartidaVista* entityInThisPosition(int x, int y);
+	map<string,string> entityInThisPosition(int x, int y);
+	map<string,string> buildMapWithEntityData(EntidadPartidaVista* entidad);
 	void actualizarProtagonista();
 	void setFoggedTiles();
 	bool isEnemyEntityVisible(pair< int, int> pos);

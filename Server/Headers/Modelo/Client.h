@@ -40,11 +40,13 @@ public:
 	bool isActive();
 	int getTimeSinceLastReport();
 	void disconect();
+	void connect();
 	int getStatus();
 	/*
 	*agrega los nuevos tiles en la lista de tiles vistos, y luego los devuelve
 	* */
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
+	list<pair<int,int> >getSeenTiles();
 	~Client();
 
 };

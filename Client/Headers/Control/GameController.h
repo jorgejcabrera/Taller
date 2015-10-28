@@ -54,7 +54,7 @@ public:
 
 	/*
 	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
-	**/
+	* */
 	void updatePosition(int id);
 	
 	void render();
@@ -62,8 +62,10 @@ public:
 	/*
 	*transforma eventos de la partida del cliente en mensajes para ser 
 	*enviados alservidor
-	**/
+	* */
 	Message* getMessageFromEvent(string userId);
+
+	void deleteEntity(int entityId);
 	
 	int getRunCycles();
 	

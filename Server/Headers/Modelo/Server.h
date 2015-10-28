@@ -80,6 +80,7 @@ class Server : public Thread{
 		*setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
 		* */ 
 		void setSeenTiles();
+		void sendSeenTiles(string client);
 		~Server();
 };
 

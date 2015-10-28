@@ -96,32 +96,21 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 
 	//personajes que no son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		entidad = (*itDinamicos).second;
-		int offSetX = this->getOffset()->first;
-		int offSetY = this->getOffset()->second;
-		//pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
-
-		entidad->trasladarse();
-		if ( isEnemyEntityVisible(*cartesianPosition) ) {
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
+		drawDinamicEntity(entidad,runCycles);
 		}
-	}
-
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
+		drawDinamicEntity(entidad,runCycles);
+	}
+}
+
+void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
-		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
-
+		pair<int,int> screenPosition = entidad->getScreenPosition();
 		entidad->trasladarse();
 		this->picassoHelper->renderObject(	entidad->getPathImage(),
 											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
@@ -129,7 +118,6 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 											gameSettings->getTileSize(),
 											gameSettings->getTileSize(),
 											entidad->getPositionOfSprite(runCycles));
-	}
 }
 
 void JuegoVista::drawSemiStaticsEntities(int runCycles){
@@ -203,7 +191,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 
-	if(active<0){
+	if((active<0) && (!imTheOwner)){
 		newPersonaje->setPathImage(gameSettings->getEntityConfig("soldadoDesconectado")->getPath());
 	}
 
@@ -264,24 +252,35 @@ void JuegoVista::drawMiniMap() {
 		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
 	}
 
-	list<pair<int,int> > unseenTiles;
-		for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-			if (!(*itTiles)->getSeen()) {
-				unseenTiles.push_front(make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY()));
+
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		this->miniMapVista->makeMiniTilePos((*itTiles)->getPosX(), (*itTiles)->getPosY());
+		if ((*itTiles)->getSeen()){
+			if ( (*itTiles)->getFogged()) {
+				this->picassoHelper->renderFogOfWar(this->gameSettings->getPathOfFoggedTile(),
+																this->miniMapVista->getTilePosX(),
+																this->miniMapVista->getTilePosY(),
+																this->miniMapVista->getMiniTileSize(),
+																this->miniMapVista->getMiniTileSize()/2);
 			}
+		} else {
+			this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
+																this->miniMapVista->getTilePosX(),
+																this->miniMapVista->getTilePosY(),
+																this->miniMapVista->getMiniTileSize(),
+																this->miniMapVista->getMiniTileSize());
 		}
+	}
 
-		for(list<pair<int,int> >::iterator it = unseenTiles.begin(); it!=unseenTiles.end(); ++it){
+/*			list<pair<int,int> > unseenTiles;
+ * 			for(list<pair<int,int> >::iterator it = unseenTiles.begin(); it!=unseenTiles.end(); ++it){
 			this->miniMapVista->makeMiniTilePos((*it).first, (*it).second);
-					this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
-														this->miniMapVista->getTilePosX(),
-														this->miniMapVista->getTilePosY(),
-														this->miniMapVista->getMiniTileSize(),
-														this->miniMapVista->getMiniTileSize());
 		}
+				unseenTiles.push_front(make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY()));
 
-
+*/
 }
+
 
 map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 	return &this->misPersonajes;
@@ -302,22 +301,39 @@ EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	}
 }
 
-EntidadPartidaVista* JuegoVista::entityInThisPosition(int x, int y){
+map<string,string> JuegoVista::buildMapWithEntityData(EntidadPartidaVista* entidad){
+	map<string,string> mapInThisPosition = map<string,string>();
+	stringstream ss;
+	ss.str("");
+	ss<<entidad->getId();
+	mapInThisPosition.insert(make_pair("id",ss.str()));
+	mapInThisPosition.insert(make_pair("name", entidad->getName()));
+	mapInThisPosition.insert(make_pair("path", entidad->getPathImage()));
+	ss.str("");
+	ss<<entidad->getSalud();
+	mapInThisPosition.insert(make_pair("salud", ss.str()));
+	return mapInThisPosition;
+}
+
+
+void JuegoVista::deleteStaticEntityById(int id){
+	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
+	this->buildings.erase(itEstaticos);
+}
+
+map<string,string> JuegoVista::entityInThisPosition(int x, int y){
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
-			//cout << "1- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
-			return (*itDinamicos).second;
+			return this->buildMapWithEntityData((*itDinamicos).second);
 		}
 	}
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
-			//cout << "2- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
-			return (*itDinamicos).second;
+			return this->buildMapWithEntityData((*itDinamicos).second);
 		}
-	}		//escuchamos eventos y los mandamos al server
-
+	}
 
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
 		pair<int,int>* entityPosition = (*itEstaticos).second->getPosition();
@@ -325,8 +341,7 @@ EntidadPartidaVista* JuegoVista::entityInThisPosition(int x, int y){
 		int length = (*itEstaticos).second->getLength();
 		if(entityPosition->first<=x and (entityPosition->first+width-1)>=x){
 			if(entityPosition->second<=y and (entityPosition->second+length-1)>=y){
-				//cout << "3- juegoVista first "<< entityPosition->first << (entityPosition->first+width-1) << " x "<< x << " second " << entityPosition->second << (entityPosition->second+length-1)<< " y " <<y<<endl;
-				return (*itEstaticos).second;
+				return this->buildMapWithEntityData((*itEstaticos).second);
 			}
 		}
 	}
@@ -334,11 +349,11 @@ EntidadPartidaVista* JuegoVista::entityInThisPosition(int x, int y){
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiDinamicos = this->semiEstaticos.begin(); itSemiDinamicos!=this->semiEstaticos.end(); ++itSemiDinamicos){
 		pair<int,int>* entityPosition = (*itSemiDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
-			//cout << "4- juegoVista first "<< entityPosition->first<< " x "<< x << " second " << entityPosition->second << " y " <<y<<endl;
-			return (*itSemiDinamicos).second;
+			return this->buildMapWithEntityData((*itSemiDinamicos).second);
 		}
 	}
-	return new EntidadPartidaVista();
+	map<string,string> mapEmpty = map<string,string>();
+	return mapEmpty;
 }
 
 void JuegoVista::setVisibleTile(int x,int y) {
