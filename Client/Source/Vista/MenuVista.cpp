@@ -76,7 +76,7 @@ void MenuVista::drawEntityDescription() {
 														0, 0,0);
 			offsetY = offsetY+alturaDeLetra;
 		}else{
-			PicassoHelper::GetInstance()->renderObject(strings.at("path"),30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
+			PicassoHelper::GetInstance()->renderObject((*it).second,30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
 		}
 	}
 	
