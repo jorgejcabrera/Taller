@@ -101,28 +101,34 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 	//personajes que no son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
-		drawDinamicEntity(entidad,runCycles);
+		drawDinamicEntity(entidad,runCycles,false);
 		}
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
-		drawDinamicEntity(entidad,runCycles);
+		drawDinamicEntity(entidad,runCycles,true);
 	}
 }
 
-void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles){
+void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,bool isMyEntity){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = entidad->getScreenPosition();
 		entidad->trasladarse();
-		this->picassoHelper->renderObject(	entidad->getPathImage(),
-											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-											screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-											gameSettings->getTileSize(),
-											gameSettings->getTileSize(),
-											entidad->getPositionOfSprite(runCycles));
-}
+		bool drawEntity = true;
+		/*if(!isMyEntity){
+			drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
+		}*/
+		if(drawEntity){			
+			this->picassoHelper->renderObject(	entidad->getPathImage(),
+												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+												gameSettings->getTileSize(),
+												gameSettings->getTileSize(),
+												entidad->getPositionOfSprite(runCycles));
+		}
+	}
 
 void JuegoVista::drawSemiStaticsEntities(int runCycles){
 	pair<int,int> isometricPosition;

@@ -47,7 +47,7 @@ private:
 	/*
 	*dibuja una entidad dinamica
 	* */
-	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles);
+	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles,bool isMyEntity);
 	void drawSemiStaticsEntities(int runCycles);
 	void drawMenu();
 	void drawMiniMap();
