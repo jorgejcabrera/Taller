@@ -294,10 +294,10 @@ Server::~Server() {
 	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
 	}
-	this->gameSettings = NULL;
-	this->gController = NULL;
+	//this->gameSettings = NULL;
+	//this->gController = NULL;
 	readQueue->~SocketQueue();
-	delete(this->readQueue);
+	//delete(this->readQueue);
 	close(this->serverSocket);
 }
 
