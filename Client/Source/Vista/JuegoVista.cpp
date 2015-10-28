@@ -112,6 +112,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		}
 	}
 
+
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
