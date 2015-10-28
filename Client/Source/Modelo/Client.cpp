@@ -123,6 +123,9 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "fog"){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
 
+		}else if (tipoMensaje == "deleteResourse"){
+			this->gController->deleteEntity((*it)->getId());
+			
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;

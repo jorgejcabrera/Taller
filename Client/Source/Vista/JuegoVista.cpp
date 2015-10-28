@@ -96,32 +96,21 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 
 	//personajes que no son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		entidad = (*itDinamicos).second;
-		int offSetX = this->getOffset()->first;
-		int offSetY = this->getOffset()->second;
-		//pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
-
-		entidad->trasladarse();
-		if ( isEnemyEntityVisible(*cartesianPosition) ) {
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
+		drawDinamicEntity(entidad,runCycles);
 		}
-	}
-
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
+		drawDinamicEntity(entidad,runCycles);
+	}
+}
+
+void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
-		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
-
+		pair<int,int> screenPosition = entidad->getScreenPosition();
 		entidad->trasladarse();
 		this->picassoHelper->renderObject(	entidad->getPathImage(),
 											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
@@ -129,7 +118,6 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 											gameSettings->getTileSize(),
 											gameSettings->getTileSize(),
 											entidad->getPositionOfSprite(runCycles));
-	}
 }
 
 void JuegoVista::drawSemiStaticsEntities(int runCycles){
@@ -328,8 +316,12 @@ map<string,string> JuegoVista::buildMapWithEntityData(EntidadPartidaVista* entid
 }
 
 
-map<string,string> JuegoVista::entityInThisPosition(int x, int y){
+void JuegoVista::deleteStaticEntityById(int id){
+	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
+	this->buildings.erase(itEstaticos);
+}
 
+map<string,string> JuegoVista::entityInThisPosition(int x, int y){
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
