@@ -28,6 +28,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->camino = new list<pair<int,int> >();
 	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
 	this->cicloActual = 0;
+	this->newPath = false;
 }
 
 void EntidadDinamica::setOwner(string ownerId){
@@ -52,6 +53,7 @@ void EntidadDinamica::nextPosition(){
 			pair<int,int> nextTile = camino->front();
 			camino->pop_front();
 			this->setNotifiable(true);
+			this->newPath = false;
 
 			this->setPosition(nextTile.first,nextTile.second);
 		}
@@ -205,6 +207,14 @@ void EntidadDinamica::trasladarse(){
 
 void EntidadDinamica::destruir(){
 	this->~EntidadDinamica();
+}
+
+void EntidadDinamica::setPathIsNew(bool es){
+	this->newPath = es;
+}
+
+bool EntidadDinamica::pathIsNew(){
+	return this->pathIsNew();
 }
 
 EntidadDinamica::~EntidadDinamica() {

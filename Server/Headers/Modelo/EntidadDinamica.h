@@ -41,6 +41,7 @@ class EntidadDinamica: public EntidadPartida {
 		string owner;
 		list<pair<int,int> >* camino;
 		bool notifiable;
+		bool newPath;
 		int ciclos;
 		int cicloActual;
 
@@ -69,6 +70,8 @@ class EntidadDinamica: public EntidadPartida {
 		void trasladarse();
 		bool isWalking();
 		void setNotifiable(bool notifiable);
+		void setPathIsNew(bool esNuevo);
+		bool pathIsNew();
 		bool hasToNotify();
 };
 

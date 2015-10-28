@@ -75,6 +75,8 @@ public:
 	
 	void delay();
 	
+	void resetPath(int id);
+
 	JuegoVista* getJuegoVista();
 };
 

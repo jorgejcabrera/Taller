@@ -92,7 +92,12 @@ JuegoVista* GameController::getJuegoVista(){
 
 void GameController::actualizarJuego(){
 	//juegoVista->actualizarProtagonista();
-	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getMyEntities();
+	map<int,EntidadDinamicaVista*>* misEntidades = this->juegoVista->getMyEntities();
+	for(map<int,EntidadDinamicaVista*>::iterator it = misEntidades->begin(); it !=misEntidades->end(); ++it){
+		updatePosition((*it).second->getId());
+	}
+
+	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getPersonajes();
 	for(map<int,EntidadDinamicaVista*>::iterator it = entidades->begin(); it !=entidades->end(); ++it){
 		updatePosition((*it).second->getId());
 	}
@@ -187,6 +192,11 @@ void GameController::updatePosition(int id){
 void GameController::addTileToCharacter(int id,int x,int y){
 	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
 	entity->addTileToPath(x,y);
+}
+
+void GameController::resetPath(int id){
+	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+	entity->getCamino()->clear();
 }
 
 void GameController::delay(){

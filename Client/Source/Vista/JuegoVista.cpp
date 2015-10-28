@@ -101,10 +101,9 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		if ( isEnemyEntityVisible(*cartesianPosition) ) {
-
-			if( entidad->isWalking() ){
-				entidad->trasladarse();
+		if( entidad->isWalking() ){
+			entidad->trasladarse();
+			if ( isEnemyEntityVisible(*cartesianPosition) ) {
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
@@ -112,7 +111,9 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 													gameSettings->getTileSize(),
 													entidad->getPositionOfSprite(runCycles));
 				screenPosition = entidad->getScreenPosition();
-			}else{
+			}
+		}else{
+			if ( isEnemyEntityVisible(*cartesianPosition) ) {
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
@@ -122,6 +123,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 			}
 		}
 	}
+
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
@@ -303,6 +305,10 @@ void JuegoVista::drawMiniMap() {
 
 map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 	return &this->misPersonajes;
+}
+
+map<int,EntidadDinamicaVista*>* JuegoVista::getPersonajes(){
+	return &this->personajes;
 }
 
 EntidadDinamicaVista* JuegoVista::getEntityById(int id){
