@@ -120,6 +120,7 @@ void Server::notifyClients(){
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
 		if (it->second->hasToNotify()){
 			Message *messageUpdate = new Message(it->second->getId(), it->second->getPosition()->first, it->second->getPosition()->second);
+			//messageUpdate->setAsNewPath(it->second->pathIsNew());
 			list<Client*> activeClients= getActiveClients();
 			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 				(*clientIterator)->writeMessagesInQueue(messageUpdate);

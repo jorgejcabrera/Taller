@@ -194,6 +194,11 @@ void GameController::addTileToCharacter(int id,int x,int y){
 	entity->addTileToPath(x,y);
 }
 
+void GameController::resetPath(int id){
+	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+	entity->getCamino()->clear();
+}
+
 void GameController::delay(){
 	this->runCycles++;
 	SDL_Delay(50); // para que sean 50 frames x segundos
