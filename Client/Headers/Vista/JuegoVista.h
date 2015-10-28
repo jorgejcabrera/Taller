@@ -74,6 +74,7 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
+	void deleteStaticEntityById(int id);
 	void setVisibleTile(int x,int y);
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
 	EntidadPartidaVista* entityInThisPosition(int x, int y);

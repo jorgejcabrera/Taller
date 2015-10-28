@@ -301,6 +301,11 @@ EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	}
 }
 
+void JuegoVista::deleteStaticEntityById(int id){
+	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
+	this->buildings.erase(itEstaticos);
+}
+
 EntidadPartidaVista* JuegoVista::entityInThisPosition(int x, int y){
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();

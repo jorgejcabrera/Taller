@@ -205,6 +205,10 @@ void GameController::delay(){
 	//}
 }
 
+void GameController::deleteEntity(int entityId){
+	this->juegoVista->deleteStaticEntityById(entityId);
+}
+
 GameController::~GameController() {
 	//TODO: ver si no es necesario ejecutar el destructor de juego Vista
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
