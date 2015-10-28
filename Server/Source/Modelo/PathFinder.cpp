@@ -18,8 +18,7 @@ PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap,ResourceManager* rm
 	this->candidatos = new list<candidato>();
 	this->resourceManager = rm;
 
-	// DESCOMENTAR CUANDO ESTE RESOURCE MANAGER
-	if( ! positionAvailable(destinoX,destinoY) /*&& ! resourceManager->resourceAt(dX,dY)*/){
+	if( ! positionAvailable(destinoX,destinoY) && ! resourceManager->resourceAt(dX,dY)){
 		pair<int,int> nuevoDestino = getClosestAvailable(destinoX,destinoY);
 		this->destinoX = nuevoDestino.first;
 		this->destinoY = nuevoDestino.second;
@@ -164,8 +163,7 @@ bool PathFinder::positionAvailable(int x,int y){
 	if(x < 0 || y < 0) return false;
 	if(x > gameSettings->MAP_HEIGHT - 1 || y > gameSettings->MAP_WIDTH -1) return false;
 
-	//ACA HAY QUE DESCOMENTAR resourceAt cuando este lo del resourcemanager
-	return (this->map->getTileAt(x,y)->isAvailable() /*|| resourceManager->resourceAt(x,y)*/);
+	return (this->map->getTileAt(x,y)->isAvailable() || resourceManager->resourceAt(x,y));
 }
 
 list<pair<int,int> >* PathFinder::buscarCamino(){

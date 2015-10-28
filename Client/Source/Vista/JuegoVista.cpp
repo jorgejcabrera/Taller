@@ -100,7 +100,9 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		entidad = (*itDinamicos).second;
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
-		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
+		//pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
+		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
+
 		entidad->trasladarse();
 		if ( isEnemyEntityVisible(*cartesianPosition) ) {
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
@@ -119,6 +121,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
+
 		entidad->trasladarse();
 		this->picassoHelper->renderObject(	entidad->getPathImage(),
 											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
@@ -261,24 +264,35 @@ void JuegoVista::drawMiniMap() {
 		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
 	}
 
-	list<pair<int,int> > unseenTiles;
-		for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-			if (!(*itTiles)->getSeen()) {
-				unseenTiles.push_front(make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY()));
+
+	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+		this->miniMapVista->makeMiniTilePos((*itTiles)->getPosX(), (*itTiles)->getPosY());
+		if ((*itTiles)->getSeen()){
+			if ( (*itTiles)->getFogged()) {
+				this->picassoHelper->renderFogOfWar(this->gameSettings->getPathOfFoggedTile(),
+																this->miniMapVista->getTilePosX(),
+																this->miniMapVista->getTilePosY(),
+																this->miniMapVista->getMiniTileSize(),
+																this->miniMapVista->getMiniTileSize()/2);
 			}
+		} else {
+			this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
+																this->miniMapVista->getTilePosX(),
+																this->miniMapVista->getTilePosY(),
+																this->miniMapVista->getMiniTileSize(),
+																this->miniMapVista->getMiniTileSize());
 		}
+	}
 
-		for(list<pair<int,int> >::iterator it = unseenTiles.begin(); it!=unseenTiles.end(); ++it){
+/*			list<pair<int,int> > unseenTiles;
+ * 			for(list<pair<int,int> >::iterator it = unseenTiles.begin(); it!=unseenTiles.end(); ++it){
 			this->miniMapVista->makeMiniTilePos((*it).first, (*it).second);
-					this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
-														this->miniMapVista->getTilePosX(),
-														this->miniMapVista->getTilePosY(),
-														this->miniMapVista->getMiniTileSize(),
-														this->miniMapVista->getMiniTileSize());
 		}
+				unseenTiles.push_front(make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY()));
 
-
+*/
 }
+
 
 map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 	return &this->misPersonajes;

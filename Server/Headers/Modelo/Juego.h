@@ -45,6 +45,7 @@ public:
 	list<EntidadDinamica*>* getNewProtagonistasToNotify();
 	pair<int,int>* getPositionOfProtagonistaById(int idBuscado);
 	void cleanNewProtagonistas();
+	ResourceManager* getResourceManager();
 
 	void agregarProtagonista(string owner);
 };
