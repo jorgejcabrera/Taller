@@ -47,9 +47,9 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
 		if((*it)->getPosition()->first == pos->first && (*it)->getPosition()->second == pos->second){
 			this->IdRecursoAEliminar = (*it)->getId();
-			if((*it)->getName() == "chori") this->alimento++;
-			if((*it)->getName() == "gold") this->oro++;
-			if((*it)->getName() == "wood") this->madera++;
+			if((*it)->getName() == "chori") setUltimoTipoConsumido("chori");
+			if((*it)->getName() == "gold") setUltimoTipoConsumido("gold");
+			if((*it)->getName() == "wood") setUltimoTipoConsumido("wood");
 			this->resources->erase(it);
 			collected = true;
 		}
@@ -67,11 +67,6 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	//marco el tile como disponible
 	map->getTileAt(pos->first,pos->second)->changeStatusAvailable();
 	this->notify = true;
-
-	cout<<"madera: "<<madera<<endl;
-	cout<<"oro: "<<oro<<endl;
-	cout<<"alimento: "<<alimento<<endl;
-
 }
 
 void ResourceManager::actualizar(){
@@ -124,6 +119,22 @@ void ResourceManager::yaNotifique(){
 
 int ResourceManager::getIdAEliminar(){
 	return this->IdRecursoAEliminar;
+}
+
+void ResourceManager::setUltimoEnConsumir(string owner){
+	this->ultimoEnConsumir = owner;
+}
+
+string ResourceManager::getUltimoEnConsumir(){
+	return this->ultimoEnConsumir;
+}
+
+void ResourceManager::setUltimoTipoConsumido(string tipo){
+	this->ultimoTipoConsumido = tipo;
+}
+
+string ResourceManager::getUltimoTipoConsumido(){
+	return this->ultimoTipoConsumido;
 }
 
 ResourceManager::~ResourceManager() {

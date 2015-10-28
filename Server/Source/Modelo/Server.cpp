@@ -145,9 +145,11 @@ void Server::notifyClients(){
 	//mando que se consumio un recurso
 	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasToNotify()){
-		//el primer y ultimo parametro de este mensaje no me importan
-		Message* resourceMessege = new Message(rm->getIdAEliminar(),"deleteResource","",0,0,0);
+		//a los ultimos 3 parametros del mensaje no les doy bola
+		Message* resourceMessege = new Message(rm->getIdAEliminar(),"deleteResource",rm->getUltimoTipoConsumido(),0,0,0);
 		rm->yaNotifique();
+		resourceMessege->setOwner(rm->getUltimoEnConsumir());
+
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(resourceMessege);

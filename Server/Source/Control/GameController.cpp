@@ -64,6 +64,7 @@ void GameController::setNextPaths(){
 		pair<int,int>* pos = (*it).second->getPosition();
 		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos->first,pos->second)){
 			this->juego->getResourceManager()->collectResourceAt(pos);
+			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
 		}
 
 		(*it).second->nextPosition();

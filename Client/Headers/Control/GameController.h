@@ -15,6 +15,7 @@
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
+#include "../Modelo/ResourceCounter.h"
 
 class GameController {
 
@@ -30,6 +31,7 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
+	ResourceCounter* resourceCounter;
 	
 	/*
 	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
@@ -78,6 +80,8 @@ public:
 	void delay();
 	
 	void resetPath(int id);
+
+	ResourceCounter* getResourceCounter();
 
 	JuegoVista* getJuegoVista();
 };

@@ -18,6 +18,7 @@ GameController::GameController(){
 	this->posMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
+	this->resourceCounter = new ResourceCounter();
 }
 
 Message* GameController::getMessageFromEvent(string userId){
@@ -209,6 +210,10 @@ void GameController::delay(){
 
 void GameController::deleteEntity(int entityId){
 	this->juegoVista->deleteStaticEntityById(entityId);
+}
+
+ResourceCounter* GameController::getResourceCounter(){
+	return this->resourceCounter;
 }
 
 GameController::~GameController() {

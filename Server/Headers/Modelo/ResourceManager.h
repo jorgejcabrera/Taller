@@ -26,6 +26,8 @@ private:
 	int alimento;
 	bool notify;
 	pair<int,int> posRecursoConsumido;
+	string ultimoEnConsumir;
+	string ultimoTipoConsumido;
 public:
 	void collectResourceAt(pair<int,int>* pos);
 	ResourceManager(Mapa* map);
@@ -34,6 +36,12 @@ public:
 	bool hasToNotify();
 	void yaNotifique();
 	pair<int,int> getPosRecursoConsumido();
+	//setea el ultimo usuario en consumir un recurso
+	void setUltimoEnConsumir(string owner);
+	string getUltimoEnConsumir();
+	//setea el ultimo tipo consumido (madera,oro o alimento)
+	void setUltimoTipoConsumido(string tipo);
+	string getUltimoTipoConsumido();
 	int getIdAEliminar();
 	int getGold();
 	int getWood();

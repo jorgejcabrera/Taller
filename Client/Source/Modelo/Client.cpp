@@ -125,6 +125,18 @@ void Client::processReceivedMessages(){
 
 		}else if (tipoMensaje == "deleteResource"){
 			this->gController->deleteEntity((*it)->getId());
+			bool imTheOwner= ((*it)->getOwner() == this->userName);
+			if(imTheOwner){
+				if((*it)->getNombre() == "gold"){
+					this->gController->getResourceCounter()->recolectarOro();
+				}
+				if((*it)->getNombre() == "wood"){
+					this->gController->getResourceCounter()->recolectarMadera();
+				}
+				if((*it)->getNombre() == "chori"){
+					this->gController->getResourceCounter()->recolectarAlimento();
+				}
+			}
 			
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
