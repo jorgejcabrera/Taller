@@ -179,7 +179,7 @@ pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
 
 void GameController::updatePosition(int id){
 	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
-	if(! entity->getCamino()->empty() && ! entity->isWalking()){
+	if( !(entity->getCamino()->empty()) && !(entity->isWalking())){
 		pair<int,int> nuevaPos = entity->getCamino()->front();
 		entity->getCamino()->pop_front();
 

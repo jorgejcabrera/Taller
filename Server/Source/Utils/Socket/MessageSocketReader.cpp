@@ -40,7 +40,6 @@ list<Message*> MessageSocketReader::getMessagePendingProcess(){
 
 Message* MessageSocketReader::readMessageNow(){
 	Message *userName = this->socket->readMessage();
-	cout << userName->toString();
 	return userName;
 }
 

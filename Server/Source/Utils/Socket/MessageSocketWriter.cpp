@@ -18,7 +18,7 @@ void MessageSocketWriter::writeMessage(Message *msg){
 }
 
 int MessageSocketWriter::run(void* data){
-	cout << "MessageSocketWriter running! "<<endl;
+	Logger::get()->logInfo("MessageSocketWriter","run","writer thread is running");
 	while(this->isAlive){
 		stringstream ss;
 		while(!this->queue->isEmpty()){

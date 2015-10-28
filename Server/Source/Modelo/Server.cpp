@@ -51,7 +51,6 @@ bool Server::isRunning(){
 }
 
 int Server::run(void * data){
-	cout << "RUN" <<endl;
 	//TODO: esto deberia ser while true?
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
@@ -295,10 +294,10 @@ Server::~Server() {
 	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
 	}
-	this->gameSettings = NULL;
-	this->gController = NULL;
+	//this->gameSettings = NULL;
+	//this->gController = NULL;
 	readQueue->~SocketQueue();
-	delete(this->readQueue);
+	//delete(this->readQueue);
 	close(this->serverSocket);
 }
 

@@ -20,7 +20,6 @@ Juego::Juego() {
 void Juego::agregarProtagonista(string owner){
 	//TODO revisar que le ponemos en tipo
 	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition();
-	cout << "Posicion del protagonista: X: "<< positionOfProtagonista.first << " Y: " <<positionOfProtagonista.second << endl;
 	EntidadDinamica *protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
 				gameSettings->getVelocidadPersonaje(),
 				positionOfProtagonista.first,
