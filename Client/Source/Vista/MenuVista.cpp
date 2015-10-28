@@ -31,6 +31,7 @@ void MenuVista::drawMe() {
 	for (int i = 0 ; i <= GameSettings::GetInstance()->getScreenWidth() ; i = i + this->littleStripSise ) {
 		PicassoHelper::GetInstance()->renderObject(pathImage, i, 0, this->mediumStripSise, this->mediumStripSise);
 	}
+	if (this->drawDescription) this->drawEntityDescription();
 }
 
 string MenuVista::getPath() {
@@ -47,7 +48,17 @@ int MenuVista::getMiniMapHeight() {
 	return this->miniMapHeight;
 }
 
-void MenuVista::drawEntityDescription(map<string,string> strings) {
+void MenuVista::deselectedEntity() {
+	this->strings.clear();
+	this->drawDescription = false;
+}
+
+void MenuVista::setSelectedEntityDescription(map<string,string> description) {
+	this->strings = description;
+	this->drawDescription = true;
+}
+
+void MenuVista::drawEntityDescription() {
 	int offsetY = 0;
 	int alturaDeLetra = this->bigHeight/strings.size();
 	string text;

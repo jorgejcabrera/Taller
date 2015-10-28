@@ -17,13 +17,16 @@ namespace std {
 class MenuVista {
 
 private:
-	string pathImage = "../../Taller/Images/Menu/Menu3.jpg";
-	string pathPergamino = "../../Taller/Images/Menu/pergamino.jpg";
-	int bigHeight = 120;
-	int littleStripSise = 10;
-	int mediumStripSise = 20;
-	int miniMapWidth ;
-	int miniMapHeight = 0;
+	string pathImage;
+	string pathPergamino;
+	int bigHeight;
+	int littleStripSise;
+	int mediumStripSise;
+	int miniMapWidth;
+	int miniMapHeight;
+	bool drawDescription;
+	map<string,string> strings;
+
 
 public:
 	MenuVista();
@@ -33,7 +36,9 @@ public:
 	int getPosY();
 	int getMiniMapWidht();
 	int getMiniMapHeight();
-	void drawEntityDescription(map<string,string> strings);
+	void drawEntityDescription();
+	void deselectedEntity();
+	void setSelectedEntityDescription(map<string,string> description);
 	virtual ~MenuVista();
 };
 
