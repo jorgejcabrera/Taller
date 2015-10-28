@@ -33,6 +33,7 @@ public:
 	int getPosY();
 	int getMiniMapWidht();
 	int getMiniMapHeight();
+	void drawEntityDescription(map<string,string> strings);
 	virtual ~MenuVista();
 };
 

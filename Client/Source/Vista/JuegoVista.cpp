@@ -27,6 +27,12 @@ void JuegoVista::render(int runCycles){
 	this->drawSemiStaticsEntities(runCycles);
 	this->drawFog();
 	this->drawMenu();
+	map<string,string> map;
+	map["id"] = "1";
+	map["name"] = "soldado";
+	map["salud"] = "100";
+	map["path"] = "taller/imagen/server.jpg";
+	this->menuVista->drawEntityDescription(map);
 	this->drawMiniMap();
 	this->picassoHelper->renderView();
 }
