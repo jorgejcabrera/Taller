@@ -138,9 +138,13 @@ void Client::processReceivedMessages(){
 				if((*it)->getNombre() == "chori"){
 					this->resourceCounter->recolectarAlimento();
 				}
-
-				cout<<"oro"<<resourceCounter->getOro()<<endl;
 			}
+
+		}else if (tipoMensaje == "newResource"){
+			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
+															(*it)->getNombre(),
+															(*it)->getPositionX(),
+															(*it)->getPositionY());
 			
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
