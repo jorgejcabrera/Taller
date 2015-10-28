@@ -117,9 +117,9 @@ void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,
 		pair<int,int> screenPosition = entidad->getScreenPosition();
 		entidad->trasladarse();
 		bool drawEntity = true;
-		/*if(!isMyEntity){
+		if(!isMyEntity){
 			drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
-		}*/
+		}
 		if(drawEntity){			
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
 												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
