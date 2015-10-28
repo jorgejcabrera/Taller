@@ -56,11 +56,11 @@ pair<int,int>* Juego::getPositionOfProtagonistaById(int idBuscado){
 	return this->protagonistas.at(idBuscado)->getPosition();
 }
 
-void Juego::actualizarProtagonistas(){
+/*void Juego::actualizarProtagonistas(){
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
 		(*it).second->trasladarse();
 	}
-}
+}*/
 
 string Juego::getCurrentAge(){
 	return this->currentAge;

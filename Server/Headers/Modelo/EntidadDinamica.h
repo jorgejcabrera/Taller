@@ -70,7 +70,6 @@ class EntidadDinamica: public EntidadPartida {
 		list<pair<int,int> >* getCamino();
 		Direccion getDireccion();
 		void setScreenPosition(float x, float y);
-		void trasladarse();
 		bool isWalking();
 		void setNotifiable(bool notifiable);
 		void setPathIsNew(bool esNuevo);

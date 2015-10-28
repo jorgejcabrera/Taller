@@ -177,35 +177,6 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 	this->vecVelocity.second = velocidad * seno;
 }
 
-void EntidadDinamica::trasladarse(){
-	//TODO porque se llama screenPosition? es de pantalla o es donde se va moviendo?
-	/*if(distanciaEnX(destinoX) <= vecVelocity.first){
-			screenPosition.first = destinoX;
-			//Logger::get()->logDebug("a","b","mira como me ajusto X");
-	}
-
-	if(distanciaEnY(destinoY) <= vecVelocity.second){
-			screenPosition.second = destinoY;
-			//Logger::get()->logDebug("a","b","mira como me ajusto Y");
-	}
-
-	if(distanciaEnX(destinoX) <= vecVelocity.first && distanciaEnY(destinoY) <= vecVelocity.first)
-		caminando = false;
-
-	if(caminando){
-		//Logger::get()->logDebug("a","b","mira como camino");
-		if(screenPosition.first > destinoX)
-			screenPosition.first -= vecVelocity.first;
-		if(screenPosition.first < destinoX)
-			screenPosition.first += vecVelocity.first;
-		if(screenPosition.second > destinoY)
-			screenPosition.second -= vecVelocity.second;
-		if(screenPosition.second < destinoY)
-			screenPosition.second += vecVelocity.second;
-	}
-	*/
-}
-
 void EntidadDinamica::destruir(){
 	this->~EntidadDinamica();
 }
@@ -222,6 +193,6 @@ EntidadDinamica::~EntidadDinamica() {
 }
 
 bool EntidadDinamica::isWalking(){
-	//return this->caminando;
-	return this->camino->empty() == false;
+	return this->caminando;
+	//return this->camino->empty() == false;
 }

@@ -39,7 +39,8 @@ public:
 	string getCurrentAge();
 	void setProtagonistaAt(int velocidad,int x,int y);
 	void setDestinoProtagonista(int idProtagonista, int x,int y);
-	void actualizarProtagonistas();
+	/*
+	void actualizarProtagonistas();*/
 	bool getStatusPartida();
 	map<int,EntidadDinamica*> getProtagonistas();
 	list<EntidadDinamica*>* getNewProtagonistasToNotify();
