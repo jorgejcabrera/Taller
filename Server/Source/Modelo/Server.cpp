@@ -74,6 +74,7 @@ int Server::run(void * data){
 
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
+				newClient->writeMessagesInQueue(newClient->getListSeenTilesAsMessages());
 				newClient->connect();
 			}
 	}
@@ -215,7 +216,9 @@ void Server::initConnection(Client *newClient){
 					ss << "player "<< userName << " has reconnected";
 					Logger::get()->logInfo("Server","readClientUserName",ss.str());
 					//asigno el cliente
+					list<pair<int,int> > listaTiles = this->clients.at(newClient->getUserName())->getSeenTiles();
 					this->clients.at(newClient->getUserName()) = newClient;
+					newClient->setSeenTiles(listaTiles);
 					notifyClientReconect(newClient->getUserName());
 				}
 			}else{

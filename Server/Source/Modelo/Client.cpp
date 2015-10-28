@@ -100,6 +100,16 @@ list<pair<int,int> > Client::getSeenTiles() {
 	return this->seenTiles;
 }
 
+list<Message*> Client::getListSeenTilesAsMessages(){
+	list<Message*> tilesVistos;
+	for(list<pair<int,int> >::iterator tilesIte=seenTiles.begin(); tilesIte!=seenTiles.end();++tilesIte){
+		Message* msg = new Message();
+		msg->activeTile((*tilesIte).first,(*tilesIte).second);
+		tilesVistos.push_back(msg);
+	}
+	return tilesVistos;
+}
+
 Client::~Client() {
 	this->writeThread->shutDown();
 	this->readThread->shutDown();
