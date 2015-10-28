@@ -51,7 +51,6 @@ bool Server::isRunning(){
 }
 
 int Server::run(void * data){
-	cout << "RUN" <<endl;
 	//TODO: esto deberia ser while true?
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);

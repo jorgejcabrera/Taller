@@ -8,53 +8,56 @@
 
 /* Defines */
 #define NUM_DOTS 1024
+#define TCSANOW 1
 
 /* Includes */
 #include "../Headers/Control/GameController.h"
 #include "../Headers/Modelo/Server.h"
-#include <stdio.h>
-#include <unistd.h>
 #include <ctime>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/select.h>
+#include <termios.h>
 
 using namespace std;
 
-/*int kbhit(){
-    struct timeval tv;
-    fd_set fds;
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
-    FD_ZERO(&fds);
-    FD_SET(STDIN_FILENO, &fds); //STDIN_FILENO is 0
-    select(STDIN_FILENO+1, &fds, NULL, NULL, &tv);
-    return FD_ISSET(STDIN_FILENO, &fds);
+struct termios orig_termios;
+
+void reset_terminal_mode(){
+    tcsetattr(0, TCSANOW, &orig_termios);
 }
 
-void nonblock(int state){
-    struct termios ttystate;
-    int VMIN = 0;
-    int ICANON = 0;
-    int NB_ENABLE = 1;
-    int NB_DISABLE = 0;
-    int TCSANOW = 0;
-    //get the terminal state
-    tcgetattr(STDIN_FILENO, &ttystate);
- 
-    if (state==NB_ENABLE)
-    {
-        //turn off canonical mode
-        ttystate.c_lflag &= ~ICANON;
-        //minimum of number input read.
-        ttystate.c_cc[VMIN] = 1;
+void set_conio_terminal_mode(){
+    struct termios new_termios;
+
+    /* take two copies - one for now, one for later */
+    tcgetattr(0, &orig_termios);
+    memcpy(&new_termios, &orig_termios, sizeof(new_termios));
+
+    /* register cleanup handler, and set the new terminal mode */
+    atexit(reset_terminal_mode);
+    cfmakeraw(&new_termios);
+    tcsetattr(0, TCSANOW, &new_termios);
+}
+
+int kbhit(){
+    struct timeval tv = { 0L, 0L };
+    fd_set fds;
+    FD_ZERO(&fds);
+    FD_SET(0, &fds);
+    return select(1, &fds, NULL, NULL, &tv);
+}
+
+int getch(){
+    int r;
+    unsigned char c;
+    if ((r = read(0, &c, sizeof(c))) < 0) {
+        return r;
+    } else {
+        return c;
     }
-    else if (state==NB_DISABLE)
-    {
-        //turn on canonical mode
-        ttystate.c_lflag |= ICANON;
-    }
-    //set the terminal attributes.
-    tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
- 
-}*/
+}
 
 int main(int argc, char* argv[]) {
 
@@ -63,9 +66,10 @@ int main(int argc, char* argv[]) {
 	if( server->initSocketServer() == ERROR)
 		return ERROR;
 	server->start((void *) &server);
-	/*int i = 0;
-	nonblock(1);*/
-	while(server->isRunning()){
+
+	set_conio_terminal_mode();
+	cout << "press a key to close the connection"<<endl;
+	while(!kbhit()){
 
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados
 		server->processReceivedMessages();
