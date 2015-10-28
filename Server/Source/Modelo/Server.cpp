@@ -291,6 +291,15 @@ void Server::setSeenTiles() {
 	}
 }
 
+void Server::sendSeenTiles(string client) {
+	list<pair<int,int> > seenTiles = this->clients[client]->getSeenTiles();
+	for(list<pair<int,int> >::iterator it=seenTiles.begin(); it!=seenTiles.end();++it){
+		Message* msg = new Message();
+		msg->activeTile((*it).first,(*it).second);
+		this->clients[client]->writeMessagesInQueue(msg);
+	}
+}
+
 Server::~Server() {
 	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
 		it->second->~Client();
