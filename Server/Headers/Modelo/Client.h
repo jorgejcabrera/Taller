@@ -40,6 +40,7 @@ public:
 	bool isActive();
 	int getTimeSinceLastReport();
 	void disconect();
+	void connect();
 	int getStatus();
 	/*
 	*agrega los nuevos tiles en la lista de tiles vistos, y luego los devuelve

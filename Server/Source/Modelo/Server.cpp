@@ -74,6 +74,7 @@ int Server::run(void * data){
 
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
+				newClient->connect();
 			}
 	}
 	return 0;
@@ -129,8 +130,8 @@ void Server::notifyClients(){
 	//MANDO los nuevos personajes
 	list<EntidadDinamica*> *nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
 	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
-		int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
-		Message *protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()), (*it)->getName(), (*it)->getPosition()->first, (*it)->getPosition()->second, clientConnected);
+		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
+		Message *protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()), (*it)->getName(), (*it)->getPosition()->first, (*it)->getPosition()->second, 0);
 		protagonistaMessage->setOwner((*it)->getOwner());
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
