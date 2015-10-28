@@ -12,7 +12,7 @@ using namespace std;
 TileVista::TileVista(int x, int y ) {
 	this->position.first = x;
 	this->position.second = y;
-	this->seen = 0;
+	this->seen = false;
 }
 
 pair<int,int>* TileVista::getPosition(){
