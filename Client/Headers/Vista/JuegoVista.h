@@ -40,7 +40,14 @@ private:
 	pair<int,int> offset;
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
+	/*
+	*dibuja todas las entidades dinamicas
+	* */
 	void drawDinamicEntities(int runCycles);
+	/*
+	*dibuja una entidad dinamica
+	* */
+	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles);
 	void drawSemiStaticsEntities(int runCycles);
 	void drawMenu();
 	void drawMiniMap();
