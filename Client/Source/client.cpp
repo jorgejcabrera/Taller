@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 		//leemos las novedades del server
 		jorge->processReceivedMessages();
 		gController->actualizarJuego();
-		gController->getJuegoVista()->render(gController->getRunCycles());
+		gController->getJuegoVista()->render(gController->getRunCycles(),jorge->getResourceCounter());
 		//escuchamos eventos y los mandamos al server
 		jorge->sendEvents();
 		jorge->verifyServerAlive();

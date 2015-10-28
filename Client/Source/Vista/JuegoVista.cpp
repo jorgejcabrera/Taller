@@ -22,7 +22,11 @@ void JuegoVista::createView(){
 	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
 
-void JuegoVista::render(int runCycles){
+void JuegoVista::setResources(int alimento, int madera, int oro) {
+
+}
+
+void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();
 	this->setFoggedTiles();
@@ -31,6 +35,7 @@ void JuegoVista::render(int runCycles){
 	this->drawSemiStaticsEntities(runCycles);
 	this->drawFog();
 	this->drawMenu();
+	this->drawResources(resourceCounter);
 	this->drawMiniMap();
 	this->picassoHelper->renderView();
 }
@@ -413,6 +418,15 @@ bool JuegoVista::isEnemyEntityVisible(pair< int, int> pos) {
 		if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == pos.first && (*itTiles)->getPosY() == pos.second) return false;
 	}
 	return true;
+}
+
+void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
+	map<string,int> resources;
+	resources["alimento"] = resourceCounter->getAlimento();
+	resources["madera"] = resourceCounter->getMadera();
+	resources["oro"] = resourceCounter->getOro();
+
+	this->menuVista->drawResources(resources);
 }
 
 JuegoVista::~JuegoVista() {

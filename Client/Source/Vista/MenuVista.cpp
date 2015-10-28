@@ -83,6 +83,20 @@ void MenuVista::drawEntityDescription() {
 
 }
 
+void MenuVista::drawResources(map<string,int> resources){
+	int posX = 10;
+	int posY = 0;
+	stringstream ss;
+	for (map<string,int>::iterator it = resources.begin() ; it != resources.end(); ++it ) {
+		ss << (*it).first <<" : " << resources[(*it).first];
+		PicassoHelper::GetInstance()->renderText(posX,	posY, ss.str().size()*15, 20, ss.str(),255,255,255);
+		posX = posX+ss.str().size()*15 + 30;
+		ss.str("");
+	}
+
+}
+
+
 MenuVista::~MenuVista() {
 }
 

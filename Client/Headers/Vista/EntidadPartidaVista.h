@@ -17,7 +17,6 @@ namespace std {
 
 class EntidadPartidaVista {
 protected:
-	int salud;
 	pair<int,int> position;
 	int width;
 	int length;
@@ -26,6 +25,9 @@ protected:
 	int id;
 	string name;
 	bool seen;
+
+private:
+	int salud;
 
 public:
 	EntidadPartidaVista();

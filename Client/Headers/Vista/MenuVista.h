@@ -9,6 +9,7 @@
 #define SOURCE_MODELO_MENUVISTA_H_
 
 #include <string>
+#include <sstream>
 #include "../Modelo/PicassoHelper.h"
 #include "../Modelo/GameSettings.h"
 
@@ -39,6 +40,7 @@ public:
 	void drawEntityDescription();
 	void deselectedEntity();
 	void setSelectedEntityDescription(map<string,string> description);
+	void drawResources(map<string,int> resources);
 	virtual ~MenuVista();
 };
 

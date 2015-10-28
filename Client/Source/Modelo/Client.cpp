@@ -216,6 +216,10 @@ void Client::notifyUserName(){
 
 }
 
+ResourceCounter* Client::getResourceCounter() {
+	return this->resourceCounter;
+}
+
 Client::~Client() {
 	this->writeThread->shutDown();
 	this->readThread->shutDown();

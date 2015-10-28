@@ -90,6 +90,7 @@ public:
 	/*
 	*?
 	**/
+	ResourceCounter* getResourceCounter();
 	void disconnectPlayer(int id);
 	bool isConected();
 	virtual ~Client();

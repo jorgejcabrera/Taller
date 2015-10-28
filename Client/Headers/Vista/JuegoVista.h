@@ -11,6 +11,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../../Headers/Modelo/GameSettings.h"
+#include "../../Headers/Modelo/ResourceCounter.h"
 #include "../../Headers/Modelo/PicassoHelper.h"
 #include "../../Headers/Control/UtilsController.h"
 #include "../../Headers/Modelo/DefaultSettings.h"
@@ -63,9 +64,10 @@ public:
 	/*
 	*metodo que se encarga de dibujar mapa y todas las entidades
 	**/
-	void render(int ciclos);
+	void render(int ciclos, ResourceCounter* resourceCounter);
 	void createView();
 	void actualizarOffset(int offsetX,int offsetY);
+	void setResources(int alimento, int madera, int oro);
 	pair<int,int>* getOffset();
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y);
@@ -83,6 +85,7 @@ public:
 	void setFoggedTiles();
 	bool isEnemyEntityVisible(pair< int, int> pos);
 	MenuVista* getMenuVista();
+	void drawResources(ResourceCounter* resourceCounter);
 	~JuegoVista();
 
 
