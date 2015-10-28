@@ -191,7 +191,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 
-	if(active<0){
+	if((active<0) && (!imTheOwner)){
 		newPersonaje->setPathImage(gameSettings->getEntityConfig("soldadoDesconectado")->getPath());
 	}
 
