@@ -110,6 +110,10 @@ pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
 	return isometricPosition;
 }
 
+ResourceManager* Juego::getResourceManager(){
+	return this->resourseManager;
+}
+
 Juego::~Juego() {
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
 			delete(it->second);

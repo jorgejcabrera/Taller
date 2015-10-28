@@ -15,8 +15,8 @@ ResourceManager::ResourceManager(Mapa* map){
 
 	this->map = map;
 	this->resources = new list<Resource*>();
-	Resource* oro = new Resource("gold",0,1);
-	Resource* chori = new Resource("chori",1,0);
+	Resource* oro = new Resource("gold",9,9);
+	Resource* chori = new Resource("chori",0,20);
 	Resource* madera = new Resource("wood",20,15);
 
 	this->resources->push_front(oro);
@@ -30,9 +30,11 @@ ResourceManager::ResourceManager(Mapa* map){
 bool ResourceManager::resourceAt(int x,int y){
 	bool hay = false;
 
-	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end(); ++it)
+	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end(); ++it){
+		cout<<"hay un recurso en "<<(*it)->getPosition()->first<<","<<(*it)->getPosition()->second;
 	    if((*it)->getPosition()->first == x && (*it)->getPosition()->second == y)
 	    	hay = true;
+	}
 	return hay;
 }
 
