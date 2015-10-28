@@ -101,11 +101,10 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		if ( /*isEnemyEntityVisible(*cartesianPosition)*/ true ) {
 
-			if( entidad->isWalking() ){
-				cout<<"el otro guacho esta en: "<<cartesianPosition->first<<","<<cartesianPosition->second<<endl;
-				entidad->trasladarse();
+		if( entidad->isWalking() ){
+			entidad->trasladarse();
+			if ( isEnemyEntityVisible(*cartesianPosition) ) {
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
@@ -113,7 +112,9 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 													gameSettings->getTileSize(),
 													entidad->getPositionOfSprite(runCycles));
 				screenPosition = entidad->getScreenPosition();
-			}else{
+			}
+		}else{
+			if ( isEnemyEntityVisible(*cartesianPosition) ) {
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
@@ -123,6 +124,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 			}
 		}
 	}
+
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
