@@ -305,6 +305,10 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
 	return &this->misPersonajes;
 }
 
+map<int,EntidadDinamicaVista*>* JuegoVista::getPersonajes(){
+	return &this->personajes;
+}
+
 EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
 	if(itPersonajes!=this->personajes.end()){
