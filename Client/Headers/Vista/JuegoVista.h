@@ -65,6 +65,7 @@ public:
 	void addSemiEstaticEntity(int id, string type, int x, int y);
 	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active);
 	map<int,EntidadDinamicaVista*>* getMyEntities();
+	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
 	void setVisibleTile(int x,int y);
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
