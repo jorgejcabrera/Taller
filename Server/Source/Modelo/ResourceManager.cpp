@@ -31,7 +31,6 @@ bool ResourceManager::resourceAt(int x,int y){
 	bool hay = false;
 
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end(); ++it){
-		cout<<"hay un recurso en "<<(*it)->getPosition()->first<<","<<(*it)->getPosition()->second;
 	    if((*it)->getPosition()->first == x && (*it)->getPosition()->second == y)
 	    	hay = true;
 	}

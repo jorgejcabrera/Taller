@@ -135,7 +135,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		
 		if( entidad->isWalking() ){
 			entidad->trasladarse();
-			cout<<"yo estoy en: "<<entidad->getPosition()->first<<","<<entidad->getPosition()->second<<endl;
+			//cout<<"yo estoy en: "<<entidad->getPosition()->first<<","<<entidad->getPosition()->second<<endl;
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
 												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
