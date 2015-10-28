@@ -62,7 +62,7 @@ int getch(){
 int main(int argc, char* argv[]) {
 
 	GameController* gController = new GameController();
-	Server* server = new Server(7843,gController);
+	Server* server = new Server(7844,gController);
 	if( server->initSocketServer() == ERROR)
 		return ERROR;
 	server->start((void *) &server);
