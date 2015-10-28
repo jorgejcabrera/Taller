@@ -147,6 +147,7 @@ void Server::notifyClients(){
 	if(rm->hasToNotify()){
 		//el primer y ultimo parametro de este mensaje no me importan
 		Message* resourceMessege = new Message(rm->getIdAEliminar(),"deleteResource","",0,0,0);
+		rm->yaNotifique();
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(resourceMessege);
