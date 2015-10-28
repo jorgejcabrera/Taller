@@ -65,16 +65,19 @@ void MenuVista::drawEntityDescription() {
 	int maxWidth = (GameSettings::GetInstance()->getScreenWidth() - GameSettings::GetInstance()->getScreenWidth()/2);
 	int width;
 	for (map<string,string>::iterator it = strings.begin() ; it != strings.end() ; it++) {
-		text = ((*it).first+":"+(*it).second);
-		width = (text.size()*15 < maxWidth ) ? text.size()*15  : maxWidth;
-		PicassoHelper::GetInstance()->renderText(	(GameSettings::GetInstance()->getScreenWidth()/4),
-													GameSettings::GetInstance()->getScreenHeight()-this->bigHeight+offsetY,
-													width,
-													alturaDeLetra,
-													text,
-													0, 0,0);
-		offsetY = offsetY+alturaDeLetra;
+		if((*it).first!="path"){
+			text = ((*it).first+":"+(*it).second);
+			width = (text.size()*15 < maxWidth ) ? text.size()*15  : maxWidth;
+			PicassoHelper::GetInstance()->renderText(	(GameSettings::GetInstance()->getScreenWidth()/4),
+														GameSettings::GetInstance()->getScreenHeight()-this->bigHeight+offsetY,
+														width,
+														alturaDeLetra,
+														text,
+														0, 0,0);
+			offsetY = offsetY+alturaDeLetra;
+		}
 	}
+	PicassoHelper::GetInstance()->renderObject(strings.at("path"),30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
 
 }
 
