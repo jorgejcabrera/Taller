@@ -100,7 +100,8 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		entidad = (*itDinamicos).second;
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
-		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
+		//pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
+		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
 
 		entidad->trasladarse();
 		if ( isEnemyEntityVisible(*cartesianPosition) ) {
