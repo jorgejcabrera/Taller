@@ -85,6 +85,7 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update"){
+			//if((*it)->isNewPath()) this->gController->resetPath((*it)->getId());
 			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){

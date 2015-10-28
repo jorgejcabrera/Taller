@@ -79,16 +79,11 @@ void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
 
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
-	stringstream ss;
-	for(list<pair<int,int> >::iterator it = caminoMinimo->begin();it != caminoMinimo->end();++it){
-		ss.str("");
-		ss<<(*it).first<<","<<(*it).second;
-		Logger::get()->logDebug("Juego","setDestinoProtagonista",ss.str());
-	}
 	delete pathF;
-	protagonistaToUpdate->setCamino(caminoMinimo);
 
+	protagonistaToUpdate->setCamino(caminoMinimo);
 	protagonistaToUpdate->nextPosition();
+	protagonistaToUpdate->setPathIsNew(true);
 
 	//TODO aca le tiene que pasar la screen position en isometricas
 	//protagonistaToUpdate->setScreenPosition(x,y);
