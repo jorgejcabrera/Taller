@@ -96,6 +96,10 @@ list<pair<int,int> > Client::setSeenTiles( list<pair<int,int> > newTiles) {
 	return newSeenTiles;
 }
 
+list<pair<int,int> > Client::getSeenTiles() {
+	return this->seenTiles;
+}
+
 Client::~Client() {
 	this->writeThread->shutDown();
 	this->readThread->shutDown();
