@@ -8,7 +8,9 @@
 #ifndef SOURCE_MODELO_TILE_H_
 #define SOURCE_MODELO_TILE_H_
 
+#include "../Utils/Logger.h"
 #include <string>
+#include <sstream>
 #include <iostream>
 
 using namespace std;

@@ -45,20 +45,21 @@ void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	this->screenPosition.second = y;
 }
 
-void EntidadDinamica::nextPosition(){
+bool EntidadDinamica::nextPosition(){
 
 	this->setNotifiable(false);
-	if(! camino->empty()){
-		if(cicloActual % ciclos == 0){
+	if( !camino->empty()){
+		if( cicloActual % ciclos == 0){
 			pair<int,int> nextTile = camino->front();
 			camino->pop_front();
 			this->setNotifiable(true);
 			this->newPath = false;
-
 			this->setPosition(nextTile.first,nextTile.second);
 		}
 		cicloActual++;
+		return true;
 	}
+	return false;
 }
 
 pair<int,int>* EntidadDinamica::getPosition(){
@@ -221,5 +222,6 @@ EntidadDinamica::~EntidadDinamica() {
 }
 
 bool EntidadDinamica::isWalking(){
-	return this->caminando;
+	//return this->caminando;
+	return this->camino->empty() == false;
 }

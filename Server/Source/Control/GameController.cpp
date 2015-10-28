@@ -60,18 +60,20 @@ void GameController::setNextPaths(){
 	//antes de setear el proximo path, me fijo si hay un recurso en donde esta
 
 	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
-	for(map<int,EntidadDinamica*>::iterator it= listaPersonajes.begin(); it!=listaPersonajes.end();++it){
+	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes.begin(); it!=listaPersonajes.end();++it){
 		pair<int,int>* pos = (*it).second->getPosition();
 		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos->first,pos->second)){
 			this->juego->getResourceManager()->collectResourceAt(pos);
 			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
 		}
-		pair<int,int>* antes = (*it).second->getPosition();
-		(*it).second->nextPosition();
-		pair<int,int>* despues = (*it).second->getPosition();
-		/*if((antes->first!=despues->first) || (antes->second!=despues->second)){
-			this->juego->getMap()->getTileAt(antes->first,antes->second)->changeStatusAvailable();
-			this->juego->getMap()->getTileAt(despues->first,despues->second)->changeStatusAvailable();
+		//pair<int,int>* firstPosition = (*it).second->getPosition();
+		bool changeStatusAvailable = (*it).second->nextPosition();
+		
+		/*if( changeStatusAvailable && it->second->isWalking() ){
+			Logger::get()->logDebug("GameController","setNextPaths","Le cambiamos el status al tile");
+			pair<int,int>* secondPosition = (*it).second->getPosition();
+			this->juego->getMap()->getTileAt(firstPosition->first,firstPosition->second)->changeStatusAvailable();
+			this->juego->getMap()->getTileAt(secondPosition->first,secondPosition->second)->changeStatusAvailable();
 		}*/
 	}
 }

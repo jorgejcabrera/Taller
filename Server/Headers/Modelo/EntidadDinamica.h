@@ -57,7 +57,10 @@ class EntidadDinamica: public EntidadPartida {
 		void destruir();
 		void setCamino(list<pair<int,int> >* camino);
 		void setOwner(string owner);
-		void nextPosition();
+		/*
+		*devuelve true si pudo mover la entidad de posicion
+		* */
+		bool nextPosition();
 		string getOwner();
 		EntidadDinamica();
 		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
