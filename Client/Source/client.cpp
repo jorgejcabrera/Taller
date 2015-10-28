@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
 	Client* jorge = new Client("127.0.0.1",7843, gController);
 	jorge->connectToServer();
 	
-	//ESPERO 5 segundos
-	SDL_Delay(5000);
+	//ESPERO 9 segundos
+	SDL_Delay(9000);
 
 	while( jorge->isConected() ){
 		//leemos las novedades del server

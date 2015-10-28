@@ -8,9 +8,9 @@
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
 MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue* queueUnique) {
-	this->isAlive = true;
 	this->socket = new SocketUtils(sockfd);
 	this->queue = queueUnique;
+	this->isAlive = true;
 }
 
 int MessageSocketReader::run(void *data){
@@ -22,7 +22,7 @@ int MessageSocketReader::run(void *data){
 	return OK;
 }
 
-void MessageSocketReader::stopWrite(){
+void MessageSocketReader::shutDown(){
 	this->isAlive = false;
 }
 

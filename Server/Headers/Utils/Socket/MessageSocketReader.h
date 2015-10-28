@@ -26,10 +26,10 @@ private:
 public:
 	MessageSocketReader(int sockfd, SocketQueue *queueUnique);
 	int run(void* data);
-	void stopWrite();
-	virtual ~MessageSocketReader();
+	void shutDown();
 	list<Message*> getMessagePendingProcess();
 	Message* readMessageNow();
+	virtual ~MessageSocketReader();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEREADER_H_ */

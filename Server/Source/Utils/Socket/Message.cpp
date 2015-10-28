@@ -136,10 +136,6 @@ string Message::serializeAsString(){
 	return this->msg.SerializeAsString();
 }
 
-Message::~Message(){
-}
-
-
 string Message::getTipo(){
 	return this->msg.tipo();
 }
@@ -209,4 +205,8 @@ void Message::activeTile( int x, int y) {
 	this->msg.set_y(y);
 	this->msg.set_id(0);
 	this->msg.set_tipo("fog");
+}
+
+Message::~Message(){
+	this->msg.~msg_game();
 }

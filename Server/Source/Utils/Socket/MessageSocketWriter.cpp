@@ -34,7 +34,7 @@ int MessageSocketWriter::run(void* data){
 MessageSocketWriter::~MessageSocketWriter() {
 }
 
-void MessageSocketWriter::stopWrite(){
+void MessageSocketWriter::shutDown(){
 	this->isAlive = false;
 }
 

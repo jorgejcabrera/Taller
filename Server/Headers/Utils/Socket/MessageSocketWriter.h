@@ -33,9 +33,9 @@ public:
 	*Ponemos los mensajes en la cola de novedades
 	*/
 	void writeMessage(Message *msg);
-	void stopWrite();
-	virtual ~MessageSocketWriter();
+	void shutDown();
 	void writeMessageNow(Message *msg);
+	virtual ~MessageSocketWriter();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEWRITER_H_ */

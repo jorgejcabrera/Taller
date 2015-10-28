@@ -35,10 +35,6 @@ int SocketQueue::getSize(){
 	return this->myQueue.size();
 }
 
-SocketQueue::~SocketQueue() {
-	SDL_DestroyMutex(this->lock);
-}
-
 Message* SocketQueue::pullTailWithoutLock(){
 	Message *message = this->myQueue.front();
 	this->myQueue.pop();
@@ -53,4 +49,13 @@ void SocketQueue::lockQueue(){
 void SocketQueue::unlockQueue(){
 	//SDL_UnlockMutex(lock);
 	SDL_mutexV(lock);
+}
+
+SocketQueue::~SocketQueue() {
+	while(!this->myQueue.empty()){
+		Message* msg = this->myQueue.front();
+		this->myQueue.pop();
+		msg->~Message();
+	}
+	SDL_DestroyMutex(this->lock);
 }

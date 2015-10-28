@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 		return ERROR;
 	server->start((void *) &server);
 
-	while(true){
+	while(server->isRunning()){
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados
 		server->processReceivedMessages();
 		//Los protagonistas se trasladan a su posicion destino
