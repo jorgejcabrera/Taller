@@ -65,8 +65,13 @@ void GameController::setNextPaths(){
 		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos->first,pos->second)){
 			this->juego->getResourceManager()->collectResourceAt(pos);
 		}
-
+		pair<int,int>* antes = (*it).second->getPosition();
 		(*it).second->nextPosition();
+		pair<int,int>* despues = (*it).second->getPosition();
+		/*if((antes->first!=despues->first) || (antes->second!=despues->second)){
+			this->juego->getMap()->getTileAt(antes->first,antes->second)->changeStatusAvailable();
+			this->juego->getMap()->getTileAt(despues->first,despues->second)->changeStatusAvailable();
+		}*/
 	}
 }
 
