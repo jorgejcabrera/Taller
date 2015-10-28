@@ -123,7 +123,7 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "fog"){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
 
-		}else if (tipoMensaje == "deleteResourse"){
+		}else if (tipoMensaje == "deleteResource"){
 			this->gController->deleteEntity((*it)->getId());
 			
 		}else{

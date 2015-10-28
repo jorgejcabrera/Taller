@@ -23,8 +23,8 @@ GameController::GameController(){
 Message* GameController::getMessageFromEvent(string userId){
 
 	while(SDL_PollEvent(event)){
-
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
+			this->juegoVista->getMenuVista()->deselectedEntity();
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				// TODO aca iria algo en caso de que el menu sea interactivo
@@ -55,16 +55,20 @@ Message* GameController::getMessageFromEvent(string userId){
 		}
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
+			this->juegoVista->getMenuVista()->deselectedEntity();
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				pair<int,int>* offset = this->juegoVista->getOffset();
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 				map<string,string> entidadMap = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
-				//cout << "CLICKKKK "<< entidadMap.size()<<endl;
+				if(entidadMap.size()>0){
+					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+				}
 			}
 		}
 
 		if( event->type == SDL_QUIT){
+			this->juegoVista->getMenuVista()->deselectedEntity();
 			this->salirDelJuego = true;
 			Message* message = new Message();
 			msg_game body;

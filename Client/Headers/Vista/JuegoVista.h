@@ -82,6 +82,7 @@ public:
 	void actualizarProtagonista();
 	void setFoggedTiles();
 	bool isEnemyEntityVisible(pair< int, int> pos);
+	MenuVista* getMenuVista();
 	~JuegoVista();
 
 

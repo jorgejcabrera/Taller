@@ -14,6 +14,10 @@ JuegoVista::JuegoVista() {
 	this->menuVista = new MenuVista();
 }
 
+MenuVista* JuegoVista::getMenuVista(){
+	return this->menuVista;
+}
+
 void JuegoVista::createView(){
 	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
