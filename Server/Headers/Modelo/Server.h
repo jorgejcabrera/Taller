@@ -33,7 +33,7 @@ class Server : public Thread{
 	private:
 		SocketQueue* readQueue;
 		map<string,Client*> clients;
-		GameController *gController;
+		GameController* gController;
 		GameSettings* gameSettings;
 		bool isAlive;
 		int serverSocket;
@@ -49,10 +49,14 @@ class Server : public Thread{
 		*escuchamos nuevas conexiones de clientes, y le mandamos toda la conf de la partida
 		* */
 		int run(void * data);
-		/* 1- Bajo todos los mansajes de la cola
+		/* 
+		* 1- Bajo todos los mansajes de la cola
 	 	* 2- actualizo la posicion de los protagonistas
 	 	* */
 	 	void processReceivedMessages();
+		/*
+		* ?
+		* */
 		void notifyClients();
 		/*
 		*inicia la conexion con el cliente, pide el usuario y se fija si es nuevo o si tiene que 
@@ -60,6 +64,9 @@ class Server : public Thread{
 		* */
 		void initConnection(Client *newClient);
 		void pingMessage();
+		/*
+		*
+		* */
 		void verifyClientsConections();
 		list<Client*> getActiveClients();
 		list<Message*> getProtagonistasMessages();

@@ -7,13 +7,13 @@
 
 #include "../../Headers/Modelo/Client.h"
 
-Client::Client(int identifier, SocketQueue *queueUnique) {
+Client::Client(int identifier, SocketQueue* queueUnique) {
 	this->clientId = identifier;
 	this->writeThread = new MessageSocketWriter(identifier);
 	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
 	this->lastReported = time(0);
 	this->status = CONECTED;
-	// TODO settear los primeros lugares vistos en el mapa segun las entitis del cliente
+	// TODO settear los primeros lugares vistos en el mapa segun las entities del cliente
 }
 
 void Client::reporting(){
@@ -98,5 +98,13 @@ list<pair<int,int> > Client::setSeenTiles( list<pair<int,int> > newTiles) {
 }
 
 Client::~Client() {
-	shutdown(this->clientId, 2);
+	this->writeThread->shutDown();
+	this->readThread->shutDown();
+	shutdown(this->clientId, 2);	//2 blocks recv and sending
+	close(this->clientId);
+	this->writeThread->~MessageSocketWriter();
+	this->readThread->~MessageSocketReader();
+	delete writeThread;
+	delete readThread;
+
 }

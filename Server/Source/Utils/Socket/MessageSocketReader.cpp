@@ -38,7 +38,6 @@ list<Message*> MessageSocketReader::getMessagePendingProcess(){
 	return listaPendientes;
 }
 
-//Metodo utilizado para leer mensajes on line, la idea es utilizarlo solo para leer el user name
 Message* MessageSocketReader::readMessageNow(){
 	Message *userName = this->socket->readMessage();
 	cout << userName->toString();
@@ -46,4 +45,7 @@ Message* MessageSocketReader::readMessageNow(){
 }
 
 MessageSocketReader::~MessageSocketReader() {
+	//esta queue es usada por todos los threads que leen y es la del server, asi que la destruimos por fuera
+	this->queue = NULL;
+	delete socket;
 }

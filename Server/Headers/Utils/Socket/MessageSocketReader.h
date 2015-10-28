@@ -28,6 +28,9 @@ public:
 	int run(void* data);
 	void shutDown();
 	list<Message*> getMessagePendingProcess();
+	/*
+	*metodo utilizado para leer mensajes on line, la idea es utilizarlo solo para leer el user name
+	* */
 	Message* readMessageNow();
 	virtual ~MessageSocketReader();
 };

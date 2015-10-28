@@ -295,6 +295,8 @@ Server::~Server() {
 		it->second->~Client();
 	}
 	this->gameSettings = NULL;
+	this->gController = NULL;
+	readQueue->~SocketQueue();
 	delete(this->readQueue);
 	close(this->serverSocket);
 }

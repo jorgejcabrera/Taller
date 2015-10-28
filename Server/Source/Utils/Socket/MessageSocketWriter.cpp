@@ -31,14 +31,15 @@ int MessageSocketWriter::run(void* data){
 	return OK;
 }
 
-MessageSocketWriter::~MessageSocketWriter() {
-}
-
 void MessageSocketWriter::shutDown(){
 	this->isAlive = false;
 }
 
 void MessageSocketWriter::writeMessageNow(Message *msg){
 	this->socket->writeMessage(msg);
-	Logger::get()->logDebug("MessageSocketWriter","writeMessageNow",msg->toString());
+}
+
+MessageSocketWriter::~MessageSocketWriter() {
+	this->queue->~SocketQueue();
+	delete socket;
 }
