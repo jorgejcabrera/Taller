@@ -37,7 +37,17 @@ int Server::initSocketServer(){
 		Logger::get()->logError("Server","initSocketServer","Error en el listen");
 		return ERROR;
 	}
+
+	this->isAlive = true;
 	return OK;
+}
+
+void Server::shutDown(){
+	this->isAlive = false;
+}
+
+bool Server::isRunning(){
+	return this->isAlive;
 }
 
 int Server::run(void * data){
@@ -45,11 +55,9 @@ int Server::run(void * data){
 	//TODO: esto deberia ser while true?
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
-	while(true){
+	while(this->isAlive){
 			if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
-
-
-				Client *newClient = new Client(cliente, this->readQueue);
+				Client* newClient = new Client(cliente, this->readQueue);
 				initConnection(newClient);
 
 				//Mando la dimension de la ventana
@@ -69,7 +77,6 @@ int Server::run(void * data){
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
 			}
 	}
-	cout << "FIN RUN" <<endl;
 	return 0;
 }
 
@@ -91,9 +98,6 @@ list<Message*> Server::getProtagonistasMessages(){
 
 void Server::processReceivedMessages(){
 	this->readQueue->lockQueue();
-	/* 1- Bajo todos los mansajes de la cola
-	 * 2- actualizo la posicion de los protagonistas
-	 * */
 	//TODO revisar, hoy no usamos la lista idEntitiesUpdated porque notificamos lo que se este "moviendo"
 	this->idEntitiesUpdated.clear();
 	while(!this->readQueue->isEmpty()){
@@ -101,11 +105,7 @@ void Server::processReceivedMessages(){
 		if(messageUpdate->getTipo()=="ping"){
 			this->clients.at(messageUpdate->getNombre())->reporting();
 		}else if(messageUpdate->getTipo()=="exit"){
-			//TODO desconectar al cliente? hoy deberia hacerlo cuando no detecta novedades
 			Logger::get()->logInfo("Server","processReceivedMessages", "RECIBI MESAJE DE DESCONEXION");
-//		}else if(messageUpdate->getTipo()=="fog"){
-//			this->setSeenTiles();
-
 		} else {
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
@@ -296,6 +296,8 @@ Server::~Server() {
 		it->second->~Client();
 	}
 	this->gameSettings = NULL;
+	this->gController = NULL;
+	readQueue->~SocketQueue();
 	delete(this->readQueue);
 	close(this->serverSocket);
 }

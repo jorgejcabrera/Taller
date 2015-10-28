@@ -28,7 +28,7 @@ class Client {
 	time_t lastReported;
 	int status;
 public:
-	Client(int identifier, SocketQueue *queueUnique);
+	Client(int identifier, SocketQueue* queueUnique);
 	void writeMessagesInQueue(list<Message*> messagesList);
 	void writeMessagesInQueue(Message* message);
 	void startCommunication();

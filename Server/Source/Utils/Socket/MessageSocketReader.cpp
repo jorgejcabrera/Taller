@@ -8,24 +8,21 @@
 #include "../../../Headers/Utils/Socket/MessageSocketReader.h"
 
 MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue* queueUnique) {
-	this->isAlive = true;
 	this->socket = new SocketUtils(sockfd);
 	this->queue = queueUnique;
+	this->isAlive = true;
 }
 
 int MessageSocketReader::run(void *data){
 	Logger::get()->logInfo("MessageSocketReader","run","running thread server reader");
 	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
-		stringstream ss;
-		ss << "El servidor leyo del socket: "<< message->toString();
-		Logger::get()->logDebug("MessageSocketReader","run",ss.str());
 		this->queue->queuing(message);
 	}
 	return OK;
 }
 
-void MessageSocketReader::stopWrite(){
+void MessageSocketReader::shutDown(){
 	this->isAlive = false;
 }
 
@@ -41,7 +38,6 @@ list<Message*> MessageSocketReader::getMessagePendingProcess(){
 	return listaPendientes;
 }
 
-//Metodo utilizado para leer mensajes on line, la idea es utilizarlo solo para leer el user name
 Message* MessageSocketReader::readMessageNow(){
 	Message *userName = this->socket->readMessage();
 	cout << userName->toString();
@@ -49,4 +45,7 @@ Message* MessageSocketReader::readMessageNow(){
 }
 
 MessageSocketReader::~MessageSocketReader() {
+	//esta queue es usada por todos los threads que leen y es la del server, asi que la destruimos por fuera
+	this->queue = NULL;
+	delete socket;
 }

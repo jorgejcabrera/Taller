@@ -32,27 +32,46 @@ using namespace std;
 class Server : public Thread{
 	private:
 		SocketQueue* readQueue;
+		map<string,Client*> clients;
+		GameController* gController;
+		GameSettings* gameSettings;
+		bool isAlive;
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;
-		map<string,Client*> clients;
-		GameController *gController;
 		list<int> idEntitiesUpdated;
 		time_t lastReportedServer;
-		GameSettings* gameSettings;
 
 	public:
 		Server(int port, GameController *myController);
 		int initSocketServer();
+		/*
+		*escuchamos nuevas conexiones de clientes, y le mandamos toda la conf de la partida
+		* */
 		int run(void * data);
-		void processReceivedMessages();
+		/* 
+		* 1- Bajo todos los mansajes de la cola
+	 	* 2- actualizo la posicion de los protagonistas
+	 	* */
+	 	void processReceivedMessages();
+		/*
+		* ?
+		* */
 		void notifyClients();
-		//inicia la conexion con el cliente, pide el usuario y se fija si es nuevo o si tiene que levantar data de antes porque se reconecto
+		/*
+		*inicia la conexion con el cliente, pide el usuario y se fija si es nuevo o si tiene que 
+		*levantar data de antes porque se reconecto
+		* */
 		void initConnection(Client *newClient);
 		void pingMessage();
+		/*
+		*
+		* */
 		void verifyClientsConections();
 		list<Client*> getActiveClients();
 		list<Message*> getProtagonistasMessages();
+		bool isRunning();
+		void shutDown();
 		/*
 		*levanta todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
 		* */

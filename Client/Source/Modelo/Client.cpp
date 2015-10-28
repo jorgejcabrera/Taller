@@ -191,17 +191,19 @@ void Client::notifyUserName(){
 		if(response->getNombre()=="OK"){
 			valid=true;
 		}else{
-			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro"<<endl;
+			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro";
 		}
 	}
 
 }
 
 Client::~Client() {
+	this->writeThread->shutDown();
+	this->readThread->shutDown();
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending
 	close(this->sockfd);
-	//this->writeThread->~MessageSocketWriter();
-	//this->readThread->~MessageSocketReader();
-	//delete writeThread;
-	//delete readThread;
+	this->writeThread->~MessageSocketWriter();
+	this->readThread->~MessageSocketReader();
+	delete writeThread;
+	delete readThread;
 }
