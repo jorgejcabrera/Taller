@@ -101,25 +101,14 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
+		entidad->trasladarse();
 		if ( isEnemyEntityVisible(*cartesianPosition) ) {
-
-			if( entidad->isWalking() ){
-				entidad->trasladarse();
-				this->picassoHelper->renderObject(	entidad->getPathImage(),
-													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-													gameSettings->getTileSize(),
-													gameSettings->getTileSize(),
-													entidad->getPositionOfSprite(runCycles));
-				screenPosition = entidad->getScreenPosition();
-			}else{
-				this->picassoHelper->renderObject(	entidad->getPathImage(),
-													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-													screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-													gameSettings->getTileSize(),
-													gameSettings->getTileSize(),
-													entidad->getPositionOfSprite(runCycles));
-			}
+			this->picassoHelper->renderObject(	entidad->getPathImage(),
+												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+												gameSettings->getTileSize(),
+												gameSettings->getTileSize(),
+												entidad->getPositionOfSprite(runCycles));
 		}
 	}
 
@@ -129,24 +118,13 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = (*itDinamicos).second->getScreenPosition();
-		
-		if( entidad->isWalking() ){
-			entidad->trasladarse();
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-			screenPosition = entidad->getScreenPosition();
-		}else{
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-		}
+		entidad->trasladarse();
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+											screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
 	}
 }
 
