@@ -66,8 +66,13 @@ void GameController::setNextPaths(){
 			this->juego->getResourceManager()->collectResourceAt(pos);
 			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
 		}
-
+		pair<int,int>* antes = (*it).second->getPosition();
 		(*it).second->nextPosition();
+		pair<int,int>* despues = (*it).second->getPosition();
+		/*if((antes->first!=despues->first) || (antes->second!=despues->second)){
+			this->juego->getMap()->getTileAt(antes->first,antes->second)->changeStatusAvailable();
+			this->juego->getMap()->getTileAt(despues->first,despues->second)->changeStatusAvailable();
+		}*/
 	}
 }
 
