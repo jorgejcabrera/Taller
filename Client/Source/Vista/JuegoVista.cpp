@@ -101,9 +101,10 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		int offSetX = this->getOffset()->first;
 		int offSetY = this->getOffset()->second;
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		if ( isEnemyEntityVisible(*cartesianPosition) ) {
+		if ( /*isEnemyEntityVisible(*cartesianPosition)*/ true ) {
 
 			if( entidad->isWalking() ){
+				cout<<"el otro guacho esta en: "<<cartesianPosition->first<<","<<cartesianPosition->second<<endl;
 				entidad->trasladarse();
 				this->picassoHelper->renderObject(	entidad->getPathImage(),
 													screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
@@ -132,6 +133,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 		
 		if( entidad->isWalking() ){
 			entidad->trasladarse();
+			cout<<"yo estoy en: "<<entidad->getPosition()->first<<","<<entidad->getPosition()->second<<endl;
 			this->picassoHelper->renderObject(	entidad->getPathImage(),
 												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
 												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
