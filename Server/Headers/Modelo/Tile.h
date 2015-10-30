@@ -8,7 +8,9 @@
 #ifndef SOURCE_MODELO_TILE_H_
 #define SOURCE_MODELO_TILE_H_
 
+#include "../Utils/Logger.h"
 #include <string>
+#include <sstream>
 #include <iostream>
 
 using namespace std;
@@ -25,13 +27,13 @@ enum surface_type{
 class Tile {
 	bool available;
 	pair<int,int> position;
+	//TODO: no usamos para nada la superficie
 	surface_type superficie;	//por default la superficie es pasto
-	string pathImage;
+	string superficieStr;
 
 public:
 	void setPathImage(string path);
 	Tile(int x,int y);
-	void show();
 	void changeStatusAvailable();
 	bool isAvailable();
 	int getPosX();
@@ -39,6 +41,8 @@ public:
 	pair<int,int>* getPosition();
 	void pushSurface(surface_type surface);
 	int getSurfaceSpeed();
+	string getSuperficie();
+	void setSuperficie(string superficieNueva);
 	virtual ~Tile();
 	string getPathImage();
 };

@@ -13,8 +13,14 @@ const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
+const string DefaultSettings::PATH_OF_FOGGED_TILE = "tileFog";
+const string DefaultSettings::PATH_OF_COVERED_TILE = "tileNegro";
 
 DefaultSettings::DefaultSettings() {
+}
+
+int DefaultSettings::getTimeOut(){
+	return TIMEOUT;
 }
 
 int DefaultSettings::getScreenWidth(){
@@ -173,6 +179,13 @@ string DefaultSettings::getTypeEntity(const string &type){
 	tiles.push_back("agua");
 	if(isInList(tiles,type))
 		return "tiles";
+
+	list<string> resources;
+	resources.push_back("gold");
+	resources.push_back("chori");
+	resources.push_back("wood");
+	if(isInList(resources,type))
+			return "resources";
 	return "";
 }
 
@@ -234,6 +247,34 @@ int DefaultSettings::getPosYProtagonista(){
 
 int DefaultSettings::getVelocidadPersonaje	(){
 	return VELOCIDAD_PERSONAJE;
+}
+
+int DefaultSettings::getViewDistance() {
+	return VIEW_DISTANCE;
+}
+
+int DefaultSettings::getAlturaMenuInferior(){
+	return ALTURA_MENU_INFERIOR;
+}
+
+int DefaultSettings::getAlturaMenuSuperior(){
+	return ALTURA_MENU_SUPERIOR;
+}
+
+int DefaultSettings::getAlturaBandaMenu(){
+	return ALTURA_BANDA_MENU;
+}
+
+string DefaultSettings::getPathOfFoggedTile() {
+	return IMAGE_BASE_PATH +"/Tiles/" + PATH_OF_FOGGED_TILE + ".png";
+}
+
+string DefaultSettings::getPathOfCoveredTile() {
+	return IMAGE_BASE_PATH +"/Tiles/" + PATH_OF_COVERED_TILE + ".png";
+}
+
+int DefaultSettings::getRangeVisibility() {
+	return RANGE_VISIBILITY;
 }
 
 DefaultSettings::~DefaultSettings() {

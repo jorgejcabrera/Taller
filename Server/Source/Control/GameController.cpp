@@ -8,72 +8,79 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
-	gameSettings = GameSettings::GetInstance();
+	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
-	this->camino = new list<pair<int,int> >;
 	this->salirDelJuego = false;
 	this->reiniciar = false;
 	this->juego = new Juego();
-	this->event = new SDL_Event();
 	this->posMouseX = 0;
 	this->posMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
-
-	this->resourceManager = new ResourceManager(this->juego->getMap());
 }
 
 Juego* GameController::getJuego(){
 	return this->juego;
 }
 
-void GameController::setNextPath(){
-
-	pair<int,int>* offset = this->juego->getOffset();
-	pair<int,int> primerElemento = camino->front();
-	int cartesianPositionX = primerElemento.first;
-	int cartesianPositionY = primerElemento.second;
-	camino->pop_front();
-	pair<int,int> isom = this->utils->getIsometricPosition(cartesianPositionX,cartesianPositionY);
-	posMouseX = isom.first+offset->first;
-	posMouseY = isom.second+offset->second;
-
-	juego->setDestinoProtagonista(cartesianPositionX,cartesianPositionY,posMouseX,posMouseY);
+list<Message*> GameController::getTilesMessages(){
+	list<Message*> listaDeTiles;
+	map<pair<int,int>,Tile*>* tilesList = this->juego->getMap()->getTiles();
+	for(map<pair<int,int>,Tile*>::iterator it=tilesList->begin(); it!=tilesList->end(); ++it){
+		Message *tileMessage = new Message("tile",it->second->getSuperficie(),it->first.first,it->first.second);
+		listaDeTiles.push_back(tileMessage);
+	}
+	return listaDeTiles;
 }
 
-void GameController::obtenerMouseInput(){
+list<Message*> GameController::getEntitiesMessages(){
+	list<Message*> listaDeEntities;
+	list<EntidadPartida*>* entidades = this->getJuego()->getMap()->getEntities();
+	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
+		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
+		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado
+		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second, 0);
+		listaDeEntities.push_back(entityMessage);
+	}
+	return listaDeEntities;
+}
 
-	while(SDL_PollEvent(event)){
-
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
-			SDL_GetMouseState(&posMouseX,&posMouseY);
-			this->moveCharacter(posMouseX,posMouseY);
+list<int> GameController::getEntitiesOfClient(string userName){
+	list<int> idOfEntities;
+	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
+	for(map<int,EntidadDinamica*>::iterator iteratePersonajes= listaPersonajes.begin(); iteratePersonajes!=listaPersonajes.end();++iteratePersonajes){
+		if(iteratePersonajes->second->getOwner()==userName){
+			idOfEntities.push_back(iteratePersonajes->first);
 		}
-		if( event->type == SDL_QUIT)
-			this->salirDelJuego = true;
-		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r)
-			this->reiniciar = true;
+	}
+	return idOfEntities;
+}
 
+void GameController::setNextPaths(){
+	//antes de setear el proximo path, me fijo si hay un recurso en donde esta
+
+	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
+	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes.begin(); it!=listaPersonajes.end();++it){
+		pair<int,int>* pos = (*it).second->getPosition();
+		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos->first,pos->second)){
+			this->juego->getResourceManager()->collectResourceAt(pos);
+			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
+		}
+		//pair<int,int>* firstPosition = (*it).second->getPosition();
+		bool changeStatusAvailable = (*it).second->nextPosition();
+		
+		/*if( changeStatusAvailable && it->second->isWalking() ){
+			Logger::get()->logDebug("GameController","setNextPaths","Le cambiamos el status al tile");
+			pair<int,int>* secondPosition = (*it).second->getPosition();
+			this->juego->getMap()->getTileAt(firstPosition->first,firstPosition->second)->changeStatusAvailable();
+			this->juego->getMap()->getTileAt(secondPosition->first,secondPosition->second)->changeStatusAvailable();
+		}*/
 	}
 }
 
 void GameController::actualizarJuego(){
-
-	pair<int,int>* position = juego->getProtagonista()->getPosition();
-	int x = (*position).first;
-	int y = (*position).second;
-
-	this->resourceManager->actualizar();
-
-	if(! juego->getProtagonista()->estaCaminando() && resourceManager->resourceAt(x,y)){
-		this->resourceManager->collectResourceAt(position);
-	}
-	if(! juego->getProtagonista()->estaCaminando() && (! camino->empty()) ){
-		this->setNextPath();
-	}
-	juego->actualizarProtagonista();
-	pair<int,int> offset = this->getOffset(this->juego->getOffset()->first,this->juego->getOffset()->second);
-	juego->actualizarOffset(offset.first,offset.second);
+	this->setNextPaths();
+	this->juego->getResourceManager()->actualizar();
 }
 
 bool GameController::reiniciarJuego(){
@@ -88,132 +95,19 @@ int GameController::getMaxFramesPerSecond(){
 	return this->maxFramesPerSecond;
 }
 
-bool GameController::finDeJuego(){
-	this->inicioDeCiclo = SDL_GetTicks();
-	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
-}
-
-pair<int,int> GameController::getOffset(int offSetX, int offSetY){
-	int posicionX = 0;
-	int posicionY = 0;
-	SDL_GetMouseState(&posicionX, &posicionY);
-
-	if (posicionX >= gameSettings->getMargenDerechoUno()	&& posicionX < gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
-			offSetX -= gameSettings->getVelocidadScrollUno();
-	}
-
-	if (posicionX >= gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
-			offSetX -= 1 * gameSettings->getVelocidadScrollDos();
-	}
-
-	if ((posicionX > gameSettings->getMargenIzquierdoDos()) && (posicionX <= gameSettings->getMargenIzquierdoUno()) && !(offSetX > gameSettings->getLimiteIzquierdo())) {
-			offSetX += gameSettings->getVelocidadScrollUno();
-	}
-
-	if (posicionX <= gameSettings->getMargenIzquierdoDos() && !(offSetX > gameSettings->getLimiteIzquierdo())) {
-			offSetX += gameSettings->getVelocidadScrollDos();
-	}
-
-	if ((posicionY <= gameSettings->getMargenSuperiorUno()) && (posicionY > gameSettings->getMargenSuperiorDos()) && !((offSetY > gameSettings->getLimiteSuperior()))) {
-			offSetY += gameSettings->getVelocidadScrollUno();
-	}
-
-	if (posicionY <= gameSettings->getMargenSuperiorDos() && !((offSetY > gameSettings->getLimiteSuperior()))) {
-		offSetY += gameSettings->getVelocidadScrollDos();
-	}
-
-	if (posicionY >= gameSettings->getMargenInferiorUno() && (posicionY < gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
-			offSetY -= gameSettings->getVelocidadScrollUno();
-	}
-
-	if ((posicionY >= gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
-		offSetY -= gameSettings->getVelocidadScrollDos();
-	}
-
-	pair<int,int> curretOffset;
-	curretOffset.first = offSetX;
-	curretOffset.second = offSetY;
-	return curretOffset;
-}
-
-void GameController::moveCharacter(int xScreen,int yScreen){
-
-	pair<int,int>* offset = this->juego->getOffset();
-	pair<int,int> cartesianPosition = this->utils->convertToCartesian(xScreen-offset->first,yScreen-offset->second);
-	bool correctPosition = false;
-
-	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
-	if( cartesianPosition.first < 0 ){
-		cartesianPosition.first = 0;
-		correctPosition = true;
-	}else if( cartesianPosition.first >= gameSettings->getMapWidth()){
-		cartesianPosition.first = gameSettings->getMapWidth() - 1 ;
-		correctPosition = true;
-	}
-	if( cartesianPosition.second < 0){
-		cartesianPosition.second = 0;
-		correctPosition = true;
-	}else if( cartesianPosition.second >= gameSettings->getMapHeight()){
-		cartesianPosition.second = gameSettings->getMapHeight() - 1;
-		correctPosition = true;
-	}
-
-	//si tuvimos que hacer alguna correccion cambiamos la posicion final del mouse
-	if(correctPosition){
-		pair<int,int> isometricPosition = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-		posMouseX = isometricPosition.first+offset->first;
-		posMouseY = isometricPosition.second+offset->second;
-	}
-
-	int posActualX = this->getJuego()->getProtagonista()->getPosition()->first;
-	int posActualY = this->getJuego()->getProtagonista()->getPosition()->second;
-
-	PathFinder* pf = new PathFinder(posActualX,posActualY,cartesianPosition.first,cartesianPosition.second,this->getJuego()->getMap(),this->resourceManager);
-	camino->clear();
-	camino = pf->buscarCamino();
-	delete pf;
-
-	if(! camino->empty()){
-		pair<int,int> primerElemento = camino->front();
-		cartesianPosition.first = primerElemento.first;
-		cartesianPosition.second = primerElemento.second;
-		camino->pop_front();
-
-		pair<int,int> isom = this->utils->getIsometricPosition(cartesianPosition.first,cartesianPosition.second);
-		posMouseX = isom.first+offset->first;
-		posMouseY = isom.second+offset->second;
-
-		//una vez convertida a cartesiana la posicion le decimos al modelo que se actualize
-		juego->setDestinoProtagonista(cartesianPosition.first,cartesianPosition.second,posMouseX,posMouseY);
-	}
-
-	return;
-}
-
 void GameController::delay(){
-	//if((SDL_GetTicks()-this->inicioDeCiclo) < 1000 / this->juego->getProtagonista()->getFramesPerSecond()){
-		//int valor = ((1000 / this->juego->getProtagonista()->getFramesPerSecond()) - (SDL_GetTicks()-this->inicioDeCiclo));
-		//SDL_Delay(valor);
+	//TODO: revisar si se puede sacar el delay, ya que de esa manera sacariamos el include de SDL2
 	this->runCycles++;
-	//if(this->runCycles % this->maxFramesPerSecond == 0){ this->runCycles = 0; }
-
 	SDL_Delay(50); // para que sean 50 frames x segundos
-	//}
 }
+
 GameController::~GameController() {
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
 	this->juego=NULL;
-	delete resourceManager;
 //	this->utils->~UtilsController();
 	delete(this->utils);
 	this->utils = NULL;
 //	this->gameSettings->~GameSettings();
 	delete(this->gameSettings);
 	this->gameSettings = NULL;
-	this->event->quit;
-	delete(this->event);
-	this->event = NULL;
-
-
 }
-

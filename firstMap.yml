@@ -1,6 +1,6 @@
 pantalla:
- ancho: 1024
- alto: 800
+ ancho: 800
+ alto: 600
 
 configuracion: 
  vel_personaje : 10
@@ -55,6 +55,21 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
+- nombre: chori
+  imagen: ../../Taller/Images/Resources/chori.png
+  ancho_base: 1
+  alto_base: 1
+
+- nombre: gold
+  imagen: ../../Taller/Images/Resources/gold.png
+  ancho_base: 1
+  alto_base: 1
+
+- nombre: wood
+  imagen: ../../Taller/Images/Resources/Wood.png
+  ancho_base: 1
+  alto_base: 1
+
 - nombre: House1
   imagen: ../../Taller/Images/Industrial_Age/House1-2x2.png
   ancho_base: 2
@@ -77,6 +92,7 @@ tipos:
   fps: 20
   delay: 0
   total_frames_line: 23
+  pixels_dimension: 150
 
 - nombre: soldado
   imagen: ../../Taller/Images/Personajes/soldado.png
@@ -89,27 +105,41 @@ tipos:
   imagen: path/a/imagen.png
   fps: 10
 
+- nombre: tierra
+  imagen: ../../Taller/Images/Tiles/tierra.png
+
+- nombre: agua
+  imagen: ../../Taller/Images/Tiles/agua.png
+
+- nombre: pasto
+  imagen: ../../Taller/Images/Tiles/pasto.png
+
+- nombre: soldadoDesconectado
+  imagen: ../../Taller/Images/Personajes/soldadoDesconectado.png
+
 escenario:
   nombre: orleans
   size_x: 30
   size_y: 30
   entidades:
-  - {x: 3, y: 17, tipo: AdvancedChurch}
-  - {x: 0, y: 12, tipo: Consulate}
-  - {x: 0, y: 7, tipo: Town_Hall}
-  - {x: 3, y: 1, tipo: Army}
-  - {x: 10, y: 3 , tipo: Barracks}
-  - {x: 10, y: 0, tipo: Armory}
-  - {x: 12, y: 13 , tipo: Smithy}
-  - {x: 17, y: 17, tipo: University}
-  - {x: 9, y: 17, tipo: Market}
   - {x: 6, y: 8, tipo: House1}
   - {x: 6, y: 11, tipo: House1}
   - {x: 6, y: 14, tipo: House1}
+  - {x: 0, y: 12, tipo: Consulate}
+  - {x: 17, y: 17, tipo: University}
+  - {x: 8, y: 10, tipo: agua}
+  - {x: 12, y: 12, tipo: tierra}
+  - {x: 3, y: 17, tipo: AdvancedChurch}
+  - {x: 0, y: 7, tipo: Town_Hall}
+  - {x: 3, y: 1, tipo: Army}
+  - {x: 10, y: 4 , tipo: Barracks}
+  - {x: 10, y: 0, tipo: Armory}
+  - {x: 12, y: 13 , tipo: Smithy}
+  - {x: 9, y: 17, tipo: Market}
   - {x: 0, y: 3, tipo: molino}
-  - {x: 13, y: 3, tipo: Factory}
+  - {x: 15, y: 3, tipo: Factory}
 
   protagonista: 
    tipo: soldado 
-   x: 8 
-   y: 8 
+   x: 0 
+   y: 4

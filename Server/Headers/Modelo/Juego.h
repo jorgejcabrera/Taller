@@ -12,34 +12,43 @@
 #include "EntidadDinamica.h"
 #include "../Modelo/DefaultSettings.h"
 #include "GameSettings.h"
+#include "ResourceManager.h"
+#include "PathFinder.h"
 #include <map>
+#include <list>
 
 using namespace std ;
 
 class Juego {
 private:
 	Mapa* mapa;
-	EntidadDinamica* protagonista;
+	map<int,EntidadDinamica*> protagonistas;
+	list<EntidadDinamica*> newProtagonistas;
+	ResourceManager* resourseManager;
 	string currentAge;
 	bool juegoFinalizado;
 	GameSettings* gameSettings;
-	pair<int,int> offset;
 	pair<int,int> getIsometricPosition(EntidadPartida* entidad);
 public:
 	Juego();
 	virtual ~Juego();
 	//Intenta cargar la conf del yaml y setear los atributos al mapa, si por algún motivo no los encuentra setea los valores por default
 	Mapa* getMap();
-	void actualizarOffset(int offsetX,int offsetY);
 	void comenzarPartida();
 	void terminarJuego();
 	string getCurrentAge();
-	pair<int,int>* getOffset();
 	void setProtagonistaAt(int velocidad,int x,int y);
-	void setDestinoProtagonista(int x,int y, int screenPositionX, int screenPositionY);
-	void actualizarProtagonista();
+	void setDestinoProtagonista(int idProtagonista, int x,int y);
+	/*
+	void actualizarProtagonistas();*/
 	bool getStatusPartida();
-	EntidadDinamica* getProtagonista();
+	map<int,EntidadDinamica*> getProtagonistas();
+	list<EntidadDinamica*>* getNewProtagonistasToNotify();
+	pair<int,int>* getPositionOfProtagonistaById(int idBuscado);
+	void cleanNewProtagonistas();
+	ResourceManager* getResourceManager();
+
+	void agregarProtagonista(string owner);
 };
 
 #endif /* SOURCE_MODELO_JUEGO_H_ */

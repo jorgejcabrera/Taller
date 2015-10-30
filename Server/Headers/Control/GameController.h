@@ -9,47 +9,48 @@
 #define GAMECONTROLLER_H_
 
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
 #include "../Modelo/Juego.h"
-#include "../Vista/JuegoVista.h"
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
-#include "../Modelo/PathFinder.h"
-#include "../Modelo/ResourceManager.h"
+#include "../Utils/Socket/Message.h"
+#include "../Modelo/EntidadPartida.h"
+#include "../Modelo/EntidadDinamica.h"
+#include <list>
 
 class GameController {
 
 private:
 	UtilsController* utils;
-	SDL_Event* event;
 	Juego* juego;
-	list<pair<int,int> >* camino;
-	ResourceManager* resourceManager;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
+	//TODO reiniciar juego no va mas
 	bool reiniciar;
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	GameSettings* gameSettings;
-	void moveCharacter(int xScreen,int yScreen);
-	void setNextPath();
-	pair<int,int> getOffset(int mouseX,int mouseY);
+	void setNextPaths();
 
 public:
 	GameController();
 	Juego* getJuego();
+	//TODO reiniciar juego no va mas
 	bool reiniciarJuego();
 	void actualizarJuego();
-	void render();
-	void obtenerMouseInput();
 	int getRunCycles();
 	int getMaxFramesPerSecond();
-	bool finDeJuego();
 	virtual ~GameController();
 	void delay();
+
+	/*
+	* generadores de mensajes para cuando se conecta un cliente nuevo
+	* */
+	list<Message*> getTilesMessages();
+	list<Message*> getEntitiesMessages();
+	list<int> getEntitiesOfClient(string userName);
 };
 
 #endif /* GAMECONTROLLER_H_ */

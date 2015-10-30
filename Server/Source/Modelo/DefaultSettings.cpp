@@ -17,6 +17,10 @@ const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 DefaultSettings::DefaultSettings() {
 }
 
+int DefaultSettings::getTimeOut(){
+	return TIMEOUT;
+}
+
 int DefaultSettings::getScreenWidth(){
 	return SCREEN_WIDTH;
 }
@@ -166,13 +170,20 @@ string DefaultSettings::getTypeEntity(const string &type){
 		return "personajes";
 
 	list<string> tiles;
-	tiles.push_back("pasto");
-	tiles.push_back("ceramico");
-	tiles.push_back("hielo");
-	tiles.push_back("tierra");
-	tiles.push_back("agua");
-	if(isInList(tiles,type))
-		return "tiles";
+		tiles.push_back("pasto");
+		tiles.push_back("ceramico");
+		tiles.push_back("hielo");
+		tiles.push_back("tierra");
+		tiles.push_back("agua");
+		if(isInList(tiles,type))
+			return "tiles";
+
+		list<string> resources;
+		resources.push_back("gold");
+		resources.push_back("chori");
+		resources.push_back("wood");
+		if(isInList(resources,type))
+				return "resources";
 	return "";
 }
 
@@ -234,6 +245,10 @@ int DefaultSettings::getPosYProtagonista(){
 
 int DefaultSettings::getVelocidadPersonaje	(){
 	return VELOCIDAD_PERSONAJE;
+}
+
+int DefaultSettings::getRangeVisibility() {
+	return RANGE_VISIBILITY;
 }
 
 DefaultSettings::~DefaultSettings() {

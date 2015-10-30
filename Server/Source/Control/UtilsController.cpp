@@ -20,6 +20,7 @@ UtilsController* UtilsController::GetInstance(){
 }
 
 pair<int,int> UtilsController::convertToCartesian(int xScreen,int yScreen){
+	//TODO: este metodo no deberia estar, en el server solo tenemos posiciones fisica, no de pantalla
 	int startMapX = gameSettings->getScreenWidth() / 2 + gameSettings->getTileSize();
 	int x = ( yScreen * 2 + xScreen - startMapX) / (gameSettings->getTileSize() * 2);
 	int y = yScreen / (gameSettings->getTileSize() / 2) - x;

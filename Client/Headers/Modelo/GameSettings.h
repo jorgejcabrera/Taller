@@ -8,25 +8,24 @@
 #ifndef GAMESETTINGS_H_
 #define GAMESETTINGS_H_
 
-#include "Loader.h"
 #include "DefaultSettings.h"
-#include "EntidadPartida.h"
-#include "EntidadEstatica.h"
-#include "EntidadSemiEstatica.h"
 #include <list>
 #include <fstream>
 #include <map>
-#include <list>
+#include <vector>
+#include "../../Headers/Vista/EntidadEstaticaVista.h"
+#include "../../Headers/Vista/EntidadPartidaVista.h"
+#include "../../Headers/Vista/EntidadSemiEstaticaVista.h"
+#include "EntidadConfig.h"
 
 namespace std {
 
 class GameSettings {
 private:
-
-	Loader* loader;
 	static GameSettings* instance;
 	GameSettings();
 	bool isFileExist(const string fileName);
+	map<string,EntidadConfig*> entitiesConfig;
 
 public:
 	//pantalla:
@@ -34,11 +33,11 @@ public:
 	int SCREEN_HEIGHT;
 	//configuracion:
 	int VELOCIDAD_PERSONAJE;
-	int LONG_MARGEN_SCROLL;
+	int LONG_MARGEN_SCROLL=30;
 	//escenario
 	string NOMBRE_ESCENARIO;
-	int MAP_WIDTH;
-	int MAP_HEIGHT;
+	int MAP_WIDTH=30;
+	int MAP_HEIGHT=30;
 	//protagonista
 	string TIPO_PROTAGONISTA;
 	int POS_X_PROTAGONISTA;
@@ -65,9 +64,8 @@ public:
 	int PIXEL_DIMENSION_PROTAGONISTA;
 	int DELAY_PROTAGONISTA;
 
-	list<EntidadPartida*> edificios;
+	list<EntidadPartidaVista*> edificios;
 	map<pair<int,int>,string> tiles;
-	void SetGameSettings();
 	static GameSettings* GetInstance();
 	virtual ~GameSettings();
 	int getScreenWidth();
@@ -99,10 +97,9 @@ public:
 	int getMargenSuperiorDos();
 	int getMargenInferiorUno();
 	int getMargenInferiorDos();
-	void createEntidades();
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
-	list<EntidadPartida*> getEntidadesEstaticas();
+	list<EntidadPartidaVista*> getEntidadesEstaticas();
 	string getTipoProtagonista();
 	int getPosXProtagonista();
 	int getPosYProtagonista();
@@ -113,6 +110,16 @@ public:
 	int getProtagonistaFramesInFile();
 	int getProtagonistaPixelDimension();
 	int getProtagonistaDelay();
+	int getAlturaMenuInferior();
+
+	//AGREGADO EN CLIENTE UNICAMENTE
+	void setScreenDimension(int width, int heigth);
+	void addEntityConfig(EntidadConfig* entity);
+	EntidadConfig* getEntityConfig(string nameEntity);
+	void setMapDimention(int ancho, int alto);
+	string getPathOfFoggedTile();
+	string getPathOfCoveredTile();
+	int getRangeVisibility();
 };
 
 } /* namespace std */

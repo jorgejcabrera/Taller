@@ -8,21 +8,12 @@
 #include "../../Headers/Modelo/EntidadDinamica.h"
 
 EntidadDinamica::EntidadDinamica(){
-	//esto no sirve, hay que borrarlo
 }
 
-EntidadDinamica::EntidadDinamica(int vel,int x,int y) {
+//TODO sacar los fps y el tamaño en pixel
+EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels){
 	this->caminando = false;
-	//son las coordenadas cartesianas de donde se va a posicionar el chabon
-	this->position.first = x;
-	this->position.first = x = y;
-	this->velocidad = vel;
-	this->width = 50;
-	this->length = 50;
-}
-
-EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float y, float widthPixel, float lengthPixels, int fps){
-	this->caminando = false;
+	this->notifiable = false;
 	this->position.first = x;
 	this->position.second = y;
 	this->velocidad = vel;
@@ -32,63 +23,43 @@ EntidadDinamica::EntidadDinamica(string typeDinamicEntity, int vel,float x,float
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = 1;
 	this->length = 1;
-	this->widthPixel = widthPixel;
-	this->lengthPixel = lengthPixels;
-	if(fps > 50) fps = 50;
-	this->framesPerSecond = fps;
-	this->inDelayPeriod = false;
+	this->owner = "";
+	this->name = nameEntity;
+	this->camino = new list<pair<int,int> >();
+	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
+	this->cicloActual = 0;
+	this->newPath = false;
 }
 
-SDL_Rect EntidadDinamica::getPositionOfSprite(int ciclos){
-	int ciclesPerFrame = 50 / this->framesPerSecond;
-
-	int lineaSprite = this->getLineSprite(this->getDireccion());
-	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
-	if(this->inDelayPeriod){
-		if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
-			this->inDelayPeriod = false;
-		}
-	}else{
-			if(!this->caminando){
-				this->frame = 0;
-			}else{
-				if(ciclos % ciclesPerFrame == 0){
-					this->frame++;
-					if( (this->frame % this->getFramesInLineFile()) == 0){
-						this->frame = 0;
-						if(this->delay>0){
-							this->delayIndex = SDL_GetTicks();
-							this->inDelayPeriod = true;
-						}
-					}
-				}
-			}
-	}
-
-	return srcrect;
+void EntidadDinamica::setOwner(string ownerId){
+	this->owner = ownerId;
 }
 
-bool EntidadDinamica::estaCaminando(){
-	return this->caminando;
+string EntidadDinamica::getOwner(){
+	return this->owner;
 }
 
 void EntidadDinamica::setInitialScreenPosition(float x,float y){
-	// no borrar por favor
+	//TODO: esto no deberia estar en la VISTA nada mas?
 	this->screenPosition.first = x;
 	this->screenPosition.second = y;
 }
 
-//seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
-void EntidadDinamica::setFramesInLineFile(int qty){
-	this->framesInLineFile = qty;
-}
+bool EntidadDinamica::nextPosition(){
 
-int EntidadDinamica::getFramesInLineFile(){
-	return this->framesInLineFile;
-}
-
-pair<float,float>* EntidadDinamica::getScreenPosition(){
-	return &this->screenPosition;
+	this->setNotifiable(false);
+	if( !camino->empty()){
+		if( cicloActual % ciclos == 0){
+			pair<int,int> nextTile = camino->front();
+			camino->pop_front();
+			this->setNotifiable(true);
+			this->newPath = false;
+			this->setPosition(nextTile.first,nextTile.second);
+		}
+		cicloActual++;
+		return true;
+	}
+	return false;
 }
 
 pair<int,int>* EntidadDinamica::getPosition(){
@@ -102,14 +73,6 @@ float EntidadDinamica::distanciaEnX(float x){
 	return res;
 }
 
-int EntidadDinamica::getWidthPixel(){
-	return this->widthPixel;
-}
-
-int EntidadDinamica::getLengthPixel(){
-	return this->lengthPixel;
-}
-
 float EntidadDinamica::distanciaEnY(float y){
 	float res;
 	if(screenPosition.second > y) res = screenPosition.second - y;
@@ -117,10 +80,27 @@ float EntidadDinamica::distanciaEnY(float y){
 	return res;
 }
 
+void EntidadDinamica::setNotifiable(bool noti){
+	this->notifiable = noti;
+}
+
+bool EntidadDinamica::hasToNotify(){
+	return notifiable;
+}
+
 float EntidadDinamica::distanciaA(float x, float y){
 	float distY = (screenPosition.second - y);
 	float distX = (screenPosition.first - x);
 	return sqrt((distX * distX) +  (distY * distY));
+}
+
+list<pair<int,int> >* EntidadDinamica::getCamino(){
+	return this->camino;
+}
+
+void EntidadDinamica::setCamino(list<pair<int,int> >* caminito){
+	this->camino->clear();
+	this->camino = caminito;
 }
 
 Direccion EntidadDinamica::getDireccionVertical(){
@@ -180,6 +160,9 @@ int EntidadDinamica::getLineSprite(Direccion dir){
 }
 
 void EntidadDinamica::setScreenPosition(float x,float y){
+	/*TODO: esto no deberia estar en la VISTA nada mas?
+	 * No deberia usar la posicion fisica en lugar de la de pantalla?
+	*/
 	this->destinoX = x;
 	this->destinoY = y;
 
@@ -194,42 +177,22 @@ void EntidadDinamica::setScreenPosition(float x,float y){
 	this->vecVelocity.second = velocidad * seno;
 }
 
-void EntidadDinamica::trasladarse(){
-	if(distanciaEnX(destinoX) <= vecVelocity.first)
-			screenPosition.first = destinoX;
-
-	if(distanciaEnY(destinoY) <= vecVelocity.second)
-			screenPosition.second = destinoY;
-
-	if(distanciaEnX(destinoX) <= vecVelocity.first && distanciaEnY(destinoY) <= vecVelocity.first)
-		caminando = false;
-
-	if(caminando){
-		if(screenPosition.first > destinoX)
-			screenPosition.first -= vecVelocity.first;
-		if(screenPosition.first < destinoX)
-			screenPosition.first += vecVelocity.first;
-		if(screenPosition.second > destinoY)
-			screenPosition.second -= vecVelocity.second;
-		if(screenPosition.second < destinoY)
-			screenPosition.second += vecVelocity.second;
-	}
-}
-
-int EntidadDinamica::getFramesPerSecond(){
-	return this->framesPerSecond;
-}
-
-void EntidadDinamica::setDelay(int delayFrames){
-	this->delay = delayFrames;
-}
-
 void EntidadDinamica::destruir(){
 	this->~EntidadDinamica();
+}
+
+void EntidadDinamica::setPathIsNew(bool es){
+	this->newPath = es;
+}
+
+bool EntidadDinamica::pathIsNew(){
+	return this->pathIsNew();
 }
 
 EntidadDinamica::~EntidadDinamica() {
 }
 
-void EntidadDinamica::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
+bool EntidadDinamica::isWalking(){
+	return this->caminando;
+	//return this->camino->empty() == false;
 }

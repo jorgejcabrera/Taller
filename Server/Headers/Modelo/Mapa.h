@@ -24,19 +24,24 @@ using namespace std;
 
 class Mapa {
 private:
-	map<pair<int,int>,EntidadPartida*> entidades;
+	//map<pair<int,int>,EntidadPartida*> entidades;
+	list<EntidadPartida*> entidades;
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
 public:
 	Mapa();
-	void show();
 	Tile* getTileAt(int x,int y);
 	void pushEntity(EntidadPartida* entidad);
 	bool positionAvailable(EntidadPartida* entidad);
-	EntidadPartida* getEntityAt(int x,int y);
 	map<pair<int,int>,Tile*>* getTiles();
-	map<pair<int,int>,EntidadPartida*>* getEntities();
+	list<EntidadPartida*>* getEntities();
+	//TODO se sacan estos metodos porque no necesitamos las coordenadas en la lista, solo necesitamos las entidades
+	//map<pair<int,int>,EntidadPartida*>* getEntities();
+	//EntidadPartida* getEntityAt(int x,int y);
 	~Mapa();
+
+	//Busco una posicion disponible para poner un personaje cuando se crea un cliente
+	pair<int,int> getAvailablePosition();
 };
 
 

@@ -10,6 +10,11 @@
 using namespace std;
 
 EntidadPartida::EntidadPartida() {
+	this->id=SequenceUtils::GetInstance()->getSequence();
+}
+
+int EntidadPartida::getId(){
+	return this->id;
 }
 
 void EntidadPartida::setPosition(int x,int y){
@@ -29,12 +34,12 @@ int EntidadPartida::getLength(){
 	return this->length;
 }
 
-string EntidadPartida::getPathImage(){
-	return pathImage;
+string EntidadPartida::getName(){
+	return this->name;
 }
 
-void EntidadPartida::setPathImage(string path){
-	this->pathImage = path;
+void EntidadPartida::setName(string nameImage){
+	this->name = nameImage;
 }
 
 void EntidadPartida::destruir(){
@@ -45,7 +50,12 @@ string EntidadPartida::getSizeString(){
 	return this->sizeString;
 }
 
-void EntidadPartida::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
+void EntidadPartida::setRangeVisibility ( int range) {
+	this->rangeVisibility = range;
+}
+
+int EntidadPartida::getRangeVisibility() {
+	return this->rangeVisibility;
 }
 
 EntidadPartida::~EntidadPartida() {

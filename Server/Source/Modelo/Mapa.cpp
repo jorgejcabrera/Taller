@@ -14,7 +14,8 @@ Mapa::Mapa() {
 		//barrido horizontal del mapa
 		for(int j = 0; j < gameSettings->getMapWidth(); j++){
 			Tile* newTile =  new Tile(j,i);
-			newTile->setPathImage(gameSettings->imagePathTilesByType("pasto"));
+			//TODO: ya no es necesario setear el path de la imagen, ademas borre el metodo y el atributo
+			//newTile->setPathImage(gameSettings->imagePathTilesByType("pasto"));
 			this->tiles.insert(std::make_pair(std::make_pair(j,i),newTile));
 		}
 	}
@@ -28,7 +29,7 @@ Mapa::Mapa() {
 	for (std::map<pair<int,int>,string>::iterator it = tilesToSetImage.begin(); it != tilesToSetImage.end();++it){
 		int posX = (*it).first.first;
 		int posY = (*it).first.second;
-		this->getTileAt(posX,posY)->setPathImage((*it).second);
+		this->getTileAt(posX,posY)->setSuperficie((*it).second);
 	}
 }
 
@@ -38,9 +39,13 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 		return;
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first+ entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
-		int i=entidad->getPosition()->first;
-		int j= entidad->getPosition()->second;
-		this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
+		/*
+		 * TODO revisar si no falla, se cambio la estructura de entidades, ahora es una lista y antes un mapa con las posiciones
+		 * int i=entidad->getPosition()->first;
+		 * int j= entidad->getPosition()->second;
+		 * this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
+		 */
+		this->entidades.push_back(entidad);
 
 		//le cambiamos el estado a los tiles que ocupa
 		for(int j=entidad->getPosition()->second; j<lowerVertex.second; j++)
@@ -67,34 +72,47 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	}
 	return true;
 }
-EntidadPartida* Mapa::getEntityAt(int x,int y){
+/*EntidadPartida* Mapa::getEntityAt(int x,int y){
 	return this->entidades.at(make_pair(x,y));
 }
-
+*/
 Tile* Mapa::getTileAt(int x,int y){
 	return this->tiles.at(make_pair(x,y));
 }
 
+//Busco una posicion disponible para poner un personaje cuando se crea un cliente
+pair<int,int> Mapa::getAvailablePosition(){
+	for(map<pair<int,int>,Tile*>::iterator tilesIterator=this->tiles.begin(); tilesIterator!=this->tiles.end(); ++tilesIterator){
+		if(tilesIterator->second->isAvailable()){
+			//TODO ver como hacer para que cuando se mueva el personaje se vuelva a habilitar el tile
+			tilesIterator->second->changeStatusAvailable();
+			return tilesIterator->first;
+		}
+	}
+	return make_pair(-1,-1);
+}
 map<pair<int,int>,Tile*>* Mapa::getTiles(){
 	return &this->tiles;
 }
 
+/*
 map<pair<int,int>,EntidadPartida*>* Mapa::getEntities(){
+	return &this->entidades;
+}*/
+
+list<EntidadPartida*>* Mapa::getEntities(){
 	return &this->entidades;
 }
 
-void Mapa::show(){
-	for (std::map<pair<int,int>,Tile*>::iterator it = tiles.begin(); it != tiles.end();++it){
-		  (*it).second->show();
-	}
-	return;
-}
-
 Mapa::~Mapa() {
-	for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
-		delete((*it).second);
-//		(*it).second = NULL;
+	/*for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
+			delete((*it).second);
+	//		(*it).second = NULL;
+	}*/
+	for (list<EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
+		delete((*it));
 	}
+
 	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
 //		(*it).second->~Tile();
 		delete((*it).second);

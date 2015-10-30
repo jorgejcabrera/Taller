@@ -14,9 +14,25 @@ Tile::Tile(int x, int y ) {
 	this->position.second = y;
 	this->available = true;
 	this->superficie = grass;
+	this->superficieStr ="pasto";
+}
+
+string Tile::getSuperficie(){
+	return this->superficieStr;
+}
+
+void Tile::setSuperficie(string superficieNueva){
+	this->superficieStr = superficieNueva;
 }
 
 void Tile::changeStatusAvailable(){
+	stringstream ss;
+	ss << "Tile [" << this->position.first <<";"<< this->position.second<<"] was available " << this->available;
+	Logger::get()->logDebug("Tile","changeStatusAvailable",ss.str());
+	ss.str("");
+	bool result = this->available == false;
+	ss << "Tile [" << this->position.first <<";"<< this->position.second<<"] now is " << result;
+	Logger::get()->logDebug("Tile","changeStatusAvailable",ss.str());
 	this->available = this->available == false;
 }
 
@@ -42,18 +58,6 @@ int Tile::getPosX(){
 
 int Tile::getPosY(){
 	return this->position.second;
-}
-
-void Tile::show(){
-	cout << "x:" << this->position.first << ", y:" << this->position.second << "\n";
-}
-
-string Tile::getPathImage(){
-	return pathImage;
-}
-
-void Tile::setPathImage(string path){
-	this->pathImage = path;
 }
 
 Tile::~Tile() {

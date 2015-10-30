@@ -34,6 +34,11 @@ void PicassoHelper::createContext(){
 	    if (renderer == NULL){
 	    	this->exitError("SDL_CreateRenderer Error:");
 	    }
+	    TTF_Init();
+   		this->font= TTF_OpenFont("Purisa-Bold.ttf", 100);
+   		if(!font) {
+   		    printf("TTF_OpenFont: %s\n", TTF_GetError());
+   		}
 }
 
 void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h){
@@ -44,6 +49,7 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 		}else{
 			textureExists = loadTexture(file);
 		}
+		//cout << "X: " <<x<<" Y: "<<y<<" W: "<<w<<" H: "<< h<<endl;
 		renderTexture(textureExists,x,y,w,h);
 }
 
@@ -79,7 +85,6 @@ void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h){
 }
 
 void PicassoHelper::renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject){
-	//Setup the destination rectangle to be at the position we want
 	SDL_Rect dst;
 	dst.x = x;
 	dst.y = y;
@@ -118,6 +123,43 @@ PicassoHelper* PicassoHelper::GetInstance(int width, int high) {
 	return instance;
 }
 
+void PicassoHelper::renderFogOfWar(const string &file, int x, int y, int w, int h) {
+	SDL_Texture* textureExists;
+	map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+	if(it != mapByImagePath.end()){
+		textureExists = (*it).second;
+	}else{
+		textureExists = loadTexture(file);
+	}
+	SDL_SetTextureAlphaMod(textureExists,150);
+	renderTexture(textureExists,x,y,w,h);
+}
+
+void PicassoHelper::renderText(int x, int y, int w, int h, string text,Uint8 r, Uint8 g, Uint8 b) {
+
+	SDL_Color color = {r,g,b};
+	SDL_Surface* surface;
+	map<string,SDL_Surface*>::iterator itSurface = mapOfSurface.find( text.c_str());
+	if(itSurface != mapOfSurface.end()){
+		surface = (*itSurface).second;
+	}else{
+		surface = TTF_RenderText_Solid(this->font, text.c_str(), color);
+
+		this->mapOfSurface[text.c_str()] = surface;
+	}
+
+	SDL_Texture* textureExists;
+	map<string,SDL_Texture*>::iterator it = mapByImagePath.find(text);
+	if(it != mapByImagePath.end()){
+		textureExists = it->second;
+	}else{
+		textureExists = SDL_CreateTextureFromSurface(renderer, surface);
+	}
+	renderTexture(textureExists,x,y,w,h);
+//	SDL_DestroyTexture(Message);
+	//SDL_FreeSurface(surface);
+}
+
 PicassoHelper::~PicassoHelper() {
 	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
 		SDL_DestroyTexture(it->second);
@@ -140,6 +182,6 @@ PicassoHelper::~PicassoHelper() {
 		this->highView = 0;
 		this->instance=NULL;
 	SDL_Quit();
-
-
+	TTF_CloseFont(this->font);
+	TTF_Quit();
 }

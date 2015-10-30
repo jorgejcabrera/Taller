@@ -13,10 +13,13 @@ ResourceManager::ResourceManager(Mapa* map){
 	this->madera = cantidadInicial;
 	this->oro = cantidadInicial;
 
+	this->notify = false;
+	this->newResource = false;
+
 	this->map = map;
 	this->resources = new list<Resource*>();
-	Resource* oro = new Resource("gold",15,8);
-	Resource* chori = new Resource("chori",11,9);
+	Resource* oro = new Resource("gold",9,9);
+	Resource* chori = new Resource("chori",0,20);
 	Resource* madera = new Resource("wood",20,15);
 
 	this->resources->push_front(oro);
@@ -30,39 +33,46 @@ ResourceManager::ResourceManager(Mapa* map){
 bool ResourceManager::resourceAt(int x,int y){
 	bool hay = false;
 
-	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end(); ++it)
+	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end(); ++it){
 	    if((*it)->getPosition()->first == x && (*it)->getPosition()->second == y)
 	    	hay = true;
+	}
 	return hay;
 }
 
 void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	bool collected = false;
+
+	//borro el recurso de la lista de recursos y sumo al contador
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
 		if((*it)->getPosition()->first == pos->first && (*it)->getPosition()->second == pos->second){
-			if((*it)->getTipo() == "chori") this->alimento++;
-			if((*it)->getTipo() == "gold") this->oro++;
-			if((*it)->getTipo() == "wood") this->madera++;
+			this->IdRecursoAEliminar = (*it)->getId();
+			if((*it)->getName() == "chori") setUltimoTipoConsumido("chori");
+			if((*it)->getName() == "gold") setUltimoTipoConsumido("gold");
+			if((*it)->getName() == "wood") setUltimoTipoConsumido("wood");
 			this->resources->erase(it);
 			collected = true;
 		}
 
-	std::map<pair<int,int>,EntidadPartida*>::iterator it2;
-	it2 = map->getEntities()->find(*pos);
-	if( it2 != map->getEntities()->end())
-		map->getEntities()->erase(it2);
+	//borro el recurso del mapa
+	list<EntidadPartida*>::iterator it2;
+	bool borrado = false;
+	for( it2 = this->map->getEntities()->begin(); it2 != this->map->getEntities()->end() && ! borrado; ++it2){
+		if((*it2)->getPosition()->first == pos->first && (*it2)->getPosition()->second == pos->second){
+			this->map->getEntities()->erase(it2);
+			borrado = true;
+		}
+	}
 
+	//marco el tile como disponible
 	map->getTileAt(pos->first,pos->second)->changeStatusAvailable();
-
-	cout<<"madera: "<<madera<<endl;
-	cout<<"oro: "<<oro<<endl;
-	cout<<"alimento: "<<alimento<<endl;
-
+	this->notify = true;
 }
 
 void ResourceManager::actualizar(){
 
-	int nRandom = rand() % 18;
+	unsigned int maxResources = 12;
+	int nRandom = rand() % 30;
 
 	//posicion random para el nuevo rescurso
 	GameSettings* gs = GameSettings::GetInstance();
@@ -73,17 +83,29 @@ void ResourceManager::actualizar(){
 	//tipo de recurso random
 	int tipo = (rand()%3 + 1);
 
-	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0){
+	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0 && this->resources->size() < maxResources){
 		Resource* nuevoRecurso;
-		if(tipo == 1)
+		if(tipo == 1){
 			nuevoRecurso = new Resource("gold",x,y);
-		if(tipo == 2)
+			this->tipoUltimoCreado = "gold";
+		}
+		if(tipo == 2){
 			nuevoRecurso = new Resource("chori",x,y);
-		if(tipo == 3)
+			this->tipoUltimoCreado = "chori";
+		}
+		if(tipo == 3){
 			nuevoRecurso = new Resource("wood",x,y);
+			this->tipoUltimoCreado = "wood";
+		}
+
+		this->posNuevoRecurso.first = x;
+		this->posNuevoRecurso.second = y;
+		this->IdNuevoRecurso = nuevoRecurso->getId();
+
 
 		this->resources->push_front(nuevoRecurso);
 		this->map->pushEntity(nuevoRecurso);
+		newResource = true;
 	}
 }
 
@@ -99,8 +121,55 @@ int ResourceManager::getWood(){
 	return this->madera;
 }
 
+bool ResourceManager::hasToNotify(){
+	return this->notify;
+}
+
+void ResourceManager::yaNotifique(){
+	this->notify = false;
+}
+
+int ResourceManager::getIdAEliminar(){
+	return this->IdRecursoAEliminar;
+}
+
+int ResourceManager::getIdNuevoRecurso(){
+	return this->IdNuevoRecurso;
+}
+
+void ResourceManager::setUltimoEnConsumir(string owner){
+	this->ultimoEnConsumir = owner;
+}
+
+string ResourceManager::getUltimoEnConsumir(){
+	return this->ultimoEnConsumir;
+}
+
+void ResourceManager::setUltimoTipoConsumido(string tipo){
+	this->ultimoTipoConsumido = tipo;
+}
+
+string ResourceManager::getUltimoTipoConsumido(){
+	return this->ultimoTipoConsumido;
+}
+
+bool ResourceManager::hasNewResource(){
+	return this->newResource;
+}
+
+pair<int,int> ResourceManager::getPosNuevoRecurso(){
+	return this->posNuevoRecurso;
+}
+
+string ResourceManager::getUltimoTipoCreado(){
+	return this->tipoUltimoCreado;
+}
+
+void ResourceManager::newResourceSent(){
+	this->newResource = false;
+}
+
 ResourceManager::~ResourceManager() {
 	resources->clear();
 	delete resources;
 }
-

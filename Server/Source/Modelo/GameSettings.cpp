@@ -17,12 +17,14 @@ GameSettings::GameSettings() {
 }
 
 int GameSettings::getScreenWidth(){
+	//TODO: esto deberia estar solo en la vista
 	if((SCREEN_WIDTH<=0) or (SCREEN_WIDTH>DefaultSettings::getScreenWidth()))
 		return DefaultSettings::getScreenWidth();
 	return this->SCREEN_WIDTH;
 }
 
 int GameSettings::getScreenHeight(){
+	//TODO: esto deberia estar solo en la vista
 	if((SCREEN_HEIGHT<=0) or (SCREEN_HEIGHT>DefaultSettings::getScreenHeight()))
 		return DefaultSettings::getScreenHeight();
 	return this->SCREEN_HEIGHT;
@@ -30,10 +32,6 @@ int GameSettings::getScreenHeight(){
 
 int GameSettings::getTileSize(){
 	return DefaultSettings::getTileSize();
-}
-
-int GameSettings::getLongMargenScroll(){
-	return (LONG_MARGEN_SCROLL > 1) ? LONG_MARGEN_SCROLL : DefaultSettings::getLongMargenScroll();
 }
 
 string GameSettings::getNombreEscenario(){
@@ -51,87 +49,6 @@ int GameSettings::getMapHeight(){
 int GameSettings::getMediumSize(){
 	return (MEDIUM_SIZE > 0 ) ? MEDIUM_SIZE : DefaultSettings::getMediumSize();
 }
-
-int GameSettings::getVelocidadScrollUno(){
-	//return (VELOCIDAD_SCROLL_UNO > 0) ? VELOCIDAD_SCROLL_UNO : DefaultSettings::getVelocidadScrollUno();
-	return DefaultSettings::getVelocidadScrollUno();
-}
-
-int GameSettings::getVelocidadScrollDos(){
-	//return (VELOCIDAD_SCROLL_DOS > 0) ? VELOCIDAD_SCROLL_DOS : DefaultSettings::getVelocidadScrollDos();
-	return DefaultSettings::getVelocidadScrollDos();
-}
-
-int GameSettings::getLimiteDerecho() {
-	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
-	int altura = sqrt(factor);
-	int widthMapaIsometric = altura * 2 * this->getMapWidth();
-	if (widthMapaIsometric > this->getScreenWidth()) {
-		return ((this->getScreenWidth() - widthMapaIsometric) / 2) - this->getTileSize();
-	} else {
-		return 0;
-	}
-}
-
-int GameSettings::getLimiteIzquierdo() {
-	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
-	int altura = sqrt(factor);
-	int widthMapaIsometric = altura * 2 * this->getMapWidth();
-	if (widthMapaIsometric > this->getScreenWidth()) {
-		return ((widthMapaIsometric - this->getScreenWidth()) / 2) - this->getTileSize();
-	} else {
-		return 0;
-	}
-}
-
-int GameSettings::getLimiteInferior() {
-	double factor = this->getTileSize() * this->getTileSize() - (17 / 16);
-	int altura = sqrt(factor);
-	int heightMapaIsometric = altura * this->getMapHeight();
-	if (heightMapaIsometric > this->getScreenHeight()) {
-		return (this->getScreenHeight() - heightMapaIsometric);
-	} else {
-		return this->getTileSize()/2;
-	}
-}
-
-int GameSettings::getLimiteSuperior() {
-	return DefaultSettings::getLimiteSuperior();
-}
-
-int GameSettings::getMargenDerechoUno(){
-	return ( this->getScreenWidth() - this->getLongMargenScroll() * 2);
-}
-
-int GameSettings::getMargenDerechoDos(){
-	return (this->getScreenWidth() - this->getLongMargenScroll());
-}
-
-int GameSettings::getMargenIzquierdoUno(){
-	return this->getLongMargenScroll() * 2;
-}
-
-int GameSettings::getMargenIzquierdoDos(){
-	return this->getLongMargenScroll();
-}
-
-int GameSettings::getMargenSuperiorUno(){
-	return this->getLongMargenScroll() * 2;
-}
-
-int GameSettings::getMargenSuperiorDos(){
-	return this->getLongMargenScroll() * 2;
-}
-
-int GameSettings::getMargenInferiorUno(){
-	return (this->getScreenHeight() - 2 * this->getLongMargenScroll());
-}
-
-
-int GameSettings::getMargenInferiorDos(){
-	return (this->getScreenHeight() - this->getLongMargenScroll());
-}
-
 
 bool GameSettings::isEntityTypeValid(const string &type){
 	return DefaultSettings::isEntityTypeValid(type);
@@ -172,10 +89,27 @@ int GameSettings::getVelocidadPersonaje	(){
 	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
 }
 
-void GameSettings::SetGameSettings(){
-//	map<string,int>* mapSI = new map<string,int>();
-//	map< string, string> * mapSS = new map< string, string>();
+void GameSettings::generateListMessageConfiguration(){
+	//Genero una lista de mensajes de configuracion para mandarle a cada cliente
+	vector< map< string, string> > *listaDeTipos = loader->getTypes();
+	for(vector< map< string, string> >::iterator it=listaDeTipos->begin(); it!=listaDeTipos->end(); ++it){
+		string name = getValueInMap(*it, "nombre");
+		string path = getValueInMap(*it, "imagen");
+		int anchoBase =  atoi(getValueInMap(*it, "ancho_base").c_str());
+		int altoBase = atoi(getValueInMap(*it, "alto_base").c_str());
+		int fps = atoi(getValueInMap(*it, "fps").c_str());
+		int delay = atoi(getValueInMap(*it, "delay").c_str());
+		int total_frames_line = atoi(getValueInMap(*it, "total_frames_line").c_str());
+		int pixels_dimension = atoi(getValueInMap(*it, "pixels_dimension").c_str());
+		this->messageConfigList.push_back(new Message(name,path,anchoBase,altoBase,fps,delay,total_frames_line,pixels_dimension));
+	}
+}
 
+list<Message*> GameSettings::getListMessageConfiguration(){
+	return this->messageConfigList;
+}
+
+void GameSettings::SetGameSettings(){
 	map<string,int>* mapSI;
 	map< string, string> * mapSS;
 
@@ -247,6 +181,7 @@ GameSettings* GameSettings::GetInstance() {
 		instance = new GameSettings();
 		instance->SetGameSettings();
 		instance->createEntidades();
+		instance->generateListMessageConfiguration();
 	}
 	return instance;
 }
@@ -263,17 +198,18 @@ void GameSettings::createEntidades(){
 			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<this->MAP_WIDTH and posY<this->MAP_HEIGHT){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
-				string imagen = this->getValueInMap(entidadObjeto, "imagen");
+				//TODO: este es un control que debe hacer el cliente
+				/*string imagen = this->getValueInMap(entidadObjeto, "imagen");
 				if(!(isFileExist(imagen))){
 					cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
 					imagen = DefaultSettings::defaultImage();
-				}
+				}*/
 				if((tipoEntidad == "edificios") or (tipoEntidad=="semiestaticos")){
 					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
 					if(anchoBase>0 and altoBase>0){
 						if(tipoEntidad == "edificios"){
-							EntidadEstatica* edificioCreado = new EntidadEstatica(anchoBase,altoBase,nombre,true,imagen);
+							EntidadEstatica* edificioCreado = new EntidadEstatica(nombre,anchoBase,altoBase,true);
 							edificioCreado->setPosition(posX,posY);
 							this->edificios.push_back(edificioCreado);
 						}else if (tipoEntidad=="semiestaticos"){
@@ -282,7 +218,7 @@ void GameSettings::createEntidades(){
 							int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
 							int total_frames = (total_frames_line > 0) ? total_frames_line : 1;
 							if(fps > 50) fps = 50;
-							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,nombre,imagen);
+							EntidadSemiEstatica* molino = new EntidadSemiEstatica(nombre, anchoBase,altoBase,150,150,fps);
 							molino->setPosition(posX,posY);
 							molino->setDelay(delay);
 							molino->setFramesInLineFile(total_frames);
@@ -290,7 +226,8 @@ void GameSettings::createEntidades(){
 						}
 					}
 				}else if (tipoEntidad=="tiles" && posX < this->getMapHeight() && posY < this->getMapHeight()){
-					this->tiles.insert(make_pair(make_pair(posX,posY),imagen));
+					//TODO: modifico lo que hay en la cola, ahora solo guardo que tipo de tile es, antes mandaba el path. Eso deberia resolverlo la vista
+					this->tiles.insert(make_pair(make_pair(posX,posY),nombre));
 				}
 			}
 	}
@@ -349,18 +286,15 @@ bool GameSettings::isFileExist(const string fileName){
 }
 
 GameSettings::~GameSettings() {
-//	for (list<EntidadPartida*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
-//			(*it)->~EntidadPartida();
-//		}
-//	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
-//		this->tiles.erase(it);
-//		}
-	//this->edificios = NULL;
-//	this->loader->~Loader();
+	//TODO: borrar la lista de mensajes de configuracion
+
 	delete(this->loader);
 	this->loader = NULL;
 	this->instance =NULL;
 }
 
+int GameSettings::getRangeVisibility() {
+	return DefaultSettings::getRangeVisibility(); // TODO que cada entidad tenga su propia visibilidad, y que esto se obtenga del yaml
+}
 
 } /* namespace std */

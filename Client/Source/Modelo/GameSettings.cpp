@@ -12,8 +12,6 @@ GameSettings* GameSettings::instance = NULL;
 namespace std {
 
 GameSettings::GameSettings() {
-	this->loader = new Loader();
-	this->loader->load();
 }
 
 int GameSettings::getScreenWidth(){
@@ -172,128 +170,12 @@ int GameSettings::getVelocidadPersonaje	(){
 	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
 }
 
-void GameSettings::SetGameSettings(){
-//	map<string,int>* mapSI = new map<string,int>();
-//	map< string, string> * mapSS = new map< string, string>();
-
-	map<string,int>* mapSI;
-	map< string, string> * mapSS;
-
-	// seteo screen
-	mapSI = loader->getScreen();
-	this->SCREEN_HEIGHT = mapSI->operator []("alto");
-	this->SCREEN_WIDTH = mapSI->operator []("ancho");
-	mapSI->clear();
-	// seteo conf
-	mapSI = loader->getConf();
-	this->VELOCIDAD_PERSONAJE = mapSI->operator []("vel_personaje");
-	this->LONG_MARGEN_SCROLL = mapSI->operator []("margen_scroll");
-	mapSI->clear();
-	//seteo escenario
-	mapSS = loader->getStage();
-	this->NOMBRE_ESCENARIO = mapSS->operator []("orleans");
-	this->MAP_HEIGHT = atoi(mapSS->operator []("size_x").c_str());
-	this->MAP_WIDTH = atoi(mapSS->operator []("size_y").c_str());
-	mapSS->clear();
-	//seteo protagonista
-	mapSS = loader->getMainCharacter();
-	this->TIPO_PROTAGONISTA = mapSS->operator []("tipo");
-	this->POS_X_PROTAGONISTA = atoi(mapSS->operator []("x").c_str());
-	this->POS_Y_PROTAGONISTA = atoi(mapSS->operator []("y").c_str());
-	mapSS->clear();
-
-	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", this->TIPO_PROTAGONISTA);
-	int fps = atoi(this->getValueInMap(entidadObjeto, "fps").c_str());
-	if(fps>0){
-		this->FPS_PROTAGONISTA = fps;
-	}else{
-		this->FPS_PROTAGONISTA = 1;
-	}
-
-	int delay = atoi(this->getValueInMap(entidadObjeto, "delay").c_str());
-	this->DELAY_PROTAGONISTA = delay;
-
-	string imagen = this->getValueInMap(entidadObjeto, "imagen");
-	if(!(isFileExist(imagen))){
-		cout << "LOG.INFO : Uso la imagen por default porque no existe el file: " << imagen <<endl;
-		this->PATH_PROTAGONISTA = DefaultSettings::defaultImage();
-	}else{
-		this->PATH_PROTAGONISTA = imagen;
-	}
-
-	int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
-	if(total_frames_line>0){
-		this->FRAMES_IN_FILE_PROTAGONISTA = total_frames_line;
-	}else{
-		this->FRAMES_IN_FILE_PROTAGONISTA = 7;
-	}
-
-	int pixels_dimension = atoi(this->getValueInMap(entidadObjeto, "pixels_dimension").c_str());
-	if(pixels_dimension>0){
-		this->PIXEL_DIMENSION_PROTAGONISTA = pixels_dimension;
-	}else{
-		this->PIXEL_DIMENSION_PROTAGONISTA = 50;
-	}
-
-	// los pongo en NULL para no borrar informacion del Loader
-	mapSI = NULL;
-	mapSS = NULL;
-	delete mapSI;
-	delete mapSS;
-}
 
 GameSettings* GameSettings::GetInstance() {
 	if (!instance) {
 		instance = new GameSettings();
-		instance->SetGameSettings();
-		instance->createEntidades();
 	}
 	return instance;
-}
-
-void GameSettings::createEntidades(){
-	vector< map< string, string> > *entidades = loader->getEntitys();
-	for(vector< map< string, string> >::iterator it = entidades->begin(); it!= entidades->end(); ++it){
-			string nombre = this->getValueInMap(*it, "tipo");
-			string posXStr = this->getValueInMap(*it, "x");
-			string posYStr = this->getValueInMap(*it, "y");
-			int posX = atoi(posXStr.c_str());
-			int posY = atoi(posYStr.c_str());
-
-			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<this->MAP_WIDTH and posY<this->MAP_HEIGHT){
-				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
-				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
-				string imagen = this->getValueInMap(entidadObjeto, "imagen");
-				if(!(isFileExist(imagen))){
-					cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
-					imagen = DefaultSettings::defaultImage();
-				}
-				if((tipoEntidad == "edificios") or (tipoEntidad=="semiestaticos")){
-					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
-					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
-					if(anchoBase>0 and altoBase>0){
-						if(tipoEntidad == "edificios"){
-							EntidadEstatica* edificioCreado = new EntidadEstatica(anchoBase,altoBase,nombre,true,imagen);
-							edificioCreado->setPosition(posX,posY);
-							this->edificios.push_back(edificioCreado);
-						}else if (tipoEntidad=="semiestaticos"){
-							int fps = atoi(this->getValueInMap(entidadObjeto, "fps").c_str());
-							int delay = atoi(this->getValueInMap(entidadObjeto, "delay").c_str());
-							int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
-							int total_frames = (total_frames_line > 0) ? total_frames_line : 1;
-							if(fps > 50) fps = 50;
-							EntidadSemiEstatica* molino = new EntidadSemiEstatica(anchoBase,altoBase,150,150,fps,nombre,imagen);
-							molino->setPosition(posX,posY);
-							molino->setDelay(delay);
-							molino->setFramesInLineFile(total_frames);
-							this->edificios.push_back(molino);
-						}
-					}
-				}else if (tipoEntidad=="tiles" && posX < this->getMapHeight() && posY < this->getMapHeight()){
-					this->tiles.insert(make_pair(make_pair(posX,posY),imagen));
-				}
-			}
-	}
 }
 
 int GameSettings::getProtagonistaFPS(){
@@ -316,7 +198,7 @@ int GameSettings::getProtagonistaPixelDimension(){
 	return this->PIXEL_DIMENSION_PROTAGONISTA;
 }
 
-list<EntidadPartida*> GameSettings::getEntidadesEstaticas(){
+list<EntidadPartidaVista*> GameSettings::getEntidadesEstaticas(){
 	return this->edificios;
 }
 
@@ -349,18 +231,41 @@ bool GameSettings::isFileExist(const string fileName){
 }
 
 GameSettings::~GameSettings() {
-//	for (list<EntidadPartida*>::iterator it=this->edificios.begin(); it!=this->edificios.end(); ++it){
-//			(*it)->~EntidadPartida();
-//		}
-//	for (map<pair<int,int>,string>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
-//		this->tiles.erase(it);
-//		}
-	//this->edificios = NULL;
-//	this->loader->~Loader();
-	delete(this->loader);
-	this->loader = NULL;
 	this->instance =NULL;
 }
 
+void GameSettings::setScreenDimension(int width, int heigth){
+	this->SCREEN_WIDTH = width;
+	this->SCREEN_HEIGHT = heigth;
+}
 
+void GameSettings::addEntityConfig(EntidadConfig* entidad){
+	this->entitiesConfig.insert(make_pair(entidad->getName(),entidad));
+}
+
+EntidadConfig* GameSettings::getEntityConfig(string nameEntity){
+	return this->entitiesConfig.at(nameEntity);
+}
+
+void GameSettings::setMapDimention(int ancho, int alto){
+	this->MAP_WIDTH=ancho;
+	this->MAP_HEIGHT=alto;
+
+}
+
+int GameSettings::getAlturaMenuInferior() {
+	return DefaultSettings::getAlturaMenuInferior();
+}
+
+string GameSettings::getPathOfFoggedTile(){
+	return DefaultSettings::getPathOfFoggedTile();
+}
+
+string GameSettings::getPathOfCoveredTile(){
+	return DefaultSettings::getPathOfCoveredTile();
+}
+
+int GameSettings::getRangeVisibility() {
+	return DefaultSettings::getRangeVisibility(); // TODO que cada entidad tenga su propia visibilidad, y que esto se obtenga del yaml
+}
 } /* namespace std */
