@@ -64,9 +64,7 @@ int Client::connectToServer(){
 }
 
 void Client::sendMessage(Message *msg){
-	if (this->status == CONECTED){
-		this->writeThread->writeMessage(msg);
-	}
+	this->writeThread->writeMessage(msg);
 }
 
 bool Client::isConected(){
@@ -176,8 +174,10 @@ void Client::saveEntitiesConfig(Message* msg){
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->name);
 	if(newMessage){
-		if(newMessage->getTipo()=="exit"){
+		if( newMessage->getTipo() == "exit" ){
 			this->status = DISCONECTED;
+			Logger::get()->logError("Client","sendEvents","Client disconnect, so can't send message to server");
+			return;
 		}
 		this->writeThread->writeMessage(newMessage);
 	}

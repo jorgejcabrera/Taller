@@ -38,6 +38,14 @@ public:
 	*ponemos los mensajes en la cola de novedades
 	* */
 	void writeMessage(Message* msg);
+	/*
+	*borramos de la cola todos los mensajes que quedaban por escribir
+	* */
+	void clearQueue();
+	/*
+	*devuelve la cnatidad de mensajes que deben ser escritos en la cola
+	* */
+	int countMessage();
 	void shutDown();
 	virtual ~MessageSocketWriter();
 	/*
