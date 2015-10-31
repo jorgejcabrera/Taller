@@ -14,8 +14,8 @@ MessageSocketReader::MessageSocketReader(int sockfd) {
 }
 
 int MessageSocketReader::run(void *data){
-	//will go away on its own upon completion.
-	SDL_DetachThread(this->getThread());
+	/*will go away on its own upon completion.
+	SDL_DetachThread(this->getThread());*/
 	Logger::get()->logInfo("MessageSocketReader","run","running thread client reader");
 	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
