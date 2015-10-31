@@ -49,7 +49,6 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 		}else{
 			textureExists = loadTexture(file);
 		}
-		//cout << "X: " <<x<<" Y: "<<y<<" W: "<<w<<" H: "<< h<<endl;
 		renderTexture(textureExists,x,y,w,h);
 }
 
@@ -136,22 +135,13 @@ void PicassoHelper::renderFogOfWar(const string &file, int x, int y, int w, int 
 }
 
 void PicassoHelper::renderText(int x, int y, int w, int h, string text,Uint8 r, Uint8 g, Uint8 b) {
-	SDL_Color color = {r,g,b};
-/*	SDL_Surface* surface;
-	map<string,SDL_Surface*>::iterator itSurface = mapOfSurface.find( text.c_str());
-	if(itSurface != mapOfSurface.end()){
-		surface = (*itSurface).second;
-	}else{
-		surface = TTF_RenderText_Solid(this->font, text.c_str(), color);
-		this->mapOfSurface[text.c_str()] = surface;
-	}
-*/
 	SDL_Texture* textureExists;
 	map<string,SDL_Texture*>::iterator it = mapByImagePath.find(text);
 	if(it != mapByImagePath.end()){
 		textureExists = it->second;
 	}else{
 		SDL_Surface* surface;
+		SDL_Color color = {r,g,b};
 		surface = TTF_RenderText_Solid(this->font, text.c_str(), color);
 		textureExists = SDL_CreateTextureFromSurface(renderer, surface);
 		this->mapByImagePath[text.c_str()] = textureExists;
@@ -168,14 +158,10 @@ PicassoHelper::~PicassoHelper() {
 
 	if (renderer != NULL){
 		SDL_DestroyRenderer(renderer);
-//		free(renderer);
-//		delete(renderer);
 		renderer=NULL;
 	}
 	if (window != NULL){
 		SDL_DestroyWindow(window);
-//		free(this->window);
-//		delete(window);
 		window=NULL;
 	}
 	this->widthView = 0;
