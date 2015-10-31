@@ -9,7 +9,7 @@ using namespace std;
 
 class Thread {
 private:
-	SDL_Thread *thread;
+	SDL_Thread* thread;
 	/*
 	 * This static method matches the SDL_ThreadFunction firm needed to
 	 * start a thread. It just runs the virtual run method and passes
@@ -32,7 +32,7 @@ public:
 	 * Waits till the thread finishes.
 	 */
 	void join(int * status);
-
+	SDL_Thread* getThread();
 	virtual ~Thread();
 };
 

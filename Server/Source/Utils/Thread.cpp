@@ -31,6 +31,10 @@ int Thread::staticRun(void * data){
 	return tap->t->run(tap->param);
 }
 
+SDL_Thread* Thread::getThread(){
+	return this->thread;
+}
+
 Thread::~Thread() {
 	//Its not necessary to destroy the thread. SDL_WaitThread is the dtor.
 }
