@@ -17,6 +17,7 @@ MenuVista::MenuVista() {
 	littleStripSise = 10;
 	mediumStripSise = 20;
 	miniMapHeight = 0;
+	drawDescription = false;
 }
 
 void MenuVista::drawMe() {

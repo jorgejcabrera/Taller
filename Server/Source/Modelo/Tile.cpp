@@ -40,6 +40,14 @@ bool Tile::isAvailable(){
 	return this->available;
 }
 
+void Tile::setToAvailable(){
+	this->available = true;
+}
+
+void Tile::setToNotAvailable(){
+	this->available = false;
+}
+
 void Tile::pushSurface(surface_type surface){
 	this->superficie = surface;
 }
