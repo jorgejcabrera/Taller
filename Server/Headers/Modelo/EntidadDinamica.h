@@ -60,7 +60,7 @@ class EntidadDinamica: public EntidadPartida {
 		/*
 		*devuelve true si pudo mover la entidad de posicion
 		* */
-		bool nextPosition();
+		void nextPosition();
 		string getOwner();
 		EntidadDinamica();
 		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);

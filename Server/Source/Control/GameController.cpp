@@ -66,15 +66,16 @@ void GameController::setNextPaths(){
 			this->juego->getResourceManager()->collectResourceAt(pos);
 			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
 		}
-		//pair<int,int>* firstPosition = (*it).second->getPosition();
-		bool changeStatusAvailable = (*it).second->nextPosition();
 		
-		/*if( changeStatusAvailable && it->second->isWalking() ){
-			Logger::get()->logDebug("GameController","setNextPaths","Le cambiamos el status al tile");
-			pair<int,int>* secondPosition = (*it).second->getPosition();
-			this->juego->getMap()->getTileAt(firstPosition->first,firstPosition->second)->changeStatusAvailable();
-			this->juego->getMap()->getTileAt(secondPosition->first,secondPosition->second)->changeStatusAvailable();
-		}*/
+		//pongo el tile anterior disponible
+		pair<int,int>* firstPosition = (*it).second->getPosition();
+		this->juego->getMap()->getTileAt(firstPosition->first,firstPosition->second)->setToAvailable();
+		//busco la nueva posicion
+		(*it).second->nextPosition();
+		//pongo el nuevo tile como ocupado
+		pair<int,int>* newPos = (*it).second->getPosition();
+		this->juego->getMap()->getTileAt(newPos->first,newPos->second)->setToNotAvailable();
+
 	}
 }
 

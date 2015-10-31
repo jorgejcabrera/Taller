@@ -81,11 +81,7 @@ void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
 	delete pathF;
 
 	protagonistaToUpdate->setCamino(caminoMinimo);
-	protagonistaToUpdate->nextPosition();
 	protagonistaToUpdate->setPathIsNew(true);
-
-	//TODO aca le tiene que pasar la screen position en isometricas
-	//protagonistaToUpdate->setScreenPosition(x,y);
 }
 
 void Juego::terminarJuego(){
