@@ -45,7 +45,7 @@ void EntidadDinamica::setInitialScreenPosition(float x,float y){
 	this->screenPosition.second = y;
 }
 
-bool EntidadDinamica::nextPosition(){
+void EntidadDinamica::nextPosition(){
 
 	this->setNotifiable(false);
 	if( !camino->empty()){
@@ -57,9 +57,7 @@ bool EntidadDinamica::nextPosition(){
 			this->setPosition(nextTile.first,nextTile.second);
 		}
 		cicloActual++;
-		return true;
 	}
-	return false;
 }
 
 pair<int,int>* EntidadDinamica::getPosition(){

@@ -18,6 +18,8 @@ void MessageSocketWriter::writeMessage(Message *msg){
 }
 
 int MessageSocketWriter::run(void* data){
+	//will go away on its own upon completion.
+	SDL_DetachThread(this->getThread());
 	Logger::get()->logInfo("MessageSocketWriter","run","running thread client writer");
 	while( this->isAlive ){
 		while(!this->queue->isEmpty()){

@@ -113,6 +113,7 @@ list<Message*> Client::getListSeenTilesAsMessages(){
 Client::~Client() {
 	this->writeThread->shutDown();
 	this->readThread->shutDown();
+	SDL_Delay(1000);
 	shutdown(this->clientId, 2);	//2 blocks recv and sending
 	close(this->clientId);
 	this->writeThread->~MessageSocketWriter();

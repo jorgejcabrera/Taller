@@ -217,16 +217,16 @@ void Client::notifyUserName(){
 			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro";
 		}
 	}
-
 }
 
-ResourceCounter* Client::getResourceCounter() {
+ResourceCounter* Client::getResourceCounter(){
 	return this->resourceCounter;
 }
 
 Client::~Client() {
 	this->writeThread->shutDown();
 	this->readThread->shutDown();
+	SDL_Delay(1000);
 	shutdown(this->sockfd, 2);	//2 blocks recv and sending
 	close(this->sockfd);
 	this->writeThread->~MessageSocketWriter();

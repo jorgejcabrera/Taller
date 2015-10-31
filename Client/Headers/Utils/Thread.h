@@ -32,6 +32,7 @@ public:
 	 * Waits till the thread finishes.
 	 */
 	void join(int * status);
+	SDL_Thread* getThread();
 
 	virtual ~Thread();
 };
