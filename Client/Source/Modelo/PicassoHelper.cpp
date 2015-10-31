@@ -136,7 +136,6 @@ void PicassoHelper::renderFogOfWar(const string &file, int x, int y, int w, int 
 }
 
 void PicassoHelper::renderText(int x, int y, int w, int h, string text,Uint8 r, Uint8 g, Uint8 b) {
-
 	SDL_Color color = {r,g,b};
 	SDL_Surface* surface;
 	map<string,SDL_Surface*>::iterator itSurface = mapOfSurface.find( text.c_str());
@@ -144,7 +143,6 @@ void PicassoHelper::renderText(int x, int y, int w, int h, string text,Uint8 r, 
 		surface = (*itSurface).second;
 	}else{
 		surface = TTF_RenderText_Solid(this->font, text.c_str(), color);
-
 		this->mapOfSurface[text.c_str()] = surface;
 	}
 
@@ -154,10 +152,9 @@ void PicassoHelper::renderText(int x, int y, int w, int h, string text,Uint8 r, 
 		textureExists = it->second;
 	}else{
 		textureExists = SDL_CreateTextureFromSurface(renderer, surface);
+		this->mapByImagePath[text.c_str()] = textureExists;
 	}
 	renderTexture(textureExists,x,y,w,h);
-//	SDL_DestroyTexture(Message);
-	//SDL_FreeSurface(surface);
 }
 
 PicassoHelper::~PicassoHelper() {
