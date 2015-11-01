@@ -150,6 +150,7 @@ void PicassoHelper::renderText(int x, int y, int w, int h, string text,Uint8 r, 
 	renderTexture(textureExists,x,y,w,h);
 }
 
+
 PicassoHelper::~PicassoHelper() {
 	for (map<string,SDL_Texture*>::iterator it=mapByImagePath.begin(); it!=mapByImagePath.end(); ++it){
 		SDL_DestroyTexture(it->second);

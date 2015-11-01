@@ -57,9 +57,11 @@ int Client::connectToServer(){
 	this->readThread = new MessageSocketReader(this->sockfd);
 	this->writeThread = new MessageSocketWriter(this->sockfd);
 	notifyUserName();
+	Logger::get()->logInfo("Client","connectToServer","Ya estoy loggeado");
 
 	this->readThread->start((MessageSocketReader*) this->readThread );
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
+	Logger::get()->logInfo("Client","connectToServer","Corriendo sockets");
 	return OK;
 }
 
@@ -203,18 +205,18 @@ void Client::verifyServerAlive(){
 	}
 }
 
-//TODO usar un menu de sdl
 void Client::notifyUserName(){
-	cout << "Ingrese un nombre de usuario ";
+	this->gController->getJuegoVista()->createView();
 	bool valid = false;
+	string initialMessage = "Ingrese el nombre de usuario";
 	while(!valid){
-		getline (std::cin,this->userName);
+		this->userName = this->gController->getJuegoVista()->renderUserInputView(initialMessage);
 		this->writeThread->writeMessageNow(new Message(this->userName));
 		Message* response = this->readThread->readMessageNow();
 		if(response->getNombre()=="OK"){
 			valid=true;
 		}else{
-			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro";
+			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro por favor.";
 		}
 	}
 }

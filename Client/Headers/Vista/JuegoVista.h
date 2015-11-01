@@ -26,6 +26,7 @@
 #include "../Utils/Logger.h"
 #include "MenuVista.h"
 #include "MiniMapVista.h"
+#include "LoginVista.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ private:
 	PicassoHelper* picassoHelper;
 	MenuVista* menuVista;
 	MiniMapVista* miniMapVista;
+	LoginVista* loginVista;
 	/*
 	*offset correspondiente al desplazamiento por el offset
 	**/
@@ -87,6 +89,9 @@ public:
 	MenuVista* getMenuVista();
 	void drawResources(ResourceCounter* resourceCounter);
 	~JuegoVista();
+
+	// genero la ventana donde el usuario ingresa el userName
+	string renderUserInputView(string initialMessage);
 
 
 };

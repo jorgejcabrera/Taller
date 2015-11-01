@@ -18,8 +18,8 @@ using namespace std;
 
 class DefaultSettings {
 	private:
-		static const int SCREEN_WIDTH = 1024;
-		static const int SCREEN_HEIGHT = 700;
+		static const int SCREEN_WIDTH = 800;
+		static const int SCREEN_HEIGHT = 600;
 		static const int TILE_SIZE = 40;
 		static const int CONF_VEL_PERSONAJE;
 		static const int LONG_MARGEN_SCROLL = 30;
