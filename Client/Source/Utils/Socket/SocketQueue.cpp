@@ -41,6 +41,12 @@ Message* SocketQueue::pullTailWithoutLock(){
 	return message;
 }
 
+void SocketQueue::clear(){
+	lockQueue();
+   	std::queue<Message*> empty;
+   	std::swap( this->myQueue, empty );
+}
+
 void SocketQueue::lockQueue(){
 	//SDL_LockMutex(lock);
 	SDL_mutexP(lock);

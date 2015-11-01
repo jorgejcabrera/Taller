@@ -13,13 +13,11 @@ MessageSocketWriter::MessageSocketWriter(int sockfd) {
 	this->isAlive = true;
 }
 
-void MessageSocketWriter::writeMessage(Message *msg){
+void MessageSocketWriter::writeMessage(Message* msg){
 	this->queue->queuing(msg);
 }
 
 int MessageSocketWriter::run(void* data){
-	/*will go away on its own upon completion.
-	SDL_DetachThread(this->getThread());*/
 	Logger::get()->logInfo("MessageSocketWriter","run","running thread client writer");
 	while( this->isAlive ){
 		while(!this->queue->isEmpty()){
@@ -30,6 +28,15 @@ int MessageSocketWriter::run(void* data){
 		}
 	}
 	return OK;
+}
+
+void MessageSocketWriter::clearQueue(){
+	Logger::get()->logInfo("MessageSocketWriter","clearQueue","Client disconnected, so all pending messages are clear");
+	this->queue->clear();
+}
+
+int MessageSocketWriter::countMessage(){
+	return this->queue->getSize();
 }
 
 void MessageSocketWriter::shutDown(){

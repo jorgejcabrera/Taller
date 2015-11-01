@@ -39,10 +39,6 @@ Message* GameController::getMessageFromEvent(string userId){
 				id = (*it).first;
 				cartesianPosition = this->moveCharacter((*it).second);
 			}
-			stringstream ss;
-			ss << "hicimos click en " << cartesianPosition.first << " "<<cartesianPosition.second;
-			Logger::get()->logDebug("GameController","getMessageFromEvent",ss.str());
-
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(id);
@@ -77,12 +73,6 @@ Message* GameController::getMessageFromEvent(string userId){
 			body.set_tipo("exit");
 			message->setContent(body);
 			return message;
-		}
-		if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_r){
-			this->reiniciar = true;
-			/*TODO esto parece que no va mas asique lo podriamos ir sacando
-			 **/
-			return NULL;
 		}
 	}
 	return NULL;
