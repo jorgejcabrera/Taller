@@ -221,6 +221,7 @@ void Client::notifyUserName(){
 			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro";
 		}
 	}
+	this->lastReportedServer = time(0);
 }
 
 ResourceCounter* Client::getResourceCounter(){

@@ -26,7 +26,7 @@ int MessageSocketWriter::run(void* data){
 		while(!this->queue->isEmpty()){
 			Message* msg = ((MessageSocketWriter*)data)->queue->pullTail();
 			if(!this->socket->writeMessage(msg)){
-			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
+			 	//Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
 			 }
 		}
 		//SDL_Delay(100);

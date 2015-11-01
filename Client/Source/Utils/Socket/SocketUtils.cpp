@@ -30,7 +30,7 @@ Message* SocketUtils::readMessage(){
 			bytesRead = currentBytesRead + bytesRead;
 			if ( currentBytesRead < 0 ){
 				ss << "Error reading message size from socket " << gai_strerror(currentBytesRead);
-				Logger::get()->logError("SocketUtils","readMessage",ss.str());
+				//Logger::get()->logError("SocketUtils","readMessage",ss.str());
 				delete[] buff;
 				return NULL;
 			}

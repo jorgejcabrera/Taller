@@ -22,7 +22,7 @@ int MessageSocketReader::run(void *data){
 		if( message != NULL ){
 			this->queue->queuing(message);
 		}else{
-			Logger::get()->logError("MessageSocketReader","run","Error reading socket");
+			//Logger::get()->logError("MessageSocketReader","run","Error reading socket");
 		}
 	}
 	return OK;
