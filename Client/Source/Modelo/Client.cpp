@@ -236,8 +236,8 @@ Client::~Client() {
 	SDL_Delay(100);
 	this->writeThread->join(NULL);
 
-	/*this->readThread->shutDown();
-	SDL_Delay(100);*/
+	this->readThread->shutDown();
+	SDL_Delay(100);
 	this->readThread->join(NULL);
 
 	this->writeThread->~MessageSocketWriter();

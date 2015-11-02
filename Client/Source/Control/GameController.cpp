@@ -204,6 +204,7 @@ void GameController::deleteEntity(int entityId){
 GameController::~GameController() {
 	//TODO: ver si no es necesario ejecutar el destructor de juego Vista
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
+	//delete(this->juegoVista);
 	this->juegoVista=NULL;
 //	this->utils->~UtilsController();
 	delete(this->utils);
