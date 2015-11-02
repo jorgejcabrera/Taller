@@ -13,7 +13,6 @@ Client::Client(int identifier, SocketQueue* queueUnique) {
 	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
 	this->lastReported = time(0);
 	this->status = DISCONECTED;
-	// TODO settear los primeros lugares vistos en el mapa segun las entities del cliente
 }
 
 void Client::reporting(){

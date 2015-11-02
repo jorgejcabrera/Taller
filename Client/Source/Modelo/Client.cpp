@@ -202,7 +202,7 @@ void Client::pingMessage(){
 
 void Client::verifyServerAlive(){
 	if(isConected()){
-		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()+5)){
+		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()*2)){
 			this->status = DISCONECTED;
 			Logger::get()->logError("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
 		}

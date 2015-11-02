@@ -203,7 +203,7 @@ void Server::pingMessage(){
 void Server::verifyClientsConections(){
 	list<Client*> activeClients= getActiveClients();
 	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-		if((*clientIterator)->getTimeSinceLastReport()>= DefaultSettings::getTimeOut()){
+		if((*clientIterator)->getTimeSinceLastReport()>= (DefaultSettings::getTimeOut()*2)){
 			(*clientIterator)->disconect();
 			stringstream ss;
 			ss<< "CLIENTE se deconecto: "<< (*clientIterator)->getUserName();
