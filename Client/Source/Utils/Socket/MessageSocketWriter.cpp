@@ -22,9 +22,11 @@ int MessageSocketWriter::run(void* data){
 	while( this->isAlive ){
 		while(!this->queue->isEmpty()){
 			Message* msg = ((MessageSocketWriter*)data)->queue->pullTail();
-			if(!this->socket->writeMessage(msg)){
-			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
-			 }
+			if( msg == NULL){
+				Logger::get()->logError("MessageSocketWriter","run","There was a problem. The message format is invalid or null");
+				return ERROR;
+			}
+			this->socket->writeMessage(msg);
 		}
 	}
 	return OK;
