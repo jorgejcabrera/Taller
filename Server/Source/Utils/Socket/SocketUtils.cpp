@@ -31,7 +31,7 @@ Message* SocketUtils::readMessage(){
 		if(currentBytesRead!=0){
 			bytesRead = currentBytesRead + bytesRead;
 			if ( currentBytesRead < 0 ){
-				Logger::get()->logDebug("SocketUtils","readMessage","Error reading message size from socket");
+				Logger::get()->logError("SocketUtils","readMessage","Error reading message size from socket");
 				delete[] buff;
 				return NULL;
 			}

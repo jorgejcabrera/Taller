@@ -37,7 +37,6 @@ private:
 	int sockfd;
 	int status;
 	string ip;
-	string name;
 	void readMessage(Message msg);
 	/*
 	*al invocar este metodo el cliente siempre estara conectado, y manda los mensajes a la cola de escritura

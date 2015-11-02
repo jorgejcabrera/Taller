@@ -176,7 +176,7 @@ void Client::saveEntitiesConfig(Message* msg){
 
 //TODO si el cliente esta desconectado ya no puede enviar mas mensajes
 void Client::sendEvents(){
-	Message* newMessage = this->gController->getMessageFromEvent(this->name);
+	Message* newMessage = this->gController->getMessageFromEvent(this->userName);
 	if(newMessage){
 		this->writeThread->writeMessage(newMessage);
 		if( newMessage->getTipo() == "exit" ){

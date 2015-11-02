@@ -21,11 +21,15 @@ void Client::reporting(){
 }
 
 void Client::disconect(){
-	this->status =DISCONECTED;
+	this->status = DISCONECTED;
+	this->writeThread->shutDown();
+	this->readThread->shutDown();
 }
 
 void Client::connect(){
-	this->status =CONECTED;
+	this->status = CONECTED;
+	this->writeThread->restart();
+	this->readThread->restart();
 }
 
 int Client::getStatus(){
@@ -58,7 +62,7 @@ void Client::startCommunication(){
 }
 
 string Client::readUserName(){
-	Message *userNameMessage = this->readThread->readMessageNow();
+	Message* userNameMessage = this->readThread->readMessageNow();
 	return userNameMessage->getNombre();
 }
 
@@ -115,11 +119,9 @@ Client::~Client() {
 	close(this->clientId);
 
 	this->writeThread->shutDown();
-	SDL_Delay(100);
 	this->writeThread->join(NULL);
 
 	this->readThread->shutDown();
-	SDL_Delay(100);
 	this->readThread->join(NULL);
 
 	this->writeThread->~MessageSocketWriter();

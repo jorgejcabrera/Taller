@@ -26,13 +26,6 @@ void Tile::setSuperficie(string superficieNueva){
 }
 
 void Tile::changeStatusAvailable(){
-	stringstream ss;
-	ss << "Tile [" << this->position.first <<";"<< this->position.second<<"] was available " << this->available;
-	Logger::get()->logDebug("Tile","changeStatusAvailable",ss.str());
-	ss.str("");
-	bool result = this->available == false;
-	ss << "Tile [" << this->position.first <<";"<< this->position.second<<"] now is " << result;
-	Logger::get()->logDebug("Tile","changeStatusAvailable",ss.str());
 	this->available = this->available == false;
 }
 

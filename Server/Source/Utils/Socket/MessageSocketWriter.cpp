@@ -38,6 +38,10 @@ void MessageSocketWriter::shutDown(){
 	this->isAlive = false;
 }
 
+void MessageSocketWriter::restart(){
+	this->isAlive = true;
+}
+
 void MessageSocketWriter::writeMessageNow(Message *msg){
 	this->socket->writeMessage(msg);
 }
