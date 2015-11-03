@@ -50,8 +50,8 @@ string LoginVista::askUserName(string initialMessage){
 		}
 		PicassoHelper::GetInstance()->clearView();
 		PicassoHelper::GetInstance()->renderBackgroud();
-		PicassoHelper::GetInstance()->renderText(50,150,initialMessage.size()*15,30,initialMessage,255,255,255);
-		PicassoHelper::GetInstance()->renderText(100,200,userName.size()*15,30,userName,255,255,255);
+		PicassoHelper::GetInstance()->renderText(250,450,initialMessage.size()*10,30,initialMessage,0,0,0);
+		PicassoHelper::GetInstance()->renderText(400,500,userName.size()*15,40,userName,0,0,0);
 		PicassoHelper::GetInstance()->renderView();
 	}
 

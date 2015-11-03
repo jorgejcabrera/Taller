@@ -222,7 +222,7 @@ void Client::notifyUserName(){
 		if(response->getNombre()=="OK"){
 			valid=true;
 		}else{
-			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro por favor.";
+			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro.";
 		}
 	}
 	this->lastReportedServer = time(0);
