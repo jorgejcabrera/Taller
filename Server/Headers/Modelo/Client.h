@@ -43,7 +43,8 @@ public:
 	void connect();
 	int getStatus();
 	/*
-	*agrega los nuevos tiles en la lista de tiles vistos, y luego los devuelve
+	* setea en la lista de tiles vistos todos los nuevos tiles vistos
+	* y devuelve solo los que no habian sido vistos anteriormente
 	* */
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
 	list<pair<int,int> >getSeenTiles();
