@@ -48,6 +48,7 @@ public:
 	void renderText(int x, int y, int w, int h, string text,Uint8 r, Uint8 g, Uint8 b);
 	static PicassoHelper* GetInstance();
 	static PicassoHelper* GetInstance(int width, int high);
+	void renderBackgroud();
 };
 
 #endif /* MODELO_PICASSOHELPER_H_ */

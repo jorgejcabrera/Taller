@@ -45,6 +45,7 @@ class DefaultSettings {
 		static const string PATH_OF_FOGGED_TILE;
 		static const string PATH_OF_COVERED_TILE;
 		static const int RANGE_VISIBILITY = 4;
+		static const string PATH_MENU_BACKGROUND;
 
 	public:
 		DefaultSettings();
@@ -93,6 +94,7 @@ class DefaultSettings {
 		static string getPathOfFoggedTile();
 		static string getPathOfCoveredTile();
 		static int getRangeVisibility();
+		static string getPathOfMenuBackground();
 };
 
 

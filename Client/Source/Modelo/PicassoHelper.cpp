@@ -106,6 +106,12 @@ void PicassoHelper::clearView(){
 	SDL_SetRenderDrawColor(renderer,0,0,0,1);
 }
 
+void PicassoHelper::renderBackgroud(){
+	string file = DefaultSettings::getPathOfMenuBackground();
+	SDL_Texture* backgroudTexture = this->loadTexture(file);
+	SDL_RenderCopy(renderer, backgroudTexture, NULL, NULL);
+}
+
 PicassoHelper* PicassoHelper::GetInstance() {
 	if (!instance) {
 		instance = new PicassoHelper();

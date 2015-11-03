@@ -15,6 +15,7 @@ const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 const string DefaultSettings::PATH_OF_FOGGED_TILE = "tileFog";
 const string DefaultSettings::PATH_OF_COVERED_TILE = "tileNegro";
+const string DefaultSettings::PATH_MENU_BACKGROUND = "../../Taller/Images/Menu/agePortada.jpg";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -275,6 +276,10 @@ string DefaultSettings::getPathOfCoveredTile() {
 
 int DefaultSettings::getRangeVisibility() {
 	return RANGE_VISIBILITY;
+}
+
+string DefaultSettings::getPathOfMenuBackground(){
+	return PATH_MENU_BACKGROUND;
 }
 
 DefaultSettings::~DefaultSettings() {
