@@ -23,6 +23,14 @@ void Client::disconect(){
 	this->status = DISCONECTED;
 	this->writeThread->shutDown();
 	this->readThread->shutDown();
+	shutdown(this->clientId, 2);	//2 blocks recv and sending
+	close(this->clientId);
+
+	this->writeThread->shutDown();
+	this->writeThread->join(NULL);
+
+	this->readThread->shutDown();
+	this->readThread->join(NULL);
 }
 
 void Client::connect(){
