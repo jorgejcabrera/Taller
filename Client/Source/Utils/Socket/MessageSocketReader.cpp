@@ -22,6 +22,7 @@ int MessageSocketReader::run(void *data){
 		}else{
 			Logger::get()->logError("MessageSocketReader","run","Error reading socket");
 		}
+		SDL_Delay(10);
 	}
 	return OK;
 }

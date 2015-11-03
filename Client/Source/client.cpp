@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	jorge->connectToServer();
 	
 	//ESPERO 15 segundos
-	SDL_Delay(9000);
+	SDL_Delay(15000);
 
 	while( jorge->isConected() ){
 		//leemos las novedades del server

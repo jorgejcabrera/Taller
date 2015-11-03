@@ -18,18 +18,15 @@ void MessageSocketWriter::writeMessage(Message *msg){
 }
 
 int MessageSocketWriter::run(void* data){
-	/*will go away on its own upon completion.
-	SDL_DetachThread(this->getThread());*/
 	Logger::get()->logInfo("MessageSocketWriter","run","writer thread is running");
 	while( this->isAlive ){
-		stringstream ss;
 		while(!this->queue->isEmpty()){
 			Message* msg = ((MessageSocketWriter*)data)->queue->pullTail();
 			if(!this->socket->writeMessage(msg)){
-			 	//Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
-			 }
+			 	Logger::get()->logError("MessageSocketWriter","run","Cant find message to socket");
+			}
 		}
-		//SDL_Delay(100);
+		SDL_Delay(100);
 	}
 	return OK;
 }

@@ -28,6 +28,7 @@ int MessageSocketWriter::run(void* data){
 			}
 			this->socket->writeMessage(msg);
 		}
+		SDL_Delay(10);
 	}
 	return OK;
 }
