@@ -14,8 +14,6 @@ MessageSocketReader::MessageSocketReader(int sockfd,SocketQueue* queueUnique) {
 }
 
 int MessageSocketReader::run(void *data){
-	/*will go away on its own upon completion.
-	SDL_DetachThread(this->getThread());*/
 	Logger::get()->logInfo("MessageSocketReader","run","running thread server reader");
 	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
@@ -24,13 +22,17 @@ int MessageSocketReader::run(void *data){
 		}else{
 			Logger::get()->logError("MessageSocketReader","run","Error reading socket");
 		}
-		//SDL_Delay(1000);
+		SDL_Delay(100);
 	}
 	return OK;
 }
 
 void MessageSocketReader::shutDown(){
 	this->isAlive = false;
+}
+
+void MessageSocketReader::restart(){
+	this->isAlive = true;
 }
 
 list<Message*> MessageSocketReader::getMessagePendingProcess(){

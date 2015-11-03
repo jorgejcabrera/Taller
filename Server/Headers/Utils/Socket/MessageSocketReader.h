@@ -27,6 +27,7 @@ public:
 	MessageSocketReader(int sockfd, SocketQueue *queueUnique);
 	int run(void* data);
 	void shutDown();
+	void restart();
 	list<Message*> getMessagePendingProcess();
 	/*
 	*metodo utilizado para leer mensajes on line, la idea es utilizarlo solo para leer el user name

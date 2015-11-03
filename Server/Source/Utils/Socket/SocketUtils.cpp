@@ -11,7 +11,7 @@ void SocketUtils::setSocket(int socket){
 bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
-	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
+	//if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage"," ERROR writing to SocketUtils");
 	return wroteBytes == message->getSize();
 }
 
@@ -31,7 +31,7 @@ Message* SocketUtils::readMessage(){
 		if(currentBytesRead!=0){
 			bytesRead = currentBytesRead + bytesRead;
 			if ( currentBytesRead < 0 ){
-				Logger::get()->logDebug("SocketUtils","readMessage","Error reading message size from socket");
+				Logger::get()->logError("SocketUtils","readMessage","Error reading message size from socket");
 				delete[] buff;
 				return NULL;
 			}

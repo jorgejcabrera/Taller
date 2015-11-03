@@ -11,7 +11,7 @@ void SocketUtils::setSocket(int socket){
 bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());
-	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage","ERROR writing to SocketUtils");
+	if( wroteBytes < 0) Logger::get()->logError("SocketUtils","writeMessage","Error writing to socket");
 	return wroteBytes == message->getSize();
 }
 
@@ -21,7 +21,8 @@ Message* SocketUtils::readMessage(){
 	int bytesToRead = intSize;
 	int currentBytesRead = 0;
 	stringstream ss;
-	/***obtenemos la cantidad de bytes a leer***/
+
+	//obtenemos la cantidad de bytes a leer
 	char* buff = new char[sizeof(int)];
 	memset(buff, 0, sizeof(int));
 	while( bytesRead < intSize ){
@@ -39,7 +40,7 @@ Message* SocketUtils::readMessage(){
 	}
 	int size = atoi(buff);
 
-	/***creamos el buffer para leer el mensaje***/
+	//creamos el buffer para leer el mensaje
 	char* buffer = new char[size];
 	memset(buffer, 0, size);
 	bytesRead = 0;
@@ -58,7 +59,11 @@ Message* SocketUtils::readMessage(){
 
 	//TODO manejar los casos de error --> cuando no podemos parsear el mensaje del buffer
 	msg_game msg;
-	msg.ParseFromArray(buffer,size);
+	bool validMessage = msg.ParseFromArray(buffer,size);
+	if (!validMessage){
+		Logger::get()->logError("SocketUtils","readMessage","Message format read from socket is invalid");
+		return NULL;
+	}
 	Message* message = new Message();
 	message->setContent(msg);
 	delete[] buffer;

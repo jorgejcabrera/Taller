@@ -51,7 +51,6 @@ bool Server::isRunning(){
 }
 
 int Server::run(void * data){
-	//TODO: esto deberia ser while true?
 	int cliente;
 	socklen_t tamano = sizeof(serverAddress);
 	while(this->isAlive){
@@ -61,7 +60,6 @@ int Server::run(void * data){
 
 			//Mando la dimension de la ventana
 			newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight(),  GameSettings::GetInstance()->getMapWidth(),  GameSettings::GetInstance()->getMapHeight()));
-			//cout << "AMCHO: " << GameSettings::GetInstance()->getMapWidth() << "ALTO" <<GameSettings::GetInstance()->getMapHeight()<<endl;
 
 			//Mando la informacion que está en el YAML
 			newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
@@ -105,12 +103,19 @@ void Server::processReceivedMessages(){
 	this->readQueue->lockQueue();
 	//TODO revisar, hoy no usamos la lista idEntitiesUpdated porque notificamos lo que se este "moviendo"
 	this->idEntitiesUpdated.clear();
+	stringstream ss;
 	while(!this->readQueue->isEmpty()){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
-		if(messageUpdate->getTipo()=="ping"){
+		if( messageUpdate->getTipo() == "ping" ){
 			this->clients.at(messageUpdate->getNombre())->reporting();
-		}else if(messageUpdate->getTipo()=="exit"){
-			Logger::get()->logInfo("Server","processReceivedMessages", "RECIBI MESAJE DE DESCONEXION");
+		}else if( messageUpdate->getTipo() == "exit" ){
+			//TODO destruir el cliente que se esta desconectando
+			ss.str("");
+			ss << "Client " << messageUpdate->getNombre() << " was disconected";
+			Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
+			this->clients.at(messageUpdate->getNombre())->disconect();
+			//this->clients.at(messageUpdate->getNombre)->~Client();
+		
 		} else {
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
@@ -132,7 +137,7 @@ void Server::notifyClients(){
 			}
 		}
 	}
-	//MANDO los nuevos personajes
+	//mando los nuevos personajes
 	list<EntidadDinamica*> *nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
 	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
@@ -198,7 +203,7 @@ void Server::pingMessage(){
 void Server::verifyClientsConections(){
 	list<Client*> activeClients= getActiveClients();
 	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-		if((*clientIterator)->getTimeSinceLastReport()>= DefaultSettings::getTimeOut()){
+		if((*clientIterator)->getTimeSinceLastReport()>= (DefaultSettings::getTimeOut()*2)){
 			(*clientIterator)->disconect();
 			stringstream ss;
 			ss<< "CLIENTE se deconecto: "<< (*clientIterator)->getUserName();
@@ -226,11 +231,11 @@ list<Client*> Server::getActiveClients(){
 	return activeClients;
 }
 
-void Server::initConnection(Client *newClient){
+void Server::initConnection(Client* newClient){
 	bool validUserName=false;
 	stringstream ss;
 	while(!validUserName){
-		string userName=newClient->readUserName();
+		string userName = newClient->readUserName();
 		map<string,Client*>::iterator it = this->clients.find(userName);
 		if( it != this->clients.end() ){
 			//El cliente ya existia
@@ -245,6 +250,7 @@ void Server::initConnection(Client *newClient){
 				newClient->responseUserName("FAIL");
 			}else{
 				//TODO esto no va mas el cliente ya existia pero estaba desconectado y se vuelve a conectar
+				(*it).second->connect();
 				newClient->responseUserName("OK");
 				newClient->setUserName(userName);
 				validUserName=true;

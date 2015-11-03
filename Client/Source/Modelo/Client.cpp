@@ -40,6 +40,7 @@ int Client::connectToServer(){
 		ss.str("");
 		ss << "IP connection error ." << gai_strerror(s_addr.sin_addr.s_addr);
 		Logger::get()->logError("Client","connectToServer",ss.str());
+		this->status = DISCONECTED;
 		return ERROR;
 	}
 	if ( (error = connect(this->sockfd,(struct sockaddr *)&s_addr, sizeof(s_addr))) < 0){
@@ -49,7 +50,9 @@ int Client::connectToServer(){
 		this->status = DISCONECTED;
 		return ERROR;
 	}else{
-		cout << "Conexion con el servidor "<< inet_ntoa(s_addr.sin_addr)<<endl;
+		stringstream ss;
+		ss << "Connection to server" << inet_ntoa(s_addr.sin_addr);
+		Logger::get()->logInfo("Client","connectToServer",ss.str());
 		this->status = CONECTED;
 	}
 
@@ -175,15 +178,14 @@ void Client::saveEntitiesConfig(Message* msg){
 
 //TODO si el cliente esta desconectado ya no puede enviar mas mensajes
 void Client::sendEvents(){
-	Message* newMessage = this->gController->getMessageFromEvent(this->name);
+	Message* newMessage = this->gController->getMessageFromEvent(this->userName);
 	if(newMessage){
+		this->writeThread->writeMessage(newMessage);
 		if( newMessage->getTipo() == "exit" ){
 			this->status = DISCONECTED;
-			this->writeThread->writeMessage(newMessage);
 			this->readThread->shutDown();
-			return;
+			this->writeThread->shutDown();
 		}
-		this->writeThread->writeMessage(newMessage);
 	}else if( this->status == DISCONECTED){
 		Logger::get()->logError("Client","sendEvents","Client disconnect, so can't send message to server");
 	}
@@ -202,7 +204,7 @@ void Client::pingMessage(){
 
 void Client::verifyServerAlive(){
 	if(isConected()){
-		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()+5)){
+		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()*2)){
 			this->status = DISCONECTED;
 			Logger::get()->logError("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
 		}
@@ -223,6 +225,7 @@ void Client::notifyUserName(){
 			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro por favor.";
 		}
 	}
+	this->lastReportedServer = time(0);
 }
 
 ResourceCounter* Client::getResourceCounter(){
@@ -234,11 +237,9 @@ Client::~Client() {
 	close(this->sockfd);
 
 	this->writeThread->shutDown();
-	SDL_Delay(100);
 	this->writeThread->join(NULL);
 
-	/*this->readThread->shutDown();
-	SDL_Delay(100);*/
+	this->readThread->shutDown();
 	this->readThread->join(NULL);
 
 	this->writeThread->~MessageSocketWriter();

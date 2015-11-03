@@ -20,7 +20,7 @@ GameController::GameController(){
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 }
 
-Message* GameController::getMessageFromEvent(string userId){
+Message* GameController::getMessageFromEvent(string userName){
 
 	while(SDL_PollEvent(event)){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
@@ -69,7 +69,7 @@ Message* GameController::getMessageFromEvent(string userId){
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(0);
-			body.set_nombre(userId);
+			body.set_nombre(userName);
 			body.set_tipo("exit");
 			message->setContent(body);
 			return message;
@@ -204,6 +204,7 @@ void GameController::deleteEntity(int entityId){
 GameController::~GameController() {
 	//TODO: ver si no es necesario ejecutar el destructor de juego Vista
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
+	//delete(this->juegoVista);
 	this->juegoVista=NULL;
 //	this->utils->~UtilsController();
 	delete(this->utils);

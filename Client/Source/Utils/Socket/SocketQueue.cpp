@@ -23,7 +23,7 @@ void SocketQueue::queuing(Message* msg){
 
 Message* SocketQueue::pullTail(){
 	this->lockQueue();
-	Message *message = this->pullTailWithoutLock();
+	Message* message = this->pullTailWithoutLock();
 	this->unlockQueue();
 	return message;
 }

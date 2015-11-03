@@ -34,6 +34,7 @@ public:
 	*/
 	void writeMessage(Message *msg);
 	void shutDown();
+	void restart();
 	void writeMessageNow(Message *msg);
 	virtual ~MessageSocketWriter();
 };

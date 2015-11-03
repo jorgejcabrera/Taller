@@ -14,8 +14,6 @@ MessageSocketReader::MessageSocketReader(int sockfd) {
 }
 
 int MessageSocketReader::run(void *data){
-	/*will go away on its own upon completion.
-	SDL_DetachThread(this->getThread());*/
 	Logger::get()->logInfo("MessageSocketReader","run","running thread client reader");
 	while( this->isAlive ){
 		Message* message = this->socket->readMessage();
@@ -24,6 +22,7 @@ int MessageSocketReader::run(void *data){
 		}else{
 			Logger::get()->logError("MessageSocketReader","run","Error reading socket");
 		}
+		SDL_Delay(10);
 	}
 	return OK;
 }
