@@ -60,11 +60,9 @@ int Client::connectToServer(){
 	this->readThread = new MessageSocketReader(this->sockfd);
 	this->writeThread = new MessageSocketWriter(this->sockfd);
 	notifyUserName();
-	Logger::get()->logInfo("Client","connectToServer","Ya estoy loggeado");
 
 	this->readThread->start((MessageSocketReader*) this->readThread );
 	this->writeThread->start((MessageSocketWriter*) this->writeThread);
-	Logger::get()->logInfo("Client","connectToServer","Corriendo sockets");
 	return OK;
 }
 
@@ -220,6 +218,10 @@ void Client::notifyUserName(){
 		this->writeThread->writeMessageNow(new Message(this->userName));
 		Message* response = this->readThread->readMessageNow();
 		if(response->getNombre()=="OK"){
+			valid=true;
+		}else if(response->getNombre()=="NOTALLOW"){
+			initialMessage = "La partida ya inicio, no se puede conectar ahora";
+			cout << initialMessage <<endl;
 			valid=true;
 		}else{
 			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro.";

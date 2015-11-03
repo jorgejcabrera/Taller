@@ -88,10 +88,13 @@ public:
 	bool isEnemyEntityVisible(pair< int, int> pos);
 	MenuVista* getMenuVista();
 	void drawResources(ResourceCounter* resourceCounter);
-	~JuegoVista();
 
 	// genero la ventana donde el usuario ingresa el userName
 	string renderUserInputView(string initialMessage);
+
+	~JuegoVista();
+
+
 
 
 };
