@@ -35,20 +35,23 @@ private:
 	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
 	*le setea a la
 	*entidad la posicion de pantalla donde debería ser dibujado.
-	**/
+	* */
 	pair<int,int> moveCharacter(EntidadDinamicaVista* entidad);
 	/*
 	*devuelve el offset coorespondiente al scroll de la pantalla
-	**/
+	* */
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:
 	GameController();
-	
-	bool reiniciarJuego();
-	
-	void actualizarJuego();
 
+	/*
+	 *actualiza las posiciones de todas las entidades en el mapa y el offset
+	 * */
+	void updateGame();
+	/*
+	 *
+	 * */
 	void addTileToCharacter(int id,int x,int y);
 	/*
 	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
@@ -66,15 +69,14 @@ public:
 	
 	int getMaxFramesPerSecond();
 	
-	bool finDeJuego();
-	
-	virtual ~GameController();
-	
 	void delay();
 	
 	void resetPath(int id);
 
 	JuegoVista* getJuegoVista();
+
+	virtual ~GameController();
+
 };
 
 #endif /* GAMECONTROLLER_H_ */

@@ -12,7 +12,6 @@ GameController::GameController(){
 	this->utils = UtilsController::GetInstance();
 	this->juegoVista = new JuegoVista();
 	this->salirDelJuego = false;
-	this->reiniciar = false;
 	this->event = new SDL_Event();
 	this->posMouseX = 0;
 	this->posMouseY = 0;
@@ -82,7 +81,7 @@ JuegoVista* GameController::getJuegoVista(){
 	return this->juegoVista;
 }
 
-void GameController::actualizarJuego(){
+void GameController::updateGame(){
 	map<int,EntidadDinamicaVista*>* misEntidades = this->juegoVista->getMyEntities();
 	for(map<int,EntidadDinamicaVista*>::iterator it = misEntidades->begin(); it !=misEntidades->end(); ++it){
 		updatePosition((*it).second->getId());
@@ -97,21 +96,12 @@ void GameController::actualizarJuego(){
 	juegoVista->actualizarOffset(offset.first,offset.second);
 }
 
-bool GameController::reiniciarJuego(){
-	return this->reiniciar;
-}
-
 int GameController::getRunCycles(){
 	return this->runCycles;
 }
 
 int GameController::getMaxFramesPerSecond(){
 	return this->maxFramesPerSecond;
-}
-
-bool GameController::finDeJuego(){
-	this->inicioDeCiclo = SDL_GetTicks();
-	return (event->type == SDL_QUIT || event->type == SDL_WINDOWEVENT_CLOSE);
 }
 
 pair<int,int> GameController::getOffset(int offSetX, int offSetY){
@@ -193,13 +183,7 @@ void GameController::resetPath(int id){
 void GameController::delay(){
 	this->runCycles++;
 	SDL_Delay(50); // para que sean 50 frames x segundos
-	//}
 }
-
-/*void GameController::deleteEntity(int entityId){
-	Logger::get()->logDebug("GameController","deleteEntity","se borro la entidad");
-	this->juegoVista->deleteStaticEntityById(entityId);
-}*/
 
 GameController::~GameController() {
 	//TODO: ver si no es necesario ejecutar el destructor de juego Vista
