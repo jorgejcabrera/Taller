@@ -41,10 +41,7 @@ public:
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
-	//TODO borrar este metodo
 	void setContent(msg_game body);
-
-	//Defino metodos para poder sacar la informacion del mensaje desde afuera de la clase
 	string getTipo();
 	int getId();
 	int getPositionX();
@@ -58,7 +55,6 @@ public:
 	int getTotalFramesLine();
 	int getPixelsDimension();
 	void setAsNewPath(bool value);
-	bool isNewPath();
 	void setOwner(string userName);
 	string getOwner();
 	void pingMessage(string nombre);

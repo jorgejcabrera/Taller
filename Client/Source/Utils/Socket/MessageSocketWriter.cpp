@@ -33,15 +33,6 @@ int MessageSocketWriter::run(void* data){
 	return OK;
 }
 
-void MessageSocketWriter::clearQueue(){
-	Logger::get()->logInfo("MessageSocketWriter","clearQueue","Client disconnected, so all pending messages are clear");
-	this->queue->clear();
-}
-
-int MessageSocketWriter::countMessage(){
-	return this->queue->getSize();
-}
-
 void MessageSocketWriter::shutDown(){
 	this->isAlive = false;
 }

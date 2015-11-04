@@ -28,30 +28,24 @@ private:
 
 public:
 	MessageSocketWriter(int sockfd);
-	
 	/*
 	*sacamos los mensajes de la cola de novedades y los mandamos por el socket
 	* */
 	int run(void* data);
-	
 	/*
 	*ponemos los mensajes en la cola de novedades
 	* */
 	void writeMessage(Message* msg);
 	/*
-	*borramos de la cola todos los mensajes que quedaban por escribir
-	* */
-	void clearQueue();
-	/*
-	*devuelve la cnatidad de mensajes que deben ser escritos en la cola
-	* */
-	int countMessage();
+	 *pone a dormir los threads
+	 * */
 	void shutDown();
-	virtual ~MessageSocketWriter();
 	/*
 	*notifica el nombre de usuario,y tiene que ser en el momento, no puede seguir el ciclo normal
 	* */
 	void writeMessageNow(Message *msg);
+	virtual ~MessageSocketWriter();
+
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGEWRITER_H_ */

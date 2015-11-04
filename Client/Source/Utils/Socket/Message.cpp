@@ -141,10 +141,6 @@ void Message::setAsNewPath(bool value){
 	this->msg.set_newpath(value);
 }
 
-bool Message::isNewPath(){
-	this->msg.newpath();
-}
-
 Message::~Message(){
 	this->msg.~msg_game();
 }

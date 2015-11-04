@@ -16,26 +16,20 @@ class SocketUtils {
 private:
 	int socket;
 public:
-        SocketUtils(int socketId);
-        void setSocket(int socket);
-        /*
-        *recibe el mensaje serializado como parametro y lo manda por el socket
-        */
-        bool writeMessage(Message* message);
-        /*
-        *lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
-        */
-        Message* readMessage();
-        /*
-        *retorna el id del socket
-        */
-        int getSocket();
-        //TODO: ver que hacer con estos metodos.
-        int recvMsg(string & msg, size_t length);
-        int recvMsgSize(size_t size_length);
-        void socketShutdown();
-        void closeConnection();
-        virtual ~SocketUtils();
+	SocketUtils(int socketId);
+	/*
+	*recibe el mensaje serializado como parametro y lo manda por el socket
+	*/
+	bool writeMessage(Message* message);
+	/*
+	*lee del buffer un mensaje y devuelve el mensaje y lo devuelve, o null en caso de error
+	*/
+	Message* readMessage();
+	/*
+	*retorna el id del socket
+	*/
+	int getSocket();
+	virtual ~SocketUtils();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_SOCKET_H_ */

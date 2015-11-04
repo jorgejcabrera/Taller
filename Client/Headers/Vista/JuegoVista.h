@@ -92,8 +92,17 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
+	/*
+	 *borra el recurso o el edificio correspondiente al id pasado como parametro
+	 * */
 	void deleteStaticEntityById(int id);
+	/*
+	 *?
+	 * */
 	void setVisibleTile(int x,int y);
+	/*
+	 *?
+	 * */
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
 	/*
 	*?
@@ -103,6 +112,9 @@ public:
 	*?
 	* */
 	map<string,string> buildMapWithEntityData(EntidadPartidaVista* entidad);
+	/*
+	 *?
+	 * */
 	void setFoggedTiles();
 	/*
 	*?
@@ -111,8 +123,6 @@ public:
 	MenuVista* getMenuVista();
 	void drawResources(ResourceCounter* resourceCounter);
 	~JuegoVista();
-
-
 };
 
 #endif /* SOURCE_VISTA_JUEGOVISTA_H_ */
