@@ -76,7 +76,6 @@ bool Client::isConected(){
 
 void Client::processReceivedMessages(){
 	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
-	int idResource;
 	for(list<Message*>::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
 
@@ -90,7 +89,6 @@ void Client::processReceivedMessages(){
 
 		}else if ( tipoMensaje == "update"){
 			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
-			//idResource = this->gController->getJuegoVista()->consumeResource((*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());

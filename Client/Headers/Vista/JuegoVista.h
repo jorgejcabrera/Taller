@@ -74,10 +74,10 @@ public:
 	* */
 	void addResourceToConsume(int id);
 	/*
-	*si hay algún recurso para consumir en la posicion pasada como parametro devuelve el id del 
+	*si hay algún recurso para consumir en la posicion de la entidad pasada como parametro devuelve el id del
 	*recurso, caso contrario devuelve 0
 	* */
-	int consumeResource(int posX,int posY);
+	int consumeResource(EntidadDinamicaVista* entidad);
 	/*
 	*?
 	* */

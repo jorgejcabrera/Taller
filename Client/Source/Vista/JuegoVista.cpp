@@ -123,7 +123,7 @@ void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,
 		entidad->trasladarse();
 		bool drawEntity = true;
 		//si hay una entidad para consumir la eliminamos
-		int id = this->consumeResource(entidad->getPosition()->first,entidad->getPosition()->second);
+		int id = this->consumeResource(entidad);
 		if( id != 0 ) this->deleteStaticEntityById(id);
 		if(!isMyEntity){
 			drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
@@ -166,7 +166,6 @@ pair<int,int>* JuegoVista::getOffset(){
 
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
-	//TODO falta agregar el offset para dibujar
 	TileVista* newtile = new TileVista(x,y);
 	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
 	this->tiles.push_back(newtile);
@@ -438,12 +437,15 @@ void JuegoVista::addResourceToConsume(int idResourse){
 	}
 }
 
-int JuegoVista::consumeResource(int posX,int posY){
-	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(posX,posY));
-	if( it != this->resoursesToConsume.end() ){
-		int id =(*it).second;
-		this->resoursesToConsume.erase(it);
-		return id;
+int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
+	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad->getPosition()->first, entidad->getPosition()->second);
+	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(entidad->getPosition()->first,entidad->getPosition()->second));
+	if( it != this->resoursesToConsume.end()){
+		if (isometricPosition.first==entidad->getScreenPosition().first && isometricPosition.second==entidad->getScreenPosition().second){
+			int id =(*it).second;
+			this->resoursesToConsume.erase(it);
+			return id;
+		}
 	}
 	return 0;
 }
