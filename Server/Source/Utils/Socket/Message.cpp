@@ -79,6 +79,11 @@ void Message::clientDisconect(int identifier){
 	this->msg.set_tipo("disconnect");
 }
 
+void Message::startGame(){
+	this->msg.set_id(0);
+	this->msg.set_tipo("start");
+}
+
 void Message::clientReconnect(int identifier){
 	this->msg.set_id(identifier);
 	this->msg.set_tipo("reconnect");

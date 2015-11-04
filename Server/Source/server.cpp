@@ -69,8 +69,9 @@ int main(int argc, char* argv[]) {
 
 	set_conio_terminal_mode();
 	cout << "press a key to close the connection"<<endl;
-	while(!kbhit()){
 
+	while(!kbhit()){
+		server->verifyWaitingClients();
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados
 		server->processReceivedMessages();
 		//Los protagonistas se trasladan a su posicion destino
@@ -80,6 +81,7 @@ int main(int argc, char* argv[]) {
 		server->notifyClients();
 		gController->delay();
 		server->verifyClientsConections();
+
 	}
 	gController->~GameController();
 	delete(gController);

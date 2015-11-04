@@ -44,6 +44,10 @@ public:
 	int getMaxFramesPerSecond();
 	virtual ~GameController();
 	void delay();
+	/*
+	 * Defino un delay variable para poder mandarle los ms que yo quiera, mas que nada para el ciclo mientras espera clientes
+	 */
+	void delay(int ms);
 
 	/*
 	* generadores de mensajes para cuando se conecta un cliente nuevo

@@ -62,6 +62,9 @@ public:
 	void clientDisconect(int id);
 	void clientReconnect(int identifier);
 	void activeTile( int x, int y);
+
+	//Mensaje para notificar a los clientes que el juego arranco
+	void startGame();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

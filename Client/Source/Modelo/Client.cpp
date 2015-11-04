@@ -147,6 +147,8 @@ void Client::processReceivedMessages(){
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY());
+		}else if (tipoMensaje == "start"){
+			this->gController->setGameRunning();
 			
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
@@ -220,7 +222,7 @@ void Client::notifyUserName(){
 		if(response->getNombre()=="OK"){
 			valid=true;
 			this->lastReportedServer = time(0);
-			initialMessage = "Esperando que se conecte la cantidad minima de usuarios";
+			initialMessage = "Esperando cantidad minima de jugadores";
 			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
 		}else if(response->getNombre()=="NOTALLOW"){
 			this->status = DISCONECTED;

@@ -14,6 +14,7 @@ Server::Server(int port, GameController *myController) {
 	this->readQueue = new SocketQueue();
 	this->lastReportedServer = time(0);
 	this->gameSettings = GameSettings::GetInstance();
+	this->gameRunning=false;
 }
 
 int Server::initSocketServer(){
@@ -58,7 +59,6 @@ int Server::run(void * data){
 			Client* newClient = new Client(cliente, this->readQueue);
 			bool clientAcepted = initConnection(newClient);
 			if(clientAcepted){
-				//AUN ACEPTO CLIENTES
 				//Mando la dimension de la ventana
 				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight(),  GameSettings::GetInstance()->getMapWidth(),  GameSettings::GetInstance()->getMapHeight()));
 
@@ -84,6 +84,15 @@ int Server::run(void * data){
 bool Server::acceptingNewClients(){
 	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
 	return (this->clients.size()<2);
+}
+
+void Server::notifyGameInitToClients(){
+	Message* messageStart = new Message();
+	messageStart->startGame();
+	list<Client*> activeClients= getActiveClients();
+	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+		(*clientIterator)->writeMessagesInQueue(messageStart);
+	}
 }
 
 
@@ -124,9 +133,12 @@ void Server::processReceivedMessages(){
 			//this->clients.at(messageUpdate->getNombre)->~Client();
 		
 		} else {
-			int idUpdate = messageUpdate->getId();
-			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
-			this->idEntitiesUpdated.push_back(idUpdate);
+			if(this->gameRunning){
+				int idUpdate = messageUpdate->getId();
+				this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
+				this->idEntitiesUpdated.push_back(idUpdate);
+			}
+
 		}
 	}
 	this->readQueue->unlockQueue();
@@ -334,6 +346,16 @@ void Server::sendSeenTiles(string client) {
 		Message* msg = new Message();
 		msg->activeTile((*it).first,(*it).second);
 		this->clients[client]->writeMessagesInQueue(msg);
+	}
+}
+
+void Server::verifyWaitingClients(){
+	if(this->acceptingNewClients()){
+		//Espero 1 segundo hasta volver a chequear si ya estan todos conectados
+		this->gController->delay(1000);
+	}else if(!this->gameRunning){
+		this->notifyGameInitToClients();
+		this->gameRunning=true;
 	}
 }
 

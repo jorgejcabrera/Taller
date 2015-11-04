@@ -102,6 +102,11 @@ void GameController::delay(){
 	SDL_Delay(50); // para que sean 50 frames x segundos
 }
 
+void GameController::delay(int ms){
+	this->runCycles++;
+	SDL_Delay(ms);
+}
+
 GameController::~GameController() {
 	//No ejecuto el destructor de juego porque lo hace el juegoVista
 	this->juego=NULL;

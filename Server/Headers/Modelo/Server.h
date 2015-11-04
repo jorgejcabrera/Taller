@@ -36,6 +36,7 @@ class Server : public Thread{
 		GameController* gController;
 		GameSettings* gameSettings;
 		bool isAlive;
+		bool gameRunning;
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;
@@ -86,6 +87,15 @@ class Server : public Thread{
 		 * Controla la cantidad de clientes conectados, si supero el limite establecido devuelve false, sino true
 		 */
 		bool acceptingNewClients();
+
+		/*
+		 * Notifica a los clientes cuando arranca el juego, es decir... cuando deberian empezar a dibujar el escenario
+		 */
+		void notifyGameInitToClients();
+		/*
+		 * Verifico si estoy esperando clientes, si estoy esperando meto un delay
+		 */
+		void verifyWaitingClients();
 		~Server();
 };
 
