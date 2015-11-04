@@ -32,6 +32,10 @@ string JuegoVista::renderUserInputView(string initialMessage){
 	return userName;
 }
 
+void JuegoVista::renderFinishLogin(string finalMessage){
+	this->loginVista->renderFinishLogin(finalMessage);
+}
+
 void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();

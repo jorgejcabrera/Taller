@@ -59,3 +59,10 @@ string LoginVista::askUserName(string initialMessage){
 	SDL_StopTextInput();
 	return userName;
 }
+
+void LoginVista::renderFinishLogin(string finalMessage){
+	PicassoHelper::GetInstance()->clearView();
+	PicassoHelper::GetInstance()->renderBackgroud();
+	PicassoHelper::GetInstance()->renderText(250,450,finalMessage.size()*10,30,finalMessage,0,0,0);
+	PicassoHelper::GetInstance()->renderView();
+}

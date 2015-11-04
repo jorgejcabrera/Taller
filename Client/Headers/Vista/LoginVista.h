@@ -24,6 +24,7 @@ public:
 	LoginVista();
 	virtual ~LoginVista();
 	string askUserName(string initialMessage);
+	void renderFinishLogin(string finalMessage);
 };
 
 

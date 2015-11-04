@@ -116,6 +116,9 @@ public:
 	// genero la ventana donde el usuario ingresa el userName
 	string renderUserInputView(string initialMessage);
 
+	//Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
+	void renderFinishLogin(string finalMessage);
+
 	~JuegoVista();
 
 

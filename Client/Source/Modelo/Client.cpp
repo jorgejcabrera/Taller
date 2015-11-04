@@ -61,8 +61,10 @@ int Client::connectToServer(){
 	this->writeThread = new MessageSocketWriter(this->sockfd);
 	notifyUserName();
 
-	this->readThread->start((MessageSocketReader*) this->readThread );
-	this->writeThread->start((MessageSocketWriter*) this->writeThread);
+	if(this->isConected()){
+		this->readThread->start((MessageSocketReader*) this->readThread );
+		this->writeThread->start((MessageSocketWriter*) this->writeThread);
+	}
 	return OK;
 }
 
@@ -217,15 +219,18 @@ void Client::notifyUserName(){
 		Message* response = this->readThread->readMessageNow();
 		if(response->getNombre()=="OK"){
 			valid=true;
+			this->lastReportedServer = time(0);
+			initialMessage = "Esperando que se conecte la cantidad minima de usuarios";
+			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
 		}else if(response->getNombre()=="NOTALLOW"){
-			initialMessage = "La partida ya inicio, no se puede conectar ahora";
-			cout << initialMessage <<endl;
+			this->status = DISCONECTED;
 			valid=true;
+			initialMessage = "La partida ya inicio, no se puede conectar ahora";
+			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
 		}else{
 			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro.";
 		}
 	}
-	this->lastReportedServer = time(0);
 }
 
 ResourceCounter* Client::getResourceCounter(){
