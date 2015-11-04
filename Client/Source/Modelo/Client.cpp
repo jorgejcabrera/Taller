@@ -90,7 +90,7 @@ void Client::processReceivedMessages(){
 
 		}else if ( tipoMensaje == "update"){
 			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
-			idResource = this->gController->getJuegoVista()->consumeResource((*it)->getPositionX(),(*it)->getPositionY());
+			//idResource = this->gController->getJuegoVista()->consumeResource((*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
@@ -175,7 +175,6 @@ void Client::saveEntitiesConfig(Message* msg){
 	GameSettings::GetInstance()->addEntityConfig(entidad);
 }
 
-//TODO si el cliente esta desconectado ya no puede enviar mas mensajes
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->userName);
 	if(newMessage){
