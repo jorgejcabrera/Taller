@@ -76,6 +76,7 @@ bool Client::isConected(){
 
 void Client::processReceivedMessages(){
 	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
+	int idResource;
 	for(list<Message*>::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
 
@@ -88,8 +89,8 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update"){
-			//if((*it)->isNewPath()) this->gController->resetPath((*it)->getId());
 			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			idResource = this->gController->getJuegoVista()->consumeResource((*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
@@ -127,7 +128,7 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if (tipoMensaje == "deleteResource"){
-			this->gController->deleteEntity((*it)->getId());
+			this->gController->getJuegoVista()->addResourceToConsume((*it)->getId());
 			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			if(imTheOwner){
 				if((*it)->getNombre() == "gold"){

@@ -22,6 +22,8 @@ private:
 	UtilsController* utils;
 	SDL_Event* event;
 	JuegoVista* juegoVista;
+	GameSettings* gameSettings;
+
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;
@@ -29,15 +31,12 @@ private:
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
-	GameSettings* gameSettings;
-	
 	/*
 	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
 	*le setea a la
 	*entidad la posicion de pantalla donde debería ser dibujado.
 	**/
 	pair<int,int> moveCharacter(EntidadDinamicaVista* entidad);
-	
 	/*
 	*devuelve el offset coorespondiente al scroll de la pantalla
 	**/
@@ -51,22 +50,18 @@ public:
 	void actualizarJuego();
 
 	void addTileToCharacter(int id,int x,int y);
-
 	/*
 	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
 	* */
 	void updatePosition(int id);
 	
 	void render();
-	
 	/*
 	*transforma eventos de la partida del cliente en mensajes para ser 
 	*enviados alservidor
 	* */
 	Message* getMessageFromEvent(string userId);
 
-	void deleteEntity(int entityId);
-	
 	int getRunCycles();
 	
 	int getMaxFramesPerSecond();
