@@ -37,34 +37,50 @@ private:
 	MiniMapVista* miniMapVista;
 	/*
 	*offset correspondiente al desplazamiento por el offset
-	**/
+	* */
 	pair<int,int> offset;
-	void drawIsometricMap();
-	void drawStaticEntities(int runCycles);
 	/*
-	*dibuja todas las entidades dinamicas
+	*colección de recursos a ser consumidos
 	* */
-	void drawDinamicEntities(int runCycles);
+	map<pair<int,int>,int> resoursesToConsume;
 	/*
-	*dibuja una entidad dinamica
+	*entidades del mapa
 	* */
-	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles,bool isMyEntity);
-	void drawSemiStaticsEntities(int runCycles);
-	void drawMenu();
-	void drawMiniMap();
-	void drawFog();
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
 	map<int, EntidadDinamicaVista*> personajes;
 	map<int, EntidadDinamicaVista*> misPersonajes;
+	/*
+	*métodos para renderizar el juego
+	* */
+	void drawIsometricMap();
+	void drawStaticEntities(int runCycles);
+	void drawDinamicEntities(int runCycles);
+	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles,bool isMyEntity);
+	void drawSemiStaticsEntities(int runCycles);
+	void drawMenu();
+	void drawMiniMap();
+	void drawFog();
 
 public:
 	JuegoVista();
 	/*
 	*metodo que se encarga de dibujar mapa y todas las entidades
-	**/
+	* */
 	void render(int ciclos, ResourceCounter* resourceCounter);
+	/*
+	*agrega un recurso que será consumido cuando la entidad ocupe el correspondiente tile
+	* */
+	void addResourceToConsume(int id);
+	/*
+	*si hay algún recurso para consumir en la posicion pasada como parametro devuelve el id del 
+	*recurso, caso contrario devuelve 0
+	* */
+	int consumeResource(int posX,int posY);
+	/*
+	*?
+	* */
 	void createView();
 	void actualizarOffset(int offsetX,int offsetY);
 	void setResources(int alimento, int madera, int oro);
@@ -79,10 +95,18 @@ public:
 	void deleteStaticEntityById(int id);
 	void setVisibleTile(int x,int y);
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
+	/*
+	*?
+	* */
 	map<string,string> entityInThisPosition(int x, int y);
+	/*
+	*?
+	* */
 	map<string,string> buildMapWithEntityData(EntidadPartidaVista* entidad);
-	void actualizarProtagonista();
 	void setFoggedTiles();
+	/*
+	*?
+	* */
 	bool isEnemyEntityVisible(pair< int, int> pos);
 	MenuVista* getMenuVista();
 	void drawResources(ResourceCounter* resourceCounter);
