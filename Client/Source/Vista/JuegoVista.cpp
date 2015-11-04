@@ -113,7 +113,7 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
 		drawDinamicEntity(entidad,runCycles,false);
-		}
+	}
 
 	//personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
@@ -128,6 +128,9 @@ void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,
 		pair<int,int> screenPosition = entidad->getScreenPosition();
 		entidad->trasladarse();
 		bool drawEntity = true;
+		//si hay una entidad para consumir la eliminamos
+		int id = this->consumeResource(entidad);
+		if( id != 0 ) this->deleteStaticEntityById(id);
 		if(!isMyEntity){
 			drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
 		}
@@ -169,14 +172,14 @@ pair<int,int>* JuegoVista::getOffset(){
 
 void JuegoVista::addTile(string surface, int x, int y){
 	//TODO validar path valido sino poner por default, quizas deberia estar en el server la validacion
-	//TODO falta agregar el offset para dibujar
 	TileVista* newtile = new TileVista(x,y);
 	newtile->setPathImage(gameSettings->getEntityConfig(surface)->getPath());
 	this->tiles.push_back(newtile);
 }
 
 void JuegoVista::addBuilding(int id, string type, int x, int y){
-	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),gameSettings->getEntityConfig(type)->getAlto());
+	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
+																	gameSettings->getEntityConfig(type)->getAlto());
 	newBuilding->setName(type);
 	newBuilding->setPosition(x,y);
 	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
@@ -263,14 +266,22 @@ void JuegoVista::drawMiniMap() {
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
 		this->miniMapVista->makeMiniCharacterPos(screenPosition.first, screenPosition.second);
-		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
+		this->picassoHelper->renderObject(	this->miniMapVista->getCharacterPath(),
+											this->miniMapVista->getCharacterPosX() ,
+											this->miniMapVista->getCharacterPosY(),
+											this->miniMapVista->getMiniCharacterSize(),
+											this->miniMapVista->getMiniCharacterSize());
 	}
 	//dibujo los personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
 		this->miniMapVista->makeMiniCharacterPos(screenPosition.first, screenPosition.second);
-		this->picassoHelper->renderObject(this->miniMapVista->getCharacterPath(),this->miniMapVista->getCharacterPosX() , this->miniMapVista->getCharacterPosY(), this->miniMapVista->getMiniCharacterSize(), this->miniMapVista->getMiniCharacterSize());
+		this->picassoHelper->renderObject(	this->miniMapVista->getCharacterPath(),
+											this->miniMapVista->getCharacterPosX() ,
+											this->miniMapVista->getCharacterPosY(),
+											this->miniMapVista->getMiniCharacterSize(),
+											this->miniMapVista->getMiniCharacterSize());
 	}
 
 
@@ -320,6 +331,7 @@ EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	if(itMisPersonajes!=this->misPersonajes.end()){
 		return itMisPersonajes->second;
 	}
+	return NULL;
 }
 
 map<string,string> JuegoVista::buildMapWithEntityData(EntidadPartidaVista* entidad){
@@ -385,10 +397,6 @@ void JuegoVista::setVisibleTile(int x,int y) {
 	}
 }
 
-void JuegoVista::actualizarProtagonista(){
-	
-}
-
 void JuegoVista::setFoggedTiles() {
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
 		if ((*itTiles)->getSeen()) {
@@ -433,6 +441,28 @@ void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 	resources["oro"] = resourceCounter->getOro();
 
 	this->menuVista->drawResources(resources);
+}
+
+void JuegoVista::addResourceToConsume(int idResourse){
+	map<int, EntidadEstaticaVista*>::iterator it = this->buildings.find(idResourse);
+	if( it != this->buildings.end() ){
+		pair<int,int>* position = (*it).second->getPosition();
+		this->resoursesToConsume.insert(make_pair(make_pair(position->first,position->second),idResourse));
+		return;
+	}
+}
+
+int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
+	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad->getPosition()->first, entidad->getPosition()->second);
+	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(entidad->getPosition()->first,entidad->getPosition()->second));
+	if( it != this->resoursesToConsume.end()){
+		if (isometricPosition.first==entidad->getScreenPosition().first && isometricPosition.second==entidad->getScreenPosition().second){
+			int id =(*it).second;
+			this->resoursesToConsume.erase(it);
+			return id;
+		}
+	}
+	return 0;
 }
 
 JuegoVista::~JuegoVista() {

@@ -77,7 +77,14 @@ void MenuVista::drawEntityDescription() {
 														0, 0,0);
 			offsetY = offsetY+alturaDeLetra;
 		}else{
-			PicassoHelper::GetInstance()->renderObject((*it).second,30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
+			string path= (*it).second;
+			size_t found = path.find("Molino");
+			if(found!=string::npos) path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
+			found = path.find("soldado.");
+			if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
+			found = path.find("soldadoDesconectado");
+			if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
+			PicassoHelper::GetInstance()->renderObject(path,30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
 		}
 	}
 	

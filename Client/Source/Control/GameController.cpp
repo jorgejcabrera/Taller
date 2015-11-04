@@ -83,7 +83,6 @@ JuegoVista* GameController::getJuegoVista(){
 }
 
 void GameController::actualizarJuego(){
-	//juegoVista->actualizarProtagonista();
 	map<int,EntidadDinamicaVista*>* misEntidades = this->juegoVista->getMyEntities();
 	for(map<int,EntidadDinamicaVista*>::iterator it = misEntidades->begin(); it !=misEntidades->end(); ++it){
 		updatePosition((*it).second->getId());
@@ -197,9 +196,10 @@ void GameController::delay(){
 	//}
 }
 
-void GameController::deleteEntity(int entityId){
+/*void GameController::deleteEntity(int entityId){
+	Logger::get()->logDebug("GameController","deleteEntity","se borro la entidad");
 	this->juegoVista->deleteStaticEntityById(entityId);
-}
+}*/
 
 GameController::~GameController() {
 	//TODO: ver si no es necesario ejecutar el destructor de juego Vista

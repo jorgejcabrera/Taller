@@ -88,7 +88,6 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update"){
-			//if((*it)->isNewPath()) this->gController->resetPath((*it)->getId());
 			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if ( tipoMensaje == "tile" ){
@@ -127,7 +126,7 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
 
 		}else if (tipoMensaje == "deleteResource"){
-			this->gController->deleteEntity((*it)->getId());
+			this->gController->getJuegoVista()->addResourceToConsume((*it)->getId());
 			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			if(imTheOwner){
 				if((*it)->getNombre() == "gold"){
@@ -174,7 +173,6 @@ void Client::saveEntitiesConfig(Message* msg){
 	GameSettings::GetInstance()->addEntityConfig(entidad);
 }
 
-//TODO si el cliente esta desconectado ya no puede enviar mas mensajes
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->userName);
 	if(newMessage){
@@ -244,8 +242,8 @@ Client::~Client() {
 	this->readThread->shutDown();
 	this->readThread->join(NULL);
 
-	this->writeThread->~MessageSocketWriter();
-	this->readThread->~MessageSocketReader();
+//	this->writeThread->~MessageSocketWriter();
+//	this->readThread->~MessageSocketReader();
 
 	delete writeThread;
 	delete readThread;
