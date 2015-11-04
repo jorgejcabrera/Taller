@@ -173,7 +173,6 @@ void Client::saveEntitiesConfig(Message* msg){
 	GameSettings::GetInstance()->addEntityConfig(entidad);
 }
 
-//TODO si el cliente esta desconectado ya no puede enviar mas mensajes
 void Client::sendEvents(){
 	Message* newMessage = this->gController->getMessageFromEvent(this->userName);
 	if(newMessage){
