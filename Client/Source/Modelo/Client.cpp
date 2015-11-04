@@ -240,8 +240,8 @@ Client::~Client() {
 	this->readThread->shutDown();
 	this->readThread->join(NULL);
 
-	this->writeThread->~MessageSocketWriter();
-	this->readThread->~MessageSocketReader();
+//	this->writeThread->~MessageSocketWriter();
+//	this->readThread->~MessageSocketReader();
 
 	delete writeThread;
 	delete readThread;
