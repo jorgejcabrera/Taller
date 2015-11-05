@@ -31,6 +31,7 @@ private:
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
+	bool gameRunning;
 	/*
 	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
 	*le setea a la
@@ -75,8 +76,11 @@ public:
 
 	JuegoVista* getJuegoVista();
 
-	virtual ~GameController();
+	void setGameRunning();
 
+	bool gameIsRunning();
+
+	virtual ~GameController();
 };
 
 #endif /* GAMECONTROLLER_H_ */

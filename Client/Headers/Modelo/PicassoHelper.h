@@ -35,6 +35,7 @@ private:
 	void renderTexture(SDL_Texture *tex, int x, int y, int w, int h , SDL_Rect rectObject);
 	SDL_Texture* loadTexture(const string &file);
 
+
 public:
 	void createContext();
 	~PicassoHelper();
@@ -47,6 +48,7 @@ public:
 	void renderText(int x, int y, int w, int h, string text,Uint8 r, Uint8 g, Uint8 b);
 	static PicassoHelper* GetInstance();
 	static PicassoHelper* GetInstance(int width, int high);
+	void renderBackgroud();
 };
 
 #endif /* MODELO_PICASSOHELPER_H_ */

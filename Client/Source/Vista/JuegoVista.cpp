@@ -12,6 +12,7 @@ JuegoVista::JuegoVista() {
 	this->offset.first = 0;
 	this->offset.second = 0;
 	this->menuVista = new MenuVista();
+	this->loginVista = new LoginVista();
 }
 
 MenuVista* JuegoVista::getMenuVista(){
@@ -24,6 +25,15 @@ void JuegoVista::createView(){
 
 void JuegoVista::setResources(int alimento, int madera, int oro) {
 
+}
+
+string JuegoVista::renderUserInputView(string initialMessage){
+	string userName = this->loginVista->askUserName(initialMessage);
+	return userName;
+}
+
+void JuegoVista::renderFinishLogin(string finalMessage){
+	this->loginVista->renderFinishLogin(finalMessage);
 }
 
 void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter){

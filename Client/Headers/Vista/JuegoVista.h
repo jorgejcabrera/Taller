@@ -26,6 +26,7 @@
 #include "../Utils/Logger.h"
 #include "MenuVista.h"
 #include "MiniMapVista.h"
+#include "LoginVista.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ private:
 	PicassoHelper* picassoHelper;
 	MenuVista* menuVista;
 	MiniMapVista* miniMapVista;
+	LoginVista* loginVista;
 	/*
 	*offset correspondiente al desplazamiento por el offset
 	* */
@@ -62,7 +64,7 @@ private:
 	void drawMenu();
 	void drawMiniMap();
 	void drawFog();
-
+	void drawResources(ResourceCounter* resourceCounter);
 public:
 	JuegoVista();
 	/*
@@ -121,7 +123,15 @@ public:
 	* */
 	bool isEnemyEntityVisible(pair< int, int> pos);
 	MenuVista* getMenuVista();
-	void drawResources(ResourceCounter* resourceCounter);
+	/*
+	 *genero la ventana donde el usuario ingresa el userName
+	 * */
+	string renderUserInputView(string initialMessage);
+	/*
+	*Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
+	* */
+	void renderFinishLogin(string finalMessage);
+
 	~JuegoVista();
 };
 

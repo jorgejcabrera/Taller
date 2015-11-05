@@ -37,7 +37,10 @@ int main(int argc, char* argv[]) {
 		//leemos las novedades del server
 		jorge->processReceivedMessages();
 		gController->updateGame();
-		gController->getJuegoVista()->render(gController->getRunCycles(),jorge->getResourceCounter());
+		//Si el juego no esta corriendo no actualizo la vista
+		if(gController->gameIsRunning()){
+			gController->getJuegoVista()->render(gController->getRunCycles(),jorge->getResourceCounter());
+		}
 		//escuchamos eventos y los mandamos al server
 		jorge->sendEvents();
 		jorge->verifyServerAlive();

@@ -61,8 +61,10 @@ int Client::connectToServer(){
 	this->writeThread = new MessageSocketWriter(this->sockfd);
 	notifyUserName();
 
-	this->readThread->start((MessageSocketReader*) this->readThread );
-	this->writeThread->start((MessageSocketWriter*) this->writeThread);
+	if(this->isConected()){
+		this->readThread->start((MessageSocketReader*) this->readThread );
+		this->writeThread->start((MessageSocketWriter*) this->writeThread);
+	}
 	return OK;
 }
 
@@ -141,6 +143,8 @@ void Client::processReceivedMessages(){
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY());
+		}else if (tipoMensaje == "start"){
+			this->gController->setGameRunning();
 			
 		}else{
 			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
@@ -202,21 +206,28 @@ void Client::verifyServerAlive(){
 	}
 }
 
-//TODO usar un menu de sdl
 void Client::notifyUserName(){
-	cout << "Ingrese un nombre de usuario ";
+	this->gController->getJuegoVista()->createView();
 	bool valid = false;
+	string initialMessage = "Ingrese el nombre de usuario";
 	while(!valid){
-		getline (std::cin,this->userName);
+		this->userName = this->gController->getJuegoVista()->renderUserInputView(initialMessage);
 		this->writeThread->writeMessageNow(new Message(this->userName));
 		Message* response = this->readThread->readMessageNow();
 		if(response->getNombre()=="OK"){
 			valid=true;
+			this->lastReportedServer = time(0);
+			initialMessage = "Esperando cantidad minima de jugadores";
+			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
+		}else if(response->getNombre()=="NOTALLOW"){
+			this->status = DISCONECTED;
+			valid=true;
+			initialMessage = "La partida ya inicio, no se puede conectar ahora";
+			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
 		}else{
-			cout<<"El nombre de usuario " << this->userName <<" ya está en uso, por favor ingrese otro";
+			initialMessage = "El nombre de usuario ya esta en uso, ingrese otro.";
 		}
 	}
-	this->lastReportedServer = time(0);
 }
 
 ResourceCounter* Client::getResourceCounter(){

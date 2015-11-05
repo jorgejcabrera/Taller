@@ -36,6 +36,7 @@ class Server : public Thread{
 		GameController* gController;
 		GameSettings* gameSettings;
 		bool isAlive;
+		bool gameRunning;
 		int serverSocket;
 		int port;
 		struct sockaddr_in serverAddress;
@@ -62,7 +63,7 @@ class Server : public Thread{
 		*inicia la conexion con el cliente, pide el usuario y se fija si es nuevo o si tiene que 
 		*levantar data de antes porque se reconecto
 		* */
-		void initConnection(Client *newClient);
+		bool initConnection(Client *newClient);
 		void pingMessage();
 		/*
 		*
@@ -75,12 +76,26 @@ class Server : public Thread{
 		/*
 		*levanta todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
 		* */
-		void notifyClientReconect(string userName);
+		//TODO borrar este metodo porque ya no se puede reconectar
+		//void notifyClientReconect(string userName);
 		/*
 		*setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
 		* */ 
 		void setSeenTiles();
 		void sendSeenTiles(string client);
+		/*
+		 * Controla la cantidad de clientes conectados, si supero el limite establecido devuelve false, sino true
+		 */
+		bool acceptingNewClients();
+
+		/*
+		 * Notifica a los clientes cuando arranca el juego, es decir... cuando deberian empezar a dibujar el escenario
+		 */
+		void notifyGameInitToClients();
+		/*
+		 * Verifico si estoy esperando clientes, si estoy esperando meto un delay
+		 */
+		void verifyWaitingClients();
 		~Server();
 };
 

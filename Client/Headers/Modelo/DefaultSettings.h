@@ -18,8 +18,8 @@ using namespace std;
 
 class DefaultSettings {
 	private:
-		static const int SCREEN_WIDTH = 1024;
-		static const int SCREEN_HEIGHT = 700;
+		static const int SCREEN_WIDTH = 800;
+		static const int SCREEN_HEIGHT = 600;
 		static const int TILE_SIZE = 40;
 		static const int CONF_VEL_PERSONAJE;
 		static const int LONG_MARGEN_SCROLL = 30;
@@ -45,6 +45,7 @@ class DefaultSettings {
 		static const string PATH_OF_FOGGED_TILE;
 		static const string PATH_OF_COVERED_TILE;
 		static const int RANGE_VISIBILITY = 4;
+		static const string PATH_MENU_BACKGROUND;
 
 	public:
 		DefaultSettings();
@@ -93,6 +94,7 @@ class DefaultSettings {
 		static string getPathOfFoggedTile();
 		static string getPathOfCoveredTile();
 		static int getRangeVisibility();
+		static string getPathOfMenuBackground();
 };
 
 

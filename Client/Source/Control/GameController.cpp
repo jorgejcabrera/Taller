@@ -17,6 +17,7 @@ GameController::GameController(){
 	this->posMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
+	this->gameRunning=false;
 }
 
 Message* GameController::getMessageFromEvent(string userName){
@@ -79,6 +80,10 @@ Message* GameController::getMessageFromEvent(string userName){
 
 JuegoVista* GameController::getJuegoVista(){
 	return this->juegoVista;
+}
+
+void GameController::setGameRunning(){
+	this->gameRunning=true;
 }
 
 void GameController::updateGame(){
@@ -182,7 +187,15 @@ void GameController::resetPath(int id){
 
 void GameController::delay(){
 	this->runCycles++;
-	SDL_Delay(50); // para que sean 50 frames x segundos
+	if(this->gameRunning){
+		SDL_Delay(50); // para que sean 50 frames x segundos
+	}else{
+		SDL_Delay(1000); // espero 1 segundo porque aun no esta en juego
+	}
+}
+
+bool GameController::gameIsRunning(){
+	return this->gameRunning;
 }
 
 GameController::~GameController() {
@@ -199,7 +212,5 @@ GameController::~GameController() {
 	this->event->quit;
 	delete(this->event);
 	this->event = NULL;
-
-
 }
 

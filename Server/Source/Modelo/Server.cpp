@@ -14,6 +14,7 @@ Server::Server(int port, GameController *myController) {
 	this->readQueue = new SocketQueue();
 	this->lastReportedServer = time(0);
 	this->gameSettings = GameSettings::GetInstance();
+	this->gameRunning=false;
 }
 
 int Server::initSocketServer(){
@@ -56,27 +57,42 @@ int Server::run(void * data){
 	while(this->isAlive){
 		if((cliente = accept(this->serverSocket,(struct sockaddr*)&serverAddress,&tamano))>0){
 			Client* newClient = new Client(cliente, this->readQueue);
-			initConnection(newClient);
+			bool clientAcepted = initConnection(newClient);
+			if(clientAcepted){
+				//Mando la dimension de la ventana
+				newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight(),  GameSettings::GetInstance()->getMapWidth(),  GameSettings::GetInstance()->getMapHeight()));
 
-			//Mando la dimension de la ventana
-			newClient->writeMessagesInQueue(new Message("window","window", GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight(),  GameSettings::GetInstance()->getMapWidth(),  GameSettings::GetInstance()->getMapHeight()));
+				//Mando la informacion que está en el YAML
+				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
 
-			//Mando la informacion que está en el YAML
-			newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
+				//Mando los tiles para dibujarlos en la vista
+				newClient->writeMessagesInQueue(this->gController->getTilesMessages());
 
-			//Mando los tiles para dibujarlos en la vista
-			newClient->writeMessagesInQueue(this->gController->getTilesMessages());
+				//Mando las entidades que tiene el mapa
+				newClient->writeMessagesInQueue(gController->getEntitiesMessages());
 
-			//Mando las entidades que tiene el mapa
-			newClient->writeMessagesInQueue(gController->getEntitiesMessages());
-
-			//Mando los protagonistas hasta el momento
-			newClient->writeMessagesInQueue(getProtagonistasMessages());
-			newClient->writeMessagesInQueue(newClient->getListSeenTilesAsMessages());
-			newClient->connect();
+				//Mando los protagonistas hasta el momento
+				newClient->writeMessagesInQueue(getProtagonistasMessages());
+				newClient->writeMessagesInQueue(newClient->getListSeenTilesAsMessages());
+				newClient->connect();
+			}
 		}
 	}
 	return 0;
+}
+
+bool Server::acceptingNewClients(){
+	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
+	return (this->clients.size()<2);
+}
+
+void Server::notifyGameInitToClients(){
+	Message* messageStart = new Message();
+	messageStart->startGame();
+	list<Client*> activeClients= getActiveClients();
+	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+		(*clientIterator)->writeMessagesInQueue(messageStart);
+	}
 }
 
 
@@ -117,9 +133,12 @@ void Server::processReceivedMessages(){
 			//this->clients.at(messageUpdate->getNombre)->~Client();
 		
 		} else {
-			int idUpdate = messageUpdate->getId();
-			this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
-			this->idEntitiesUpdated.push_back(idUpdate);
+			if(this->gameRunning){
+				int idUpdate = messageUpdate->getId();
+				this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
+				this->idEntitiesUpdated.push_back(idUpdate);
+			}
+
 		}
 	}
 	this->readQueue->unlockQueue();
@@ -231,55 +250,45 @@ list<Client*> Server::getActiveClients(){
 	return activeClients;
 }
 
-void Server::initConnection(Client* newClient){
+bool Server::initConnection(Client* newClient){
 	bool validUserName=false;
 	stringstream ss;
 	while(!validUserName){
 		string userName = newClient->readUserName();
-		map<string,Client*>::iterator it = this->clients.find(userName);
-		if( it != this->clients.end() ){
-			//El cliente ya existia
-			ss << "player " << userName << " already exists...";
-			Logger::get()->logInfo("Server","readClientUserName",ss.str());
-			
-			if( it->second->getStatus()==0 ){
-				//El cliente ya existia y ademas está conectado
-				ss.str("");
-				ss << userName << " is being used by another player";
+		if(this->acceptingNewClients()){
+			map<string,Client*>::iterator it = this->clients.find(userName);
+			if( it != this->clients.end() ){
+				//El cliente ya existia
+				ss << "player " << userName << " already exists...";
 				Logger::get()->logInfo("Server","readClientUserName",ss.str());
 				newClient->responseUserName("FAIL");
 			}else{
-				//TODO esto no va mas el cliente ya existia pero estaba desconectado y se vuelve a conectar
-				(*it).second->connect();
+				//El cliente no exitia
 				newClient->responseUserName("OK");
 				newClient->setUserName(userName);
 				validUserName=true;
 				ss.str("");
-				ss << "player "<< userName << " has reconnected";
+				ss << "player "<< userName << " has joined the game";
 				Logger::get()->logInfo("Server","readClientUserName",ss.str());
-				//asigno el cliente
-				list<pair<int,int> > listaTiles = this->clients.at(newClient->getUserName())->getSeenTiles();
-				this->clients.at(newClient->getUserName()) = newClient;
-				newClient->setSeenTiles(listaTiles);
-				notifyClientReconect(newClient->getUserName());
+				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
+				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
+				this->clients.insert(make_pair(newClient->getUserName(),newClient));
+				newClient->startCommunication();
+				return true;
 			}
 		}else{
-			//El cliente no exitia
-			newClient->responseUserName("OK");
-			newClient->setUserName(userName);
+			//Ya se conectaron todos los clientes
 			validUserName=true;
-			ss.str("");
-			ss << "player "<< userName << " has joined the game";
-			Logger::get()->logInfo("Server","readClientUserName",ss.str());
-			//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-			this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
-			this->clients.insert(make_pair(newClient->getUserName(),newClient));
+			Logger::get()->logInfo("Server","readClientUserName","Limit of clients");
+			newClient->responseUserName("NOTALLOW");
+			newClient->~Client();
+			return false;
 		}
 	}
-	newClient->startCommunication();
-
 }
 
+/*
+ * TODO sacar esto, ya no se puede reconectar
 void Server::notifyClientReconect(string userName){
 	list<Client*> activeClients= getActiveClients();
 	list<int> entitiesToDisconect = gController->getEntitiesOfClient(userName);
@@ -292,7 +301,7 @@ void Server::notifyClientReconect(string userName){
 			}
 		}
 	}
-}
+}*/
 
 //TODO : (FOG)EL SERVER LE MANDA AL CLIENTE LA NUEVA POSICION DE LA ENTIDAD, EL CLIENTE CALCULA LOS NUEVOS TILES, Y SE LOS DEVUELVE AL SERVER
 void Server::setSeenTiles() {
@@ -337,6 +346,16 @@ void Server::sendSeenTiles(string client) {
 		Message* msg = new Message();
 		msg->activeTile((*it).first,(*it).second);
 		this->clients[client]->writeMessagesInQueue(msg);
+	}
+}
+
+void Server::verifyWaitingClients(){
+	if(this->acceptingNewClients()){
+		//Espero 1 segundo hasta volver a chequear si ya estan todos conectados
+		this->gController->delay(1000);
+	}else if(!this->gameRunning){
+		this->notifyGameInitToClients();
+		this->gameRunning=true;
 	}
 }
 
