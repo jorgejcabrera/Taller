@@ -28,12 +28,7 @@ public:
 	 *devuelve mensajes de la cola
 	 */
 	Message* pullTail();
-	/*
-	 * elimina todos los mensajes pendientes por escribit
-	 * */
-	void clear();
 	bool isEmpty();
-	int getSize();
 	void lockQueue();
 	void unlockQueue();
 	Message* pullTailWithoutLock();

@@ -31,7 +31,6 @@ private:
 public:
 	EntidadSemiEstaticaVista();
 	EntidadSemiEstaticaVista(int width, int length,float widthPixel,float lengthPixels, int fps);
-
 	int getWidthPixel();
 	int getLengthPixel();
 	void setFramesInLineFile(int qty);
@@ -40,7 +39,6 @@ public:
 	void setDelay(int delayFrames);
 	SDL_Rect getPositionOfSprite(int ciclos);
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
-
 	virtual ~EntidadSemiEstaticaVista();
 };
 

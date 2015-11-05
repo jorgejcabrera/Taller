@@ -37,11 +37,6 @@ private:
 	int sockfd;
 	int status;
 	string ip;
-	void readMessage(Message msg);
-	/*
-	*al invocar este metodo el cliente siempre estara conectado, y manda los mensajes a la cola de escritura
-	* */
-	void sendMessage(Message* msg);
 	GameController* gController;
 	time_t lastReportedClient;
 	time_t lastReportedServer;

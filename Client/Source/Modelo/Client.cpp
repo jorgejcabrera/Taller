@@ -68,10 +68,6 @@ int Client::connectToServer(){
 	return OK;
 }
 
-void Client::sendMessage(Message *msg){
-	this->writeThread->writeMessage(msg);
-}
-
 bool Client::isConected(){
 	return this->status == CONECTED;
 }
@@ -158,9 +154,8 @@ void Client::processReceivedMessages(){
 	}
 }
 
+//TODO borrar este metodo
 void Client::disconnectPlayer(int id){
-	//TODO cambiar el path a buscar por algo que no este hardcodeado
-	//cambio el path de la imagen por otro grisado y que se note que está desconectado
 	this->gController->getJuegoVista()->getEntityById(id)->
 			setPathImage(GameSettings::GetInstance()->getEntityConfig("soldadoDesconectado")->getPath());
 }

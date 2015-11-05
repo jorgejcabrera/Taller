@@ -13,7 +13,9 @@
 #include <typeinfo>
 #include "../../Headers/Modelo/PicassoHelper.h"
 
-namespace std {
+//namespace std {
+
+using namespace std;
 
 class EntidadPartidaVista {
 protected:
@@ -31,7 +33,6 @@ private:
 
 public:
 	EntidadPartidaVista();
-	void destruir();
 	int getWidth();
 	int getLength();
 	string getPathImage();
@@ -49,12 +50,11 @@ public:
 	*4x4 ya que el render depende de este factor
 	**/
 	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
-	void restarSalud();
-	virtual ~EntidadPartidaVista();
 	bool getSeen();
 	void saw();
+	virtual ~EntidadPartidaVista();
 };
 
-} /* namespace std */
+//} /* namespace std */
 
 #endif /* SOURCE_MODELO_ENTIDADPARTIDAVISTA_H_ */

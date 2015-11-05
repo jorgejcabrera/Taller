@@ -7,8 +7,6 @@
 
 #include "../../Headers/Vista/EntidadPartidaVista.h"
 
-using namespace std;
-
 EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
 	this->seen = false;
@@ -44,10 +42,6 @@ void EntidadPartidaVista::setPathImage(string path){
 	this->pathImage = path;
 }
 
-void EntidadPartidaVista::destruir(){
-	this->~EntidadPartidaVista();
-}
-
 string EntidadPartidaVista::getSizeString(){
 	return this->sizeString;
 }
@@ -68,7 +62,6 @@ int EntidadPartidaVista::getId(){
 
 void EntidadPartidaVista::setName(string nameEnt){
 	this->name=nameEnt;
-
 }
 
 string EntidadPartidaVista::getName(){

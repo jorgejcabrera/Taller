@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 	while( jorge->isConected() ){
 		//leemos las novedades del server
 		jorge->processReceivedMessages();
-		gController->actualizarJuego();
+		gController->updateGame();
 		//Si el juego no esta corriendo no actualizo la vista
 		if(gController->gameIsRunning()){
 			gController->getJuegoVista()->render(gController->getRunCycles(),jorge->getResourceCounter());

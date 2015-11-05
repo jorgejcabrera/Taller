@@ -31,20 +31,11 @@ Message* SocketQueue::pullTail(){
 bool SocketQueue::isEmpty(){
 	return this->myQueue.empty();
 }
-int SocketQueue::getSize(){
-	return this->myQueue.size();
-}
 
 Message* SocketQueue::pullTailWithoutLock(){
 	Message* message = this->myQueue.front();
 	this->myQueue.pop();
 	return message;
-}
-
-void SocketQueue::clear(){
-	lockQueue();
-   	std::queue<Message*> empty;
-   	std::swap( this->myQueue, empty );
 }
 
 void SocketQueue::lockQueue(){

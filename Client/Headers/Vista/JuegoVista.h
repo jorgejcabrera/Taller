@@ -64,7 +64,7 @@ private:
 	void drawMenu();
 	void drawMiniMap();
 	void drawFog();
-
+	void drawResources(ResourceCounter* resourceCounter);
 public:
 	JuegoVista();
 	/*
@@ -94,8 +94,17 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
+	/*
+	 *borra el recurso o el edificio correspondiente al id pasado como parametro
+	 * */
 	void deleteStaticEntityById(int id);
+	/*
+	 *?
+	 * */
 	void setVisibleTile(int x,int y);
+	/*
+	 *?
+	 * */
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
 	/*
 	*?
@@ -105,25 +114,25 @@ public:
 	*?
 	* */
 	map<string,string> buildMapWithEntityData(EntidadPartidaVista* entidad);
+	/*
+	 *?
+	 * */
 	void setFoggedTiles();
 	/*
 	*?
 	* */
 	bool isEnemyEntityVisible(pair< int, int> pos);
 	MenuVista* getMenuVista();
-	void drawResources(ResourceCounter* resourceCounter);
-
-	// genero la ventana donde el usuario ingresa el userName
+	/*
+	 *genero la ventana donde el usuario ingresa el userName
+	 * */
 	string renderUserInputView(string initialMessage);
-
-	//Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
+	/*
+	*Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
+	* */
 	void renderFinishLogin(string finalMessage);
 
 	~JuegoVista();
-
-
-
-
 };
 
 #endif /* SOURCE_VISTA_JUEGOVISTA_H_ */

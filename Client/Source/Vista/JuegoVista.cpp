@@ -307,14 +307,6 @@ void JuegoVista::drawMiniMap() {
 																this->miniMapVista->getMiniTileSize());
 		}
 	}
-
-/*			list<pair<int,int> > unseenTiles;
- * 			for(list<pair<int,int> >::iterator it = unseenTiles.begin(); it!=unseenTiles.end(); ++it){
-			this->miniMapVista->makeMiniTilePos((*it).first, (*it).second);
-		}
-				unseenTiles.push_front(make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY()));
-
-*/
 }
 
 
@@ -443,7 +435,6 @@ void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 	resources["alimento"] = resourceCounter->getAlimento();
 	resources["madera"] = resourceCounter->getMadera();
 	resources["oro"] = resourceCounter->getOro();
-
 	this->menuVista->drawResources(resources);
 }
 

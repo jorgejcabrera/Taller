@@ -45,7 +45,7 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad
 	//4x4
 	}else if( stringSize == "standardBigSize"){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
-		isometricPosition.second =isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize()/2 - DefaultSettings::getTileSize()/2;	//TODO de donde se esta sacando el valor del tile???!
+		isometricPosition.second =isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize()/2 - DefaultSettings::getTileSize()/2;
 	//2x2
 	}else if( stringSize == "standarSmallSize"){
 		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
@@ -57,7 +57,7 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad
 	//1x1
 	}else if( stringSize == "standarMiniSize"){
 		isometricPosition.first = isometricPosition.first + gameSettings->getTileSize()*2/3;
-		isometricPosition.second =isometricPosition.second + gameSettings->getTileSize()/4;// - DefaultSettings::getTileSize();
+		isometricPosition.second =isometricPosition.second + gameSettings->getTileSize()/4;
 	}
 
 	//TODO centrar entidades de 4x2
@@ -76,39 +76,10 @@ pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 	isometricPosition.second = isometricPosition.second + gameSettings->getTileSize()/2;
 	return isometricPosition;
 }
-/*
-pair<int,int> UtilsController::getMiniIsometricPosition(EntidadPartidaVista* entidad) {
-	pair<int,int> isometricPosition;
-	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
-	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
-	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
 
-	//Centramos la entidad segun la cantidad de tiles que ocupa
-	string stringSize = entidad->getSizeString();
-
-	//3x3
-	if ( stringSize == "standarMediumSize"){
-		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
-		isometricPosition.second =isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize()/2;
-	//4x4
-	}else if( stringSize == "standardBigSize"){
-		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
-		isometricPosition.second =isometricPosition.second - (entidad->getLength()-1) *  gameSettings->getTileSize()/2 - DefaultSettings::getTileSize()/2;	//TODO de donde se esta sacando el valor del tile???!
-	//2x2
-	}else if( stringSize == "standarSmallSize"){
-		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
-		isometricPosition.second =isometricPosition.second - entidad->getLength() * gameSettings->getTileSize()/2 - DefaultSettings::getTileSize();
-	//3x4
-	}else if( stringSize == "mediumSize"){
-		isometricPosition.first = isometricPosition.first - (entidad->getWidth()-1)  *  gameSettings->getTileSize();
-		isometricPosition.second =isometricPosition.second - entidad->getLength() * gameSettings->getTileSize()/2 - DefaultSettings::getTileSize();
-	}
-	//TODO centrar entidades de 4x2
-	return isometricPosition;
-}
-*/
 UtilsController::~UtilsController() {
 	this->instance = NULL;
+	//TODO no hay que hacer el delete te la instancia?
 }
 
 
