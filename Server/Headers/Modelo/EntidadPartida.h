@@ -18,33 +18,27 @@ namespace std {
 
 class EntidadPartida {
 protected:
-	int salud;
+	int health;
 	pair<int,int> position;
 	int width;
 	int length;
-	string sizeString;
 	string name;
 	int id;
-	int rangeVisibility;
+	int visibilityRange;
 
 public:
 	EntidadPartida();
-	virtual ~EntidadPartida();
-	void destruir();
 	int getWidth();
 	int getLength();
 	string getName();
-	string getSizeString();
+	pair<int,int>* getPosition();
+	int getVisibilityRange();
+	int getId();
 	void setPosition(int x,int y);
 	void setName(string name);
-	pair<int,int>* getPosition();
-	int getId();
-	void setRangeVisibility ( int range);
-	int getRangeVisibility();
-
-	/*El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 2x2,3x3,4x4,
-	 *ya que el render depende de este factor*/
-	void restarSalud();
+	void setVisibilityRange(int range);
+	void subtractHealth();
+	virtual ~EntidadPartida();
 };
 
 } /* namespace std */

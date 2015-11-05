@@ -9,6 +9,9 @@
 
 namespace std {
 
+EntidadSemiEstatica::EntidadSemiEstatica() {
+}
+
 string getStringSize(EntidadPartida* entidad){
 	if(entidad->getWidth() == 3 && entidad->getLength() == 3){
 		return "standarMediumSize";
@@ -23,10 +26,6 @@ string getStringSize(EntidadPartida* entidad){
 	}
 }
 
-EntidadSemiEstatica::EntidadSemiEstatica() {
-}
-
-
 EntidadSemiEstatica::EntidadSemiEstatica(string nameEntity, int width, int length, float widthPixel, float lengthPixels,int fps) {
 	//el ancho y el largo es siempre el del tamaño del tile
 	this->width = width;
@@ -36,7 +35,7 @@ EntidadSemiEstatica::EntidadSemiEstatica(string nameEntity, int width, int lengt
 	this->framesPerSecond = fps;
 	this->name = nameEntity;
 	this->frame = 0;
-	this->sizeString = getStringSize(this);
+	//this->sizeString = getStringSize(this);
 }
 
 int EntidadSemiEstatica::getFramesPerSecond(){

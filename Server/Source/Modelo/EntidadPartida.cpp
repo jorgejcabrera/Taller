@@ -10,7 +10,7 @@
 using namespace std;
 
 EntidadPartida::EntidadPartida() {
-	this->id=SequenceUtils::GetInstance()->getSequence();
+	this->id = SequenceUtils::GetInstance()->getSequence();
 }
 
 int EntidadPartida::getId(){
@@ -42,20 +42,12 @@ void EntidadPartida::setName(string nameImage){
 	this->name = nameImage;
 }
 
-void EntidadPartida::destruir(){
-	this->~EntidadPartida();
+void EntidadPartida::setVisibilityRange( int range) {
+	this->visibilityRange = range;
 }
 
-string EntidadPartida::getSizeString(){
-	return this->sizeString;
-}
-
-void EntidadPartida::setRangeVisibility ( int range) {
-	this->rangeVisibility = range;
-}
-
-int EntidadPartida::getRangeVisibility() {
-	return this->rangeVisibility;
+int EntidadPartida::getVisibilityRange() {
+	return this->visibilityRange;
 }
 
 EntidadPartida::~EntidadPartida() {

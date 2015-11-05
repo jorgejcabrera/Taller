@@ -17,11 +17,11 @@ private:
 	int widthPixel;
 	int lengthPixel;
 	int framesPerSecond;
-	float destinoY;
 	int frame;
 	int framesInLineFile;
-
-	//Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+	/*
+	*delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+	* */
 	int delay;
 public:
 	EntidadSemiEstatica();

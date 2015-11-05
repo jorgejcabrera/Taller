@@ -9,6 +9,9 @@
 
 using namespace std;
 
+EntidadEstatica::EntidadEstatica() {
+}
+
 string getStringSize(EntidadPartida* entidad){
 	if(entidad->getWidth() == 3 && entidad->getLength() == 3){
 		return "standarMediumSize";
@@ -23,19 +26,12 @@ string getStringSize(EntidadPartida* entidad){
 	}
 }
 
-EntidadEstatica::EntidadEstatica() {
-}
-
 EntidadEstatica::EntidadEstatica(string nameEntity, int width,int length, bool esEdificable){
 	this->width = width;
 	this->length = length;
 	this->edificable = esEdificable;
 	this->name = nameEntity;
-	this->sizeString = getStringSize(this);
-}
-
-void EntidadEstatica::destruir(){
-	this->~EntidadEstatica();
+	//this->sizeString = getStringSize(this);
 }
 
 EntidadEstatica::~EntidadEstatica() {

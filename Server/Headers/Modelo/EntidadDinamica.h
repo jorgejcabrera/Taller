@@ -30,51 +30,36 @@ enum Direccion{
 };
 
 class EntidadDinamica: public EntidadPartida {
-	private:
-		int velocidad;
-		bool caminando;
-		pair<float,float> vecVelocity;
-		pair<float,float> screenPosition;
-		float destinoX;
-		float destinoY;
-		int frame;
-		string owner;
-		list<pair<int,int> >* camino;
-		bool notifiable;
-		bool newPath;
-		int ciclos;
-		int cicloActual;
+private:
+	list<pair<int,int> >* camino;
+	pair<float,float> screenPosition;
+	string owner;
+	bool caminando;
+	bool notifiable;
+	bool newPath;
+	int ciclos;
+	int cicloActual;
 
-		float distanciaA(float x, float y);
-		float distanciaEnX(float x);
-		float distanciaEnY(float y);
-
-		Direccion getDireccionVertical();
-		Direccion getDireccionHorizontal();
-		int getLineSprite(Direccion dir);
-
-	public:
-		void destruir();
-		void setCamino(list<pair<int,int> >* camino);
-		void setOwner(string owner);
-		/*
-		*devuelve true si pudo mover la entidad de posicion
-		* */
-		void nextPosition();
-		string getOwner();
-		EntidadDinamica();
-		EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
-		void setInitialScreenPosition(float x,float y);
-		virtual ~EntidadDinamica();
-		pair<int,int>* getPosition();
-		list<pair<int,int> >* getCamino();
-		Direccion getDireccion();
-		void setScreenPosition(float x, float y);
-		bool isWalking();
-		void setNotifiable(bool notifiable);
-		void setPathIsNew(bool esNuevo);
-		bool pathIsNew();
-		bool hasToNotify();
+public:
+	EntidadDinamica();
+	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
+	void setCamino(list<pair<int,int> >* camino);
+	void setOwner(string owner);
+	/*
+	*devuelve true si pudo mover la entidad de posicion
+	* */
+	void nextPosition();
+	string getOwner();
+	void setInitialScreenPosition(float x,float y);
+	virtual ~EntidadDinamica();
+	pair<int,int>* getPosition();
+	list<pair<int,int> >* getCamino();
+	void setScreenPosition(float x, float y);
+	bool isWalking();
+	void setNotifiable(bool notifiable);
+	void setPathIsNew(bool esNuevo);
+	bool pathIsNew();
+	bool hasToNotify();
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */

@@ -28,7 +28,7 @@ void Juego::agregarProtagonista(string owner){
 
 	protagonista->setOwner(owner);
 	protagonista->setInitialScreenPosition(gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista());
-	protagonista->setRangeVisibility(gameSettings->getRangeVisibility());
+	protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
 	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
 	//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
 	this->newProtagonistas.push_back(protagonista);

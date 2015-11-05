@@ -18,7 +18,6 @@ private:
 
 public:
 	EntidadEstatica();
-	void destruir();
 	EntidadEstatica(string nameEntity, int width,int length, bool esEdificable);
 	virtual ~EntidadEstatica();
 };

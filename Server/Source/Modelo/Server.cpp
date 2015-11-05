@@ -311,7 +311,7 @@ void Server::setSeenTiles() {
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
 		EntidadDinamica * entidad = (*it).second;
 		pair<int,int>* position = entidad->getPosition();
-		int rangeEntity = entidad->getRangeVisibility();
+		int rangeEntity = entidad->getVisibilityRange();
 		string owner = (*it).second->getOwner();
 		for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
 			if ( (x>=0) && (x < gameSettings->getMapWidth())) {
