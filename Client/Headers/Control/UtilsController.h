@@ -30,11 +30,10 @@ public:
 	 * */
 	pair<int,int> getIsometricPosition(EntidadPartidaVista* entidad);
 	/*
-	 *
+	 *devuelve la posición isométrica correspondiente a la posición cartesiana pasada como parámetro
 	 * */
 	pair<int,int> getIsometricPosition(int x,int y);
 	virtual ~UtilsController();
-
 };
 
 #endif /* SOURCE_CONTROL_UTILSCONTROLLER_H_ */

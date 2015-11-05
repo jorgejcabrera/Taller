@@ -75,7 +75,6 @@ public:
 	int getMapWidth();
 	int getMapHeight();
 	int getMediumSize();
-	string getAgeOfEmpires();
 	string imagePathBuildingsByTypeAndAge(const string &object,const string &age);
 	string imagePathPersonajesByType(const string &object);
 	string imagePathTilesByType(const string &object);

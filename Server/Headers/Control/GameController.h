@@ -23,38 +23,31 @@ class GameController {
 private:
 	UtilsController* utils;
 	Juego* juego;
-	int posMouseX;
-	int posMouseY;
+	GameSettings* gameSettings;
 	bool salirDelJuego;
-	//TODO reiniciar juego no va mas
-	bool reiniciar;
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
-	GameSettings* gameSettings;
 	void setNextPaths();
 
 public:
 	GameController();
+	/*
+	*defino un delay variable para poder mandarle los ms que yo quiera, mas que nada para el ciclo mientras espera clientes
+	* */
+	void delay(int ms);
+	/*
+	*generadores de mensajes para cuando se conecta un cliente nuevo
+	* */
 	Juego* getJuego();
-	//TODO reiniciar juego no va mas
-	bool reiniciarJuego();
 	void actualizarJuego();
 	int getRunCycles();
 	int getMaxFramesPerSecond();
-	virtual ~GameController();
 	void delay();
-	/*
-	 * Defino un delay variable para poder mandarle los ms que yo quiera, mas que nada para el ciclo mientras espera clientes
-	 */
-	void delay(int ms);
-
-	/*
-	* generadores de mensajes para cuando se conecta un cliente nuevo
-	* */
 	list<Message*> getTilesMessages();
 	list<Message*> getEntitiesMessages();
 	list<int> getEntitiesOfClient(string userName);
+	virtual ~GameController();
 };
 
 #endif /* GAMECONTROLLER_H_ */

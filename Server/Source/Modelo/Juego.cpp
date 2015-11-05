@@ -13,7 +13,6 @@ Juego::Juego() {
 	gameSettings = GameSettings::GetInstance();
 	this->juegoFinalizado = false;
 	this->mapa = new Mapa();
-	this->currentAge = gameSettings->getAgeOfEmpires();
 	this->resourseManager = new ResourceManager(this->mapa);
 }
 
@@ -56,17 +55,6 @@ pair<int,int>* Juego::getPositionOfProtagonistaById(int idBuscado){
 	return this->protagonistas.at(idBuscado)->getPosition();
 }
 
-/*void Juego::actualizarProtagonistas(){
-	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
-		(*it).second->trasladarse();
-	}
-}*/
-
-string Juego::getCurrentAge(){
-	return this->currentAge;
-}
-
-
 void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
 	/*TODO: seteo solo las coordenadas fisicas, antes seteaba las de pantalla tambien,
 	 * revisar si esto no rompe nada ya que las coordenadas de pantalla deberian setearse solo en la vista*/
@@ -89,20 +77,6 @@ void Juego::terminarJuego(){
 }
 bool Juego::getStatusPartida(){
 	return this->juegoFinalizado;
-}
-
-pair<int,int> Juego::getIsometricPosition(EntidadPartida* entidad){
-	//TODO: esto no deberia estar solo en la vista?
-
-	pair<int,int> isometricPosition;
-	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile
-	isometricPosition.first = (entidad->getPosition()->first - entidad->getPosition()->second) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2;
-	isometricPosition.second = (entidad->getPosition()->first + entidad->getPosition()->second) * gameSettings->getTileSize() / 2  ;
-
-	//ahora hay que centrar la entidad con el tile
-	isometricPosition.first = isometricPosition.first - (entidad->getWidth() - 1)  *  gameSettings->getTileSize();
-	isometricPosition.second = isometricPosition.second - (entidad->getLength() - 1) *  gameSettings->getTileSize() / 2;
-	return isometricPosition;
 }
 
 ResourceManager* Juego::getResourceManager(){

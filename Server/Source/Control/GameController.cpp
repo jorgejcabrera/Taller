@@ -11,10 +11,7 @@ GameController::GameController(){
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->salirDelJuego = false;
-	this->reiniciar = false;
 	this->juego = new Juego();
-	this->posMouseX = 0;
-	this->posMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 }
@@ -82,10 +79,6 @@ void GameController::setNextPaths(){
 void GameController::actualizarJuego(){
 	this->setNextPaths();
 	this->juego->getResourceManager()->actualizar();
-}
-
-bool GameController::reiniciarJuego(){
-	return this->reiniciar;
 }
 
 int GameController::getRunCycles(){

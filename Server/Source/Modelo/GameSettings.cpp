@@ -70,10 +70,6 @@ string GameSettings::imagePathTilesByType(const string &object){
 	return DefaultSettings::imagePathTilesByType(object);
 }
 
-string GameSettings::getAgeOfEmpires(){
-	return DefaultSettings::getAgeOfEmpires();
-}
-
 string GameSettings::getTipoProtagonista(){
 	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
 }

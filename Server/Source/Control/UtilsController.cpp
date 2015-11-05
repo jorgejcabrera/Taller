@@ -19,17 +19,6 @@ UtilsController* UtilsController::GetInstance(){
 	return instance;
 }
 
-pair<int,int> UtilsController::convertToCartesian(int xScreen,int yScreen){
-	//TODO: este metodo no deberia estar, en el server solo tenemos posiciones fisica, no de pantalla
-	int startMapX = gameSettings->getScreenWidth() / 2 + gameSettings->getTileSize();
-	int x = ( yScreen * 2 + xScreen - startMapX) / (gameSettings->getTileSize() * 2);
-	int y = yScreen / (gameSettings->getTileSize() / 2) - x;
-	pair<int,int> cartesianPosition;
-	cartesianPosition.first = x;
-	cartesianPosition.second = y;
-	return cartesianPosition;
-}
-
 pair<int,int> UtilsController::getIsometricPosition(EntidadPartida* entidad){
 	pair<int,int> isometricPosition;
 	//hacemos coincidir el vertice superior izquierdo de la entidad con el tile

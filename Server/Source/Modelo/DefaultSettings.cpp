@@ -229,10 +229,6 @@ string DefaultSettings::imagePathTilesByType(const string &object){
 	return defaultImage();
 }
 
-string DefaultSettings::getAgeOfEmpires(){
-	return AGE_OF_EMPIRES;
-}
-
 string DefaultSettings::getTipoProtagonista(){
 	return TIPO_PROTAGONISTA;
 }
