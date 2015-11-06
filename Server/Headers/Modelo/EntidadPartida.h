@@ -7,6 +7,7 @@
 
 #ifndef SOURCE_MODELO_ENTIDADPARTIDA_H_
 #define SOURCE_MODELO_ENTIDADPARTIDA_H_
+#define ARC4RANDOM_MAX	0x100000000
 
 #include <string>
 #include <iostream>
@@ -14,22 +15,36 @@
 #include "../Utils/SequenceUtils.h"
 #include "DefaultSettings.h"
 
-namespace std {
+using namespace std;
 
 class EntidadPartida {
 protected:
-	int health;
-	int width;
-	int length;
-	int id;
 	int visibilityRange;
 	string name;
 	pair<int,int> position;
+	int width;
+	int length;
+	int id;
+	/*
+	* parametros variables segun el nivel y características de la entidad
+	* */
+	int health;
+	int strength;
+	float precision;
+	/*
+	* devuelve el daño causado al atacar
+	* */
+	int getDamage();
+	/*
+	* establece la defenza de la entidad cuando lo están atacando
+	* */
+	int defend();
 
 public:
 	EntidadPartida();
 	int getWidth();
 	int getLength();
+	int getHealth();
 	string getName();
 	pair<int,int>* getPosition();
 	int getVisibilityRange();
@@ -38,16 +53,14 @@ public:
 	void setName(string name);
 	void setVisibilityRange(int range);
 	/*
-	*disminuye la salud de la entidad según 
+	* disminuye la salud de la entidad según 
 	* */
-	void subtractHealth(int attackValue);
+	void attackTo(EntidadPartida* entity);
 	/*
-	*establece la defenza de la entidad cuando lo están atacando
+	* la entidad recibe el daño provoca y descuenta salud
 	* */
-	int defend();
+	void takeDamage(int damage);
 	virtual ~EntidadPartida();
 };
-
-} /* namespace std */
 
 #endif /* SOURCE_MODELO_ENTIDADPARTIDA_H_ */

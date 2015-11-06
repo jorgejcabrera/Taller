@@ -50,5 +50,32 @@ int EntidadPartida::getVisibilityRange() {
 	return this->visibilityRange;
 }
 
+int EntidadPartida::getDamage(){
+	float val = ( rand() % 100 ) / 100;
+	if( val <= this->precision )
+		return this->strength;
+	else
+		return 0;
+}
+
+int EntidadPartida::defend(){
+	float val = ( rand() % 100 ) / 100;
+	if( val <= this->precision )
+		return this->health - this->strength;
+	else
+		return 0;
+}
+
+void EntidadPartida::takeDamage(int damage){
+	int damageTaken = damage - this->defend();
+	if( damageTaken <= 0 )
+		return;
+	this->health = this->health - damageTaken;
+}
+
+void EntidadPartida::attackTo(EntidadPartida* entity){
+	entity->takeDamage(this->getDamage());
+}
+
 EntidadPartida::~EntidadPartida() {
 }
