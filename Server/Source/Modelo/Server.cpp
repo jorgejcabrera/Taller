@@ -73,7 +73,7 @@ int Server::run(void * data){
 
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
-				newClient->writeMessagesInQueue(newClient->getListSeenTilesAsMessages());
+				newClient->writeMessagesInQueue(newClient->getSeenTilesAsMessages());
 				newClient->connect();
 			}
 		}
@@ -94,7 +94,6 @@ void Server::notifyGameInitToClients(){
 		(*clientIterator)->writeMessagesInQueue(messageStart);
 	}
 }
-
 
 list<Message*> Server::getProtagonistasMessages(){
 	list<Message*> listaDeProtagonistas;
@@ -130,15 +129,11 @@ void Server::processReceivedMessages(){
 			ss << "Client " << messageUpdate->getNombre() << " was disconected";
 			Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
 			this->clients.at(messageUpdate->getNombre())->disconect();
-			//this->clients.at(messageUpdate->getNombre)->~Client();
 		
-		} else {
-			if(this->gameRunning){
+		}else if( this->gameRunning ){
 				int idUpdate = messageUpdate->getId();
-				this->gController->getJuego()->setDestinoProtagonista(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
+				this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
 				this->idEntitiesUpdated.push_back(idUpdate);
-			}
-
 		}
 	}
 	this->readQueue->unlockQueue();
@@ -200,7 +195,6 @@ void Server::notifyClients(){
 		}
 
 	}
-
 
 	this->gController->getJuego()->cleanNewProtagonistas();
 	pingMessage();
@@ -271,7 +265,7 @@ bool Server::initConnection(Client* newClient){
 				ss << "player "<< userName << " has joined the game";
 				Logger::get()->logInfo("Server","readClientUserName",ss.str());
 				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-				this->gController->getJuego()->agregarProtagonista(newClient->getUserName());
+				this->gController->getJuego()->createDinamicEntity(newClient->getUserName());
 				this->clients.insert(make_pair(newClient->getUserName(),newClient));
 				newClient->startCommunication();
 				return true;

@@ -31,14 +31,29 @@ public:
 	Client(int identifier, SocketQueue* queueUnique);
 	void writeMessagesInQueue(list<Message*> messagesList);
 	void writeMessagesInQueue(Message* message);
+	/*
+	*?
+	* */
 	void startCommunication();
+	/*
+	*?
+	* */
+	void responseUserName(string status);
+	/*
+	*?
+	* */
 	string readUserName();
+	/*
+	*?
+	* */
+	void reporting();
+	/*
+	*?
+	* */
+	int getTimeSinceLastReport();
 	string getUserName();
 	void setUserName(string myName);
-	void responseUserName(string status);
-	void reporting();
 	bool isActive();
-	int getTimeSinceLastReport();
 	void disconect();
 	void connect();
 	int getStatus();
@@ -48,7 +63,7 @@ public:
 	* */
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
 	list<pair<int,int> >getSeenTiles();
-	list<Message*> getListSeenTilesAsMessages();
+	list<Message*> getSeenTilesAsMessages();
 	~Client();
 
 };

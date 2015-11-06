@@ -31,7 +31,7 @@ enum Direccion{
 
 class EntidadDinamica: public EntidadPartida {
 private:
-	list<pair<int,int> >* camino;
+	list<pair<int,int> >* path;
 	pair<float,float> screenPosition;
 	string owner;
 	bool caminando;
@@ -43,23 +43,22 @@ private:
 public:
 	EntidadDinamica();
 	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
-	void setCamino(list<pair<int,int> >* camino);
+	void setPath(list<pair<int,int> >* camino);
 	void setOwner(string owner);
 	/*
 	*devuelve true si pudo mover la entidad de posicion
 	* */
 	void nextPosition();
 	string getOwner();
-	void setInitialScreenPosition(float x,float y);
-	virtual ~EntidadDinamica();
+	void setScreenPosition(float x,float y);
 	pair<int,int>* getPosition();
-	list<pair<int,int> >* getCamino();
-	void setScreenPosition(float x, float y);
+	list<pair<int,int> >* getPath();
 	bool isWalking();
 	void setNotifiable(bool notifiable);
 	void setPathIsNew(bool esNuevo);
 	bool pathIsNew();
 	bool hasToNotify();
+	virtual ~EntidadDinamica();
 };
 
 #endif /* SOURCE_MODELO_ENTIDADDINAMICA_H_ */

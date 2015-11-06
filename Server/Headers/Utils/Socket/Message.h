@@ -34,7 +34,6 @@ public:
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
 	Message(string nombre);
 
-	virtual ~Message();
 	int getSize();
 	char* serializeToArray();
 	string serializeAsString();
@@ -65,6 +64,7 @@ public:
 
 	//Mensaje para notificar a los clientes que el juego arranco
 	void startGame();
+	virtual ~Message();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

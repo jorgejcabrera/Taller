@@ -19,12 +19,12 @@ namespace std {
 class EntidadPartida {
 protected:
 	int health;
-	pair<int,int> position;
 	int width;
 	int length;
-	string name;
 	int id;
 	int visibilityRange;
+	string name;
+	pair<int,int> position;
 
 public:
 	EntidadPartida();
@@ -37,7 +37,14 @@ public:
 	void setPosition(int x,int y);
 	void setName(string name);
 	void setVisibilityRange(int range);
-	void subtractHealth();
+	/*
+	*disminuye la salud de la entidad según 
+	* */
+	void subtractHealth(int attackValue);
+	/*
+	*establece la defenza de la entidad cuando lo están atacando
+	* */
+	int defend();
 	virtual ~EntidadPartida();
 };
 
