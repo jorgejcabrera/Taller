@@ -90,7 +90,6 @@ int GameController::getMaxFramesPerSecond(){
 }
 
 void GameController::delay(){
-	//TODO: revisar si se puede sacar el delay, ya que de esa manera sacariamos el include de SDL2
 	this->runCycles++;
 	SDL_Delay(50); // para que sean 50 frames x segundos
 }

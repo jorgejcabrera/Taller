@@ -74,11 +74,6 @@ class Server : public Thread{
 		bool isRunning();
 		void shutDown();
 		/*
-		*levanta todas entidades que tenia el cliente viejo y notifico que se volvio a conectar
-		* */
-		//TODO borrar este metodo porque ya no se puede reconectar
-		//void notifyClientReconect(string userName);
-		/*
 		*setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
 		* */ 
 		void setSeenTiles();

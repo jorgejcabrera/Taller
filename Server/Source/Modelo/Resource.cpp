@@ -24,6 +24,5 @@ Resource::Resource(string tipo,int x,int y) {
 }*/
 
 Resource::~Resource() {
-	// TODO Auto-generated destructor stub
 }
 

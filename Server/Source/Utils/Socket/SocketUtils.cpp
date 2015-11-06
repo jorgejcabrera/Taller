@@ -15,7 +15,6 @@ bool SocketUtils::writeMessage(Message* message){
 	return wroteBytes == message->getSize();
 }
 
-//TODO borrar la variable ss es para debuggear y ver los logs
 Message* SocketUtils::readMessage(){
 	int bytesRead = 0;
 	int intSize = sizeof(int);

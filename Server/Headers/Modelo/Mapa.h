@@ -24,7 +24,6 @@ using namespace std;
 
 class Mapa {
 private:
-	//map<pair<int,int>,EntidadPartida*> entidades;
 	list<EntidadPartida*> entidades;
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
@@ -35,8 +34,6 @@ public:
 	bool positionAvailable(EntidadPartida* entidad);
 	map<pair<int,int>,Tile*>* getTiles();
 	list<EntidadPartida*>* getEntities();
-	//TODO se sacan estos metodos porque no necesitamos las coordenadas en la lista, solo necesitamos las entidades
-	//map<pair<int,int>,EntidadPartida*>* getEntities();
 	//EntidadPartida* getEntityAt(int x,int y);
 	~Mapa();
 

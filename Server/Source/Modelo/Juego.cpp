@@ -32,7 +32,6 @@ void Juego::agregarProtagonista(string owner){
 	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
 	//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
 	this->newProtagonistas.push_back(protagonista);
-	//cout << "creo un personaje en: "<< owner<< " "<< positionOfProtagonista.first << " y: " << positionOfProtagonista.second << endl;
 }
 
 Mapa* Juego::getMap(){
@@ -56,8 +55,6 @@ pair<int,int>* Juego::getPositionOfProtagonistaById(int idBuscado){
 }
 
 void Juego::setDestinoProtagonista(int idProtagonista, int x,int y){
-	/*TODO: seteo solo las coordenadas fisicas, antes seteaba las de pantalla tambien,
-	 * revisar si esto no rompe nada ya que las coordenadas de pantalla deberian setearse solo en la vista*/
 	EntidadDinamica *protagonistaToUpdate = this->protagonistas.at(idProtagonista);
 
 	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition()->first,

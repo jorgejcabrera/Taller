@@ -287,22 +287,6 @@ bool Server::initConnection(Client* newClient){
 	}
 }
 
-/*
- * TODO sacar esto, ya no se puede reconectar
-void Server::notifyClientReconect(string userName){
-	list<Client*> activeClients= getActiveClients();
-	list<int> entitiesToDisconect = gController->getEntitiesOfClient(userName);
-	for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
-		Message* messageReconnect = new Message();
-		messageReconnect->clientReconnect(*it);
-		for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
-			if((*clientIt)->getUserName()!=userName){
-			(*clientIt)->writeMessagesInQueue(messageReconnect);
-			}
-		}
-	}
-}*/
-
 //TODO : (FOG)EL SERVER LE MANDA AL CLIENTE LA NUEVA POSICION DE LA ENTIDAD, EL CLIENTE CALCULA LOS NUEVOS TILES, Y SE LOS DEVUELVE AL SERVER
 void Server::setSeenTiles() {
 	map<string,list<pair<int,int> > > newTilesByClient;

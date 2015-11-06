@@ -14,8 +14,6 @@ Mapa::Mapa() {
 		//barrido horizontal del mapa
 		for(int j = 0; j < gameSettings->getMapWidth(); j++){
 			Tile* newTile =  new Tile(j,i);
-			//TODO: ya no es necesario setear el path de la imagen, ademas borre el metodo y el atributo
-			//newTile->setPathImage(gameSettings->imagePathTilesByType("pasto"));
 			this->tiles.insert(std::make_pair(std::make_pair(j,i),newTile));
 		}
 	}
@@ -39,12 +37,6 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 		return;
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first+ entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
-		/*
-		 * TODO revisar si no falla, se cambio la estructura de entidades, ahora es una lista y antes un mapa con las posiciones
-		 * int i=entidad->getPosition()->first;
-		 * int j= entidad->getPosition()->second;
-		 * this->entidades.insert(std::make_pair(std::make_pair(i,j),entidad));
-		 */
 		this->entidades.push_back(entidad);
 
 		//le cambiamos el estado a los tiles que ocupa
@@ -84,7 +76,6 @@ Tile* Mapa::getTileAt(int x,int y){
 pair<int,int> Mapa::getAvailablePosition(){
 	for(map<pair<int,int>,Tile*>::iterator tilesIterator=this->tiles.begin(); tilesIterator!=this->tiles.end(); ++tilesIterator){
 		if(tilesIterator->second->isAvailable()){
-			//TODO ver como hacer para que cuando se mueva el personaje se vuelva a habilitar el tile
 			tilesIterator->second->changeStatusAvailable();
 			return tilesIterator->first;
 		}
@@ -94,11 +85,6 @@ pair<int,int> Mapa::getAvailablePosition(){
 map<pair<int,int>,Tile*>* Mapa::getTiles(){
 	return &this->tiles;
 }
-
-/*
-map<pair<int,int>,EntidadPartida*>* Mapa::getEntities(){
-	return &this->entidades;
-}*/
 
 list<EntidadPartida*>* Mapa::getEntities(){
 	return &this->entidades;
