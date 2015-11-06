@@ -108,7 +108,7 @@ list<pair<int,int> > Client::getSeenTiles() {
 	return this->seenTiles;
 }
 
-list<Message*> Client::getListSeenTilesAsMessages(){
+list<Message*> Client::getSeenTilesAsMessages(){
 	list<Message*> tilesVistos;
 	for(list<pair<int,int> >::iterator tilesIte=seenTiles.begin(); tilesIte!=seenTiles.end();++tilesIte){
 		Message* msg = new Message();
