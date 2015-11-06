@@ -17,14 +17,12 @@ GameSettings::GameSettings() {
 }
 
 int GameSettings::getScreenWidth(){
-	//TODO: esto deberia estar solo en la vista
 	if((SCREEN_WIDTH<=0) or (SCREEN_WIDTH>DefaultSettings::getScreenWidth()))
 		return DefaultSettings::getScreenWidth();
 	return this->SCREEN_WIDTH;
 }
 
 int GameSettings::getScreenHeight(){
-	//TODO: esto deberia estar solo en la vista
 	if((SCREEN_HEIGHT<=0) or (SCREEN_HEIGHT>DefaultSettings::getScreenHeight()))
 		return DefaultSettings::getScreenHeight();
 	return this->SCREEN_HEIGHT;
@@ -222,7 +220,6 @@ void GameSettings::createEntidades(){
 						}
 					}
 				}else if (tipoEntidad=="tiles" && posX < this->getMapHeight() && posY < this->getMapHeight()){
-					//TODO: modifico lo que hay en la cola, ahora solo guardo que tipo de tile es, antes mandaba el path. Eso deberia resolverlo la vista
 					this->tiles.insert(make_pair(make_pair(posX,posY),nombre));
 				}
 			}

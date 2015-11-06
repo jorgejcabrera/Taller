@@ -10,7 +10,6 @@
 EntidadDinamica::EntidadDinamica(){
 }
 
-//TODO sacar los fps y el tamaño en pixel
 EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, float widthPixel, float lengthPixels){
 	this->caminando = false;
 	this->notifiable = false;

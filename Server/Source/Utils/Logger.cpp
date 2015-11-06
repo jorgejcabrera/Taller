@@ -53,5 +53,4 @@ string Logger::getTimeStamp(){
 }
 
 Logger::~Logger() {
-	// TODO Auto-generated destructor stub
 }
