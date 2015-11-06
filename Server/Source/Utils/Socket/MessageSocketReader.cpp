@@ -37,13 +37,6 @@ void MessageSocketReader::restart(){
 
 list<Message*> MessageSocketReader::getMessagePendingProcess(){
 	list<Message*> listaPendientes;
-	/*this->queue->lockQueue();
-	while(!this->queue->isEmpty()){
-		Message *msg = this->queue->pullTailWithoutLock();
-		listaPendientes.push_back(msg);
-	}
-	this->queue->unlockQueue();
-	*/
 	return listaPendientes;
 }
 

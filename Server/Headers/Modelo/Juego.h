@@ -26,8 +26,6 @@ private:
 	list<EntidadDinamica*> newProtagonistas;
 	ResourceManager* resourseManager;
 	GameSettings* gameSettings;
-	//string currentAge;
-	bool juegoFinalizado;
 
 public:
 	Juego();
@@ -36,17 +34,21 @@ public:
 	*motivo no los encuentra setea los valores por default
 	* */
 	Mapa* getMap();
-	void comenzarPartida();
-	void terminarJuego();
-	void setProtagonistaAt(int velocidad,int x,int y);
-	void setDestinoProtagonista(int idProtagonista, int x,int y);
-	bool getStatusPartida();
-	map<int,EntidadDinamica*> getProtagonistas();
-	list<EntidadDinamica*>* getNewProtagonistasToNotify();
-	pair<int,int>* getPositionOfProtagonistaById(int idBuscado);
+	/*
+	*establece la posición a donde va a moverse la entidad
+	* */
+	void setPlaceToGo(int idProtagonista, int x,int y);
+	/*
+	*genera una entidad dinámica y se la asigna al jugador pasado como parámetro
+	* */
+	void createDinamicEntity(string owner);
+	/*
+	*?
+	* */
 	void cleanNewProtagonistas();
 	ResourceManager* getResourceManager();
-	void agregarProtagonista(string owner);
+	map<int,EntidadDinamica*> getProtagonistas();
+	list<EntidadDinamica*>* getNewProtagonistasToNotify();
 	virtual ~Juego();
 };
 

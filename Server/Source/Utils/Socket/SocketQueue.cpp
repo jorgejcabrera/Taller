@@ -31,9 +31,6 @@ Message* SocketQueue::pullTail(){
 bool SocketQueue::isEmpty(){
 	return this->myQueue.empty();
 }
-int SocketQueue::getSize(){
-	return this->myQueue.size();
-}
 
 Message* SocketQueue::pullTailWithoutLock(){
 	Message *message = this->myQueue.front();
