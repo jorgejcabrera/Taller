@@ -74,22 +74,25 @@ class Server : public Thread{
 		bool isRunning();
 		void shutDown();
 		/*
-		*setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
+		* setea los nuevos tiles vistos y envia 1 msje al correspondiente cliente por cada nuevo tile
 		* */ 
 		void setSeenTiles();
+		/*
+		* ?
+		* */
 		void sendSeenTiles(string client);
 		/*
-		 * Controla la cantidad de clientes conectados, si supero el limite establecido devuelve false, sino true
-		 */
+		* Controla la cantidad de clientes conectados, si supero el limite establecido devuelve false, sino true
+		* */
 		bool acceptingNewClients();
 
 		/*
-		 * Notifica a los clientes cuando arranca el juego, es decir... cuando deberian empezar a dibujar el escenario
-		 */
+		* Notifica a los clientes cuando arranca el juego, es decir... cuando deberian empezar a dibujar el escenario
+		* */
 		void notifyGameInitToClients();
 		/*
-		 * Verifico si estoy esperando clientes, si estoy esperando meto un delay
-		 */
+		* Verifico si estoy esperando clientes, si estoy esperando meto un delay
+		* */
 		void verifyWaitingClients();
 		~Server();
 };

@@ -53,7 +53,6 @@ int Message::getSize(){
 	return this->msg.ByteSize() + sizeof(int);
 }
 
-//TODO ver si hay que hacer un delete de integer_string
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
 	char* buffer = new char[ size + sizeof(int) ];
@@ -137,8 +136,12 @@ string Message::getOwner(){
 	return this->msg.owner();
 }
 
-void Message::setAsNewPath(bool value){
-	this->msg.set_newpath(value);
+void Message::setTarget(int entityId){
+	return this->msg.set_target(entityId);
+}
+
+int Message::getTarget(){
+	return this->msg.target();
 }
 
 Message::~Message(){

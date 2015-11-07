@@ -1,16 +1,16 @@
 message msg_game{
 	required int32 id = 1;
 	required string tipo = 2;
-	optional int32 x = 3;
-	optional int32 y = 4;
-	optional string nombre = 5;
-	optional string imagen = 6;
-	optional int32 ancho_base = 7;
-	optional int32 alto_base = 8;
-	optional int32 fps = 9;
-	optional int32 delay = 10;
-	optional int32 total_frames_line = 11;
-	optional int32 pixels_dimension = 12;
-	optional string owner = 13;
-	optional bool newPath = 14;
+	optional int32 target = 3;
+	optional int32 x = 4;
+	optional int32 y = 5;
+	optional string nombre = 6;
+	optional string imagen = 7;
+	optional int32 ancho_base = 8;
+	optional int32 alto_base = 9;
+	optional int32 fps = 10;
+	optional int32 delay = 11;
+	optional int32 total_frames_line = 12;
+	optional int32 pixels_dimension = 13;
+	optional string owner = 14;
 }

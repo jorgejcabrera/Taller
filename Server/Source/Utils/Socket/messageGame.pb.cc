@@ -2,8 +2,7 @@
 // source: messageGame.proto
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
-#include "../../../Headers/Utils/Socket/messageGame.pb.h"
-
+#include  "../../../Headers/Utils/Socket/messageGame.pb.h"
 
 #include <algorithm>
 
@@ -36,6 +35,7 @@ void protobuf_AssignDesc_messageGame_2eproto() {
   static const int msg_game_offsets_[14] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, tipo_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, target_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, nombre_),
@@ -47,7 +47,6 @@ void protobuf_AssignDesc_messageGame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, total_frames_line_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, pixels_dimension_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, owner_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, newpath_),
   };
   msg_game_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -90,13 +89,13 @@ void protobuf_AddDesc_messageGame_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\021messageGame.proto\"\362\001\n\010msg_game\022\n\n\002id\030\001"
-    " \002(\005\022\014\n\004tipo\030\002 \002(\t\022\t\n\001x\030\003 \001(\005\022\t\n\001y\030\004 \001(\005"
-    "\022\016\n\006nombre\030\005 \001(\t\022\016\n\006imagen\030\006 \001(\t\022\022\n\nanch"
-    "o_base\030\007 \001(\005\022\021\n\talto_base\030\010 \001(\005\022\013\n\003fps\030\t"
-    " \001(\005\022\r\n\005delay\030\n \001(\005\022\031\n\021total_frames_line"
-    "\030\013 \001(\005\022\030\n\020pixels_dimension\030\014 \001(\005\022\r\n\005owne"
-    "r\030\r \001(\t\022\017\n\007newPath\030\016 \001(\010", 264);
+    "\n\021messageGame.proto\"\361\001\n\010msg_game\022\n\n\002id\030\001"
+    " \002(\005\022\014\n\004tipo\030\002 \002(\t\022\016\n\006target\030\003 \001(\005\022\t\n\001x\030"
+    "\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\016\n\006nombre\030\006 \001(\t\022\016\n\006imag"
+    "en\030\007 \001(\t\022\022\n\nancho_base\030\010 \001(\005\022\021\n\talto_bas"
+    "e\030\t \001(\005\022\013\n\003fps\030\n \001(\005\022\r\n\005delay\030\013 \001(\005\022\031\n\021t"
+    "otal_frames_line\030\014 \001(\005\022\030\n\020pixels_dimensi"
+    "on\030\r \001(\005\022\r\n\005owner\030\016 \001(\t", 263);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "messageGame.proto", &protobuf_RegisterTypes);
   msg_game::default_instance_ = new msg_game();
@@ -116,6 +115,7 @@ struct StaticDescriptorInitializer_messageGame_2eproto {
 #ifndef _MSC_VER
 const int msg_game::kIdFieldNumber;
 const int msg_game::kTipoFieldNumber;
+const int msg_game::kTargetFieldNumber;
 const int msg_game::kXFieldNumber;
 const int msg_game::kYFieldNumber;
 const int msg_game::kNombreFieldNumber;
@@ -127,7 +127,6 @@ const int msg_game::kDelayFieldNumber;
 const int msg_game::kTotalFramesLineFieldNumber;
 const int msg_game::kPixelsDimensionFieldNumber;
 const int msg_game::kOwnerFieldNumber;
-const int msg_game::kNewPathFieldNumber;
 #endif  // !_MSC_VER
 
 msg_game::msg_game()
@@ -151,6 +150,7 @@ void msg_game::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
   tipo_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  target_ = 0;
   x_ = 0;
   y_ = 0;
   nombre_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -162,7 +162,6 @@ void msg_game::SharedCtor() {
   total_frames_line_ = 0;
   pixels_dimension_ = 0;
   owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  newpath_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -221,8 +220,7 @@ void msg_game::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(id_, x_);
-    ZR_(y_, ancho_base_);
+    ZR_(id_, y_);
     if (has_tipo()) {
       if (tipo_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         tipo_->clear();
@@ -238,11 +236,10 @@ void msg_game::Clear() {
         imagen_->clear();
       }
     }
-    alto_base_ = 0;
+    ancho_base_ = 0;
   }
   if (_has_bits_[8 / 32] & 16128) {
-    ZR_(fps_, total_frames_line_);
-    ZR_(pixels_dimension_, newpath_);
+    ZR_(alto_base_, pixels_dimension_);
     if (has_owner()) {
       if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         owner_->clear();
@@ -294,13 +291,28 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_x;
+        if (input->ExpectTag(24)) goto parse_target;
         break;
       }
 
-      // optional int32 x = 3;
+      // optional int32 target = 3;
       case 3: {
         if (tag == 24) {
+         parse_target:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &target_)));
+          set_has_target();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_x;
+        break;
+      }
+
+      // optional int32 x = 4;
+      case 4: {
+        if (tag == 32) {
          parse_x:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -309,13 +321,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_y;
+        if (input->ExpectTag(40)) goto parse_y;
         break;
       }
 
-      // optional int32 y = 4;
-      case 4: {
-        if (tag == 32) {
+      // optional int32 y = 5;
+      case 5: {
+        if (tag == 40) {
          parse_y:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -324,13 +336,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_nombre;
+        if (input->ExpectTag(50)) goto parse_nombre;
         break;
       }
 
-      // optional string nombre = 5;
-      case 5: {
-        if (tag == 42) {
+      // optional string nombre = 6;
+      case 6: {
+        if (tag == 50) {
          parse_nombre:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_nombre()));
@@ -341,13 +353,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_imagen;
+        if (input->ExpectTag(58)) goto parse_imagen;
         break;
       }
 
-      // optional string imagen = 6;
-      case 6: {
-        if (tag == 50) {
+      // optional string imagen = 7;
+      case 7: {
+        if (tag == 58) {
          parse_imagen:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_imagen()));
@@ -358,13 +370,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_ancho_base;
+        if (input->ExpectTag(64)) goto parse_ancho_base;
         break;
       }
 
-      // optional int32 ancho_base = 7;
-      case 7: {
-        if (tag == 56) {
+      // optional int32 ancho_base = 8;
+      case 8: {
+        if (tag == 64) {
          parse_ancho_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -373,13 +385,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_alto_base;
+        if (input->ExpectTag(72)) goto parse_alto_base;
         break;
       }
 
-      // optional int32 alto_base = 8;
-      case 8: {
-        if (tag == 64) {
+      // optional int32 alto_base = 9;
+      case 9: {
+        if (tag == 72) {
          parse_alto_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -388,13 +400,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_fps;
+        if (input->ExpectTag(80)) goto parse_fps;
         break;
       }
 
-      // optional int32 fps = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional int32 fps = 10;
+      case 10: {
+        if (tag == 80) {
          parse_fps:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -403,13 +415,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(80)) goto parse_delay;
+        if (input->ExpectTag(88)) goto parse_delay;
         break;
       }
 
-      // optional int32 delay = 10;
-      case 10: {
-        if (tag == 80) {
+      // optional int32 delay = 11;
+      case 11: {
+        if (tag == 88) {
          parse_delay:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -418,13 +430,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(88)) goto parse_total_frames_line;
+        if (input->ExpectTag(96)) goto parse_total_frames_line;
         break;
       }
 
-      // optional int32 total_frames_line = 11;
-      case 11: {
-        if (tag == 88) {
+      // optional int32 total_frames_line = 12;
+      case 12: {
+        if (tag == 96) {
          parse_total_frames_line:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -433,13 +445,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_pixels_dimension;
+        if (input->ExpectTag(104)) goto parse_pixels_dimension;
         break;
       }
 
-      // optional int32 pixels_dimension = 12;
-      case 12: {
-        if (tag == 96) {
+      // optional int32 pixels_dimension = 13;
+      case 13: {
+        if (tag == 104) {
          parse_pixels_dimension:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -448,13 +460,13 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(106)) goto parse_owner;
+        if (input->ExpectTag(114)) goto parse_owner;
         break;
       }
 
-      // optional string owner = 13;
-      case 13: {
-        if (tag == 106) {
+      // optional string owner = 14;
+      case 14: {
+        if (tag == 114) {
          parse_owner:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_owner()));
@@ -462,21 +474,6 @@ bool msg_game::MergePartialFromCodedStream(
             this->owner().data(), this->owner().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
             "owner");
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(112)) goto parse_newPath;
-        break;
-      }
-
-      // optional bool newPath = 14;
-      case 14: {
-        if (tag == 112) {
-         parse_newPath:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &newpath_)));
-          set_has_newpath();
         } else {
           goto handle_unusual;
         }
@@ -524,79 +521,79 @@ void msg_game::SerializeWithCachedSizes(
       2, this->tipo(), output);
   }
 
-  // optional int32 x = 3;
+  // optional int32 target = 3;
+  if (has_target()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->target(), output);
+  }
+
+  // optional int32 x = 4;
   if (has_x()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->x(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->x(), output);
   }
 
-  // optional int32 y = 4;
+  // optional int32 y = 5;
   if (has_y()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->y(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->y(), output);
   }
 
-  // optional string nombre = 5;
+  // optional string nombre = 6;
   if (has_nombre()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->nombre().data(), this->nombre().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "nombre");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      5, this->nombre(), output);
+      6, this->nombre(), output);
   }
 
-  // optional string imagen = 6;
+  // optional string imagen = 7;
   if (has_imagen()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->imagen().data(), this->imagen().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "imagen");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      6, this->imagen(), output);
+      7, this->imagen(), output);
   }
 
-  // optional int32 ancho_base = 7;
+  // optional int32 ancho_base = 8;
   if (has_ancho_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->ancho_base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->ancho_base(), output);
   }
 
-  // optional int32 alto_base = 8;
+  // optional int32 alto_base = 9;
   if (has_alto_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->alto_base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->alto_base(), output);
   }
 
-  // optional int32 fps = 9;
+  // optional int32 fps = 10;
   if (has_fps()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->fps(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->fps(), output);
   }
 
-  // optional int32 delay = 10;
+  // optional int32 delay = 11;
   if (has_delay()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->delay(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->delay(), output);
   }
 
-  // optional int32 total_frames_line = 11;
+  // optional int32 total_frames_line = 12;
   if (has_total_frames_line()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->total_frames_line(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->total_frames_line(), output);
   }
 
-  // optional int32 pixels_dimension = 12;
+  // optional int32 pixels_dimension = 13;
   if (has_pixels_dimension()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->pixels_dimension(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->pixels_dimension(), output);
   }
 
-  // optional string owner = 13;
+  // optional string owner = 14;
   if (has_owner()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->owner().data(), this->owner().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "owner");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      13, this->owner(), output);
-  }
-
-  // optional bool newPath = 14;
-  if (has_newpath()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(14, this->newpath(), output);
+      14, this->owner(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -625,17 +622,22 @@ void msg_game::SerializeWithCachedSizes(
         2, this->tipo(), target);
   }
 
-  // optional int32 x = 3;
+  // optional int32 target = 3;
+  if (has_target()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->target(), target);
+  }
+
+  // optional int32 x = 4;
   if (has_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->x(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->x(), target);
   }
 
-  // optional int32 y = 4;
+  // optional int32 y = 5;
   if (has_y()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->y(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->y(), target);
   }
 
-  // optional string nombre = 5;
+  // optional string nombre = 6;
   if (has_nombre()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->nombre().data(), this->nombre().length(),
@@ -643,10 +645,10 @@ void msg_game::SerializeWithCachedSizes(
       "nombre");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->nombre(), target);
+        6, this->nombre(), target);
   }
 
-  // optional string imagen = 6;
+  // optional string imagen = 7;
   if (has_imagen()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->imagen().data(), this->imagen().length(),
@@ -654,40 +656,40 @@ void msg_game::SerializeWithCachedSizes(
       "imagen");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->imagen(), target);
+        7, this->imagen(), target);
   }
 
-  // optional int32 ancho_base = 7;
+  // optional int32 ancho_base = 8;
   if (has_ancho_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->ancho_base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->ancho_base(), target);
   }
 
-  // optional int32 alto_base = 8;
+  // optional int32 alto_base = 9;
   if (has_alto_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->alto_base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->alto_base(), target);
   }
 
-  // optional int32 fps = 9;
+  // optional int32 fps = 10;
   if (has_fps()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->fps(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->fps(), target);
   }
 
-  // optional int32 delay = 10;
+  // optional int32 delay = 11;
   if (has_delay()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->delay(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->delay(), target);
   }
 
-  // optional int32 total_frames_line = 11;
+  // optional int32 total_frames_line = 12;
   if (has_total_frames_line()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->total_frames_line(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->total_frames_line(), target);
   }
 
-  // optional int32 pixels_dimension = 12;
+  // optional int32 pixels_dimension = 13;
   if (has_pixels_dimension()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->pixels_dimension(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->pixels_dimension(), target);
   }
 
-  // optional string owner = 13;
+  // optional string owner = 14;
   if (has_owner()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->owner().data(), this->owner().length(),
@@ -695,12 +697,7 @@ void msg_game::SerializeWithCachedSizes(
       "owner");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        13, this->owner(), target);
-  }
-
-  // optional bool newPath = 14;
-  if (has_newpath()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(14, this->newpath(), target);
+        14, this->owner(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -729,88 +726,90 @@ int msg_game::ByteSize() const {
           this->tipo());
     }
 
-    // optional int32 x = 3;
+    // optional int32 target = 3;
+    if (has_target()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->target());
+    }
+
+    // optional int32 x = 4;
     if (has_x()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->x());
     }
 
-    // optional int32 y = 4;
+    // optional int32 y = 5;
     if (has_y()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->y());
     }
 
-    // optional string nombre = 5;
+    // optional string nombre = 6;
     if (has_nombre()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->nombre());
     }
 
-    // optional string imagen = 6;
+    // optional string imagen = 7;
     if (has_imagen()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->imagen());
     }
 
-    // optional int32 ancho_base = 7;
+    // optional int32 ancho_base = 8;
     if (has_ancho_base()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->ancho_base());
     }
 
-    // optional int32 alto_base = 8;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 alto_base = 9;
     if (has_alto_base()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->alto_base());
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 fps = 9;
+    // optional int32 fps = 10;
     if (has_fps()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->fps());
     }
 
-    // optional int32 delay = 10;
+    // optional int32 delay = 11;
     if (has_delay()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->delay());
     }
 
-    // optional int32 total_frames_line = 11;
+    // optional int32 total_frames_line = 12;
     if (has_total_frames_line()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->total_frames_line());
     }
 
-    // optional int32 pixels_dimension = 12;
+    // optional int32 pixels_dimension = 13;
     if (has_pixels_dimension()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->pixels_dimension());
     }
 
-    // optional string owner = 13;
+    // optional string owner = 14;
     if (has_owner()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->owner());
-    }
-
-    // optional bool newPath = 14;
-    if (has_newpath()) {
-      total_size += 1 + 1;
     }
 
   }
@@ -846,6 +845,9 @@ void msg_game::MergeFrom(const msg_game& from) {
     if (from.has_tipo()) {
       set_tipo(from.tipo());
     }
+    if (from.has_target()) {
+      set_target(from.target());
+    }
     if (from.has_x()) {
       set_x(from.x());
     }
@@ -861,11 +863,11 @@ void msg_game::MergeFrom(const msg_game& from) {
     if (from.has_ancho_base()) {
       set_ancho_base(from.ancho_base());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_alto_base()) {
       set_alto_base(from.alto_base());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_fps()) {
       set_fps(from.fps());
     }
@@ -880,9 +882,6 @@ void msg_game::MergeFrom(const msg_game& from) {
     }
     if (from.has_owner()) {
       set_owner(from.owner());
-    }
-    if (from.has_newpath()) {
-      set_newpath(from.newpath());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -910,6 +909,7 @@ void msg_game::Swap(msg_game* other) {
   if (other != this) {
     std::swap(id_, other->id_);
     std::swap(tipo_, other->tipo_);
+    std::swap(target_, other->target_);
     std::swap(x_, other->x_);
     std::swap(y_, other->y_);
     std::swap(nombre_, other->nombre_);
@@ -921,7 +921,6 @@ void msg_game::Swap(msg_game* other) {
     std::swap(total_frames_line_, other->total_frames_line_);
     std::swap(pixels_dimension_, other->pixels_dimension_);
     std::swap(owner_, other->owner_);
-    std::swap(newpath_, other->newpath_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
