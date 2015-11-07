@@ -25,6 +25,7 @@ private:
 	int oro;
 	int madera;
 	int alimento;
+	int roca;
 	bool notify;
 	bool newResource;
 	pair<int,int> posNuevoRecurso;

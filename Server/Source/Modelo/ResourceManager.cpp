@@ -12,6 +12,7 @@ ResourceManager::ResourceManager(Mapa* map){
 	this->alimento = cantidadInicial;
 	this->madera = cantidadInicial;
 	this->oro = cantidadInicial;
+	this->roca = cantidadInicial;
 
 	this->notify = false;
 	this->newResource = false;
@@ -50,6 +51,7 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 			if((*it)->getName() == "chori") setUltimoTipoConsumido("chori");
 			if((*it)->getName() == "gold") setUltimoTipoConsumido("gold");
 			if((*it)->getName() == "wood") setUltimoTipoConsumido("wood");
+			if((*it)->getName() == "rock") setUltimoTipoConsumido("rock");
 			this->resources->erase(it);
 			collected = true;
 		}
@@ -81,7 +83,7 @@ void ResourceManager::actualizar(){
 	int y = rand() % size;
 
 	//tipo de recurso random
-	int tipo = (rand()%3 + 1);
+	int tipo = (rand()%4 + 1);
 
 	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0 && this->resources->size() < maxResources){
 		Resource* nuevoRecurso;
@@ -96,6 +98,10 @@ void ResourceManager::actualizar(){
 		if(tipo == 3){
 			nuevoRecurso = new Resource("wood",x,y);
 			this->tipoUltimoCreado = "wood";
+		}
+		if(tipo == 4){
+			nuevoRecurso = new Resource("rock",x,y);
+			this->tipoUltimoCreado = "rock";
 		}
 
 		this->posNuevoRecurso.first = x;

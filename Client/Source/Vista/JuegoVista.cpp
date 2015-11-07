@@ -435,6 +435,7 @@ void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 	resources["alimento"] = resourceCounter->getAlimento();
 	resources["madera"] = resourceCounter->getMadera();
 	resources["oro"] = resourceCounter->getOro();
+	resources["roca"] = resourceCounter->getRoca();
 	this->menuVista->drawResources(resources);
 }
 
