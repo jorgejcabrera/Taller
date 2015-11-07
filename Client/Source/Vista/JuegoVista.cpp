@@ -165,7 +165,7 @@ void JuegoVista::drawSemiStaticsEntities(int runCycles){
 	}
 }
 
-void JuegoVista::actualizarOffset(int offsetX,int offsetY){
+void JuegoVista::updateOffset(int offsetX,int offsetY){
 	this->offset.first = offsetX;
 	this->offset.second = offsetY;
 }
@@ -333,18 +333,18 @@ EntidadDinamicaVista* JuegoVista::getEntityById(int id){
 	return NULL;
 }
 
-map<string,string> JuegoVista::buildMapWithEntityData(EntidadPartidaVista* entidad){
+map<string,string> JuegoVista::getEntityAttributes(EntidadPartidaVista* entidad){
 	map<string,string> mapInThisPosition = map<string,string>();
 	stringstream ss;
 	ss.str("");
-	ss<<entidad->getId();
+	ss << entidad->getId();
 	mapInThisPosition.insert(make_pair("id",ss.str()));
 	mapInThisPosition.insert(make_pair("name", entidad->getName()));
 	mapInThisPosition.insert(make_pair("path", entidad->getPathImage()));
 	mapInThisPosition.insert(make_pair("owner", entidad->getOwner()));
 	ss.str("");
-	ss<<entidad->getSalud();
-	mapInThisPosition.insert(make_pair("salud", ss.str()));
+	ss << entidad->getHealth();
+	mapInThisPosition.insert(make_pair("health", ss.str()));
 	return mapInThisPosition;
 }
 
@@ -354,39 +354,39 @@ void JuegoVista::deleteStaticEntityById(int id){
 	this->buildings.erase(itEstaticos);
 }
 
-map<string,string> JuegoVista::entityInThisPosition(int x, int y){
+map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
+	int x = position.first;
+	int y = position.second;
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
-			return this->buildMapWithEntityData((*itDinamicos).second);
+			return this->getEntityAttributes((*itDinamicos).second);
 		}
 	}
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
-			return this->buildMapWithEntityData((*itDinamicos).second);
+			return this->getEntityAttributes((*itDinamicos).second);
 		}
 	}
-
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
 		pair<int,int>* entityPosition = (*itEstaticos).second->getPosition();
 		int width = (*itEstaticos).second->getWidth();
 		int length = (*itEstaticos).second->getLength();
 		if(entityPosition->first<=x and (entityPosition->first+width-1)>=x){
 			if(entityPosition->second<=y and (entityPosition->second+length-1)>=y){
-				return this->buildMapWithEntityData((*itEstaticos).second);
+				return this->getEntityAttributes((*itEstaticos).second);
 			}
 		}
 	}
-
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiDinamicos = this->semiEstaticos.begin(); itSemiDinamicos!=this->semiEstaticos.end(); ++itSemiDinamicos){
 		pair<int,int>* entityPosition = (*itSemiDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
-			return this->buildMapWithEntityData((*itSemiDinamicos).second);
+			return this->getEntityAttributes((*itSemiDinamicos).second);
 		}
 	}
-	map<string,string> mapEmpty = map<string,string>();
-	return mapEmpty;
+	//map<string,string> mapEmpty = map<string,string>();
+	return map<string,string>();
 }
 
 void JuegoVista::setVisibleTile(int x,int y) {

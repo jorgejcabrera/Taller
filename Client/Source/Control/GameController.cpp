@@ -11,7 +11,6 @@ GameController::GameController(){
 	gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->juegoVista = new JuegoVista();
-	this->salirDelJuego = false;
 	this->event = new SDL_Event();
 	this->posMouseX = 0;
 	this->posMouseY = 0;
@@ -24,14 +23,25 @@ GameController::GameController(){
 Message* GameController::getMessageFromEvent(string userName){
 
 	while(SDL_PollEvent(event)){
+		// movemos de posición la entidad
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-				// TODO aca iria algo en caso de que el menu sea interactivo
-			} else {
-				if(this->idEntitySelected>0){
-					EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
-					pair<int,int> cartesianPosition = this->moveCharacter(miPersonaje);
+			if( this->idEntitySelected > 0 ){
+				EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
+				pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
+				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
+
+				if( targetToAttack.size() > 0 ){
+					Logger::get()->logDebug("GameController","getMessageFromEvent","vamos a atacar!");
+					//Message* message = new Message();
+					//msg_game body;
+					//body.set_id(this->idEntitySelected);
+					//body.set_tipo("attack");
+					//TODO aca tenemos que mandar el id de la entidad que vamos a atacar despues el servidor se 
+					//encargara de decirnos a donde movernos
+					//message->setContent(body);
+					//return message;
+				}else{
 					Message* message = new Message();
 					msg_game body;
 					body.set_id(this->idEntitySelected);
@@ -41,15 +51,16 @@ Message* GameController::getMessageFromEvent(string userName){
 					message->setContent(body);
 					return message;
 				}
-			}
+			}	
 		}
 
+		// seleccionamos una entidad del mapa
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				pair<int,int>* offset = this->juegoVista->getOffset();
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
-				map<string,string> entidadMap = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
+				map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
 					if(this->clientName == entidadMap.at("owner")){
 						this->idEntitySelected=atoi(entidadMap.at("id").c_str());
@@ -64,9 +75,9 @@ Message* GameController::getMessageFromEvent(string userName){
 			}
 		}
 
+		// cerramos el juego
 		if( event->type == SDL_QUIT){
 			this->juegoVista->getMenuVista()->deselectedEntity();
-			this->salirDelJuego = true;
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(0);
@@ -99,7 +110,7 @@ void GameController::updateGame(){
 	}
 
 	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);
-	juegoVista->actualizarOffset(offset.first,offset.second);
+	juegoVista->updateOffset(offset.first,offset.second);
 }
 
 int GameController::getRunCycles(){
@@ -145,7 +156,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	return curretOffset;
 }
 
-pair<int,int> GameController::moveCharacter(EntidadDinamicaVista* entidad){
+pair<int,int> GameController::getValidCartesianPosition(EntidadDinamicaVista* entidad){
 	pair<int,int>* offset = this->juegoVista->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 
