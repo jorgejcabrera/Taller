@@ -10,6 +10,7 @@
 using namespace std;
 
 EntidadPartida::EntidadPartida() {
+	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
 }
 
@@ -75,6 +76,14 @@ void EntidadPartida::takeDamage(int damage){
 
 void EntidadPartida::attackTo(EntidadPartida* entity){
 	entity->takeDamage(this->getDamage());
+}
+
+void EntidadPartida::setOwner(string ownerId){
+	this->owner = ownerId;
+}
+
+string EntidadPartida::getOwner(){
+	return this->owner;
 }
 
 EntidadPartida::~EntidadPartida() {

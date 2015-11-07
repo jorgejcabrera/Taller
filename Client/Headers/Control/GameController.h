@@ -24,6 +24,7 @@ private:
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
 
+	int idEntitySelected;
 	int posMouseX;
 	int posMouseY;
 	bool salirDelJuego;

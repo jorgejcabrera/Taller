@@ -17,20 +17,11 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->position.second = y;
 	this->width = 1;
 	this->length = 1;
-	this->owner = "";
 	this->name = nameEntity;
 	this->path = new list<pair<int,int> >();
 	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
 	this->cicloActual = 0;
 	this->newPath = false;
-}
-
-void EntidadDinamica::setOwner(string ownerId){
-	this->owner = ownerId;
-}
-
-string EntidadDinamica::getOwner(){
-	return this->owner;
 }
 
 void EntidadDinamica::setScreenPosition(float x,float y){

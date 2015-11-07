@@ -58,6 +58,7 @@ Message* GameController::getMessageFromEvent(string userName){
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 				map<string,string> entidadMap = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
 				if(entidadMap.size()>0){
+					this->idEntitySelected=atoi(entidadMap.at("id").c_str());
 					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 				}
 			}
