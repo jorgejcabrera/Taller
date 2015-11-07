@@ -133,7 +133,7 @@ void Server::processReceivedMessages(){
 		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
 			int idUpdate = messageUpdate->getId();
 			int target = messageUpdate->getTarget();
-			EntidadDinamica* targetAsEntity = this->gController->getJuego()->getEntityById(target);
+			EntidadDinamica* targetAsEntity = this->gController->getJuego()->getDinamicEntityById(target);
 			pair<int,int>* position = targetAsEntity->getPosition();
 			this->gController->getJuego()->setPlaceToGo(idUpdate, position->first, position->second);
 			this->idEntitiesUpdated.push_back(idUpdate);
