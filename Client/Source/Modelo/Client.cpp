@@ -7,11 +7,8 @@
 
 #include "../../Headers/Modelo/Client.h"
 
-Client::Client(string ip, int port, GameController *gControllerNew) {
+Client::Client(GameController *gControllerNew) {
 	this->userName = "goku";
-	this->ip = ip;
-	this->port = port;
-	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	this->status = DISCONECTED;								//desconected
 	this->gController = gControllerNew;
 	this->lastReportedClient = time(0);
@@ -20,7 +17,11 @@ Client::Client(string ip, int port, GameController *gControllerNew) {
 
 }
 
-int Client::connectToServer(){
+int Client::connectToServer(string ip){
+	this->askPortConnection();
+
+	this->ip = ip;
+	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	int error;
 	stringstream ss;
 	if ( this->sockfd < 0) {
@@ -33,7 +34,7 @@ int Client::connectToServer(){
 	struct sockaddr_in s_addr;
 	memset(&s_addr, 0, sizeof(s_addr));
 	s_addr.sin_family = AF_INET;							//address family internet
-	s_addr.sin_port = htons(port);							//set server's port number
+	s_addr.sin_port = htons(this->port);							//set server's port number
 	s_addr.sin_addr.s_addr = inet_addr(this->ip.c_str());	//set server's IP
 
 	if ( s_addr.sin_addr.s_addr < 0 ){
@@ -197,6 +198,16 @@ void Client::verifyServerAlive(){
 		}
 	}
 }
+
+
+void Client::askPortConnection(){
+	this->gController->getJuegoVista()->createView();
+	bool valid = false;
+	string initialMessage = "Ingrese el puerto de conexion";
+	string portStr = this->gController->getJuegoVista()->renderUserInputView(initialMessage);
+	this->port = atoi(portStr.c_str());
+}
+
 
 void Client::notifyUserName(){
 	this->gController->getJuegoVista()->createView();

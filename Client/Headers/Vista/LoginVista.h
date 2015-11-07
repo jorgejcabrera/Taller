@@ -23,7 +23,7 @@ private:
 public:
 	LoginVista();
 	virtual ~LoginVista();
-	string askUserName(string initialMessage);
+	string askInfoUser(string initialMessage);
 	void renderFinishLogin(string finalMessage);
 };
 
