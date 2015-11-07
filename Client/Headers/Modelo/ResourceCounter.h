@@ -8,6 +8,10 @@
 #ifndef RESOURCECOUNTER_H_
 #define RESOURCECOUNTER_H_
 
+#include <string>
+
+using namespace std;
+
 class ResourceCounter {
 private:
 	int oro;
@@ -18,6 +22,7 @@ public:
 	void recolectarOro();
 	void recolectarMadera();
 	void recolectarAlimento();
+	void recolectar(string recurso);
 	int getOro();
 	int getAlimento();
 	int getMadera();

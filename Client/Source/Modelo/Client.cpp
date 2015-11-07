@@ -128,15 +128,7 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addResourceToConsume((*it)->getId());
 			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			if(imTheOwner){
-				if((*it)->getNombre() == "gold"){
-					this->resourceCounter->recolectarOro();
-				}
-				if((*it)->getNombre() == "wood"){
-					this->resourceCounter->recolectarMadera();
-				}
-				if((*it)->getNombre() == "chori"){
-					this->resourceCounter->recolectarAlimento();
-				}
+				this->resourceCounter->recolectar((*it)->getNombre());
 			}
 
 		}else if (tipoMensaje == "newResource"){
