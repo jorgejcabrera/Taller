@@ -40,7 +40,7 @@ void EntidadEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, 
 	if(this->sizeString == "standarSmallSize"){
 		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,this->getWidth() * 2 * DefaultSettings::getTileSize(), this->getLength() * DefaultSettings::getTileSize() * 2);
 	}else if(this->sizeString =="standarMiniSize"){
-		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,DefaultSettings::getTileSize()/2, DefaultSettings::getTileSize()/2);
+		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX-10) , (isometricPosition.second+ offSetY-10) ,DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
 	}else{
 		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,this->getWidth() * 2 * DefaultSettings::getTileSize(), (this->getLength()-1) * DefaultSettings::getTileSize() * 2);
 	}
