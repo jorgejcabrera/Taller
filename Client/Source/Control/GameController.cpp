@@ -53,6 +53,8 @@ Message* GameController::getMessageFromEvent(string userName){
 				if(entidadMap.size()>0){
 					if(this->clientName == entidadMap.at("owner")){
 						this->idEntitySelected=atoi(entidadMap.at("id").c_str());
+					}else{
+						this->idEntitySelected=0;
 					}
 					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 				}else{
