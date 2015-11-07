@@ -28,8 +28,9 @@ Message* GameController::getMessageFromEvent(string userName){
 			if( this->idEntitySelected > 0 ){
 				EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
-				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-				/*if( targetToAttack.size() > 0 ){
+				map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
+				
+				if( targetToAttack.size() > 0 ){
 					Logger::get()->logDebug("GameController","getMessageFromEvent","vamos a atacar!");
 					Message* message = new Message();
 					msg_game body;
@@ -39,7 +40,7 @@ Message* GameController::getMessageFromEvent(string userName){
 					body.set_target(atoi(target.c_str()));
 					message->setContent(body);
 					return message;
-				}else{*/
+				}else{
 					Message* message = new Message();
 					msg_game body;
 					body.set_id(this->idEntitySelected);
@@ -48,7 +49,7 @@ Message* GameController::getMessageFromEvent(string userName){
 					body.set_y(cartesianPosition.second);
 					message->setContent(body);
 					return message;
-				//}
+				}
 			}	
 		}
 

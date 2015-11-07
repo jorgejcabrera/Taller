@@ -385,8 +385,25 @@ map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 			return this->getEntityAttributes((*itSemiDinamicos).second);
 		}
 	}
-	//map<string,string> mapEmpty = map<string,string>();
 	return map<string,string>();
+}
+
+//este método es necesario debido a las limitaciones del polimorfismo en c++
+map<string,string> JuegoVista::getDinamicEntityAt(pair<int,int> position){
+	int x = position.first;
+	int y = position.second;
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
+		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
+		if(entityPosition->first==x && entityPosition->second==y){
+			return this->getEntityAttributes((*itDinamicos).second);
+		}
+	}
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
+		if(entityPosition->first==x && entityPosition->second==y){
+			return this->getEntityAttributes((*itDinamicos).second);
+		}
+	}
 }
 
 void JuegoVista::setVisibleTile(int x,int y) {
