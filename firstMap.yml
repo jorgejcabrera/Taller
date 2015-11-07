@@ -56,7 +56,7 @@ tipos:
   alto_base: 3
 
 - nombre: chori
-  imagen: ../../Taller/Images/Resources/apple.png
+  imagen: ../../Taller/Images/Resources/cow.png
   ancho_base: 1
   alto_base: 1
 
@@ -66,12 +66,12 @@ tipos:
   alto_base: 1
 
 - nombre: wood
-  imagen: ../../Taller/Images/Resources/Wood.png
+  imagen: ../../Taller/Images/Resources/wood.png
   ancho_base: 1
   alto_base: 1
 
 - nombre: rock
-  imagen: ../../Taller/Images/Resources/Rock.png
+  imagen: ../../Taller/Images/Resources/rock.png
   ancho_base: 1
   alto_base: 1
 
