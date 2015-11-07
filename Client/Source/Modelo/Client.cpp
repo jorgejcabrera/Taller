@@ -14,14 +14,13 @@ Client::Client(GameController *gControllerNew) {
 	this->lastReportedClient = time(0);
 	this->lastReportedServer = time(0);
 	this->resourceCounter = new ResourceCounter();
-
+	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 }
 
 int Client::connectToServer(string ip){
 	this->askPortConnection();
 
 	this->ip = ip;
-	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 	int error;
 	stringstream ss;
 	if ( this->sockfd < 0) {
@@ -96,21 +95,25 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
-															(*it)->getPositionY());
+															(*it)->getPositionY(),
+															(*it)->getOwner());
 		}else if ( tipoMensaje == "semiestaticos"){
 			this->gController->getJuegoVista()->addSemiEstaticEntity((*it)->getId(),
 																	(*it)->getNombre(),
 																	(*it)->getPositionX(),
-																	(*it)->getPositionY());
+																	(*it)->getPositionY(),
+																	(*it)->getOwner());
 		}else if ( tipoMensaje == "personajes"){
 			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
+			//TODO meter un refactor acá, creo que no vamos a necesitar mas dos listas de personajes
 			this->gController->getJuegoVista()->addDinamicEntity((*it)->getId(),
 																(*it)->getNombre(),
 																(*it)->getPositionX(),
 																(*it)->getPositionY(),
 																imTheOwner,
-																(*it)->getFps());
+																(*it)->getFps(),
+																(*it)->getOwner());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getId());
 
@@ -135,12 +138,12 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
-															(*it)->getPositionY());
+															(*it)->getPositionY(),
+															"");
 		}else if (tipoMensaje == "start"){
 			this->gController->setGameRunning();
 			
 		}else{
-			//TODO me estan llegando los recursos, son 3 mensajes que no tiene tipo
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 			cout << (*it)->toString()<<endl;
 		}
@@ -221,6 +224,7 @@ void Client::notifyUserName(){
 			valid=true;
 			this->lastReportedServer = time(0);
 			initialMessage = "Esperando cantidad minima de jugadores";
+			this->gController->setClientName(this->userName);
 			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
 		}else if(response->getNombre()=="NOTALLOW"){
 			this->status = DISCONECTED;

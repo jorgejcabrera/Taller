@@ -27,6 +27,7 @@ protected:
 	int id;
 	string name;
 	bool seen;
+	string owner;
 
 private:
 	int salud;
@@ -52,6 +53,9 @@ public:
 	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
 	bool getSeen();
 	void saw();
+
+	void setOwner(string owner);
+	string getOwner();
 	virtual ~EntidadPartidaVista();
 };
 

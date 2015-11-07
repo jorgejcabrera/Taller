@@ -33,6 +33,7 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	bool gameRunning;
+	string clientName;
 	/*
 	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
 	*le setea a la
@@ -80,6 +81,11 @@ public:
 	void setGameRunning();
 
 	bool gameIsRunning();
+
+	/*
+	 * seteo el clientName porque despues lo necesito para seleccionar las entidades
+	 */
+	void setClientName(string name);
 
 	virtual ~GameController();
 };

@@ -88,9 +88,9 @@ public:
 	void setResources(int alimento, int madera, int oro);
 	pair<int,int>* getOffset();
 	void addTile(string surface, int x, int y);
-	void addBuilding(int id, string type, int x, int y);
-	void addSemiEstaticEntity(int id, string type, int x, int y);
-	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active);
+	void addBuilding(int id, string type, int x, int y,string owner);
+	void addSemiEstaticEntity(int id, string type, int x, int y, string owner);
+	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner);
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
