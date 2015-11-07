@@ -28,8 +28,8 @@ void JuegoVista::setResources(int alimento, int madera, int oro) {
 }
 
 string JuegoVista::renderUserInputView(string initialMessage){
-	string userName = this->loginVista->askUserName(initialMessage);
-	return userName;
+	string userInput = this->loginVista->askInfoUser(initialMessage);
+	return userInput;
 }
 
 void JuegoVista::renderFinishLogin(string finalMessage){

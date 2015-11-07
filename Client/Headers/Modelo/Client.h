@@ -53,13 +53,14 @@ private:
 public:
 	string userName;
 	/*
-	*ip y puerto al cual se va a conectar
+	*instancio el servidor
 	**/
-	Client(string ip, int port, GameController *gController);
+	Client(GameController *gController);
 	/*
+	*ip al cual se va a conectar, el puerto se lo pregunto en askPortConnection()
 	*intenta conectar al servidor, en caso de error devuelve -1
 	**/
-	int connectToServer();
+	int connectToServer(string ip);
 	/*
 	*lee la cola de novedades a procesar, y transforma las novedades en eventos
 	**/
@@ -90,6 +91,10 @@ public:
 	ResourceCounter* getResourceCounter();
 	void disconnectPlayer(int id);
 	bool isConected();
+	/*
+	 * Al iniciar el cliente le pregunto a que puerto del servidor se quiere conectar
+	 */
+	void askPortConnection();
 	virtual ~Client();
 };
 
