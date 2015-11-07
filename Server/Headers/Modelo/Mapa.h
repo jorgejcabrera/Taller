@@ -31,7 +31,7 @@ private:
 public:
 	Mapa();
 	/*
-	*busco una posicion disponible para poner un personaje cuando se crea un cliente
+	* devuelve una posicion disponible
 	* */
 	pair<int,int> getAvailablePosition();
 	Tile* getTileAt(int x,int y);
@@ -40,7 +40,6 @@ public:
 	void pushEntity(EntidadPartida* entidad);
 	bool positionAvailable(EntidadPartida* entidad);
 	~Mapa();
-
 };
 
 

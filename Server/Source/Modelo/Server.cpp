@@ -130,10 +130,18 @@ void Server::processReceivedMessages(){
 			Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
 			this->clients.at(messageUpdate->getNombre())->disconect();
 		
+		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
+			int idUpdate = messageUpdate->getId();
+			int target = messageUpdate->getTarget();
+			EntidadDinamica* targetAsEntity = this->gController->getJuego()->getEntityById(target);
+			pair<int,int>* position = targetAsEntity->getPosition();
+			this->gController->getJuego()->setPlaceToGo(idUpdate, position->first, position->second);
+			this->idEntitiesUpdated.push_back(idUpdate);
+
 		}else if( this->gameRunning ){
-				int idUpdate = messageUpdate->getId();
-				this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
-				this->idEntitiesUpdated.push_back(idUpdate);
+			int idUpdate = messageUpdate->getId();
+			this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
+			this->idEntitiesUpdated.push_back(idUpdate);
 		}
 	}
 	this->readQueue->unlockQueue();
