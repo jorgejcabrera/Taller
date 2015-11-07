@@ -18,47 +18,46 @@ GameController::GameController(){
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 	this->gameRunning=false;
+	this->idEntitySelected=0;
 }
 
 Message* GameController::getMessageFromEvent(string userName){
 
 	while(SDL_PollEvent(event)){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
-			this->juegoVista->getMenuVista()->deselectedEntity();
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				// TODO aca iria algo en caso de que el menu sea interactivo
 			} else {
-			int id;
-			pair<int,int> cartesianPosition;
-			map<int,EntidadDinamicaVista*>* misPersonajes = this->juegoVista->getMyEntities();
-
-			//TODO identidicar cual es la entidad del cliente que se desea mover, hoy esto anda porque tenemos un unico
-			//personaje
-			for(map<int,EntidadDinamicaVista*>::iterator it = misPersonajes->begin(); it != misPersonajes->end(); ++it){
-				id = (*it).first;
-				cartesianPosition = this->moveCharacter((*it).second);
-			}
-			Message* message = new Message();
-			msg_game body;
-			body.set_id(id);
-			body.set_tipo("update");
-			body.set_x(cartesianPosition.first);
-			body.set_y(cartesianPosition.second);
-			message->setContent(body);
-			return message;
+				if(this->idEntitySelected>0){
+					EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
+					pair<int,int> cartesianPosition = this->moveCharacter(miPersonaje);
+					Message* message = new Message();
+					msg_game body;
+					body.set_id(this->idEntitySelected);
+					body.set_tipo("update");
+					body.set_x(cartesianPosition.first);
+					body.set_y(cartesianPosition.second);
+					message->setContent(body);
+					return message;
+				}
 			}
 		}
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
-			this->juegoVista->getMenuVista()->deselectedEntity();
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				pair<int,int>* offset = this->juegoVista->getOffset();
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 				map<string,string> entidadMap = juegoVista->entityInThisPosition(cartesianPosition.first, cartesianPosition.second);
 				if(entidadMap.size()>0){
+					if(this->clientName == entidadMap.at("owner")){
+						this->idEntitySelected=atoi(entidadMap.at("id").c_str());
+					}
 					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+				}else{
+					this->juegoVista->getMenuVista()->deselectedEntity();
+					this->idEntitySelected=0;
 				}
 			}
 		}
@@ -196,6 +195,10 @@ void GameController::delay(){
 
 bool GameController::gameIsRunning(){
 	return this->gameRunning;
+}
+
+void GameController::setClientName(string name){
+	this->clientName = name;
 }
 
 GameController::~GameController() {

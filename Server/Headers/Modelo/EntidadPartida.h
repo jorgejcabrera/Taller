@@ -25,6 +25,7 @@ protected:
 	int width;
 	int length;
 	int id;
+	string owner;
 	/*
 	* parametros variables segun el nivel y características de la entidad
 	* */
@@ -60,6 +61,15 @@ public:
 	* la entidad recibe el daño provoca y descuenta salud
 	* */
 	void takeDamage(int damage);
+
+	/*
+	 * seteo el dueño de la entidad
+	 */
+	void setOwner(string owner);
+	/*
+	 * Devuelvo el nombre del cliente dueño de la entidad
+	 */
+	string getOwner();
 	virtual ~EntidadPartida();
 };
 

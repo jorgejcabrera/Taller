@@ -33,7 +33,6 @@ class EntidadDinamica: public EntidadPartida {
 private:
 	list<pair<int,int> >* path;
 	pair<float,float> screenPosition;
-	string owner;
 	bool caminando;
 	bool notifiable;
 	bool newPath;
@@ -44,12 +43,10 @@ public:
 	EntidadDinamica();
 	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 	void setPath(list<pair<int,int> >* camino);
-	void setOwner(string owner);
 	/*
 	*devuelve true si pudo mover la entidad de posicion
 	* */
 	void nextPosition();
-	string getOwner();
 	void setScreenPosition(float x,float y);
 	pair<int,int>* getPosition();
 	list<pair<int,int> >* getPath();

@@ -181,17 +181,18 @@ void JuegoVista::addTile(string surface, int x, int y){
 	this->tiles.push_back(newtile);
 }
 
-void JuegoVista::addBuilding(int id, string type, int x, int y){
+void JuegoVista::addBuilding(int id, string type, int x, int y, string owner){
 	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																	gameSettings->getEntityConfig(type)->getAlto());
 	newBuilding->setName(type);
 	newBuilding->setPosition(x,y);
 	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newBuilding->setId(id);
+	newBuilding->setOwner(owner);
 	this->buildings.insert(make_pair(id,newBuilding));
 }
 
-void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y){
+void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string owner){
 	EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																			gameSettings->getEntityConfig(type)->getAlto(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -203,10 +204,11 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y){
 	newSemiStatic->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newSemiStatic->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newSemiStatic->setId(id);
+	newSemiStatic->setOwner(owner);
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 }
 
-void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active){
+void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner){
 	EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -214,6 +216,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	//seteo atributos
 	newPersonaje->setName(type);
 	newPersonaje->setPosition(x,y);
+	newPersonaje->setOwner(owner);
 	//agrego la posicion inicial de pantalla
 	pair<float,float> initialScreenPos = UtilsController::GetInstance()->getIsometricPosition(x,y);
 	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
@@ -338,6 +341,7 @@ map<string,string> JuegoVista::buildMapWithEntityData(EntidadPartidaVista* entid
 	mapInThisPosition.insert(make_pair("id",ss.str()));
 	mapInThisPosition.insert(make_pair("name", entidad->getName()));
 	mapInThisPosition.insert(make_pair("path", entidad->getPathImage()));
+	mapInThisPosition.insert(make_pair("owner", entidad->getOwner()));
 	ss.str("");
 	ss<<entidad->getSalud();
 	mapInThisPosition.insert(make_pair("salud", ss.str()));
