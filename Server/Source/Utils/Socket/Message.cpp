@@ -84,11 +84,6 @@ void Message::startGame(){
 	this->msg.set_tipo("start");
 }
 
-void Message::clientReconnect(int identifier){
-	this->msg.set_id(identifier);
-	this->msg.set_tipo("reconnect");
-}
-
 string Message::toString(){
 	stringstream ss;
 	ss << " id: " << this->msg.id();
@@ -197,12 +192,12 @@ string Message::getOwner(){
 	return this->msg.owner();
 }
 
-void Message::setAsNewPath(bool value){
-	this->msg.set_newpath(value);
+void Message::setTarget(int entityId){
+	return this->msg.set_target(entityId);
 }
 
-bool Message::isNewPath(){
-	this->msg.newpath();
+int Message::getTarget(){
+	return this->msg.target();
 }
 
 void Message::activeTile( int x, int y) {

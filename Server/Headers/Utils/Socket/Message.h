@@ -40,29 +40,44 @@ public:
 	string toString();
 	void setContent(msg_game body);
 
-	//Defino metodos para poder sacar la informacion del mensaje desde afuera de la clase
+	/*
+	* metodos para poder sacar la informacion del mensaje desde afuera de la clase
+	* */
 	string getTipo();
+	string getNombre();
+	string getImagen();
+	string getOwner();
 	int getId();
 	int getPositionX();
 	int getPositionY();
-	string getNombre();
-	string getImagen();
 	int getAnchoBase();
 	int getAltoBase();
 	int getFps();
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
+	int getTarget();
 	void setAsNewPath(bool value);
-	bool isNewPath();
 	void setOwner(string userName);
-	string getOwner();
+	/*
+	* ?
+	* */
 	void pingMessage(string nombre);
+	/*
+	* ?
+	* */
 	void clientDisconect(int id);
-	void clientReconnect(int identifier);
+	/*
+	* ?
+	* */
 	void activeTile( int x, int y);
-
-	//Mensaje para notificar a los clientes que el juego arranco
+	/*
+	* setea el id de la entidad con la que se desea interactuar
+	* */
+	void setTarget(int entityId);
+	/*
+	* mensaje para notificar a los clientes que el juego arranco
+	* */
 	void startGame();
 	virtual ~Message();
 };

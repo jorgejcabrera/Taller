@@ -107,24 +107,31 @@ class msg_game : public ::google::protobuf::Message {
   inline ::std::string* release_tipo();
   inline void set_allocated_tipo(::std::string* tipo);
 
-  // optional int32 x = 3;
+  // optional int32 target = 3;
+  inline bool has_target() const;
+  inline void clear_target();
+  static const int kTargetFieldNumber = 3;
+  inline ::google::protobuf::int32 target() const;
+  inline void set_target(::google::protobuf::int32 value);
+
+  // optional int32 x = 4;
   inline bool has_x() const;
   inline void clear_x();
-  static const int kXFieldNumber = 3;
+  static const int kXFieldNumber = 4;
   inline ::google::protobuf::int32 x() const;
   inline void set_x(::google::protobuf::int32 value);
 
-  // optional int32 y = 4;
+  // optional int32 y = 5;
   inline bool has_y() const;
   inline void clear_y();
-  static const int kYFieldNumber = 4;
+  static const int kYFieldNumber = 5;
   inline ::google::protobuf::int32 y() const;
   inline void set_y(::google::protobuf::int32 value);
 
-  // optional string nombre = 5;
+  // optional string nombre = 6;
   inline bool has_nombre() const;
   inline void clear_nombre();
-  static const int kNombreFieldNumber = 5;
+  static const int kNombreFieldNumber = 6;
   inline const ::std::string& nombre() const;
   inline void set_nombre(const ::std::string& value);
   inline void set_nombre(const char* value);
@@ -133,10 +140,10 @@ class msg_game : public ::google::protobuf::Message {
   inline ::std::string* release_nombre();
   inline void set_allocated_nombre(::std::string* nombre);
 
-  // optional string imagen = 6;
+  // optional string imagen = 7;
   inline bool has_imagen() const;
   inline void clear_imagen();
-  static const int kImagenFieldNumber = 6;
+  static const int kImagenFieldNumber = 7;
   inline const ::std::string& imagen() const;
   inline void set_imagen(const ::std::string& value);
   inline void set_imagen(const char* value);
@@ -145,52 +152,52 @@ class msg_game : public ::google::protobuf::Message {
   inline ::std::string* release_imagen();
   inline void set_allocated_imagen(::std::string* imagen);
 
-  // optional int32 ancho_base = 7;
+  // optional int32 ancho_base = 8;
   inline bool has_ancho_base() const;
   inline void clear_ancho_base();
-  static const int kAnchoBaseFieldNumber = 7;
+  static const int kAnchoBaseFieldNumber = 8;
   inline ::google::protobuf::int32 ancho_base() const;
   inline void set_ancho_base(::google::protobuf::int32 value);
 
-  // optional int32 alto_base = 8;
+  // optional int32 alto_base = 9;
   inline bool has_alto_base() const;
   inline void clear_alto_base();
-  static const int kAltoBaseFieldNumber = 8;
+  static const int kAltoBaseFieldNumber = 9;
   inline ::google::protobuf::int32 alto_base() const;
   inline void set_alto_base(::google::protobuf::int32 value);
 
-  // optional int32 fps = 9;
+  // optional int32 fps = 10;
   inline bool has_fps() const;
   inline void clear_fps();
-  static const int kFpsFieldNumber = 9;
+  static const int kFpsFieldNumber = 10;
   inline ::google::protobuf::int32 fps() const;
   inline void set_fps(::google::protobuf::int32 value);
 
-  // optional int32 delay = 10;
+  // optional int32 delay = 11;
   inline bool has_delay() const;
   inline void clear_delay();
-  static const int kDelayFieldNumber = 10;
+  static const int kDelayFieldNumber = 11;
   inline ::google::protobuf::int32 delay() const;
   inline void set_delay(::google::protobuf::int32 value);
 
-  // optional int32 total_frames_line = 11;
+  // optional int32 total_frames_line = 12;
   inline bool has_total_frames_line() const;
   inline void clear_total_frames_line();
-  static const int kTotalFramesLineFieldNumber = 11;
+  static const int kTotalFramesLineFieldNumber = 12;
   inline ::google::protobuf::int32 total_frames_line() const;
   inline void set_total_frames_line(::google::protobuf::int32 value);
 
-  // optional int32 pixels_dimension = 12;
+  // optional int32 pixels_dimension = 13;
   inline bool has_pixels_dimension() const;
   inline void clear_pixels_dimension();
-  static const int kPixelsDimensionFieldNumber = 12;
+  static const int kPixelsDimensionFieldNumber = 13;
   inline ::google::protobuf::int32 pixels_dimension() const;
   inline void set_pixels_dimension(::google::protobuf::int32 value);
 
-  // optional string owner = 13;
+  // optional string owner = 14;
   inline bool has_owner() const;
   inline void clear_owner();
-  static const int kOwnerFieldNumber = 13;
+  static const int kOwnerFieldNumber = 14;
   inline const ::std::string& owner() const;
   inline void set_owner(const ::std::string& value);
   inline void set_owner(const char* value);
@@ -199,19 +206,14 @@ class msg_game : public ::google::protobuf::Message {
   inline ::std::string* release_owner();
   inline void set_allocated_owner(::std::string* owner);
 
-  // optional bool newPath = 14;
-  inline bool has_newpath() const;
-  inline void clear_newpath();
-  static const int kNewPathFieldNumber = 14;
-  inline bool newpath() const;
-  inline void set_newpath(bool value);
-
   // @@protoc_insertion_point(class_scope:msg_game)
  private:
   inline void set_has_id();
   inline void clear_has_id();
   inline void set_has_tipo();
   inline void clear_has_tipo();
+  inline void set_has_target();
+  inline void clear_has_target();
   inline void set_has_x();
   inline void clear_has_x();
   inline void set_has_y();
@@ -234,8 +236,6 @@ class msg_game : public ::google::protobuf::Message {
   inline void clear_has_pixels_dimension();
   inline void set_has_owner();
   inline void clear_has_owner();
-  inline void set_has_newpath();
-  inline void clear_has_newpath();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -243,18 +243,18 @@ class msg_game : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::std::string* tipo_;
   ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 target_;
   ::google::protobuf::int32 x_;
-  ::std::string* nombre_;
   ::google::protobuf::int32 y_;
-  ::google::protobuf::int32 ancho_base_;
+  ::std::string* nombre_;
   ::std::string* imagen_;
+  ::google::protobuf::int32 ancho_base_;
   ::google::protobuf::int32 alto_base_;
   ::google::protobuf::int32 fps_;
   ::google::protobuf::int32 delay_;
   ::google::protobuf::int32 total_frames_line_;
-  ::std::string* owner_;
   ::google::protobuf::int32 pixels_dimension_;
-  bool newpath_;
+  ::std::string* owner_;
   friend void  protobuf_AddDesc_messageGame_2eproto();
   friend void protobuf_AssignDesc_messageGame_2eproto();
   friend void protobuf_ShutdownFile_messageGame_2eproto();
@@ -369,15 +369,39 @@ inline void msg_game::set_allocated_tipo(::std::string* tipo) {
   // @@protoc_insertion_point(field_set_allocated:msg_game.tipo)
 }
 
-// optional int32 x = 3;
-inline bool msg_game::has_x() const {
+// optional int32 target = 3;
+inline bool msg_game::has_target() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void msg_game::set_has_x() {
+inline void msg_game::set_has_target() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void msg_game::clear_has_x() {
+inline void msg_game::clear_has_target() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void msg_game::clear_target() {
+  target_ = 0;
+  clear_has_target();
+}
+inline ::google::protobuf::int32 msg_game::target() const {
+  // @@protoc_insertion_point(field_get:msg_game.target)
+  return target_;
+}
+inline void msg_game::set_target(::google::protobuf::int32 value) {
+  set_has_target();
+  target_ = value;
+  // @@protoc_insertion_point(field_set:msg_game.target)
+}
+
+// optional int32 x = 4;
+inline bool msg_game::has_x() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void msg_game::set_has_x() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void msg_game::clear_has_x() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void msg_game::clear_x() {
   x_ = 0;
@@ -393,15 +417,15 @@ inline void msg_game::set_x(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.x)
 }
 
-// optional int32 y = 4;
+// optional int32 y = 5;
 inline bool msg_game::has_y() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void msg_game::set_has_y() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void msg_game::clear_has_y() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void msg_game::clear_y() {
   y_ = 0;
@@ -417,15 +441,15 @@ inline void msg_game::set_y(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.y)
 }
 
-// optional string nombre = 5;
+// optional string nombre = 6;
 inline bool msg_game::has_nombre() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void msg_game::set_has_nombre() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void msg_game::clear_has_nombre() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void msg_game::clear_nombre() {
   if (nombre_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -493,15 +517,15 @@ inline void msg_game::set_allocated_nombre(::std::string* nombre) {
   // @@protoc_insertion_point(field_set_allocated:msg_game.nombre)
 }
 
-// optional string imagen = 6;
+// optional string imagen = 7;
 inline bool msg_game::has_imagen() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void msg_game::set_has_imagen() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void msg_game::clear_has_imagen() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void msg_game::clear_imagen() {
   if (imagen_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -569,15 +593,15 @@ inline void msg_game::set_allocated_imagen(::std::string* imagen) {
   // @@protoc_insertion_point(field_set_allocated:msg_game.imagen)
 }
 
-// optional int32 ancho_base = 7;
+// optional int32 ancho_base = 8;
 inline bool msg_game::has_ancho_base() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void msg_game::set_has_ancho_base() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void msg_game::clear_has_ancho_base() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void msg_game::clear_ancho_base() {
   ancho_base_ = 0;
@@ -593,15 +617,15 @@ inline void msg_game::set_ancho_base(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.ancho_base)
 }
 
-// optional int32 alto_base = 8;
+// optional int32 alto_base = 9;
 inline bool msg_game::has_alto_base() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void msg_game::set_has_alto_base() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void msg_game::clear_has_alto_base() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void msg_game::clear_alto_base() {
   alto_base_ = 0;
@@ -617,15 +641,15 @@ inline void msg_game::set_alto_base(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.alto_base)
 }
 
-// optional int32 fps = 9;
+// optional int32 fps = 10;
 inline bool msg_game::has_fps() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 inline void msg_game::set_has_fps() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
 }
 inline void msg_game::clear_has_fps() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline void msg_game::clear_fps() {
   fps_ = 0;
@@ -641,15 +665,15 @@ inline void msg_game::set_fps(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.fps)
 }
 
-// optional int32 delay = 10;
+// optional int32 delay = 11;
 inline bool msg_game::has_delay() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 inline void msg_game::set_has_delay() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000400u;
 }
 inline void msg_game::clear_has_delay() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline void msg_game::clear_delay() {
   delay_ = 0;
@@ -665,15 +689,15 @@ inline void msg_game::set_delay(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.delay)
 }
 
-// optional int32 total_frames_line = 11;
+// optional int32 total_frames_line = 12;
 inline bool msg_game::has_total_frames_line() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 inline void msg_game::set_has_total_frames_line() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000800u;
 }
 inline void msg_game::clear_has_total_frames_line() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void msg_game::clear_total_frames_line() {
   total_frames_line_ = 0;
@@ -689,15 +713,15 @@ inline void msg_game::set_total_frames_line(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.total_frames_line)
 }
 
-// optional int32 pixels_dimension = 12;
+// optional int32 pixels_dimension = 13;
 inline bool msg_game::has_pixels_dimension() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 inline void msg_game::set_has_pixels_dimension() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00001000u;
 }
 inline void msg_game::clear_has_pixels_dimension() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline void msg_game::clear_pixels_dimension() {
   pixels_dimension_ = 0;
@@ -713,15 +737,15 @@ inline void msg_game::set_pixels_dimension(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:msg_game.pixels_dimension)
 }
 
-// optional string owner = 13;
+// optional string owner = 14;
 inline bool msg_game::has_owner() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 inline void msg_game::set_has_owner() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00002000u;
 }
 inline void msg_game::clear_has_owner() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline void msg_game::clear_owner() {
   if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -787,30 +811,6 @@ inline void msg_game::set_allocated_owner(::std::string* owner) {
     owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:msg_game.owner)
-}
-
-// optional bool newPath = 14;
-inline bool msg_game::has_newpath() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
-}
-inline void msg_game::set_has_newpath() {
-  _has_bits_[0] |= 0x00002000u;
-}
-inline void msg_game::clear_has_newpath() {
-  _has_bits_[0] &= ~0x00002000u;
-}
-inline void msg_game::clear_newpath() {
-  newpath_ = false;
-  clear_has_newpath();
-}
-inline bool msg_game::newpath() const {
-  // @@protoc_insertion_point(field_get:msg_game.newPath)
-  return newpath_;
-}
-inline void msg_game::set_newpath(bool value) {
-  set_has_newpath();
-  newpath_ = value;
-  // @@protoc_insertion_point(field_set:msg_game.newPath)
 }
 
 
