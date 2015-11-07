@@ -10,11 +10,6 @@
 EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
 	this->seen = false;
-	this->salud=100;
-}
-
-int EntidadPartidaVista::getSalud(){
-	return this->salud;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){
@@ -54,7 +49,19 @@ void EntidadPartidaVista::setId(int identifier){
 }
 
 int EntidadPartidaVista::getId(){
-		return this->id;
+	return this->id;
+}
+
+int EntidadPartidaVista::getHealth(){
+	return this->health;
+}
+
+int EntidadPartidaVista::getStrength(){
+	return this->strength;
+}
+
+float EntidadPartidaVista::getPrecision(){
+	return this->precision;
 }
 
 void EntidadPartidaVista::setName(string nameEnt){

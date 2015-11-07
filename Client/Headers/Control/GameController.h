@@ -27,66 +27,49 @@ private:
 	int idEntitySelected;
 	int posMouseX;
 	int posMouseY;
-	bool salirDelJuego;
-	bool reiniciar;
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	bool gameRunning;
 	string clientName;
 	/*
-	*retorna la posicion cartesiana de correspondiente a donde se hizo click, y 
-	*le setea a la
-	*entidad la posicion de pantalla donde debería ser dibujado.
+	* retorna la posicion cartesiana valida correspondiente al lugar donde se hizo click
 	* */
-	pair<int,int> moveCharacter(EntidadDinamicaVista* entidad);
+	pair<int,int> getValidCartesianPosition(EntidadDinamicaVista* entidad);
 	/*
-	*devuelve el offset coorespondiente al scroll de la pantalla
+	* devuelve el offset coorespondiente al scroll de la pantalla
 	* */
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
 public:
 	GameController();
-
 	/*
-	 *actualiza las posiciones de todas las entidades en el mapa y el offset
-	 * */
+	* actualiza las posiciones de todas las entidades en el mapa y el offset
+	* */
 	void updateGame();
 	/*
-	 *
-	 * */
+	*
+	* */
 	void addTileToCharacter(int id,int x,int y);
 	/*
-	*actualiza la posicion de la entidad que corresponde al id pasado como parametro
+	* actualiza la posicion de la entidad que corresponde al id pasado como parametro
 	* */
 	void updatePosition(int id);
-	
-	void render();
 	/*
-	*transforma eventos de la partida del cliente en mensajes para ser 
-	*enviados alservidor
+	* transforma eventos de la partida del cliente en mensajes para ser enviados alservidor
 	* */
 	Message* getMessageFromEvent(string userId);
-
-	int getRunCycles();
-	
-	int getMaxFramesPerSecond();
-	
-	void delay();
-	
-	void resetPath(int id);
-
 	JuegoVista* getJuegoVista();
-
+	int getRunCycles();
+	int getMaxFramesPerSecond();
+	void delay();
+	void resetPath(int id);
 	void setGameRunning();
-
 	bool gameIsRunning();
-
 	/*
-	 * seteo el clientName porque despues lo necesito para seleccionar las entidades
-	 */
+	* seteo el clientName porque despues lo necesito para seleccionar las entidades
+	* */
 	void setClientName(string name);
-
 	virtual ~GameController();
 };
 
