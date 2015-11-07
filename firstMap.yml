@@ -70,6 +70,11 @@ tipos:
   ancho_base: 1
   alto_base: 1
 
+- nombre: rock
+  imagen: ../../Taller/Images/Resources/Rock.png
+  ancho_base: 1
+  alto_base: 1
+
 - nombre: House1
   imagen: ../../Taller/Images/Industrial_Age/House1-2x2.png
   ancho_base: 2

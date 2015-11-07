@@ -17,6 +17,7 @@ private:
 	int oro;
 	int madera;
 	int alimento;
+	int roca;
 public:
 	ResourceCounter();
 	void recolectarOro();
@@ -26,6 +27,7 @@ public:
 	int getOro();
 	int getAlimento();
 	int getMadera();
+	int getRoca();
 	virtual ~ResourceCounter();
 };
 
