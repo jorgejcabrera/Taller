@@ -38,15 +38,15 @@ private:
 	MiniMapVista* miniMapVista;
 	LoginVista* loginVista;
 	/*
-	*offset correspondiente al desplazamiento por el offset
+	* offset correspondiente al desplazamiento por el offset
 	* */
 	pair<int,int> offset;
 	/*
-	*colección de recursos a ser consumidos
+	* colección de recursos a ser consumidos cuando la entidad llegue a la posicion donde esta el recurso
 	* */
 	map<pair<int,int>,int> resoursesToConsume;
 	/*
-	*entidades del mapa
+	* entidades del mapa
 	* */
 	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
@@ -54,7 +54,7 @@ private:
 	map<int, EntidadDinamicaVista*> personajes;
 	map<int, EntidadDinamicaVista*> misPersonajes;
 	/*
-	*métodos para renderizar el juego
+	* métodos para renderizar el juego
 	* */
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
@@ -65,58 +65,59 @@ private:
 	void drawMiniMap();
 	void drawFog();
 	void drawResources(ResourceCounter* resourceCounter);
+	/*
+	* devuelve la información de la entidad en una colección
+	* */
+	map<string,string> getEntityAttributes(EntidadPartidaVista* entidad);
+
 public:
 	JuegoVista();
 	/*
-	*metodo que se encarga de dibujar mapa y todas las entidades
+	* metodo que se encarga de dibujar mapa y todas las entidades
 	* */
 	void render(int ciclos, ResourceCounter* resourceCounter);
 	/*
-	*agrega un recurso que será consumido cuando la entidad ocupe el correspondiente tile
+	* agrega un recurso que será consumido cuando la entidad ocupe el correspondiente tile
 	* */
 	void addResourceToConsume(int id);
 	/*
-	*si hay algún recurso para consumir en la posicion de la entidad pasada como parametro devuelve el id del
-	*recurso, caso contrario devuelve 0
+	* si hay algún recurso para consumir en la posicion de la entidad pasada como parametro devuelve el id del
+	* recurso, caso contrario devuelve 0
 	* */
 	int consumeResource(EntidadDinamicaVista* entidad);
 	/*
+	* borra el recurso o el edificio correspondiente al id pasado como parametro
+	* */
+	void deleteStaticEntityById(int id);/*
 	*?
 	* */
 	void createView();
-	void actualizarOffset(int offsetX,int offsetY);
+	void updateOffset(int offsetX,int offsetY);
 	void setResources(int alimento, int madera, int oro);
-	pair<int,int>* getOffset();
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y,string owner);
 	void addSemiEstaticEntity(int id, string type, int x, int y, string owner);
 	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner);
+	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
 	/*
-	 *borra el recurso o el edificio correspondiente al id pasado como parametro
-	 * */
-	void deleteStaticEntityById(int id);
-	/*
-	 *?
-	 * */
+	*?
+	* */
 	void setVisibleTile(int x,int y);
 	/*
-	 *?
-	 * */
+	*?
+	* */
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
 	/*
-	*?
+	* devuelve en una colección toda la información de la entidad ubicada en 
+	* la posición pasada como parámetro
 	* */
-	map<string,string> entityInThisPosition(int x, int y);
+	map<string,string> getEntityAt(pair<int,int> position);
 	/*
-	*?
+	* QUE HACE ESTE METODO? 
 	* */
-	map<string,string> buildMapWithEntityData(EntidadPartidaVista* entidad);
-	/*
-	 *?
-	 * */
 	void setFoggedTiles();
 	/*
 	*?
@@ -124,14 +125,13 @@ public:
 	bool isEnemyEntityVisible(pair< int, int> pos);
 	MenuVista* getMenuVista();
 	/*
-	 *genero la ventana donde el usuario ingresa el userName
-	 * */
+	* genero la ventana donde el usuario ingresa el userName
+	* */
 	string renderUserInputView(string initialMessage);
 	/*
-	*Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
+	* Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
 	* */
 	void renderFinishLogin(string finalMessage);
-
 	~JuegoVista();
 };
 

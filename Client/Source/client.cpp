@@ -6,9 +6,6 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-/* Defines */
-#define NUM_DOTS 1024
-
 /* Includes */
 #include "../Headers/Vista/JuegoVista.h"
 #include "../Headers/Control/GameController.h"
@@ -30,7 +27,7 @@ int main(int argc, char* argv[]) {
 	//jorge->connectToServer("192.168.1.1");
 	jorge->connectToServer("127.0.0.1");
 	
-	//ESPERO 9 segundos
+	//delay to wait all messages from server
 	SDL_Delay(9000);
 
 	while( jorge->isConected() ){
