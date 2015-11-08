@@ -86,7 +86,7 @@ int Server::run(void * data){
 
 bool Server::acceptingNewClients(){
 	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<4);
+	return (this->clients.size()<2);
 }
 
 void Server::notifyGameInitToClients(){
