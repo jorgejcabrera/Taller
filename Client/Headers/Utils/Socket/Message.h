@@ -17,7 +17,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #include "messageGame.pb.h"
 
 using namespace std;
@@ -32,7 +31,7 @@ public:
 	Message(string nombre);
 	virtual ~Message();
 	/*
-	 *Develve el tamaño en bytes del mensaje
+	 *Devuelve el tamaño en bytes del mensaje
 	 * */
 	int getSize();
 	/*
@@ -41,24 +40,28 @@ public:
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
+	/*
+	* setea el id de la entidad con la que se desea interactuar
+	* */
+	void setTarget(int entityId);
+	void setAsNewPath(bool value);
+	void setOwner(string userName);
 	void setContent(msg_game body);
 	string getTipo();
+	string getNombre();
+	string getImagen();
+	string getOwner();
 	int getId();
 	int getPositionX();
 	int getPositionY();
-	string getNombre();
-	string getImagen();
 	int getAnchoBase();
 	int getAltoBase();
 	int getFps();
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
-	void setAsNewPath(bool value);
-	void setOwner(string userName);
-	string getOwner();
+	int getTarget();
 	void pingMessage(string nombre);
-
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

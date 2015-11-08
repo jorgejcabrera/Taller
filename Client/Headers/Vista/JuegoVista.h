@@ -116,6 +116,11 @@ public:
 	* */
 	map<string,string> getEntityAt(pair<int,int> position);
 	/*
+	* devuelve en una colección toda la información de la entidad dinámica ubicada
+	* en la posición pasada como parámetro
+	* */
+	map<string,string> getDinamicEntityAt(pair<int,int> position);
+	/*
 	* QUE HACE ESTE METODO? 
 	* */
 	void setFoggedTiles();

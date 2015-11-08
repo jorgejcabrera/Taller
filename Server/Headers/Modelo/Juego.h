@@ -30,22 +30,23 @@ private:
 public:
 	Juego();
 	/*
-	*intenta cargar la conf del yaml y setear los atributos al mapa, si por algún
-	*motivo no los encuentra setea los valores por default
+	* intenta cargar la conf del yaml y setear los atributos al mapa, si por algún
+	* motivo no los encuentra setea los valores por default
 	* */
 	Mapa* getMap();
 	/*
-	*establece la posición a donde va a moverse la entidad
+	* establece la posición a donde va a moverse la entidad
 	* */
 	void setPlaceToGo(int idProtagonista, int x,int y);
 	/*
-	*genera una entidad dinámica y se la asigna al jugador pasado como parámetro
+	* genera una entidad dinámica y se la asigna al jugador pasado como parámetro
 	* */
 	void createDinamicEntity(string owner);
 	/*
 	*?
 	* */
 	void cleanNewProtagonistas();
+	EntidadDinamica* getDinamicEntityById(int id);
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*> getProtagonistas();
 	list<EntidadDinamica*>* getNewProtagonistasToNotify();

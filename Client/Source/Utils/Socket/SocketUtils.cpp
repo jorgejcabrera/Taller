@@ -4,10 +4,6 @@ SocketUtils::SocketUtils(int socket) {
     this->socket = socket;
 }
 
-/*void SocketUtils::setSocket(int socket){
-    this->socket = socket;
-}*/
-
 bool SocketUtils::writeMessage(Message* message){
 	char* serializedMessage = message->serializeToArray();
 	int wroteBytes = write(this->socket, serializedMessage,message->getSize());

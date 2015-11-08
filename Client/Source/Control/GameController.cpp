@@ -23,24 +23,23 @@ GameController::GameController(){
 Message* GameController::getMessageFromEvent(string userName){
 
 	while(SDL_PollEvent(event)){
-		// movemos de posición la entidad
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if( this->idEntitySelected > 0 ){
 				EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
-				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-
+				map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
+				
 				if( targetToAttack.size() > 0 ){
 					Logger::get()->logDebug("GameController","getMessageFromEvent","vamos a atacar!");
-					//Message* message = new Message();
-					//msg_game body;
-					//body.set_id(this->idEntitySelected);
-					//body.set_tipo("attack");
-					//TODO aca tenemos que mandar el id de la entidad que vamos a atacar despues el servidor se 
-					//encargara de decirnos a donde movernos
-					//message->setContent(body);
-					//return message;
+					Message* message = new Message();
+					msg_game body;
+					body.set_id(this->idEntitySelected);
+					body.set_tipo("attack");
+					string target = targetToAttack["id"];
+					body.set_target(atoi(target.c_str()));
+					message->setContent(body);
+					return message;
 				}else{
 					Message* message = new Message();
 					msg_game body;

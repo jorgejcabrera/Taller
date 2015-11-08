@@ -32,29 +32,28 @@ public:
 	void writeMessagesInQueue(list<Message*> messagesList);
 	void writeMessagesInQueue(Message* message);
 	/*
-	*?
+	* ?
 	* */
 	void startCommunication();
 	/*
-	*?
+	* ?
 	* */
 	void responseUserName(string status);
 	/*
-	*?
+	* ?
 	* */
 	string readUserName();
 	/*
-	*?
+	* ?
 	* */
 	void reporting();
 	/*
-	*?
+	* ?
 	* */
 	int getTimeSinceLastReport();
 	string getUserName();
 	void setUserName(string myName);
 	bool isActive();
-	void disconect();
 	void connect();
 	int getStatus();
 	/*
@@ -64,6 +63,7 @@ public:
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
 	list<pair<int,int> >getSeenTiles();
 	list<Message*> getSeenTilesAsMessages();
+	void disconect();
 	~Client();
 
 };
