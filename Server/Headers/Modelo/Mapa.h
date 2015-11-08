@@ -34,6 +34,10 @@ public:
 	* devuelve una posicion disponible
 	* */
 	pair<int,int> getAvailablePosition();
+	/*
+	 * Devuelve una posicion disponible cercana al origen que recibe
+	 */
+	pair<int,int> getAvailablePosition(int xFrom, int yFrom);
 	Tile* getTileAt(int x,int y);
 	map<pair<int,int>,Tile*>* getTiles();
 	list<EntidadPartida*>* getEntities();

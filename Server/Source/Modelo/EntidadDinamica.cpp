@@ -24,12 +24,6 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->newPath = false;
 }
 
-void EntidadDinamica::setScreenPosition(float x,float y){
-	//TODO: esto no deberia estar en la VISTA nada mas?
-	this->screenPosition.first = x;
-	this->screenPosition.second = y;
-}
-
 void EntidadDinamica::nextPosition(){
 	this->setNotifiable(false);
 	if( !path->empty()){
@@ -42,10 +36,6 @@ void EntidadDinamica::nextPosition(){
 		}
 		cicloActual++;
 	}
-}
-
-pair<int,int>* EntidadDinamica::getPosition(){
-	return &this->position;
 }
 
 void EntidadDinamica::setNotifiable(bool noti){

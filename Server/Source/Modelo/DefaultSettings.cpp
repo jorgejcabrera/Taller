@@ -247,5 +247,9 @@ int DefaultSettings::getRangeVisibility() {
 	return RANGE_VISIBILITY;
 }
 
+int DefaultSettings::getQtyInitialCharacters(){
+	return QTY_INITIAL_CHARACTERS;
+}
+
 DefaultSettings::~DefaultSettings() {
 }

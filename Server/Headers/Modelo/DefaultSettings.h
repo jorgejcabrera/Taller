@@ -39,6 +39,7 @@ private:
 	static const int VELOCIDAD_PERSONAJE = 10;
 	static const int TIMEOUT = 15;
 	static const int RANGE_VISIBILITY = 4;
+	static const int QTY_INITIAL_CHARACTERS = 3;
 
 
 public:
@@ -81,6 +82,7 @@ public:
 	static int getVelocidadPersonaje();
 	static int getTimeOut();
 	static int getRangeVisibility();
+	static int getQtyInitialCharacters();
 };
 
 

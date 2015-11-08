@@ -73,7 +73,10 @@ int Server::run(void * data){
 
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
+
 				newClient->writeMessagesInQueue(newClient->getSeenTilesAsMessages());
+
+				newClient->writeMessagesInQueue(newClient->getInitialOffsetAsMessage());
 				newClient->connect();
 			}
 		}
@@ -83,7 +86,7 @@ int Server::run(void * data){
 
 bool Server::acceptingNewClients(){
 	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<2);
+	return (this->clients.size()<4);
 }
 
 void Server::notifyGameInitToClients(){
@@ -272,9 +275,7 @@ bool Server::initConnection(Client* newClient){
 				ss.str("");
 				ss << "player "<< userName << " has joined the game";
 				Logger::get()->logInfo("Server","readClientUserName",ss.str());
-				//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-				this->gController->getJuego()->createDinamicEntity(newClient->getUserName());
-				this->clients.insert(make_pair(newClient->getUserName(),newClient));
+				this->createEntitiesForClient(newClient);
 				newClient->startCommunication();
 				return true;
 			}
@@ -287,6 +288,13 @@ bool Server::initConnection(Client* newClient){
 			return false;
 		}
 	}
+}
+
+void Server::createEntitiesForClient(Client* newClient){
+	//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
+	pair<int,int> offsetClient = this->gController->getJuego()->createEntitiesForClient(newClient->getUserName(), this->clients.size());
+	newClient->setInitialOffset(offsetClient.first, offsetClient.second);
+	this->clients.insert(make_pair(newClient->getUserName(),newClient));
 }
 
 //TODO : (FOG)EL SERVER LE MANDA AL CLIENTE LA NUEVA POSICION DE LA ENTIDAD, EL CLIENTE CALCULA LOS NUEVOS TILES, Y SE LOS DEVUELVE AL SERVER

@@ -13,7 +13,6 @@ Loader::Loader() {
 }
 
 void Loader::load() {
-	//FILE *fh = fopen("/home/jorlando/Documentos/repositorios/Taller/firstMap.yml", "r");
 	FILE *fh = fopen("../firstMap.yml", "r");
 	yaml_parser_t parser;
 	yaml_event_t  event;

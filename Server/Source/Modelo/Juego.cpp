@@ -15,22 +15,86 @@ Juego::Juego() {
 	this->resourseManager = new ResourceManager(this->mapa);
 }
 
-void Juego::createDinamicEntity(string owner){
-	//TODO revisar que le ponemos en tipo
-	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition();
-	EntidadDinamica* protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
-														gameSettings->getVelocidadPersonaje(),
-														positionOfProtagonista.first,
-														positionOfProtagonista.second,
-														gameSettings->getProtagonistaPixelDimension(),
-														gameSettings->getProtagonistaPixelDimension());
+pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
-	protagonista->setOwner(owner);
-	protagonista->setScreenPosition(gameSettings->getPosXProtagonista(),gameSettings->getPosYProtagonista());
-	protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
-	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
-	//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
-	this->newProtagonistas.push_back(protagonista);
+	int width = this->gameSettings->getMapWidth();
+	int height = this->gameSettings->getMapHeight();
+	int xOriginClientSection;
+	int yOriginClientSection;
+	switch(clientIndex){
+		case 0:
+			xOriginClientSection = 0;
+			yOriginClientSection = 0;
+			break;
+		case 1:
+			xOriginClientSection = (width/2);
+			yOriginClientSection = 0;
+			break;
+		case 2:
+			xOriginClientSection = (width/2);
+			yOriginClientSection = (height/2);
+			break;
+		case 3:
+			xOriginClientSection = 0;
+			yOriginClientSection = (height/2);
+			break;
+	}
+
+	//Creo el centro civico del jugador
+	string nombre = "Barracks";
+	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(nombre);
+	int xOrigin =  xOriginClientSection+width/4;
+	int yOrigin =  yOriginClientSection+height/4;
+
+	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,dimension.first,dimension.second,true);
+	edificioCreado->setPosition(xOrigin,yOrigin);
+	edificioCreado->setOwner(owner);
+	this->mapa->pushEntity(edificioCreado);
+
+	//Caclulo el offset inicial
+	int xOffset = ((xOrigin-xOriginClientSection)/2)+ xOriginClientSection;
+	//TODO revisar este switch horrible, lo fui armando mientras testeaba como se veia
+	int yOffset;;
+	switch(clientIndex){
+		case 0:
+			yOffset = (yOrigin/2);
+			break;
+		case 1:
+			yOffset = (yOrigin*3/2);
+			break;
+		case 2:
+			yOffset = (yOrigin*3/4);
+			xOffset = -xOriginClientSection+((xOrigin-xOriginClientSection)*3);
+			break;
+		case 3:
+			yOffset = (yOrigin/2);
+			xOffset = -(((xOrigin-xOriginClientSection)*3/2)+ xOriginClientSection);
+
+			break;
+	}
+	pair<int,int> initialOffset;
+	initialOffset.first= -(xOffset*this->gameSettings->getTileSize());
+	initialOffset.second= -(yOffset*this->gameSettings->getTileSize());
+
+	//Creo los personajes del cliente
+	xOrigin += dimension.first;
+	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
+		//TODO revisar que le ponemos en tipo
+		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
+		EntidadDinamica* protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
+															gameSettings->getVelocidadPersonaje(),
+															positionOfProtagonista.first,
+															positionOfProtagonista.second,
+															gameSettings->getProtagonistaPixelDimension(),
+															gameSettings->getProtagonistaPixelDimension());
+
+		protagonista->setOwner(owner);
+		protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
+		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
+		//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
+		this->newProtagonistas.push_back(protagonista);
+	}
+	return initialOffset;
 }
 
 Mapa* Juego::getMap(){

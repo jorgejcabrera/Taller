@@ -118,6 +118,13 @@ list<Message*> Client::getSeenTilesAsMessages(){
 	return tilesVistos;
 }
 
+Message* Client::getInitialOffsetAsMessage(){
+	Message* msg = new Message();
+	msg->initialOffset(this->initialOffset.first, this->initialOffset.second);
+	return msg;
+}
+
+
 void Client::disconect(){
 	this->status = DISCONECTED;
 	this->writeThread->shutDown();
@@ -130,6 +137,15 @@ void Client::disconect(){
 
 	this->readThread->shutDown();
 	this->readThread->join(NULL);
+}
+
+void Client::setInitialOffset(int x, int y){
+	this->initialOffset.first=x;
+	this->initialOffset.second=y;
+}
+
+pair<int,int> Client::getInitialOffset(){
+	return this->initialOffset;
 }
 
 

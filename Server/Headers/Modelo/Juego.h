@@ -39,9 +39,9 @@ public:
 	* */
 	void setPlaceToGo(int idProtagonista, int x,int y);
 	/*
-	* genera una entidad dinámica y se la asigna al jugador pasado como parámetro
+	* genera una entidad dinámica y se la asigna al jugador pasado como parámetro, devuelve el offset inicial del cliente
 	* */
-	void createDinamicEntity(string owner);
+	pair<int,int> createEntitiesForClient(string owner, int clientIndex);
 	/*
 	*?
 	* */

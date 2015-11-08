@@ -68,6 +68,13 @@ Message::Message(string nombre){
 	this->msg.set_nombre(nombre);
 }
 
+void Message::initialOffset(int x, int y){
+	this->msg.set_id(0);
+	this->msg.set_tipo("offset");
+	this->msg.set_x(x);
+	this->msg.set_y(y);
+}
+
 void Message::pingMessage(string nombre){
 	this->msg.set_id(0);
 	this->msg.set_tipo("ping");

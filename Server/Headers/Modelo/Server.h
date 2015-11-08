@@ -98,6 +98,12 @@ public:
 	* Verifico si estoy esperando clientes, si estoy esperando meto un delay
 	* */
 	void verifyWaitingClients();
+
+	/*
+	 * Cuando se conecta un nuevo cliente, creo todas sus entidades, centro civico y aldeanos
+	 */
+	void createEntitiesForClient(Client* newClient);
+
 	list<Client*> getActiveClients();
 	list<Message*> getProtagonistasMessages();
 	bool isRunning();

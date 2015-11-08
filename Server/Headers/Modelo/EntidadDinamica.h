@@ -32,7 +32,6 @@ enum Direccion{
 class EntidadDinamica: public EntidadPartida {
 private:
 	list<pair<int,int> >* path;
-	pair<float,float> screenPosition;
 	bool caminando;
 	bool notifiable;
 	bool newPath;
@@ -47,8 +46,6 @@ public:
 	*devuelve true si pudo mover la entidad de posicion
 	* */
 	void nextPosition();
-	void setScreenPosition(float x,float y);
-	pair<int,int>* getPosition();
 	list<pair<int,int> >* getPath();
 	bool isWalking();
 	void setNotifiable(bool notifiable);

@@ -99,6 +99,11 @@ public:
 	void generateListMessageConfiguration();
 	list<Message*> getListMessageConfiguration();
 	int getRangeVisibility();
+
+	/*
+	 * devuelve el ancho y el alto para un tipo dado
+	 */
+	pair<int,int> getConfigDimensionOfEntity(string nombre);
 };
 
 } /* namespace std */

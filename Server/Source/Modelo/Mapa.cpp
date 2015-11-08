@@ -33,7 +33,7 @@ Mapa::Mapa() {
 
 void Mapa::pushEntity(EntidadPartida* entidad){
 	if(!this->positionAvailable(entidad)){
-		cout << "no se puede colocar la entidad, en este tile"<<endl;
+		cout << entidad->getName()<<" no se puede colocar la entidad, en este tile " << entidad->getPosition()->first<<" "<<entidad->getPosition()->second<<endl;
 		return;
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first+ entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
@@ -78,6 +78,20 @@ pair<int,int> Mapa::getAvailablePosition(){
 		if(tilesIterator->second->isAvailable()){
 			tilesIterator->second->changeStatusAvailable();
 			return tilesIterator->first;
+		}
+	}
+	return make_pair(-1,-1);
+}
+
+pair<int,int> Mapa::getAvailablePosition(int xFrom, int yFrom){
+	bool positionFound=false;
+	for(map<pair<int,int>,Tile*>::iterator tilesIterator=this->tiles.begin(); tilesIterator!=this->tiles.end(); ++tilesIterator){
+		if ((tilesIterator->second->getPosX()==xFrom && tilesIterator->second->getPosY()==yFrom) || positionFound ){
+			positionFound=true;
+			if(tilesIterator->second->isAvailable() && abs(tilesIterator->second->getPosX()-xFrom)<10 && abs(tilesIterator->second->getPosY()-yFrom)<10){
+				tilesIterator->second->changeStatusAvailable();
+				return tilesIterator->first;
+			}
 		}
 	}
 	return make_pair(-1,-1);

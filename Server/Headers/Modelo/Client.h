@@ -27,6 +27,7 @@ class Client {
 	string userName;
 	time_t lastReported;
 	int status;
+	pair<int, int> initialOffset;
 public:
 	Client(int identifier, SocketQueue* queueUnique);
 	void writeMessagesInQueue(list<Message*> messagesList);
@@ -63,7 +64,17 @@ public:
 	list<pair<int,int> > setSeenTiles( list<pair<int,int> > newSeenTiles);
 	list<pair<int,int> >getSeenTiles();
 	list<Message*> getSeenTilesAsMessages();
+
+	/*
+	 * genero un mensaje con el offset inicial
+	 */
+	Message* getInitialOffsetAsMessage();
 	void disconect();
+	/*
+	 * Configuro un offset inicial que la ventana del cliente arranque posicionada en donde estan sus entidades
+	 */
+	void setInitialOffset(int x, int y);
+	pair<int,int> getInitialOffset();
 	~Client();
 
 };

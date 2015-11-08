@@ -226,6 +226,14 @@ void GameSettings::createEntidades(){
 	}
 }
 
+pair<int,int> GameSettings::getConfigDimensionOfEntity(string nombre){
+	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
+	int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
+	int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
+	pair<int,int> dimension = make_pair(anchoBase,altoBase);
+	return dimension;
+}
+
 int GameSettings::getProtagonistaFPS(){
 	return this->FPS_PROTAGONISTA;
 }

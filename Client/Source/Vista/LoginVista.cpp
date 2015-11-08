@@ -31,11 +31,9 @@ string LoginVista::askInfoUser(string initialMessage){
 	//While application is running
 	while( !quit ){
 		//Handle events on queue
-		while( SDL_PollEvent( &e ) != 0 )
-		{
+		while( SDL_PollEvent( &e ) != 0 ){
 			//presione ENTER
 			if( (e.type == SDL_QUIT) || (e.type==SDL_KEYDOWN && e.key.keysym.sym== 13 && infoUser.length()>0)){
-				cout << infoUser<<endl;
 				quit = true;
 			}
 			else if( e.type == SDL_KEYDOWN ){
@@ -54,7 +52,6 @@ string LoginVista::askInfoUser(string initialMessage){
 		PicassoHelper::GetInstance()->renderText(400,500,infoUser.size()*15,40,infoUser,0,0,0);
 		PicassoHelper::GetInstance()->renderView();
 	}
-
 	//Disable text input
 	SDL_StopTextInput();
 	return infoUser;

@@ -79,6 +79,10 @@ public:
 	* mensaje para notificar a los clientes que el juego arranco
 	* */
 	void startGame();
+	/*
+	 * mensaje para mandar el offset inicial del cliente
+	 */
+	void initialOffset(int x, int y);
 	virtual ~Message();
 };
 
