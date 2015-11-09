@@ -101,8 +101,8 @@ Mapa* Juego::getMap(){
 	return this->mapa;
 }
 
-map<int,EntidadDinamica*> Juego::getProtagonistas(){
-	return this->protagonistas;
+map<int,EntidadDinamica*>* Juego::getDinamicEntities(){
+	return &this->protagonistas;
 }
 
 list<EntidadDinamica*>* Juego::getNewProtagonistasToNotify(){

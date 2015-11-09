@@ -45,8 +45,8 @@ list<Message*> GameController::getEntitiesMessages(){
 
 list<int> GameController::getEntitiesOfClient(string userName){
 	list<int> idOfEntities;
-	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
-	for(map<int,EntidadDinamica*>::iterator iteratePersonajes= listaPersonajes.begin(); iteratePersonajes!=listaPersonajes.end();++iteratePersonajes){
+	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
+	for(map<int,EntidadDinamica*>::iterator iteratePersonajes= listaPersonajes->begin(); iteratePersonajes!=listaPersonajes->end();++iteratePersonajes){
 		if(iteratePersonajes->second->getOwner()==userName){
 			idOfEntities.push_back(iteratePersonajes->first);
 		}
@@ -57,8 +57,8 @@ list<int> GameController::getEntitiesOfClient(string userName){
 void GameController::setNextPaths(){
 	//antes de setear el proximo path, me fijo si hay un recurso en donde esta
 
-	map<int,EntidadDinamica*> listaPersonajes = this->juego->getProtagonistas();
-	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes.begin(); it!=listaPersonajes.end();++it){
+	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
+	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
 		pair<int,int>* pos = (*it).second->getPosition();
 		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos->first,pos->second)){
 			this->juego->getResourceManager()->collectResourceAt(pos);

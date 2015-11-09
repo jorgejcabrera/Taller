@@ -52,7 +52,7 @@ public:
 	void cleanNewProtagonistas();
 	EntidadDinamica* getDinamicEntityById(int id);
 	ResourceManager* getResourceManager();
-	map<int,EntidadDinamica*> getProtagonistas();
+	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadDinamica*>* getNewProtagonistasToNotify();
 	virtual ~Juego();
 };

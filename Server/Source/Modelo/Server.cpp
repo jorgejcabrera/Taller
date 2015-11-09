@@ -100,8 +100,8 @@ void Server::notifyGameInitToClients(){
 
 list<Message*> Server::getProtagonistasMessages(){
 	list<Message*> listaDeProtagonistas;
-	map<int,EntidadDinamica*> protagonistas = this->gController->getJuego()->getProtagonistas();
-	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
+	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
@@ -151,8 +151,8 @@ void Server::processReceivedMessages(){
 }
 
 void Server::notifyClients(){
-	map<int,EntidadDinamica*> protagonistas = this->gController->getJuego()->getProtagonistas();
-	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
+	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		if (it->second->hasToNotify()){
 			Message* messageUpdate = new Message(it->second->getId(), it->second->getPosition()->first, it->second->getPosition()->second);
 			//messageUpdate->setAsNewPath(it->second->pathIsNew());
@@ -300,9 +300,9 @@ void Server::createEntitiesForClient(Client* newClient){
 //TODO : (FOG)EL SERVER LE MANDA AL CLIENTE LA NUEVA POSICION DE LA ENTIDAD, EL CLIENTE CALCULA LOS NUEVOS TILES, Y SE LOS DEVUELVE AL SERVER
 void Server::setSeenTiles() {
 	map<string,list<pair<int,int> > > newTilesByClient;
-	map<int,EntidadDinamica*> protagonistas =this->gController->getJuego()->getProtagonistas();
+	map<int,EntidadDinamica*>* protagonistas =this->gController->getJuego()->getDinamicEntities();
 
-	for(map<int,EntidadDinamica*>::iterator it=protagonistas.begin(); it!=protagonistas.end();++it){
+	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		EntidadDinamica * entidad = (*it).second;
 		pair<int,int>* position = entidad->getPosition();
 		int rangeEntity = entidad->getVisibilityRange();
