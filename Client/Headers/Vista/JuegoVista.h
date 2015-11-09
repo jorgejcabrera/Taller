@@ -126,10 +126,6 @@ public:
 	* */
 	void setFoggedTiles();
 	/*
-	* me indica si el id de la entidad pasada como parámetro pertenece al cliente
-	* */
-	bool belongToMe(int id);
-	/*
 	* ?
 	* */
 	bool isEnemyEntityVisible(pair< int, int> pos);

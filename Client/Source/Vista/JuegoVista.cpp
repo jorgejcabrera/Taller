@@ -483,18 +483,6 @@ int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
 	return 0;
 }
 
-//TODO considerar entidades estaticas tmb
-bool JuegoVista::belongToMe(int id){
-	map<int, EntidadDinamicaVista*>::iterator itMyEntities = this->misPersonajes.find(id);
-	if( itMyEntities != this->misPersonajes.end() )
-		return true;
-	map<int, EntidadDinamicaVista*>::iterator it = this->personajes.find(id);
-	if( it != this->personajes.end() )
-		return false;
-
-	return false; 
-}
-
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
 	delete(this->menuVista);
