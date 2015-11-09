@@ -77,7 +77,24 @@ void GameController::setNextPaths(){
 	}
 }
 
+void GameController::pursuitTarget(){
+	stringstream ss;
+	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
+	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
+		if( it->second->getTarget() != 0){
+			pair<int,int>* targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
+			if( *targetPosition != it->second->getTargetPosition()){
+				ss << "entity "<< it->second->getId() <<" is moving to " << targetPosition->first<< " "<<targetPosition->second;
+				Logger::get()->logDebug("GameController","pursuitTarget",ss.str());
+				this->juego->setPlaceToGo(it->second->getId(), targetPosition->first, targetPosition->second);
+			}
+		}
+	}
+	return;
+}
+
 void GameController::actualizarJuego(){
+	this->pursuitTarget();
 	this->setNextPaths();
 	this->juego->getResourceManager()->actualizar();
 }

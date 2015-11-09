@@ -39,7 +39,7 @@ public:
 	* */
 	void setPlaceToGo(int idProtagonista, int x,int y);
 	/*
-	* le setea el target a la entidad pasada como parámetro
+	* le setea el target a la entidad pasada como parámetro, y su posición en ese instante
 	* */
 	void setTargetTo(int entityId,int target);
 	/*

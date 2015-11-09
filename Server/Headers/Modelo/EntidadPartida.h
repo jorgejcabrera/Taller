@@ -19,12 +19,16 @@ using namespace std;
 
 class EntidadPartida {
 protected:
-	int visibilityRange;
-	string name;
 	pair<int,int> position;
+	/*
+	* posicion de la entidad marcada como objetivo
+	* */
+	pair<int,int> targetPosition;
 	int width;
 	int length;
 	int id;
+	int visibilityRange;
+	string name;
 	string owner;
 	/*
 	* parametros variables segun el nivel y características de la entidad
@@ -54,9 +58,11 @@ public:
 	int getVisibilityRange();
 	int getId();
 	string getName();
+	pair<int,int> getTargetPosition();
 	pair<int,int>* getPosition();
 	void setTarget(int target);
 	void setPosition(int x,int y);
+	void setTargetPosition(pair<int,int> position);
 	void setName(string name);
 	void setVisibilityRange(int range);
 	/*

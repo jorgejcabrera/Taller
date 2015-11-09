@@ -29,6 +29,10 @@ private:
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
 	void setNextPaths();
+	/*
+	* si las entidades tiene algun target, y éste se movió, se debe perseguirlo
+	* */
+	void pursuitTarget();
 
 public:
 	GameController();
