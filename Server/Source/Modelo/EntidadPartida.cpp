@@ -18,6 +18,14 @@ int EntidadPartida::getId(){
 	return this->id;
 }
 
+int EntidadPartida::getTarget(){
+	return this->target;
+}
+
+void EntidadPartida::setTarget(int target){
+	this->target = target;
+}
+
 void EntidadPartida::setPosition(int x,int y){
 	this->position.first = x;
 	this->position.second = y;

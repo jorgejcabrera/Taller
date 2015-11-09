@@ -33,6 +33,10 @@ protected:
 	int strength;
 	float precision;
 	/*
+	* id de la entidad con la que se va a interactuar, por ejemplo a atacar
+	* */
+	int target;
+	/*
 	* devuelve el daño causado al atacar
 	* */
 	int getDamage();
@@ -46,10 +50,12 @@ public:
 	int getWidth();
 	int getLength();
 	int getHealth();
-	string getName();
-	pair<int,int>* getPosition();
+	int getTarget();
 	int getVisibilityRange();
 	int getId();
+	string getName();
+	pair<int,int>* getPosition();
+	void setTarget(int target);
 	void setPosition(int x,int y);
 	void setName(string name);
 	void setVisibilityRange(int range);

@@ -43,9 +43,12 @@ public:
 	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 	void setPath(list<pair<int,int> >* camino);
 	/*
-	*devuelve true si pudo mover la entidad de posicion
+	* devuelve true si pudo mover la entidad de posicion
 	* */
 	void nextPosition();
+	/*
+	*
+	* */
 	list<pair<int,int> >* getPath();
 	bool isWalking();
 	void setNotifiable(bool notifiable);
