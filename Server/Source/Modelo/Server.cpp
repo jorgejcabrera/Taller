@@ -108,8 +108,8 @@ list<Message*> Server::getProtagonistasMessages(){
 		Message* protagonistaMessage = new Message((*it).second->getId(), 
 													tipoEntidad, 
 													(*it).second->getName(), 
-													(*it).second->getPosition()->first, 
-													(*it).second->getPosition()->second,
+													(*it).second->getPosition().first,
+													(*it).second->getPosition().second,
 													clientConnected);
 		protagonistaMessage->setOwner((*it).second->getOwner());
 		listaDeProtagonistas.push_back(protagonistaMessage);
@@ -136,8 +136,8 @@ void Server::processReceivedMessages(){
 		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
 			int idUpdate = messageUpdate->getId();
 			int target = messageUpdate->getTarget();
-			pair<int,int>* targetPosition= this->gController->getJuego()->getDinamicEntityById(target)->getPosition();
-			this->gController->getJuego()->setPlaceToGo(idUpdate, targetPosition->first, targetPosition->second);
+			pair<int,int> targetPosition= this->gController->getJuego()->getDinamicEntityById(target)->getPosition();
+			this->gController->getJuego()->setPlaceToGo(idUpdate, targetPosition.first, targetPosition.second);
 			this->gController->getJuego()->setTargetTo(idUpdate,target);
 			this->idEntitiesUpdated.push_back(idUpdate);
 		
@@ -154,7 +154,7 @@ void Server::notifyClients(){
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		if (it->second->hasToNotify()){
-			Message* messageUpdate = new Message(it->second->getId(), it->second->getPosition()->first, it->second->getPosition()->second);
+			Message* messageUpdate = new Message(it->second->getId(), it->second->getPosition().first, it->second->getPosition().second);
 			//messageUpdate->setAsNewPath(it->second->pathIsNew());
 			list<Client*> activeClients= getActiveClients();
 			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
@@ -169,8 +169,8 @@ void Server::notifyClients(){
 		Message* protagonistaMessage = new Message((*it)->getId(), 
 													DefaultSettings::getTypeEntity((*it)->getName()),
 													(*it)->getName(), 
-													(*it)->getPosition()->first, 
-													(*it)->getPosition()->second,0);
+													(*it)->getPosition().first,
+													(*it)->getPosition().second,0);
 		protagonistaMessage->setOwner((*it)->getOwner());
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
@@ -304,15 +304,15 @@ void Server::setSeenTiles() {
 
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		EntidadDinamica * entidad = (*it).second;
-		pair<int,int>* position = entidad->getPosition();
+		pair<int,int> position = entidad->getPosition();
 		int rangeEntity = entidad->getVisibilityRange();
 		string owner = (*it).second->getOwner();
-		for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
+		for (int x = position.first - rangeEntity; x <= position.first + rangeEntity; x++) {
 			if ( (x>=0) && (x < gameSettings->getMapWidth())) {
-				for (int y = position->second-rangeEntity ; y <= position->second+rangeEntity ; y++) {
+				for (int y = position.second-rangeEntity ; y <= position.second+rangeEntity ; y++) {
 					if ((y>=0) && (y < this->gameSettings->getMapHeight())) {
-						if((x+y >= position->first + position->second - rangeEntity) && (x+y <= position->first + position->second + rangeEntity)
-						&& (x-y >= position->first - position->second - rangeEntity) && (x-y <= position->first - position->second + rangeEntity)) {
+						if((x+y >= position.first + position.second - rangeEntity) && (x+y <= position.first + position.second + rangeEntity)
+						&& (x-y >= position.first - position.second - rangeEntity) && (x-y <= position.first - position.second + rangeEntity)) {
 							newTilesByClient[owner].push_back(std::make_pair(x,y));
 						}
 					}

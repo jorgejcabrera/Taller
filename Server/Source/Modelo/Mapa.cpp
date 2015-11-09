@@ -32,16 +32,18 @@ Mapa::Mapa() {
 }
 
 void Mapa::pushEntity(EntidadPartida* entidad){
+	stringstream ss;
 	if(!this->positionAvailable(entidad)){
-		cout << entidad->getName()<<" no se puede colocar la entidad, en este tile " << entidad->getPosition()->first<<" "<<entidad->getPosition()->second<<endl;
+		ss << entidad->getName() << " can't push entity in " << entidad->getPosition().first <<" "<< entidad->getPosition().second;
+		Logger::get()->logDebug("Mapa","pushEntity",ss.str());
 		return;
 	}else{
-		pair<int,int> lowerVertex = make_pair(entidad->getPosition()->first+ entidad->getWidth(), entidad->getPosition()->second + entidad->getLength());
+		pair<int,int> lowerVertex = make_pair(entidad->getPosition().first+ entidad->getWidth(), entidad->getPosition().second + entidad->getLength());
 		this->entidades.push_back(entidad);
 
 		//le cambiamos el estado a los tiles que ocupa
-		for(int j=entidad->getPosition()->second; j<lowerVertex.second; j++)
-			for(int i=entidad->getPosition()->first; i<lowerVertex.first; i++){
+		for(int j=entidad->getPosition().second; j<lowerVertex.second; j++)
+			for(int i=entidad->getPosition().first; i<lowerVertex.first; i++){
 				this->tiles.at(make_pair(i,j))->changeStatusAvailable();
 			}
 
@@ -50,8 +52,8 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 }
 
 bool Mapa::positionAvailable(EntidadPartida* entidad){
-	int x = entidad->getPosition()->first;
-	int y = entidad->getPosition()->second;
+	int x = entidad->getPosition().first;
+	int y = entidad->getPosition().second;
 	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0){
 		return false;
 	}

@@ -59,7 +59,7 @@ public:
 	int getId();
 	string getName();
 	pair<int,int> getTargetPosition();
-	pair<int,int>* getPosition();
+	pair<int,int> getPosition();
 	void setTarget(int target);
 	void setPosition(int x,int y);
 	void setTargetPosition(pair<int,int> position);

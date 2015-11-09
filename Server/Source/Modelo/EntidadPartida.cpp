@@ -39,8 +39,8 @@ void EntidadPartida::setPosition(int x,int y){
 	this->position.second = y;
 }
 
-pair<int,int>* EntidadPartida::getPosition(){
-	return &this->position;
+pair<int,int> EntidadPartida::getPosition(){
+	return this->position;
 }
 
 int EntidadPartida::getWidth(){

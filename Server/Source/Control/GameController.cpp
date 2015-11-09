@@ -36,7 +36,7 @@ list<Message*> GameController::getEntitiesMessages(){
 	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
 		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado
-		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition()->first, (**it).getPosition()->second, 0);
+		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition().first, (**it).getPosition().second, 0);
 		entityMessage->setOwner((**it).getOwner());
 		listaDeEntities.push_back(entityMessage);
 	}
@@ -59,20 +59,20 @@ void GameController::setNextPaths(){
 
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
-		pair<int,int>* pos = (*it).second->getPosition();
-		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos->first,pos->second)){
-			this->juego->getResourceManager()->collectResourceAt(pos);
+		pair<int,int> pos = (*it).second->getPosition();
+		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos.first,pos.second)){
+			this->juego->getResourceManager()->collectResourceAt(&pos);
 			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
 		}
 		
 		//pongo el tile anterior disponible
-		pair<int,int>* firstPosition = (*it).second->getPosition();
-		this->juego->getMap()->getTileAt(firstPosition->first,firstPosition->second)->setToAvailable();
+		pair<int,int> firstPosition = (*it).second->getPosition();
+		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->setToAvailable();
 		//busco la nueva posicion
 		(*it).second->nextPosition();
 		//pongo el nuevo tile como ocupado
-		pair<int,int>* newPos = (*it).second->getPosition();
-		this->juego->getMap()->getTileAt(newPos->first,newPos->second)->setToNotAvailable();
+		pair<int,int> newPos = (*it).second->getPosition();
+		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->setToNotAvailable();
 
 	}
 }
@@ -82,11 +82,11 @@ void GameController::pursuitTarget(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0){
-			pair<int,int>* targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
-			if( *targetPosition != it->second->getTargetPosition()){
-				ss << "entity "<< it->second->getId() <<" is moving to " << targetPosition->first<< " "<<targetPosition->second;
+			pair<int,int> targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
+			if( targetPosition != it->second->getTargetPosition()){
+				ss << "entity "<< it->second->getId() <<" is moving to " << targetPosition.first<< " "<<targetPosition.second;
 				Logger::get()->logDebug("GameController","pursuitTarget",ss.str());
-				this->juego->setPlaceToGo(it->second->getId(), targetPosition->first, targetPosition->second);
+				this->juego->setPlaceToGo(it->second->getId(), targetPosition.first, targetPosition.second);
 			}
 		}
 	}

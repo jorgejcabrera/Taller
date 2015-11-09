@@ -35,7 +35,7 @@ bool ResourceManager::resourceAt(int x,int y){
 	bool hay = false;
 
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end(); ++it){
-	    if((*it)->getPosition()->first == x && (*it)->getPosition()->second == y)
+	    if((*it)->getPosition().first == x && (*it)->getPosition().second == y)
 	    	hay = true;
 	}
 	return hay;
@@ -46,7 +46,7 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 
 	//borro el recurso de la lista de recursos y sumo al contador
 	for (list<Resource*>::iterator it=this->resources->begin(); it != this->resources->end() && ! collected; ++it)
-		if((*it)->getPosition()->first == pos->first && (*it)->getPosition()->second == pos->second){
+		if((*it)->getPosition().first == pos->first && (*it)->getPosition().second == pos->second){
 			this->IdRecursoAEliminar = (*it)->getId();
 			if((*it)->getName() == "chori") setUltimoTipoConsumido("chori");
 			if((*it)->getName() == "gold") setUltimoTipoConsumido("gold");
@@ -60,7 +60,7 @@ void ResourceManager::collectResourceAt(pair<int,int>* pos){
 	list<EntidadPartida*>::iterator it2;
 	bool borrado = false;
 	for( it2 = this->map->getEntities()->begin(); it2 != this->map->getEntities()->end() && ! borrado; ++it2){
-		if((*it2)->getPosition()->first == pos->first && (*it2)->getPosition()->second == pos->second){
+		if((*it2)->getPosition().first == pos->first && (*it2)->getPosition().second == pos->second){
 			this->map->getEntities()->erase(it2);
 			borrado = true;
 		}

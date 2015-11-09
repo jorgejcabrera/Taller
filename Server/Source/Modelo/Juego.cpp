@@ -115,8 +115,8 @@ void Juego::cleanNewProtagonistas(){
 
 void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	EntidadDinamica* protagonistaToUpdate = this->protagonistas.at(idProtagonista);
-	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition()->first,
-									  protagonistaToUpdate->getPosition()->second,
+	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition().first,
+									  protagonistaToUpdate->getPosition().second,
 									  x,y,this->mapa,this->resourseManager);
 
 	//calculo el camino minimo para llegar a destino
@@ -129,7 +129,7 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 void Juego::setTargetTo(int entityId,int target){
 	EntidadDinamica* entityToUpdate = this->protagonistas.at(entityId);
 	entityToUpdate->setTarget(target);
-	entityToUpdate->setTargetPosition(*this->protagonistas.at(target)->getPosition());
+	entityToUpdate->setTargetPosition(this->protagonistas.at(target)->getPosition());
 }
 
 EntidadDinamica* Juego::getDinamicEntityById(int id){
