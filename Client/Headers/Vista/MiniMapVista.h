@@ -15,8 +15,6 @@ namespace std {
 class MiniMapVista {
 private:
 	GameSettings* gameSettings;
-	int miniTilePosX;
-	int miniTilePosY;
 	string miniTilePath;
 	string miniUnseenTilePath;
 	string miniFoggedTilePath;
@@ -24,37 +22,26 @@ private:
 	int diagonal;
 	int offsetY ;
 	int offsetX ;
-	int miniTileSize;
-	int miniTileHeight;
-	int miniTileWidth;
-	int miniEntityPosX;
-	int miniEntityPosY;
 	string miniEntityPath;
 	int miniEntitySize;
-	int miniCharacterPosX;
-	int miniCharacterPosY;
 	string miniCharacterPath;
-	int miniCharacterSize;
+	int miniPosX;
+	int miniPosY;
+	int miniWidth;
+	int miniHeight;
 public:
 	MiniMapVista();
 	virtual ~MiniMapVista();
-	void makeMiniTilePos(int posX, int posY);
 	string getMiniTilePath();
 	string getMiniUnseenTilePath();
 	string getMiniFoggedTilePath();
-	int getTilePosX();
-	int getTilePosY();
-	int getMiniTileSize();
-	void makeMiniEntityPos(int posX, int posY);
 	string getEntityPath();
-	int getEntityPosX();
-	int getEntityPosY();
-	int getMiniEntitySize();
-	void makeMiniCharacterPos(int posX, int posY);
 	string getCharacterPath();
-	int getCharacterPosX();
-	int getCharacterPosY();
-	int getMiniCharacterSize();
+	void makeMiniPos(int posX, int posY);
+	int getMiniPosX();
+	int getMiniPosY();
+	int getMiniWidth();
+	int getMiniHeight();
 };
 
 } /* namespace std */

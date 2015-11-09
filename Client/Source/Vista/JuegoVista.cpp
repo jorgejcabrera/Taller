@@ -241,12 +241,12 @@ void JuegoVista::drawMiniMap() {
 	this->miniMapVista = new MiniMapVista();
 	//dibujo el minimap
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-		this->miniMapVista->makeMiniTilePos((*itTiles)->getPosX(), (*itTiles)->getPosY());
+		this->miniMapVista->makeMiniPos((*itTiles)->getPosX(), (*itTiles)->getPosY());
 		this->picassoHelper->renderObject(	this->miniMapVista->getMiniTilePath(),
-											this->miniMapVista->getTilePosX(),
-											this->miniMapVista->getTilePosY(),
-											this->miniMapVista->getMiniTileSize(),
-											this->miniMapVista->getMiniTileSize());
+											this->miniMapVista->getMiniPosX(),
+											this->miniMapVista->getMiniPosY(),
+											this->miniMapVista->getMiniWidth(),
+											this->miniMapVista->getMiniHeight());
 		}
 
 	//dibujo las entidades estaticas
@@ -256,58 +256,52 @@ void JuegoVista::drawMiniMap() {
 		position = entidad->getPosition();
 		int x = position->first;
 		int y =  position->second;
-		this->miniMapVista->makeMiniEntityPos(x,y);
+		this->miniMapVista->makeMiniPos(x,y);
 		this->picassoHelper->renderObject(	this->miniMapVista->getEntityPath(),
-											this->miniMapVista->getEntityPosX(),
-											this->miniMapVista->getEntityPosY(),
-											this->miniMapVista->getMiniEntitySize(),
-											this->miniMapVista->getMiniEntitySize());
+											this->miniMapVista->getMiniPosX(),
+											this->miniMapVista->getMiniPosY(),
+											this->miniMapVista->getMiniWidth()+1,
+											this->miniMapVista->getMiniHeight()+1);
 	}
 
-	//dibujo las entidades dinamicas
-	pair<int,int> isometricPosition;
-	EntidadDinamicaVista* entidad;
-
-	//deberia dibujar los personajes que son del cliente
+	//dibujo los personajes que NO son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
-		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		this->miniMapVista->makeMiniCharacterPos(screenPosition.first, screenPosition.second);
+		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
 		this->picassoHelper->renderObject(	this->miniMapVista->getCharacterPath(),
-											this->miniMapVista->getCharacterPosX() ,
-											this->miniMapVista->getCharacterPosY(),
-											this->miniMapVista->getMiniCharacterSize(),
-											this->miniMapVista->getMiniCharacterSize());
+											this->miniMapVista->getMiniPosX() ,
+											this->miniMapVista->getMiniPosY(),
+											this->miniMapVista->getMiniWidth(),
+											this->miniMapVista->getMiniHeight());
 	}
 	//dibujo los personajes que son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
-		pair<int,int> screenPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition->first,cartesianPosition->second);
-		this->miniMapVista->makeMiniCharacterPos(screenPosition.first, screenPosition.second);
+		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
 		this->picassoHelper->renderObject(	this->miniMapVista->getCharacterPath(),
-											this->miniMapVista->getCharacterPosX() ,
-											this->miniMapVista->getCharacterPosY(),
-											this->miniMapVista->getMiniCharacterSize(),
-											this->miniMapVista->getMiniCharacterSize());
+											this->miniMapVista->getMiniPosX() ,
+											this->miniMapVista->getMiniPosY(),
+											this->miniMapVista->getMiniWidth(),
+											this->miniMapVista->getMiniHeight());
 	}
 
 
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-		this->miniMapVista->makeMiniTilePos((*itTiles)->getPosX(), (*itTiles)->getPosY());
+		this->miniMapVista->makeMiniPos((*itTiles)->getPosX(), (*itTiles)->getPosY());
 		if ((*itTiles)->getSeen()){
 			if ( (*itTiles)->getFogged()) {
 				this->picassoHelper->renderFogOfWar(this->gameSettings->getPathOfFoggedTile(),
-																this->miniMapVista->getTilePosX(),
-																this->miniMapVista->getTilePosY(),
-																this->miniMapVista->getMiniTileSize(),
-																this->miniMapVista->getMiniTileSize()/2);
+																this->miniMapVista->getMiniPosX(),
+																this->miniMapVista->getMiniPosY(),
+																this->miniMapVista->getMiniWidth(),
+																this->miniMapVista->getMiniHeight());
 			}
 		} else {
 			this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
-																this->miniMapVista->getTilePosX(),
-																this->miniMapVista->getTilePosY(),
-																this->miniMapVista->getMiniTileSize(),
-																this->miniMapVista->getMiniTileSize());
+																this->miniMapVista->getMiniPosX(),
+																this->miniMapVista->getMiniPosY(),
+																this->miniMapVista->getMiniWidth(),
+																this->miniMapVista->getMiniHeight());
 		}
 	}
 }
