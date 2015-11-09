@@ -126,6 +126,10 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	protagonistaToUpdate->setPathIsNew(true);
 }
 
+void Juego::setTargetTo(int entityId,int target){
+
+}
+
 EntidadDinamica* Juego::getDinamicEntityById(int id){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( (*it).second->getId() == id )
