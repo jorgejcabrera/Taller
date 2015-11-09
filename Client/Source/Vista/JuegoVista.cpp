@@ -268,7 +268,7 @@ void JuegoVista::drawMiniMap() {
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
-		this->picassoHelper->renderObject(	this->miniMapVista->getCharacterPath(),
+		this->picassoHelper->renderObject(	this->miniMapVista->getEnemyCharacterPath(),
 											this->miniMapVista->getMiniPosX() ,
 											this->miniMapVista->getMiniPosY(),
 											this->miniMapVista->getMiniWidth(),

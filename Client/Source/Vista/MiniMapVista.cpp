@@ -15,6 +15,7 @@ MiniMapVista::MiniMapVista() {
 	miniUnseenTilePath = "../../Taller/Images/Tiles/tileNegro.png";
 	miniFoggedTilePath = "../../Taller/Images/Tiles/tilefog.png";
 	miniCharacterPath = "../../Taller/Images/Tiles/tileAzul.png";
+	miniEnemyCharacterPath = "../../Taller/Images/Tiles/tileRojo.png";
 	miniEntityPath = "../../Taller/Images/Tiles/tileAzul.png";
 
 	alturaMenu = gameSettings->getAlturaMenuInferior();
@@ -51,6 +52,10 @@ string MiniMapVista::getEntityPath() {
 
 string MiniMapVista::getCharacterPath() {
 	return this->miniCharacterPath;
+}
+
+string MiniMapVista::getEnemyCharacterPath() {
+	return this->miniEnemyCharacterPath;
 }
 
 int MiniMapVista::getMiniPosX() {
