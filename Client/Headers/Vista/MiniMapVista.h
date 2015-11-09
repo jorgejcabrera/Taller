@@ -25,6 +25,7 @@ private:
 	string miniEntityPath;
 	int miniEntitySize;
 	string miniCharacterPath;
+	string miniEnemyCharacterPath;
 	int miniPosX;
 	int miniPosY;
 	int miniWidth;
@@ -37,6 +38,7 @@ public:
 	string getMiniFoggedTilePath();
 	string getEntityPath();
 	string getCharacterPath();
+	string getEnemyCharacterPath();
 	void makeMiniPos(int posX, int posY);
 	int getMiniPosX();
 	int getMiniPosY();
