@@ -78,20 +78,29 @@ void GameController::setNextPaths(){
 }
 
 void GameController::pursuitTarget(){
-	stringstream ss;
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0){
-			pair<int,int> targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
-			if( targetPosition.first != it->second->getTargetPosition().first &&
-				targetPosition.second != it->second->getTargetPosition().second	){
-				ss << "entity "<< it->second->getId() <<" is moving to " << targetPosition.first<< " "<<targetPosition.second;
-				Logger::get()->logDebug("GameController","pursuitTarget",ss.str());
+			if( !this->readyToAttack(it->second) ){
+				Logger::get()->logDebug("GameController","pursuitTarget","persiguiendo enemigo");
+				pair<int,int> targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(), targetPosition.first, targetPosition.second);
 			}
 		}
 	}
 	return;
+}
+
+bool GameController::readyToAttack(EntidadDinamica* entity){
+	pair<int,int> targetPosition= this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
+	if( targetPosition.first != entity->getTargetPosition().first || targetPosition.second != entity->getTargetPosition().second){
+		if ( UtilsController::GetInstance()->getDistance(targetPosition,entity->getTargetPosition()) <= 1 )
+			return true;
+		else 
+			return false;
+	}
+	Logger::get()->logDebug("GameController","readyToAttack","there is no target position");
+	return false;
 }
 
 void GameController::updateGame(){
