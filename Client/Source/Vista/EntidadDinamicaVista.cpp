@@ -25,6 +25,7 @@ EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, floa
 	this->inDelayPeriod = false;
 	this->velocidad = 10;
 	this->camino = new list<pair<int,int> >();
+	this->owner = "";
 }
 
 string EntidadDinamicaVista::getName(){

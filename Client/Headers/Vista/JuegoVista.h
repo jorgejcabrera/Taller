@@ -102,12 +102,13 @@ public:
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getEntityById(int id);
+	MenuVista* getMenuVista();
 	/*
-	*?
+	* ?
 	* */
 	void setVisibleTile(int x,int y);
 	/*
-	*?
+	* ?
 	* */
 	bool isEntitySeen(pair<int,int>* entityPos, int lenght);
 	/*
@@ -125,10 +126,13 @@ public:
 	* */
 	void setFoggedTiles();
 	/*
-	*?
+	* me indica si el id de la entidad pasada como parámetro pertenece al cliente
+	* */
+	bool belongToMe(int id);
+	/*
+	* ?
 	* */
 	bool isEnemyEntityVisible(pair< int, int> pos);
-	MenuVista* getMenuVista();
 	/*
 	* genero la ventana donde el usuario ingresa el userName
 	* */

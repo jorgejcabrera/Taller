@@ -42,58 +42,58 @@ private:
 	time_t lastReportedServer;
 	ResourceCounter* resourceCounter;
 	/*
-	*thread que se encarga de enviar al servidor los mensajes encolados al servidor
-	**/
+	* thread que se encarga de enviar al servidor los mensajes encolados al servidor
+	* */
 	MessageSocketWriter* writeThread;
 	/*
-	*thread que se encarga de leer los mensajes enviados por el servidor
-	**/
+	* thread que se encarga de leer los mensajes enviados por el servidor
+	* */
 	MessageSocketReader* readThread;
 
 public:
 	string userName;
 	/*
-	*instancio el servidor
-	**/
+	* instancio el servidor
+	* */
 	Client(GameController *gController);
 	/*
-	*ip al cual se va a conectar, el puerto se lo pregunto en askPortConnection()
-	*intenta conectar al servidor, en caso de error devuelve -1
-	**/
+	* ip al cual se va a conectar, el puerto se lo pregunto en askPortConnection()
+	* intenta conectar al servidor, en caso de error devuelve -1
+	* */
 	int connectToServer(string ip);
 	/*
-	*lee la cola de novedades a procesar, y transforma las novedades en eventos
-	**/
+	* lee la cola de novedades a procesar, y transforma las novedades en eventos
+	* */
 	void processReceivedMessages();
 	/*
-	*genera los mensajes de los eventos, y los envia al servidor
-	**/
+	* genera los mensajes de los eventos, y los envia al servidor
+	* */
 	void sendEvents();
 	/*
 	*
-	**/
+	* */
 	void saveEntitiesConfig(Message* msg);
 	/*
 	*?
-	**/
+	* */
 	void notifyUserName();
 	/*
 	*?
-	**/
+	* */
 	void pingMessage();
 	/*
 	*?
-	**/
+	* */
 	void verifyServerAlive();
 	/*
 	*?
-	**/
+	* */
 	ResourceCounter* getResourceCounter();
 	void disconnectPlayer(int id);
 	bool isConected();
 	/*
-	 * Al iniciar el cliente le pregunto a que puerto del servidor se quiere conectar
-	 */
+	* Al iniciar el cliente le pregunto a que puerto del servidor se quiere conectar
+	* */
 	void askPortConnection();
 	virtual ~Client();
 };

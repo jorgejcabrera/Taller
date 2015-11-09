@@ -37,6 +37,7 @@ EntidadSemiEstaticaVista::EntidadSemiEstaticaVista(int width, int length, float 
 	this->frame = 0;
 	this->inDelayPeriod = false;
 	this->sizeString = getStringSize(this);
+	this->owner = "";
 }
 
 int EntidadSemiEstaticaVista::getFramesPerSecond(){

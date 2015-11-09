@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados
 		server->processReceivedMessages();
 		//Los protagonistas se trasladan a su posicion destino
-		gController->actualizarJuego();
+		gController->updateGame();
 		server->setSeenTiles();
 		//Se le manda a los clientes las novedades
 		server->notifyClients();

@@ -44,7 +44,7 @@ public:
 	*generadores de mensajes para cuando se conecta un cliente nuevo
 	* */
 	Juego* getJuego();
-	void actualizarJuego();
+	void updateGame();
 	int getRunCycles();
 	int getMaxFramesPerSecond();
 	void delay();

@@ -40,13 +40,11 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition().first+ entidad->getWidth(), entidad->getPosition().second + entidad->getLength());
 		this->entidades.push_back(entidad);
-
 		//le cambiamos el estado a los tiles que ocupa
 		for(int j=entidad->getPosition().second; j<lowerVertex.second; j++)
 			for(int i=entidad->getPosition().first; i<lowerVertex.first; i++){
 				this->tiles.at(make_pair(i,j))->changeStatusAvailable();
 			}
-
 		return;
 	}
 }
@@ -66,10 +64,7 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	}
 	return true;
 }
-/*EntidadPartida* Mapa::getEntityAt(int x,int y){
-	return this->entidades.at(make_pair(x,y));
-}
-*/
+
 Tile* Mapa::getTileAt(int x,int y){
 	return this->tiles.at(make_pair(x,y));
 }
@@ -98,6 +93,7 @@ pair<int,int> Mapa::getAvailablePosition(int xFrom, int yFrom){
 	}
 	return make_pair(-1,-1);
 }
+
 map<pair<int,int>,Tile*>* Mapa::getTiles(){
 	return &this->tiles;
 }
@@ -107,16 +103,10 @@ list<EntidadPartida*>* Mapa::getEntities(){
 }
 
 Mapa::~Mapa() {
-	/*for (map<pair<int,int>,EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
-			delete((*it).second);
-	//		(*it).second = NULL;
-	}*/
 	for (list<EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){
 		delete((*it));
 	}
-
 	for (map<pair<int,int>,Tile*>::iterator it=this->tiles.begin(); it!=this->tiles.end(); ++it){
-//		(*it).second->~Tile();
 		delete((*it).second);
 		(*it).second = NULL;
 	}

@@ -144,6 +144,7 @@ void Server::processReceivedMessages(){
 		}else if( this->gameRunning ){
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
+			//this->gController->getJuego()->setTargetTo(idUpdate,0);
 			this->idEntitiesUpdated.push_back(idUpdate);
 		}
 	}

@@ -30,6 +30,7 @@ EntidadEstaticaVista::EntidadEstaticaVista(int width,int length){
 	this->length = length;
 	this->edificable = true;
 	this->sizeString = getStringSize(this);
+	this->owner = "";
 }
 
 void EntidadEstaticaVista::destruir(){
