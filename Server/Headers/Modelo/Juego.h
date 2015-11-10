@@ -61,6 +61,10 @@ public:
 	* */
 	list<EntidadDinamica> getFallenEntities();
 	EntidadDinamica* getDinamicEntityById(int id);
+	/*
+	 * Borro el personaje pasado por parametro, lo uso cuando el cliente de desconecto
+	 */
+	void deleteEntity(int id);
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadPartida*>* getNewEntitiesToNotify();

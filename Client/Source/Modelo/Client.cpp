@@ -118,7 +118,7 @@ void Client::processReceivedMessages(){
 																(*it)->getStrength(),
 																(*it)->getPrecision());
 		}else if ( tipoMensaje == "disconnect"){
-			disconnectPlayer((*it)->getId());
+			disconnectPlayer((*it)->getNombre());
 
 		}else if ( tipoMensaje == "reconnect"){
 			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getEntityById((*it)->getId());
@@ -167,9 +167,8 @@ void Client::processReceivedMessages(){
 }
 
 //TODO borrar este metodo
-void Client::disconnectPlayer(int id){
-	this->gController->getJuegoVista()->getEntityById(id)->
-			setPathImage(GameSettings::GetInstance()->getEntityConfig("soldadoDesconectado")->getPath());
+void Client::disconnectPlayer(string userName){
+	this->gController->getJuegoVista()->deleteEntitiesOfClient(userName);
 }
 
 void Client::saveEntitiesConfig(Message* msg){

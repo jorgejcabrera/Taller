@@ -492,6 +492,14 @@ void JuegoVista::setColour(string owner,int iColour) {
 	this->coloursOfClients[owner] = c;
 }
 
+void JuegoVista::deleteEntitiesOfClient(string clientName){
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
+		if(itDinamicos->second->getOwner()==clientName){
+			this->personajes.erase(itDinamicos);
+		}
+	}
+}
+
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
 	delete(this->menuVista);

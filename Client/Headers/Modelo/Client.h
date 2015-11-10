@@ -89,7 +89,10 @@ public:
 	*?
 	* */
 	ResourceCounter* getResourceCounter();
-	void disconnectPlayer(int id);
+	/*
+	 * Borro todas las entidades del cliente desconectado
+	 */
+	void disconnectPlayer(string userName);
 	bool isConected();
 	/*
 	* Al iniciar el cliente le pregunto a que puerto del servidor se quiere conectar

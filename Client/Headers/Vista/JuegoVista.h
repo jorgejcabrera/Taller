@@ -146,6 +146,10 @@ public:
 	 * Renderiza la vista actual y el mensaje pasado por parametro
 	 */
 	void renderFinalMessage(string finalMessage);
+	/*
+	 * Borro las entidades del cliente porque se desconecto
+	 */
+	void deleteEntitiesOfClient(string clientName);
 	~JuegoVista();
 };
 

@@ -255,13 +255,16 @@ void Server::verifyClientsConections(){
 			ss<< "CLIENTE se deconecto: "<< (*clientIterator)->getUserName();
 			Logger::get()->logInfo("Server","verifyClientsConections",ss.str());
 
+			//Cuando el cliente se desconecta mando un solo mensaje
+			Message* messageDisconnect = new Message();
+			messageDisconnect->clientDisconect((*clientIterator)->getUserName());
+			for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
+				(*clientIt)->writeMessagesInQueue(messageDisconnect);
+			}
+
 			list<int> entitiesToDisconect = gController->getEntitiesOfClient((*clientIterator)->getUserName());
 			for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
-				Message* messageDisconnect = new Message();
-				messageDisconnect->clientDisconect(*it);
-				for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
-						(*clientIt)->writeMessagesInQueue(messageDisconnect);
-				}
+				this->gController->getJuego()->deleteEntity(*it);
 			}
 		}
 		if(this->gController->checkIfClientLostGame((*clientIterator)->getUserName())){

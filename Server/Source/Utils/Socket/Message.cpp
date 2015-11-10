@@ -81,9 +81,10 @@ void Message::pingMessage(string nombre){
 	this->msg.set_nombre(nombre);
 }
 
-void Message::clientDisconect(int identifier){
-	this->msg.set_id(identifier);
+void Message::clientDisconect(string clientName){
+	this->msg.set_id(0);
 	this->msg.set_tipo("disconnect");
+	this->msg.set_nombre(clientName);
 }
 
 void Message::clientLost(string clientName){

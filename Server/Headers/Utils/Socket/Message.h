@@ -70,9 +70,9 @@ public:
 	* */
 	void pingMessage(string nombre);
 	/*
-	* El cliente se deconecto entonces mando la novedad con el id de la entidad desconectada
+	* El cliente se deconecto entonces mando la novedad con el nombre del cliente que se desconecto
 	* */
-	void clientDisconect(int id);
+	void clientDisconect(string clientName);
 	/*
 	* ?
 	* */
