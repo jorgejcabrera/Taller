@@ -96,16 +96,17 @@ float EntidadPartida::getPrecision(){
 
 int EntidadPartida::getDamage(){
 	float val = ( rand() % 100 ) / 100;
-	if( val <= this->precision )
+	if( val <= this->precision ){
 		return this->strength;
-	else
+	}else{
 		return 0;
+	}
 }
 
 int EntidadPartida::defend(){
 	float val = ( rand() % 100 ) / 100;
 	if( val <= this->precision )
-		return this->health - this->strength;
+		return /*this->health -*/ this->strength * val;
 	else
 		return 0;
 }
