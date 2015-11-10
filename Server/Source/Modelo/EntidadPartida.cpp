@@ -14,6 +14,7 @@ EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
 	this->target = 0;
+	this->targetPosition = make_pair(0,0);
 }
 
 int EntidadPartida::getId(){

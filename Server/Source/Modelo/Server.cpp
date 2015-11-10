@@ -96,8 +96,8 @@ bool Server::acceptingNewClients(){
 void Server::notifyGameInitToClients(){
 	Message* messageStart = new Message();
 	messageStart->startGame();
-	list<Client*> activeClients= getActiveClients();
-	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+	list<Client*> activeClients = getActiveClients();
+	for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 		(*clientIterator)->writeMessagesInQueue(messageStart);
 	}
 }
@@ -105,7 +105,7 @@ void Server::notifyGameInitToClients(){
 list<Message*> Server::getProtagonistasMessages(){
 	list<Message*> listaDeProtagonistas;
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
-	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
+	for(map<int,EntidadDinamica*>::iterator it = protagonistas->begin(); it != protagonistas->end();++it){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
