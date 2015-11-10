@@ -13,11 +13,14 @@ MenuVista::MenuVista() {
 	//TODO modificar esto para obtenerse del default o del yaml
 	pathImage = "../../Taller/Images/Menu/Menu3.jpg";
 	pathPergamino = "../../Taller/Images/Menu/pergamino.jpg";
-	bigHeight = 120;
+	bigHeight = GameSettings::GetInstance()->getAlturaMenuInferior();
 	littleStripSise = 10;
 	mediumStripSise = 20;
 	miniMapHeight = 0;
 	drawDescription = false;
+	posXvertexFirstButton = GameSettings::GetInstance()->getScreenWidth()/2 ;
+	posYvertexFirstButton = GameSettings::GetInstance()->getScreenHeight() - bigHeight;
+	sideFirstButton = 55;
 }
 
 void MenuVista::drawMe() {
@@ -33,6 +36,13 @@ void MenuVista::drawMe() {
 		PicassoHelper::GetInstance()->renderObject(pathImage, i, 0, this->mediumStripSise, this->mediumStripSise);
 	}
 	if (this->drawDescription) this->drawEntityDescription();
+
+	if (strings["name"] == "Barracks") {
+		PicassoHelper::GetInstance()->renderObject("../../Taller/Images/Personajes/soldadoSolo.png",GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), GameSettings::GetInstance()->getAlturaMenuInferior()/2, GameSettings::GetInstance()->getAlturaMenuInferior()/2);
+	} else if (strings["name"] == "Town Center") {
+
+	}
+
 }
 
 string MenuVista::getPath() {
@@ -101,9 +111,22 @@ void MenuVista::drawResources(map<string,int> resources){
 		posX = posX+ss.str().size()*15 + 30;
 		ss.str("");
 	}
-
 }
 
+string MenuVista::getTypeOfNewEntity(string nameEntitySelected,int posMouseX,int posMouseY) {
+	if (posMouseX > posXvertexFirstButton &&
+		posMouseX < posXvertexFirstButton + sideFirstButton &&
+		posMouseY > posYvertexFirstButton &&
+		posMouseY < posYvertexFirstButton + sideFirstButton ) {
+		if (strings["name"] == "Barracks") {
+			return "soldado";
+		}
+		if (strings["name"] == "Town Center") {
+			return "aldeano";
+		}
+	}
+	return "";
+}
 
 MenuVista::~MenuVista() {
 }

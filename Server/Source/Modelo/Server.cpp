@@ -149,6 +149,9 @@ void Server::processReceivedMessages(){
 			this->gController->getJuego()->setTargetTo(idUpdate,target);
 			this->idEntitiesUpdated.push_back(idUpdate);
 		
+		}else if( this->gameRunning && messageUpdate->getTipo() == "create" ){
+			Logger::get()->logInfo("Server","processReceivedMessages", "llega el create");
+
 		}else if( this->gameRunning ){
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
