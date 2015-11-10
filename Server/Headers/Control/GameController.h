@@ -33,6 +33,10 @@ private:
 	* si las entidades tiene algun target, y éste se movió, se debe perseguirlo
 	* */
 	void pursuitTarget();
+	/*
+	* indica si la entidad pasada como parámetro está a la distancia necesaria del target para poder atacar
+	* */
+	bool readyToAttack(EntidadDinamica* entidad);
 
 public:
 	GameController();
