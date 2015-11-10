@@ -50,6 +50,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
 	this->mapa->pushEntity(edificioCreado);
+	this->newEntities.push_back(edificioCreado);
 
 	//Caclulo el offset inicial
 	int xOffset = ((xOrigin-xOriginClientSection)/2)+ xOriginClientSection;
@@ -95,8 +96,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 		protagonista->setOwner(owner);
 		protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
 		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
-		//defino una lista con los nuevos protagonistas para que se enteren los clientes anteriores
-		this->newProtagonistas.push_back(protagonista);
+		this->newEntities.push_back(protagonista);
 	}
 	return initialOffset;
 }
@@ -109,12 +109,12 @@ map<int,EntidadDinamica*>* Juego::getDinamicEntities(){
 	return &this->protagonistas;
 }
 
-list<EntidadDinamica*>* Juego::getNewProtagonistasToNotify(){
-	return &this->newProtagonistas;
+list<EntidadPartida*>* Juego::getNewEntitiesToNotify(){
+	return &this->newEntities;
 }
 
-void Juego::cleanNewProtagonistas(){
-	this->newProtagonistas.clear();
+void Juego::cleanNewEntities(){
+	this->newEntities.clear();
 }
 
 void Juego::setPlaceToGo(int idProtagonista, int x,int y){

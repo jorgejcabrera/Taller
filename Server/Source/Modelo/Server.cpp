@@ -174,9 +174,9 @@ void Server::notifyClients(){
 			}
 		}
 	}
-	//mando los nuevos personajes
-	list<EntidadDinamica*>* nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
-	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
+	//mando las nuevas Entidades
+	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
+	for(list<EntidadPartida*>::iterator it=newEntities->begin(); it!=newEntities->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
 		Message* protagonistaMessage = new Message((*it)->getId(), 
 													DefaultSettings::getTypeEntity((*it)->getName()),
@@ -228,7 +228,7 @@ void Server::notifyClients(){
 	//		(*clientIterator)->writeMessagesInQueue(fallenEntity);
 	//	}
 	//}
-	this->gController->getJuego()->cleanNewProtagonistas();
+	this->gController->getJuego()->cleanNewEntities();
 	pingMessage();
 }
 

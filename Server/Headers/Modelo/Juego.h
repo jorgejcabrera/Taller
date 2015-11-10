@@ -29,7 +29,7 @@ private:
 	/*
 	* ?
 	* */
-	list<EntidadDinamica*> newProtagonistas;
+	list<EntidadPartida*> newEntities;
 	ResourceManager* resourseManager;
 	GameSettings* gameSettings;
 
@@ -55,7 +55,7 @@ public:
 	/*
 	*?
 	* */
-	void cleanNewProtagonistas();
+	void cleanNewEntities();
 	/*
 	* devuelve una lista de entidades que murieron
 	* */
@@ -63,7 +63,7 @@ public:
 	EntidadDinamica* getDinamicEntityById(int id);
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();
-	list<EntidadDinamica*>* getNewProtagonistasToNotify();
+	list<EntidadPartida*>* getNewEntitiesToNotify();
 	virtual ~Juego();
 };
 
