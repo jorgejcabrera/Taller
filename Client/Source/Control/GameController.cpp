@@ -45,6 +45,7 @@ Message* GameController::getMessageFromEvent(string userName){
 					body.set_tipo("update");
 					body.set_x(cartesianPosition.first);
 					body.set_y(cartesianPosition.second);
+					body.set_target(0);
 					message->setContent(body);
 					return message;
 				}
