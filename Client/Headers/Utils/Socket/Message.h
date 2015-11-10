@@ -29,17 +29,14 @@ public:
 	Message();
 	Message(int identifier, string typeEntity, int xPosition, int yPosition);
 	Message(string nombre);
-	virtual ~Message();
 	/*
-	 *Devuelve el tamaño en bytes del mensaje
-	 * */
+	* Devuelve el tamaño en bytes del mensaje
+	* */
 	int getSize();
 	/*
-	 *Devuelve el tamaño del mensaje concatenado con el mensaje serializado
-	 * */
+	* Devuelve el tamaño del mensaje concatenado con el mensaje serializado
+	* */
 	char* serializeToArray();
-	string serializeAsString();
-	string toString();
 	/*
 	* setea el id de la entidad con la que se desea interactuar
 	* */
@@ -47,6 +44,9 @@ public:
 	void setAsNewPath(bool value);
 	void setOwner(string userName);
 	void setContent(msg_game body);
+	void setHealth(int health);
+	void setStrength(int strength);
+	void setPrecision(float precition);
 	string getTipo();
 	string getNombre();
 	string getImagen();
@@ -61,7 +61,15 @@ public:
 	int getTotalFramesLine();
 	int getPixelsDimension();
 	int getTarget();
+	int getHealth();
+	int getStrength();
+	float getPrecision();
+	/*
+	* ?
+	* */
 	void pingMessage(string nombre);
+	string toString();
+	virtual ~Message();
 };
 
 #endif /* SOURCE_UTILS_SOCKET_MESSAGE_H_ */

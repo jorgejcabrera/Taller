@@ -14,6 +14,7 @@ EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
 	this->target = 0;
+	this->targetPosition = make_pair(0,0);
 }
 
 int EntidadPartida::getId(){
@@ -67,6 +68,30 @@ void EntidadPartida::setVisibilityRange( int range) {
 
 int EntidadPartida::getVisibilityRange() {
 	return this->visibilityRange;
+}
+
+void EntidadPartida::setHealth(int health){
+	this->health = health;
+}
+
+int EntidadPartida::getHealth(){
+	return this->health;
+}
+
+void EntidadPartida::setStrength(int strength){
+	this->strength = strength;
+}
+
+int EntidadPartida::getStrength(){
+	return this->strength;
+}
+
+void EntidadPartida::setPrecision(float precision){
+	this->precision = precision;
+}
+
+float EntidadPartida::getPrecision(){
+	return this->precision;
 }
 
 int EntidadPartida::getDamage(){

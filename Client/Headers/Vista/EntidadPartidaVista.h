@@ -52,6 +52,9 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	void setId(int identifier);
+	void setHealth(int health);
+	void setStrength(int strength);
+	void setPrecision(float presition);
 	/*
 	* El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 1x1,2x2,3x3,
 	* 4x4 ya que el render depende de este factor

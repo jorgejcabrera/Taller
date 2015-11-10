@@ -13,4 +13,7 @@ message msg_game{
 	optional int32 total_frames_line = 12;
 	optional int32 pixels_dimension = 13;
 	optional string owner = 14;
+	optional int32 health = 15;
+	optional int32 strength = 16;
+	optional float precition = 17;
 }

@@ -113,7 +113,10 @@ void Client::processReceivedMessages(){
 																(*it)->getPositionY(),
 																imTheOwner,
 																(*it)->getFps(),
-																(*it)->getOwner());
+																(*it)->getOwner(),
+																(*it)->getHealth(),
+																(*it)->getStrength(),
+																(*it)->getPrecision());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getId());
 

@@ -69,7 +69,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 		case 3:
 			yOffset = (yOrigin/2);
 			xOffset = -(((xOrigin-xOriginClientSection)*3/2)+ xOriginClientSection);
-
 			break;
 	}
 	pair<int,int> initialOffset;
@@ -78,6 +77,9 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
 	//Creo los personajes del cliente
 	xOrigin += dimension.first;
+	int villagerHealth = 100;
+	int villagerStrength = 4;
+	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO revisar que le ponemos en tipo
 		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
@@ -87,11 +89,13 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 															positionOfProtagonista.second,
 															gameSettings->getProtagonistaPixelDimension(),
 															gameSettings->getProtagonistaPixelDimension());
-
+		protagonista->setHealth(villagerHealth);
+		protagonista->setStrength(villagerStrength);
+		protagonista->setPrecision(villagerPrecition);
 		protagonista->setOwner(owner);
 		protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
 		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
-		//defino una lista con los nuevos protagonistas para que se enteren los clientes anterores
+		//defino una lista con los nuevos protagonistas para que se enteren los clientes anteriores
 		this->newProtagonistas.push_back(protagonista);
 	}
 	return initialOffset;

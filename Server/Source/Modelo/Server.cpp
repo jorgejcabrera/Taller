@@ -7,7 +7,7 @@
 
 #include "../../Headers/Modelo/Server.h"
 
-Server::Server(int port, GameController *myController) {
+Server::Server(int port, GameController* myController) {
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
@@ -15,6 +15,7 @@ Server::Server(int port, GameController *myController) {
 	this->lastReportedServer = time(0);
 	this->gameSettings = GameSettings::GetInstance();
 	this->gameRunning=false;
+	this->isAlive = true;
 }
 
 int Server::initSocketServer(){
@@ -96,8 +97,8 @@ bool Server::acceptingNewClients(){
 void Server::notifyGameInitToClients(){
 	Message* messageStart = new Message();
 	messageStart->startGame();
-	list<Client*> activeClients= getActiveClients();
-	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+	list<Client*> activeClients = getActiveClients();
+	for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 		(*clientIterator)->writeMessagesInQueue(messageStart);
 	}
 }
@@ -105,7 +106,7 @@ void Server::notifyGameInitToClients(){
 list<Message*> Server::getProtagonistasMessages(){
 	list<Message*> listaDeProtagonistas;
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
-	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
+	for(map<int,EntidadDinamica*>::iterator it = protagonistas->begin(); it != protagonistas->end();++it){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
@@ -116,6 +117,9 @@ list<Message*> Server::getProtagonistasMessages(){
 													(*it).second->getPosition().second,
 													clientConnected);
 		protagonistaMessage->setOwner((*it).second->getOwner());
+		protagonistaMessage->setHealth((*it).second->getHealth());
+		protagonistaMessage->setStrength((*it).second->getStrength());
+		protagonistaMessage->setPrecision((*it).second->getPrecision());
 		listaDeProtagonistas.push_back(protagonistaMessage);
 	}
 	return listaDeProtagonistas;

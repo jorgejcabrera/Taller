@@ -206,6 +206,27 @@ class msg_game : public ::google::protobuf::Message {
   inline ::std::string* release_owner();
   inline void set_allocated_owner(::std::string* owner);
 
+  // optional int32 health = 15;
+  inline bool has_health() const;
+  inline void clear_health();
+  static const int kHealthFieldNumber = 15;
+  inline ::google::protobuf::int32 health() const;
+  inline void set_health(::google::protobuf::int32 value);
+
+  // optional int32 strength = 16;
+  inline bool has_strength() const;
+  inline void clear_strength();
+  static const int kStrengthFieldNumber = 16;
+  inline ::google::protobuf::int32 strength() const;
+  inline void set_strength(::google::protobuf::int32 value);
+
+  // optional float precition = 17;
+  inline bool has_precition() const;
+  inline void clear_precition();
+  static const int kPrecitionFieldNumber = 17;
+  inline float precition() const;
+  inline void set_precition(float value);
+
   // @@protoc_insertion_point(class_scope:msg_game)
  private:
   inline void set_has_id();
@@ -236,6 +257,12 @@ class msg_game : public ::google::protobuf::Message {
   inline void clear_has_pixels_dimension();
   inline void set_has_owner();
   inline void clear_has_owner();
+  inline void set_has_health();
+  inline void clear_has_health();
+  inline void set_has_strength();
+  inline void clear_has_strength();
+  inline void set_has_precition();
+  inline void clear_has_precition();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -255,6 +282,9 @@ class msg_game : public ::google::protobuf::Message {
   ::google::protobuf::int32 total_frames_line_;
   ::google::protobuf::int32 pixels_dimension_;
   ::std::string* owner_;
+  ::google::protobuf::int32 health_;
+  ::google::protobuf::int32 strength_;
+  float precition_;
   friend void  protobuf_AddDesc_messageGame_2eproto();
   friend void protobuf_AssignDesc_messageGame_2eproto();
   friend void protobuf_ShutdownFile_messageGame_2eproto();
@@ -811,6 +841,78 @@ inline void msg_game::set_allocated_owner(::std::string* owner) {
     owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:msg_game.owner)
+}
+
+// optional int32 health = 15;
+inline bool msg_game::has_health() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void msg_game::set_has_health() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void msg_game::clear_has_health() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void msg_game::clear_health() {
+  health_ = 0;
+  clear_has_health();
+}
+inline ::google::protobuf::int32 msg_game::health() const {
+  // @@protoc_insertion_point(field_get:msg_game.health)
+  return health_;
+}
+inline void msg_game::set_health(::google::protobuf::int32 value) {
+  set_has_health();
+  health_ = value;
+  // @@protoc_insertion_point(field_set:msg_game.health)
+}
+
+// optional int32 strength = 16;
+inline bool msg_game::has_strength() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void msg_game::set_has_strength() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void msg_game::clear_has_strength() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void msg_game::clear_strength() {
+  strength_ = 0;
+  clear_has_strength();
+}
+inline ::google::protobuf::int32 msg_game::strength() const {
+  // @@protoc_insertion_point(field_get:msg_game.strength)
+  return strength_;
+}
+inline void msg_game::set_strength(::google::protobuf::int32 value) {
+  set_has_strength();
+  strength_ = value;
+  // @@protoc_insertion_point(field_set:msg_game.strength)
+}
+
+// optional float precition = 17;
+inline bool msg_game::has_precition() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void msg_game::set_has_precition() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void msg_game::clear_has_precition() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void msg_game::clear_precition() {
+  precition_ = 0;
+  clear_has_precition();
+}
+inline float msg_game::precition() const {
+  // @@protoc_insertion_point(field_get:msg_game.precition)
+  return precition_;
+}
+inline void msg_game::set_precition(float value) {
+  set_has_precition();
+  precition_ = value;
+  // @@protoc_insertion_point(field_set:msg_game.precition)
 }
 
 
