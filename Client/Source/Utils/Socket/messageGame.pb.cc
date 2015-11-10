@@ -2,7 +2,8 @@
 // source: messageGame.proto
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
-#include  "../../../Headers/Utils/Socket/messageGame.pb.h"
+
+#include "../../../Headers/Utils/Socket/messageGame.pb.h"
 
 #include <algorithm>
 
@@ -32,7 +33,7 @@ void protobuf_AssignDesc_messageGame_2eproto() {
       "messageGame.proto");
   GOOGLE_CHECK(file != NULL);
   msg_game_descriptor_ = file->message_type(0);
-  static const int msg_game_offsets_[14] = {
+  static const int msg_game_offsets_[17] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, tipo_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, target_),
@@ -47,6 +48,9 @@ void protobuf_AssignDesc_messageGame_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, total_frames_line_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, pixels_dimension_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, owner_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, health_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, strength_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(msg_game, precition_),
   };
   msg_game_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -89,13 +93,14 @@ void protobuf_AddDesc_messageGame_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\021messageGame.proto\"\361\001\n\010msg_game\022\n\n\002id\030\001"
+    "\n\021messageGame.proto\"\246\002\n\010msg_game\022\n\n\002id\030\001"
     " \002(\005\022\014\n\004tipo\030\002 \002(\t\022\016\n\006target\030\003 \001(\005\022\t\n\001x\030"
     "\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\016\n\006nombre\030\006 \001(\t\022\016\n\006imag"
     "en\030\007 \001(\t\022\022\n\nancho_base\030\010 \001(\005\022\021\n\talto_bas"
     "e\030\t \001(\005\022\013\n\003fps\030\n \001(\005\022\r\n\005delay\030\013 \001(\005\022\031\n\021t"
     "otal_frames_line\030\014 \001(\005\022\030\n\020pixels_dimensi"
-    "on\030\r \001(\005\022\r\n\005owner\030\016 \001(\t", 263);
+    "on\030\r \001(\005\022\r\n\005owner\030\016 \001(\t\022\016\n\006health\030\017 \001(\005\022"
+    "\020\n\010strength\030\020 \001(\005\022\021\n\tprecition\030\021 \001(\002", 316);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "messageGame.proto", &protobuf_RegisterTypes);
   msg_game::default_instance_ = new msg_game();
@@ -127,6 +132,9 @@ const int msg_game::kDelayFieldNumber;
 const int msg_game::kTotalFramesLineFieldNumber;
 const int msg_game::kPixelsDimensionFieldNumber;
 const int msg_game::kOwnerFieldNumber;
+const int msg_game::kHealthFieldNumber;
+const int msg_game::kStrengthFieldNumber;
+const int msg_game::kPrecitionFieldNumber;
 #endif  // !_MSC_VER
 
 msg_game::msg_game()
@@ -162,6 +170,9 @@ void msg_game::SharedCtor() {
   total_frames_line_ = 0;
   pixels_dimension_ = 0;
   owner_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  health_ = 0;
+  strength_ = 0;
+  precition_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -238,14 +249,16 @@ void msg_game::Clear() {
     }
     ancho_base_ = 0;
   }
-  if (_has_bits_[8 / 32] & 16128) {
+  if (_has_bits_[8 / 32] & 65280) {
     ZR_(alto_base_, pixels_dimension_);
+    ZR_(health_, strength_);
     if (has_owner()) {
       if (owner_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         owner_->clear();
       }
     }
   }
+  precition_ = 0;
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -260,7 +273,7 @@ bool msg_game::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:msg_game)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -477,6 +490,51 @@ bool msg_game::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(120)) goto parse_health;
+        break;
+      }
+
+      // optional int32 health = 15;
+      case 15: {
+        if (tag == 120) {
+         parse_health:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &health_)));
+          set_has_health();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(128)) goto parse_strength;
+        break;
+      }
+
+      // optional int32 strength = 16;
+      case 16: {
+        if (tag == 128) {
+         parse_strength:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &strength_)));
+          set_has_strength();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(141)) goto parse_precition;
+        break;
+      }
+
+      // optional float precition = 17;
+      case 17: {
+        if (tag == 141) {
+         parse_precition:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &precition_)));
+          set_has_precition();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -596,6 +654,21 @@ void msg_game::SerializeWithCachedSizes(
       14, this->owner(), output);
   }
 
+  // optional int32 health = 15;
+  if (has_health()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->health(), output);
+  }
+
+  // optional int32 strength = 16;
+  if (has_strength()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->strength(), output);
+  }
+
+  // optional float precition = 17;
+  if (has_precition()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(17, this->precition(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -698,6 +771,21 @@ void msg_game::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         14, this->owner(), target);
+  }
+
+  // optional int32 health = 15;
+  if (has_health()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->health(), target);
+  }
+
+  // optional int32 strength = 16;
+  if (has_strength()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->strength(), target);
+  }
+
+  // optional float precition = 17;
+  if (has_precition()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->precition(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -812,6 +900,27 @@ int msg_game::ByteSize() const {
           this->owner());
     }
 
+    // optional int32 health = 15;
+    if (has_health()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->health());
+    }
+
+    // optional int32 strength = 16;
+    if (has_strength()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->strength());
+    }
+
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional float precition = 17;
+    if (has_precition()) {
+      total_size += 2 + 4;
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -883,6 +992,17 @@ void msg_game::MergeFrom(const msg_game& from) {
     if (from.has_owner()) {
       set_owner(from.owner());
     }
+    if (from.has_health()) {
+      set_health(from.health());
+    }
+    if (from.has_strength()) {
+      set_strength(from.strength());
+    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (from.has_precition()) {
+      set_precition(from.precition());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -921,6 +1041,9 @@ void msg_game::Swap(msg_game* other) {
     std::swap(total_frames_line_, other->total_frames_line_);
     std::swap(pixels_dimension_, other->pixels_dimension_);
     std::swap(owner_, other->owner_);
+    std::swap(health_, other->health_);
+    std::swap(strength_, other->strength_);
+    std::swap(precition_, other->precition_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -40,7 +40,7 @@ private:
 
 public:
 	EntidadDinamica();
-	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length,int health, int strength,float precision);
+	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
 	void setPath(list<pair<int,int> >* camino);
 	/*
 	* devuelve true si pudo mover la entidad de posicion

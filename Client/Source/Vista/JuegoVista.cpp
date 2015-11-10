@@ -208,7 +208,7 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 }
 
-void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner){
+void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner,int health,int strength,float precision){
 	EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -217,6 +217,9 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	newPersonaje->setName(type);
 	newPersonaje->setPosition(x,y);
 	newPersonaje->setOwner(owner);
+	newPersonaje->setHealth(health);
+	newPersonaje->setStrength(health);
+	newPersonaje->setPrecision(precision);
 	//agrego la posicion inicial de pantalla
 	pair<float,float> initialScreenPos = UtilsController::GetInstance()->getIsometricPosition(x,y);
 	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);

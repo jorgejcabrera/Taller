@@ -64,6 +64,19 @@ float EntidadPartidaVista::getPrecision(){
 	return this->precision;
 }
 
+void EntidadPartidaVista::setHealth(int health){
+	this->health = health;
+}
+
+void EntidadPartidaVista::setStrength(int strength){
+	this->strength = strength;
+}
+
+void EntidadPartidaVista::setPrecision(float precision){
+	this->precision = precision;
+}
+
+
 void EntidadPartidaVista::setName(string nameEnt){
 	this->name=nameEnt;
 }

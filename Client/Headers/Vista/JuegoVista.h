@@ -101,7 +101,7 @@ public:
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y,string owner);
 	void addSemiEstaticEntity(int id, string type, int x, int y, string owner);
-	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner);
+	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner,int health,int strength,float precision);
 	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();

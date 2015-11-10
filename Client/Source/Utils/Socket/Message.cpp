@@ -76,10 +76,6 @@ void Message::setContent(msg_game message){
 	this->msg = message;
 }
 
-string Message::serializeAsString(){
-	return this->msg.SerializeAsString();
-}
-
 string Message::getTipo(){
 	return this->msg.tipo();
 }
@@ -142,6 +138,30 @@ void Message::setTarget(int entityId){
 
 int Message::getTarget(){
 	return this->msg.target();
+}
+
+void Message::setHealth(int health){
+	this->msg.set_health(health);
+}
+
+int Message::getHealth(){
+	return this->msg.health();
+}
+
+void Message::setStrength(int strength){
+	this->msg.set_strength(strength);
+}
+
+int Message::getStrength(){
+	return this->msg.strength();
+}
+
+void Message::setPrecision(float precision){
+	this->msg.set_precition(precision);
+}
+
+float Message::getPrecision(){
+	return this->msg.precition();
 }
 
 Message::~Message(){

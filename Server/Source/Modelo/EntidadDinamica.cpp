@@ -15,10 +15,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,
 								float x,
 								float y,
 								float widthPixel,
-								float lengthPixelsn,
-								int health, 
-								int strength,
-								float precision){
+								float lengthPixels){
 	this->caminando = false;
 	this->notifiable = false;
 	this->position.first = x;

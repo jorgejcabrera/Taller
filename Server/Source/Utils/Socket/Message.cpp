@@ -207,6 +207,30 @@ int Message::getTarget(){
 	return this->msg.target();
 }
 
+void Message::setHealth(int health){
+	this->msg.set_health(health);
+}
+
+int Message::getHealth(){
+	return this->msg.health();
+}
+
+void Message::setStrength(int strength){
+	this->msg.set_strength(strength);
+}
+
+int Message::getStrength(){
+	return this->msg.strength();
+}
+
+void Message::setPrecision(float precition){
+	this->msg.set_precition(precition);
+}
+
+float Message::getPrecision(){
+	return this->msg.precition();
+}
+
 void Message::activeTile( int x, int y) {
 	this->msg.set_x(x);
 	this->msg.set_y(y);

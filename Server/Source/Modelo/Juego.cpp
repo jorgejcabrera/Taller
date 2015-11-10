@@ -69,7 +69,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 		case 3:
 			yOffset = (yOrigin/2);
 			xOffset = -(((xOrigin-xOriginClientSection)*3/2)+ xOriginClientSection);
-
 			break;
 	}
 	pair<int,int> initialOffset;
@@ -80,7 +79,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	xOrigin += dimension.first;
 	int villagerHealth = 100;
 	int villagerStrength = 4;
-	int villagerPrecition = 0.5;
+	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO revisar que le ponemos en tipo
 		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
@@ -89,11 +88,10 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 															positionOfProtagonista.first,
 															positionOfProtagonista.second,
 															gameSettings->getProtagonistaPixelDimension(),
-															gameSettings->getProtagonistaPixelDimension(),
-															villagerHealth,
-															villagerStrength,
-															villagerPrecition);
-
+															gameSettings->getProtagonistaPixelDimension());
+		protagonista->setHealth(villagerHealth);
+		protagonista->setStrength(villagerStrength);
+		protagonista->setPrecision(villagerPrecition);
 		protagonista->setOwner(owner);
 		protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
 		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));

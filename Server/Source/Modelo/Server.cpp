@@ -7,7 +7,7 @@
 
 #include "../../Headers/Modelo/Server.h"
 
-Server::Server(int port, GameController *myController) {
+Server::Server(int port, GameController* myController) {
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
@@ -15,6 +15,7 @@ Server::Server(int port, GameController *myController) {
 	this->lastReportedServer = time(0);
 	this->gameSettings = GameSettings::GetInstance();
 	this->gameRunning=false;
+	this->isAlive = true;
 }
 
 int Server::initSocketServer(){
@@ -116,6 +117,9 @@ list<Message*> Server::getProtagonistasMessages(){
 													(*it).second->getPosition().second,
 													clientConnected);
 		protagonistaMessage->setOwner((*it).second->getOwner());
+		protagonistaMessage->setHealth((*it).second->getHealth());
+		protagonistaMessage->setStrength((*it).second->getStrength());
+		protagonistaMessage->setPrecision((*it).second->getPrecision());
 		listaDeProtagonistas.push_back(protagonistaMessage);
 	}
 	return listaDeProtagonistas;

@@ -70,6 +70,30 @@ int EntidadPartida::getVisibilityRange() {
 	return this->visibilityRange;
 }
 
+void EntidadPartida::setHealth(int health){
+	this->health = health;
+}
+
+int EntidadPartida::getHealth(){
+	return this->health;
+}
+
+void EntidadPartida::setStrength(int strength){
+	this->strength = strength;
+}
+
+int EntidadPartida::getStrength(){
+	return this->strength;
+}
+
+void EntidadPartida::setPrecision(float precision){
+	this->precision = precision;
+}
+
+float EntidadPartida::getPrecision(){
+	return this->precision;
+}
+
 int EntidadPartida::getDamage(){
 	float val = ( rand() % 100 ) / 100;
 	if( val <= this->precision )

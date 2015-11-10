@@ -39,6 +39,9 @@ public:
 	string serializeAsString();
 	string toString();
 	void setContent(msg_game body);
+	void setHealth(int health);
+	void setStrength(int strength);
+	void setPrecision(float precition);
 
 	/*
 	* metodos para poder sacar la informacion del mensaje desde afuera de la clase
@@ -57,6 +60,9 @@ public:
 	int getTotalFramesLine();
 	int getPixelsDimension();
 	int getTarget();
+	int getHealth();
+	int getStrength();
+	float getPrecision();
 	void setAsNewPath(bool value);
 	void setOwner(string userName);
 	/*
