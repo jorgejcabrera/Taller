@@ -8,9 +8,10 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
+	this->gameType = CIVIC_CENTER;
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
-	this->salirDelJuego = false;
+	this->gameRunning = true;
 	this->juego = new Juego();
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
@@ -18,6 +19,14 @@ GameController::GameController(){
 
 Juego* GameController::getJuego(){
 	return this->juego;
+}
+
+bool GameController::isGameRunning(){
+	return this->gameRunning;
+}
+
+void GameController::gameFinished(){
+	this->gameRunning=false;
 }
 
 list<Message*> GameController::getTilesMessages(){
@@ -135,6 +144,35 @@ void GameController::delay(){
 void GameController::delay(int ms){
 	this->runCycles++;
 	SDL_Delay(ms);
+}
+
+bool GameController::checkIfClientLostGame(string clientName){
+	bool lost=false;
+	switch(this->gameType){
+		case CIVIC_CENTER:
+			//TODO verificar que si no tiene entidades esto devuelve 0 ya que la lista no esta inicializada
+			lost = ((this->getEntitiesOfClient(clientName)).size()==0);
+			break;
+		case CAPTURE_FLAG:
+			//TODO ver como capturar la bandera
+			cout << "NO SE QUE CONTROLAR"<<endl;
+			break;
+		case REGICIDE:
+			lost=this->isKingOfClientAlive(clientName);
+			break;
+	}
+	return lost;
+}
+
+bool GameController::isKingOfClientAlive(string userName){
+	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
+	for(map<int,EntidadDinamica*>::iterator iteratePersonajes= listaPersonajes->begin(); iteratePersonajes!=listaPersonajes->end();++iteratePersonajes){
+		//TODO ver de crear una entidad con el name king
+		if((iteratePersonajes->second->getOwner()==userName) && iteratePersonajes->second->getName()=="king"){
+			return true;
+		}
+	}
+	return false;
 }
 
 GameController::~GameController() {

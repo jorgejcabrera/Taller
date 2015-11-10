@@ -10,6 +10,8 @@
 EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
 	this->seen = false;
+	//TODO sacar esto, lo dejo asi sino a veces lo pone como el valor maximo de int
+	this->health = 100;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){

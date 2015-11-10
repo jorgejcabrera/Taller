@@ -18,6 +18,7 @@ GameController::GameController(){
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 	this->gameRunning=false;
 	this->idEntitySelected=0;
+	this->gameStatus = RUNNING;
 }
 
 Message* GameController::getMessageFromEvent(string userName){
@@ -204,12 +205,44 @@ void GameController::delay(){
 	}
 }
 
+void GameController::delay(int delayMs){
+	this->runCycles++;
+	SDL_Delay(delayMs);
+}
+
 bool GameController::gameIsRunning(){
 	return this->gameRunning;
 }
 
 void GameController::setClientName(string name){
 	this->clientName = name;
+}
+
+void GameController::winGame(){
+	this->gameStatus = WIN;
+}
+
+void GameController::loseGame(){
+	this->gameStatus = LOSE;
+}
+
+void GameController::disconnectedGame(){
+	this->gameStatus = DISCONNECTED;
+}
+
+void GameController::showFinalMessage(){
+	string finalMessage= "";
+	if(this->gameStatus == WIN){
+		finalMessage = "Victory is yours";
+	}else if(this->gameStatus == LOSE){
+		finalMessage = "You Die";
+	}else if (this->gameStatus == DISCONNECTED){
+		finalMessage = "Server disconnected";
+	}
+	if(finalMessage!=""){
+		this->getJuegoVista()->renderFinalMessage(finalMessage);
+		this->delay(5000);
+	}
 }
 
 GameController::~GameController() {
