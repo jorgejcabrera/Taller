@@ -86,14 +86,18 @@ void GameController::setNextPaths(){
 	}
 }
 
-void GameController::pursuitTarget(){
+void GameController::pursuitAndAttackTarget(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0){
-			if( !this->readyToAttack(it->second) ){
+			if( !this->readyToAttack(it->second) && !this->targetOutOfReach(it->second) ){
 				//Logger::get()->logDebug("GameController","pursuitTarget","persiguiendo enemigo");
 				pair<int,int> targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
+			
+			}else if( this->targetOutOfReach(it->second) ){
+				this->juego->setTargetTo(it->second->getId(),0);
+
 			}else{
 				Logger::get()->logDebug("GameController","pursuitTarget","atacando el enemigo");
 				EntidadDinamica* enemy = this->juego->getDinamicEntityById(it->second->getTarget());
@@ -112,18 +116,16 @@ bool GameController::readyToAttack(EntidadDinamica* entity){
 	ss.str("");
 	ss << "la posicion de la entidad es: " << entity->getPosition().first << " " << entity->getPosition().second;
 	Logger::get()->logDebug("GameController","readyToAttack",ss.str());*/
+	return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
+}
 
-	if ( UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1 ){
-		return true;
-	}else{
-		return false;
-	}
-	Logger::get()->logDebug("GameController","readyToAttack","there is no target position");
-	return false;
+bool GameController::targetOutOfReach(EntidadDinamica* entity){
+	pair<int,int> targetPosition = this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
+	return UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) >= 10;
 }
 
 void GameController::updateGame(){
-	this->pursuitTarget();
+	this->pursuitAndAttackTarget();
 	this->setNextPaths();
 	this->juego->getResourceManager()->actualizar();
 }
