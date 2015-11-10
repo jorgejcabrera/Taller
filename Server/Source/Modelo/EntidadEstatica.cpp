@@ -10,7 +10,6 @@
 using namespace std;
 
 EntidadEstatica::EntidadEstatica() {
-	this->target = 0;
 }
 
 EntidadEstatica::EntidadEstatica(string nameEntity, int width,int length, bool esEdificable){
@@ -18,7 +17,6 @@ EntidadEstatica::EntidadEstatica(string nameEntity, int width,int length, bool e
 	this->length = length;
 	this->edificable = esEdificable;
 	this->name = nameEntity;
-	this->target = 0;
 }
 
 string getStringSize(EntidadPartida* entidad){

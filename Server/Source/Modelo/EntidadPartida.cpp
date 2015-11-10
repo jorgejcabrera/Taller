@@ -9,9 +9,11 @@
 
 using namespace std;
 
+//TODO es posible que no tenga sentido que todas las entidades tengan target
 EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
+	this->target = 0;
 }
 
 int EntidadPartida::getId(){

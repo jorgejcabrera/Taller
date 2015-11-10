@@ -22,7 +22,6 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y, floa
 	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
 	this->cicloActual = 0;
 	this->newPath = false;
-	this->target = 0;
 }
 
 void EntidadDinamica::nextPosition(){
