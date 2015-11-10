@@ -142,6 +142,10 @@ public:
 	* */
 	void renderFinishLogin(string finalMessage);
 	void setColour(string owner,int colour);
+	/*
+	 * Renderiza la vista actual y el mensaje pasado por parametro
+	 */
+	void renderFinalMessage(string finalMessage);
 	~JuegoVista();
 };
 

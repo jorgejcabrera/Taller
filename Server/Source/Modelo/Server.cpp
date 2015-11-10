@@ -230,6 +230,7 @@ void Server::pingMessage(){
 }
 
 void Server::verifyClientsConections(){
+
 	list<Client*> activeClients= getActiveClients();
 	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 		if((*clientIterator)->getTimeSinceLastReport()>= (DefaultSettings::getTimeOut()*2)){
@@ -247,8 +248,34 @@ void Server::verifyClientsConections(){
 				}
 			}
 		}
+		if(this->gController->checkIfClientLostGame((*clientIterator)->getUserName())){
+			Message* messageClientLost = new Message();
+			messageClientLost->clientLost((*clientIterator)->getUserName());
+			for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
+					(*clientIt)->writeMessagesInQueue(messageClientLost);
+			}
+			(*clientIterator)->disconect();
+		}
+	}
+
+	if(!this->acceptingNewClients()){
+		//Si solo queda un cliente, entonces gano
+		activeClients= getActiveClients();
+		if(activeClients.size()==1){
+
+			Client* winner = activeClients.front();
+			Message* messageClientWin = new Message();
+			messageClientWin->clientWin(winner->getUserName());
+			winner->writeMessagesInQueue(messageClientWin);
+			this->gController->gameFinished();
+			//TODO revisar si esto es necesario, quiero que al ultimo cliente le llegue el mensaje de que gano y que no sea que pierde la conexion
+			this->gController->delay(1000);
+		}else if(activeClients.size()==0){
+			this->gController->gameFinished();
+		}
 	}
 }
+
 
 list<Client*> Server::getActiveClients(){
 	list<Client*> activeClients;

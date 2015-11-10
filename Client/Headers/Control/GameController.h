@@ -16,6 +16,13 @@
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
 
+enum game{
+	WIN,
+	LOSE,
+	RUNNING,
+	DISCONNECTED
+};
+
 class GameController {
 
 private:
@@ -32,6 +39,7 @@ private:
 	int inicioDeCiclo;
 	bool gameRunning;
 	string clientName;
+	game gameStatus;
 	/*
 	* retorna la posicion cartesiana valida correspondiente al lugar donde se hizo click
 	* */
@@ -63,6 +71,10 @@ public:
 	int getRunCycles();
 	int getMaxFramesPerSecond();
 	void delay();
+	/*
+	 * Ejecuto un delay especifico
+	 */
+	void delay(int delayMs);
 	void resetPath(int id);
 	void setGameRunning();
 	bool gameIsRunning();
@@ -70,6 +82,22 @@ public:
 	* seteo el clientName porque despues lo necesito para seleccionar las entidades
 	* */
 	void setClientName(string name);
+	/*
+	* Seteo la partida como GANADA
+	*/
+	void winGame();
+	/*
+	 * Seteo la partida como PERDIDA
+	 */
+	void loseGame();
+	/*
+	 * Servidor desconectado
+	 */
+	void disconnectedGame();
+	/*
+	 * Muestra el mensaje final, si gano o perdio
+	 */
+	void showFinalMessage();
 	virtual ~GameController();
 };
 

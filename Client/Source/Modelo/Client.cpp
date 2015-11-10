@@ -146,6 +146,16 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->updateOffset((*it)->getPositionX(),(*it)->getPositionY());
 		}else if (tipoMensaje == "colour"){
 			this->gController->getJuegoVista()->setColour((*it)->getOwner(),(*it)->getPositionX());
+		}else if (tipoMensaje == "win"){
+			this->gController->winGame();
+			this->status = DISCONECTED;
+		}else if (tipoMensaje == "lost"){
+			if((*it)->getNombre() == this->userName){
+				this->gController->loseGame();
+				this->status = DISCONECTED;
+			}else{
+				//TODO borrar las entidades del cliente desconectado
+			}
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 			cout << (*it)->toString()<<endl;
@@ -201,10 +211,10 @@ void Client::verifyServerAlive(){
 		if( (time(0)-this->lastReportedServer) > (DefaultSettings::getTimeOut()*2)){
 			this->status = DISCONECTED;
 			Logger::get()->logError("Client","verifyServerAlive","Problemas con el servidor. Conexion cerrada.");
+			gController->disconnectedGame();
 		}
 	}
 }
-
 
 void Client::askPortConnection(){
 	this->gController->getJuegoVista()->createView();

@@ -64,7 +64,7 @@ public:
 	* */
 	void pingMessage(string nombre);
 	/*
-	* ?
+	* El cliente se deconecto entonces mando la novedad con el id de la entidad desconectada
 	* */
 	void clientDisconect(int id);
 	/*
@@ -83,6 +83,14 @@ public:
 	 * mensaje para mandar el offset inicial del cliente
 	 */
 	void initialOffset(int x, int y);
+	/*
+	 * Mensaje para mandar que un cliente perdio el juego
+	 */
+	void clientLost(string clientName);
+	/*
+	 * Mensaje para mandar que un cliente es el ganador del juego
+	 */
+	void clientWin(string clientName);
 	void colourOfClient(string client, int colour);
 	virtual ~Message();
 };

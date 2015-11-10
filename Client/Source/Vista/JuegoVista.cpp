@@ -50,6 +50,11 @@ void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter){
 	this->picassoHelper->renderView();
 }
 
+void JuegoVista::renderFinalMessage(string finalMessage){
+	PicassoHelper::GetInstance()->renderText(GameSettings::GetInstance()->getScreenWidth()/3,GameSettings::GetInstance()->getScreenHeight()/2,finalMessage.size()*20,40,finalMessage,255,255,255);
+	this->picassoHelper->renderView();
+}
+
 void JuegoVista::drawFog() {
 	int posX = 0;
 	int posY = 0;

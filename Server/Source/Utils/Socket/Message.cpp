@@ -86,6 +86,18 @@ void Message::clientDisconect(int identifier){
 	this->msg.set_tipo("disconnect");
 }
 
+void Message::clientLost(string clientName){
+	this->msg.set_id(0);
+	this->msg.set_tipo("lost");
+	this->msg.set_nombre(clientName);
+}
+
+void Message::clientWin(string clientName){
+	this->msg.set_id(0);
+	this->msg.set_tipo("win");
+	this->msg.set_nombre(clientName);
+}
+
 void Message::startGame(){
 	this->msg.set_id(0);
 	this->msg.set_tipo("start");

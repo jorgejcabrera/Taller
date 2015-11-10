@@ -18,16 +18,23 @@
 #include "../Modelo/EntidadDinamica.h"
 #include <list>
 
+enum game {
+	CIVIC_CENTER,
+	CAPTURE_FLAG,
+	REGICIDE} ;
+
 class GameController {
 
 private:
 	UtilsController* utils;
 	Juego* juego;
 	GameSettings* gameSettings;
-	bool salirDelJuego;
+	bool gameRunning;
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
+	game gameType;
+
 	void setNextPaths();
 	/*
 	* si las entidades tiene algun target, y éste se movió, se debe perseguirlo
@@ -55,6 +62,24 @@ public:
 	list<Message*> getTilesMessages();
 	list<Message*> getEntitiesMessages();
 	list<int> getEntitiesOfClient(string userName);
+	/*
+	 * Verifica si el cliente perdió
+	 */
+	bool checkIfClientLostGame(string clientName);
+	/*
+	 * Verifica si dentro de la lista de los personajes de un cliente existe uno que tenga name=king
+	 * Ver si queremos identificar al key de otra manera
+	 */
+	bool isKingOfClientAlive(string userName);
+
+	/*
+	 * devuelve true si el juego esta en curso o false si hay algun ganador
+	 */
+	bool isGameRunning();
+	/*
+	 * Setea el gameRunning en false para indicar que ya termino el juego
+	 */
+	void gameFinished();
 	virtual ~GameController();
 };
 
