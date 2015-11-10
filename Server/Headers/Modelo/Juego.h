@@ -22,7 +22,13 @@ using namespace std ;
 class Juego {
 private:
 	Mapa* mapa;
+	/*
+	* entidades dinámicas mapeadas por el owner
+	* */
 	map<int,EntidadDinamica*> protagonistas;
+	/*
+	* ?
+	* */
 	list<EntidadDinamica*> newProtagonistas;
 	ResourceManager* resourseManager;
 	GameSettings* gameSettings;
@@ -50,6 +56,10 @@ public:
 	*?
 	* */
 	void cleanNewProtagonistas();
+	/*
+	* devuelve una lista de entidades que murieron
+	* */
+	list<EntidadDinamica> getFallenEntities();
 	EntidadDinamica* getDinamicEntityById(int id);
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();

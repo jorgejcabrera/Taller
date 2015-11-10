@@ -136,6 +136,19 @@ void Juego::setTargetTo(int entityId,int target){
 	entityToUpdate->setTargetPosition(make_pair(0,0));
 }
 
+//TODO OJO el atacante que tenia seteada a la entidad caida como target debe clenearlo sino rompe todo
+list<EntidadDinamica> Juego::getFallenEntities(){
+	list<EntidadDinamica> fallenEntities;
+	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
+		if(it->second->getHealth() <= 0 ){
+			Logger::get()->logDebug("Juego","getFallenEntities","se murio una entidad");
+			fallenEntities.push_front(*it->second);
+			protagonistas.erase(it);
+		}
+	}
+	return fallenEntities;
+}
+
 EntidadDinamica* Juego::getDinamicEntityById(int id){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( (*it).second->getId() == id )

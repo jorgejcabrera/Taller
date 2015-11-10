@@ -172,7 +172,7 @@ void Server::notifyClients(){
 		}
 	}
 	//mando los nuevos personajes
-	list<EntidadDinamica*> *nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
+	list<EntidadDinamica*>* nuevosProtagonistas = this->gController->getJuego()->getNewProtagonistasToNotify();
 	for(list<EntidadDinamica*>::iterator it=nuevosProtagonistas->begin(); it!=nuevosProtagonistas->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
 		Message* protagonistaMessage = new Message((*it)->getId(), 
@@ -202,7 +202,6 @@ void Server::notifyClients(){
 			(*clientIterator)->writeMessagesInQueue(resourceMessege);
 		}
 	}
-
 	//mando los nuevos recursos que se crean
 	if(rm->hasNewResource()){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
@@ -215,7 +214,17 @@ void Server::notifyClients(){
 		}
 
 	}
+	//mando las entidades dinámicas que murieron
+	//list<EntidadDinamica> fallenEntities = this->gController->getJuego()->getFallenEntities();
+	//for(list<EntidadDinamica>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
+	//	Message* fallenEntity = new Message((*itFallenEntities).getId(),"deleteEntity",rm->getUltimoTipoConsumido(),0,0,0);
+	//	list<Client*> activeClients = getActiveClients();
 
+		//TODO poner esto en un metodo
+	//	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+	//		(*clientIterator)->writeMessagesInQueue(fallenEntity);
+	//	}
+	//}
 	this->gController->getJuego()->cleanNewProtagonistas();
 	pingMessage();
 }
