@@ -28,7 +28,10 @@ Message* GameController::getMessageFromEvent(string userName){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				//menu
-			}else if( this->idEntitySelected > 0 ){
+				if( this->idEntitySelected > 0 ) {
+					EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
+				}
+			} else if( this->idEntitySelected > 0 ) {
 				EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
 				map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
@@ -58,9 +61,7 @@ Message* GameController::getMessageFromEvent(string userName){
 		// seleccionamos una entidad del mapa
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-				//menu
-			}else if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				pair<int,int>* offset = this->juegoVista->getOffset();
 				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 				map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
