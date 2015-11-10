@@ -146,7 +146,6 @@ public:
 	 * Renderiza la vista actual y el mensaje pasado por parametro
 	 */
 	void renderFinalMessage(string finalMessage);
-	void drawOptionsToCreateOf(string creatorBuilding);
 	~JuegoVista();
 };
 

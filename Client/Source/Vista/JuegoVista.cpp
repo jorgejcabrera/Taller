@@ -492,10 +492,6 @@ void JuegoVista::setColour(string owner,int iColour) {
 	this->coloursOfClients[owner] = c;
 }
 
-void JuegoVista::drawOptionsToCreateOf(string creatorBuilding) {
-
-}
-
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
 	delete(this->menuVista);
