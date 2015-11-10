@@ -41,7 +41,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	}
 
 	//Creo el centro civico del jugador
-	string nombre = "Barracks";
+	string nombre = DefaultSettings::getNameCivicCenter();
 	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(nombre);
 	int xOrigin =  xOriginClientSection+width/4;
 	int yOrigin =  yOriginClientSection+height/4;

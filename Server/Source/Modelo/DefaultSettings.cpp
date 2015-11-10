@@ -13,6 +13,7 @@ const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
+const string DefaultSettings::NAME_OF_CIVIC_CENTER = "Barracks";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -249,6 +250,10 @@ int DefaultSettings::getRangeVisibility() {
 
 int DefaultSettings::getQtyInitialCharacters(){
 	return QTY_INITIAL_CHARACTERS;
+}
+
+string DefaultSettings::getNameCivicCenter(){
+	return NAME_OF_CIVIC_CENTER;
 }
 
 DefaultSettings::~DefaultSettings() {

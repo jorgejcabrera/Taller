@@ -40,6 +40,7 @@ private:
 	static const int TIMEOUT = 15;
 	static const int RANGE_VISIBILITY = 4;
 	static const int QTY_INITIAL_CHARACTERS = 3;
+	static const string NAME_OF_CIVIC_CENTER;
 
 
 public:
@@ -83,6 +84,7 @@ public:
 	static int getTimeOut();
 	static int getRangeVisibility();
 	static int getQtyInitialCharacters();
+	static string getNameCivicCenter();
 };
 
 

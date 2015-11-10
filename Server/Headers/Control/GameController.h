@@ -75,7 +75,10 @@ public:
 	 * Ver si queremos identificar al key de otra manera
 	 */
 	bool isKingOfClientAlive(string userName);
-
+	/*
+	 * Verifica si el cliente aun tiene un centro civico
+	 */
+	bool isCivicCenterStillExist(string userName);
 	/*
 	 * devuelve true si el juego esta en curso o false si hay algun ganador
 	 */

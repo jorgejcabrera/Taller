@@ -152,18 +152,27 @@ bool GameController::checkIfClientLostGame(string clientName){
 	bool lost=false;
 	switch(this->gameType){
 		case CIVIC_CENTER:
-			//TODO verificar que si no tiene entidades esto devuelve 0 ya que la lista no esta inicializada
-			lost = ((this->getEntitiesOfClient(clientName)).size()==0);
+			lost=(!this->isCivicCenterStillExist(clientName));
 			break;
 		case CAPTURE_FLAG:
 			//TODO ver como capturar la bandera
 			cout << "NO SE QUE CONTROLAR"<<endl;
 			break;
 		case REGICIDE:
-			lost=this->isKingOfClientAlive(clientName);
+			lost=(!this->isKingOfClientAlive(clientName));
 			break;
 	}
 	return lost;
+}
+
+bool GameController::isCivicCenterStillExist(string userName){
+	list<EntidadPartida*>* listEntities = this->juego->getMap()->getEntities();
+	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
+		if(((*iterateEntities)->getOwner()==userName) && (*iterateEntities)->getName()==DefaultSettings::getNameCivicCenter()){
+			return true;
+		}
+	}
+	return false;
 }
 
 bool GameController::isKingOfClientAlive(string userName){
