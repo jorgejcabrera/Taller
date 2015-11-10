@@ -49,6 +49,10 @@ private:
 	* entidades del mapa
 	* */
 	list<TileVista*> tiles;
+	/*
+	* colores de los clientes
+	* */
+	map<string,colour> coloursOfClients;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
 	map<int, EntidadDinamicaVista*> personajes;
@@ -137,6 +141,7 @@ public:
 	* Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
 	* */
 	void renderFinishLogin(string finalMessage);
+	void setColour(string owner,int colour);
 	~JuegoVista();
 };
 

@@ -14,9 +14,9 @@ MiniMapVista::MiniMapVista() {
 	miniTilePath = "../../Taller/Images/Tiles/tileVerde.png";
 	miniUnseenTilePath = "../../Taller/Images/Tiles/tileNegro.png";
 	miniFoggedTilePath = "../../Taller/Images/Tiles/tilefog.png";
-	miniCharacterPath = "../../Taller/Images/Tiles/tileAzul.png";
+	miniCharacterPath = "../../Taller/Images/Tiles/blueTile.png";
 	miniEnemyCharacterPath = "../../Taller/Images/Tiles/tileRojo.png";
-	miniEntityPath = "../../Taller/Images/Tiles/tileAzul.png";
+	miniEntityPath = "../../Taller/Images/Tiles/blueTile.png";
 
 	alturaMenu = gameSettings->getAlturaMenuInferior();
 	diagonal = sqrt(pow(gameSettings->getMapHeight(),2) + pow(gameSettings->getMapWidth(),2));
@@ -76,6 +76,20 @@ int MiniMapVista::getMiniHeight() {
 
 MiniMapVista::~MiniMapVista() {
 	this->gameSettings = NULL;
+}
+
+string MiniMapVista::getPathOfColour(colour colour) {
+	switch (colour) {
+	case red : 			return "../../Taller/Images/Tiles/redTile.png";
+						break;
+	case blue : 		return "../../Taller/Images/Tiles/blueTile.png";
+						break;
+	case yellow :		return "../../Taller/Images/Tiles/yellowTile.png";
+						break;
+	case lightGreen : 	return "../../Taller/Images/Tiles/lightGreenTile.png";
+						break;
+	default : 			return "";
+	}
 }
 
 } /* namespace std */

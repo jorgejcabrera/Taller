@@ -268,7 +268,8 @@ void JuegoVista::drawMiniMap() {
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
-		this->picassoHelper->renderObject(	this->miniMapVista->getEnemyCharacterPath(),
+		colour colour = this->coloursOfClients[(*itDinamicos).second->getOwner()];
+		this->picassoHelper->renderObject(	this->miniMapVista->getPathOfColour(colour),
 											this->miniMapVista->getMiniPosX() ,
 											this->miniMapVista->getMiniPosY(),
 											this->miniMapVista->getMiniWidth(),
@@ -278,7 +279,8 @@ void JuegoVista::drawMiniMap() {
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
-		this->picassoHelper->renderObject(	this->miniMapVista->getCharacterPath(),
+		colour colour = this->coloursOfClients[(*itDinamicos).second->getOwner()];
+		this->picassoHelper->renderObject(	this->miniMapVista->getPathOfColour(colour),
 											this->miniMapVista->getMiniPosX() ,
 											this->miniMapVista->getMiniPosY(),
 											this->miniMapVista->getMiniWidth(),
@@ -475,6 +477,11 @@ int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
 		}
 	}
 	return 0;
+}
+
+void JuegoVista::setColour(string owner,int iColour) {
+	colour c = static_cast<colour>(iColour);
+	this->coloursOfClients[owner] = c;
 }
 
 JuegoVista::~JuegoVista() {

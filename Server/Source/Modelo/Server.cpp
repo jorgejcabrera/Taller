@@ -77,6 +77,10 @@ int Server::run(void * data){
 				newClient->writeMessagesInQueue(newClient->getSeenTilesAsMessages());
 
 				newClient->writeMessagesInQueue(newClient->getInitialOffsetAsMessage());
+
+				//le mando a todos los clientes el color del cliente
+				this->sendColour(newClient);
+
 				newClient->connect();
 			}
 		}
@@ -352,6 +356,16 @@ void Server::verifyWaitingClients(){
 		this->notifyGameInitToClients();
 		this->gameRunning=true;
 	}
+}
+
+void Server::sendColour(Client* client) {
+	//envio el nuevo color a todos los clientes
+	Message* msg = new Message();
+	msg->colourOfClient(client->getUserName(), this->clients.size());
+	for (map<string,Client*>::iterator it = clients.begin() ; it != clients.end() ; it++ ) {
+		(*it).second->writeMessagesInQueue(msg);
+	}
+
 }
 
 Server::~Server() {

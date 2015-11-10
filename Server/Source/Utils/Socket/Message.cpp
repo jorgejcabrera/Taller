@@ -214,6 +214,13 @@ void Message::activeTile( int x, int y) {
 	this->msg.set_tipo("fog");
 }
 
+void Message::colourOfClient(string client, int colour){
+	this->msg.set_x(colour);
+	this->msg.set_owner(client);
+	this->msg.set_id(0);
+	this->msg.set_tipo("colour");
+}
+
 Message::~Message(){
 	this->msg.~msg_game();
 }
