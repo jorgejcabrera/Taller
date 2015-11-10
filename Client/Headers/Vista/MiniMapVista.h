@@ -10,6 +10,8 @@
 
 #include "../../Headers/Modelo/GameSettings.h"
 
+enum colour { red=1, blue, yellow, lightGreen,} ;
+
 namespace std {
 
 class MiniMapVista {
@@ -44,6 +46,7 @@ public:
 	int getMiniPosY();
 	int getMiniWidth();
 	int getMiniHeight();
+	string getPathOfColour(colour colour);
 };
 
 } /* namespace std */

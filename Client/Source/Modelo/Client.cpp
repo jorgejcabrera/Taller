@@ -144,6 +144,8 @@ void Client::processReceivedMessages(){
 			this->gController->setGameRunning();
 		}else if (tipoMensaje == "offset"){
 			this->gController->getJuegoVista()->updateOffset((*it)->getPositionX(),(*it)->getPositionY());
+		}else if (tipoMensaje == "colour"){
+			this->gController->getJuegoVista()->setColour((*it)->getOwner(),(*it)->getPositionX());
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
 			cout << (*it)->toString()<<endl;

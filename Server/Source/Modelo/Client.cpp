@@ -148,7 +148,6 @@ pair<int,int> Client::getInitialOffset(){
 	return this->initialOffset;
 }
 
-
 Client::~Client() {
 	shutdown(this->clientId, 2);	//2 blocks recv and sending
 	close(this->clientId);

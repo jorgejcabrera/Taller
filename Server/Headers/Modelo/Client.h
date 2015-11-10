@@ -28,6 +28,7 @@ class Client {
 	time_t lastReported;
 	int status;
 	pair<int, int> initialOffset;
+//	colour myColour;
 public:
 	Client(int identifier, SocketQueue* queueUnique);
 	void writeMessagesInQueue(list<Message*> messagesList);

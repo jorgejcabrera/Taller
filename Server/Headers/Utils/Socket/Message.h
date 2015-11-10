@@ -83,6 +83,7 @@ public:
 	 * mensaje para mandar el offset inicial del cliente
 	 */
 	void initialOffset(int x, int y);
+	void colourOfClient(string client, int colour);
 	virtual ~Message();
 };
 
