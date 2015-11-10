@@ -32,6 +32,7 @@ private:
 	GameSettings* gameSettings;
 
 	int idEntitySelected;
+	string nameEntitySelected;
 	int posMouseX;
 	int posMouseY;
 	int runCycles;
@@ -98,6 +99,11 @@ public:
 	 * Muestra el mensaje final, si gano o perdio
 	 */
 	void showFinalMessage();
+	/*
+	 * Maneja el menu interactivo, en caso de tener seleccionado un town center o una barrack
+	 */
+	Message* interactiveMenu(int posMouseX,int posMouseY);
+
 	virtual ~GameController();
 };
 

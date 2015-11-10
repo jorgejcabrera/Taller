@@ -19,6 +19,7 @@ GameController::GameController(){
 	this->gameRunning=false;
 	this->idEntitySelected=0;
 	this->gameStatus = RUNNING;
+	this->nameEntitySelected = "";
 }
 
 Message* GameController::getMessageFromEvent(string userName){
@@ -26,33 +27,37 @@ Message* GameController::getMessageFromEvent(string userName){
 	while(SDL_PollEvent(event)){
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
-			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-				//menu
-			} else if( this->idEntitySelected > 0 ) {
-				EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
-				pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
-				map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
+			if( this->idEntitySelected > 0 ) {
+				if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+					//menu
+					return this->interactiveMenu(posMouseX,posMouseY);
+				} else {
+					//attack
+					EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
+					pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
+					map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
 
-				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-					Message* message = new Message();
-					msg_game body;
-					body.set_id(this->idEntitySelected);
-					body.set_tipo("attack");
-					body.set_target(atoi(targetToAttack["id"].c_str()));
-					message->setContent(body);
-					return message;
-				}else{
-					Message* message = new Message();
-					msg_game body;
-					body.set_id(this->idEntitySelected);
-					body.set_tipo("update");
-					body.set_x(cartesianPosition.first);
-					body.set_y(cartesianPosition.second);
-					body.set_target(0);
-					message->setContent(body);
-					return message;
+					if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+						Message* message = new Message();
+						msg_game body;
+						body.set_id(this->idEntitySelected);
+						body.set_tipo("attack");
+						body.set_target(atoi(targetToAttack["id"].c_str()));
+						message->setContent(body);
+						return message;
+					}else{
+						Message* message = new Message();
+						msg_game body;
+						body.set_id(this->idEntitySelected);
+						body.set_tipo("update");
+						body.set_x(cartesianPosition.first);
+						body.set_y(cartesianPosition.second);
+						body.set_target(0);
+						message->setContent(body);
+						return message;
+					}
 				}
-			}	
+			}
 		}
 
 		// seleccionamos una entidad del mapa
@@ -64,9 +69,11 @@ Message* GameController::getMessageFromEvent(string userName){
 				map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
 					if(this->clientName == entidadMap.at("owner")){
-						this->idEntitySelected=atoi(entidadMap.at("id").c_str());
+						this->idEntitySelected = atoi(entidadMap.at("id").c_str());
+						this->nameEntitySelected = entidadMap.at("name");
 					}else{
-						this->idEntitySelected=0;
+						this->idEntitySelected = 0;
+						this->nameEntitySelected = "";
 					}
 					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 				}else{
@@ -245,6 +252,23 @@ void GameController::showFinalMessage(){
 		this->getJuegoVista()->renderFinalMessage(finalMessage);
 		this->delay(5000);
 	}
+}
+
+Message* GameController::interactiveMenu(int posMouseX,int posMouseY) {
+	string type = this->juegoVista->getMenuVista()->getTypeOfNewEntity(this->nameEntitySelected,posMouseX,posMouseY);
+	if (type != "") {
+		//mando msje con la nueva entidad ..... por ahora no me importan los recursos
+		Message* message = new Message();
+		msg_game body;
+		body.set_id(0);
+		body.set_tipo("create");
+		body.set_nombre(type);
+		message->setContent(body);
+		message->setOwner(this->clientName);
+		return message;
+	}
+	return NULL;
+
 }
 
 GameController::~GameController() {
