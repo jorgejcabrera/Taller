@@ -28,9 +28,6 @@ Message* GameController::getMessageFromEvent(string userName){
 			SDL_GetMouseState(&posMouseX,&posMouseY);
 			if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 				//menu
-				if( this->idEntitySelected > 0 ) {
-					EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
-				}
 			} else if( this->idEntitySelected > 0 ) {
 				EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
