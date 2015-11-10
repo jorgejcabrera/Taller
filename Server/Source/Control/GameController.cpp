@@ -82,7 +82,7 @@ void GameController::pursuitTarget(){
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0){
 			if( !this->readyToAttack(it->second) ){
-				Logger::get()->logDebug("GameController","pursuitTarget","persiguiendo enemigo");
+				//Logger::get()->logDebug("GameController","pursuitTarget","persiguiendo enemigo");
 				pair<int,int> targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(), targetPosition.first, targetPosition.second);
 			}
@@ -92,12 +92,18 @@ void GameController::pursuitTarget(){
 }
 
 bool GameController::readyToAttack(EntidadDinamica* entity){
-	pair<int,int> targetPosition= this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
-	if( targetPosition.first != entity->getTargetPosition().first || targetPosition.second != entity->getTargetPosition().second){
-		if ( UtilsController::GetInstance()->getDistance(targetPosition,entity->getTargetPosition()) <= 1 )
-			return true;
-		else 
-			return false;
+	pair<int,int> targetPosition = this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
+	/*stringstream ss;
+	ss << "la posicion del target es: " << targetPosition.first << " " << targetPosition.second;
+	Logger::get()->logDebug("GameController","readyToAttack",ss.str());
+	ss.str("");
+	ss << "la posicion de la entidad es: " << entity->getPosition().first << " " << entity->getPosition().second;
+	Logger::get()->logDebug("GameController","readyToAttack",ss.str());*/
+
+	if ( UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1 ){
+		return true;
+	}else{
+		return false;
 	}
 	Logger::get()->logDebug("GameController","readyToAttack","there is no target position");
 	return false;
