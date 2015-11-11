@@ -110,6 +110,7 @@ tipos:
   total_frames_line: 7
   pixels_dimension: 50
   delay: 0
+  velocidad: 10
 
 - nombre: king
   imagen: ../../Taller/Images/Personajes/king.png

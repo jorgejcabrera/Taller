@@ -150,10 +150,6 @@ void Server::processReceivedMessages(){
 			this->idEntitiesUpdated.push_back(idUpdate);
 		
 		}else if( this->gameRunning && messageUpdate->getTipo() == "create" ){
-			ss.str("");
-			ss << "Client = " << messageUpdate->getOwner() << " - nombre = "<< messageUpdate->getNombre();
-			Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
-
 			this->gController->getJuego()->createNewEntitie(messageUpdate->getOwner(),messageUpdate->getNombre(), messageUpdate->getId());
 		}else if( this->gameRunning ){
 			int idUpdate = messageUpdate->getId();
@@ -190,7 +186,7 @@ void Server::notifyClients(){
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
-				//no notifico al dueño del personaje porque ya lo recibio
+				//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
 				(*clientIterator)->writeMessagesInQueue(protagonistaMessage);
 			}
 		}

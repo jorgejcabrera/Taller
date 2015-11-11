@@ -179,12 +179,12 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 			positionOfCreator= (*it)->getPosition();
 		}
 	}
-	pair<int, int> positionOfCreated = this->mapa->getAvailablePosition(positionOfCreator.first+4 , positionOfCreator.second+4);
+	pair<int, int> positionOfCreated = this->mapa->getAvailablePosition(positionOfCreator.first+3 , positionOfCreator.second+3);
 	if (positionOfCreated.first == -1) {
 		positionOfCreated = this->mapa->getAvailablePosition();
 	}
 	EntidadDinamica* protagonista = new EntidadDinamica(type,
-														gameSettings->getVelocidadPersonaje(),
+														gameSettings->getValueForAttributeOfEntity(type, "velocidad"),
 														positionOfCreated.first,
 														positionOfCreated.second,
 														gameSettings->getProtagonistaPixelDimension(),
