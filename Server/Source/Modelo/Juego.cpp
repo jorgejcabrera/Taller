@@ -266,7 +266,7 @@ pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
 	for( ; candidatePosition.first < buildingPosition.first+buildingWidth ; candidatePosition.first++) {
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
 		if (tile->isAvailable()) return candidatePosition;
-	}
+	}//si no hay posiciones disponibles en el mapa ..
 	return this->getMap()->getAvailablePosition(buildingPosition.first+buildingWidth,buildingPosition.second+buildingHeight);
 }
 

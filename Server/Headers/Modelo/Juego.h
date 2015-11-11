@@ -83,6 +83,10 @@ public:
 	 * Creo la bandera para el jugador
 	 */
 	void createFlag(string client);
+	/*
+	 * Obtengo una posicion dentro del perimetro del edificio,
+	 * si no hay ninguna disponible, llama a mapa->getAvailablePosition(x,y)
+	 */
 	pair<int,int> getNearestPositionOfABuilding(int idBuilding);
 	virtual ~Juego();
 };
