@@ -76,6 +76,10 @@ public:
 	 * Obtengo la posicion del centro civico del jugador
 	 */
 	pair<int,int> getCivicCenterPositionOfClient(string owner);
+	/*
+	 * Creo la bandera para el jugador
+	 */
+	void createFlag(string client);
 	virtual ~Juego();
 };
 

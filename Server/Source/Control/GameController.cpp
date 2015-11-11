@@ -8,8 +8,9 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
-	//this->gameType = CIVIC_CENTER;
-	this->gameType = REGICIDE;
+	this->gameType = CIVIC_CENTER;
+	//this->gameType = REGICIDE;
+	//this->gameType = CAPTURE_FLAG;
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->gameRunning = true;
@@ -159,7 +160,8 @@ bool GameController::checkIfClientLostGame(string clientName){
 			break;
 		case CAPTURE_FLAG:
 			//TODO ver como capturar la bandera
-			cout << "NO SE QUE CONTROLAR"<<endl;
+			//cout << "NO SE QUE CONTROLAR"<<endl;
+			lost=false;
 			break;
 		case REGICIDE:
 			lost=(!this->isKingOfClientAlive(clientName));
@@ -194,6 +196,9 @@ pair<int,int> GameController::createEntitiesForClient(string owner, int clientIn
 	if(this->gameType == REGICIDE){
 		//Creo al rey
 		this->getJuego()->createKingForClient(owner);
+	}else if(this->gameType == CAPTURE_FLAG){
+		//Creo la bandera para el cliente
+		this->getJuego()->createFlag(owner);
 	}
 	return offsetClient;
 }

@@ -172,26 +172,34 @@ ResourceManager* Juego::getResourceManager(){
 }
 
 void Juego::createKingForClient(string owner){
-	// TODO revisar estos valores
-	//TODO cambiar los getProtagonista del game settings
-	int villagerHealth = 100;
-	int villagerStrength = 4;
-	float villagerPrecition = 0.5;
 	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
 	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(civicCenterPosition.first+4,civicCenterPosition.second+4);
-	EntidadDinamica* king = new EntidadDinamica("king",
-														gameSettings->getVelocidadPersonaje(),
-														positionOfProtagonista.first,
-														positionOfProtagonista.second,
-														gameSettings->getProtagonistaPixelDimension(),
-														gameSettings->getProtagonistaPixelDimension());
-	king->setHealth(villagerHealth);
-	king->setStrength(villagerStrength);
-	king->setPrecision(villagerPrecition);
+	string name = "king";
+	EntidadDinamica* king = new EntidadDinamica(name,
+												gameSettings->getValueForAttributeOfEntity(name, "velocidad"),
+												positionOfProtagonista.first,
+												positionOfProtagonista.second,
+												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"),
+												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"));
+	king->setHealth(100);
+	king->setStrength(0);
+	king->setPrecision(0);
 	king->setOwner(owner);
 	king->setVisibilityRange(gameSettings->getRangeVisibility());
 	this->protagonistas.insert(make_pair(king->getId(),king));
 	this->newEntities.push_back(king);
+}
+
+void Juego::createFlag(string owner){
+	string name = "flag";
+	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
+	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+5,civicCenterPosition.second+5);
+	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(name);
+	EntidadPartida* flagEntity = new EntidadEstatica(name,dimension.first,dimension.second,true);
+	flagEntity->setPosition(position.first, position.second);
+	flagEntity->setOwner(owner);
+	this->mapa->pushEntity(flagEntity);
+	this->newEntities.push_back(flagEntity);
 }
 
 pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){

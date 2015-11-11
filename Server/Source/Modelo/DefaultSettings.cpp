@@ -157,6 +157,8 @@ string DefaultSettings::getTypeEntity(const string &type){
 	edificios.push_back("Army");
 	edificios.push_back("Barracks");
 	edificios.push_back("Town_Hall");
+
+	edificios.push_back("flag");
 	if(isInList(edificios,type))
 		return "edificios";
 

@@ -104,6 +104,10 @@ public:
 	 * devuelve el ancho y el alto para un tipo dado
 	 */
 	pair<int,int> getConfigDimensionOfEntity(string nombre);
+	/*
+	 * Dado un tipo y un parametro devuelve el valor
+	 */
+	int getValueForAttributeOfEntity(string nombre, string attribute);
 };
 
 } /* namespace std */
