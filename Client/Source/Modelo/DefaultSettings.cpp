@@ -286,5 +286,14 @@ string DefaultSettings::getPathOfMenuBackground(){
 	return PATH_MENU_BACKGROUND;
 }
 
+map<string,int> DefaultSettings::getCostsOf(string type) {
+	map<string,int>  returnMap;
+	if (type == "soldado") {
+		returnMap["chori"] = 3;
+		returnMap["rock"] = 2;
+	}
+	return returnMap;
+}
+
 DefaultSettings::~DefaultSettings() {
 }

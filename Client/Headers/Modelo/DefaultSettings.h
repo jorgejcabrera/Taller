@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <math.h>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -46,6 +47,8 @@ class DefaultSettings {
 		static const string PATH_OF_COVERED_TILE;
 		static const int RANGE_VISIBILITY = 4;
 		static const string PATH_MENU_BACKGROUND;
+		static const int FOOD_OF_NEW_SOLDIER = 3;
+		static const int ROCK_OF_NEW_SOLDIER = 2;
 
 	public:
 		DefaultSettings();
@@ -95,6 +98,7 @@ class DefaultSettings {
 		static string getPathOfCoveredTile();
 		static int getRangeVisibility();
 		static string getPathOfMenuBackground();
+		static map<string,int> getCostsOf(string type);
 };
 
 

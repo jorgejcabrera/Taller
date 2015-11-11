@@ -120,6 +120,7 @@ public:
 	string getPathOfFoggedTile();
 	string getPathOfCoveredTile();
 	int getRangeVisibility();
+	map<string,int> getCostsOf(string type);
 };
 
 } /* namespace std */

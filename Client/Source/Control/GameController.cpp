@@ -252,9 +252,9 @@ void GameController::showFinalMessage(){
 }
 
 Message* GameController::interactiveMenu(int posMouseX,int posMouseY) {
-//	string type = this->juegoVista->getMenuVista()->getTypeOfNewEntity(this->nameEntitySelected,posMouseX,posMouseY);
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(posMouseX,posMouseY);
 	if (buildingAndEntitie.second != "") {
+		this->juegoVista->get
 		//mando msje con la nueva entidad ..... por ahora no me importan los recursos
 		Message* message = new Message();
 		msg_game body;

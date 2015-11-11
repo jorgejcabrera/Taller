@@ -23,6 +23,7 @@ public:
 	void recolectarOro();
 	void recolectarMadera();
 	void recolectarAlimento();
+	void gastar(string recurso);
 	void recolectar(string recurso);
 	int getOro();
 	int getAlimento();

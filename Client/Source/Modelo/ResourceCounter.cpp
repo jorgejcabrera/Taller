@@ -29,6 +29,17 @@ void ResourceCounter::recolectarOro(){
 	this->oro++;
 }
 
+void ResourceCounter::gastar(string recurso) {
+	if(recurso == "gold")
+		this->oro--;
+	if(recurso == "wood")
+		this->madera--;
+	if(recurso == "chori")
+		this->alimento--;
+	if(recurso == "rock")
+		this->roca--;
+}
+
 void ResourceCounter::recolectar(string recurso){
 	if(recurso == "gold")
 		this->oro++;
