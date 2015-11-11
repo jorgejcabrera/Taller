@@ -234,6 +234,11 @@ pair<int,int> GameSettings::getConfigDimensionOfEntity(string nombre){
 	return dimension;
 }
 
+int GameSettings::getValueForAttributeOfEntity(string nombre, string attribute){
+	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
+	return atoi(this->getValueInMap(entidadObjeto, attribute).c_str());
+}
+
 int GameSettings::getProtagonistaFPS(){
 	return this->FPS_PROTAGONISTA;
 }
