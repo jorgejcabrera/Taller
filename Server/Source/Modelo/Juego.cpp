@@ -174,8 +174,6 @@ ResourceManager* Juego::getResourceManager(){
 }
 
 void Juego::createKingForClient(string owner){
-	// TODO revisar estos valores
-	//TODO cambiar los getProtagonista del game settings
 	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
 	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(civicCenterPosition.first+4,civicCenterPosition.second+4);
 	string name = "king";
@@ -192,6 +190,18 @@ void Juego::createKingForClient(string owner){
 	king->setVisibilityRange(gameSettings->getRangeVisibility());
 	this->protagonistas.insert(make_pair(king->getId(),king));
 	this->newEntities.push_back(king);
+}
+
+void Juego::createFlag(string owner){
+	string name = "flag";
+	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
+	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+5,civicCenterPosition.second+5);
+	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(name);
+	EntidadPartida* flagEntity = new EntidadEstatica(name,dimension.first,dimension.second,true);
+	flagEntity->setPosition(position.first, position.second);
+	flagEntity->setOwner(owner);
+	this->mapa->pushEntity(flagEntity);
+	this->newEntities.push_back(flagEntity);
 }
 
 pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
