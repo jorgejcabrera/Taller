@@ -8,9 +8,9 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
-	this->gameType = CIVIC_CENTER;
+	//this->gameType = CIVIC_CENTER;
 	//this->gameType = REGICIDE;
-	//this->gameType = CAPTURE_FLAG;
+	this->gameType = CAPTURE_FLAG;
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->gameRunning = true;

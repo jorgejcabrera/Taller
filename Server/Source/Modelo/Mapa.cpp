@@ -77,7 +77,6 @@ Tile* Mapa::getTileAt(int x,int y){
 pair<int,int> Mapa::getAvailablePosition(){
 	for(map<pair<int,int>,Tile*>::iterator tilesIterator=this->tiles.begin(); tilesIterator!=this->tiles.end(); ++tilesIterator){
 		if(tilesIterator->second->isAvailable()){
-			tilesIterator->second->changeStatusAvailable();
 			return tilesIterator->first;
 		}
 	}
@@ -90,7 +89,6 @@ pair<int,int> Mapa::getAvailablePosition(int xFrom, int yFrom){
 		if ((tilesIterator->second->getPosX()==xFrom && tilesIterator->second->getPosY()==yFrom) || positionFound ){
 			positionFound=true;
 			if(tilesIterator->second->isAvailable() && abs(tilesIterator->second->getPosX()-xFrom)<10 && abs(tilesIterator->second->getPosY()-yFrom)<10){
-				tilesIterator->second->changeStatusAvailable();
 				return tilesIterator->first;
 			}
 		}
