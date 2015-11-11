@@ -95,6 +95,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 		protagonista->setPrecision(villagerPrecition);
 		protagonista->setOwner(owner);
 		protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
+		protagonista->setNotifiable(true);
 		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
 		this->newEntities.push_back(protagonista);
 	}
@@ -172,6 +173,36 @@ EntidadDinamica* Juego::getDinamicEntityById(int id){
 ResourceManager* Juego::getResourceManager(){
 	return this->resourseManager;
 }
+
+void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
+	pair<int, int> positionOfProtagonista;
+	for(list<EntidadPartida*>::iterator it = newEntities.begin(); it != newEntities.end() ; it++) {
+		if ( (*it)->getId() == idOfCreator ) {
+			positionOfProtagonista= (*it)->getPosition();
+		}
+	}
+	positionOfProtagonista.first = positionOfProtagonista.first-1;
+	positionOfProtagonista.second = positionOfProtagonista.second-1;
+	positionOfProtagonista = this->mapa->getAvailablePosition(positionOfProtagonista.first,positionOfProtagonista.second);
+	if (positionOfProtagonista.first == -1) positionOfProtagonista = this->mapa->getAvailablePosition();
+	EntidadDinamica* protagonista = new EntidadDinamica(type,
+														gameSettings->getVelocidadPersonaje(),
+														positionOfProtagonista.first,
+														positionOfProtagonista.second,
+														gameSettings->getProtagonistaPixelDimension(),
+														gameSettings->getProtagonistaPixelDimension());
+	int villagerHealth = 100;
+	int villagerStrength = 4;
+	float villagerPrecition = 0.5;
+	protagonista->setHealth(villagerHealth);
+	protagonista->setStrength(villagerStrength);
+	protagonista->setPrecision(villagerPrecition);
+	protagonista->setOwner(owner);
+	protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
+	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
+	this->newEntities.push_back(protagonista);
+}
+
 
 Juego::~Juego() {
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){

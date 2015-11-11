@@ -68,6 +68,7 @@ public:
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadPartida*>* getNewEntitiesToNotify();
+	void createNewEntitie(string owner,string type, int idOfCreator);
 	virtual ~Juego();
 };
 

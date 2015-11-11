@@ -107,6 +107,9 @@ void Client::processReceivedMessages(){
 			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
 			//TODO meter un refactor acá, creo que no vamos a necesitar mas dos listas de personajes
+			stringstream ss;
+			ss<< "newProtagonista... posx: "<< (*it)->getPositionX() << "posy: "<< (*it)->getPositionY() << "posx: "<< (*it)->getPositionX() << " client = " << this->userName;
+			Logger::get()->logInfo("Client","processReceivedmessages",ss.str());
 			this->gController->getJuegoVista()->addDinamicEntity((*it)->getId(),
 																(*it)->getNombre(),
 																(*it)->getPositionX(),

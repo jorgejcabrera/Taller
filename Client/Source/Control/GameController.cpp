@@ -19,7 +19,6 @@ GameController::GameController(){
 	this->gameRunning=false;
 	this->idEntitySelected=0;
 	this->gameStatus = RUNNING;
-	this->nameEntitySelected = "";
 }
 
 Message* GameController::getMessageFromEvent(string userName){
@@ -70,10 +69,8 @@ Message* GameController::getMessageFromEvent(string userName){
 				if(entidadMap.size()>0){
 					if(this->clientName == entidadMap.at("owner")){
 						this->idEntitySelected = atoi(entidadMap.at("id").c_str());
-						this->nameEntitySelected = entidadMap.at("name");
 					}else{
 						this->idEntitySelected = 0;
-						this->nameEntitySelected = "";
 					}
 					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 				}else{
@@ -255,14 +252,15 @@ void GameController::showFinalMessage(){
 }
 
 Message* GameController::interactiveMenu(int posMouseX,int posMouseY) {
-	string type = this->juegoVista->getMenuVista()->getTypeOfNewEntity(this->nameEntitySelected,posMouseX,posMouseY);
-	if (type != "") {
+//	string type = this->juegoVista->getMenuVista()->getTypeOfNewEntity(this->nameEntitySelected,posMouseX,posMouseY);
+	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(posMouseX,posMouseY);
+	if (buildingAndEntitie.second != "") {
 		//mando msje con la nueva entidad ..... por ahora no me importan los recursos
 		Message* message = new Message();
 		msg_game body;
-		body.set_id(0);
+		body.set_id(buildingAndEntitie.first);
 		body.set_tipo("create");
-		body.set_nombre(type);
+		body.set_nombre(buildingAndEntitie.second);
 		message->setContent(body);
 		message->setOwner(this->clientName);
 		return message;

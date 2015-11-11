@@ -43,7 +43,7 @@ public:
 	void deselectedEntity();
 	void setSelectedEntityDescription(map<string,string> description);
 	void drawResources(map<string,int> resources);
-	string getTypeOfNewEntity(string nameEntitySelected,int posMouseX,int posMouseY);
+	pair<int, string> getTypeOfNewEntity(int posMouseX,int posMouseY);
 	virtual ~MenuVista();
 };
 

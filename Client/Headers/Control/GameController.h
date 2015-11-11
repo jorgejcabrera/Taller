@@ -32,7 +32,6 @@ private:
 	GameSettings* gameSettings;
 
 	int idEntitySelected;
-	string nameEntitySelected;
 	int posMouseX;
 	int posMouseY;
 	int runCycles;

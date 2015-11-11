@@ -113,19 +113,18 @@ void MenuVista::drawResources(map<string,int> resources){
 	}
 }
 
-string MenuVista::getTypeOfNewEntity(string nameEntitySelected,int posMouseX,int posMouseY) {
+pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
+	pair<int, string> result;
 	if (posMouseX > posXvertexFirstButton &&
 		posMouseX < posXvertexFirstButton + sideFirstButton &&
 		posMouseY > posYvertexFirstButton &&
 		posMouseY < posYvertexFirstButton + sideFirstButton ) {
-		if (strings["name"] == "Barracks") {
-			return "soldado";
-		}
-		if (strings["name"] == "Town Center") {
-			return "aldeano";
-		}
+		result.first = atoi(strings["id"].c_str());
+		if (strings["name"] == "Barracks") result.second = "soldado";
+		else if (strings["name"] == "Town Center") result.second = "aldeano";
+		else result.second = "";
 	}
-	return "";
+	return result;
 }
 
 MenuVista::~MenuVista() {
