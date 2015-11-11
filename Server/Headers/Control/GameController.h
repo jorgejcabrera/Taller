@@ -84,6 +84,10 @@ public:
 	 */
 	bool isCivicCenterStillExist(string userName);
 	/*
+	 * Verifica si el cliente aun tiene la bandera
+	 */
+	bool clientKeepFlag(string clienName);
+	/*
 	 * devuelve true si el juego esta en curso o false si hay algun ganador
 	 */
 	bool isGameRunning();

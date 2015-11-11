@@ -160,8 +160,7 @@ bool GameController::checkIfClientLostGame(string clientName){
 			lost=(!this->isCivicCenterStillExist(clientName));
 			break;
 		case CAPTURE_FLAG:
-			//TODO ver como capturar la bandera
-			//cout << "NO SE QUE CONTROLAR"<<endl;
+			lost=(!this->clientKeepFlag(clientName));
 			lost=false;
 			break;
 		case REGICIDE:
@@ -175,6 +174,16 @@ bool GameController::isCivicCenterStillExist(string userName){
 	list<EntidadPartida*>* listEntities = this->juego->getMap()->getEntities();
 	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
 		if(((*iterateEntities)->getOwner()==userName) && (*iterateEntities)->getName()==DefaultSettings::getNameCivicCenter()){
+			return true;
+		}
+	}
+	return false;
+}
+
+bool GameController::clientKeepFlag(string userName){
+	list<EntidadPartida*>* listEntities = this->juego->getMap()->getEntities();
+	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
+		if(((*iterateEntities)->getOwner()==userName) && (*iterateEntities)->getName()== "flag"){
 			return true;
 		}
 	}
