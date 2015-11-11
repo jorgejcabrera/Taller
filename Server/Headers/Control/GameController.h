@@ -48,6 +48,10 @@ private:
 	* si el objetivo está demasiado lejos, ya no los podemos seguir
 	* */
 	bool targetOutOfReach(EntidadDinamica* entidad);
+	/*
+	* devuelve true si el target aún está presente en el mapa
+	* */
+	bool targetIsAlive(EntidadDinamica* entidad);
 
 public:
 	GameController();

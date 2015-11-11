@@ -91,16 +91,14 @@ void GameController::pursuitAndAttackTarget(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0){
-			if( !this->readyToAttack(it->second) && !this->targetOutOfReach(it->second) ){
-				//Logger::get()->logDebug("GameController","pursuitTarget","persiguiendo enemigo");
-				pair<int,int> targetPosition= this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
+			if( this->targetIsAlive(it->second) && !this->readyToAttack(it->second)/* && !this->targetOutOfReach(it->second) */){
+				pair<int,int> targetPosition = this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
 			
-			}else if( this->targetOutOfReach(it->second) ){
+			}else if( it->second->getTarget() != 0 && this->targetOutOfReach(it->second) ){
 				this->juego->setTargetTo(it->second->getId(),0);
 
-			}else{
-				Logger::get()->logDebug("GameController","pursuitTarget","atacando el enemigo");
+			}else if( it->second->getTarget() != 0 ){
 				EntidadDinamica* enemy = this->juego->getDinamicEntityById(it->second->getTarget());
 				it->second->attackTo(enemy);
 			}
@@ -111,13 +109,17 @@ void GameController::pursuitAndAttackTarget(){
 
 bool GameController::readyToAttack(EntidadDinamica* entity){
 	pair<int,int> targetPosition = this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
-	/*stringstream ss;
-	ss << "la posicion del target es: " << targetPosition.first << " " << targetPosition.second;
-	Logger::get()->logDebug("GameController","readyToAttack",ss.str());
-	ss.str("");
-	ss << "la posicion de la entidad es: " << entity->getPosition().first << " " << entity->getPosition().second;
-	Logger::get()->logDebug("GameController","readyToAttack",ss.str());*/
 	return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
+}
+
+bool GameController::targetIsAlive(EntidadDinamica* entity){
+	EntidadDinamica* targetEntity = this->juego->getDinamicEntityById(entity->getTarget());
+	if(!targetEntity){
+		entity->setTarget(0);
+		entity->setTargetPosition(make_pair(0,0));
+		return false;
+	}
+	return true;
 }
 
 bool GameController::targetOutOfReach(EntidadDinamica* entity){

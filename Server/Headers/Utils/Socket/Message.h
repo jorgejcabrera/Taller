@@ -38,6 +38,8 @@ public:
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
+	void setId(int id);
+	void setType(string type);
 	void setContent(msg_game body);
 	void setHealth(int health);
 	void setStrength(int strength);

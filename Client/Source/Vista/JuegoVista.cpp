@@ -358,6 +358,19 @@ void JuegoVista::deleteStaticEntityById(int id){
 	this->buildings.erase(itEstaticos);
 }
 
+void JuegoVista::deleteDinamicEntityById(int id){
+	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
+	if( itEnemy != this->personajes.end()){
+		this->personajes.erase(itEnemy);
+		return;		
+	}
+	map<int, EntidadDinamicaVista*>::iterator itMyEntity = this->misPersonajes.find(id);
+	if( itMyEntity != this->misPersonajes.end()){
+		this->misPersonajes.erase(itMyEntity);
+		return;
+	}
+}
+
 map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 	int x = position.first;
 	int y = position.second;

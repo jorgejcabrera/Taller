@@ -68,6 +68,14 @@ Message::Message(string nombre){
 	this->msg.set_nombre(nombre);
 }
 
+void Message::setType(string type){
+	this->msg.set_tipo(type);
+}
+
+void Message::setId(int id){
+	this->msg.set_id(id);
+}
+
 void Message::initialOffset(int x, int y){
 	this->msg.set_id(0);
 	this->msg.set_tipo("offset");

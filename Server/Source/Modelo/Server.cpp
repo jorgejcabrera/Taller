@@ -176,7 +176,7 @@ void Server::notifyClients(){
 	}
 	//mando las nuevas Entidades
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
-	for(list<EntidadPartida*>::iterator it=newEntities->begin(); it!=newEntities->end();++it){
+	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
 		Message* protagonistaMessage = new Message((*it)->getId(), 
 													DefaultSettings::getTypeEntity((*it)->getName()),
@@ -201,7 +201,7 @@ void Server::notifyClients(){
 		resourceMessege->setOwner(rm->getUltimoEnConsumir());
 
 		list<Client*> activeClients= getActiveClients();
-		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(resourceMessege);
 		}
 	}
@@ -218,16 +218,18 @@ void Server::notifyClients(){
 
 	}
 	//mando las entidades dinámicas que murieron
-	//list<EntidadDinamica> fallenEntities = this->gController->getJuego()->getFallenEntities();
-	//for(list<EntidadDinamica>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
-	//	Message* fallenEntity = new Message((*itFallenEntities).getId(),"deleteEntity",rm->getUltimoTipoConsumido(),0,0,0);
-	//	list<Client*> activeClients = getActiveClients();
+	list<EntidadDinamica> fallenEntities = this->gController->getJuego()->getFallenEntities();
+	for(list<EntidadDinamica>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
+		Message* msgfallenEntity = new Message();
+		msgfallenEntity->setId((*itFallenEntities).getId());
+		msgfallenEntity->setType("deleteEntity");
+		list<Client*> activeClients = getActiveClients();
 
 		//TODO poner esto en un metodo
-	//	for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-	//		(*clientIterator)->writeMessagesInQueue(fallenEntity);
-	//	}
-	//}
+		for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
+			(*clientIterator)->writeMessagesInQueue(msgfallenEntity);
+		}
+	}
 	this->gController->getJuego()->cleanNewEntities();
 	pingMessage();
 }

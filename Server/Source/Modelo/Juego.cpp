@@ -141,9 +141,8 @@ list<EntidadDinamica> Juego::getFallenEntities(){
 	list<EntidadDinamica> fallenEntities;
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getHealth() <= 0 ){
-			Logger::get()->logDebug("Juego","getFallenEntities","se murio una entidad");
 			fallenEntities.push_front(*it->second);
-			protagonistas.erase(it);
+			this->protagonistas.erase(it);
 		}
 	}
 	return fallenEntities;
@@ -152,7 +151,6 @@ list<EntidadDinamica> Juego::getFallenEntities(){
 void Juego::deleteEntity(int id){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getId() == id){
-			Logger::get()->logDebug("Juego","deleteEntity","Se deconecto el cliente y borro sus personajes");
 			//Borro el personaje y libero el tile
 			pair<int,int> position= it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
