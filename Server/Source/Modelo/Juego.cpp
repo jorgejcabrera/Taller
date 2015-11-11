@@ -173,28 +173,25 @@ ResourceManager* Juego::getResourceManager(){
 }
 
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
-	pair<int, int> positionOfProtagonista;
+	pair<int, int> positionOfCreator;
 	for(list<EntidadPartida*>::iterator it = newEntities.begin(); it != newEntities.end() ; it++) {
 		if ( (*it)->getId() == idOfCreator ) {
-			positionOfProtagonista= (*it)->getPosition();
+			positionOfCreator= (*it)->getPosition();
 		}
 	}
-	positionOfProtagonista.first = positionOfProtagonista.first-1;
-	positionOfProtagonista.second = positionOfProtagonista.second-1;
-	positionOfProtagonista = this->mapa->getAvailablePosition(positionOfProtagonista.first,positionOfProtagonista.second);
-	if (positionOfProtagonista.first == -1) positionOfProtagonista = this->mapa->getAvailablePosition();
+	pair<int, int> positionOfCreated = this->mapa->getAvailablePosition(positionOfCreator.first+4 , positionOfCreator.second+4);
+	if (positionOfCreated.first == -1) {
+		positionOfCreated = this->mapa->getAvailablePosition();
+	}
 	EntidadDinamica* protagonista = new EntidadDinamica(type,
 														gameSettings->getVelocidadPersonaje(),
-														positionOfProtagonista.first,
-														positionOfProtagonista.second,
+														positionOfCreated.first,
+														positionOfCreated.second,
 														gameSettings->getProtagonistaPixelDimension(),
 														gameSettings->getProtagonistaPixelDimension());
-	int villagerHealth = 100;
-	int villagerStrength = 4;
-	float villagerPrecition = 0.5;
-	protagonista->setHealth(villagerHealth);
-	protagonista->setStrength(villagerStrength);
-	protagonista->setPrecision(villagerPrecition);
+	protagonista->setHealth(100);
+	protagonista->setStrength(4);
+	protagonista->setPrecision(0.5);
 	protagonista->setOwner(owner);
 	protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
 	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
