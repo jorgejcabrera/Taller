@@ -68,6 +68,14 @@ public:
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadPartida*>* getNewEntitiesToNotify();
+	/*
+	 * Creo al rey del jugador
+	 */
+	void createKingForClient(string owner);
+	/*
+	 * Obtengo la posicion del centro civico del jugador
+	 */
+	pair<int,int> getCivicCenterPositionOfClient(string owner);
 	virtual ~Juego();
 };
 

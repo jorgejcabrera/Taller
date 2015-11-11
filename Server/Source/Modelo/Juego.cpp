@@ -154,9 +154,9 @@ void Juego::deleteEntity(int id){
 		if(it->second->getId() == id){
 			Logger::get()->logDebug("Juego","deleteEntity","Se deconecto el cliente y borro sus personajes");
 			//Borro el personaje y libero el tile
-			this->protagonistas.erase(it);
 			pair<int,int> position= it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
+			this->protagonistas.erase(it);
 		}
 	}
 }
@@ -171,6 +171,38 @@ EntidadDinamica* Juego::getDinamicEntityById(int id){
 
 ResourceManager* Juego::getResourceManager(){
 	return this->resourseManager;
+}
+
+void Juego::createKingForClient(string owner){
+	// TODO revisar estos valores
+	//TODO cambiar los getProtagonista del game settings
+	int villagerHealth = 100;
+	int villagerStrength = 4;
+	float villagerPrecition = 0.5;
+	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
+	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(civicCenterPosition.first+4,civicCenterPosition.second+4);
+	EntidadDinamica* king = new EntidadDinamica("king",
+														gameSettings->getVelocidadPersonaje(),
+														positionOfProtagonista.first,
+														positionOfProtagonista.second,
+														gameSettings->getProtagonistaPixelDimension(),
+														gameSettings->getProtagonistaPixelDimension());
+	king->setHealth(villagerHealth);
+	king->setStrength(villagerStrength);
+	king->setPrecision(villagerPrecition);
+	king->setOwner(owner);
+	king->setVisibilityRange(gameSettings->getRangeVisibility());
+	this->protagonistas.insert(make_pair(king->getId(),king));
+	this->newEntities.push_back(king);
+}
+
+pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
+	list<EntidadPartida*>* listEntities = this->getMap()->getEntities();
+	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
+		if(((*iterateEntities)->getOwner()==owner) && (*iterateEntities)->getName()==DefaultSettings::getNameCivicCenter()){
+			return (*iterateEntities)->getPosition();
+		}
+	}
 }
 
 Juego::~Juego() {

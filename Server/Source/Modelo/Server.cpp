@@ -266,8 +266,7 @@ void Server::verifyClientsConections(){
 			for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
 				this->gController->getJuego()->deleteEntity(*it);
 			}
-		}
-		if(this->gController->checkIfClientLostGame((*clientIterator)->getUserName())){
+		}else if(this->gController->checkIfClientLostGame((*clientIterator)->getUserName())){
 			Message* messageClientLost = new Message();
 			messageClientLost->clientLost((*clientIterator)->getUserName());
 			for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
@@ -281,7 +280,6 @@ void Server::verifyClientsConections(){
 		//Si solo queda un cliente, entonces gano
 		activeClients= getActiveClients();
 		if(activeClients.size()==1){
-
 			Client* winner = activeClients.front();
 			Message* messageClientWin = new Message();
 			messageClientWin->clientWin(winner->getUserName());
@@ -342,8 +340,8 @@ bool Server::initConnection(Client* newClient){
 }
 
 void Server::createEntitiesForClient(Client* newClient){
-	//Cada vez que se conecta un cliente agrego un protagonista que tiene un owner
-	pair<int,int> offsetClient = this->gController->getJuego()->createEntitiesForClient(newClient->getUserName(), this->clients.size());
+	//Cada vez que se conecta un cliente agrego el centro civico, los aldeanos y demas personajes de aucerdo a la partida
+	pair<int,int> offsetClient = this->gController->createEntitiesForClient(newClient->getUserName(), this->clients.size());
 	newClient->setInitialOffset(offsetClient.first, offsetClient.second);
 	this->clients.insert(make_pair(newClient->getUserName(),newClient));
 }

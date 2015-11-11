@@ -167,6 +167,8 @@ string DefaultSettings::getTypeEntity(const string &type){
 
 	list<string> personajes;
 	personajes.push_back("soldado");
+	personajes.push_back("king");
+	personajes.push_back("villager");
 	if(isInList(personajes,type))
 		return "personajes";
 

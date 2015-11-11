@@ -87,6 +87,10 @@ public:
 	 * Setea el gameRunning en false para indicar que ya termino el juego
 	 */
 	void gameFinished();
+	/*
+	 * Crea las entidades del cliente
+	 */
+	pair<int,int> createEntitiesForClient(string owner, int clientIndex);
 	virtual ~GameController();
 };
 

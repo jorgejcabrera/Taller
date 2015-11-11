@@ -8,7 +8,8 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
-	this->gameType = CIVIC_CENTER;
+	//this->gameType = CIVIC_CENTER;
+	this->gameType = REGICIDE;
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->gameRunning = true;
@@ -184,6 +185,15 @@ bool GameController::isKingOfClientAlive(string userName){
 		}
 	}
 	return false;
+}
+
+pair<int,int> GameController::createEntitiesForClient(string owner, int clientIndex){
+	pair<int,int> offsetClient = this->getJuego()->createEntitiesForClient(owner,clientIndex);
+	if(this->gameType == REGICIDE){
+		//Creo al rey
+		this->getJuego()->createKingForClient(owner);
+	}
+	return offsetClient;
 }
 
 GameController::~GameController() {
