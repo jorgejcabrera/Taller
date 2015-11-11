@@ -142,9 +142,8 @@ list<EntidadDinamica> Juego::getFallenEntities(){
 	list<EntidadDinamica> fallenEntities;
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getHealth() <= 0 ){
-			Logger::get()->logDebug("Juego","getFallenEntities","se murio una entidad");
 			fallenEntities.push_front(*it->second);
-			protagonistas.erase(it);
+			this->protagonistas.erase(it);
 		}
 	}
 	return fallenEntities;
@@ -153,11 +152,10 @@ list<EntidadDinamica> Juego::getFallenEntities(){
 void Juego::deleteEntity(int id){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getId() == id){
-			Logger::get()->logDebug("Juego","deleteEntity","Se deconecto el cliente y borro sus personajes");
 			//Borro el personaje y libero el tile
-			this->protagonistas.erase(it);
 			pair<int,int> position= it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
+			this->protagonistas.erase(it);
 		}
 	}
 }
@@ -203,6 +201,46 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	this->newEntities.push_back(protagonista);
 }
 
+
+void Juego::createKingForClient(string owner){
+	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
+	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(civicCenterPosition.first+4,civicCenterPosition.second+4);
+	string name = "king";
+	EntidadDinamica* king = new EntidadDinamica(name,
+												gameSettings->getValueForAttributeOfEntity(name, "velocidad"),
+												positionOfProtagonista.first,
+												positionOfProtagonista.second,
+												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"),
+												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"));
+	king->setHealth(100);
+	king->setStrength(0);
+	king->setPrecision(0);
+	king->setOwner(owner);
+	king->setVisibilityRange(gameSettings->getRangeVisibility());
+	this->protagonistas.insert(make_pair(king->getId(),king));
+	this->newEntities.push_back(king);
+}
+
+void Juego::createFlag(string owner){
+	string name = "flag";
+	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
+	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+5,civicCenterPosition.second+5);
+	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(name);
+	EntidadPartida* flagEntity = new EntidadEstatica(name,dimension.first,dimension.second,true);
+	flagEntity->setPosition(position.first, position.second);
+	flagEntity->setOwner(owner);
+	this->mapa->pushEntity(flagEntity);
+	this->newEntities.push_back(flagEntity);
+}
+
+pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
+	list<EntidadPartida*>* listEntities = this->getMap()->getEntities();
+	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
+		if(((*iterateEntities)->getOwner()==owner) && (*iterateEntities)->getName()==DefaultSettings::getNameCivicCenter()){
+			return (*iterateEntities)->getPosition();
+		}
+	}
+}
 
 Juego::~Juego() {
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){

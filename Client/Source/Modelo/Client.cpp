@@ -92,6 +92,9 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
 		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources"){
+			if((*it)->getNombre()=="flag"){
+				cout << "RECIBI la bandera"<<endl;
+			}
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
@@ -139,6 +142,9 @@ void Client::processReceivedMessages(){
 			if(imTheOwner){
 				this->resourceCounter->recolectar((*it)->getNombre());
 			}
+
+		}else if (tipoMensaje == "deleteEntity"){
+			this->gController->getJuegoVista()->deleteDinamicEntityById((*it)->getId());
 
 		}else if (tipoMensaje == "newResource"){
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),

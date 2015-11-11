@@ -48,6 +48,10 @@ private:
 	* si el objetivo está demasiado lejos, ya no los podemos seguir
 	* */
 	bool targetOutOfReach(EntidadDinamica* entidad);
+	/*
+	* devuelve true si el target aún está presente en el mapa
+	* */
+	bool targetIsAlive(EntidadDinamica* entidad);
 
 public:
 	GameController();
@@ -87,6 +91,10 @@ public:
 	 * Setea el gameRunning en false para indicar que ya termino el juego
 	 */
 	void gameFinished();
+	/*
+	 * Crea las entidades del cliente
+	 */
+	pair<int,int> createEntitiesForClient(string owner, int clientIndex);
 	virtual ~GameController();
 };
 

@@ -92,7 +92,12 @@ public:
 	/*
 	* borra el recurso o el edificio correspondiente al id pasado como parametro
 	* */
-	void deleteStaticEntityById(int id);/*
+	void deleteStaticEntityById(int id);
+	/*
+	* borra las entidades dinamicas que se quedaron sin vida
+	* */
+	void deleteDinamicEntityById(int id);
+	/*
 	*?
 	* */
 	void createView();
@@ -141,6 +146,9 @@ public:
 	* Muestro el mensaje: "Esperando mas clientes" o "Ya se alcanzo el limite de usuarios conectados"
 	* */
 	void renderFinishLogin(string finalMessage);
+	/*
+	* ?
+	* */
 	void setColour(string owner,int colour);
 	/*
 	 * Renderiza la vista actual y el mensaje pasado por parametro

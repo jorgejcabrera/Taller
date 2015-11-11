@@ -50,6 +50,7 @@ void Mapa::pushEntity(EntidadPartida* entidad){
 }
 
 bool Mapa::positionAvailable(EntidadPartida* entidad){
+	stringstream ss;
 	int x = entidad->getPosition().first;
 	int y = entidad->getPosition().second;
 	if( x > gameSettings->getMapWidth() || y > gameSettings->getMapHeight() || x < 0 || y < 0){
@@ -60,6 +61,9 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	if( posFinalX > gameSettings->getMapWidth() || posFinalY > gameSettings->getMapHeight())
 		return false;
 	if(!this->tiles.at(make_pair(x,y))->isAvailable() || !this->tiles.at(make_pair( x + entidad->getWidth()-1, y + entidad->getLength()-1))->isAvailable() ){
+		ss << entidad->getName() << " can't push entity in " << entidad->getPosition().first <<" "<< entidad->getPosition().second <<" width "<<  entidad->getWidth()<< " LENGTH "<< entidad->getLength();
+		ss << " " <<this->tiles.at(make_pair(x,y))->isAvailable()<< " " << this->tiles.at(make_pair( x + entidad->getWidth()-1, y + entidad->getLength()-1))->isAvailable();
+		Logger::get()->logDebug("Mapa","positionAvailable",ss.str());
 		return false;
 	}
 	return true;

@@ -92,6 +92,8 @@ void MenuVista::drawEntityDescription() {
 			if(found!=string::npos) path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
 			found = path.find("soldado.");
 			if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
+			found = path.find("king");
+			if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
 			found = path.find("soldadoDesconectado");
 			if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
 			PicassoHelper::GetInstance()->renderObject(path,30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);

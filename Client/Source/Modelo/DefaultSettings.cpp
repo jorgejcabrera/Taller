@@ -159,6 +159,8 @@ string DefaultSettings::getTypeEntity(const string &type){
 	edificios.push_back("Army");
 	edificios.push_back("Barracks");
 	edificios.push_back("Town_Hall");
+
+	edificios.push_back("flag");
 	if(isInList(edificios,type))
 		return "edificios";
 
@@ -169,6 +171,8 @@ string DefaultSettings::getTypeEntity(const string &type){
 
 	list<string> personajes;
 	personajes.push_back("soldado");
+	personajes.push_back("king");
+	personajes.push_back("villager");
 	if(isInList(personajes,type))
 		return "personajes";
 
