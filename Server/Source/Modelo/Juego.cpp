@@ -168,21 +168,21 @@ EntidadDinamica* Juego::getDinamicEntityById(int id){
 	return NULL;
 }
 
+EntidadPartida* Juego::getEntityById(int id){
+	list<EntidadPartida*>* entities = this->mapa->getEntities();
+	for(list<EntidadPartida*>::iterator iterateEntities= entities->begin(); iterateEntities!=entities->end();++iterateEntities){
+		if((*iterateEntities)->getId() == id) return (*iterateEntities);
+	}
+	return NULL;
+}
+
 ResourceManager* Juego::getResourceManager(){
 	return this->resourseManager;
 }
 
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
-	pair<int, int> positionOfCreator;
-	for(list<EntidadPartida*>::iterator it = newEntities.begin(); it != newEntities.end() ; it++) {
-		if ( (*it)->getId() == idOfCreator ) {
-			positionOfCreator= (*it)->getPosition();
-		}
-	}
-	pair<int, int> positionOfCreated = this->mapa->getAvailablePosition(positionOfCreator.first+3 , positionOfCreator.second+3);
-	if (positionOfCreated.first == -1) {
-		positionOfCreated = this->mapa->getAvailablePosition();
-	}
+	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);
+	if (positionOfCreated.first == -1) positionOfCreated = this->mapa->getAvailablePosition();
 	EntidadDinamica* protagonista = new EntidadDinamica(type,
 														gameSettings->getValueForAttributeOfEntity(type, "velocidad"),
 														positionOfCreated.first,
@@ -237,6 +237,37 @@ pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
 			return (*iterateEntities)->getPosition();
 		}
 	}
+}
+
+pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
+	stringstream ss;
+	EntidadPartida* building = this->getEntityById(idBuilding);
+	if (building == NULL) return make_pair(-1,-1);
+	int buildingWidth = gameSettings->getValueForAttributeOfEntity(building->getName(), "ancho_base");
+	int buildingHeight = gameSettings->getValueForAttributeOfEntity(building->getName(), "alto_base");
+	pair<int,int> buildingPosition;
+	pair<int,int> candidatePosition;
+	buildingPosition.first = building->getPosition().first;
+	buildingPosition.second = building->getPosition().second;
+	candidatePosition.first = buildingPosition.first+buildingWidth;
+	//recorro el perimetro del edificio
+	for( candidatePosition.second = buildingPosition.second+buildingHeight; candidatePosition.second > buildingPosition.second-2 ; candidatePosition.second--) {
+		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
+		if (tile->isAvailable()) return candidatePosition;
+	}
+	for( ; candidatePosition.first > buildingPosition.first-2 ; candidatePosition.first--) {
+		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
+		if (tile->isAvailable()) return candidatePosition;
+	}
+	for( ; candidatePosition.second < buildingPosition.second+buildingHeight ; candidatePosition.second++) {
+		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
+		if (tile->isAvailable()) return candidatePosition;
+	}
+	for( ; candidatePosition.first < buildingPosition.first+buildingWidth ; candidatePosition.first++) {
+		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
+		if (tile->isAvailable()) return candidatePosition;
+	}
+	return this->getMap()->getAvailablePosition(buildingPosition.first+buildingWidth,buildingPosition.second+buildingHeight);
 }
 
 Juego::~Juego() {

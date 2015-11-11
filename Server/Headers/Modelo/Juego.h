@@ -17,6 +17,7 @@
 #include <map>
 #include <list>
 
+
 using namespace std ;
 
 class Juego {
@@ -61,6 +62,7 @@ public:
 	* */
 	list<EntidadDinamica> getFallenEntities();
 	EntidadDinamica* getDinamicEntityById(int id);
+	EntidadPartida* getEntityById(int id); // TODO reemplazar el anterior metodo por este
 	/*
 	 * Borro el personaje pasado por parametro, lo uso cuando el cliente de desconecto
 	 */
@@ -81,6 +83,7 @@ public:
 	 * Creo la bandera para el jugador
 	 */
 	void createFlag(string client);
+	pair<int,int> getNearestPositionOfABuilding(int idBuilding);
 	virtual ~Juego();
 };
 
