@@ -25,7 +25,6 @@ using namespace std;
 class Mapa {
 private:
 	list<EntidadPartida*> entidades;
-	//map<int,EntidadPartida*> entidades;
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
 
@@ -36,8 +35,8 @@ public:
 	* */
 	pair<int,int> getAvailablePosition();
 	/*
-	 * Devuelve una posicion disponible cercana al origen que recibe
-	 */
+	* Devuelve una posicion disponible cercana al origen que recibe
+	* */
 	pair<int,int> getAvailablePosition(int xFrom, int yFrom);
 	Tile* getTileAt(int x,int y);
 	map<pair<int,int>,Tile*>* getTiles();

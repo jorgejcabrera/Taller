@@ -33,6 +33,10 @@ private:
 	list<EntidadPartida*> newEntities;
 	ResourceManager* resourseManager;
 	GameSettings* gameSettings;
+	/*
+	* habilita los tiles ocupados por la entidad pasada como parametro una vez que se elimina
+	* */
+	void enableTiles(EntidadPartida* entity);
 
 public:
 	Juego();

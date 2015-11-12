@@ -63,7 +63,7 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 	if(!this->tiles.at(make_pair(x,y))->isAvailable() || !this->tiles.at(make_pair( x + entidad->getWidth()-1, y + entidad->getLength()-1))->isAvailable() ){
 		ss << entidad->getName() << " can't push entity in " << entidad->getPosition().first <<" "<< entidad->getPosition().second <<" width "<<  entidad->getWidth()<< " LENGTH "<< entidad->getLength();
 		ss << " " <<this->tiles.at(make_pair(x,y))->isAvailable()<< " " << this->tiles.at(make_pair( x + entidad->getWidth()-1, y + entidad->getLength()-1))->isAvailable();
-		Logger::get()->logDebug("Mapa","positionAvailable",ss.str());
+		Logger::get()->logError("Mapa","positionAvailable",ss.str());
 		return false;
 	}
 	return true;
@@ -84,9 +84,9 @@ pair<int,int> Mapa::getAvailablePosition(){
 }
 
 pair<int,int> Mapa::getAvailablePosition(int xFrom, int yFrom){
-	bool positionFound=false;
-	for(map<pair<int,int>,Tile*>::iterator tilesIterator=this->tiles.begin(); tilesIterator!=this->tiles.end(); ++tilesIterator){
-		if ((tilesIterator->second->getPosX()==xFrom && tilesIterator->second->getPosY()==yFrom) || positionFound ){
+	bool positionFound = false;
+	for(map<pair<int,int>,Tile*>::iterator tilesIterator = this->tiles.begin(); tilesIterator != this->tiles.end(); ++tilesIterator){
+		if ((tilesIterator->second->getPosX() == xFrom && tilesIterator->second->getPosY() == yFrom) || positionFound ){
 			positionFound=true;
 			if(tilesIterator->second->isAvailable() && abs(tilesIterator->second->getPosX()-xFrom)<10 && abs(tilesIterator->second->getPosY()-yFrom)<10){
 				return tilesIterator->first;

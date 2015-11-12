@@ -149,9 +149,9 @@ list<EntidadPartida> Juego::getFallenEntities(){
 			this->protagonistas.erase(it);
 		}
 	}
-	//TODO revisar como liberamos la posicion del edificio borrado
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
+			this->enableTiles(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
 			delete *itBuilds;
 			itBuilds = this->mapa->getEntities()->erase(itBuilds);
@@ -160,6 +160,15 @@ list<EntidadPartida> Juego::getFallenEntities(){
 		}
 	}
 	return fallenEntities;
+}
+
+void Juego::enableTiles(EntidadPartida* entity){
+	pair<int,int> position = entity->getPosition();
+	for(int i = position.first; i < position.first + entity->getWidth(); i++){
+		for(int j= position.second; j < position.second + entity->getLength(); j++){
+			this->getMap()->getTileAt(i,j)->changeStatusAvailable();
+		}
+	}
 }
 
 void Juego::deleteEntity(int id){
