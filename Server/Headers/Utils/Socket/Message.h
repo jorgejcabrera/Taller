@@ -26,16 +26,15 @@ private:
 	msg_game msg;
 
 public:
-	//Message(int entityId, string msgType);
+	Message(int entityId, string msgType);
 	Message();
-	Message(int identifier, int xPosition, int yPosition);
+	//Message(int identifier, int xPosition, int yPosition);
 	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected);
 	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
 	Message(string nombre);
 
-	int getSize();
 	char* serializeToArray();
 	string serializeAsString();
 	string toString();
@@ -45,6 +44,7 @@ public:
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float precition);
+	void setPosition(pair<int,int> position);
 
 	/*
 	* metodos para poder sacar la informacion del mensaje desde afuera de la clase
@@ -53,6 +53,7 @@ public:
 	string getNombre();
 	string getImagen();
 	string getOwner();
+	int getSize();
 	int getId();
 	int getPositionX();
 	int getPositionY();

@@ -167,7 +167,8 @@ void Server::notifyClients(){
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		if ( it->second->hasToNotify() ){
 			//Logger::get()->logDebug("Server","notifyClients","actualizamos una entidad");
-			Message* messageUpdate = new Message(it->second->getId(), it->second->getPosition().first, it->second->getPosition().second);
+			Message* messageUpdate = new Message(it->second->getId(),"update"/* it->second->getPosition().first, it->second->getPosition().second*/);
+			messageUpdate->setPosition(it->second->getPosition());
 			messageUpdate->setHealth(it->second->getHealth());
 			messageUpdate->setPrecision(it->second->getPrecision());
 			messageUpdate->setStrength(it->second->getStrength());

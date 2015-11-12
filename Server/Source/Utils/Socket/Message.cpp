@@ -7,19 +7,20 @@
 
 #include "../../../Headers/Utils/Socket/Message.h"
 
-/*Message::Message(int entityId, string msgType){
+Message::Message(int entityId, string msgType){
 	this->msg.set_id(entityId);
 	this->msg.set_tipo(msgType);
-}*/
+}
 
 Message::Message(){}
+
 //Mensaje usado para novedad de movimiento
-Message::Message(int identifier, int xPosition, int yPosition){
+/*Message::Message(int identifier, int xPosition, int yPosition){
 	this->msg.set_id(identifier);
 	this->msg.set_tipo("update");
 	this->msg.set_x(xPosition);
 	this->msg.set_y(yPosition);
-}
+}*/
 
 //Mesaje utilizado para mandar por primera vez una entidad
 Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected){
@@ -254,6 +255,11 @@ void Message::setPrecision(float precition){
 
 float Message::getPrecision(){
 	return this->msg.precition();
+}
+
+void Message::setPosition(pair<int,int> position){
+	this->msg.set_x(position.first);
+	this->msg.set_y(position.second);
 }
 
 void Message::activeTile( int x, int y) {
