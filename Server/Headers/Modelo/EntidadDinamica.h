@@ -47,14 +47,12 @@ public:
 	* */
 	void nextPosition();
 	/*
-	*
+	* ?
 	* */
 	list<pair<int,int> >* getPath();
 	bool isWalking();
-	void setNotifiable(bool notifiable);
 	void setPathIsNew(bool esNuevo);
 	bool pathIsNew();
-	bool hasToNotify();
 	virtual ~EntidadDinamica();
 };
 

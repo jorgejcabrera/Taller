@@ -64,6 +64,7 @@ public:
 	int getStrength();
 	float getPrecision();
 	string getName();
+	string getOwner();
 	pair<int,int> getTargetPosition();
 	pair<int,int> getPosition();
 	void setTarget(int target);
@@ -74,6 +75,8 @@ public:
 	void setTargetPosition(pair<int,int> position);
 	void setName(string name);
 	void setVisibilityRange(int range);
+	void setNotifiable(bool notifiable);
+	void setOwner(string owner);
 	/*
 	* disminuye la salud de la entidad según 
 	* */
@@ -83,13 +86,9 @@ public:
 	* */
 	void takeDamage(int damage);
 	/*
-	* seteo el dueño de la entidad
+	* si la entidad sufrio algun cambio debe ser notificado
 	* */
-	void setOwner(string owner);
-	/*
-	* Devuelvo el nombre del cliente dueño de la entidad
-	* */
-	string getOwner();
+	bool hasToNotify();
 	virtual ~EntidadPartida();
 };
 

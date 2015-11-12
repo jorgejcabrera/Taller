@@ -43,14 +43,6 @@ void EntidadDinamica::nextPosition(){
 	}
 }
 
-void EntidadDinamica::setNotifiable(bool noti){
-	this->notifiable = noti;
-}
-
-bool EntidadDinamica::hasToNotify(){
-	return notifiable;
-}
-
 list<pair<int,int> >* EntidadDinamica::getPath(){
 	return this->path;
 }

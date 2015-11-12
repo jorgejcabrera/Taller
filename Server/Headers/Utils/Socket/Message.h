@@ -26,6 +26,7 @@ private:
 	msg_game msg;
 
 public:
+	//Message(int entityId, string msgType);
 	Message();
 	Message(int identifier, int xPosition, int yPosition);
 	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected);

@@ -7,8 +7,12 @@
 
 #include "../../../Headers/Utils/Socket/Message.h"
 
-Message::Message() {}
+/*Message::Message(int entityId, string msgType){
+	this->msg.set_id(entityId);
+	this->msg.set_tipo(msgType);
+}*/
 
+Message::Message(){}
 //Mensaje usado para novedad de movimiento
 Message::Message(int identifier, int xPosition, int yPosition){
 	this->msg.set_id(identifier);

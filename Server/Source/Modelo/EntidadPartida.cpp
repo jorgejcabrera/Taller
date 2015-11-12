@@ -106,7 +106,7 @@ int EntidadPartida::getDamage(){
 int EntidadPartida::defend(){
 	float val = ( rand() % 100 ) / 100;
 	if( val <= this->precision )
-		return /*this->health -*/ this->strength * val;
+		return this->strength * val;
 	else
 		return 0;
 }
@@ -129,6 +129,14 @@ void EntidadPartida::setOwner(string ownerId){
 
 string EntidadPartida::getOwner(){
 	return this->owner;
+}
+
+void EntidadPartida::setNotifiable(bool noti){
+	this->notifiable = noti;
+}
+
+bool EntidadPartida::hasToNotify(){
+	return notifiable;
 }
 
 EntidadPartida::~EntidadPartida() {
