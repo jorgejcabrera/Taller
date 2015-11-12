@@ -18,6 +18,11 @@ Server::Server(int port, GameController* myController) {
 	this->isAlive = true;
 }
 
+bool Server::acceptingNewClients(){
+	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
+	return (this->clients.size()<2);
+}
+
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
 	if ( this->serverSocket < 0) {
@@ -88,11 +93,6 @@ int Server::run(void * data){
 		}
 	}
 	return 0;
-}
-
-bool Server::acceptingNewClients(){
-	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<2);
 }
 
 void Server::notifyGameInitToClients(){
@@ -277,6 +277,11 @@ void Server::verifyClientsConections(){
 			messageClientLost->clientLost((*clientIterator)->getUserName());
 			for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
 					(*clientIt)->writeMessagesInQueue(messageClientLost);
+			}
+			//TODO revisar como hacer cuando el tipo de juego es captura de bandera porque ahi pasan las entidades de dueño
+			list<int> entitiesToDisconect = gController->getEntitiesOfClient((*clientIterator)->getUserName());
+			for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
+				this->gController->getJuego()->deleteEntity(*it);
 			}
 			this->gController->delay(1000);
 			(*clientIterator)->disconect();

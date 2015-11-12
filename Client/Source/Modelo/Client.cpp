@@ -126,7 +126,6 @@ void Client::processReceivedMessages(){
 																(*it)->getPrecision());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getNombre());
-
 		}else if ( tipoMensaje == "reconnect"){
 			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
 			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
@@ -167,7 +166,9 @@ void Client::processReceivedMessages(){
 				this->gController->loseGame();
 				this->status = DISCONECTED;
 			}else{
-				//TODO borrar las entidades del cliente desconectado
+				//Si el que perdio es otro, borro sus entidades
+				//TODO revisar que pasa si el juego es captura de bandera
+				disconnectPlayer((*it)->getNombre());
 			}
 		}else{
 			cout << "No se que hacer con el tipo: " << tipoMensaje <<endl;
