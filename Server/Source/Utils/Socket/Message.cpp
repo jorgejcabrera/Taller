@@ -14,16 +14,8 @@ Message::Message(int entityId, string msgType){
 
 Message::Message(){}
 
-//Mensaje usado para novedad de movimiento
-/*Message::Message(int identifier, int xPosition, int yPosition){
-	this->msg.set_id(identifier);
-	this->msg.set_tipo("update");
-	this->msg.set_x(xPosition);
-	this->msg.set_y(yPosition);
-}*/
-
 //Mesaje utilizado para mandar por primera vez una entidad
-Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected){
+/*Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected){
 	this->msg.set_id(identifier);
 	this->msg.set_tipo(tipoMessage);
 	this->msg.set_nombre(nombreEntity);
@@ -31,7 +23,7 @@ Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPo
 	this->msg.set_y(yPosition);
 	//Utilizo el campo FPS para mandar 0: el cliente está conectado, -1: el cliente está DESCONECTADO
 	this->msg.set_fps(clientConnected);
-}
+}*/
 
 //Mensaje usado para configuracion
 Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension){
@@ -79,6 +71,15 @@ void Message::setType(string type){
 
 void Message::setId(int id){
 	this->msg.set_id(id);
+}
+
+//Utilizo el campo FPS para mandar 0: el cliente está conectado, -1: el cliente está DESCONECTADO
+void Message::setClientConnected(int client){
+	this->msg.set_fps(client);
+}
+
+int Message::getClientConnected(){
+	return this->msg.fps();
 }
 
 void Message::initialOffset(int x, int y){
@@ -185,7 +186,11 @@ int Message::getPositionY(){
 	return this->msg.y();
 }
 
-string Message::getNombre(){
+void Message::setName(string name){
+	this->msg.set_nombre(name);
+}
+
+string Message::getName(){
 	return this->msg.nombre();
 }
 

@@ -111,12 +111,14 @@ list<Message*> Server::getProtagonistasMessages(){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
-		Message* protagonistaMessage = new Message((*it).second->getId(), 
-													tipoEntidad, 
+		Message* protagonistaMessage = new Message((*it).second->getId(), tipoEntidad/*,
 													(*it).second->getName(), 
 													(*it).second->getPosition().first,
 													(*it).second->getPosition().second,
-													clientConnected);
+													clientConnected*/);
+		protagonistaMessage->setName((*it).second->getName());
+		protagonistaMessage->setPosition((*it).second->getPosition());
+		protagonistaMessage->setClientConnected(clientConnected);
 		protagonistaMessage->setOwner((*it).second->getOwner());
 		protagonistaMessage->setHealth((*it).second->getHealth());
 		protagonistaMessage->setStrength((*it).second->getStrength());
@@ -134,13 +136,13 @@ void Server::processReceivedMessages(){
 	while(!this->readQueue->isEmpty()){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
 		if( messageUpdate->getTipo() == "ping" ){
-			this->clients.at(messageUpdate->getNombre())->reporting();
+			this->clients.at(messageUpdate->getName())->reporting();
 		}else if( messageUpdate->getTipo() == "exit" ){
 			//TODO destruir el cliente que se esta desconectando
 			ss.str("");
-			ss << "Client " << messageUpdate->getNombre() << " was disconected";
+			ss << "Client " << messageUpdate->getName() << " was disconected";
 			Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
-			this->clients.at(messageUpdate->getNombre())->disconect();
+			this->clients.at(messageUpdate->getName())->disconect();
 		
 		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
 			int idUpdate = messageUpdate->getId();
@@ -151,7 +153,7 @@ void Server::processReceivedMessages(){
 			this->idEntitiesUpdated.push_back(idUpdate);
 		
 		}else if( this->gameRunning && messageUpdate->getTipo() == "create" ){
-			this->gController->getJuego()->createNewEntitie(messageUpdate->getOwner(),messageUpdate->getNombre(), messageUpdate->getId());
+			this->gController->getJuego()->createNewEntitie(messageUpdate->getOwner(),messageUpdate->getName(), messageUpdate->getId());
 		}else if( this->gameRunning ){
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
@@ -183,11 +185,12 @@ void Server::notifyClients(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
-		Message* protagonistaMessage = new Message((*it)->getId(), 
-													DefaultSettings::getTypeEntity((*it)->getName()),
+		Message* protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName())/*,
 													(*it)->getName(), 
 													(*it)->getPosition().first,
-													(*it)->getPosition().second,0);
+													(*it)->getPosition().second,0*/);
+		protagonistaMessage->setName((*it)->getName());
+		protagonistaMessage->setPosition((*it)->getPosition());
 		protagonistaMessage->setOwner((*it)->getOwner());
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
@@ -201,24 +204,28 @@ void Server::notifyClients(){
 	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasToNotify()){
 		//a los ultimos 3 parametros del mensaje no les doy bola
-		Message* resourceMessege = new Message(rm->getIdAEliminar(),"deleteResource",rm->getUltimoTipoConsumido(),0,0,0);
+		Message* resourceMessage = new Message(rm->getIdAEliminar(),"deleteResource"
+												/*,rm->getUltimoTipoConsumido(),0,0,0*/);
 		rm->yaNotifique();
-		resourceMessege->setOwner(rm->getUltimoEnConsumir());
+		resourceMessage->setName(rm->getUltimoTipoConsumido());
+		resourceMessage->setOwner(rm->getUltimoEnConsumir());
 
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
-			(*clientIterator)->writeMessagesInQueue(resourceMessege);
+			(*clientIterator)->writeMessagesInQueue(resourceMessage);
 		}
 	}
 	//mando los nuevos recursos que se crean
 	if(rm->hasNewResource()){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
-		Message* newResourceMessege = new Message(rm->getIdNuevoRecurso(),"newResource",rm->getUltimoTipoCreado(),pos.first,pos.second,0);
+		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource"
+				/*,rm->getUltimoTipoCreado(),pos.first,pos.second,0*/);
 		rm->newResourceSent();
+		newResourceMessage->setName(rm->getUltimoTipoCreado());
 
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-			(*clientIterator)->writeMessagesInQueue(newResourceMessege);
+			(*clientIterator)->writeMessagesInQueue(newResourceMessage);
 		}
 
 	}

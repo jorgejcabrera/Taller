@@ -47,7 +47,10 @@ list<Message*> GameController::getEntitiesMessages(){
 	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
 		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado
-		Message *entityMessage = new Message((**it).getId(), tipoEntidad, (**it).getName(), (**it).getPosition().first, (**it).getPosition().second, 0);
+		Message* entityMessage = new Message((**it).getId(), tipoEntidad
+							/*, (**it).getName(), (**it).getPosition().first, (**it).getPosition().second, 0*/);
+		entityMessage->setName((**it).getName());
+		entityMessage->setPosition((**it).getPosition());
 		entityMessage->setOwner((**it).getOwner());
 		listaDeEntities.push_back(entityMessage);
 	}

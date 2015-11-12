@@ -70,7 +70,7 @@ void Client::startCommunication(){
 
 string Client::readUserName(){
 	Message* userNameMessage = this->readThread->readMessageNow();
-	return userNameMessage->getNombre();
+	return userNameMessage->getName();
 }
 
 void Client::responseUserName(string isOk){

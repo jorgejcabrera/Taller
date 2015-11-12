@@ -28,8 +28,7 @@ private:
 public:
 	Message(int entityId, string msgType);
 	Message();
-	//Message(int identifier, int xPosition, int yPosition);
-	Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected);
+	//Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected);
 	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
@@ -40,17 +39,19 @@ public:
 	string toString();
 	void setId(int id);
 	void setType(string type);
+	void setName(string name);
 	void setContent(msg_game body);
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float precition);
 	void setPosition(pair<int,int> position);
+	void setClientConnected(int client);
 
 	/*
 	* metodos para poder sacar la informacion del mensaje desde afuera de la clase
 	* */
 	string getTipo();
-	string getNombre();
+	string getName();
 	string getImagen();
 	string getOwner();
 	int getSize();
@@ -63,6 +64,7 @@ public:
 	int getDelay();
 	int getTotalFramesLine();
 	int getPixelsDimension();
+	int getClientConnected();
 	int getTarget();
 	int getHealth();
 	int getStrength();
