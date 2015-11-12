@@ -274,6 +274,7 @@ void Server::verifyClientsConections(){
 			for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
 					(*clientIt)->writeMessagesInQueue(messageClientLost);
 			}
+			this->gController->delay(1000);
 			(*clientIterator)->disconect();
 		}
 	}
