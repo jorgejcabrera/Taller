@@ -241,7 +241,7 @@ void GameController::showFinalMessage(){
 	if(this->gameStatus == WIN){
 		finalMessage = "Victory is yours";
 	}else if(this->gameStatus == LOSE){
-		finalMessage = "You Die";
+		finalMessage = "You Died";
 	}else if (this->gameStatus == DISCONNECTED){
 		finalMessage = "Server disconnected";
 	}
