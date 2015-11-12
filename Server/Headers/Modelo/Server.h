@@ -41,13 +41,21 @@ private:
 	int port;
 	struct sockaddr_in serverAddress;
 	/*
-	* ?
+	* ALGUIEN PUEDE COMENTAR PARA QUE ES ESTA LISTA DE ENTIDADES?
 	* */
 	list<int> idEntitiesUpdated;
 	/*
 	* ?
 	* */
 	time_t lastReportedServer;
+	/*
+	* Verifican el tipo del msg y aplican los cambios indicados en el cuerpo del msg. En caso de exito devuelve true
+	* */
+	bool checkForPingMsg(Message* msg);
+	bool checkForExitMsg(Message* msg);
+	bool checkForAttackMsg(Message* msg);
+	bool checkForCreateMsg(Message* msg);
+	bool checkForUpdMsg(Message* msg);
 
 public:
 	Server(int port, GameController *myController);
@@ -100,8 +108,8 @@ public:
 	void verifyWaitingClients();
 
 	/*
-	 * Cuando se conecta un nuevo cliente, creo todas sus entidades, centro civico y aldeanos
-	 */
+	* Cuando se conecta un nuevo cliente, creo todas sus entidades, centro civico y aldeanos
+	* */
 	void createEntitiesForClient(Client* newClient);
 
 	list<Client*> getActiveClients();

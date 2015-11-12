@@ -133,16 +133,13 @@ void Server::processReceivedMessages(){
 	this->readQueue->lockQueue();
 	//TODO revisar, hoy no usamos la lista idEntitiesUpdated porque notificamos lo que se este "moviendo"
 	this->idEntitiesUpdated.clear();
-	stringstream ss;
 	while(!this->readQueue->isEmpty()){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
-		if( messageUpdate->getTipo() == "ping" ){
+		/*if( messageUpdate->getTipo() == "ping" ){
 			this->clients.at(messageUpdate->getName())->reporting();
+
 		}else if( messageUpdate->getTipo() == "exit" ){
 			//TODO destruir el cliente que se esta desconectando
-			ss.str("");
-			ss << "Client " << messageUpdate->getName() << " was disconected";
-			Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
 			this->clients.at(messageUpdate->getName())->disconect();
 		
 		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
@@ -156,21 +153,83 @@ void Server::processReceivedMessages(){
 		
 		}else if( this->gameRunning && messageUpdate->getTipo() == "create" ){
 			this->gController->getJuego()->createNewEntitie(messageUpdate->getOwner(),messageUpdate->getName(), messageUpdate->getId());
+
 		}else if( this->gameRunning ){
 			int idUpdate = messageUpdate->getId();
 			this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
 			this->gController->getJuego()->setTargetTo(idUpdate,0);
 			this->idEntitiesUpdated.push_back(idUpdate);
-		}
+		}*/
+		bool msgProcessed = this->checkForPingMsg(messageUpdate);
+		if(!msgProcessed)
+			msgProcessed = this->checkForExitMsg(messageUpdate);
+		if(!msgProcessed)
+			msgProcessed = this->checkForAttackMsg(messageUpdate);
+		if(!msgProcessed)
+			msgProcessed = this->checkForCreateMsg(messageUpdate);
+		if(!msgProcessed)
+			this->checkForUpdMsg(messageUpdate);
 	}
 	this->readQueue->unlockQueue();
+}
+
+bool Server::checkForPingMsg(Message* msg){
+	if( msg->getTipo() == "ping" ){
+		this->clients.at(msg->getName())->reporting();
+		return true;
+	}
+	return false;
+}
+
+bool Server::checkForExitMsg(Message* msg){
+	stringstream ss;
+	if( msg->getTipo() == "exit" ){
+		//TODO destruir el cliente que se esta desconectando
+		ss.str("");
+		ss << "Client " << msg->getName() << " was disconected";
+		Logger::get()->logInfo("Server","processReceivedMessages", ss.str());
+		this->clients.at(msg->getName())->disconect();
+		return true;
+	}
+	return false;
+}
+
+bool Server::checkForAttackMsg(Message* msg){
+	if( this->gameRunning && msg->getTipo() == "attack" ){
+		int idUpdate = msg->getId();
+		int target = msg->getTarget();
+		pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
+		this->gController->getJuego()->setPlaceToGo(idUpdate, targetPosition.first, targetPosition.second);
+		this->gController->getJuego()->setTargetTo(idUpdate,target);
+		this->idEntitiesUpdated.push_back(idUpdate);
+		return true;
+	}
+	return false;
+}
+
+bool Server::checkForCreateMsg(Message* msg){
+	 if( this->gameRunning && msg->getTipo() == "create" ){
+		this->gController->getJuego()->createNewEntitie(msg->getOwner(),msg->getName(), msg->getId());
+		return true;
+	 }
+	return false;
+}
+
+bool Server::checkForUpdMsg(Message* msg){
+	if( this->gameRunning ){
+		int idUpdate = msg->getId();
+		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
+		this->gController->getJuego()->setTargetTo(idUpdate,0);
+		this->idEntitiesUpdated.push_back(idUpdate);
+		return true;
+	}
+	return false;
 }
 
 void Server::notifyClients(){
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		if ( it->second->hasToNotify() ){
-			//Logger::get()->logDebug("Server","notifyClients","actualizamos una entidad");
 			Message* messageUpdate = new Message(it->second->getId(),"update");
 			messageUpdate->setPosition(it->second->getPosition());
 			messageUpdate->setHealth(it->second->getHealth());
