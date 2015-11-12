@@ -13,6 +13,7 @@ Client::Client(int identifier, SocketQueue* queueUnique) {
 	this->readThread = new MessageSocketReader(this->clientId, queueUnique);
 	this->lastReported = time(0);
 	this->status = DISCONECTED;
+	this->colour = 0;
 }
 
 void Client::reporting(){
@@ -148,6 +149,14 @@ void Client::setInitialOffset(int x, int y){
 
 pair<int,int> Client::getInitialOffset(){
 	return this->initialOffset;
+}
+
+void Client::setColour(int colour) {
+	this->colour = colour;
+}
+
+int Client::getColour() {
+	return this->colour;
 }
 
 Client::~Client() {

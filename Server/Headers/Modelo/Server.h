@@ -108,7 +108,7 @@ public:
 	list<Message*> getProtagonistasMessages();
 	bool isRunning();
 	void shutDown();
-	void sendColour(Client* client);
+	void sendColours(Client* client);
 	~Server();
 };
 

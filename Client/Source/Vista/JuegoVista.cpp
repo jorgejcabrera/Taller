@@ -268,12 +268,29 @@ void JuegoVista::drawMiniMap() {
 		int x = position->first;
 		int y =  position->second;
 		this->miniMapVista->makeMiniPos(x,y);
-		this->picassoHelper->renderObject(	this->miniMapVista->getEntityPath(),
+		colour colourClient = this->coloursOfClients[entidad->getOwner()];
+		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
 											this->miniMapVista->getMiniPosX(),
 											this->miniMapVista->getMiniPosY(),
 											this->miniMapVista->getMiniWidth()+1,
 											this->miniMapVista->getMiniHeight()+1);
 	}
+
+	//Dibujo los semi estaticos
+	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
+		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
+		int x = entidad->getPosition()->first;
+		int y = entidad->getPosition()->second;
+		this->miniMapVista->makeMiniPos(x,y);
+		colour colourClient = this->coloursOfClients[entidad->getOwner()];
+		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
+											this->miniMapVista->getMiniPosX(),
+											this->miniMapVista->getMiniPosY(),
+											this->miniMapVista->getMiniWidth()+1,
+											this->miniMapVista->getMiniHeight()+1);
+	}
+
+
 
 	//dibujo los personajes que NO son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){

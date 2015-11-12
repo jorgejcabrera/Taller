@@ -18,6 +18,11 @@ Server::Server(int port, GameController* myController) {
 	this->isAlive = true;
 }
 
+bool Server::acceptingNewClients(){
+	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
+	return (this->clients.size()<2);
+}
+
 int Server::initSocketServer(){
 	this->serverSocket = socket(PF_INET, SOCK_STREAM, 0);
 	if ( this->serverSocket < 0) {
@@ -76,7 +81,7 @@ int Server::run(void * data){
 
 				//Le mando a todos los clientes el color del cliente
 				//Lo hago antes de mandar las entidades porque cuando recibo la bandera tengo que saber cual es el color del cliente
-				this->sendColour(newClient);
+				this->sendColours(newClient);
 
 				//Mando las entidades que tiene el mapa
 				newClient->writeMessagesInQueue(gController->getEntitiesMessages());
@@ -93,11 +98,6 @@ int Server::run(void * data){
 		}
 	}
 	return 0;
-}
-
-bool Server::acceptingNewClients(){
-	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<2);
 }
 
 void Server::notifyGameInitToClients(){
@@ -284,6 +284,12 @@ void Server::verifyClientsConections(){
 			for(list<Client*>::iterator clientIt=activeClients.begin(); clientIt!=activeClients.end(); ++clientIt){
 					(*clientIt)->writeMessagesInQueue(messageClientLost);
 			}
+			//TODO revisar como hacer cuando el tipo de juego es captura de bandera porque ahi pasan las entidades de dueño
+			list<int> entitiesToDisconect = gController->getEntitiesOfClient((*clientIterator)->getUserName());
+			for(list<int>::iterator it=entitiesToDisconect.begin(); it!=entitiesToDisconect.end();++it){
+				this->gController->getJuego()->deleteEntity(*it);
+			}
+			this->gController->delay(1000);
 			(*clientIterator)->disconect();
 		}
 	}
@@ -414,14 +420,22 @@ void Server::verifyWaitingClients(){
 	}
 }
 
-void Server::sendColour(Client* client) {
-	//envio el nuevo color a todos los clientes
+void Server::sendColours(Client* client) {
+	client->setColour(this->clients.size());
 	Message* msg = new Message();
-	msg->colourOfClient(client->getUserName(), this->clients.size());
-	for (map<string,Client*>::iterator it = clients.begin() ; it != clients.end() ; it++ ) {
-		(*it).second->writeMessagesInQueue(msg);
+	msg->colourOfClient(client->getUserName(), client->getColour());
+	client->writeMessagesInQueue(msg);
+	//Le mando a los clientes anteriores el color del nuevo cliente
+	list<Client*> activeClients = this->getActiveClients();
+	for (list<Client*>::iterator it = activeClients.begin() ; it != activeClients.end() ; it++ ) {
+			(*it)->writeMessagesInQueue(msg);
 	}
-
+	//Le mando al cliente nuevo el color de todos los clientes anteriores
+	for (map<string,Client*>::iterator it = clients.begin() ; it != clients.end() ; it++ ) {
+		Message* msgOldClient = new Message();
+		msgOldClient->colourOfClient(it->second->getUserName(), it->second->getColour());
+		client->writeMessagesInQueue(msgOldClient);
+	}
 }
 
 Server::~Server() {

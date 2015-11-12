@@ -303,7 +303,7 @@ string DefaultSettings::getPathFlagImage(string stringColor){
 
 string DefaultSettings::getPathTileColour(string stringColor){
 	if(stringColor==""){
-			return "";
+		stringColor = "grey";
 	}
 	return IMAGE_BASE_PATH +"/Tiles/" + stringColor + "Tile.png";
 }
