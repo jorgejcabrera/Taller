@@ -190,7 +190,7 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 														positionOfCreated.second,
 														gameSettings->getProtagonistaPixelDimension(),
 														gameSettings->getProtagonistaPixelDimension());
-	protagonista->setHealth(100);
+	protagonista->setHealth(10000);
 	protagonista->setStrength(4);
 	protagonista->setPrecision(0.5);
 	protagonista->setOwner(owner);

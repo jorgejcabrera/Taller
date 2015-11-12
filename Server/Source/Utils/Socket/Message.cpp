@@ -14,23 +14,8 @@ Message::Message(int entityId, string msgType){
 
 Message::Message(){}
 
-//Mensaje usado para configuracion
-/*Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension){
-	this->msg.set_id(0);
-	this->msg.set_tipo("config");
-	this->msg.set_nombre(nameEntity);
-	this->msg.set_imagen(thePath);
-	this->msg.set_ancho_base(anchoBase);
-	this->msg.set_alto_base(altoBase);
-	this->msg.set_fps(fps);
-	this->msg.set_delay(delay);
-	this->msg.set_total_frames_line(totalFramesLine);
-
-	this->msg.set_pixels_dimension(pixelDimension);
-}*/
-
 //Mensaje utilizado para mandar tiles o dimension de la ventana
-Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto){
+/*Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto){
 	this->msg.set_id(0);
 	this->msg.set_tipo(tipo);
 	this->msg.set_nombre(nombreEntity);
@@ -38,7 +23,7 @@ Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition,
 	this->msg.set_y(yPosition);
 	this->msg.set_ancho_base(mapaAncho);
 	this->msg.set_alto_base(mapaAlto);
-}
+}*/
 
 Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition){
 	this->msg.set_id(0);
