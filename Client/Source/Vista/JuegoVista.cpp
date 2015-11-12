@@ -186,7 +186,7 @@ void JuegoVista::addBuilding(int id, string type, int x, int y, string owner){
 	newBuilding->setId(id);
 	newBuilding->setOwner(owner);
 	string pathImage="";
-	if(type=="flag"){
+	if( type == "flag" ){
 		pathImage = getPathFlagImage(this->coloursOfClients[owner]);
 	}else{
 		pathImage = gameSettings->getEntityConfig(type)->getPath();
@@ -369,12 +369,16 @@ void JuegoVista::deleteDinamicEntityById(int id){
 
 void JuegoVista::deleteEntityById(int id){
 	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
+	stringstream ss;
+	ss << "borramos la entidad "<<id;
 	if( itEnemy != this->personajes.end() ){
+		Logger::get()->logDebug("JuegoVista","deleteEntityById",ss.str());
 		this->personajes.erase(itEnemy);
 		return;		
 	}
 	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
 	if( itEstaticos != this->buildings.end() ){
+		Logger::get()->logDebug("JuegoVista","deleteEntityById",ss.str());
 		this->buildings.erase(itEstaticos);
 		return;
 	}

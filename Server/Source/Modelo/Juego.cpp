@@ -143,19 +143,31 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	list<EntidadPartida> fallenEntities;
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getHealth() <= 0 ){
+			pair<int,int> position = it->second->getPosition();
+			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
 			this->protagonistas.erase(it);
 		}
 	}
+	/*stringstream ss;
+	//TODO revisar como liberamos la posicion del edificio borrado
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ++itBuilds){
-		stringstream ss;
-		ss << "la salud de la entidad es de "<< (*itBuilds)->getHealth();
+		ss.str("");
+		ss << "la salud de la entidad "<< (*itBuilds)->getId() <<" es de "<< (*itBuilds)->getHealth();
 		Logger::get()->logDebug("Juego","getFallenEntities",ss.str());
-		if( (*itBuilds)->getHealth() <= 0 ){
-			Logger::get()->logDebug("Juego","getFallenEntities","agregamos una entidad caida");
+		if( (*itBuilds)->getHealth() <= 0 && (*itBuilds)->getId()>0){
+			Logger::get()->logDebug("Juego","getFallenEntities","hay una entidad caida");
 			fallenEntities.push_front(*(*itBuilds));
-			this->mapa->getEntities()->erase(itBuilds);
+			//pair<int,int> position = (*(*itBuilds)).getPosition();
+			//this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
+			this->mapa->deleteEntity((*itBuilds)->getId());
+			Logger::get()->logDebug("Juego","getFallenEntities","se borro la entidad del mapa");
 		}
+	}
+	Logger::get()->logDebug("Juego","getFallenEntities","------------------------------");*/
+	list<EntidadPartida> staticFallenEntities = this->mapa->getDestroyedEntities();
+	for(list<EntidadPartida>::iterator itFallen = staticFallenEntities.begin(); itFallen != staticFallenEntities.end(); ++itFallen ){
+		fallenEntities.push_front(*itFallen);
 	}
 	return fallenEntities;
 }

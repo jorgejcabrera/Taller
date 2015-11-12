@@ -102,6 +102,28 @@ map<pair<int,int>,Tile*>* Mapa::getTiles(){
 
 list<EntidadPartida*>* Mapa::getEntities(){
 	return &this->entidades;
+}	
+
+list<EntidadPartida> Mapa::getDestroyedEntities(){
+	list<EntidadPartida> fallenEntities;
+	stringstream ss;
+	for(list<EntidadPartida*>::iterator itEntidades = this->entidades.begin(); itEntidades != this->entidades.end(); ++itEntidades){
+		if( (*itEntidades)->getHealth() < 0 ){
+			ss.str("");
+			ss << "la entidad " << (*itEntidades)->getId() << " tiene salud " << (*itEntidades)->getHealth();
+			Logger::get()->logDebug("Mapa","getDestroyedEntities",ss.str());
+			fallenEntities.push_front(*(*itEntidades));
+		}
+	}
+	for(list<EntidadPartida*>::iterator it = this->entidades.begin(); it != this->entidades.end(); ++it){
+		if((*it)->getHealth() <= 0){
+			ss.str("");
+			ss << "borramos la entidad " << (*it)->getId() << " tiene salud " << (*it)->getHealth();
+			Logger::get()->logDebug("Mapa","getDestroyedEntities",ss.str());
+			this->entidades.erase(it);
+		}
+	}
+	return fallenEntities;
 }
 
 Mapa::~Mapa() {
