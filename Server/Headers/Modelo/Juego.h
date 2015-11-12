@@ -64,8 +64,8 @@ public:
 	EntidadDinamica* getDinamicEntityById(int id);
 	EntidadPartida* getEntityById(int id); // TODO reemplazar el anterior metodo por este
 	/*
-	 * Borro el personaje pasado por parametro, lo uso cuando el cliente de desconecto
-	 */
+	* Borro el personaje pasado por parametro, lo uso cuando el cliente de desconecto
+	* */
 	void deleteEntity(int id);
 	ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();

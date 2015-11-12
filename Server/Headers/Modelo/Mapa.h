@@ -42,7 +42,6 @@ public:
 	Tile* getTileAt(int x,int y);
 	map<pair<int,int>,Tile*>* getTiles();
 	list<EntidadPartida*>* getEntities();
-	list<EntidadPartida> getDestroyedEntities();
 	void pushEntity(EntidadPartida* entidad);
 	bool positionAvailable(EntidadPartida* entidad);
 	~Mapa();

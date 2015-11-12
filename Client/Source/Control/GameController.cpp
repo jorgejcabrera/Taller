@@ -38,9 +38,6 @@ Message* GameController::getMessageFromEvent(string userName){
 
 					if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
 						Message* message = new Message();
-						stringstream ss;
-						ss << "vamos a atacar la entidad "<< targetToAttack["id"].c_str();
-						Logger::get()->logDebug("GameController","getMessageFromEvent",ss.str());
 						msg_game body;
 						body.set_id(this->idEntitySelected);
 						body.set_tipo("attack");

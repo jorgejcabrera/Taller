@@ -286,7 +286,6 @@ void Server::sendFallenEntites(){
 		msgfallenEntity->setId((*itFallenEntities).getId());
 		msgfallenEntity->setType("deleteEntity");
 		list<Client*> activeClients = getActiveClients();
-		Logger::get()->logDebug("Server","sendFallenEntites","mandamos una entidad caida");
 		for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(msgfallenEntity);
 		}
