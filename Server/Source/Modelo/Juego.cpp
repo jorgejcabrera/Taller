@@ -49,7 +49,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,dimension.first,dimension.second,true);
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
-	edificioCreado->setHealth(1000);
+	edificioCreado->setHealth(500);
 	this->mapa->pushEntity(edificioCreado);
 	this->newEntities.push_back(edificioCreado);
 
@@ -79,7 +79,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
 	//Creo los personajes del cliente
 	xOrigin += dimension.first;
-	int villagerHealth = 1000;
+	int villagerHealth = 500;
 	int villagerStrength = 4;
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
@@ -147,12 +147,16 @@ list<EntidadPartida> Juego::getFallenEntities(){
 			this->protagonistas.erase(it);
 		}
 	}
-	//for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ++itBuilds){
-	//	if((*itBuilds)->getHealth() <= 0 ){
-	//		fallenEntities.push_front(*(*itBuilds));
-			//this->mapa->getEntities()->erase(itBuilds);
-	//	}
-	//}
+	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ++itBuilds){
+		stringstream ss;
+		ss << "la salud de la entidad es de "<< (*itBuilds)->getHealth();
+		Logger::get()->logDebug("Juego","getFallenEntities",ss.str());
+		if( (*itBuilds)->getHealth() <= 0 ){
+			Logger::get()->logDebug("Juego","getFallenEntities","agregamos una entidad caida");
+			fallenEntities.push_front(*(*itBuilds));
+			this->mapa->getEntities()->erase(itBuilds);
+		}
+	}
 	return fallenEntities;
 }
 
@@ -263,6 +267,7 @@ pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
 			return (*iterateEntities)->getPosition();
 		}
 	}
+	return pair<int,int>();
 }
 
 pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {

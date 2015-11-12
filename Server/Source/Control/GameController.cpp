@@ -71,7 +71,6 @@ list<int> GameController::getEntitiesOfClient(string userName){
 
 void GameController::setNextPaths(){
 	//antes de setear el proximo path, me fijo si hay un recurso en donde esta
-
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
 		pair<int,int> pos = (*it).second->getPosition();
@@ -97,7 +96,6 @@ void GameController::pursuitAndAttackTarget(){
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0){
 			if( this->targetIsAlive(it->second) && !this->readyToAttack(it->second) ){
-				//pair<int,int> targetPosition = this->juego->getDinamicEntityById(it->second->getTarget())->getPosition();
 				pair<int,int> targetPosition = this->juego->getEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
 			
@@ -105,7 +103,6 @@ void GameController::pursuitAndAttackTarget(){
 				this->juego->setTargetTo(it->second->getId(),0);
 
 			}else if( this->targetIsAlive(it->second) ){
-				//EntidadDinamica* enemy = this->juego->getDinamicEntityById(it->second->getTarget());
 				EntidadPartida* enemy = this->juego->getEntityById(it->second->getTarget());
 				it->second->attackTo(enemy);
 			}
@@ -116,13 +113,11 @@ void GameController::pursuitAndAttackTarget(){
 
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1
 bool GameController::readyToAttack(EntidadDinamica* entity){
-	//pair<int,int> targetPosition = this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
 	pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
 	return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
 }
 
 bool GameController::targetIsAlive(EntidadDinamica* entity){
-	//EntidadDinamica* targetEntity = this->juego->getDinamicEntityById(entity->getTarget());
 	EntidadPartida* targetEntity = this->juego->getEntityById(entity->getTarget());
 	if(!targetEntity){
 		entity->setTarget(0);
@@ -133,7 +128,6 @@ bool GameController::targetIsAlive(EntidadDinamica* entity){
 }
 
 bool GameController::targetOutOfReach(EntidadDinamica* entity){
-	//pair<int,int> targetPosition = this->juego->getDinamicEntityById(entity->getTarget())->getPosition();
 	pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
 	return UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) >= 10;
 }

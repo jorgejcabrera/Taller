@@ -11,12 +11,8 @@
 #include "EntidadEstatica.h"
 
 class Resource: public EntidadEstatica {
-//private:
-	//No uso el tipo, uso el name de entidadPArtida porque se usa para notificar a los clientes y la logica ya esta adaptada
-	//string tipo;
 public:
-	Resource(string tipo,int x,int y);
-	//string getTipo();
+	Resource(string tipo,int x,int y,int health);
 	virtual ~Resource();
 };
 

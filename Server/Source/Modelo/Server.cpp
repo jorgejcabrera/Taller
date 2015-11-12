@@ -222,7 +222,7 @@ void Server::sendDinamicEntitesChanges(){
 			messageUpdate->setStrength(it->second->getStrength());
 
 			list<Client*> activeClients = getActiveClients();
-			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+			for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 				(*clientIterator)->writeMessagesInQueue(messageUpdate);
 			}
 		}
@@ -232,13 +232,12 @@ void Server::sendDinamicEntitesChanges(){
 void Server::sendNewDinamicEntities(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
-		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
 		Message* protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()));
 		protagonistaMessage->setName((*it)->getName());
 		protagonistaMessage->setPosition((*it)->getPosition());
 		protagonistaMessage->setOwner((*it)->getOwner());
 
-		list<Client*> activeClients= getActiveClients();
+		list<Client*> activeClients = getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
 				//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
@@ -251,7 +250,6 @@ void Server::sendNewDinamicEntities(){
 void Server::sendResoursesChanges(){
 	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasToNotify()){
-		//a los ultimos 3 parametros del mensaje no les doy bola
 		Message* resourceMessage = new Message(rm->getIdAEliminar(),"deleteResource");
 		rm->yaNotifique();
 		resourceMessage->setName(rm->getUltimoTipoConsumido());
@@ -266,12 +264,13 @@ void Server::sendResoursesChanges(){
 
 void Server::sendNewResourses(){
 	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
-	if(rm->hasNewResource()){
+	if( rm->hasNewResource() ){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
 		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource");
 		newResourceMessage->setPosition(pos);
 		rm->newResourceSent();
 		newResourceMessage->setName(rm->getUltimoTipoCreado());
+		newResourceMessage->setHealth(100);
 
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
