@@ -28,7 +28,6 @@ private:
 public:
 	Message(int entityId, string msgType);
 	Message();
-	//Message(string nombre);
 
 	char* serializeToArray();
 	string serializeAsString();
@@ -55,7 +54,7 @@ public:
 	* */
 	string getTipo();
 	string getName();
-	string getImagen();
+	//string getImagen();
 	string getOwner();
 	string getImagePath();
 	int getSize();

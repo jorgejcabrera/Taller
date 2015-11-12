@@ -12,14 +12,9 @@ Message::Message(int entityId, string msgType){
 	this->msg.set_tipo(msgType);
 }
 
-Message::Message(){}
+Message::Message(){
 
-//Mensaje Utilizado para notificar el nombre de usuario
-/*Message::Message(string nombre){
-	this->msg.set_id(0);
-	this->msg.set_tipo("username");
-	this->msg.set_nombre(nombre);
-}*/
+}
 
 int Message::getBaseHeigth(){
 	return this->msg.alto_base();
@@ -45,12 +40,32 @@ void Message::setImagePath(string path){
 	this->msg.set_imagen(path);
 }
 
+string Message::getTipo(){
+	return this->msg.tipo();
+}
+
 void Message::setType(string type){
 	this->msg.set_tipo(type);
 }
 
+int Message::getId(){
+	return this->msg.id();
+}
+
 void Message::setId(int id){
 	this->msg.set_id(id);
+}
+
+string Message::getName(){
+	return this->msg.nombre();
+}
+
+void Message::setName(string name){
+	this->msg.set_nombre(name);
+}
+
+int Message::getClientConnected(){
+	return this->msg.fps();
 }
 
 //Utilizo el campo FPS para mandar 0: el cliente está conectado, -1: el cliente está DESCONECTADO
@@ -58,8 +73,89 @@ void Message::setClientConnected(int client){
 	this->msg.set_fps(client);
 }
 
-int Message::getClientConnected(){
+int Message::getFps(){
 	return this->msg.fps();
+}
+
+void Message::setFps(int fps){
+	this->msg.set_fps(fps);
+}
+
+int Message::getDelay(){
+	return this->msg.delay();
+}
+
+void Message::setDelay(int delay){
+	this->msg.set_delay(delay);
+}
+
+int Message::getTotalFramesLine(){
+	return this->msg.total_frames_line();
+}
+
+void Message::setTotalFramesLine(int frames){
+	this->msg.set_total_frames_line(frames);
+}
+
+int Message::getPixelsDimension(){
+	return this->msg.pixels_dimension();
+}
+
+void Message::setPixelsDimension(int pixels){
+	this->msg.set_pixels_dimension(pixels);
+}
+
+string Message::getOwner(){
+	return this->msg.owner();
+}
+
+void Message::setOwner(string userName){
+	this->msg.set_owner(userName);
+}
+
+int Message::getTarget(){
+	return this->msg.target();
+}
+
+void Message::setTarget(int entityId){
+	return this->msg.set_target(entityId);
+}
+
+int Message::getHealth(){
+	return this->msg.health();
+}
+
+void Message::setHealth(int health){
+	this->msg.set_health(health);
+}
+
+int Message::getStrength(){
+	return this->msg.strength();
+}
+
+void Message::setStrength(int strength){
+	this->msg.set_strength(strength);
+}
+
+float Message::getPrecision(){
+	return this->msg.precition();
+}
+
+void Message::setPrecision(float precition){
+	this->msg.set_precition(precition);
+}
+
+int Message::getPositionX(){
+	return this->msg.x();
+}
+
+int Message::getPositionY(){
+	return this->msg.y();
+}
+
+void Message::setPosition(pair<int,int> position){
+	this->msg.set_x(position.first);
+	this->msg.set_y(position.second);
 }
 
 void Message::initialOffset(int x, int y){
@@ -148,111 +244,6 @@ void Message::setContent(msg_game message){
 
 string Message::serializeAsString(){
 	return this->msg.SerializeAsString();
-}
-
-string Message::getTipo(){
-	return this->msg.tipo();
-}
-
-int Message::getId(){
-	return this->msg.id();
-}
-
-int Message::getPositionX(){
-	return this->msg.x();
-}
-
-int Message::getPositionY(){
-	return this->msg.y();
-}
-
-void Message::setName(string name){
-	this->msg.set_nombre(name);
-}
-
-string Message::getName(){
-	return this->msg.nombre();
-}
-
-string Message::getImagen(){
-	return this->msg.imagen();
-}
-
-void Message::setFps(int fps){
-	this->msg.set_fps(fps);
-}
-
-int Message::getFps(){
-	return this->msg.fps();
-}
-
-void Message::setDelay(int delay){
-	this->msg.set_delay(delay);
-}
-
-int Message::getDelay(){
-	return this->msg.delay();
-}
-
-int Message::getTotalFramesLine(){
-	return this->msg.total_frames_line();
-}
-
-void Message::setTotalFramesLine(int frames){
-	this->msg.set_total_frames_line(frames);
-}
-
-int Message::getPixelsDimension(){
-	return this->msg.pixels_dimension();
-}
-
-void Message::setPixelsDimension(int pixels){
-	this->msg.set_pixels_dimension(pixels);
-}
-
-void Message::setOwner(string userName){
-	this->msg.set_owner(userName);
-}
-
-string Message::getOwner(){
-	return this->msg.owner();
-}
-
-void Message::setTarget(int entityId){
-	return this->msg.set_target(entityId);
-}
-
-int Message::getTarget(){
-	return this->msg.target();
-}
-
-void Message::setHealth(int health){
-	this->msg.set_health(health);
-}
-
-int Message::getHealth(){
-	return this->msg.health();
-}
-
-void Message::setStrength(int strength){
-	this->msg.set_strength(strength);
-}
-
-int Message::getStrength(){
-	return this->msg.strength();
-}
-
-void Message::setPrecision(float precition){
-	this->msg.set_precition(precition);
-}
-
-float Message::getPrecision(){
-	return this->msg.precition();
-}
-
-void Message::setPosition(pair<int,int> position){
-	this->msg.set_x(position.first);
-	this->msg.set_y(position.second);
 }
 
 void Message::activeTile( int x, int y) {
