@@ -77,19 +77,4 @@ int MiniMapVista::getMiniHeight() {
 MiniMapVista::~MiniMapVista() {
 	this->gameSettings = NULL;
 }
-
-string MiniMapVista::getPathOfColour(colour colour) {
-	switch (colour) {
-	case red : 			return "../../Taller/Images/Tiles/redTile.png";
-						break;
-	case blue : 		return "../../Taller/Images/Tiles/blueTile.png";
-						break;
-	case yellow :		return "../../Taller/Images/Tiles/yellowTile.png";
-						break;
-	case lightGreen : 	return "../../Taller/Images/Tiles/lightGreenTile.png";
-						break;
-	default : 			return "";
-	}
-}
-
 } /* namespace std */
