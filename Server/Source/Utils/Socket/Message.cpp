@@ -14,19 +14,8 @@ Message::Message(int entityId, string msgType){
 
 Message::Message(){}
 
-//Mesaje utilizado para mandar por primera vez una entidad
-/*Message::Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected){
-	this->msg.set_id(identifier);
-	this->msg.set_tipo(tipoMessage);
-	this->msg.set_nombre(nombreEntity);
-	this->msg.set_x(xPosition);
-	this->msg.set_y(yPosition);
-	//Utilizo el campo FPS para mandar 0: el cliente está conectado, -1: el cliente está DESCONECTADO
-	this->msg.set_fps(clientConnected);
-}*/
-
 //Mensaje usado para configuracion
-Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension){
+/*Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension){
 	this->msg.set_id(0);
 	this->msg.set_tipo("config");
 	this->msg.set_nombre(nameEntity);
@@ -36,8 +25,9 @@ Message::Message(string nameEntity, string thePath, int anchoBase, int altoBase,
 	this->msg.set_fps(fps);
 	this->msg.set_delay(delay);
 	this->msg.set_total_frames_line(totalFramesLine);
+
 	this->msg.set_pixels_dimension(pixelDimension);
-}
+}*/
 
 //Mensaje utilizado para mandar tiles o dimension de la ventana
 Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto){
@@ -63,6 +53,30 @@ Message::Message(string nombre){
 	this->msg.set_id(0);
 	this->msg.set_tipo("username");
 	this->msg.set_nombre(nombre);
+}
+
+int Message::getBaseHeigth(){
+	return this->msg.alto_base();
+}
+
+void Message::setBaseHeight(int baseHeigth){
+	this->msg.set_alto_base(baseHeigth);
+}
+
+int Message::getBaseWidth(){
+	return this->msg.ancho_base();
+}
+
+void Message::setBaseWidth(int baseWidth){
+	this->msg.set_ancho_base(baseWidth);
+}
+
+string Message::getImagePath(){
+	return this->msg.imagen();
+}
+
+void Message::setImagePath(string path){
+	this->msg.set_imagen(path);
 }
 
 void Message::setType(string type){
@@ -198,16 +212,16 @@ string Message::getImagen(){
 	return this->msg.imagen();
 }
 
-int Message::getAnchoBase(){
-	return this->msg.ancho_base();
-}
-
-int Message::getAltoBase(){
-	return this->msg.alto_base();
+void Message::setFps(int fps){
+	this->msg.set_fps(fps);
 }
 
 int Message::getFps(){
 	return this->msg.fps();
+}
+
+void Message::setDelay(int delay){
+	this->msg.set_delay(delay);
 }
 
 int Message::getDelay(){
@@ -218,8 +232,16 @@ int Message::getTotalFramesLine(){
 	return this->msg.total_frames_line();
 }
 
+void Message::setTotalFramesLine(int frames){
+	this->msg.set_total_frames_line(frames);
+}
+
 int Message::getPixelsDimension(){
 	return this->msg.pixels_dimension();
+}
+
+void Message::setPixelsDimension(int pixels){
+	this->msg.set_pixels_dimension(pixels);
 }
 
 void Message::setOwner(string userName){

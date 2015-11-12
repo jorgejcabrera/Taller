@@ -28,8 +28,7 @@ private:
 public:
 	Message(int entityId, string msgType);
 	Message();
-	//Message(int identifier,string tipoMessage, string nombreEntity, int xPosition, int yPosition, int clientConnected);
-	Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
+	//Message(string nameEntity, string thePath, int anchoBase, int altoBase, int fps, int delay, int totalFramesLine, int pixelDimension);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition, int mapaAncho, int mapaAlto);
 	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
 	Message(string nombre);
@@ -40,12 +39,19 @@ public:
 	void setId(int id);
 	void setType(string type);
 	void setName(string name);
+	void setFps(int fps);
+	void setDelay(int delay);
+	void setImagePath(string path);
 	void setContent(msg_game body);
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float precition);
 	void setPosition(pair<int,int> position);
 	void setClientConnected(int client);
+	void setBaseWidth(int baseWidth);
+	void setBaseHeight(int baseHeigth);
+	void setTotalFramesLine(int frames);
+	void setPixelsDimension(int pixels);
 
 	/*
 	* metodos para poder sacar la informacion del mensaje desde afuera de la clase
@@ -54,12 +60,11 @@ public:
 	string getName();
 	string getImagen();
 	string getOwner();
+	string getImagePath();
 	int getSize();
 	int getId();
 	int getPositionX();
 	int getPositionY();
-	int getAnchoBase();
-	int getAltoBase();
 	int getFps();
 	int getDelay();
 	int getTotalFramesLine();
@@ -68,6 +73,8 @@ public:
 	int getTarget();
 	int getHealth();
 	int getStrength();
+	int getBaseHeigth();
+	int getBaseWidth();
 	float getPrecision();
 	void setAsNewPath(bool value);
 	void setOwner(string userName);

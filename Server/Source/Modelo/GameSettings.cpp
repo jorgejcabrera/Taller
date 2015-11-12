@@ -95,7 +95,19 @@ void GameSettings::generateListMessageConfiguration(){
 		int delay = atoi(getValueInMap(*it, "delay").c_str());
 		int total_frames_line = atoi(getValueInMap(*it, "total_frames_line").c_str());
 		int pixels_dimension = atoi(getValueInMap(*it, "pixels_dimension").c_str());
-		this->messageConfigList.push_back(new Message(name,path,anchoBase,altoBase,fps,delay,total_frames_line,pixels_dimension));
+
+		Message* newMessage = new Message(0,"config");
+		newMessage->setName(name);
+		newMessage->setImagePath(path);
+		newMessage->setBaseWidth(anchoBase);
+		newMessage->setBaseHeight(altoBase);
+		newMessage->setFps(fps);
+		newMessage->setDelay(delay);
+		newMessage->setTotalFramesLine(total_frames_line);
+		newMessage->setPixelsDimension(pixels_dimension);
+
+		this->messageConfigList.push_back(newMessage
+				/*new Message(name,path,anchoBase,altoBase,fps,delay,total_frames_line,pixels_dimension)*/);
 	}
 }
 

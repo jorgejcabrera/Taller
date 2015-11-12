@@ -111,11 +111,7 @@ list<Message*> Server::getProtagonistasMessages(){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
-		Message* protagonistaMessage = new Message((*it).second->getId(), tipoEntidad/*,
-													(*it).second->getName(), 
-													(*it).second->getPosition().first,
-													(*it).second->getPosition().second,
-													clientConnected*/);
+		Message* protagonistaMessage = new Message((*it).second->getId(), tipoEntidad);
 		protagonistaMessage->setName((*it).second->getName());
 		protagonistaMessage->setPosition((*it).second->getPosition());
 		protagonistaMessage->setClientConnected(clientConnected);
@@ -185,13 +181,11 @@ void Server::notifyClients(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
-		Message* protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName())/*,
-													(*it)->getName(), 
-													(*it)->getPosition().first,
-													(*it)->getPosition().second,0*/);
+		Message* protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()));
 		protagonistaMessage->setName((*it)->getName());
 		protagonistaMessage->setPosition((*it)->getPosition());
 		protagonistaMessage->setOwner((*it)->getOwner());
+
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
@@ -218,8 +212,7 @@ void Server::notifyClients(){
 	//mando los nuevos recursos que se crean
 	if(rm->hasNewResource()){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
-		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource"
-				/*,rm->getUltimoTipoCreado(),pos.first,pos.second,0*/);
+		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource");
 		rm->newResourceSent();
 		newResourceMessage->setName(rm->getUltimoTipoCreado());
 
