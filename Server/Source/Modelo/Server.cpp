@@ -71,7 +71,7 @@ int Server::run(void * data){
 
 				//Le mando a todos los clientes el color del cliente
 				//Lo hago antes de mandar las entidades porque cuando recibo la bandera tengo que saber cual es el color del cliente
-				this->sendColour(newClient);
+				this->sendColours(newClient);
 
 				//Mando las entidades que tiene el mapa
 				newClient->writeMessagesInQueue(gController->getEntitiesMessages());
@@ -409,13 +409,23 @@ void Server::verifyWaitingClients(){
 	}
 }
 
-void Server::sendColour(Client* client) {
+void Server::sendColours(Client* client) {
+	clients[client->getUserName()]->setColour(this->clients.size());
 	//envio el nuevo color a todos los clientes
 	Message* msg = new Message();
-	msg->colourOfClient(client->getUserName(), this->clients.size());
+
 	for (map<string,Client*>::iterator it = clients.begin() ; it != clients.end() ; it++ ) {
+		msg->colourOfClient(client->getUserName(), client->getColour());
 		(*it).second->writeMessagesInQueue(msg);
+		if ((*it).first != client->getUserName()) {
+			msg->colourOfClient((*it).first, (*it).second->getColour());
+			client->writeMessagesInQueue(msg);
+		} else  {
+
+		}
+
 	}
+
 
 }
 

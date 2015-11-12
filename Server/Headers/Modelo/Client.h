@@ -28,7 +28,7 @@ class Client {
 	time_t lastReported;
 	int status;
 	pair<int, int> initialOffset;
-//	colour myColour;
+	int colour;
 public:
 	Client(int identifier, SocketQueue* queueUnique);
 	void writeMessagesInQueue(list<Message*> messagesList);
@@ -76,6 +76,8 @@ public:
 	 */
 	void setInitialOffset(int x, int y);
 	pair<int,int> getInitialOffset();
+	void setColour(int colour);
+	int getColour();
 	~Client();
 
 };
