@@ -60,7 +60,7 @@ public:
 	/*
 	* devuelve una lista de entidades que murieron
 	* */
-	list<EntidadDinamica> getFallenEntities();
+	list<EntidadPartida> getFallenEntities();
 	EntidadDinamica* getDinamicEntityById(int id);
 	EntidadPartida* getEntityById(int id); // TODO reemplazar el anterior metodo por este
 	/*

@@ -314,6 +314,22 @@ map<int,EntidadDinamicaVista*>* JuegoVista::getPersonajes(){
 	return &this->personajes;
 }
 
+EntidadPartidaVista* JuegoVista::getEntityById(int id){
+	map<int, EntidadEstaticaVista*>::iterator itBuildings = this->buildings.find(id);
+	if( itBuildings != this->buildings.end()){
+		return itBuildings->second;
+	}
+	map<int, EntidadSemiEstaticaVista*>::iterator itSemiEstaticos = this->semiEstaticos.find(id);
+	if( itSemiEstaticos != this->semiEstaticos.end()){
+		return itSemiEstaticos->second;
+	}
+	map<int, EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
+	if( itPersonajes != this->personajes.end()){
+		return itPersonajes->second;
+	}
+	return NULL;
+}
+
 EntidadDinamicaVista* JuegoVista::getDinamicEntityById(int id){
 	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
 	if(itPersonajes!=this->personajes.end()){
@@ -351,6 +367,19 @@ void JuegoVista::deleteDinamicEntityById(int id){
 	}
 }
 
+void JuegoVista::deleteEntityById(int id){
+	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
+	if( itEnemy != this->personajes.end() ){
+		this->personajes.erase(itEnemy);
+		return;		
+	}
+	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
+	if( itEstaticos != this->buildings.end() ){
+		this->buildings.erase(itEstaticos);
+		return;
+	}
+}
+
 map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 	int x = position.first;
 	int y = position.second;
@@ -374,17 +403,6 @@ map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 		pair<int,int>* entityPosition = (*itSemiDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
 			return this->getEntityAttributes((*itSemiDinamicos).second);
-		}
-	}
-	return map<string,string>();
-}
-
-//este método es necesario debido a las limitaciones del polimorfismo en c++
-map<string,string> JuegoVista::getDinamicEntityAt(pair<int,int> positionParam){
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
-		if(entityPosition->first==positionParam.first && entityPosition->second==positionParam.second){
-			return this->getEntityAttributes((*itDinamicos).second);
 		}
 	}
 	return map<string,string>();

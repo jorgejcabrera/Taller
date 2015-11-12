@@ -32,11 +32,14 @@ Message* GameController::getMessageFromEvent(string userName){
 					return this->interactiveMenu(posMouseX,posMouseY);
 				} else {
 					//attack
-					EntidadPartidaVista* miPersonaje = this->juegoVista->getDinamicEntityById(this->idEntitySelected);
-					pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
-					map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
+					EntidadPartidaVista* entity = this->juegoVista->getEntityById(this->idEntitySelected);
+					pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
+					map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
 					if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+						/*stringstream ss;
+						ss << "el target a atacar es: " << targetToAttack["id"];
+						Logger::get()->logDebug("GameController","getMessageFromEvent",ss.str());*/
 						Message* message = new Message();
 						msg_game body;
 						body.set_id(this->idEntitySelected);
@@ -185,16 +188,6 @@ void GameController::updatePosition(int id){
 		pair<int,int> destinoIsometrico = this->utils->GetInstance()->getIsometricPosition(nuevaPos.first,nuevaPos.second);
 		entity->setScreenPosition(destinoIsometrico.first,destinoIsometrico.second);
 	}
-}
-
-void GameController::addTileToCharacter(int id,int x,int y){
-	EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(id);
-	entity->addTileToPath(x,y);
-}
-
-void GameController::resetPath(int id){
-	EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(id);
-	entity->getCamino()->clear();
 }
 
 void GameController::delay(){

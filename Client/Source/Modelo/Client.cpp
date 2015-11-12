@@ -86,8 +86,9 @@ void Client::processReceivedMessages(){
 			saveEntitiesConfig(*it);
 
 		}else if ( tipoMensaje == "update" ){
-			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
-			EntidadDinamicaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
+			//TODO ojo cuando actualizemos la salud de un endificio esto no va a andar por las calses estaticas no tienen el metodo addTileTopath
+			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->addTileToPath((*it)->getPositionX(),(*it)->getPositionY());
+			EntidadPartidaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
 			entity->setHealth((*it)->getHealth());
 			entity->setStrength((*it)->getStrength());
 			entity->setPrecision((*it)->getPrecision());
@@ -124,11 +125,11 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getNombre());
 		}else if ( tipoMensaje == "reconnect"){
-			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
+			EntidadPartidaVista* personaje = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
 			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
 
 		}else if ( tipoMensaje == "ping"){
-			this->lastReportedServer = time(0);								//servidor avisa que sigue arriba
+			this->lastReportedServer = time(0);	//servidor avisa que sigue arriba
 
 		}else if (tipoMensaje == "fog"){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());

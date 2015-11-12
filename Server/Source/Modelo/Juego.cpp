@@ -49,7 +49,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,dimension.first,dimension.second,true);
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
-	edificioCreado->setHealth(100000);
+	edificioCreado->setHealth(1000);
 	this->mapa->pushEntity(edificioCreado);
 	this->newEntities.push_back(edificioCreado);
 
@@ -79,7 +79,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
 	//Creo los personajes del cliente
 	xOrigin += dimension.first;
-	int villagerHealth = 100000;
+	int villagerHealth = 1000;
 	int villagerStrength = 4;
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
@@ -139,15 +139,20 @@ void Juego::setTargetTo(int entityId,int target){
 	entityToUpdate->setTargetPosition(make_pair(0,0));
 }
 
-//TODO OJO el atacante que tenia seteada a la entidad caida como target debe clenearlo sino rompe todo
-list<EntidadDinamica> Juego::getFallenEntities(){
-	list<EntidadDinamica> fallenEntities;
+list<EntidadPartida> Juego::getFallenEntities(){
+	list<EntidadPartida> fallenEntities;
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getHealth() <= 0 ){
 			fallenEntities.push_front(*it->second);
 			this->protagonistas.erase(it);
 		}
 	}
+	//for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ++itBuilds){
+	//	if((*itBuilds)->getHealth() <= 0 ){
+	//		fallenEntities.push_front(*(*itBuilds));
+			//this->mapa->getEntities()->erase(itBuilds);
+	//	}
+	//}
 	return fallenEntities;
 }
 
@@ -155,11 +160,18 @@ void Juego::deleteEntity(int id){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if(it->second->getId() == id){
 			//Borro el personaje y libero el tile
-			pair<int,int> position= it->second->getPosition();
+			pair<int,int> position = it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			this->protagonistas.erase(it);
 		}
 	}
+	/*for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ++itBuilds){
+		if((*itBuilds)->getId() == id ){
+			pair<int,int> position = (*itBuilds)->getPosition();
+			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
+			this->mapa->getEntities()->erase(itBuilds);
+		}
+	}*/
 }
 
 EntidadDinamica* Juego::getDinamicEntityById(int id){
@@ -171,9 +183,14 @@ EntidadDinamica* Juego::getDinamicEntityById(int id){
 }
 
 EntidadPartida* Juego::getEntityById(int id){
+	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
+		if( (*it).second->getId() == id )
+			return (*it).second;
+	}
 	list<EntidadPartida*>* entities = this->mapa->getEntities();
-	for(list<EntidadPartida*>::iterator iterateEntities= entities->begin(); iterateEntities!=entities->end();++iterateEntities){
-		if((*iterateEntities)->getId() == id) return (*iterateEntities);
+	for(list<EntidadPartida*>::iterator iterateEntities = entities->begin(); iterateEntities!=entities->end();++iterateEntities){
+		if((*iterateEntities)->getId() == id) 
+			return (*iterateEntities);
 	}
 	return NULL;
 }

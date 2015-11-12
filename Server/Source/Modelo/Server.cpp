@@ -148,7 +148,8 @@ void Server::processReceivedMessages(){
 		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
 			int idUpdate = messageUpdate->getId();
 			int target = messageUpdate->getTarget();
-			pair<int,int> targetPosition= this->gController->getJuego()->getDinamicEntityById(target)->getPosition();
+			//pair<int,int> targetPosition= this->gController->getJuego()->getDinamicEntityById(target)->getPosition();
+			pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
 			this->gController->getJuego()->setPlaceToGo(idUpdate, targetPosition.first, targetPosition.second);
 			this->gController->getJuego()->setTargetTo(idUpdate,target);
 			this->idEntitiesUpdated.push_back(idUpdate);
@@ -217,6 +218,7 @@ void Server::notifyClients(){
 	if(rm->hasNewResource()){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
 		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource");
+		newResourceMessage->setPosition(pos);
 		rm->newResourceSent();
 		newResourceMessage->setName(rm->getUltimoTipoCreado());
 
@@ -226,9 +228,9 @@ void Server::notifyClients(){
 		}
 
 	}
-	//mando las entidades dinámicas que murieron
-	list<EntidadDinamica> fallenEntities = this->gController->getJuego()->getFallenEntities();
-	for(list<EntidadDinamica>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
+	//mando las entidades dinámicas que murieron y los edificios que se destruyeron
+	list<EntidadPartida> fallenEntities = this->gController->getJuego()->getFallenEntities();
+	for(list<EntidadPartida>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
 		Message* msgfallenEntity = new Message();
 		msgfallenEntity->setId((*itFallenEntities).getId());
 		msgfallenEntity->setType("deleteEntity");

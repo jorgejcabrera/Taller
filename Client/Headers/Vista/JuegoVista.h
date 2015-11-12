@@ -96,6 +96,7 @@ public:
 	* borra las entidades dinamicas que se quedaron sin vida
 	* */
 	void deleteDinamicEntityById(int id);
+	void deleteEntityById(int id);
 	/*
 	*?
 	* */
@@ -109,6 +110,7 @@ public:
 	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getDinamicEntityById(int id);
+	EntidadPartidaVista* getEntityById(int id);
 	MenuVista* getMenuVista();
 	/*
 	* ?
@@ -123,11 +125,6 @@ public:
 	* la posición pasada como parámetro
 	* */
 	map<string,string> getEntityAt(pair<int,int> position);
-	/*
-	* devuelve en una colección toda la información de la entidad dinámica ubicada
-	* en la posición pasada como parámetro
-	* */
-	map<string,string> getDinamicEntityAt(pair<int,int> position);
 	/*
 	* QUE HACE ESTE METODO? 
 	* */

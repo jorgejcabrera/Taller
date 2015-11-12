@@ -56,10 +56,6 @@ public:
 	* */
 	void updateGame();
 	/*
-	*
-	* */
-	void addTileToCharacter(int id,int x,int y);
-	/*
 	* actualiza la posicion de la entidad que corresponde al id pasado como parametro
 	* */
 	void updatePosition(int id);
@@ -75,7 +71,6 @@ public:
 	 * Ejecuto un delay especifico
 	 */
 	void delay(int delayMs);
-	void resetPath(int id);
 	void setGameRunning();
 	bool gameIsRunning();
 	/*
