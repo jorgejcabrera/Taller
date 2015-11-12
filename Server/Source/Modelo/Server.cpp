@@ -133,33 +133,8 @@ void Server::processReceivedMessages(){
 	this->readQueue->lockQueue();
 	//TODO revisar, hoy no usamos la lista idEntitiesUpdated porque notificamos lo que se este "moviendo"
 	this->idEntitiesUpdated.clear();
-	while(!this->readQueue->isEmpty()){
+	while( !this->readQueue->isEmpty() ){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
-		/*if( messageUpdate->getTipo() == "ping" ){
-			this->clients.at(messageUpdate->getName())->reporting();
-
-		}else if( messageUpdate->getTipo() == "exit" ){
-			//TODO destruir el cliente que se esta desconectando
-			this->clients.at(messageUpdate->getName())->disconect();
-		
-		}else if( this->gameRunning && messageUpdate->getTipo() == "attack" ){
-			int idUpdate = messageUpdate->getId();
-			int target = messageUpdate->getTarget();
-			//pair<int,int> targetPosition= this->gController->getJuego()->getDinamicEntityById(target)->getPosition();
-			pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
-			this->gController->getJuego()->setPlaceToGo(idUpdate, targetPosition.first, targetPosition.second);
-			this->gController->getJuego()->setTargetTo(idUpdate,target);
-			this->idEntitiesUpdated.push_back(idUpdate);
-		
-		}else if( this->gameRunning && messageUpdate->getTipo() == "create" ){
-			this->gController->getJuego()->createNewEntitie(messageUpdate->getOwner(),messageUpdate->getName(), messageUpdate->getId());
-
-		}else if( this->gameRunning ){
-			int idUpdate = messageUpdate->getId();
-			this->gController->getJuego()->setPlaceToGo(idUpdate, messageUpdate->getPositionX(), messageUpdate->getPositionY());
-			this->gController->getJuego()->setTargetTo(idUpdate,0);
-			this->idEntitiesUpdated.push_back(idUpdate);
-		}*/
 		bool msgProcessed = this->checkForPingMsg(messageUpdate);
 		if(!msgProcessed)
 			msgProcessed = this->checkForExitMsg(messageUpdate);
@@ -227,6 +202,16 @@ bool Server::checkForUpdMsg(Message* msg){
 }
 
 void Server::notifyClients(){
+	this->sendDinamicEntitesChanges();
+	this->sendNewDinamicEntities();
+	this->sendResoursesChanges();
+	this->sendNewResourses();
+	this->sendStaticEntitesChanges();
+	this->gController->getJuego()->cleanNewEntities();
+	this->pingMessage();
+}
+
+void Server::sendDinamicEntitesChanges(){
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		if ( it->second->hasToNotify() ){
@@ -242,7 +227,9 @@ void Server::notifyClients(){
 			}
 		}
 	}
-	//mando las nuevas Entidades
+}
+
+void Server::sendNewDinamicEntities(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
 		//int clientConnected = this->clients.at((*it)->getOwner())->getStatus();
@@ -259,7 +246,9 @@ void Server::notifyClients(){
 			}
 		}
 	}
-	//mando que se consumio un recurso
+}
+
+void Server::sendResoursesChanges(){
 	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasToNotify()){
 		//a los ultimos 3 parametros del mensaje no les doy bola
@@ -273,7 +262,10 @@ void Server::notifyClients(){
 			(*clientIterator)->writeMessagesInQueue(resourceMessage);
 		}
 	}
-	//mando los nuevos recursos que se crean
+}
+
+void Server::sendNewResourses(){
+	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasNewResource()){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
 		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource");
@@ -285,9 +277,10 @@ void Server::notifyClients(){
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(newResourceMessage);
 		}
-
 	}
-	//mando las entidades dinámicas que murieron y los edificios que se destruyeron
+}
+
+void Server::sendStaticEntitesChanges(){
 	list<EntidadPartida> fallenEntities = this->gController->getJuego()->getFallenEntities();
 	for(list<EntidadPartida>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
 		Message* msgfallenEntity = new Message();
@@ -295,13 +288,14 @@ void Server::notifyClients(){
 		msgfallenEntity->setType("deleteEntity");
 		list<Client*> activeClients = getActiveClients();
 
-		//TODO poner esto en un metodo
 		for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(msgfallenEntity);
 		}
 	}
-	this->gController->getJuego()->cleanNewEntities();
-	pingMessage();
+}
+
+void Server::sendNewStaticEntites(){
+	//TODO hacerlo ;)
 }
 
 void Server::pingMessage(){

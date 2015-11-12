@@ -49,13 +49,22 @@ private:
 	* */
 	time_t lastReportedServer;
 	/*
-	* Verifican el tipo del msg y aplican los cambios indicados en el cuerpo del msg. En caso de exito devuelve true
+	* Verifican el tipo del msg, y en caso de poder aplicar los cambios indicados en el cuerpo del msg devuelve true
 	* */
 	bool checkForPingMsg(Message* msg);
 	bool checkForExitMsg(Message* msg);
 	bool checkForAttackMsg(Message* msg);
 	bool checkForCreateMsg(Message* msg);
 	bool checkForUpdMsg(Message* msg);
+	/*
+	* Envían msg a los clientes activos, sobre las novedades de las entidades de la partida
+	* */
+	void sendDinamicEntitesChanges();
+	void sendNewDinamicEntities();
+	void sendResoursesChanges();
+	void sendNewResourses();
+	void sendStaticEntitesChanges();
+	void sendNewStaticEntites();
 
 public:
 	Server(int port, GameController *myController);
