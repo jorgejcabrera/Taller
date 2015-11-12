@@ -36,10 +36,10 @@ void JuegoVista::renderFinishLogin(string finalMessage){
 	this->loginVista->renderFinishLogin(finalMessage);
 }
 
-void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter){
+void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter, string userName){
 	this->picassoHelper->clearView();
 	this->drawIsometricMap();
-	this->setFoggedTiles();
+	this->setFoggedTiles(userName);
 	this->drawDinamicEntities(runCycles);
 	this->drawStaticEntities(runCycles);
 	this->drawSemiStaticsEntities(runCycles);
@@ -117,17 +117,9 @@ void JuegoVista::drawStaticEntities(int runCycles){
 void JuegoVista::drawDinamicEntities(int runCycles){
 	pair<int,int> isometricPosition;
 	EntidadDinamicaVista* entidad;
-
-	//personajes que no son del cliente
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
 		drawDinamicEntity(entidad,runCycles,false);
-	}
-
-	//personajes que son del cliente
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
-		entidad = (*itDinamicos).second;
-		drawDinamicEntity(entidad,runCycles,true);
 	}
 }
 
@@ -220,7 +212,7 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 }
 
-void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner,int health,int strength,float precision){
+void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision){
 	EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
@@ -240,12 +232,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 	newPersonaje->setId(id);
-
-	if(imTheOwner){
-		this->misPersonajes.insert(make_pair(id,newPersonaje));
-	}else{
-		this->personajes.insert(make_pair(id,newPersonaje));
-	}
+	this->personajes.insert(make_pair(id,newPersonaje));
 }
 
 void JuegoVista::drawMiniMap() {
@@ -292,7 +279,7 @@ void JuegoVista::drawMiniMap() {
 
 
 
-	//dibujo los personajes que NO son del cliente
+	//dibujo los personajes
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
@@ -303,19 +290,6 @@ void JuegoVista::drawMiniMap() {
 											this->miniMapVista->getMiniWidth(),
 											this->miniMapVista->getMiniHeight());
 	}
-	//dibujo los personajes que son del cliente
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
-		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
-		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
-		colour colourClient = this->coloursOfClients[(*itDinamicos).second->getOwner()];
-		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
-											this->miniMapVista->getMiniPosX() ,
-											this->miniMapVista->getMiniPosY(),
-											this->miniMapVista->getMiniWidth(),
-											this->miniMapVista->getMiniHeight());
-	}
-
-
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
 		this->miniMapVista->makeMiniPos((*itTiles)->getPosX(), (*itTiles)->getPosY());
 		if ((*itTiles)->getSeen()){
@@ -336,11 +310,6 @@ void JuegoVista::drawMiniMap() {
 	}
 }
 
-
-map<int,EntidadDinamicaVista*>* JuegoVista::getMyEntities(){
-	return &this->misPersonajes;
-}
-
 map<int,EntidadDinamicaVista*>* JuegoVista::getPersonajes(){
 	return &this->personajes;
 }
@@ -349,10 +318,6 @@ EntidadDinamicaVista* JuegoVista::getDinamicEntityById(int id){
 	map<int,EntidadDinamicaVista*>::iterator itPersonajes = this->personajes.find(id);
 	if(itPersonajes!=this->personajes.end()){
 		return itPersonajes->second;
-	}
-	map<int,EntidadDinamicaVista*>::iterator itMisPersonajes = this->misPersonajes.find(id);
-	if(itMisPersonajes!=this->misPersonajes.end()){
-		return itMisPersonajes->second;
 	}
 	return NULL;
 }
@@ -384,23 +349,12 @@ void JuegoVista::deleteDinamicEntityById(int id){
 		this->personajes.erase(itEnemy);
 		return;		
 	}
-	map<int, EntidadDinamicaVista*>::iterator itMyEntity = this->misPersonajes.find(id);
-	if( itMyEntity != this->misPersonajes.end()){
-		this->misPersonajes.erase(itMyEntity);
-		return;
-	}
 }
 
 map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 	int x = position.first;
 	int y = position.second;
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
-		if(entityPosition->first==x && entityPosition->second==y){
-			return this->getEntityAttributes((*itDinamicos).second);
-		}
-	}
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
 		if(entityPosition->first==x && entityPosition->second==y){
 			return this->getEntityAttributes((*itDinamicos).second);
@@ -426,18 +380,10 @@ map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 }
 
 //este método es necesario debido a las limitaciones del polimorfismo en c++
-map<string,string> JuegoVista::getDinamicEntityAt(pair<int,int> position){
-	int x = position.first;
-	int y = position.second;
+map<string,string> JuegoVista::getDinamicEntityAt(pair<int,int> positionParam){
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
-		if(entityPosition->first==x && entityPosition->second==y){
-			return this->getEntityAttributes((*itDinamicos).second);
-		}
-	}
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
-		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
-		if(entityPosition->first==x && entityPosition->second==y){
+		if(entityPosition->first==positionParam.first && entityPosition->second==positionParam.second){
 			return this->getEntityAttributes((*itDinamicos).second);
 		}
 	}
@@ -452,32 +398,34 @@ void JuegoVista::setVisibleTile(int x,int y) {
 	}
 }
 
-void JuegoVista::setFoggedTiles() {
+void JuegoVista::setFoggedTiles(string userName) {
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
 		if ((*itTiles)->getSeen()) {
 			(*itTiles)->setFogged(true);
 		}
 	}
 
-	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
+	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		EntidadDinamicaVista * entidad = (*itDinamicos).second;
-		pair<int,int>* position = entidad->getPosition();
-		int rangeEntity = this->gameSettings->getRangeVisibility();// TODO aca se deberia usar entidad->getRangeVisibility(), para esto cada entidad deberia saber su rango de visibilidad
-		for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
-			if ( (x>=0) && (x < gameSettings->getMapWidth())) {
-				for (int y = position->second-rangeEntity ; y <= position->second+rangeEntity ; y++) {
-					if ((y>=0) && (y < this->gameSettings->getMapHeight())) {
-						if((x+y >= position->first + position->second - rangeEntity) && (x+y <= position->first + position->second + rangeEntity)
-						&& (x-y >= position->first - position->second - rangeEntity) && (x-y <= position->first - position->second + rangeEntity)) {
-							for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-								if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == x && (*itTiles)->getPosY() == y) {
-									(*itTiles)->setFogged(false);
+		if(entidad->getOwner()==userName){
+			pair<int,int>* position = entidad->getPosition();
+				int rangeEntity = this->gameSettings->getRangeVisibility();// TODO aca se deberia usar entidad->getRangeVisibility(), para esto cada entidad deberia saber su rango de visibilidad
+				for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
+					if ( (x>=0) && (x < gameSettings->getMapWidth())) {
+						for (int y = position->second-rangeEntity ; y <= position->second+rangeEntity ; y++) {
+							if ((y>=0) && (y < this->gameSettings->getMapHeight())) {
+								if((x+y >= position->first + position->second - rangeEntity) && (x+y <= position->first + position->second + rangeEntity)
+								&& (x-y >= position->first - position->second - rangeEntity) && (x-y <= position->first - position->second + rangeEntity)) {
+									for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
+										if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == x && (*itTiles)->getPosY() == y) {
+											(*itTiles)->setFogged(false);
+										}
+									}
 								}
 							}
 						}
 					}
 				}
-			}
 		}
 	}
 }

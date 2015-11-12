@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 		gController->updateGame();
 		//Si el juego no esta corriendo no actualizo la vista
 		if(gController->gameIsRunning()){
-			gController->getJuegoVista()->render(gController->getRunCycles(),jorge->getResourceCounter());
+			gController->getJuegoVista()->render(gController->getRunCycles(),jorge->getResourceCounter(), jorge->getUserName());
 		}
 		//escuchamos eventos y los mandamos al server
 		jorge->sendEvents();
