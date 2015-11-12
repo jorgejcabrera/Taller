@@ -191,9 +191,16 @@ void JuegoVista::addBuilding(int id, string type, int x, int y, string owner){
 																	gameSettings->getEntityConfig(type)->getAlto());
 	newBuilding->setName(type);
 	newBuilding->setPosition(x,y);
-	newBuilding->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 	newBuilding->setId(id);
 	newBuilding->setOwner(owner);
+	string pathImage="";
+	if(type=="flag"){
+		pathImage = getPathFlagImage(this->coloursOfClients[owner]);
+	}else{
+		pathImage = gameSettings->getEntityConfig(type)->getPath();
+	}
+	newBuilding->setPathImage(pathImage);
+
 	this->buildings.insert(make_pair(id,newBuilding));
 }
 
@@ -229,10 +236,6 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, bool imTheO
 	pair<float,float> initialScreenPos = UtilsController::GetInstance()->getIsometricPosition(x,y);
 	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
 	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
-
-	if((active<0) && (!imTheOwner)){
-		newPersonaje->setPathImage(gameSettings->getEntityConfig("soldadoDesconectado")->getPath());
-	}
 
 	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
 	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
@@ -276,8 +279,8 @@ void JuegoVista::drawMiniMap() {
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
-		colour colour = this->coloursOfClients[(*itDinamicos).second->getOwner()];
-		this->picassoHelper->renderObject(	this->miniMapVista->getPathOfColour(colour),
+		colour colourClient = this->coloursOfClients[(*itDinamicos).second->getOwner()];
+		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
 											this->miniMapVista->getMiniPosX() ,
 											this->miniMapVista->getMiniPosY(),
 											this->miniMapVista->getMiniWidth(),
@@ -287,8 +290,8 @@ void JuegoVista::drawMiniMap() {
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->misPersonajes.begin(); itDinamicos!=this->misPersonajes.end(); ++itDinamicos){
 		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
 		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
-		colour colour = this->coloursOfClients[(*itDinamicos).second->getOwner()];
-		this->picassoHelper->renderObject(	this->miniMapVista->getPathOfColour(colour),
+		colour colourClient = this->coloursOfClients[(*itDinamicos).second->getOwner()];
+		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
 											this->miniMapVista->getMiniPosX() ,
 											this->miniMapVista->getMiniPosY(),
 											this->miniMapVista->getMiniWidth(),
@@ -510,6 +513,20 @@ void JuegoVista::deleteEntitiesOfClient(string clientName){
 		if(itDinamicos->second->getOwner()==clientName){
 			this->personajes.erase(itDinamicos);
 		}
+	}
+}
+
+string JuegoVista::getPathFlagImage(colour colorClient){
+	return DefaultSettings::getPathFlagImage(this->convertColourToString(colorClient));
+}
+
+string JuegoVista::convertColourToString(colour colorClient){
+	switch(colorClient){
+	case red: return "red";
+	case blue: return "blue";
+	case yellow: return "yellow";
+	case lightGreen: return "lightGreen";
+	default: return "";
 	}
 }
 

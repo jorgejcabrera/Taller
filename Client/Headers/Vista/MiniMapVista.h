@@ -46,7 +46,6 @@ public:
 	int getMiniPosY();
 	int getMiniWidth();
 	int getMiniHeight();
-	string getPathOfColour(colour colour);
 };
 
 } /* namespace std */

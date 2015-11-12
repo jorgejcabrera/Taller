@@ -294,6 +294,19 @@ map<string,int> DefaultSettings::getCostsOf(string type) {
 	}
 	return returnMap;
 }
+string DefaultSettings::getPathFlagImage(string stringColor){
+	if(stringColor==""){
+		stringColor="flag";
+	}
+	return IMAGE_BASE_PATH +"/Flags/" + stringColor + ".png";
+}
+
+string DefaultSettings::getPathTileColour(string stringColor){
+	if(stringColor==""){
+			return "";
+	}
+	return IMAGE_BASE_PATH +"/Tiles/" + stringColor + "Tile.png";
+}
 
 DefaultSettings::~DefaultSettings() {
 }

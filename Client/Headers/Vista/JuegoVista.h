@@ -158,6 +158,14 @@ public:
 	 * Borro las entidades del cliente porque se desconecto
 	 */
 	void deleteEntitiesOfClient(string clientName);
+	/*
+	 * Dado el enum del color, devuelvo el path de la imagen de la bandera correspondiente
+	 */
+	string getPathFlagImage(colour colorClient);
+	/*
+	 * Convierte el enumaro colo a un string
+	 */
+	string convertColourToString(colour colorClient);
 	~JuegoVista();
 };
 

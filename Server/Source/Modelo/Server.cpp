@@ -69,6 +69,10 @@ int Server::run(void * data){
 				//Mando los tiles para dibujarlos en la vista
 				newClient->writeMessagesInQueue(this->gController->getTilesMessages());
 
+				//Le mando a todos los clientes el color del cliente
+				//Lo hago antes de mandar las entidades porque cuando recibo la bandera tengo que saber cual es el color del cliente
+				this->sendColour(newClient);
+
 				//Mando las entidades que tiene el mapa
 				newClient->writeMessagesInQueue(gController->getEntitiesMessages());
 
@@ -78,9 +82,6 @@ int Server::run(void * data){
 				newClient->writeMessagesInQueue(newClient->getSeenTilesAsMessages());
 
 				newClient->writeMessagesInQueue(newClient->getInitialOffsetAsMessage());
-
-				//le mando a todos los clientes el color del cliente
-				this->sendColour(newClient);
 
 				newClient->connect();
 			}

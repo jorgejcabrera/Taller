@@ -121,7 +121,7 @@ tipos:
   velocidad: 8
 
 - nombre: flag
-  imagen: ../../Taller/Images/Flags/red.png
+  imagen: ../../Taller/Images/Flags/flag.png
   ancho_base: 1
   alto_base: 1
 

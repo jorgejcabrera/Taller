@@ -99,6 +99,8 @@ class DefaultSettings {
 		static int getRangeVisibility();
 		static string getPathOfMenuBackground();
 		static map<string,int> getCostsOf(string type);
+		static string getPathFlagImage(string stringColor);
+		static string getPathTileColour(string stringColor);
 };
 
 
