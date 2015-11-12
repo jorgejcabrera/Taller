@@ -112,6 +112,7 @@ int EntidadPartida::defend(){
 }
 
 void EntidadPartida::takeDamage(int damage){
+	this->notifiable = true;
 	int damageTaken = damage - this->defend();
 	if( damageTaken <= 0 )
 		return;

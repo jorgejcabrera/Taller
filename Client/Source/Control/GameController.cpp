@@ -32,7 +32,7 @@ Message* GameController::getMessageFromEvent(string userName){
 					return this->interactiveMenu(posMouseX,posMouseY);
 				} else {
 					//attack
-					EntidadDinamicaVista* miPersonaje = this->juegoVista->getEntityById(this->idEntitySelected);
+					EntidadDinamicaVista* miPersonaje = this->juegoVista->getDinamicEntityById(this->idEntitySelected);
 					pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
 					map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
 
@@ -181,7 +181,7 @@ pair<int,int> GameController::getValidCartesianPosition(EntidadDinamicaVista* en
 }
 
 void GameController::updatePosition(int id){
-	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+	EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(id);
 	if( !(entity->getCamino()->empty()) && !(entity->isWalking())){
 		pair<int,int> nuevaPos = entity->getCamino()->front();
 		entity->getCamino()->pop_front();
@@ -193,12 +193,12 @@ void GameController::updatePosition(int id){
 }
 
 void GameController::addTileToCharacter(int id,int x,int y){
-	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+	EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(id);
 	entity->addTileToPath(x,y);
 }
 
 void GameController::resetPath(int id){
-	EntidadDinamicaVista* entity = this->juegoVista->getEntityById(id);
+	EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(id);
 	entity->getCamino()->clear();
 }
 
