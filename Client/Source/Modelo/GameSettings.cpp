@@ -269,7 +269,7 @@ int GameSettings::getRangeVisibility() {
 	return DefaultSettings::getRangeVisibility(); // TODO que cada entidad tenga su propia visibilidad, y que esto se obtenga del yaml
 }
 
-map<string,int> getCostsOf(string type) {
+map<string,int> GameSettings::getCostsOf(string type) {
 	return DefaultSettings::getCostsOf(type);
 }
 

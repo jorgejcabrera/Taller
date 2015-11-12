@@ -24,7 +24,7 @@ void JuegoVista::createView(){
 }
 
 void JuegoVista::setResources(int alimento, int madera, int oro) {
-
+//???
 }
 
 string JuegoVista::renderUserInputView(string initialMessage){
@@ -124,26 +124,26 @@ void JuegoVista::drawDinamicEntities(int runCycles){
 }
 
 void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,bool isMyEntity){
-		int offSetX = this->getOffset()->first;
-		int offSetY = this->getOffset()->second;
-		pair<int,int> screenPosition = entidad->getScreenPosition();
-		entidad->trasladarse();
-		bool drawEntity = true;
-		//si hay una entidad para consumir la eliminamos
-		int id = this->consumeResource(entidad);
-		if( id != 0 ) this->deleteStaticEntityById(id);
-		if(!isMyEntity){
-			drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
-		}
-		if(drawEntity){			
-			this->picassoHelper->renderObject(	entidad->getPathImage(),
-												screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-												screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
-												gameSettings->getTileSize(),
-												gameSettings->getTileSize(),
-												entidad->getPositionOfSprite(runCycles));
-		}
+	int offSetX = this->getOffset()->first;
+	int offSetY = this->getOffset()->second;
+	pair<int,int> screenPosition = entidad->getScreenPosition();
+	entidad->trasladarse();
+	bool drawEntity = true;
+	//si hay una entidad para consumir la eliminamos
+	int id = this->consumeResource(entidad);
+	if( id != 0 ) this->deleteStaticEntityById(id);
+	if(!isMyEntity){
+		drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
 	}
+	if(drawEntity){
+		this->picassoHelper->renderObject(	entidad->getPathImage(),
+											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
+											screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+											gameSettings->getTileSize(),
+											gameSettings->getTileSize(),
+											entidad->getPositionOfSprite(runCycles));
+	}
+}
 
 void JuegoVista::drawSemiStaticsEntities(int runCycles){
 	pair<int,int> isometricPosition;
@@ -513,6 +513,14 @@ string JuegoVista::convertColourToString(colour colorClient){
 	}
 }
 
+void JuegoVista::setResourceCounter(ResourceCounter* resourceCounter) {
+	this->resourceCounter = resourceCounter;
+}
+
+ResourceCounter* JuegoVista::getResourceCounter() {
+	return this->resourceCounter ;
+}
+
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
 	delete(this->menuVista);
@@ -522,4 +530,5 @@ JuegoVista::~JuegoVista() {
 	delete(this->picassoHelper);
 	this->picassoHelper=NULL;
 	this->gameSettings=NULL;
+	this->resourceCounter=NULL;
 }

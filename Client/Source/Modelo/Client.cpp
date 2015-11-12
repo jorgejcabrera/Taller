@@ -14,6 +14,7 @@ Client::Client(GameController *gControllerNew) {
 	this->lastReportedClient = time(0);
 	this->lastReportedServer = time(0);
 	this->resourceCounter = new ResourceCounter();
+	this->gController->getJuegoVista()->setResourceCounter(this->resourceCounter);
 	this->sockfd = socket(PF_INET, SOCK_STREAM, 0);			//create socket
 }
 

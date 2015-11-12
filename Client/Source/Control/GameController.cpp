@@ -239,19 +239,29 @@ void GameController::showFinalMessage(){
 Message* GameController::interactiveMenu(int posMouseX,int posMouseY) {
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(posMouseX,posMouseY);
 	if (buildingAndEntitie.second != "") {
-		//this->juegoVista->get
-		//mando msje con la nueva entidad ..... por ahora no me importan los recursos
-		Message* message = new Message();
-		msg_game body;
-		body.set_id(buildingAndEntitie.first);
-		body.set_tipo("create");
-		body.set_nombre(buildingAndEntitie.second);
-		message->setContent(body);
-		message->setOwner(this->clientName);
-		return message;
+		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
+		map<string,int> costs = this->gameSettings->getCostsOf(buildingAndEntitie.second);
+		if (	costs["chori"] <= resourceCounter->getAlimento() &&
+				costs["rock"] <= resourceCounter->getRoca() &&
+				costs["gold"] <= resourceCounter->getOro() &&
+				costs["wood"] <= resourceCounter->getMadera() ) {
+			//gasto los recursos
+			for (map<string,int>::iterator it = costs.begin(); it != costs.end(); ++it){
+				for (int resource = (*it).second; resource!=0 ; resource --) {
+					resourceCounter->gastar((*it).first);
+				}
+			}
+			Message* message = new Message();
+			msg_game body;
+			body.set_id(buildingAndEntitie.first);
+			body.set_tipo("create");
+			body.set_nombre(buildingAndEntitie.second);
+			message->setContent(body);
+			message->setOwner(this->clientName);
+			return message;
+		}
 	}
 	return NULL;
-
 }
 
 GameController::~GameController() {
