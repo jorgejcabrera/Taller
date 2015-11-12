@@ -104,11 +104,6 @@ void GameController::setGameRunning(){
 }
 
 void GameController::updateGame(){
-	map<int,EntidadDinamicaVista*>* misEntidades = this->juegoVista->getMyEntities();
-	for(map<int,EntidadDinamicaVista*>::iterator it = misEntidades->begin(); it !=misEntidades->end(); ++it){
-		updatePosition((*it).second->getId());
-	}
-
 	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getPersonajes();
 	for(map<int,EntidadDinamicaVista*>::iterator it = entidades->begin(); it !=entidades->end(); ++it){
 		updatePosition((*it).second->getId());

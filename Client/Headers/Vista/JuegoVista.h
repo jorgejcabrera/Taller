@@ -56,7 +56,6 @@ private:
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
 	map<int, EntidadDinamicaVista*> personajes;
-	map<int, EntidadDinamicaVista*> misPersonajes;
 	/*
 	* métodos para renderizar el juego
 	* */
@@ -79,7 +78,7 @@ public:
 	/*
 	* metodo que se encarga de dibujar mapa y todas las entidades
 	* */
-	void render(int ciclos, ResourceCounter* resourceCounter);
+	void render(int ciclos, ResourceCounter* resourceCounter, string userName);
 	/*
 	* agrega un recurso que será consumido cuando la entidad ocupe el correspondiente tile
 	* */
@@ -106,9 +105,8 @@ public:
 	void addTile(string surface, int x, int y);
 	void addBuilding(int id, string type, int x, int y,string owner);
 	void addSemiEstaticEntity(int id, string type, int x, int y, string owner);
-	void addDinamicEntity(int id, string type, int x, int y, bool imTheOwner, int active, string owner,int health,int strength,float precision);
+	void addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision);
 	pair<int,int>* getOffset();
-	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
 	EntidadDinamicaVista* getDinamicEntityById(int id);
 	MenuVista* getMenuVista();
@@ -133,7 +131,7 @@ public:
 	/*
 	* QUE HACE ESTE METODO? 
 	* */
-	void setFoggedTiles();
+	void setFoggedTiles(string userName);
 	/*
 	* ?
 	* */

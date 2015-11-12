@@ -108,9 +108,7 @@ void Client::processReceivedMessages(){
 																	(*it)->getPositionY(),
 																	(*it)->getOwner());
 		}else if ( tipoMensaje == "personajes"){
-			bool imTheOwner= ((*it)->getOwner() == this->userName);
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
-			//TODO meter un refactor acá, creo que no vamos a necesitar mas dos listas de personajes
 			stringstream ss;
 			ss<< "newProtagonista... posx: "<< (*it)->getPositionX() << "posy: "<< (*it)->getPositionY() << "posx: "<< (*it)->getPositionX() << " client = " << this->userName;
 			Logger::get()->logInfo("Client","processReceivedmessages",ss.str());
@@ -118,7 +116,6 @@ void Client::processReceivedMessages(){
 																(*it)->getNombre(),
 																(*it)->getPositionX(),
 																(*it)->getPositionY(),
-																imTheOwner,
 																(*it)->getFps(),
 																(*it)->getOwner(),
 																(*it)->getHealth(),
@@ -265,6 +262,10 @@ void Client::notifyUserName(){
 
 ResourceCounter* Client::getResourceCounter(){
 	return this->resourceCounter;
+}
+
+string Client::getUserName(){
+	return this->userName;
 }
 
 Client::~Client() {

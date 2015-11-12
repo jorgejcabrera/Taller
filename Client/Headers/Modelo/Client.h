@@ -98,6 +98,10 @@ public:
 	* Al iniciar el cliente le pregunto a que puerto del servidor se quiere conectar
 	* */
 	void askPortConnection();
+	/*
+	 * Devuelve el userName del cliente
+	 */
+	string getUserName();
 	virtual ~Client();
 };
 
