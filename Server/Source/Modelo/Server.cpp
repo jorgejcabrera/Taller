@@ -63,16 +63,10 @@ int Server::run(void * data){
 				//Mando la dimension de la ventana
 				Message* msgWindow = new Message(0,"window");
 				msgWindow->setName("window");
-				msgWindow->setPosition(make_pair(GameSettings::GetInstance()->getScreenWidth(),
-												GameSettings::GetInstance()->getScreenHeight()));
+				msgWindow->setPosition(make_pair(GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
 				msgWindow->setBaseWidth(GameSettings::GetInstance()->getMapWidth());
 				msgWindow->setBaseHeight(GameSettings::GetInstance()->getMapHeight());
-				newClient->writeMessagesInQueue(msgWindow
-															/*"window","window",
-															GameSettings::GetInstance()->getScreenWidth(),
-															GameSettings::GetInstance()->getScreenHeight(),
-															GameSettings::GetInstance()->getMapWidth(),
-															GameSettings::GetInstance()->getMapHeight())*/);
+				newClient->writeMessagesInQueue(msgWindow);
 
 				//Mando la informacion que está en el YAML
 				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
