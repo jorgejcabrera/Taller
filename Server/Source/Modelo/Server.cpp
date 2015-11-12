@@ -415,23 +415,21 @@ void Server::verifyWaitingClients(){
 }
 
 void Server::sendColours(Client* client) {
-	clients[client->getUserName()]->setColour(this->clients.size());
-	//envio el nuevo color a todos los clientes
+	client->setColour(this->clients.size());
 	Message* msg = new Message();
-
-	for (map<string,Client*>::iterator it = clients.begin() ; it != clients.end() ; it++ ) {
-		msg->colourOfClient(client->getUserName(), client->getColour());
-		(*it).second->writeMessagesInQueue(msg);
-		if ((*it).first != client->getUserName()) {
-			msg->colourOfClient((*it).first, (*it).second->getColour());
-			client->writeMessagesInQueue(msg);
-		} else  {
-
-		}
-
+	msg->colourOfClient(client->getUserName(), client->getColour());
+	client->writeMessagesInQueue(msg);
+	//Le mando a los clientes anteriores el color del nuevo cliente
+	list<Client*> activeClients = this->getActiveClients();
+	for (list<Client*>::iterator it = activeClients.begin() ; it != activeClients.end() ; it++ ) {
+			(*it)->writeMessagesInQueue(msg);
 	}
-
-
+	//Le mando al cliente nuevo el color de todos los clientes anteriores
+	for (map<string,Client*>::iterator it = clients.begin() ; it != clients.end() ; it++ ) {
+		Message* msgOldClient = new Message();
+		msgOldClient->colourOfClient(it->second->getUserName(), it->second->getColour());
+		client->writeMessagesInQueue(msgOldClient);
+	}
 }
 
 Server::~Server() {
