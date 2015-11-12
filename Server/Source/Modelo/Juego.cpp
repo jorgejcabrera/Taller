@@ -49,6 +49,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,dimension.first,dimension.second,true);
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
+	edificioCreado->setHealth(100000);
 	this->mapa->pushEntity(edificioCreado);
 	this->newEntities.push_back(edificioCreado);
 
@@ -78,7 +79,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
 	//Creo los personajes del cliente
 	xOrigin += dimension.first;
-	int villagerHealth = 100;
+	int villagerHealth = 100000;
 	int villagerStrength = 4;
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
@@ -184,20 +185,20 @@ ResourceManager* Juego::getResourceManager(){
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);
 	if (positionOfCreated.first == -1) positionOfCreated = this->mapa->getAvailablePosition();
-	EntidadDinamica* protagonista = new EntidadDinamica(type,
+	EntidadDinamica* dinamicEntity = new EntidadDinamica(type,
 														gameSettings->getValueForAttributeOfEntity(type, "velocidad"),
 														positionOfCreated.first,
 														positionOfCreated.second,
 														gameSettings->getProtagonistaPixelDimension(),
 														gameSettings->getProtagonistaPixelDimension());
-	protagonista->setHealth(10000);
-	protagonista->setStrength(4);
-	protagonista->setPrecision(0.5);
-	protagonista->setOwner(owner);
-	protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
-	this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
+	dinamicEntity->setHealth(100);
+	dinamicEntity->setStrength(4);
+	dinamicEntity->setPrecision(0.5);
+	dinamicEntity->setOwner(owner);
+	dinamicEntity->setVisibilityRange(gameSettings->getRangeVisibility());
+	this->protagonistas.insert(make_pair(dinamicEntity->getId(),dinamicEntity));
 	this->mapa->getTileAt(positionOfCreated.first,positionOfCreated.second)->changeStatusAvailable();
-	this->newEntities.push_back(protagonista);
+	this->newEntities.push_back(dinamicEntity);
 }
 
 

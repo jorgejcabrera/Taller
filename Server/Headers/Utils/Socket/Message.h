@@ -54,7 +54,6 @@ public:
 	* */
 	string getTipo();
 	string getName();
-	//string getImagen();
 	string getOwner();
 	string getImagePath();
 	int getSize();

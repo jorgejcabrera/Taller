@@ -43,7 +43,7 @@ private:
 	/*
 	* retorna la posicion cartesiana valida correspondiente al lugar donde se hizo click
 	* */
-	pair<int,int> getValidCartesianPosition(EntidadDinamicaVista* entidad);
+	pair<int,int> getValidCartesianPosition(EntidadPartidaVista* entidad);
 	/*
 	* devuelve el offset coorespondiente al scroll de la pantalla
 	* */

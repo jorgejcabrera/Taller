@@ -10,12 +10,7 @@
 EntidadDinamica::EntidadDinamica(){
 }
 
-EntidadDinamica::EntidadDinamica(string nameEntity,
-								int vel,
-								float x,
-								float y,
-								float widthPixel,
-								float lengthPixels){
+EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float widthPixel,float lengthPixels){
 	this->caminando = false;
 	this->notifiable = false;
 	this->position.first = x;

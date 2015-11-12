@@ -32,7 +32,7 @@ Message* GameController::getMessageFromEvent(string userName){
 					return this->interactiveMenu(posMouseX,posMouseY);
 				} else {
 					//attack
-					EntidadDinamicaVista* miPersonaje = this->juegoVista->getDinamicEntityById(this->idEntitySelected);
+					EntidadPartidaVista* miPersonaje = this->juegoVista->getDinamicEntityById(this->idEntitySelected);
 					pair<int,int> cartesianPosition = this->getValidCartesianPosition(miPersonaje);
 					map<string,string> targetToAttack = this->juegoVista->getDinamicEntityAt(cartesianPosition);
 
@@ -161,7 +161,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	return curretOffset;
 }
 
-pair<int,int> GameController::getValidCartesianPosition(EntidadDinamicaVista* entidad){
+pair<int,int> GameController::getValidCartesianPosition(EntidadPartidaVista* entidad){
 	pair<int,int>* offset = this->juegoVista->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
 
