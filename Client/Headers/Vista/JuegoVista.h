@@ -37,6 +37,7 @@ private:
 	MenuVista* menuVista;
 	MiniMapVista* miniMapVista;
 	LoginVista* loginVista;
+	ResourceCounter* resourceCounter;
 	/*
 	* offset correspondiente al desplazamiento por el offset
 	* */
@@ -161,6 +162,8 @@ public:
 	 * Convierte el enumaro colo a un string
 	 */
 	string convertColourToString(colour colorClient);
+	void setResourceCounter(ResourceCounter* resourceCounter);
+	ResourceCounter* getResourceCounter();
 	~JuegoVista();
 };
 
