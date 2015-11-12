@@ -14,20 +14,12 @@ Message::Message(int entityId, string msgType){
 
 Message::Message(){}
 
-/*Message::Message(string tipo, string nombreEntity, int xPosition, int yPosition){
-	this->msg.set_id(0);
-	this->msg.set_tipo(tipo);
-	this->msg.set_nombre(nombreEntity);
-	this->msg.set_x(xPosition);
-	this->msg.set_y(yPosition);
-}*/
-
 //Mensaje Utilizado para notificar el nombre de usuario
-Message::Message(string nombre){
+/*Message::Message(string nombre){
 	this->msg.set_id(0);
 	this->msg.set_tipo("username");
 	this->msg.set_nombre(nombre);
-}
+}*/
 
 int Message::getBaseHeigth(){
 	return this->msg.alto_base();

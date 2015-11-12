@@ -74,7 +74,9 @@ string Client::readUserName(){
 }
 
 void Client::responseUserName(string isOk){
-	this->writeThread->writeMessageNow(new Message(isOk));
+	Message* msg = new Message(0,"username");
+	msg->setName(isOk);
+	this->writeThread->writeMessageNow(msg/*new Message(isOk)*/);
 }
 
 string Client::getUserName(){

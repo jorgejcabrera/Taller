@@ -28,8 +28,7 @@ private:
 public:
 	Message(int entityId, string msgType);
 	Message();
-//	Message(string tipo, string nombreEntity, int xPosition, int yPosition);
-	Message(string nombre);
+	//Message(string nombre);
 
 	char* serializeToArray();
 	string serializeAsString();
