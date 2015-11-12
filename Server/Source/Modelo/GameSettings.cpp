@@ -106,8 +106,7 @@ void GameSettings::generateListMessageConfiguration(){
 		newMessage->setTotalFramesLine(total_frames_line);
 		newMessage->setPixelsDimension(pixels_dimension);
 
-		this->messageConfigList.push_back(newMessage
-				/*new Message(name,path,anchoBase,altoBase,fps,delay,total_frames_line,pixels_dimension)*/);
+		this->messageConfigList.push_back(newMessage);
 	}
 }
 

@@ -170,7 +170,7 @@ void Server::notifyClients(){
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
 		if ( it->second->hasToNotify() ){
 			//Logger::get()->logDebug("Server","notifyClients","actualizamos una entidad");
-			Message* messageUpdate = new Message(it->second->getId(),"update"/* it->second->getPosition().first, it->second->getPosition().second*/);
+			Message* messageUpdate = new Message(it->second->getId(),"update");
 			messageUpdate->setPosition(it->second->getPosition());
 			messageUpdate->setHealth(it->second->getHealth());
 			messageUpdate->setPrecision(it->second->getPrecision());
@@ -203,8 +203,7 @@ void Server::notifyClients(){
 	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasToNotify()){
 		//a los ultimos 3 parametros del mensaje no les doy bola
-		Message* resourceMessage = new Message(rm->getIdAEliminar(),"deleteResource"
-												/*,rm->getUltimoTipoConsumido(),0,0,0*/);
+		Message* resourceMessage = new Message(rm->getIdAEliminar(),"deleteResource");
 		rm->yaNotifique();
 		resourceMessage->setName(rm->getUltimoTipoConsumido());
 		resourceMessage->setOwner(rm->getUltimoEnConsumir());
