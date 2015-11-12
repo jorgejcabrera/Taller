@@ -78,12 +78,12 @@ void GameController::setNextPaths(){
 		
 		//pongo el tile anterior disponible
 		pair<int,int> firstPosition = (*it).second->getPosition();
-		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->setToAvailable();
+		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
 		//busco la nueva posicion
 		(*it).second->nextPosition();
 		//pongo el nuevo tile como ocupado
 		pair<int,int> newPos = (*it).second->getPosition();
-		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->setToNotAvailable();
+		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
 
 	}
 }

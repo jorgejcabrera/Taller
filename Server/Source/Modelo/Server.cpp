@@ -164,10 +164,14 @@ void Server::processReceivedMessages(){
 void Server::notifyClients(){
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it=protagonistas->begin(); it!=protagonistas->end();++it){
-		if (it->second->hasToNotify()){
+		if ( it->second->hasToNotify() ){
+			//Logger::get()->logDebug("Server","notifyClients","actualizamos una entidad");
 			Message* messageUpdate = new Message(it->second->getId(), it->second->getPosition().first, it->second->getPosition().second);
-			//messageUpdate->setAsNewPath(it->second->pathIsNew());
-			list<Client*> activeClients= getActiveClients();
+			messageUpdate->setHealth(it->second->getHealth());
+			messageUpdate->setPrecision(it->second->getPrecision());
+			messageUpdate->setStrength(it->second->getStrength());
+
+			list<Client*> activeClients = getActiveClients();
 			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 				(*clientIterator)->writeMessagesInQueue(messageUpdate);
 			}

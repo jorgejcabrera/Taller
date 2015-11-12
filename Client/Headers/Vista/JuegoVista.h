@@ -110,7 +110,7 @@ public:
 	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getMyEntities();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
-	EntidadDinamicaVista* getEntityById(int id);
+	EntidadDinamicaVista* getDinamicEntityById(int id);
 	MenuVista* getMenuVista();
 	/*
 	* ?

@@ -33,7 +33,7 @@ class EntidadDinamica: public EntidadPartida {
 private:
 	list<pair<int,int> >* path;
 	bool caminando;
-	bool notifiable;
+	//bool notifiable;
 	bool newPath;
 	int ciclos;
 	int cicloActual;

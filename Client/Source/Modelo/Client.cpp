@@ -85,8 +85,12 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "config" ){
 			saveEntitiesConfig(*it);
 
-		}else if ( tipoMensaje == "update"){
+		}else if ( tipoMensaje == "update" ){
 			this->gController->addTileToCharacter((*it)->getId(),(*it)->getPositionX(),(*it)->getPositionY());
+			EntidadDinamicaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
+			entity->setHealth((*it)->getHealth());
+			entity->setStrength((*it)->getStrength());
+			entity->setPrecision((*it)->getPrecision());
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
@@ -124,7 +128,7 @@ void Client::processReceivedMessages(){
 			disconnectPlayer((*it)->getNombre());
 
 		}else if ( tipoMensaje == "reconnect"){
-			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getEntityById((*it)->getId());
+			EntidadDinamicaVista* personaje = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
 			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
 
 		}else if ( tipoMensaje == "ping"){
@@ -142,7 +146,7 @@ void Client::processReceivedMessages(){
 
 		}else if (tipoMensaje == "deleteEntity"){
 			this->gController->getJuegoVista()->deleteDinamicEntityById((*it)->getId());
-
+			
 		}else if (tipoMensaje == "newResource"){
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),

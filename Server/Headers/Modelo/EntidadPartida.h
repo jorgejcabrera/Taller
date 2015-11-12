@@ -31,6 +31,10 @@ protected:
 	string name;
 	string owner;
 	/*
+	* atributo para saber la entidada sufrió algún cambio y debe ser notificado su status
+	* */
+	bool notifiable;
+	/*
 	* parametros variables segun el nivel y características de la entidad
 	* */
 	int health;

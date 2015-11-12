@@ -35,8 +35,6 @@ public:
 	void setPathImage(string path);
 	Tile(int x,int y);
 	void changeStatusAvailable();
-	void setToAvailable();
-	void setToNotAvailable();
 	bool isAvailable();
 	int getPosX();
 	int getPosY();
