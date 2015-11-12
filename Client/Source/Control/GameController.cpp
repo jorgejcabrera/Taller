@@ -37,9 +37,6 @@ Message* GameController::getMessageFromEvent(string userName){
 					map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
 					if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-						/*stringstream ss;
-						ss << "el target a atacar es: " << targetToAttack["id"];
-						Logger::get()->logDebug("GameController","getMessageFromEvent",ss.str());*/
 						Message* message = new Message();
 						msg_game body;
 						body.set_id(this->idEntitySelected);

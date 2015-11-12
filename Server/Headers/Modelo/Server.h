@@ -63,7 +63,7 @@ private:
 	void sendNewDinamicEntities();
 	void sendResoursesChanges();
 	void sendNewResourses();
-	void sendStaticEntitesChanges();
+	void sendFallenEntites();
 	void sendNewStaticEntites();
 
 public:

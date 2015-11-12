@@ -102,7 +102,7 @@ map<pair<int,int>,Tile*>* Mapa::getTiles(){
 
 list<EntidadPartida*>* Mapa::getEntities(){
 	return &this->entidades;
-}
+}	
 
 Mapa::~Mapa() {
 	for (list<EntidadPartida*>::iterator it=this->entidades.begin(); it!=this->entidades.end(); ++it){

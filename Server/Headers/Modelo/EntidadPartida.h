@@ -15,9 +15,6 @@
 #include "../Utils/SequenceUtils.h"
 #include "DefaultSettings.h"
 
-//TODO borrar este import
-#include <sstream>
-#include "../Utils/Logger.h"
 using namespace std;
 
 class EntidadPartida {

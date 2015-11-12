@@ -120,13 +120,7 @@ void EntidadPartida::takeDamage(int damage){
 }
 
 void EntidadPartida::attackTo(EntidadPartida* entity){
-	stringstream ss;
-	ss << "la salud de la entidad era de " << entity->getHealth();
-	Logger::get()->logDebug("EntidadPartida","attackTo",ss.str());
 	entity->takeDamage(this->getDamage());
-	ss.str("");
-	ss << "la salud de la entidad es de " << entity->getHealth();
-	Logger::get()->logDebug("EntidadPartida","attackTo",ss.str());
 }
 
 void EntidadPartida::setOwner(string ownerId){

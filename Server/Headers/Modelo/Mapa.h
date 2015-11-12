@@ -25,6 +25,7 @@ using namespace std;
 class Mapa {
 private:
 	list<EntidadPartida*> entidades;
+	//map<int,EntidadPartida*> entidades;
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
 

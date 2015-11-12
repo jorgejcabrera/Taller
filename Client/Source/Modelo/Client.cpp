@@ -143,8 +143,8 @@ void Client::processReceivedMessages(){
 			}
 
 		}else if (tipoMensaje == "deleteEntity"){
-			this->gController->getJuegoVista()->deleteDinamicEntityById((*it)->getId());
-			
+			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
+		
 		}else if (tipoMensaje == "newResource"){
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),

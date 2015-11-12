@@ -206,7 +206,7 @@ void Server::notifyClients(){
 	this->sendNewDinamicEntities();
 	this->sendResoursesChanges();
 	this->sendNewResourses();
-	this->sendStaticEntitesChanges();
+	this->sendFallenEntites();
 	this->gController->getJuego()->cleanNewEntities();
 	this->pingMessage();
 }
@@ -279,14 +279,13 @@ void Server::sendNewResourses(){
 	}
 }
 
-void Server::sendStaticEntitesChanges(){
+void Server::sendFallenEntites(){
 	list<EntidadPartida> fallenEntities = this->gController->getJuego()->getFallenEntities();
 	for(list<EntidadPartida>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
 		Message* msgfallenEntity = new Message();
 		msgfallenEntity->setId((*itFallenEntities).getId());
 		msgfallenEntity->setType("deleteEntity");
 		list<Client*> activeClients = getActiveClients();
-
 		for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(msgfallenEntity);
 		}
