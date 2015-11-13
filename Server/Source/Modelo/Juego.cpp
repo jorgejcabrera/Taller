@@ -85,12 +85,12 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO revisar que le ponemos en tipo
 		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
-		EntidadDinamica* protagonista = new EntidadDinamica(gameSettings->getTipoProtagonista(),
-															gameSettings->getVelocidadPersonaje(),
+		EntidadDinamica* protagonista = new EntidadDinamica(gameSettings->getEntityType(),
+															gameSettings->getEntitySpeed(),
 															positionOfProtagonista.first,
 															positionOfProtagonista.second,
-															gameSettings->getProtagonistaPixelDimension(),
-															gameSettings->getProtagonistaPixelDimension());
+															gameSettings->getPixelDimension(),
+															gameSettings->getPixelDimension());
 		protagonista->setHealth(villagerHealth);
 		protagonista->setStrength(villagerStrength);
 		protagonista->setPrecision(villagerPrecition);
@@ -214,8 +214,8 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 														gameSettings->getValueForAttributeOfEntity(type, "velocidad"),
 														positionOfCreated.first,
 														positionOfCreated.second,
-														gameSettings->getProtagonistaPixelDimension(),
-														gameSettings->getProtagonistaPixelDimension());
+														gameSettings->getPixelDimension(),
+														gameSettings->getPixelDimension());
 	dinamicEntity->setHealth(100);
 	dinamicEntity->setStrength(4);
 	dinamicEntity->setPrecision(0.5);

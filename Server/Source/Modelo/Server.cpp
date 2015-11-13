@@ -74,7 +74,7 @@ int Server::run(void * data){
 				newClient->writeMessagesInQueue(msgWindow);
 
 				//Mando la informacion que está en el YAML
-				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getListMessageConfiguration());
+				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getConfMessages());
 
 				//Mando los tiles para dibujarlos en la vista
 				newClient->writeMessagesInQueue(this->gController->getTilesMessages());

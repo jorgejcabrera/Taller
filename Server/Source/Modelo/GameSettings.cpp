@@ -32,10 +32,6 @@ int GameSettings::getTileSize(){
 	return DefaultSettings::getTileSize();
 }
 
-string GameSettings::getNombreEscenario(){
-	return (NOMBRE_ESCENARIO == "") ? NOMBRE_ESCENARIO : DefaultSettings::getNombreEscenario();
-}
-
 int GameSettings::getMapWidth(){
 	return (MAP_WIDTH > 0 ) ? MAP_WIDTH : DefaultSettings::getMapWidth();
 }
@@ -44,20 +40,8 @@ int GameSettings::getMapHeight(){
 	return (MAP_HEIGHT > 0 ) ? MAP_HEIGHT : DefaultSettings::getMapHeight();
 }
 
-int GameSettings::getMediumSize(){
-	return (MEDIUM_SIZE > 0 ) ? MEDIUM_SIZE : DefaultSettings::getMediumSize();
-}
-
-bool GameSettings::isEntityTypeValid(const string &type){
-	return DefaultSettings::isEntityTypeValid(type);
-}
-
 string GameSettings::imagePathBuildingsByTypeAndAge(const string &object,const string &age){
 	return DefaultSettings::imagePathBuildingsByTypeAndAge(object,age);
-}
-
-string GameSettings::defaultImage(){
-	return DefaultSettings::defaultImage();
 }
 
 string GameSettings::imagePathPersonajesByType(const string &object){
@@ -68,22 +52,15 @@ string GameSettings::imagePathTilesByType(const string &object){
 	return DefaultSettings::imagePathTilesByType(object);
 }
 
-string GameSettings::getTipoProtagonista(){
+string GameSettings::getEntityType(){
 	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
 }
 
-int GameSettings::getPosXProtagonista(){
-	return (this->POS_X_PROTAGONISTA > 0) ? this->POS_X_PROTAGONISTA : DefaultSettings::getPosXProtagonista();
-}
-int GameSettings::getPosYProtagonista(){
-	return (this->POS_Y_PROTAGONISTA > 0) ? this->POS_Y_PROTAGONISTA : DefaultSettings::getPosYProtagonista();
-}
-
-int GameSettings::getVelocidadPersonaje	(){
+int GameSettings::getEntitySpeed(){
 	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
 }
 
-void GameSettings::generateListMessageConfiguration(){
+void GameSettings::createConfMessages(){
 	vector< map< string, string> > *listaDeTipos = loader->getTypes();
 	for(vector< map< string, string> >::iterator it=listaDeTipos->begin(); it!=listaDeTipos->end(); ++it){
 		string name = getValueInMap(*it, "nombre");
@@ -109,7 +86,7 @@ void GameSettings::generateListMessageConfiguration(){
 	}
 }
 
-list<Message*> GameSettings::getListMessageConfiguration(){
+list<Message*> GameSettings::getConfMessages(){
 	return this->messageConfigList;
 }
 
@@ -185,7 +162,7 @@ GameSettings* GameSettings::GetInstance() {
 		instance = new GameSettings();
 		instance->SetGameSettings();
 		//instance->createEntidades();
-		instance->generateListMessageConfiguration();
+		instance->createConfMessages();
 	}
 	return instance;
 }
@@ -244,23 +221,7 @@ int GameSettings::getValueForAttributeOfEntity(string nombre, string attribute){
 	return atoi(this->getValueInMap(entidadObjeto, attribute).c_str());
 }
 
-int GameSettings::getProtagonistaFPS(){
-	return this->FPS_PROTAGONISTA;
-}
-
-string GameSettings::getProtagonistaPath(){
-	return this->PATH_PROTAGONISTA;
-}
-
-int GameSettings::getProtagonistaFramesInFile(){
-	return this->FRAMES_IN_FILE_PROTAGONISTA;
-}
-
-int GameSettings::getProtagonistaDelay(){
-	return this->DELAY_PROTAGONISTA;
-}
-
-int GameSettings::getProtagonistaPixelDimension(){
+int GameSettings::getPixelDimension(){
 	return this->PIXEL_DIMENSION_PROTAGONISTA;
 }
 
