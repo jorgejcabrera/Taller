@@ -105,8 +105,8 @@ public:
 	void updateOffset(int offsetX,int offsetY);
 	void setResources(int alimento, int madera, int oro);
 	void addTile(string surface, int x, int y);
-	void addBuilding(int id, string type, int x, int y,string owner);
-	void addSemiEstaticEntity(int id, string type, int x, int y, string owner);
+	void addBuilding(int id, string type, int x, int y,string owner,int health);
+	void addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health);
 	void addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision);
 	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getPersonajes();

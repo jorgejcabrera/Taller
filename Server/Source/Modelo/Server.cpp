@@ -203,7 +203,7 @@ bool Server::checkForUpdMsg(Message* msg){
 
 void Server::notifyClients(){
 	this->sendDinamicEntitesChanges();
-	this->sendNewDinamicEntities();
+	this->sendNewEntities();
 	this->sendResoursesChanges();
 	this->sendNewResourses();
 	this->sendFallenEntites();
@@ -229,7 +229,7 @@ void Server::sendDinamicEntitesChanges(){
 	}
 }
 
-void Server::sendNewDinamicEntities(){
+void Server::sendNewEntities(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
 		Message* protagonistaMessage = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()));

@@ -60,7 +60,7 @@ private:
 	* Envían msg a los clientes activos, sobre las novedades de las entidades de la partida
 	* */
 	void sendDinamicEntitesChanges();
-	void sendNewDinamicEntities();
+	void sendNewEntities();
 	void sendResoursesChanges();
 	void sendNewResourses();
 	void sendFallenEntites();

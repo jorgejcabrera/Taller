@@ -102,13 +102,15 @@ void Client::processReceivedMessages(){
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY(),
-															(*it)->getOwner());
+															(*it)->getOwner(),
+															(*it)->getHealth());
 		}else if ( tipoMensaje == "semiestaticos"){
 			this->gController->getJuegoVista()->addSemiEstaticEntity((*it)->getId(),
 																	(*it)->getNombre(),
 																	(*it)->getPositionX(),
 																	(*it)->getPositionY(),
-																	(*it)->getOwner());
+																	(*it)->getOwner(),
+																	(*it)->getHealth());
 		}else if ( tipoMensaje == "personajes"){
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
 			stringstream ss;
@@ -150,7 +152,8 @@ void Client::processReceivedMessages(){
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY(),
-															"");
+															"",
+															(*it)->getHealth());
 		}else if (tipoMensaje == "start"){
 			this->gController->setGameRunning();
 		}else if (tipoMensaje == "offset"){

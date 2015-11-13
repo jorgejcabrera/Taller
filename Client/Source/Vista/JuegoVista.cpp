@@ -178,13 +178,14 @@ void JuegoVista::addTile(string surface, int x, int y){
 	this->tiles.push_back(newtile);
 }
 
-void JuegoVista::addBuilding(int id, string type, int x, int y, string owner){
+void JuegoVista::addBuilding(int id, string type, int x, int y, string owner,int health){
 	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																	gameSettings->getEntityConfig(type)->getAlto());
 	newBuilding->setName(type);
 	newBuilding->setPosition(x,y);
 	newBuilding->setId(id);
 	newBuilding->setOwner(owner);
+	newBuilding->setHealth(health);
 	string pathImage="";
 	if( type == "flag" ){
 		pathImage = getPathFlagImage(this->coloursOfClients[owner]);
@@ -196,12 +197,13 @@ void JuegoVista::addBuilding(int id, string type, int x, int y, string owner){
 	this->buildings.insert(make_pair(id,newBuilding));
 }
 
-void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string owner){
+void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health){
 	EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																			gameSettings->getEntityConfig(type)->getAlto(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
 																			gameSettings->getEntityConfig(type)->getFps());
+	newSemiStatic->setHealth(health);
 	newSemiStatic->setName(type);
 	newSemiStatic->setPosition(x,y);
 	newSemiStatic->setPathImage(gameSettings->getEntityConfig(type)->getPath());
