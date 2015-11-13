@@ -98,6 +98,9 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
 		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources"){
+			stringstream ss;
+			ss << "se agrego una entidad estatica " << (*it)->getId() << " con vida " << (*it)->getHealth() << " en la posicion "<< (*it)->getPositionX() <<" " << (*it)->getPositionY();
+			Logger::get()->logDebug("Client","processReceivedmessages",ss.str());
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
@@ -105,6 +108,9 @@ void Client::processReceivedMessages(){
 															(*it)->getOwner(),
 															(*it)->getHealth());
 		}else if ( tipoMensaje == "semiestaticos"){
+			stringstream ss;
+			ss << "se agrego una entidad semiestatica " << (*it)->getId() << " con vida " << (*it)->getHealth() << " en la posicion "<< (*it)->getPositionX() <<" " << (*it)->getPositionY();
+			Logger::get()->logDebug("Client","processReceivedmessages",ss.str());
 			this->gController->getJuegoVista()->addSemiEstaticEntity((*it)->getId(),
 																	(*it)->getNombre(),
 																	(*it)->getPositionX(),

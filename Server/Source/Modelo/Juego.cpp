@@ -49,7 +49,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,dimension.first,dimension.second,true);
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
-	edificioCreado->setHealth(500);
+	edificioCreado->setHealth(1234);
 	this->mapa->pushEntity(edificioCreado);
 	this->newEntities.push_back(edificioCreado);
 
