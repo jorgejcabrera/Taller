@@ -12,84 +12,113 @@ GameController::GameController(){
 	this->utils = UtilsController::GetInstance();
 	this->juegoVista = new JuegoVista();
 	this->event = new SDL_Event();
-	this->posMouseX = 0;
-	this->posMouseY = 0;
+	this->initialPosMouseX = 0;
+	this->initialPosMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 	this->gameRunning=false;
 	this->idEntitySelected=0;
 	this->gameStatus = RUNNING;
+	this->pressedMouseButton = "";
 }
 
 Message* GameController::getMessageFromEvent(string userName){
 
 	while(SDL_PollEvent(event)){
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
-			SDL_GetMouseState(&posMouseX,&posMouseY);
-			if( this->idEntitySelected > 0 ) {
-				if ( posMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-					//menu
-					return this->interactiveMenu(posMouseX,posMouseY);
-				} else {
-					//attack
-					EntidadPartidaVista* entity = this->juegoVista->getEntityById(this->idEntitySelected);
-					pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
-					map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-
-					if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-						Message* message = new Message();
-						msg_game body;
-						body.set_id(this->idEntitySelected);
-						body.set_tipo("attack");
-						body.set_target(atoi(targetToAttack["id"].c_str()));
-						message->setContent(body);
-						return message;
-					}else{
-						Message* message = new Message();
-						msg_game body;
-						body.set_id(this->idEntitySelected);
-						body.set_tipo("update");
-						body.set_x(cartesianPosition.first);
-						body.set_y(cartesianPosition.second);
-						body.set_target(0);
-						message->setContent(body);
-						return message;
-					}
-				}
-			}
-		}
-
-		// seleccionamos una entidad del mapa
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT){
-			SDL_GetMouseState(&posMouseX,&posMouseY);
-			if ( posMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-				pair<int,int>* offset = this->juegoVista->getOffset();
-				pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
-				map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
-				if(entidadMap.size()>0){
-					if(this->clientName == entidadMap.at("owner")){
-						this->idEntitySelected = atoi(entidadMap.at("id").c_str());
-					}else{
-						this->idEntitySelected = 0;
-					}
-					this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
-				}else{
-					this->juegoVista->getMenuVista()->deselectedEntity();
-					this->idEntitySelected=0;
-				}
-			}
-		}
-
-		// cerramos el juego
 		if( event->type == SDL_QUIT){
+					this->juegoVista->getMenuVista()->deselectedEntity();
+					Message* message = new Message();
+					msg_game body;
+					body.set_id(0);
+					body.set_nombre(userName);
+					body.set_tipo("exit");
+					message->setContent(body);
+					return message;
+		}
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+			pressedMouseButton = "left";
+			SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
+			return NULL;
+		}
+
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT) {
+			pressedMouseButton = "right";
+			SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
+			return this->action();
+		}
+
+		if( event->type == SDL_MOUSEBUTTONUP && pressedMouseButton == "left"){
+			SDL_GetMouseState(&finalPosMouseX,&finalPosMouseY);
+			//si se movio el mouse
+			if (initialPosMouseX != finalPosMouseX || initialPosMouseY != finalPosMouseY) {
+				this->pressedMouseButton ="";
+				return this->selectBox();
+			//si no se movio el mouse
+			}else {
+				this->pressedMouseButton ="";
+				return this->individualSelection();
+			}
+		}
+	}
+	return NULL;
+}
+
+Message* GameController::selectBox() {
+return NULL;
+}
+
+
+Message* GameController::individualSelection() {
+	// seleccionamos una entidad del mapa
+	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+		pair<int,int>* offset = this->juegoVista->getOffset();
+		pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
+		map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
+		if(entidadMap.size()>0){
+			if(this->clientName == entidadMap.at("owner")){
+				this->idEntitySelected = atoi(entidadMap.at("id").c_str());
+			}else{
+				this->idEntitySelected = 0;
+			}
+			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+		}else{
 			this->juegoVista->getMenuVista()->deselectedEntity();
-			Message* message = new Message();
-			msg_game body;
-			body.set_id(0);
-			body.set_nombre(userName);
-			body.set_tipo("exit");
-			message->setContent(body);
-			return message;
+			this->idEntitySelected=0;
+		}
+	}
+	return NULL;
+}
+
+Message* GameController::action() {
+	if( this->idEntitySelected > 0 ) {
+		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+			//menu
+			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
+		} else {
+			//attack
+			EntidadPartidaVista* entity = this->juegoVista->getEntityById(this->idEntitySelected);
+			pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
+			map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
+
+			if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+				Message* message = new Message();
+				msg_game body;
+				body.set_id(this->idEntitySelected);
+				body.set_tipo("attack");
+				body.set_target(atoi(targetToAttack["id"].c_str()));
+				message->setContent(body);
+				return message;
+			}else{
+				Message* message = new Message();
+				msg_game body;
+				body.set_id(this->idEntitySelected);
+				body.set_tipo("update");
+				body.set_x(cartesianPosition.first);
+				body.set_y(cartesianPosition.second);
+				body.set_target(0);
+				message->setContent(body);
+				return message;
+			}
 		}
 	}
 	return NULL;
@@ -158,7 +187,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 
 pair<int,int> GameController::getValidCartesianPosition(EntidadPartidaVista* entidad){
 	pair<int,int>* offset = this->juegoVista->getOffset();
-	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->posMouseX-offset->first, this->posMouseY-offset->second);
+	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
 
 	//las coordenadas cartesianas siempre tienen que quedar dentro del mapa
 	if( cartesianPosition.first < 0 ){
@@ -236,8 +265,8 @@ void GameController::showFinalMessage(){
 	}
 }
 
-Message* GameController::interactiveMenu(int posMouseX,int posMouseY) {
-	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(posMouseX,posMouseY);
+Message* GameController::interactiveMenu(int initialPosMouseX,int initialPosMouseY) {
+	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
 	if (buildingAndEntitie.second != "") {
 		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
 		map<string,int> costs = this->gameSettings->getCostsOf(buildingAndEntitie.second);

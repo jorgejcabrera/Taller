@@ -15,6 +15,7 @@
 #include "../Modelo/DefaultSettings.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
+#include <list>
 
 enum game{
 	WIN,
@@ -31,9 +32,13 @@ private:
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
 
+	list<int> entitiesSelected;
 	int idEntitySelected;
-	int posMouseX;
-	int posMouseY;
+	int initialPosMouseX;
+	int initialPosMouseY;
+	string pressedMouseButton;
+	int finalPosMouseX;
+	int finalPosMouseY;
 	int runCycles;
 	int maxFramesPerSecond;
 	int inicioDeCiclo;
@@ -97,6 +102,10 @@ public:
 	 * Maneja el menu interactivo, en caso de tener seleccionado un town center o una barrack
 	 */
 	Message* interactiveMenu(int posMouseX,int posMouseY);
+
+	Message* selectBox();
+	Message* individualSelection();
+	Message* action();
 
 	virtual ~GameController();
 };
