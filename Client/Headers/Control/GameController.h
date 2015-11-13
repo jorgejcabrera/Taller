@@ -67,7 +67,7 @@ public:
 	/*
 	* transforma eventos de la partida del cliente en mensajes para ser enviados alservidor
 	* */
-	Message* getMessageFromEvent(string userId);
+	list<Message*> getMessagesFromEvent(string userId);
 	JuegoVista* getJuegoVista();
 	int getRunCycles();
 	int getMaxFramesPerSecond();
@@ -101,11 +101,11 @@ public:
 	/*
 	 * Maneja el menu interactivo, en caso de tener seleccionado un town center o una barrack
 	 */
-	Message* interactiveMenu(int posMouseX,int posMouseY);
+	list<Message*> interactiveMenu(int posMouseX,int posMouseY);
 
-	Message* selectBox();
-	Message* individualSelection();
-	Message* action();
+	list<Message*> selectBox();
+	list<Message*> individualSelection();
+	list<Message*> action();
 
 	virtual ~GameController();
 };

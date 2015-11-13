@@ -196,16 +196,21 @@ void Client::saveEntitiesConfig(Message* msg){
 }
 
 void Client::sendEvents(){
-	Message* newMessage = this->gController->getMessageFromEvent(this->userName);
-	if(newMessage){
-		this->writeThread->writeMessage(newMessage);
-		if( newMessage->getTipo() == "exit" ){
-			this->status = DISCONECTED;
-			this->readThread->shutDown();
-			this->writeThread->shutDown();
+	list<Message*> messages = this->gController->getMessagesFromEvent(this->userName);
+	if(messages.empty()){
+		if( this->status == DISCONECTED){
+				Logger::get()->logError("Client","sendEvents","Client disconnect, so can't send message to server");
 		}
-	}else if( this->status == DISCONECTED){
-		Logger::get()->logError("Client","sendEvents","Client disconnect, so can't send message to server");
+
+	} else {
+		for(list<Message*>::iterator it = messages.begin() ; it != messages.end() ; ++it) {
+			this->writeThread->writeMessage((*it));
+			if( (*it)->getTipo() == "exit" ){
+				this->status = DISCONECTED;
+				this->readThread->shutDown();
+				this->writeThread->shutDown();
+			}
+		}
 	}
 	pingMessage();
 }

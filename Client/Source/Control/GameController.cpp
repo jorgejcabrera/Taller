@@ -22,23 +22,24 @@ GameController::GameController(){
 	this->pressedMouseButton = "";
 }
 
-Message* GameController::getMessageFromEvent(string userName){
-
+list<Message*> GameController::getMessagesFromEvent(string userName){
+	list<Message*> messages;
 	while(SDL_PollEvent(event)){
 		if( event->type == SDL_QUIT){
-					this->juegoVista->getMenuVista()->deselectedEntity();
-					Message* message = new Message();
-					msg_game body;
-					body.set_id(0);
-					body.set_nombre(userName);
-					body.set_tipo("exit");
-					message->setContent(body);
-					return message;
+			this->juegoVista->getMenuVista()->deselectedEntity();
+			Message* message = new Message();
+			msg_game body;
+			body.set_id(0);
+			body.set_nombre(userName);
+			body.set_tipo("exit");
+			message->setContent(body);
+			messages.push_back(message);
+			return messages;
 		}
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
 			pressedMouseButton = "left";
 			SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
-			return NULL;
+			return messages;
 		}
 
 		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT) {
@@ -60,15 +61,18 @@ Message* GameController::getMessageFromEvent(string userName){
 			}
 		}
 	}
-	return NULL;
+	return messages;
 }
 
-Message* GameController::selectBox() {
-return NULL;
+list<Message*> GameController::selectBox() {
+	//TODO
+	list<Message*> messages;
+	return messages;
 }
 
 
-Message* GameController::individualSelection() {
+list<Message*> GameController::individualSelection() {
+	list<Message*> messages;
 	// seleccionamos una entidad del mapa
 	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 		pair<int,int>* offset = this->juegoVista->getOffset();
@@ -86,10 +90,11 @@ Message* GameController::individualSelection() {
 			this->idEntitySelected=0;
 		}
 	}
-	return NULL;
+	return messages;
 }
 
-Message* GameController::action() {
+list<Message*> GameController::action() {
+	list<Message*> messages;
 	if( this->idEntitySelected > 0 ) {
 		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 			//menu
@@ -107,7 +112,7 @@ Message* GameController::action() {
 				body.set_tipo("attack");
 				body.set_target(atoi(targetToAttack["id"].c_str()));
 				message->setContent(body);
-				return message;
+				messages.push_back(message);
 			}else{
 				Message* message = new Message();
 				msg_game body;
@@ -117,11 +122,11 @@ Message* GameController::action() {
 				body.set_y(cartesianPosition.second);
 				body.set_target(0);
 				message->setContent(body);
-				return message;
+				messages.push_back(message);
 			}
 		}
 	}
-	return NULL;
+	return messages;
 }
 
 JuegoVista* GameController::getJuegoVista(){
@@ -265,7 +270,8 @@ void GameController::showFinalMessage(){
 	}
 }
 
-Message* GameController::interactiveMenu(int initialPosMouseX,int initialPosMouseY) {
+list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialPosMouseY) {
+	list<Message*> messages;
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
 	if (buildingAndEntitie.second != "") {
 		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
@@ -287,10 +293,10 @@ Message* GameController::interactiveMenu(int initialPosMouseX,int initialPosMous
 			body.set_nombre(buildingAndEntitie.second);
 			message->setContent(body);
 			message->setOwner(this->clientName);
-			return message;
+			messages.push_back(message);
 		}
 	}
-	return NULL;
+	return messages;
 }
 
 GameController::~GameController() {
