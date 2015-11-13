@@ -286,11 +286,11 @@ pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
 	buildingPosition.second = building->getPosition().second;
 	candidatePosition.first = buildingPosition.first+buildingWidth;
 	//recorro el perimetro del edificio
-	for( candidatePosition.second = buildingPosition.second+buildingHeight; candidatePosition.second > buildingPosition.second-2 ; candidatePosition.second--) {
+	for( candidatePosition.second = buildingPosition.second+buildingHeight; candidatePosition.second > buildingPosition.second-1 ; candidatePosition.second--) {
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
 		if (tile->isAvailable()) return candidatePosition;
 	}
-	for( ; candidatePosition.first > buildingPosition.first-2 ; candidatePosition.first--) {
+	for( ; candidatePosition.first > buildingPosition.first-1 ; candidatePosition.first--) {
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
 		if (tile->isAvailable()) return candidatePosition;
 	}
