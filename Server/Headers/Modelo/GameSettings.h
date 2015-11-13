@@ -81,7 +81,7 @@ public:
 
 	string defaultImage();
 	bool isEntityTypeValid(const string &type);
-	void createEntidades();
+	//void createEntidades();
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
 	list<EntidadPartida*> getEntidadesEstaticas();

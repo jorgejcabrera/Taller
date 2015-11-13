@@ -50,9 +50,10 @@ list<Message*> GameController::getEntitiesMessages(){
 		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
 		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado
 		Message* entityMessage = new Message((**it).getId(), tipoEntidad);
-		entityMessage->setName((**it).getName());
-		entityMessage->setPosition((**it).getPosition());
-		entityMessage->setOwner((**it).getOwner());
+		entityMessage->setName((*it)->getName());
+		entityMessage->setPosition((*it)->getPosition());
+		entityMessage->setOwner((*it)->getOwner());
+		entityMessage->setHealth((*it)->getHealth());
 		listaDeEntities.push_back(entityMessage);
 	}
 	return listaDeEntities;
@@ -207,10 +208,8 @@ bool GameController::isKingOfClientAlive(string userName){
 pair<int,int> GameController::createEntitiesForClient(string owner, int clientIndex){
 	pair<int,int> offsetClient = this->getJuego()->createEntitiesForClient(owner,clientIndex);
 	if(this->gameType == REGICIDE){
-		//Creo al rey
 		this->getJuego()->createKingForClient(owner);
 	}else if(this->gameType == CAPTURE_FLAG){
-		//Creo la bandera para el cliente
 		this->getJuego()->createFlag(owner);
 	}
 	return offsetClient;

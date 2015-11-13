@@ -77,7 +77,6 @@ void Client::processReceivedMessages(){
 	list<Message*> pendingMessages = this->readThread->getMessagesToProcess();
 	for(list<Message*>::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it){
 		string tipoMensaje = (*it)->getTipo();
-
 		if( tipoMensaje == "window" ){
 			GameSettings::GetInstance()->setScreenDimension((*it)->getPositionX(),(*it)->getPositionY());
 			GameSettings::GetInstance()->setMapDimention((*it)->getAnchoBase(), (*it)->getAltoBase());

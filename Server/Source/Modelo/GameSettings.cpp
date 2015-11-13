@@ -84,7 +84,6 @@ int GameSettings::getVelocidadPersonaje	(){
 }
 
 void GameSettings::generateListMessageConfiguration(){
-	//Genero una lista de mensajes de configuracion para mandarle a cada cliente
 	vector< map< string, string> > *listaDeTipos = loader->getTypes();
 	for(vector< map< string, string> >::iterator it=listaDeTipos->begin(); it!=listaDeTipos->end(); ++it){
 		string name = getValueInMap(*it, "nombre");
@@ -185,13 +184,13 @@ GameSettings* GameSettings::GetInstance() {
 	if (!instance) {
 		instance = new GameSettings();
 		instance->SetGameSettings();
-		instance->createEntidades();
+		//instance->createEntidades();
 		instance->generateListMessageConfiguration();
 	}
 	return instance;
 }
 
-void GameSettings::createEntidades(){
+/*void GameSettings::createEntidades(){
 	vector< map< string, string> > *entidades = loader->getEntitys();
 	for(vector< map< string, string> >::iterator it = entidades->begin(); it!= entidades->end(); ++it){
 			string nombre = this->getValueInMap(*it, "tipo");
@@ -203,12 +202,6 @@ void GameSettings::createEntidades(){
 			if(nombre!="" and posXStr!= "" and posYStr!="" and posX<this->MAP_WIDTH and posY<this->MAP_HEIGHT){
 				map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 				string tipoEntidad = DefaultSettings::getTypeEntity(nombre);
-				//TODO: este es un control que debe hacer el cliente
-				/*string imagen = this->getValueInMap(entidadObjeto, "imagen");
-				if(!(isFileExist(imagen))){
-					cout << "LOG.INFO : Uso la imagen por deafult porque no exite el file: " << imagen <<endl;
-					imagen = DefaultSettings::defaultImage();
-				}*/
 				if((tipoEntidad == "edificios") or (tipoEntidad=="semiestaticos")){
 					int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
 					int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
@@ -227,6 +220,7 @@ void GameSettings::createEntidades(){
 							molino->setPosition(posX,posY);
 							molino->setDelay(delay);
 							molino->setFramesInLineFile(total_frames);
+							molino->setHealth(1000);
 							this->edificios.push_back(molino);
 						}
 					}
@@ -235,7 +229,7 @@ void GameSettings::createEntidades(){
 				}
 			}
 	}
-}
+}*/
 
 pair<int,int> GameSettings::getConfigDimensionOfEntity(string nombre){
 	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
