@@ -79,13 +79,14 @@ void GameController::individualSelection() {
 		pair<int,int>* offset = this->juegoVista->getOffset();
 		pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
 		map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
-		if(entidadMap.size()>0){
-			if(this->clientName == entidadMap.at("owner")){
-				this->idEntitySelected = atoi(entidadMap.at("id").c_str());
-			}else{
-				this->idEntitySelected = 0;
-			}
+		if( entidadMap.size()>0 && this->clientName == entidadMap.at("owner") ){
+			this->idEntitySelected = atoi(entidadMap.at("id").c_str());
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+		
+		}else if( entidadMap.size()>0 ){
+			this->idEntitySelected = 0;
+			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+
 		}else{
 			this->juegoVista->getMenuVista()->deselectedEntity();
 			this->idEntitySelected=0;
