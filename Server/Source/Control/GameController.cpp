@@ -109,7 +109,6 @@ void GameController::pursuitAndAttackTarget(){
 			}
 		}
 	}
-	return;
 }
 
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1
@@ -165,7 +164,6 @@ bool GameController::checkIfClientLostGame(string clientName){
 			break;
 		case CAPTURE_FLAG:
 			lost=(!this->clientKeepFlag(clientName));
-			lost=false;
 			break;
 		case REGICIDE:
 			lost=(!this->isKingOfClientAlive(clientName));
@@ -188,6 +186,9 @@ bool GameController::clientKeepFlag(string userName){
 	list<EntidadPartida*>* listEntities = this->juego->getMap()->getEntities();
 	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
 		if(((*iterateEntities)->getOwner()==userName) && (*iterateEntities)->getName()== "flag"){
+			/*stringstream ss;
+			ss<< "Tengo la bandera de " << userName;
+			Logger::get()->logInfo("GameController","clientKeepFlag",ss.str());*/
 			return true;
 		}
 	}

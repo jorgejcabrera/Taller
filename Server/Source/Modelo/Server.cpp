@@ -20,7 +20,7 @@ Server::Server(int port, GameController* myController) {
 
 bool Server::acceptingNewClients(){
 	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<3);
+	return (this->clients.size()<2);
 }
 
 int Server::initSocketServer(){
