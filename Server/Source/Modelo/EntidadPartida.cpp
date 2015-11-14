@@ -15,6 +15,7 @@ EntidadPartida::EntidadPartida() {
 	this->id = SequenceUtils::GetInstance()->getSequence();
 	this->target = 0;
 	this->targetPosition = make_pair(0,0);
+	this->attacker = "";
 }
 
 int EntidadPartida::getId(){
@@ -111,16 +112,17 @@ int EntidadPartida::defend(){
 		return 0;
 }
 
-void EntidadPartida::takeDamage(int damage){
+void EntidadPartida::takeDamage(int damage, string userAttarcker){
 	this->notifiable = true;
 	int damageTaken = damage - this->defend();
 	if( damageTaken <= 0 )
 		return;
 	this->health = this->health - damageTaken;
+	this->attacker = userAttarcker;
 }
 
 void EntidadPartida::attackTo(EntidadPartida* entity){
-	entity->takeDamage(this->getDamage());
+	entity->takeDamage(this->getDamage(), this->getOwner());
 }
 
 void EntidadPartida::setOwner(string ownerId){
@@ -137,6 +139,14 @@ void EntidadPartida::setNotifiable(bool noti){
 
 bool EntidadPartida::hasToNotify(){
 	return notifiable;
+}
+
+string EntidadPartida::getAttacker(){
+	return this->attacker;
+}
+
+void EntidadPartida::setAttacker(int attackerId){
+	 this->attacker = attackerId;
 }
 
 EntidadPartida::~EntidadPartida() {

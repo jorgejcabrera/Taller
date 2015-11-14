@@ -9,8 +9,8 @@
 
 GameController::GameController(){
 	//this->gameType = CIVIC_CENTER;
-	this->gameType = REGICIDE;
-	//this->gameType = CAPTURE_FLAG;
+	//this->gameType = REGICIDE;
+	this->gameType = CAPTURE_FLAG;
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->gameRunning = true;
@@ -106,10 +106,16 @@ void GameController::pursuitAndAttackTarget(){
 			}else if( this->targetIsAlive(it->second) ){
 				EntidadPartida* enemy = this->juego->getEntityById(it->second->getTarget());
 				it->second->attackTo(enemy);
+			}else if( (!this->targetIsAlive(it->second)) && it->second->getName() == "flag"){
+				this->transferEntitiesToNewOwner(it->second->getOwner(), it->second->getAttacker());
 			}
 		}
 	}
 	return;
+}
+
+void GameController::transferEntitiesToNewOwner(string userFrom, string userTo){
+	this->juego->transferEntitiesToUser(userFrom, userTo);
 }
 
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1

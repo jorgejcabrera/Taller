@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 	if( server->initSocketServer() == ERROR)
 		return ERROR;
 	server->start((void *) &server);
-
+	cout << "SERVER is RUNNING"<< endl;
 	while(gController->isGameRunning()){
 		server->verifyWaitingClients();
 		//Proceso las novedades de la cola del server y seteo la posicion de los protagonistas modificados

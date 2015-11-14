@@ -52,6 +52,10 @@ protected:
 	* establece la defenza de la entidad cuando lo están atacando
 	* */
 	int defend();
+	/*
+	* userName dueño de la entidad que ataco por ultima vez
+	* */
+	string attacker;
 
 public:
 	EntidadPartida();
@@ -82,13 +86,21 @@ public:
 	* */
 	void attackTo(EntidadPartida* entity);
 	/*
-	* la entidad recibe el daño provoca y descuenta salud
+	* la entidad recibe el daño provocado y el userName dueño del atacante y descuenta salud
 	* */
-	void takeDamage(int damage);
+	void takeDamage(int damage, string attarckerId);
 	/*
 	* si la entidad sufrio algun cambio debe ser notificado
 	* */
 	bool hasToNotify();
+	/*
+	* devuelvo user que lo ataco
+	* */
+	string getAttacker();
+	/*
+	* seteo el id del atacante
+	* */
+	void setAttacker(int attackerId);
 	virtual ~EntidadPartida();
 };
 

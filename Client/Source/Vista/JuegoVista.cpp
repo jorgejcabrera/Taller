@@ -179,62 +179,79 @@ void JuegoVista::addTile(string surface, int x, int y){
 }
 
 void JuegoVista::addBuilding(int id, string type, int x, int y, string owner,int health){
-	EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
-																	gameSettings->getEntityConfig(type)->getAlto());
-	newBuilding->setName(type);
-	newBuilding->setPosition(x,y);
-	newBuilding->setId(id);
-	newBuilding->setOwner(owner);
-	newBuilding->setHealth(health);
-	string pathImage="";
-	if( type == "flag" ){
-		pathImage = getPathFlagImage(this->coloursOfClients[owner]);
-	}else{
-		pathImage = gameSettings->getEntityConfig(type)->getPath();
-	}
-	newBuilding->setPathImage(pathImage);
+	if ( this->buildings.find(id) == this->buildings.end() ) {
+		//Nueva edificio
+		EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
+																		gameSettings->getEntityConfig(type)->getAlto());
+		newBuilding->setName(type);
+		newBuilding->setPosition(x,y);
+		newBuilding->setId(id);
+		newBuilding->setOwner(owner);
+		newBuilding->setHealth(health);
+		string pathImage="";
+		if( type == "flag" ){
+			pathImage = getPathFlagImage(this->coloursOfClients[owner]);
+		}else{
+			pathImage = gameSettings->getEntityConfig(type)->getPath();
+		}
+		newBuilding->setPathImage(pathImage);
 
-	this->buildings.insert(make_pair(id,newBuilding));
+		this->buildings.insert(make_pair(id,newBuilding));
+	} else {
+		//Entidad ya existia y ahora cambia de dueño
+		this->buildings.at(id)->setOwner(owner);
+	}
 }
 
 void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health){
-	EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
-																			gameSettings->getEntityConfig(type)->getAlto(),
-																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
-																			gameSettings->getEntityConfig(type)->getPixelsDimension(),
-																			gameSettings->getEntityConfig(type)->getFps());
-	newSemiStatic->setHealth(health);
-	newSemiStatic->setName(type);
-	newSemiStatic->setPosition(x,y);
-	newSemiStatic->setPathImage(gameSettings->getEntityConfig(type)->getPath());
-	newSemiStatic->setDelay(gameSettings->getEntityConfig(type)->getDelay());
-	newSemiStatic->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
-	newSemiStatic->setId(id);
-	newSemiStatic->setOwner(owner);
-	this->semiEstaticos.insert(make_pair(id,newSemiStatic));
+	if ( this->semiEstaticos.find(id) == this->semiEstaticos.end() ) {
+		EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
+																				gameSettings->getEntityConfig(type)->getAlto(),
+																				gameSettings->getEntityConfig(type)->getPixelsDimension(),
+																				gameSettings->getEntityConfig(type)->getPixelsDimension(),
+																				gameSettings->getEntityConfig(type)->getFps());
+		newSemiStatic->setHealth(health);
+		newSemiStatic->setName(type);
+		newSemiStatic->setPosition(x,y);
+		newSemiStatic->setPathImage(gameSettings->getEntityConfig(type)->getPath());
+		newSemiStatic->setDelay(gameSettings->getEntityConfig(type)->getDelay());
+		newSemiStatic->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
+		newSemiStatic->setId(id);
+		newSemiStatic->setOwner(owner);
+		this->semiEstaticos.insert(make_pair(id,newSemiStatic));
+	} else {
+		//Entidad ya existia y ahora cambia de dueño
+		this->semiEstaticos.at(id)->setOwner(owner);
+	}
 }
 
 void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision){
-	EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
-																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
-																	gameSettings->getEntityConfig(type)->getPixelsDimension(),
-																	gameSettings->getEntityConfig(type)->getFps());
-	//seteo atributos
-	newPersonaje->setName(type);
-	newPersonaje->setPosition(x,y);
-	newPersonaje->setOwner(owner);
-	newPersonaje->setHealth(health);
-	newPersonaje->setStrength(health);
-	newPersonaje->setPrecision(precision);
-	//agrego la posicion inicial de pantalla
-	pair<float,float> initialScreenPos = UtilsController::GetInstance()->getIsometricPosition(x,y);
-	newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
-	newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
+	if ( this->personajes.find(id) == this->personajes.end() ) {
+		//Nueva entidad
+		EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
+																		gameSettings->getEntityConfig(type)->getPixelsDimension(),
+																		gameSettings->getEntityConfig(type)->getPixelsDimension(),
+																		gameSettings->getEntityConfig(type)->getFps());
+		//seteo atributos
+		newPersonaje->setName(type);
+		newPersonaje->setPosition(x,y);
+		newPersonaje->setOwner(owner);
+		newPersonaje->setHealth(health);
+		newPersonaje->setStrength(health);
+		newPersonaje->setPrecision(precision);
+		//agrego la posicion inicial de pantalla
+		pair<float,float> initialScreenPos = UtilsController::GetInstance()->getIsometricPosition(x,y);
+		newPersonaje->setInitialScreenPosition(initialScreenPos.first,initialScreenPos.second);
+		newPersonaje->setPathImage(gameSettings->getEntityConfig(type)->getPath());
 
-	newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
-	newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
-	newPersonaje->setId(id);
-	this->personajes.insert(make_pair(id,newPersonaje));
+		newPersonaje->setDelay(gameSettings->getEntityConfig(type)->getDelay());
+		newPersonaje->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
+		newPersonaje->setId(id);
+		this->personajes.insert(make_pair(id,newPersonaje));
+	} else {
+		//Entidad ya existia y ahora cambia de dueño
+		this->personajes.at(id)->setOwner(owner);
+	}
 }
 
 void JuegoVista::drawMiniMap() {
