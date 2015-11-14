@@ -203,10 +203,10 @@ bool Server::checkForUpdMsg(Message* msg){
 
 void Server::notifyClients(){
 	this->sendDinamicEntitesChanges();
+	this->sendFallenEntites();
 	this->sendNewEntities();
 	this->sendResoursesChanges();
 	this->sendNewResourses();
-	this->sendFallenEntites();
 	this->gController->getJuego()->cleanNewEntities();
 	this->pingMessage();
 }
@@ -283,6 +283,12 @@ void Server::sendNewResourses(){
 void Server::sendFallenEntites(){
 	list<EntidadPartida> fallenEntities = this->gController->getJuego()->getFallenEntities();
 	for(list<EntidadPartida>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
+		if(itFallenEntities->getName()=="flag"){
+			stringstream ss;
+			ss<< "Murio bandera "<< itFallenEntities->getOwner();
+			Logger::get()->logInfo("Server","sendFallenEntites",ss.str());
+			this->gController->getJuego()->transferEntitiesToUser(itFallenEntities->getOwner(), itFallenEntities->getAttacker());
+		}
 		Message* msgfallenEntity = new Message();
 		msgfallenEntity->setId((*itFallenEntities).getId());
 		msgfallenEntity->setType("deleteEntity");

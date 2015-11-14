@@ -307,21 +307,21 @@ void Juego::transferEntitiesToUser(string userFrom, string userTo){
 	Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( it->second->getOwner() == userFrom ){
-			stringstream ss;
-			ss<< "Transfiriendo entidad "<< it->second->getId() << " name "<< it->second->getName() << " owner: "<< it->second->getOwner()<< " newowner " <<userTo;
-			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 			it->second->setOwner(userTo);
 			this->newEntities.push_back(it->second);
+			stringstream ss;
+			ss<< "Transfiriendo entidad "<< it->second->getId() << " name "<< it->second->getName() << " last owner "<< userFrom<< " new owner: "<< it->second->getOwner()<< " newowner " <<userTo;
+			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 		}
 	}
 	list<EntidadPartida*>* entities = this->mapa->getEntities();
 	for(list<EntidadPartida*>::iterator iterateEntities = entities->begin(); iterateEntities!=entities->end();++iterateEntities){
 		if((*iterateEntities)->getOwner() == userFrom && (*iterateEntities)->getName()!="flag"){
-			stringstream ss;
-			ss<< "Transfiriendo entidad "<< (*iterateEntities)->getId() << " name "<< (*iterateEntities)->getName() << " owner: "<< (*iterateEntities)->getOwner()<< " newowner " <<userTo;
-			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 			(*iterateEntities)->setOwner(userTo);
 			this->newEntities.push_back((*iterateEntities));
+			stringstream ss;
+			ss<< "Transfiriendo entidad "<< (*iterateEntities)->getId() << " name "<< (*iterateEntities)->getName() << " last owner "<< userFrom<< " new owner: "<< (*iterateEntities)->getOwner()<< " newowner " <<userTo;
+			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 		}
 	}
 }

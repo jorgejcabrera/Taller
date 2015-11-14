@@ -52,10 +52,6 @@ private:
 	* devuelve true si el target aún está presente en el mapa
 	* */
 	bool targetIsAlive(EntidadDinamica* entidad);
-	/*
-	* Traspaso las entidades del usuario que murio al nuevo usuario
-	* */
-	void transferEntitiesToNewOwner(string userFrom, string userTo);
 
 public:
 	GameController();
