@@ -126,10 +126,6 @@ void Client::processReceivedMessages(){
 																(*it)->getPrecision());
 		}else if ( tipoMensaje == "disconnect"){
 			disconnectPlayer((*it)->getNombre());
-		}else if ( tipoMensaje == "reconnect"){
-			EntidadPartidaVista* personaje = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
-			personaje->setPathImage(GameSettings::GetInstance()->getEntityConfig(personaje->getName())->getPath());
-
 		}else if ( tipoMensaje == "ping"){
 			this->lastReportedServer = time(0);	//servidor avisa que sigue arriba
 
@@ -178,7 +174,6 @@ void Client::processReceivedMessages(){
 	}
 }
 
-//TODO borrar este metodo
 void Client::disconnectPlayer(string userName){
 	this->gController->getJuegoVista()->deleteEntitiesOfClient(userName);
 }
