@@ -92,6 +92,10 @@ public:
 	 * si no hay ninguna disponible, llama a mapa->getAvailablePosition(x,y)
 	 */
 	pair<int,int> getNearestPositionOfABuilding(int idBuilding);
+	/*
+	* Dados dos usuarios traspasa todas las entidades del ownerFrom al ownerTo y lo agrega en la lista newEntities para que se notifiquen
+	* */
+	void transferEntitiesToUser(string userFrom, string userTo);
 	virtual ~Juego();
 };
 

@@ -251,16 +251,13 @@ void Juego::createFlag(string owner){
 	string name = "flag";
 	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
 	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+3,civicCenterPosition.second+3);
-	/*stringstream ss;
-	ss << "ANTES "<<this->mapa->getTileAt(position.first, position.second)->isAvailable();
-	Logger::get()->logDebug("Juego","createFlag",ss.str());*/
 	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(name);
 	EntidadPartida* flagEntity = new EntidadEstatica(name,dimension.first,dimension.second,true);
 	flagEntity->setPosition(position.first, position.second);
 	flagEntity->setOwner(owner);
-
+	flagEntity->setHealth(100);
 	this->mapa->pushEntity(flagEntity);
-	this->mapa->getTileAt(position.first, position.second)->isAvailable();
+	this->mapa->getTileAt(position.first, position.second)->changeStatusAvailable();
 	this->newEntities.push_back(flagEntity);
 }
 
@@ -303,6 +300,28 @@ pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
 		if (tile->isAvailable()) return candidatePosition;
 	}//si no hay posiciones disponibles en el mapa ..
 	return this->getMap()->getAvailablePosition(buildingPosition.first+buildingWidth,buildingPosition.second+buildingHeight);
+}
+
+void Juego::transferEntitiesToUser(string userFrom, string userTo){
+	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
+		if( it->second->getOwner() == userFrom ){
+			stringstream ss;
+			ss<< "Transfiriendo entidad "<< it->second->getId() << " name "<< it->second->getName() << " owner: "<< it->second->getOwner()<< " newowner " <<userTo;
+			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
+			it->second->setOwner(userTo);
+			this->newEntities.push_back(it->second);
+		}
+	}
+	list<EntidadPartida*>* entities = this->mapa->getEntities();
+	for(list<EntidadPartida*>::iterator iterateEntities = entities->begin(); iterateEntities!=entities->end();++iterateEntities){
+		if((*iterateEntities)->getOwner() == userFrom && (*iterateEntities)->getName()!="flag"){
+			stringstream ss;
+			ss<< "Transfiriendo entidad "<< (*iterateEntities)->getId() << " name "<< (*iterateEntities)->getName() << " owner: "<< (*iterateEntities)->getOwner()<< " newowner " <<userTo;
+			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
+			(*iterateEntities)->setOwner(userTo);
+			this->newEntities.push_back((*iterateEntities));
+		}
+	}
 }
 
 Juego::~Juego() {
