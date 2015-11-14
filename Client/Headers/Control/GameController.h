@@ -104,7 +104,7 @@ public:
 	list<Message*> interactiveMenu(int posMouseX,int posMouseY);
 
 	list<Message*> selectBox();
-	list<Message*> individualSelection();
+	void individualSelection();
 	list<Message*> action();
 
 	virtual ~GameController();

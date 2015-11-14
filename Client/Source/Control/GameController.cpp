@@ -57,7 +57,10 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 			//si no se movio el mouse
 			}else {
 				this->pressedMouseButton ="";
-				return this->individualSelection();
+				this->individualSelection();
+				//TODO esto claramente esta mal...hay que hacerle un refactor a todo el metodo, o 
+				//analizar la mejor solucion para este caso
+				return list<Message*>();
 			}
 		}
 	}
@@ -71,9 +74,7 @@ list<Message*> GameController::selectBox() {
 }
 
 
-list<Message*> GameController::individualSelection() {
-	list<Message*> messages;
-	// seleccionamos una entidad del mapa
+void GameController::individualSelection() {
 	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 		pair<int,int>* offset = this->juegoVista->getOffset();
 		pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
@@ -90,7 +91,7 @@ list<Message*> GameController::individualSelection() {
 			this->idEntitySelected=0;
 		}
 	}
-	return messages;
+	return;
 }
 
 list<Message*> GameController::action() {
