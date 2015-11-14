@@ -257,7 +257,6 @@ void Juego::createFlag(string owner){
 	flagEntity->setOwner(owner);
 	flagEntity->setHealth(100);
 	this->mapa->pushEntity(flagEntity);
-	this->mapa->getTileAt(position.first, position.second)->changeStatusAvailable();
 	this->newEntities.push_back(flagEntity);
 }
 
@@ -303,6 +302,9 @@ pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){
+	stringstream ss;
+	ss<< "Entre en  transferEntitiesToUser "<< userFrom << " to "<< userTo;
+	Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( it->second->getOwner() == userFrom ){
 			stringstream ss;
