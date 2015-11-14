@@ -237,7 +237,7 @@ void Juego::createKingForClient(string owner){
 												positionOfProtagonista.second,
 												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"),
 												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"));
-	king->setHealth(100);
+	king->setHealth(1000);
 	king->setStrength(0);
 	king->setPrecision(0);
 	king->setOwner(owner);
