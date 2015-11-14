@@ -101,28 +101,30 @@ list<Message*> GameController::action() {
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		} else {
 			//attack
-			EntidadPartidaVista* entity = this->juegoVista->getEntityById(this->idEntitySelected);
-			pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
-			map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
+			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(this->idEntitySelected);
+			if (entity != NULL) {
+				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
+				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
-			if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-				Message* message = new Message();
-				msg_game body;
-				body.set_id(this->idEntitySelected);
-				body.set_tipo("attack");
-				body.set_target(atoi(targetToAttack["id"].c_str()));
-				message->setContent(body);
-				messages.push_back(message);
-			}else{
-				Message* message = new Message();
-				msg_game body;
-				body.set_id(this->idEntitySelected);
-				body.set_tipo("update");
-				body.set_x(cartesianPosition.first);
-				body.set_y(cartesianPosition.second);
-				body.set_target(0);
-				message->setContent(body);
-				messages.push_back(message);
+				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+					Message* message = new Message();
+					msg_game body;
+					body.set_id(this->idEntitySelected);
+					body.set_tipo("attack");
+					body.set_target(atoi(targetToAttack["id"].c_str()));
+					message->setContent(body);
+					messages.push_back(message);
+				}else{
+					Message* message = new Message();
+					msg_game body;
+					body.set_id(this->idEntitySelected);
+					body.set_tipo("update");
+					body.set_x(cartesianPosition.first);
+					body.set_y(cartesianPosition.second);
+					body.set_target(0);
+					message->setContent(body);
+					messages.push_back(message);
+				}
 			}
 		}
 	}
