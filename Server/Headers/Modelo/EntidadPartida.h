@@ -45,10 +45,6 @@ protected:
 	* */
 	int target;
 	/*
-	* devuelve el daño causado al atacar
-	* */
-	int getDamage();
-	/*
 	* establece la defenza de la entidad cuando lo están atacando
 	* */
 	int defend();
@@ -81,10 +77,6 @@ public:
 	void setVisibilityRange(int range);
 	void setNotifiable(bool notifiable);
 	void setOwner(string owner);
-	/*
-	* disminuye la salud de la entidad según 
-	* */
-	//void attackTo(EntidadPartida* entity);
 	/*
 	* la entidad recibe el daño provocado y el userName dueño del atacante y descuenta salud
 	* */

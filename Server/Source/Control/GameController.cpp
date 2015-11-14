@@ -113,12 +113,12 @@ void GameController::pursuitAndAttackTarget(){
 
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1
 bool GameController::readyToAttack(EntidadDinamica* entity){
-	//if( entity->isReadyToAttck() ){
+	if( entity->isReadyToAttack() ){
 		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
 		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
-	/*}else{
+	}else{
 		return false;
-	}*/
+	}
 }
 
 bool GameController::targetIsAlive(EntidadDinamica* entity){

@@ -32,9 +32,12 @@ enum Direccion{
 class EntidadDinamica: public EntidadPartida {
 private:
 	list<pair<int,int> >* path;
-	bool caminando;
-	//bool notifiable;
+	bool walking;
 	bool newPath;
+	/*
+	* necesario para sincronizar la parte visual en el cliente con la parte logica en el server
+	* */
+	bool readyToAttack;
 	int ciclos;
 	int cicloActual;
 	/*
@@ -58,6 +61,11 @@ public:
 	* disminuye la salud de la entidad según 
 	* */
 	void attackTo(EntidadPartida* entity);
+	/*
+	* este metodo nos indica si la entidad visualmente está preparada para atacar.
+	* */
+	bool isReadyToAttack();
+	void prepareToFigth(bool value);
 	bool isWalking();
 	void setPathIsNew(bool esNuevo);
 	bool pathIsNew();
