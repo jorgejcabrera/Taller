@@ -38,6 +38,19 @@ void EntidadDinamica::nextPosition(){
 	}
 }
 
+int EntidadDinamica::getDamage(){
+	float val = ( rand() % 100 ) / 100;
+	if( val <= this->precision ){
+		return this->strength;
+	}else{
+		return 0;
+	}
+}
+
+void EntidadDinamica::attackTo(EntidadPartida* entity){
+	entity->takeDamage(this->getDamage(), this->getOwner());
+}
+
 list<pair<int,int> >* EntidadDinamica::getPath(){
 	return this->path;
 }

@@ -37,8 +37,8 @@ private:
 	* */
 	pair<float,float> screenPosition;
 	/*
-	 * corresponde a la posicion de pantalla donde queremos llegar
-	 * */
+	* corresponde a la posicion de pantalla donde queremos llegar
+	* */
 	int velocidad;
 	pair<float,float> vecVelocity;
 	bool caminando;
@@ -74,7 +74,6 @@ private:
 public:
 	EntidadDinamicaVista();
 	EntidadDinamicaVista(string myName, float width, float length, int fps);
-	void destruir();
 	/*
 	*seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
 	**/
@@ -82,25 +81,23 @@ public:
 	int getFramesInLineFile();
 	int getWidthPixel();
 	int getLengthPixel();
-	list<pair<int,int> >* getCamino();
-	SDL_Rect getPositionOfSprite(int runCycles);
 	int getFramesPerSecond();
-	void setDelay(int delayFrames);
+	int getRangeVisibility();
+	string getName();
+	list<pair<int,int> >* getCamino();
+	pair<float,float> getScreenPosition();
+	pair<int,int>* getPosition();
+	Direccion getDireccion();
+	SDL_Rect getPositionOfSprite(int runCycles);
 	string toString();
+	void setDelay(int delayFrames);
 	void setScreenPosition(float x,float y);
 	void setInitialScreenPosition(float x,float y);
 	void setPosition(int x,int y);
 	void addTileToPath(int x,int y);
-	pair<float,float> getScreenPosition();
-	pair<int,int>* getPosition();
-	Direccion getDireccion();
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
-	string getName();
 	void trasladarse();
-	void walk();
-	//void stopWalk();
 	bool isWalking();
-	int getRangeVisibility();
 	virtual ~EntidadDinamicaVista();
 
 };

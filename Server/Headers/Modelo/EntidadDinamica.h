@@ -37,6 +37,10 @@ private:
 	bool newPath;
 	int ciclos;
 	int cicloActual;
+	/*
+	* devuelve el daño causado al atacar
+	* */
+	int getDamage();
 
 public:
 	EntidadDinamica();
@@ -50,6 +54,10 @@ public:
 	* ?
 	* */
 	list<pair<int,int> >* getPath();
+	/*
+	* disminuye la salud de la entidad según 
+	* */
+	void attackTo(EntidadPartida* entity);
 	bool isWalking();
 	void setPathIsNew(bool esNuevo);
 	bool pathIsNew();

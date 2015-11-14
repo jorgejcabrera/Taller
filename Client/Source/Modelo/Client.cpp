@@ -125,7 +125,8 @@ void Client::processReceivedMessages(){
 																(*it)->getStrength(),
 																(*it)->getPrecision());
 		}else if ( tipoMensaje == "disconnect"){
-			disconnectPlayer((*it)->getNombre());
+			this->disconnectPlayer((*it)->getNombre());
+		
 		}else if ( tipoMensaje == "ping"){
 			this->lastReportedServer = time(0);	//servidor avisa que sigue arriba
 

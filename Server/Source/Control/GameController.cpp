@@ -95,7 +95,7 @@ void GameController::setNextPaths(){
 void GameController::pursuitAndAttackTarget(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
-		if( it->second->getTarget() != 0){
+		if( it->second->getTarget() != 0 ){
 			if( this->targetIsAlive(it->second) && !this->readyToAttack(it->second) ){
 				pair<int,int> targetPosition = this->juego->getEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
@@ -113,8 +113,12 @@ void GameController::pursuitAndAttackTarget(){
 
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1
 bool GameController::readyToAttack(EntidadDinamica* entity){
-	pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
-	return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
+	//if( entity->isReadyToAttck() ){
+		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
+		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
+	/*}else{
+		return false;
+	}*/
 }
 
 bool GameController::targetIsAlive(EntidadDinamica* entity){

@@ -141,7 +141,7 @@ void GameController::setGameRunning(){
 void GameController::updateGame(){
 	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getPersonajes();
 	for(map<int,EntidadDinamicaVista*>::iterator it = entidades->begin(); it !=entidades->end(); ++it){
-		updatePosition((*it).second->getId());
+		this->updatePosition((*it).second->getId());
 	}
 
 	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);

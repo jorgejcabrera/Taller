@@ -84,7 +84,7 @@ public:
 	/*
 	* disminuye la salud de la entidad según 
 	* */
-	void attackTo(EntidadPartida* entity);
+	//void attackTo(EntidadPartida* entity);
 	/*
 	* la entidad recibe el daño provocado y el userName dueño del atacante y descuenta salud
 	* */

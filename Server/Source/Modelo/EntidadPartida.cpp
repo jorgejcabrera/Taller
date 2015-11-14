@@ -95,14 +95,14 @@ float EntidadPartida::getPrecision(){
 	return this->precision;
 }
 
-int EntidadPartida::getDamage(){
+/*int EntidadPartida::getDamage(){
 	float val = ( rand() % 100 ) / 100;
 	if( val <= this->precision ){
 		return this->strength;
 	}else{
 		return 0;
 	}
-}
+}*/
 
 int EntidadPartida::defend(){
 	float val = ( rand() % 100 ) / 100;
@@ -121,9 +121,9 @@ void EntidadPartida::takeDamage(int damage, string userAttarcker){
 	this->attacker = userAttarcker;
 }
 
-void EntidadPartida::attackTo(EntidadPartida* entity){
+/*void EntidadPartida::attackTo(EntidadPartida* entity){
 	entity->takeDamage(this->getDamage(), this->getOwner());
-}
+}*/
 
 void EntidadPartida::setOwner(string ownerId){
 	this->owner = ownerId;
