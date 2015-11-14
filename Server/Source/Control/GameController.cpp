@@ -101,7 +101,7 @@ void GameController::pursuitAndAttackTarget(){
 				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
 			
 			}else if( this->targetIsAlive(it->second) && this->targetOutOfReach(it->second) ){
-				this->juego->setTargetTo(it->second->getId(),0);
+				this->juego->getEntityById(it->second->getId())->setTarget(0);
 
 			}else if( this->targetIsAlive(it->second) ){
 				EntidadPartida* enemy = this->juego->getEntityById(it->second->getTarget());
