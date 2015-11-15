@@ -20,8 +20,8 @@ void EntidadPartidaVista::setPosition(int x,int y){
 	this->position.second = y;
 }
 
-pair<int,int>* EntidadPartidaVista::getPosition(){
-	return &this->position;
+pair<int,int> EntidadPartidaVista::getPosition(){
+	return this->position;
 }
 
 int EntidadPartidaVista::getTarget(){

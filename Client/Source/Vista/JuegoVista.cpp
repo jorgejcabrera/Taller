@@ -21,6 +21,10 @@ MenuVista* JuegoVista::getMenuVista(){
 	return this->menuVista;
 }
 
+map<int, EntidadDinamicaVista*>* JuegoVista::getDinamicEntities(){
+	return &this->personajes;
+}
+
 void JuegoVista::createView(){
 	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
@@ -112,8 +116,8 @@ void JuegoVista::drawIsometricMap(){
 			}
 			this->picassoHelper->renderObject(pathImageTile,posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
 			for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-				pair<int,int>* posicionEstaticos = (*itEstaticos).second->getPosition();
-				if ( ( posicionEstaticos->first == (*itTiles)->getPosX() ) && ( posicionEstaticos->second == (*itTiles)->getPosY() ) ){
+				pair<int,int> posicionEstaticos = (*itEstaticos).second->getPosition();
+				if ( ( posicionEstaticos.first == (*itTiles)->getPosX() ) && ( posicionEstaticos.second == (*itTiles)->getPosY() ) ){
 					(*itEstaticos).second->saw();
 				}
 			}
@@ -154,7 +158,7 @@ void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,
 	int id = this->consumeResource(entidad);
 	if( id != 0 ) this->deleteStaticEntityById(id);
 	if(!isMyEntity){
-		drawEntity = isEnemyEntityVisible(*(entidad->getPosition()));
+		drawEntity = isEnemyEntityVisible(entidad->getPosition());
 	}
 	if(drawEntity){
 		this->picassoHelper->renderObject(	entidad->getPathImage(),
@@ -289,11 +293,11 @@ void JuegoVista::drawMiniMap() {
 
 	//dibujo las entidades estaticas
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-		pair<int,int>* position;
+		pair<int,int> position;
 		EntidadEstaticaVista* entidad = (*itEstaticos).second;
 		position = entidad->getPosition();
-		int x = position->first;
-		int y =  position->second;
+		int x = position.first;
+		int y =  position.second;
 		this->miniMapVista->makeMiniPos(x,y);
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];
 		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
@@ -306,8 +310,8 @@ void JuegoVista::drawMiniMap() {
 	//Dibujo los semi estaticos
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
 		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
-		int x = entidad->getPosition()->first;
-		int y = entidad->getPosition()->second;
+		int x = entidad->getPosition().first;
+		int y = entidad->getPosition().second;
 		this->miniMapVista->makeMiniPos(x,y);
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];
 		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
@@ -321,8 +325,8 @@ void JuegoVista::drawMiniMap() {
 
 	//dibujo los personajes
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int>* cartesianPosition = (*itDinamicos).second->getPosition();
-		this->miniMapVista->makeMiniPos(cartesianPosition->first, cartesianPosition->second);
+		pair<int,int> cartesianPosition = (*itDinamicos).second->getPosition();
+		this->miniMapVista->makeMiniPos(cartesianPosition.first, cartesianPosition.second);
 		colour colourClient = this->coloursOfClients[(*itDinamicos).second->getOwner()];
 		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
 											this->miniMapVista->getMiniPosX() ,
@@ -424,24 +428,24 @@ map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 	int x = position.first;
 	int y = position.second;
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int>* entityPosition = (*itDinamicos).second->getPosition();
-		if(entityPosition->first==x && entityPosition->second==y){
+		pair<int,int> entityPosition = (*itDinamicos).second->getPosition();
+		if(entityPosition.first==x && entityPosition.second==y){
 			return this->getEntityAttributes((*itDinamicos).second);
 		}
 	}
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-		pair<int,int>* entityPosition = (*itEstaticos).second->getPosition();
+		pair<int,int> entityPosition = (*itEstaticos).second->getPosition();
 		int width = (*itEstaticos).second->getWidth();
 		int length = (*itEstaticos).second->getLength();
-		if(entityPosition->first<=x and (entityPosition->first+width-1)>=x){
-			if(entityPosition->second<=y and (entityPosition->second+length-1)>=y){
+		if(entityPosition.first<=x and (entityPosition.first+width-1)>=x){
+			if(entityPosition.second<=y and (entityPosition.second+length-1)>=y){
 				return this->getEntityAttributes((*itEstaticos).second);
 			}
 		}
 	}
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiDinamicos = this->semiEstaticos.begin(); itSemiDinamicos!=this->semiEstaticos.end(); ++itSemiDinamicos){
-		pair<int,int>* entityPosition = (*itSemiDinamicos).second->getPosition();
-		if(entityPosition->first==x && entityPosition->second==y){
+		pair<int,int> entityPosition = (*itSemiDinamicos).second->getPosition();
+		if(entityPosition.first==x && entityPosition.second==y){
 			return this->getEntityAttributes((*itSemiDinamicos).second);
 		}
 	}
@@ -466,14 +470,14 @@ void JuegoVista::setFoggedTiles(string userName) {
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		EntidadDinamicaVista * entidad = (*itDinamicos).second;
 		if(entidad->getOwner()==userName){
-			pair<int,int>* position = entidad->getPosition();
+			pair<int,int> position = entidad->getPosition();
 				int rangeEntity = this->gameSettings->getRangeVisibility();// TODO aca se deberia usar entidad->getRangeVisibility(), para esto cada entidad deberia saber su rango de visibilidad
-				for (int x = position->first - rangeEntity; x <= position->first + rangeEntity; x++) {
+				for (int x = position.first - rangeEntity; x <= position.first + rangeEntity; x++) {
 					if ( (x>=0) && (x < gameSettings->getMapWidth())) {
-						for (int y = position->second-rangeEntity ; y <= position->second+rangeEntity ; y++) {
+						for (int y = position.second-rangeEntity ; y <= position.second+rangeEntity ; y++) {
 							if ((y>=0) && (y < this->gameSettings->getMapHeight())) {
-								if((x+y >= position->first + position->second - rangeEntity) && (x+y <= position->first + position->second + rangeEntity)
-								&& (x-y >= position->first - position->second - rangeEntity) && (x-y <= position->first - position->second + rangeEntity)) {
+								if((x+y >= position.first + position.second - rangeEntity) && (x+y <= position.first + position.second + rangeEntity)
+								&& (x-y >= position.first - position.second - rangeEntity) && (x-y <= position.first - position.second + rangeEntity)) {
 									for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
 										if ((*itTiles)->getFogged() && (*itTiles)->getPosX() == x && (*itTiles)->getPosY() == y) {
 											(*itTiles)->setFogged(false);
@@ -507,15 +511,15 @@ void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 void JuegoVista::addResourceToConsume(int idResourse){
 	map<int, EntidadEstaticaVista*>::iterator it = this->buildings.find(idResourse);
 	if( it != this->buildings.end() ){
-		pair<int,int>* position = (*it).second->getPosition();
-		this->resoursesToConsume.insert(make_pair(make_pair(position->first,position->second),idResourse));
+		pair<int,int> position = (*it).second->getPosition();
+		this->resoursesToConsume.insert(make_pair(make_pair(position.first,position.second),idResourse));
 		return;
 	}
 }
 
 int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
-	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad->getPosition()->first, entidad->getPosition()->second);
-	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(entidad->getPosition()->first,entidad->getPosition()->second));
+	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad->getPosition().first, entidad->getPosition().second);
+	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(entidad->getPosition().first,entidad->getPosition().second));
 	if( it != this->resoursesToConsume.end()){
 		if (isometricPosition.first == entidad->getScreenPosition().first && isometricPosition.second==entidad->getScreenPosition().second){
 			int id =(*it).second;

@@ -11,6 +11,7 @@ EntidadDinamicaVista::EntidadDinamicaVista() {
 	this->caminando = false;
 	this->width = 50;
 	this->length = 50;
+ 	this->readyToAttack = false;
 }
 
 EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, float lengthPixels, int fps){
@@ -26,10 +27,19 @@ EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, floa
 	this->velocidad = 10;
 	this->camino = new list<pair<int,int> >();
 	this->owner = "";
+ 	this->readyToAttack = false;
 }
 
 string EntidadDinamicaVista::getName(){
 	return this->name;
+}
+
+bool EntidadDinamicaVista::isReadyToAttack(){
+	return this->readyToAttack;
+}
+
+void EntidadDinamicaVista::prepareToFight(bool value){
+ 	this->readyToAttack = value;
 }
 
 void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
@@ -72,10 +82,6 @@ void EntidadDinamicaVista::setFramesInLineFile(int qty){
 
 int EntidadDinamicaVista::getFramesInLineFile(){
 	return this->framesInLineFile;
-}
-
-pair<int,int>* EntidadDinamicaVista::getPosition(){
-	return &this->position;
 }
 
 int EntidadDinamicaVista::getWidthPixel(){

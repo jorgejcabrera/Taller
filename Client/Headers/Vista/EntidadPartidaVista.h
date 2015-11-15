@@ -51,7 +51,7 @@ public:
 	string getPathImage();
 	string getSizeString();
 	bool getSeen();
-	pair<int,int>* getPosition();
+	pair<int,int> getPosition();
 	void setOwner(string owner);
 	void setName(string name);
 	void setPosition(int x,int y);
