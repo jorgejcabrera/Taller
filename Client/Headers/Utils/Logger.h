@@ -12,6 +12,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 

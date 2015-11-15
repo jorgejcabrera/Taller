@@ -53,8 +53,7 @@ void EntidadDinamica::attackTo(EntidadPartida* entity){
 }
 
 bool EntidadDinamica::isReadyToAttack(){
-	//return this->readyToAttack;
-	return true;
+	return this->readyToAttack;
 }
 
 void EntidadDinamica::prepareToFigth(bool value){

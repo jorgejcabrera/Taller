@@ -66,7 +66,11 @@ private:
 	* */
 	int delayIndex;
 	int rangeVisibility;
-
+	/*
+	* atributo necesario para sincronizar la vista con el modelo. Si visualmete estan proximos la entidad
+	* y el target, comienza la pelea.
+	* */
+	bool readyToAttack;
 	Direccion getDireccionVertical();
 	Direccion getDireccionHorizontal();
 	int getLineSprite(Direccion dir);
@@ -89,6 +93,8 @@ public:
 	Direccion getDireccion();
 	SDL_Rect getPositionOfSprite(int runCycles);
 	string toString();
+	bool isReadyToAttack();
+	void prepareToFight(bool value);
 	void setDelay(int delayFrames);
 	void setScreenPosition(float x,float y);
 	void setInitialScreenPosition(float x,float y);

@@ -193,6 +193,8 @@ void Client::saveEntitiesConfig(Message* msg){
 
 void Client::sendEvents(){
 	list<Message*> messages = this->gController->getMessagesFromEvent(this->userName);
+	this->gController->readyToAttack(&messages);
+
 	if(messages.empty()){
 		if( this->status == DISCONECTED){
 				Logger::get()->logError("Client","sendEvents","Client disconnect, so can't send message to server");

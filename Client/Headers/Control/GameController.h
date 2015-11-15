@@ -32,6 +32,7 @@ private:
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
 
+	//TODO PORQUE NO GUARDAS EL PUNTERO A LAS ENTIDADES?
 	list<int> idsEntitiesSelected;
 	int initialPosMouseX;
 	int initialPosMouseY;

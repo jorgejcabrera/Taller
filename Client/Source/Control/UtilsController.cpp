@@ -78,8 +78,7 @@ pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 }
 
 int UtilsController::getDistance(pair<int,int> firstPosition, pair<int,int> secondPosition){
-	int result = sqrt(pow(firstPosition.first - secondPosition.first,2) + pow(firstPosition.second - secondPosition.second,2));
-	return result;
+	return sqrt(pow(firstPosition.first - secondPosition.first,2) + pow(firstPosition.second - secondPosition.second,2));
 }
 
 UtilsController::~UtilsController() {

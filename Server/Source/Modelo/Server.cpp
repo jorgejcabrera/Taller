@@ -136,14 +136,18 @@ void Server::processReceivedMessages(){
 	while( !this->readQueue->isEmpty() ){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
 		bool msgProcessed = this->checkForPingMsg(messageUpdate);
-		if(!msgProcessed)
+		if(!msgProcessed){
 			msgProcessed = this->checkForExitMsg(messageUpdate);
-		if(!msgProcessed)
+		}
+		if(!msgProcessed){
 			msgProcessed = this->checkForAttackMsg(messageUpdate);
-		if(!msgProcessed)
+		}
+		if(!msgProcessed){
 			msgProcessed = this->checkForCreateMsg(messageUpdate);
-		if(!msgProcessed)
+		}
+		if(!msgProcessed){
 			this->checkForUpdMsg(messageUpdate);
+		}
 	}
 	this->readQueue->unlockQueue();
 }
@@ -171,13 +175,21 @@ bool Server::checkForExitMsg(Message* msg){
 
 bool Server::checkForAttackMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "attack" ){
-		int entityToUpd = msg->getId();
-		int target = msg->getTarget();
-		pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
-		this->gController->getJuego()->setPlaceToGo(entityToUpd, targetPosition.first, targetPosition.second);
-		this->gController->getJuego()->getEntityById(entityToUpd)->setTarget(target);
-		//TODO quizas haga falta setear el target position
-		this->idEntitiesUpdated.push_back(entityToUpd);
+		//int entityToUpd = msg->getId();
+		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
+		
+		//si la entidad ya tenia un target debe comenzar a atacar
+		if( entityToUpd->getTarget() != 0 ){
+			Logger::get()->logDebug("Server","checkForAttackMsg","llega mensaje para comenzar a atacar");
+			entityToUpd->prepareToFigth(true);
+
+		}else{
+			int target = msg->getTarget();
+			pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
+			this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
+			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
+			this->idEntitiesUpdated.push_back(entityToUpd->getId());
+		}
 		return true;
 	}
 	return false;

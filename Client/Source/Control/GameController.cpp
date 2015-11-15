@@ -77,8 +77,13 @@ void GameController::readyToAttack(list<Message*>* messages){
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
 		if( it->second->getTarget() != 0 ){
 			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget() );
+			if( target == NULL ){
+				it->second->setTarget(0);
+				it->second->prepareToFight(false);
+				return;
+			}
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
-			if( this->utils->getDistance(it->second->getPosition(), targetPosition) <= 1){
+			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) <= 50 && !it->second->isReadyToAttack() ){
 				Message* message = new Message();
 				msg_game body;
 				body.set_id(it->second->getId());
@@ -86,6 +91,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 				body.set_target(target->getId());
 				message->setContent(body);
 				messages->push_back(message);
+				it->second->prepareToFight(true);
 			}
 		}
 	}
@@ -149,13 +155,13 @@ list<Message*> GameController::action() {
 			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		} else {
-			//attack
 			list<int>::iterator it = this->idsEntitiesSelected.begin();
 			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
 			if (entity != NULL) {
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
+				//attack
 				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
@@ -164,13 +170,13 @@ list<Message*> GameController::action() {
 						body.set_tipo("attack");
 						body.set_target(atoi(targetToAttack["id"].c_str()));
 						message->setContent(body);
-						stringstream ss;
+						/*stringstream ss;
 						ss << "id :" << *it;
-						Logger::get()->logInfo("GC","attack",ss.str());
-
+						Logger::get()->logInfo("GC","attack",ss.str());*/
+						entity->setTarget(atoi(targetToAttack["id"].c_str()));
 						messages.push_back(message);
 					}
-				} else {
+				}else{
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
 						msg_game body;
@@ -180,9 +186,9 @@ list<Message*> GameController::action() {
 						body.set_y(cartesianPosition.second);
 						body.set_target(0);
 						message->setContent(body);
-						stringstream ss;
+						/*stringstream ss;
 						ss << "id :" << *it;
-						Logger::get()->logInfo("GC","update",ss.str());
+						Logger::get()->logInfo("GC","update",ss.str());*/
 
 						messages.push_back(message);
 					}
