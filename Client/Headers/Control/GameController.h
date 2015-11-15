@@ -32,8 +32,7 @@ private:
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
 
-	list<int> entitiesSelected;
-	int idEntitySelected;
+	list<int> idsEntitiesSelected;
 	int initialPosMouseX;
 	int initialPosMouseY;
 	string pressedMouseButton;
@@ -108,7 +107,11 @@ public:
 	 */
 	list<Message*> interactiveMenu(int posMouseX,int posMouseY);
 
-	list<Message*> selectBox();
+	/*
+	 * selecciona las entidades dentro de un recuadro "dibujado" por el mouse
+	 *TODO ver si se puede dibujar el recuadro, de todos modos en el enunciado dice que el recuadro se "dibuja"
+	 */
+	void selectBox();
 	void individualSelection();
 	list<Message*> action();
 
