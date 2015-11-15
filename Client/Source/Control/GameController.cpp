@@ -167,11 +167,22 @@ list<Message*> GameController::action() {
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		} else {
 			if(this->entityToBuild != ""){
-				this->entityToBuild = "";
 				this->juegoVista->clearAllDataForBuilding();
 				stringstream ss;
 				ss << "click DERECHO, construyo en " << finalPosMouseX << " " << finalPosMouseY;
+				Message* message = new Message();
+				msg_game body;
+				body.set_id(this->idsEntitiesSelected.front());
+				body.set_tipo("building");
+				body.set_nombre(this->entityToBuild);
+				body.set_x(finalPosMouseX);
+				body.set_y(finalPosMouseY);
+				body.set_owner(this->clientName);
+				message->setContent(body);
+				messages.push_back(message);
+				ss << " mensaje: "<< message->toString();
 				Logger::get()->logDebug("GameController","action",ss.str());
+				this->entityToBuild = "";
 			}else{
 				list<int>::iterator it = this->idsEntitiesSelected.begin();
 				EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);

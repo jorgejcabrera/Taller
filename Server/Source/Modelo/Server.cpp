@@ -146,7 +146,12 @@ void Server::processReceivedMessages(){
 			msgProcessed = this->checkForCreateMsg(messageUpdate);
 		}
 		if(!msgProcessed){
-			this->checkForUpdMsg(messageUpdate);
+			msgProcessed = this->checkForUpdMsg(messageUpdate);
+		}
+		if(!msgProcessed){
+			stringstream ss;
+			ss << "No se que hacer con el mensaje : "<< messageUpdate->toString();
+			Logger::get()->logInfo("Server","processReceivedMessages",ss.str());
 		}
 	}
 	this->readQueue->unlockQueue();
@@ -204,7 +209,7 @@ bool Server::checkForCreateMsg(Message* msg){
 }
 
 bool Server::checkForUpdMsg(Message* msg){
-	if( this->gameRunning ){
+	if( this->gameRunning && msg->getTipo() == "update" ){
 		int idUpdate = msg->getId();
 		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
 		this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
