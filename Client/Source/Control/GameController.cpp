@@ -275,7 +275,9 @@ void GameController::showFinalMessage(){
 list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialPosMouseY) {
 	list<Message*> messages;
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
-	if (buildingAndEntitie.second != "") {
+	if (buildingAndEntitie.second == "Castle") {
+		this->placeTheBuilding(buildingAndEntitie.second);
+	}else if (buildingAndEntitie.second != "") {
 		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
 		map<string,int> costs = this->gameSettings->getCostsOf(buildingAndEntitie.second);
 		if (	costs["chori"] <= resourceCounter->getAlimento() &&
@@ -299,6 +301,19 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 		}
 	}
 	return messages;
+}
+
+void GameController::placeTheBuilding(string buildingName){
+	while(SDL_PollEvent(event)){
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+			//CANCELO LA CREACION
+		}
+
+		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT) {
+			//CREO EL EDIFICIO
+		}
+	}
+
 }
 
 GameController::~GameController() {

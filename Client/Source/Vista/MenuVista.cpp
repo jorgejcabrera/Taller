@@ -122,8 +122,10 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 		posMouseY > posYvertexFirstButton &&
 		posMouseY < posYvertexFirstButton + sideFirstButton ) {
 		result.first = atoi(strings["id"].c_str());
+		//TODO revisar porque estoy diciendo que el soldado puede construir
 		if (strings["name"] == "Barracks") result.second = "soldado";
 		else if (strings["name"] == "Town Center") result.second = "aldeano";
+		else if (strings["name"] == "soldado") result.second = "Castle";
 		else result.second = "";
 	}
 	return result;

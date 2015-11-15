@@ -102,6 +102,10 @@ public:
 	 * Maneja el menu interactivo, en caso de tener seleccionado un town center o una barrack
 	 */
 	list<Message*> interactiveMenu(int posMouseX,int posMouseY);
+	/*
+	* Posiciono el edificio donde lo quiero crear
+	* */
+	void placeTheBuilding(string buildingName);
 
 	list<Message*> selectBox();
 	list<Message*> individualSelection();
