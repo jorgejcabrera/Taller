@@ -308,5 +308,13 @@ string DefaultSettings::getPathTileColour(string stringColor){
 	return IMAGE_BASE_PATH +"/Tiles/" + stringColor + "Tile.png";
 }
 
+string DefaultSettings::getPathTileAvailable(bool available){
+	if(available)
+		return IMAGE_BASE_PATH +"/Tiles/lightGreenTile.png";
+	return IMAGE_BASE_PATH +"/Tiles/redTile.png";
+
+
+}
+
 DefaultSettings::~DefaultSettings() {
 }

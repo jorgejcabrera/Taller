@@ -13,6 +13,8 @@ JuegoVista::JuegoVista() {
 	this->offset.second = 0;
 	this->menuVista = new MenuVista();
 	this->loginVista = new LoginVista();
+	this->availablePosForBuilding = true;
+	this->entityForBuild = "";
 }
 
 MenuVista* JuegoVista::getMenuVista(){
@@ -47,12 +49,26 @@ void JuegoVista::render(int runCycles, ResourceCounter* resourceCounter, string 
 	this->drawMenu();
 	this->drawResources(resourceCounter);
 	this->drawMiniMap();
+	this->drawEntityForBuild();
 	this->picassoHelper->renderView();
 }
 
 void JuegoVista::renderFinalMessage(string finalMessage){
 	PicassoHelper::GetInstance()->renderText(GameSettings::GetInstance()->getScreenWidth()/3,GameSettings::GetInstance()->getScreenHeight()/2,finalMessage.size()*20,40,finalMessage,255,255,255);
 	this->picassoHelper->renderView();
+}
+
+void JuegoVista::drawEntityForBuild(){
+	if(this->entityForBuild != ""){
+		int offsetX = this->getOffset()->first;
+		int offsetY = this->getOffset()->second;
+		pair< int,int > cartesianPosition = this->tilesForBuilding.front();
+		int width = this->gameSettings->getEntityConfig(this->entityForBuild)->getAncho();
+		int height = this->gameSettings->getEntityConfig(this->entityForBuild)->getAlto();
+		string path = this->gameSettings->getEntityConfig(this->entityForBuild)->getPath();
+		pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition.first-width*2, cartesianPosition.second-height);
+		PicassoHelper::GetInstance()->renderObject(path, (isometricPosition.first+ offsetX) , (isometricPosition.second+ offsetY) ,width * 2 * DefaultSettings::getTileSize(), (height-1) * DefaultSettings::getTileSize() * 2);
+	}
 }
 
 void JuegoVista::drawFog() {
@@ -89,7 +105,12 @@ void JuegoVista::drawIsometricMap(){
 		if ((*itTiles)->getSeen()){
 			posY = ((*itTiles)->getPosX()+(*itTiles)->getPosY()) * gameSettings->getTileSize() / 2 + offsetY;
 			posX = ((*itTiles)->getPosX()-(*itTiles)->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
-			this->picassoHelper->renderObject((*itTiles)->getPathImage(),posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
+			string pathImageTile = (*itTiles)->getPathImage();
+			if ( find(this->tilesForBuilding.begin(),this->tilesForBuilding.end(),make_pair((*itTiles)->getPosX(),(*itTiles)->getPosY())) != this->tilesForBuilding.end() ) {
+				//El tile esta en la lista de los "pre-seleccionados" para construir el edificio
+				pathImageTile = DefaultSettings::getPathTileAvailable(this->availablePosForBuilding);
+			}
+			this->picassoHelper->renderObject(pathImageTile,posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
 			for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
 				pair<int,int>* posicionEstaticos = (*itEstaticos).second->getPosition();
 				if ( ( posicionEstaticos->first == (*itTiles)->getPosX() ) && ( posicionEstaticos->second == (*itTiles)->getPosY() ) ){
@@ -538,6 +559,47 @@ void JuegoVista::setResourceCounter(ResourceCounter* resourceCounter) {
 
 ResourceCounter* JuegoVista::getResourceCounter() {
 	return this->resourceCounter ;
+}
+
+void JuegoVista::addTileForBuilding(int x, int y){
+	//stringstream ssSecond;
+	//ssSecond << "agrego el tile " << x << " " << y;
+	if(x < 0 || y < 0 || y> this->gameSettings->getMapHeight() || x > this->gameSettings->getMapWidth()){
+		this->availablePosForBuilding = false;
+		//ssSecond << " INVALIDO";
+	}else{
+		this->tilesForBuilding.push_back(make_pair(x,y));
+		if( ((this->getEntityAt(make_pair(x,y))).size() > 0) ){
+			this->availablePosForBuilding = false;
+			//ssSecond << " NO disponible";
+			//}else{
+			//ssSecond << " DISPONIBLE";
+		}
+	}
+	//Logger::get()->logDebug("JuegoVista","addTileForBuilding",ssSecond.str());
+}
+
+void JuegoVista::clearTilesForBuilding(){
+
+	this->availablePosForBuilding = true;
+	this->tilesForBuilding.clear();
+
+	/*stringstream ss;
+	ss << "Limpio la lista de tiles, disponible "<< this->availablePosForBuilding<< " tiles "<< this->tilesForBuilding.size();
+	Logger::get()->logDebug("JuegoVista","clearTilesForBuilding",ss.str());*/
+}
+
+void JuegoVista::clearAllDataForBuilding(){
+	this->entityForBuild = "";
+	this->clearTilesForBuilding();
+}
+
+bool JuegoVista::isAvailablePosForBuild(){
+	return this->availablePosForBuilding;
+}
+
+void JuegoVista::setEntityForBuild(string entityName){
+	this->entityForBuild = entityName;
 }
 
 JuegoVista::~JuegoVista() {

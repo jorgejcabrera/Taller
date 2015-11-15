@@ -8,7 +8,7 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
-	gameSettings = GameSettings::GetInstance();
+	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->juegoVista = new JuegoVista();
 	this->event = new SDL_Event();
@@ -21,11 +21,17 @@ GameController::GameController(){
 	this->gameRunning=false;
 	this->gameStatus = RUNNING;
 	this->pressedMouseButton = "";
+	this->entityToBuild = "";
 }
 
 list<Message*> GameController::getMessagesFromEvent(string userName){
 	list<Message*> messages;
+	stringstream ss;
 	while(SDL_PollEvent(event)){
+		if(this->entityToBuild != ""){
+			this->placeTheBuilding(this->entityToBuild);
+		}
+
 		if( event->type == SDL_QUIT){
 			this->juegoVista->getMenuVista()->deselectedEntity();
 			Message* message = new Message();
@@ -49,6 +55,13 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 			return this->action();
 		}
 		if( event->type == SDL_MOUSEBUTTONUP && pressedMouseButton == "left"){
+			if(this->entityToBuild != ""){
+				this->entityToBuild = "";
+				this->juegoVista->clearAllDataForBuilding();
+				stringstream ss;
+				ss << "click IZQUIERDO, no construyo nada en " << finalPosMouseX << " " << finalPosMouseY;
+				Logger::get()->logDebug("GameController","getMessagesFromEvent",ss.str());
+			}
 			//siempre que hago una nueva seleccion borro la lista de seleccionados
 			this->idsEntitiesSelected.clear();
 			this->juegoVista->getMenuVista()->deselectedEntity();
@@ -135,42 +148,50 @@ list<Message*> GameController::action() {
 			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		} else {
-			//attack
-			list<int>::iterator it = this->idsEntitiesSelected.begin();
-			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
-			if (entity != NULL) {
-				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
-				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
+			if(this->entityToBuild != ""){
+				this->entityToBuild = "";
+				this->juegoVista->clearAllDataForBuilding();
+				stringstream ss;
+				ss << "click DERECHO, construyo en " << finalPosMouseX << " " << finalPosMouseY;
+				Logger::get()->logDebug("GameController","action",ss.str());
+			}else{
+				//attack
+				list<int>::iterator it = this->idsEntitiesSelected.begin();
+				EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
+				if (entity != NULL) {
+					pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
+					map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
-				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
-						Message* message = new Message();
-						msg_game body;
-						body.set_id(*it);
-						body.set_tipo("attack");
-						body.set_target(atoi(targetToAttack["id"].c_str()));
-						message->setContent(body);
-						stringstream ss;
-						ss << "id :" << *it;
-						Logger::get()->logInfo("GC","attack",ss.str());
+					if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+						for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+							Message* message = new Message();
+							msg_game body;
+							body.set_id(*it);
+							body.set_tipo("attack");
+							body.set_target(atoi(targetToAttack["id"].c_str()));
+							message->setContent(body);
+							stringstream ss;
+							ss << "id :" << *it;
+							Logger::get()->logInfo("GC","attack",ss.str());
 
-						messages.push_back(message);
-					}
-				} else {
-					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
-						Message* message = new Message();
-						msg_game body;
-						body.set_id(*it);
-						body.set_tipo("update");
-						body.set_x(cartesianPosition.first);
-						body.set_y(cartesianPosition.second);
-						body.set_target(0);
-						message->setContent(body);
-						stringstream ss;
-						ss << "id :" << *it;
-						Logger::get()->logInfo("GC","update",ss.str());
+							messages.push_back(message);
+						}
+					} else {
+						for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+							Message* message = new Message();
+							msg_game body;
+							body.set_id(*it);
+							body.set_tipo("update");
+							body.set_x(cartesianPosition.first);
+							body.set_y(cartesianPosition.second);
+							body.set_target(0);
+							message->setContent(body);
+							stringstream ss;
+							ss << "id :" << *it;
+							Logger::get()->logInfo("GC","update",ss.str());
 
-						messages.push_back(message);
+							messages.push_back(message);
+						}
 					}
 				}
 			}
@@ -324,7 +345,9 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 	list<Message*> messages;
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
 	if (buildingAndEntitie.second == "Castle") {
-		this->placeTheBuilding(buildingAndEntitie.second);
+		Logger::get()->logDebug("GameController","interactiveMenu","Construir un castillo");
+		this->entityToBuild = buildingAndEntitie.second;
+		this->juegoVista->setEntityForBuild(this->entityToBuild);
 	}else if (buildingAndEntitie.second != "") {
 		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
 		map<string,int> costs = this->gameSettings->getCostsOf(buildingAndEntitie.second);
@@ -352,17 +375,34 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 }
 
 void GameController::placeTheBuilding(string buildingName){
-	while(SDL_PollEvent(event)){
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
-			//CANCELO LA CREACION
+	pair<int,int> mouseCartesianPosition = this->convertMousePositionToCartesianPosition();
+	//me fijo si movio el mouse
+	if(this->finalPosMouseX != mouseCartesianPosition.first || this->finalPosMouseY != mouseCartesianPosition.second){
+		this->finalPosMouseX = mouseCartesianPosition.first;
+		this->finalPosMouseY = mouseCartesianPosition.second;
+		EntidadConfig* entityConfig = this->gameSettings->getEntityConfig(buildingName);
+		this->juegoVista->clearTilesForBuilding();
+		pair<int,int> lowerVertex = make_pair(this->finalPosMouseX+entityConfig->getAncho(), finalPosMouseY + entityConfig->getAlto());
+		for(int j=finalPosMouseY; j<lowerVertex.second; j++){
+			for(int i=finalPosMouseX; i<lowerVertex.first; i++){
+				this->juegoVista->addTileForBuilding(i,j);
+			}
 		}
-
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT) {
-			//CREO EL EDIFICIO
-		}
+		/*stringstream ssSecond;
+		ssSecond << "Mouse en " << finalPosMouseX << " " << finalPosMouseY;
+		Logger::get()->logDebug("GameController","placeTheBuilding",ssSecond.str());
+		*/
 	}
-
 }
+
+pair <int,int> GameController::convertMousePositionToCartesianPosition(){
+	int posicionX = 0;
+	int posicionY = 0;
+	SDL_GetMouseState(&posicionX, &posicionY);
+	pair<int,int>* offset = this->juegoVista->getOffset();
+	return this->utils->convertToCartesian( posicionX - offset->first, posicionY - offset->second);
+}
+
 
 GameController::~GameController() {
 	//delete(this->juegoVista);

@@ -13,6 +13,7 @@
 #include "../Vista/JuegoVista.h"
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
+#include "../Modelo/EntidadConfig.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
 #include <list>
@@ -57,7 +58,10 @@ private:
 	* pelear le envían la novedad al servidor.
 	* */
 	void readyToAttack(list<Message*>* messages);
-
+	/*
+	* nombre de la entidad que quiero construir
+	* */
+	string entityToBuild;
 public:
 	GameController();
 	/*
@@ -118,6 +122,10 @@ public:
 	void selectBox();
 	void individualSelection();
 	list<Message*> action();
+	/*
+	* obtiene la posicion del mouse y devuelve las coordenadas cartecianas
+	* */
+	pair <int,int> convertMousePositionToCartesianPosition();
 
 	virtual ~GameController();
 };
