@@ -71,7 +71,7 @@ void JuegoVista::drawEntityForBuild(){
 		int height = this->gameSettings->getEntityConfig(this->entityForBuild)->getAlto();
 		string path = this->gameSettings->getEntityConfig(this->entityForBuild)->getPath();
 		pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition.first-width*2, cartesianPosition.second-height);
-		PicassoHelper::GetInstance()->renderObject(path, (isometricPosition.first+ offsetX) , (isometricPosition.second+ offsetY) ,width * 2 * DefaultSettings::getTileSize(), (height-1) * DefaultSettings::getTileSize() * 2);
+		PicassoHelper::GetInstance()->renderObject(path, (isometricPosition.first+ offsetX) , (isometricPosition.second+ offsetY) ,width * 2 * DefaultSettings::getTileSize(), (height-1) * DefaultSettings::getTileSize() * 2, this->availablePosForBuilding);
 	}
 }
 

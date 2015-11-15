@@ -44,6 +44,10 @@ public:
 	void clearView();
 	void renderObject(const string &file, int x, int y, int w, int h);
 	void renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject);
+	/*
+	* render utilizado para cambiar el color de la imagen, solo cuando estoy tratando de construir
+	* */
+	void renderObject(const string &file, int x, int y, int w, int h, bool available);
 	void renderFogOfWar(const string &file, int x, int y, int w, int h);
 	void renderText(int x, int y, int w, int h, string text,Uint8 r, Uint8 g, Uint8 b);
 	static PicassoHelper* GetInstance();
