@@ -77,6 +77,11 @@ pair<int,int> UtilsController::getIsometricPosition(int x,int y){
 	return isometricPosition;
 }
 
+int UtilsController::getDistance(pair<int,int> firstPosition, pair<int,int> secondPosition){
+	int result = sqrt(pow(firstPosition.first - secondPosition.first,2) + pow(firstPosition.second - secondPosition.second,2));
+	return result;
+}
+
 UtilsController::~UtilsController() {
 	this->instance = NULL;
 	//TODO no hay que hacer el delete te la instancia?

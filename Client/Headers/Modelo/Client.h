@@ -90,17 +90,14 @@ public:
 	* */
 	ResourceCounter* getResourceCounter();
 	/*
-	 * Borro todas las entidades del cliente desconectado
-	 */
+	* Borro todas las entidades del cliente desconectado
+	* */
 	void disconnectPlayer(string userName);
 	bool isConected();
 	/*
 	* Al iniciar el cliente le pregunto a que puerto del servidor se quiere conectar
 	* */
 	void askPortConnection();
-	/*
-	 * Devuelve el userName del cliente
-	 */
 	string getUserName();
 	virtual ~Client();
 };

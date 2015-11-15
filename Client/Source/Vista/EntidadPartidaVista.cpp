@@ -12,6 +12,7 @@ EntidadPartidaVista::EntidadPartidaVista() {
 	this->seen = false;
 	//TODO sacar esto, lo dejo asi sino a veces lo pone como el valor maximo de int
 	this->health = 100;
+	this->target = 0;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){
@@ -21,6 +22,13 @@ void EntidadPartidaVista::setPosition(int x,int y){
 
 pair<int,int>* EntidadPartidaVista::getPosition(){
 	return &this->position;
+}
+
+int EntidadPartidaVista::getTarget(){
+	return this->target;
+}
+void EntidadPartidaVista::setTarget(int target){
+	this->target = target;
 }
 
 int EntidadPartidaVista::getWidth(){

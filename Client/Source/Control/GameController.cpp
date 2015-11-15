@@ -63,8 +63,14 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 				return list<Message*>();
 			}
 		}
+		this->readyToAttack(&messages);
 	}
 	return messages;
+}
+
+void GameController::readyToAttack(list<Message*>* messages){
+	//TODO fijarse de las entidades que tienen seleccionado algun target, si visualmente estan cerca, avisarle
+	//al servidor que empice la pelea. MAÑANA LO HAGO :)!!!!!
 }
 
 list<Message*> GameController::selectBox() {
@@ -115,6 +121,7 @@ list<Message*> GameController::action() {
 			body.set_target(atoi(targetToAttack["id"].c_str()));
 			message->setContent(body);
 			messages.push_back(message);
+			entity->setTarget(atoi(targetToAttack["id"].c_str()));
 		}else{
 			Message* message = new Message();
 			msg_game body;

@@ -53,6 +53,11 @@ private:
 	* devuelve el offset coorespondiente al scroll de la pantalla
 	* */
 	pair<int,int> getOffset(int mouseX,int mouseY);
+	/*
+	* se fija las entidades que tienen seleccionado algun target, y si visualmente están preparadas para
+	* pelear le envían la novedad al servidor.
+	* */
+	void readyToAttack(list<Message*>* messages);
 
 public:
 	GameController();

@@ -48,7 +48,6 @@ private:
 public:
 	EntidadDinamica();
 	EntidadDinamica(string nameEntity, int vel,float posX,float posY, float width, float length);
-	void setPath(list<pair<int,int> >* camino);
 	/*
 	* devuelve true si pudo mover la entidad de posicion
 	* */
@@ -64,10 +63,11 @@ public:
 	/*
 	* este metodo nos indica si la entidad visualmente está preparada para atacar.
 	* */
-	bool isReadyToAttack();
-	void prepareToFigth(bool value);
-	bool isWalking();
 	void setPathIsNew(bool esNuevo);
+	void setPath(list<pair<int,int> >* camino);
+	void prepareToFigth(bool value);
+	bool isReadyToAttack();
+	bool isWalking();
 	bool pathIsNew();
 	virtual ~EntidadDinamica();
 };

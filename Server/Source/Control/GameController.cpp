@@ -126,6 +126,7 @@ bool GameController::targetIsAlive(EntidadDinamica* entity){
 	if(!targetEntity){
 		entity->setTarget(0);
 		entity->setTargetPosition(make_pair(0,0));
+		entity->prepareToFigth(false);
 		return false;
 	}
 	return true;

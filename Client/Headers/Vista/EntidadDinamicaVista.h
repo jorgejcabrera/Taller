@@ -54,16 +54,16 @@ private:
 	float distanciaEnY(float y);
 	list<pair<int,int> >* camino;
 	/*
-	*Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
-	**/
+	* Delay entre el fin de un ciclo de frames y el inicio de otro, la idea es setearlo en base al yaml
+	* */
 	int delay;
 	/*
-	*variable de control para indicar si estoy en medio del periodo de delay
-	**/
+	* variable de control para indicar si estoy en medio del periodo de delay
+	* */
 	bool inDelayPeriod;
 	/*
-	*indice de segundo del delay por el cual voy
-	**/
+	* indice de segundo del delay por el cual voy
+	* */
 	int delayIndex;
 	int rangeVisibility;
 
@@ -75,8 +75,8 @@ public:
 	EntidadDinamicaVista();
 	EntidadDinamicaVista(string myName, float width, float length, int fps);
 	/*
-	*seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
-	**/
+	* seteo la cantidad de frames que tiene una linea del archivo para luego poder controlar el delay
+	* */
 	void setFramesInLineFile(int qty);
 	int getFramesInLineFile();
 	int getWidthPixel();
