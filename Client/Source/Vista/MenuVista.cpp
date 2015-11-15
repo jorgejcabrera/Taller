@@ -41,6 +41,9 @@ void MenuVista::drawMe() {
 		PicassoHelper::GetInstance()->renderObject("../../Taller/Images/Personajes/soldadoSolo.png",GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), GameSettings::GetInstance()->getAlturaMenuInferior()/2, GameSettings::GetInstance()->getAlturaMenuInferior()/2);
 	} else if (strings["name"] == "Town Center") {
 
+	}else if (strings["name"] == "soldado"){
+		string path = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
+		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
 	}
 
 }
