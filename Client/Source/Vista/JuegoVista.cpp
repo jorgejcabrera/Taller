@@ -496,7 +496,7 @@ int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
 	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad->getPosition()->first, entidad->getPosition()->second);
 	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(entidad->getPosition()->first,entidad->getPosition()->second));
 	if( it != this->resoursesToConsume.end()){
-		if (isometricPosition.first==entidad->getScreenPosition().first && isometricPosition.second==entidad->getScreenPosition().second){
+		if (isometricPosition.first == entidad->getScreenPosition().first && isometricPosition.second==entidad->getScreenPosition().second){
 			int id =(*it).second;
 			this->resoursesToConsume.erase(it);
 			return id;

@@ -32,8 +32,7 @@ private:
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
 
-	list<int> entitiesSelected;
-	int idEntitySelected;
+	list<int> idsEntitiesSelected;
 	int initialPosMouseX;
 	int initialPosMouseY;
 	string pressedMouseButton;
@@ -53,6 +52,11 @@ private:
 	* devuelve el offset coorespondiente al scroll de la pantalla
 	* */
 	pair<int,int> getOffset(int mouseX,int mouseY);
+	/*
+	* se fija las entidades que tienen seleccionado algun target, y si visualmente están preparadas para
+	* pelear le envían la novedad al servidor.
+	* */
+	void readyToAttack(list<Message*>* messages);
 
 public:
 	GameController();
@@ -107,8 +111,12 @@ public:
 	* */
 	void placeTheBuilding(string buildingName);
 
-	list<Message*> selectBox();
-	list<Message*> individualSelection();
+	/*
+	 * selecciona las entidades dentro de un recuadro "dibujado" por el mouse
+	 *TODO ver si se puede dibujar el recuadro, de todos modos en el enunciado dice que el recuadro se "dibuja"
+	 */
+	void selectBox();
+	void individualSelection();
 	list<Message*> action();
 
 	virtual ~GameController();

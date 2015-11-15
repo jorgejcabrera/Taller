@@ -14,10 +14,11 @@ GameController::GameController(){
 	this->event = new SDL_Event();
 	this->initialPosMouseX = 0;
 	this->initialPosMouseY = 0;
+	this->finalPosMouseX = 0;
+	this->finalPosMouseY = 0;
 	this->runCycles = 0;
 	this->maxFramesPerSecond = 50; // maxima cantidad de frames del juego principal
 	this->gameRunning=false;
-	this->idEntitySelected=0;
 	this->gameStatus = RUNNING;
 	this->pressedMouseButton = "";
 }
@@ -47,83 +48,130 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 			SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
 			return this->action();
 		}
-
 		if( event->type == SDL_MOUSEBUTTONUP && pressedMouseButton == "left"){
+			//siempre que hago una nueva seleccion borro la lista de seleccionados
+			this->idsEntitiesSelected.clear();
+			this->juegoVista->getMenuVista()->deselectedEntity();
 			SDL_GetMouseState(&finalPosMouseX,&finalPosMouseY);
 			//si se movio el mouse
 			if (initialPosMouseX != finalPosMouseX || initialPosMouseY != finalPosMouseY) {
 				this->pressedMouseButton ="";
-				return this->selectBox();
+				this->selectBox();
+				return messages;
 			//si no se movio el mouse
 			}else {
 				this->pressedMouseButton ="";
-				return this->individualSelection();
+				this->individualSelection();
+				//TODO esto claramente esta mal...hay que hacerle un refactor a todo el metodo, o 
+				//analizar la mejor solucion para este caso
+				return messages;
 			}
 		}
+		this->readyToAttack(&messages);
 	}
 	return messages;
 }
 
-list<Message*> GameController::selectBox() {
-	//TODO
-	list<Message*> messages;
-	return messages;
+void GameController::readyToAttack(list<Message*>* messages){
+	//TODO fijarse de las entidades que tienen seleccionado algun target, si visualmente estan cerca, avisarle
+	//al servidor que empice la pelea. MAÑANA LO HAGO :)!!!!!
+}
+
+void GameController::selectBox() {
+	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+		pair<int,int>* offset = this->juegoVista->getOffset();
+		//TODO chequear cual es el mejor numero para sumarle a i y a j
+		for (int i = this->initialPosMouseX; i <= this->finalPosMouseX ; i = i + gameSettings->getTileSize()) {
+			for ( int j = this->initialPosMouseY ; j <= this->finalPosMouseY ; j = j + gameSettings->getTileSize()/2) {
+				pair<int,int> cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
+				//TODO obtener solo entidades dinamicas
+				map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
+				if(entidadMap.size()>0){
+					if(this->clientName == entidadMap.at("owner")){
+						this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
+					}
+				}
+			}
+		}
+		this->idsEntitiesSelected.unique();
+		//si no pude seleccionar ninguna entidad propia
+		if (this->idsEntitiesSelected.empty()) {
+			this->juegoVista->getMenuVista()->deselectedEntity();
+		} else {
+			//this->juegoVista->getMenuVista()->setSelectedsEntitiesDescription(this->idsEntitiesSelected);
+			//TODO este metodo deberia renderizar en el menu todos los personajes elegidos
+		}
+	}
 }
 
 
-list<Message*> GameController::individualSelection() {
-	list<Message*> messages;
-	// seleccionamos una entidad del mapa
+void GameController::individualSelection() {
 	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 		pair<int,int>* offset = this->juegoVista->getOffset();
 		pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
 		map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
-		if(entidadMap.size()>0){
-			if(this->clientName == entidadMap.at("owner")){
-				this->idEntitySelected = atoi(entidadMap.at("id").c_str());
-			}else{
-				this->idEntitySelected = 0;
-			}
+		if( entidadMap.size()>0 && this->clientName == entidadMap.at("owner") ){
+			//this->idEntitySelected = atoi(entidadMap.at("id").c_str());
+			this->idsEntitiesSelected.push_back( atoi(entidadMap.at("id").c_str()));
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+		
+		}else if( entidadMap.size()>0 ){
+			//this->idEntitySelected = 0;
+			this->idsEntitiesSelected.clear();
+			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+
 		}else{
 			this->juegoVista->getMenuVista()->deselectedEntity();
-			this->idEntitySelected=0;
+			//this->idEntitySelected=0;
+			this->idsEntitiesSelected.clear();
 		}
 	}
-	return messages;
 }
 
 list<Message*> GameController::action() {
 	list<Message*> messages;
-	if( this->idEntitySelected > 0 ) {
+	if (!this->idsEntitiesSelected.empty()) {
 		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		} else {
 			//attack
-			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(this->idEntitySelected);
+			list<int>::iterator it = this->idsEntitiesSelected.begin();
+			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
 			if (entity != NULL) {
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
 				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-					Message* message = new Message();
-					msg_game body;
-					body.set_id(this->idEntitySelected);
-					body.set_tipo("attack");
-					body.set_target(atoi(targetToAttack["id"].c_str()));
-					message->setContent(body);
-					messages.push_back(message);
-				}else{
-					Message* message = new Message();
-					msg_game body;
-					body.set_id(this->idEntitySelected);
-					body.set_tipo("update");
-					body.set_x(cartesianPosition.first);
-					body.set_y(cartesianPosition.second);
-					body.set_target(0);
-					message->setContent(body);
-					messages.push_back(message);
+					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+						Message* message = new Message();
+						msg_game body;
+						body.set_id(*it);
+						body.set_tipo("attack");
+						body.set_target(atoi(targetToAttack["id"].c_str()));
+						message->setContent(body);
+						stringstream ss;
+						ss << "id :" << *it;
+						Logger::get()->logInfo("GC","attack",ss.str());
+
+						messages.push_back(message);
+					}
+				} else {
+					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+						Message* message = new Message();
+						msg_game body;
+						body.set_id(*it);
+						body.set_tipo("update");
+						body.set_x(cartesianPosition.first);
+						body.set_y(cartesianPosition.second);
+						body.set_target(0);
+						message->setContent(body);
+						stringstream ss;
+						ss << "id :" << *it;
+						Logger::get()->logInfo("GC","update",ss.str());
+
+						messages.push_back(message);
+					}
 				}
 			}
 		}
@@ -142,7 +190,7 @@ void GameController::setGameRunning(){
 void GameController::updateGame(){
 	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getPersonajes();
 	for(map<int,EntidadDinamicaVista*>::iterator it = entidades->begin(); it !=entidades->end(); ++it){
-		updatePosition((*it).second->getId());
+		this->updatePosition((*it).second->getId());
 	}
 
 	pair<int,int> offset = this->getOffset(this->juegoVista->getOffset()->first,this->juegoVista->getOffset()->second);

@@ -11,7 +11,7 @@ EntidadDinamica::EntidadDinamica(){
 }
 
 EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float widthPixel,float lengthPixels){
-	this->caminando = false;
+	this->walking = false;
 	this->notifiable = false;
 	this->position.first = x;
 	this->position.second = y;
@@ -22,6 +22,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float
 	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
 	this->cicloActual = 0;
 	this->newPath = false;
+	this->readyToAttack = false;
 }
 
 void EntidadDinamica::nextPosition(){
@@ -36,6 +37,28 @@ void EntidadDinamica::nextPosition(){
 		}
 		cicloActual++;
 	}
+}
+
+int EntidadDinamica::getDamage(){
+	float val = ( rand() % 100 ) / 100;
+	if( val <= this->precision ){
+		return this->strength;
+	}else{
+		return 0;
+	}
+}
+
+void EntidadDinamica::attackTo(EntidadPartida* entity){
+	entity->takeDamage(this->getDamage(), this->getOwner());
+}
+
+bool EntidadDinamica::isReadyToAttack(){
+	//return this->readyToAttack;
+	return true;
+}
+
+void EntidadDinamica::prepareToFigth(bool value){
+	this->readyToAttack = value;
 }
 
 list<pair<int,int> >* EntidadDinamica::getPath(){
@@ -56,7 +79,7 @@ bool EntidadDinamica::pathIsNew(){
 }
 
 bool EntidadDinamica::isWalking(){
-	return this->caminando;
+	return this->walking;
 }
 
 EntidadDinamica::~EntidadDinamica() {

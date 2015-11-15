@@ -125,7 +125,8 @@ void Client::processReceivedMessages(){
 																(*it)->getStrength(),
 																(*it)->getPrecision());
 		}else if ( tipoMensaje == "disconnect"){
-			disconnectPlayer((*it)->getNombre());
+			this->disconnectPlayer((*it)->getNombre());
+		
 		}else if ( tipoMensaje == "ping"){
 			this->lastReportedServer = time(0);	//servidor avisa que sigue arriba
 
@@ -196,8 +197,7 @@ void Client::sendEvents(){
 		if( this->status == DISCONECTED){
 				Logger::get()->logError("Client","sendEvents","Client disconnect, so can't send message to server");
 		}
-
-	} else {
+	}else{
 		for(list<Message*>::iterator it = messages.begin() ; it != messages.end() ; ++it) {
 			this->writeThread->writeMessage((*it));
 			if( (*it)->getTipo() == "exit" ){

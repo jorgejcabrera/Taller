@@ -133,12 +133,6 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	protagonistaToUpdate->setPathIsNew(true);
 }
 
-void Juego::setTargetTo(int entityId,int target){
-	EntidadDinamica* entityToUpdate = this->protagonistas.at(entityId);
-	entityToUpdate->setTarget(target);
-	entityToUpdate->setTargetPosition(make_pair(0,0));
-}
-
 list<EntidadPartida> Juego::getFallenEntities(){
 	list<EntidadPartida> fallenEntities;
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){

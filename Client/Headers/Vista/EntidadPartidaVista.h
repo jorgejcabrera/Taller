@@ -27,6 +27,10 @@ protected:
 	string owner;
 	bool seen;
 	/*
+	* id de la entidad con la que se va a interactuar, por ejemplo a atacar
+	* */
+	int target;
+	/*
 	* parametros variables segun el nivel y características de la entidad
 	* */
 	int health;
@@ -37,6 +41,7 @@ public:
 	EntidadPartidaVista();
 	int getWidth();
 	int getLength();
+	int getTarget();
 	int getId();
 	int getHealth();
 	int getStrength();
@@ -52,6 +57,7 @@ public:
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	void setId(int identifier);
+	void setTarget(int target);	
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float presition);

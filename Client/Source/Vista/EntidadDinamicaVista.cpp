@@ -180,14 +180,6 @@ Direccion EntidadDinamicaVista::getDireccion(){
 	return dir;
 }
 
-void EntidadDinamicaVista::walk(){
-	this->caminando = true;
-}
-
-/*void EntidadDinamicaVista::stopWalk(){
-	this->caminando = false;
-}*/
-
 bool EntidadDinamicaVista::isWalking(){
 	return caminando;
 }
@@ -240,10 +232,6 @@ list<pair<int,int> >* EntidadDinamicaVista::getCamino(){
 
 void EntidadDinamicaVista::setDelay(int delayFrames){
 	this->delay = delayFrames;
-}
-
-void EntidadDinamicaVista::destruir(){
-	this->~EntidadDinamicaVista();
 }
 
 void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){

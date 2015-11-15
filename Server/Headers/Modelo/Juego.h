@@ -50,10 +50,6 @@ public:
 	* */
 	void setPlaceToGo(int idProtagonista, int x,int y);
 	/*
-	* le setea el target a la entidad pasada como parámetro, y su posición en ese instante
-	* */
-	void setTargetTo(int entityId,int target);
-	/*
 	* genera una entidad dinámica y se la asigna al jugador pasado como parámetro, devuelve el offset inicial del cliente
 	* */
 	pair<int,int> createEntitiesForClient(string owner, int clientIndex);

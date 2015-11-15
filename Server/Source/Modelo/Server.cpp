@@ -171,12 +171,13 @@ bool Server::checkForExitMsg(Message* msg){
 
 bool Server::checkForAttackMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "attack" ){
-		int idUpdate = msg->getId();
+		int entityToUpd = msg->getId();
 		int target = msg->getTarget();
 		pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
-		this->gController->getJuego()->setPlaceToGo(idUpdate, targetPosition.first, targetPosition.second);
-		this->gController->getJuego()->setTargetTo(idUpdate,target);
-		this->idEntitiesUpdated.push_back(idUpdate);
+		this->gController->getJuego()->setPlaceToGo(entityToUpd, targetPosition.first, targetPosition.second);
+		this->gController->getJuego()->getEntityById(entityToUpd)->setTarget(target);
+		//TODO quizas haga falta setear el target position
+		this->idEntitiesUpdated.push_back(entityToUpd);
 		return true;
 	}
 	return false;
@@ -194,7 +195,7 @@ bool Server::checkForUpdMsg(Message* msg){
 	if( this->gameRunning ){
 		int idUpdate = msg->getId();
 		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
-		this->gController->getJuego()->setTargetTo(idUpdate,0);
+		this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
 		this->idEntitiesUpdated.push_back(idUpdate);
 		return true;
 	}
