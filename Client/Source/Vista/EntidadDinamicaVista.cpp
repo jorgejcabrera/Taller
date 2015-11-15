@@ -74,10 +74,6 @@ int EntidadDinamicaVista::getFramesInLineFile(){
 	return this->framesInLineFile;
 }
 
-pair<int,int>* EntidadDinamicaVista::getPosition(){
-	return &this->position;
-}
-
 int EntidadDinamicaVista::getWidthPixel(){
 	return this->widthPixel;
 }

@@ -86,7 +86,6 @@ public:
 	string getName();
 	list<pair<int,int> >* getCamino();
 	pair<float,float> getScreenPosition();
-	pair<int,int>* getPosition();
 	Direccion getDireccion();
 	SDL_Rect getPositionOfSprite(int runCycles);
 	string toString();

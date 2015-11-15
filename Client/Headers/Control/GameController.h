@@ -52,11 +52,7 @@ private:
 	* devuelve el offset coorespondiente al scroll de la pantalla
 	* */
 	pair<int,int> getOffset(int mouseX,int mouseY);
-	/*
-	* se fija las entidades que tienen seleccionado algun target, y si visualmente están preparadas para
-	* pelear le envían la novedad al servidor.
-	* */
-	void readyToAttack(list<Message*>* messages);
+
 
 public:
 	GameController();
@@ -71,7 +67,11 @@ public:
 	/*
 	* transforma eventos de la partida del cliente en mensajes para ser enviados alservidor
 	* */
-	list<Message*> getMessagesFromEvent(string userId);
+	list<Message*> getMessagesFromEvent(string userId);	/*
+	* se fija las entidades que tienen seleccionado algun target, y si visualmente están preparadas para
+	* pelear le envían la novedad al servidor.
+	* */
+	void readyToAttack(list<Message*>* messages);
 	JuegoVista* getJuegoVista();
 	int getRunCycles();
 	int getMaxFramesPerSecond();

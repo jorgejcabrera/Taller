@@ -110,6 +110,7 @@ public:
 	void addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision);
 	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getPersonajes();
+	map<int, EntidadDinamicaVista*>* getDinamicEntities();
 	EntidadDinamicaVista* getDinamicEntityById(int id);
 	EntidadPartidaVista* getEntityById(int id);
 	MenuVista* getMenuVista();

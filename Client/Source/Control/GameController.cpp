@@ -25,6 +25,7 @@ GameController::GameController(){
 
 list<Message*> GameController::getMessagesFromEvent(string userName){
 	list<Message*> messages;
+	
 	while(SDL_PollEvent(event)){
 		if( event->type == SDL_QUIT){
 			this->juegoVista->getMenuVista()->deselectedEntity();
@@ -67,14 +68,27 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 				return messages;
 			}
 		}
-		this->readyToAttack(&messages);
 	}
 	return messages;
 }
 
 void GameController::readyToAttack(list<Message*>* messages){
-	//TODO fijarse de las entidades que tienen seleccionado algun target, si visualmente estan cerca, avisarle
-	//al servidor que empice la pelea. MAÑANA LO HAGO :)!!!!!
+	map<int, EntidadDinamicaVista*>* entities = this->juegoVista->getDinamicEntities();
+	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
+		if( it->second->getTarget() != 0 ){
+			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget() );
+			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
+			if( this->utils->getDistance(it->second->getPosition(), targetPosition) <= 1){
+				Message* message = new Message();
+				msg_game body;
+				body.set_id(it->second->getId());
+				body.set_tipo("attack");
+				body.set_target(target->getId());
+				message->setContent(body);
+				messages->push_back(message);
+			}
+		}
+	}
 }
 
 void GameController::selectBox() {
@@ -188,7 +202,7 @@ void GameController::setGameRunning(){
 }
 
 void GameController::updateGame(){
-	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getPersonajes();
+	map<int,EntidadDinamicaVista*>* entidades = this->juegoVista->getDinamicEntities();
 	for(map<int,EntidadDinamicaVista*>::iterator it = entidades->begin(); it !=entidades->end(); ++it){
 		this->updatePosition((*it).second->getId());
 	}
