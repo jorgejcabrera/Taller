@@ -91,8 +91,8 @@ void JuegoVista::drawIsometricMap(){
 			posX = ((*itTiles)->getPosX()-(*itTiles)->getPosY()) * gameSettings->getTileSize() + gameSettings->getScreenWidth() / 2 + offsetX;	//comienzo a dibujar de la mitad de la pantalla
 			this->picassoHelper->renderObject((*itTiles)->getPathImage(),posX,posY, gameSettings->getTileSize() * 2, gameSettings->getTileSize());
 			for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-				pair<int,int>* posicionEstaticos = (*itEstaticos).second->getPosition();
-				if ( ( posicionEstaticos->first == (*itTiles)->getPosX() ) && ( posicionEstaticos->second == (*itTiles)->getPosY() ) ){
+				pair<int,int> posicionEstaticos = (*itEstaticos).second->getPosition();
+				if ( ( posicionEstaticos.first == (*itTiles)->getPosX() ) && ( posicionEstaticos.second == (*itTiles)->getPosY() ) ){
 					(*itEstaticos).second->saw();
 				}
 			}
@@ -268,11 +268,11 @@ void JuegoVista::drawMiniMap() {
 
 	//dibujo las entidades estaticas
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-		pair<int,int>* position;
+		pair<int,int> position;
 		EntidadEstaticaVista* entidad = (*itEstaticos).second;
 		position = entidad->getPosition();
-		int x = position->first;
-		int y =  position->second;
+		int x = position.first;
+		int y =  position.second;
 		this->miniMapVista->makeMiniPos(x,y);
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];
 		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
@@ -285,8 +285,8 @@ void JuegoVista::drawMiniMap() {
 	//Dibujo los semi estaticos
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
 		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
-		int x = entidad->getPosition()->first;
-		int y = entidad->getPosition()->second;
+		int x = entidad->getPosition().first;
+		int y = entidad->getPosition().second;
 		this->miniMapVista->makeMiniPos(x,y);
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];
 		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
@@ -409,18 +409,18 @@ map<string,string> JuegoVista::getEntityAt(pair<int,int> position){
 		}
 	}
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-		pair<int,int>* entityPosition = (*itEstaticos).second->getPosition();
+		pair<int,int> entityPosition = (*itEstaticos).second->getPosition();
 		int width = (*itEstaticos).second->getWidth();
 		int length = (*itEstaticos).second->getLength();
-		if(entityPosition->first<=x and (entityPosition->first+width-1)>=x){
-			if(entityPosition->second<=y and (entityPosition->second+length-1)>=y){
+		if(entityPosition.first<=x and (entityPosition.first+width-1)>=x){
+			if(entityPosition.second<=y and (entityPosition.second+length-1)>=y){
 				return this->getEntityAttributes((*itEstaticos).second);
 			}
 		}
 	}
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiDinamicos = this->semiEstaticos.begin(); itSemiDinamicos!=this->semiEstaticos.end(); ++itSemiDinamicos){
-		pair<int,int>* entityPosition = (*itSemiDinamicos).second->getPosition();
-		if(entityPosition->first==x && entityPosition->second==y){
+		pair<int,int> entityPosition = (*itSemiDinamicos).second->getPosition();
+		if(entityPosition.first==x && entityPosition.second==y){
 			return this->getEntityAttributes((*itSemiDinamicos).second);
 		}
 	}
@@ -486,8 +486,8 @@ void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 void JuegoVista::addResourceToConsume(int idResourse){
 	map<int, EntidadEstaticaVista*>::iterator it = this->buildings.find(idResourse);
 	if( it != this->buildings.end() ){
-		pair<int,int>* position = (*it).second->getPosition();
-		this->resoursesToConsume.insert(make_pair(make_pair(position->first,position->second),idResourse));
+		pair<int,int> position = (*it).second->getPosition();
+		this->resoursesToConsume.insert(make_pair(make_pair(position.first,position.second),idResourse));
 		return;
 	}
 }
