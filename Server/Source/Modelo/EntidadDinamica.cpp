@@ -23,6 +23,9 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float
 	this->cicloActual = 0;
 	this->newPath = false;
 	this->readyToAttack = false;
+	this->health = health;
+	this->maxHealth = GameSettings::GetInstance()->getConfigAttributeOfEntityAsInt(nameEntity, "health");
+	this->health = this->maxHealth;
 }
 
 void EntidadDinamica::nextPosition(){

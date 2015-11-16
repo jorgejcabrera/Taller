@@ -17,6 +17,8 @@ EntidadEstatica::EntidadEstatica(string nameEntity, int width,int length, bool e
 	this->length = length;
 	this->edificable = esEdificable;
 	this->name = nameEntity;
+	this->maxHealth = GameSettings::GetInstance()->getConfigAttributeOfEntityAsInt(nameEntity, "health");
+	this->health = this->maxHealth;
 }
 
 string getStringSize(EntidadPartida* entidad){

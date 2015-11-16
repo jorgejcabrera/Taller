@@ -10,6 +10,7 @@
 
 #include "EntidadPartida.h"
 #include "../Utils/Logger.h"
+#include "GameSettings.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
