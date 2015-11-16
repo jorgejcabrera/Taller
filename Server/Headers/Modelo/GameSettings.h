@@ -34,22 +34,11 @@ public:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 	//configuracion:
-	int VELOCIDAD_PERSONAJE;
 	int LONG_MARGEN_SCROLL;
 	//escenario
 	string NOMBRE_ESCENARIO;
 	int MAP_WIDTH;
 	int MAP_HEIGHT;
-	//protagonista
-	string TIPO_PROTAGONISTA;
-	int POS_X_PROTAGONISTA;
-	int POS_Y_PROTAGONISTA;
-
-	int FPS_PROTAGONISTA;
-	string PATH_PROTAGONISTA;
-	int FRAMES_IN_FILE_PROTAGONISTA;
-	int PIXEL_DIMENSION_PROTAGONISTA;
-	int DELAY_PROTAGONISTA;
 
 	list<EntidadPartida*> edificios;
 	map<pair<int,int>,string> tiles;
@@ -60,27 +49,24 @@ public:
 	int getTileSize();
 	int getMapWidth();
 	int getMapHeight();
-	int getPixelDimension();
 	int getRangeVisibility();
-	int getEntitySpeed();
 	list<Message*> getConfMessages();
 	map<pair<int,int>,string> getTiles();
 	string imagePathBuildingsByTypeAndAge(const string &object,const string &age);
 	string imagePathPersonajesByType(const string &object);
 	string imagePathTilesByType(const string &object);
 	string getValueInMap(map<string,string> myMap, const string &key);
-	string getEntityType();
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
 	list<EntidadPartida*> getEntidadesEstaticas();
 	void createConfMessages();
 	/*
-	 * devuelve el ancho y el alto para un tipo dado
+	 * Devuelve un string con el valor del atributo de configuracion seteado en el yaml para la entidad
 	 */
-	pair<int,int> getConfigDimensionOfEntity(string nombre);
+	string getConfigAttributeOfEntityAsString(string nombre, string attribute);
 	/*
-	 * Dado un tipo y un parametro devuelve el valor
-	 */
-	int getValueForAttributeOfEntity(string nombre, string attribute);
+	* Devuelve un int con el valor del atributo de configuracion seteado en el yaml para la entidad
+	* */
+	int getConfigAttributeOfEntityAsInt(string nombre, string attribute);
 	virtual ~GameSettings();
 };
 

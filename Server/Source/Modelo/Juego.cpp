@@ -17,8 +17,8 @@ Juego::Juego() {
 
 pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
-	int width = this->gameSettings->getMapWidth();
-	int height = this->gameSettings->getMapHeight();
+	int widthMap = this->gameSettings->getMapWidth();
+	int heightMap = this->gameSettings->getMapHeight();
 	int xOriginClientSection;
 	int yOriginClientSection;
 	switch(clientIndex){
@@ -27,26 +27,29 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 			yOriginClientSection = 0;
 			break;
 		case 1:
-			xOriginClientSection = (width/2);
+			xOriginClientSection = (widthMap/2);
 			yOriginClientSection = 0;
 			break;
 		case 2:
-			xOriginClientSection = (width/2);
-			yOriginClientSection = (height/2);
+			xOriginClientSection = (widthMap/2);
+			yOriginClientSection = (heightMap/2);
 			break;
 		case 3:
 			xOriginClientSection = 0;
-			yOriginClientSection = (height/2);
+			yOriginClientSection = (heightMap/2);
 			break;
 	}
 
 	//Creo el centro civico del jugador
 	string nombre = DefaultSettings::getNameCivicCenter();
-	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(nombre);
-	int xOrigin =  xOriginClientSection+width/4;
-	int yOrigin =  yOriginClientSection+height/4;
+	int width = this->gameSettings->getConfigAttributeOfEntityAsInt(nombre, "ancho_base");
+	int height = this->gameSettings->getConfigAttributeOfEntityAsInt(nombre, "alto_base");
 
-	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,dimension.first,dimension.second,true);
+
+	int xOrigin =  xOriginClientSection+widthMap/4;
+	int yOrigin =  yOriginClientSection+heightMap/4;
+
+	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,width,height,true);
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
 	edificioCreado->setHealth(1234);
@@ -78,19 +81,20 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	initialOffset.second= -(yOffset*this->gameSettings->getTileSize());
 
 	//Creo los personajes del cliente
-	xOrigin += dimension.first;
+	xOrigin += width;
 	int villagerHealth = 500;
 	int villagerStrength = 4;
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO revisar que le ponemos en tipo
 		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
-		EntidadDinamica* protagonista = new EntidadDinamica(gameSettings->getEntityType(),
-															gameSettings->getEntitySpeed(),
+		string name = "aldeano";
+		EntidadDinamica* protagonista = new EntidadDinamica(name,
+															gameSettings->getConfigAttributeOfEntityAsInt(name, "velocidad"),
 															positionOfProtagonista.first,
 															positionOfProtagonista.second,
-															gameSettings->getPixelDimension(),
-															gameSettings->getPixelDimension());
+															gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"),
+															gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"));
 		protagonista->setHealth(villagerHealth);
 		protagonista->setStrength(villagerStrength);
 		protagonista->setPrecision(villagerPrecition);
@@ -205,11 +209,11 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);
 	if (positionOfCreated.first == -1) positionOfCreated = this->mapa->getAvailablePosition();
 	EntidadDinamica* dinamicEntity = new EntidadDinamica(type,
-														gameSettings->getValueForAttributeOfEntity(type, "velocidad"),
+														gameSettings->getConfigAttributeOfEntityAsInt(type, "velocidad"),
 														positionOfCreated.first,
 														positionOfCreated.second,
-														gameSettings->getPixelDimension(),
-														gameSettings->getPixelDimension());
+														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"),
+														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"));
 	dinamicEntity->setHealth(100);
 	dinamicEntity->setStrength(4);
 	dinamicEntity->setPrecision(0.5);
@@ -226,11 +230,11 @@ void Juego::createKingForClient(string owner){
 	pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(civicCenterPosition.first+4,civicCenterPosition.second+4);
 	string name = "king";
 	EntidadDinamica* king = new EntidadDinamica(name,
-												gameSettings->getValueForAttributeOfEntity(name, "velocidad"),
+												gameSettings->getConfigAttributeOfEntityAsInt(name, "velocidad"),
 												positionOfProtagonista.first,
 												positionOfProtagonista.second,
-												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"),
-												gameSettings->getValueForAttributeOfEntity(name, "pixels_dimension"));
+												gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"),
+												gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"));
 	king->setHealth(1000);
 	king->setStrength(0);
 	king->setPrecision(0);
@@ -245,8 +249,9 @@ void Juego::createFlag(string owner){
 	string name = "flag";
 	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
 	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+3,civicCenterPosition.second+3);
-	pair<int,int> dimension = this->gameSettings->getConfigDimensionOfEntity(name);
-	EntidadPartida* flagEntity = new EntidadEstatica(name,dimension.first,dimension.second,true);
+	int width = this->gameSettings->getConfigAttributeOfEntityAsInt(name, "ancho_base");
+	int height = this->gameSettings->getConfigAttributeOfEntityAsInt(name, "alto_base");
+	EntidadPartida* flagEntity = new EntidadEstatica(name,width,height,true);
 	flagEntity->setPosition(position.first, position.second);
 	flagEntity->setOwner(owner);
 	flagEntity->setHealth(100);
@@ -268,8 +273,8 @@ pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
 	stringstream ss;
 	EntidadPartida* building = this->getEntityById(idBuilding);
 	if (building == NULL) return make_pair(-1,-1);
-	int buildingWidth = gameSettings->getValueForAttributeOfEntity(building->getName(), "ancho_base");
-	int buildingHeight = gameSettings->getValueForAttributeOfEntity(building->getName(), "alto_base");
+	int buildingWidth = gameSettings->getConfigAttributeOfEntityAsInt(building->getName(), "ancho_base");
+	int buildingHeight = gameSettings->getConfigAttributeOfEntityAsInt(building->getName(), "alto_base");
 	pair<int,int> buildingPosition;
 	pair<int,int> candidatePosition;
 	buildingPosition.first = building->getPosition().first;

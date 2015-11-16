@@ -22,7 +22,6 @@ class DefaultSettings {
 		static const int SCREEN_WIDTH = 800;
 		static const int SCREEN_HEIGHT = 600;
 		static const int TILE_SIZE = 40;
-		static const int CONF_VEL_PERSONAJE;
 		static const int LONG_MARGEN_SCROLL = 30;
 		static const string NOMBRE_ESCENARIO;
 		static const string IMAGE_BASE_PATH;
@@ -34,10 +33,6 @@ class DefaultSettings {
 		static const int MEDIUM_SIZE = 3;
 		static const int VELOCIDAD_SCROLL_UNO = 10;
 		static const int VELOCIDAD_SCROLL_DOS = 30;
-		static const string TIPO_PROTAGONISTA;
-		static const int POS_X_PROTAGONISTA = 5;
-		static const int POS_Y_PROTAGONISTA = 5;
-		static const int VELOCIDAD_PERSONAJE = 10;
 		static const int TIMEOUT = 10;
 		static const int ALTURA_MENU_INFERIOR= 120;
 		static const int ALTURA_MENU_SUPERIOR= 20;
@@ -85,10 +80,6 @@ class DefaultSettings {
 		static string getTypeEntity(const string &type);
 		static bool isInList(list<string> listOfThings, const string &type);
 		static list<string> getListOfAttributesCanSetByType(const string &type);
-		static string getTipoProtagonista();
-		static int getPosXProtagonista();
-		static int getPosYProtagonista();
-		static int getVelocidadPersonaje();
 		static int getTimeOut();
 		static int getViewDistance();
 		static int getAlturaMenuInferior();

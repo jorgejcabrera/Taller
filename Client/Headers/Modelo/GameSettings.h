@@ -38,18 +38,8 @@ public:
 	string NOMBRE_ESCENARIO;
 	int MAP_WIDTH=30;
 	int MAP_HEIGHT=30;
-	//protagonista
-	string TIPO_PROTAGONISTA;
-	int POS_X_PROTAGONISTA;
-	int POS_Y_PROTAGONISTA;
-	//tipos
-	//vector< map< string, string> >* tipos;
-	//entidades
-	//vector< map< string, string> >* entidades;
-
 
 	int TILE_SIZE;
-	int CONF_VEL_PERSONAJE;
 	string IMAGE_BASE_PATH;
 	string AGE_OF_EMPIRES;
 	string IMAGE_TILES_PATH;
@@ -57,12 +47,6 @@ public:
 	int MEDIUM_SIZE;
 	int VELOCIDAD_SCROLL_UNO;
 	int VELOCIDAD_SCROLL_DOS;
-
-	int FPS_PROTAGONISTA;
-	string PATH_PROTAGONISTA;
-	int FRAMES_IN_FILE_PROTAGONISTA;
-	int PIXEL_DIMENSION_PROTAGONISTA;
-	int DELAY_PROTAGONISTA;
 
 	list<EntidadPartidaVista*> edificios;
 	map<pair<int,int>,string> tiles;
@@ -100,16 +84,7 @@ public:
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
 	list<EntidadPartidaVista*> getEntidadesEstaticas();
-	string getTipoProtagonista();
-	int getPosXProtagonista();
-	int getPosYProtagonista();
-	int getVelocidadPersonaje();
 	map<pair<int,int>,string> getTiles();
-	int getProtagonistaFPS();
-	string getProtagonistaPath();
-	int getProtagonistaFramesInFile();
-	int getProtagonistaPixelDimension();
-	int getProtagonistaDelay();
 	int getAlturaMenuInferior();
 
 	//AGREGADO EN CLIENTE UNICAMENTE

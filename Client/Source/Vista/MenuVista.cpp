@@ -38,10 +38,10 @@ void MenuVista::drawMe() {
 	if (this->drawDescription) this->drawEntityDescription();
 
 	if (strings["name"] == "Barracks") {
-		PicassoHelper::GetInstance()->renderObject("../../Taller/Images/Personajes/soldadoSolo.png",GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), GameSettings::GetInstance()->getAlturaMenuInferior()/2, GameSettings::GetInstance()->getAlturaMenuInferior()/2);
+		PicassoHelper::GetInstance()->renderObject("../../Taller/Images/Personajes/aldeanoSolo.png",GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), GameSettings::GetInstance()->getAlturaMenuInferior()/2, GameSettings::GetInstance()->getAlturaMenuInferior()/2);
 	} else if (strings["name"] == "Town Center") {
 
-	}else if (strings["name"] == "soldado"){
+	}else if (strings["name"] == "aldeano"){
 		string path = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
 		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
 	}
@@ -97,6 +97,8 @@ void MenuVista::drawEntityDescription() {
 			if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
 			found = path.find("king");
 			if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
+			found = path.find("aldeano");
+			if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
 			found = path.find("soldadoDesconectado");
 			if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
 			PicassoHelper::GetInstance()->renderObject(path,30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
@@ -125,10 +127,11 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 		posMouseY > posYvertexFirstButton &&
 		posMouseY < posYvertexFirstButton + sideFirstButton ) {
 		result.first = atoi(strings["id"].c_str());
-		//TODO revisar porque estoy diciendo que el soldado puede construir
-		if (strings["name"] == "Barracks") result.second = "soldado";
+		//TODO Nuestro centro civico es Barracks
+		if (strings["name"] == "Barracks") result.second = "aldeano";
 		else if (strings["name"] == "Town Center") result.second = "aldeano";
-		else if (strings["name"] == "soldado") result.second = "Castle";
+		else if (strings["name"] == "aldeano") result.second = "Castle";
+		else if (strings["name"] == "Castle") result.second = "soldado";
 		else result.second = "";
 	}
 	return result;
