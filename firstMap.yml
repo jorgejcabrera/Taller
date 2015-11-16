@@ -114,10 +114,10 @@ tipos:
 - nombre: aldeano
   imagen: ../../Taller/Images/Personajes/aldeano.png
   fps: 50
-  total_frames_line: 7
-  pixels_dimension: 50
+  total_frames_line: 14
+  pixels_dimension: 70
   delay: 0
-  velocidad: 8
+  velocidad: 10
 
 - nombre: king
   imagen: ../../Taller/Images/Personajes/king.png
