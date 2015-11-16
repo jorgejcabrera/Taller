@@ -8,7 +8,7 @@
 #include "../../Headers/Control/GameController.h"
 
 GameController::GameController(){
-	gameSettings = GameSettings::GetInstance();
+	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->juegoVista = new JuegoVista();
 	this->event = new SDL_Event();
@@ -21,54 +21,65 @@ GameController::GameController(){
 	this->gameRunning=false;
 	this->gameStatus = RUNNING;
 	this->pressedMouseButton = "";
+	this->entityToBuild = "";
 }
 
 list<Message*> GameController::getMessagesFromEvent(string userName){
 	list<Message*> messages;
-	
-	while(SDL_PollEvent(event)){
-		if( event->type == SDL_QUIT){
-			this->juegoVista->getMenuVista()->deselectedEntity();
-			Message* message = new Message();
-			msg_game body;
-			body.set_id(0);
-			body.set_nombre(userName);
-			body.set_tipo("exit");
-			message->setContent(body);
-			messages.push_back(message);
-			return messages;
-		}
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
-			pressedMouseButton = "left";
-			SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
-			return messages;
-		}
+			while(SDL_PollEvent(event)){
+				if(this->entityToBuild != ""){
+					this->placeTheBuilding(this->entityToBuild);
+				}
 
-		if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT) {
-			pressedMouseButton = "right";
-			SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
-			return this->action();
-		}
-		if( event->type == SDL_MOUSEBUTTONUP && pressedMouseButton == "left"){
-			//siempre que hago una nueva seleccion borro la lista de seleccionados
-			this->idsEntitiesSelected.clear();
-			this->juegoVista->getMenuVista()->deselectedEntity();
-			SDL_GetMouseState(&finalPosMouseX,&finalPosMouseY);
-			//si se movio el mouse
-			if (initialPosMouseX != finalPosMouseX || initialPosMouseY != finalPosMouseY) {
-				this->pressedMouseButton ="";
-				this->selectBox();
-				return messages;
-			//si no se movio el mouse
-			}else {
-				this->pressedMouseButton ="";
-				this->individualSelection();
-				//TODO esto claramente esta mal...hay que hacerle un refactor a todo el metodo, o 
-				//analizar la mejor solucion para este caso
-				return messages;
+				if( event->type == SDL_QUIT){
+					this->juegoVista->getMenuVista()->deselectedEntity();
+					Message* message = new Message();
+					msg_game body;
+					body.set_id(0);
+					body.set_nombre(userName);
+					body.set_tipo("exit");
+					message->setContent(body);
+					messages.push_back(message);
+					return messages;
+				}
+				if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+					pressedMouseButton = "left";
+					SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
+					return messages;
+				}
+
+				if( event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_RIGHT) {
+					pressedMouseButton = "right";
+					SDL_GetMouseState(&initialPosMouseX,&initialPosMouseY);
+					return this->action();
+				}
+				if( event->type == SDL_MOUSEBUTTONUP && pressedMouseButton == "left"){
+					if(this->entityToBuild != ""){
+						this->entityToBuild = "";
+						this->juegoVista->clearAllDataForBuilding();
+						stringstream ss;
+						ss << "click IZQUIERDO, no construyo nada en " << finalPosMouseX << " " << finalPosMouseY;
+						Logger::get()->logDebug("GameController","getMessagesFromEvent",ss.str());
+					}
+					//siempre que hago una nueva seleccion borro la lista de seleccionados
+					this->idsEntitiesSelected.clear();
+					this->juegoVista->getMenuVista()->deselectedEntity();
+					SDL_GetMouseState(&finalPosMouseX,&finalPosMouseY);
+					//si se movio el mouse
+					if (initialPosMouseX != finalPosMouseX || initialPosMouseY != finalPosMouseY) {
+						this->pressedMouseButton ="";
+						this->selectBox();
+						return messages;
+						//si no se movio el mouse
+					}else {
+						this->pressedMouseButton ="";
+						this->individualSelection();
+						//TODO esto claramente esta mal...hay que hacerle un refactor a todo el metodo, o
+						//analizar la mejor solucion para este caso
+						return messages;
+					}
+				}
 			}
-		}
-	}
 	return messages;
 }
 
@@ -152,7 +163,7 @@ void GameController::individualSelection() {
 			//this->idEntitySelected = atoi(entidadMap.at("id").c_str());
 			this->idsEntitiesSelected.push_back( atoi(entidadMap.at("id").c_str()));
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
-		
+
 		}else if( entidadMap.size()>0 ){
 			//this->idEntitySelected = 0;
 			this->idsEntitiesSelected.clear();
@@ -166,12 +177,32 @@ void GameController::individualSelection() {
 	}
 }
 
+//TODO este método es un asco lleno de else if sin sentido, lo tenemos que refactorizar
 list<Message*> GameController::action() {
 	list<Message*> messages;
 	if (!this->idsEntitiesSelected.empty()) {
 		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
-		} else {
+		
+		}else if(this->entityToBuild != ""){
+			this->juegoVista->clearAllDataForBuilding();
+			stringstream ss;
+			ss << "click DERECHO, construyo en " << finalPosMouseX << " " << finalPosMouseY;
+			Message* message = new Message();
+			msg_game body;
+			body.set_id(this->idsEntitiesSelected.front());
+			body.set_tipo("building");
+			body.set_nombre(this->entityToBuild);
+			body.set_x(finalPosMouseX);
+			body.set_y(finalPosMouseY);
+			body.set_owner(this->clientName);
+			message->setContent(body);
+			messages.push_back(message);
+			ss << " mensaje: "<< message->toString();
+			Logger::get()->logDebug("GameController","action",ss.str());
+			this->entityToBuild = "";
+		}else{
 			list<int>::iterator it = this->idsEntitiesSelected.begin();
 			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
 			if (entity != NULL) {
@@ -181,7 +212,6 @@ list<Message*> GameController::action() {
 				//attack
 				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
-						//mandamos por primera vez el msj para que el servidor setee el target
 						Message* message = new Message();
 						msg_game body;
 						body.set_id(*it);
@@ -189,6 +219,7 @@ list<Message*> GameController::action() {
 						body.set_target(atoi(targetToAttack["id"].c_str()));
 						message->setContent(body);
 						entity->setTarget(atoi(targetToAttack["id"].c_str()));
+						entity->prepareToFight(false);
 						messages.push_back(message);
 					}
 				
@@ -204,6 +235,8 @@ list<Message*> GameController::action() {
 						body.set_target(0);
 						message->setContent(body);
 						messages.push_back(message);
+						entity->setTarget(0);
+						entity->prepareToFight(false);
 					}
 				}
 			}
@@ -244,25 +277,25 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	SDL_GetMouseState(&posicionX, &posicionY);
 
 	if (posicionX >= gameSettings->getMargenDerechoUno()	&& posicionX < gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
-			offSetX -= gameSettings->getVelocidadScrollUno();
+		offSetX -= gameSettings->getVelocidadScrollUno();
 	}
 	if (posicionX >= gameSettings->getMargenDerechoDos() && !(offSetX < gameSettings->getLimiteDerecho())) {
-			offSetX -= 1 * gameSettings->getVelocidadScrollDos();
+		offSetX -= 1 * gameSettings->getVelocidadScrollDos();
 	}
 	if ((posicionX > gameSettings->getMargenIzquierdoDos()) && (posicionX <= gameSettings->getMargenIzquierdoUno()) && !(offSetX > gameSettings->getLimiteIzquierdo())) {
-			offSetX += gameSettings->getVelocidadScrollUno();
+		offSetX += gameSettings->getVelocidadScrollUno();
 	}
 	if (posicionX <= gameSettings->getMargenIzquierdoDos() && !(offSetX > gameSettings->getLimiteIzquierdo())) {
-			offSetX += gameSettings->getVelocidadScrollDos();
+		offSetX += gameSettings->getVelocidadScrollDos();
 	}
 	if ((posicionY <= gameSettings->getMargenSuperiorUno()) && (posicionY > gameSettings->getMargenSuperiorDos()) && !((offSetY > gameSettings->getLimiteSuperior()))) {
-			offSetY += gameSettings->getVelocidadScrollUno();
+		offSetY += gameSettings->getVelocidadScrollUno();
 	}
 	if (posicionY <= gameSettings->getMargenSuperiorDos() && !((offSetY > gameSettings->getLimiteSuperior()))) {
 		offSetY += gameSettings->getVelocidadScrollDos();
 	}
 	if (posicionY >= gameSettings->getMargenInferiorUno() && (posicionY < gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
-			offSetY -= gameSettings->getVelocidadScrollUno();
+		offSetY -= gameSettings->getVelocidadScrollUno();
 	}
 	if ((posicionY >= gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
 		offSetY -= gameSettings->getVelocidadScrollDos();
@@ -356,7 +389,11 @@ void GameController::showFinalMessage(){
 list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialPosMouseY) {
 	list<Message*> messages;
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
-	if (buildingAndEntitie.second != "") {
+	if (buildingAndEntitie.second == "Castle") {
+		Logger::get()->logDebug("GameController","interactiveMenu","Construir un castillo");
+		this->entityToBuild = buildingAndEntitie.second;
+		this->juegoVista->setEntityForBuild(this->entityToBuild);
+	}else if (buildingAndEntitie.second != "") {
 		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
 		map<string,int> costs = this->gameSettings->getCostsOf(buildingAndEntitie.second);
 		if (	costs["chori"] <= resourceCounter->getAlimento() &&
@@ -382,13 +419,43 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 	return messages;
 }
 
+void GameController::placeTheBuilding(string buildingName){
+	pair<int,int> mouseCartesianPosition = this->convertMousePositionToCartesianPosition();
+	//me fijo si movio el mouse
+	if(this->finalPosMouseX != mouseCartesianPosition.first || this->finalPosMouseY != mouseCartesianPosition.second){
+		this->finalPosMouseX = mouseCartesianPosition.first;
+		this->finalPosMouseY = mouseCartesianPosition.second;
+		EntidadConfig* entityConfig = this->gameSettings->getEntityConfig(buildingName);
+		this->juegoVista->clearTilesForBuilding();
+		pair<int,int> lowerVertex = make_pair(this->finalPosMouseX+entityConfig->getAncho(), finalPosMouseY + entityConfig->getAlto());
+		for(int j=finalPosMouseY; j<lowerVertex.second; j++){
+			for(int i=finalPosMouseX; i<lowerVertex.first; i++){
+				this->juegoVista->addTileForBuilding(i,j);
+			}
+		}
+		/*stringstream ssSecond;
+		ssSecond << "Mouse en " << finalPosMouseX << " " << finalPosMouseY;
+		Logger::get()->logDebug("GameController","placeTheBuilding",ssSecond.str());
+		 */
+	}
+}
+
+pair <int,int> GameController::convertMousePositionToCartesianPosition(){
+	int posicionX = 0;
+	int posicionY = 0;
+	SDL_GetMouseState(&posicionX, &posicionY);
+	pair<int,int>* offset = this->juegoVista->getOffset();
+	return this->utils->convertToCartesian( posicionX - offset->first, posicionY - offset->second);
+}
+
+
 GameController::~GameController() {
 	//delete(this->juegoVista);
 	this->juegoVista=NULL;
-//	this->utils->~UtilsController();
+	//	this->utils->~UtilsController();
 	delete(this->utils);
 	this->utils = NULL;
-//	this->gameSettings->~GameSettings();
+	//	this->gameSettings->~GameSettings();
 	delete(this->gameSettings);
 	this->gameSettings = NULL;
 	this->event->quit;

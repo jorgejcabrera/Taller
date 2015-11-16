@@ -146,7 +146,12 @@ void Server::processReceivedMessages(){
 			msgProcessed = this->checkForCreateMsg(messageUpdate);
 		}
 		if(!msgProcessed){
-			this->checkForUpdMsg(messageUpdate);
+			msgProcessed = this->checkForUpdMsg(messageUpdate);
+		}
+		if(!msgProcessed){
+			stringstream ss;
+			ss << "No se que hacer con el mensaje : "<< messageUpdate->toString();
+			Logger::get()->logInfo("Server","processReceivedMessages",ss.str());
 		}
 	}
 	this->readQueue->unlockQueue();
@@ -178,7 +183,7 @@ bool Server::checkForAttackMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "attack" ){		
 		//si la entidad ya tenia un target empieza a atacar
 		if( entityToUpd->getTarget() != 0 ){
-			Logger::get()->logDebug("Server","checkForAttackMsg","llega mensaje para comenzar a atacar");
+			Logger::get()->logDebug("Server","checkForAttackMsg","llega mensaje para consumir recurso");
 			entityToUpd->prepareToFigth(true);
 
 		//la entidad empieza a dirigirse a la posicion del target
@@ -212,7 +217,7 @@ bool Server::checkForCreateMsg(Message* msg){
 }
 
 bool Server::checkForUpdMsg(Message* msg){
-	if( this->gameRunning ){
+	if( this->gameRunning && msg->getTipo() == "update" ){
 		int idUpdate = msg->getId();
 		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
 		this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
@@ -276,7 +281,6 @@ void Server::sendResoursesChanges(){
 		rm->yaNotifique();
 		resourceMessage->setName(rm->getUltimoTipoConsumido());
 		resourceMessage->setOwner(rm->getUltimoEnConsumir());
-
 		list<Client*> activeClients= getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(resourceMessage);
@@ -305,9 +309,9 @@ void Server::sendFallenEntites(){
 	list<EntidadPartida> fallenEntities = this->gController->getJuego()->getFallenEntities();
 	for(list<EntidadPartida>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
 		if(itFallenEntities->getName()=="flag"){
-			stringstream ss;
+			/*stringstream ss;
 			ss<< "Murio bandera "<< itFallenEntities->getOwner();
-			Logger::get()->logInfo("Server","sendFallenEntites",ss.str());
+			Logger::get()->logInfo("Server","sendFallenEntites",ss.str());*/
 			this->gController->getJuego()->transferEntitiesToUser(itFallenEntities->getOwner(), itFallenEntities->getAttacker());
 		}
 		Message* msgfallenEntity = new Message();

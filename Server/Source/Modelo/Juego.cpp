@@ -149,6 +149,9 @@ list<EntidadPartida> Juego::getFallenEntities(){
 		if( (*itBuilds)->getHealth() <= 0 ){
 			this->enableTiles(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
+			/*stringstream ss;
+			ss << "borramos la entidad " << (*itBuilds)->getTarget();
+			Logger::get()->logDebug("Juego","getFallenEntities",ss.str());*/
 			delete *itBuilds;
 			itBuilds = this->mapa->getEntities()->erase(itBuilds);
 		}else{

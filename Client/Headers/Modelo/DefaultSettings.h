@@ -101,6 +101,7 @@ class DefaultSettings {
 		static map<string,int> getCostsOf(string type);
 		static string getPathFlagImage(string stringColor);
 		static string getPathTileColour(string stringColor);
+		static string getPathTileAvailable(bool available);
 };
 
 

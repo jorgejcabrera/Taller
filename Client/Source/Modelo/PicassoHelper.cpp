@@ -49,6 +49,23 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 		}else{
 			textureExists = loadTexture(file);
 		}
+		SDL_SetTextureColorMod(textureExists, 255, 255, 255);
+		renderTexture(textureExists,x,y,w,h);
+}
+
+void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, bool available){
+		SDL_Texture* textureExists;
+		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+		if(it != mapByImagePath.end()){
+			textureExists = it->second;
+		}else{
+			textureExists = loadTexture(file);
+		}
+		if(available){
+			SDL_SetTextureColorMod(textureExists, 82, 223, 87);
+		}else{
+			SDL_SetTextureColorMod(textureExists, 255, 0, 0);
+		}
 		renderTexture(textureExists,x,y,w,h);
 }
 

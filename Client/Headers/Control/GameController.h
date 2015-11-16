@@ -13,6 +13,7 @@
 #include "../Vista/JuegoVista.h"
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
+#include "../Modelo/EntidadConfig.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
 #include <list>
@@ -54,7 +55,10 @@ private:
 	* */
 	pair<int,int> getOffset(int mouseX,int mouseY);
 
-
+	/*
+	* nombre de la entidad que quiero construir
+	* */
+	string entityToBuild;
 public:
 	GameController();
 	/*
@@ -107,6 +111,10 @@ public:
 	 * Maneja el menu interactivo, en caso de tener seleccionado un town center o una barrack
 	 */
 	list<Message*> interactiveMenu(int posMouseX,int posMouseY);
+	/*
+	* Posiciono el edificio donde lo quiero crear
+	* */
+	void placeTheBuilding(string buildingName);
 
 	/*
 	 * selecciona las entidades dentro de un recuadro "dibujado" por el mouse
@@ -115,6 +123,10 @@ public:
 	void selectBox();
 	void individualSelection();
 	list<Message*> action();
+	/*
+	* obtiene la posicion del mouse y devuelve las coordenadas cartecianas
+	* */
+	pair <int,int> convertMousePositionToCartesianPosition();
 
 	virtual ~GameController();
 };

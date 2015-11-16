@@ -68,11 +68,21 @@ private:
 	void drawMenu();
 	void drawMiniMap();
 	void drawFog();
+	/*
+	* Dibujo la entidad que estoy queriendo construir
+	* */
+	void drawEntityForBuild();
 	void drawResources(ResourceCounter* resourceCounter);
 	/*
 	* devuelve la información de la entidad en una colección
 	* */
 	map<string,string> getEntityAttributes(EntidadPartidaVista* entidad);
+	/*
+	 * Lista de pares x,y donde tengo que construir el edificio, lo tengo para mostrarlo diferente en la vista
+	 */
+	list<pair< int,int > > tilesForBuilding;
+	bool availablePosForBuilding;
+	string entityForBuild;
 
 public:
 	JuegoVista();
@@ -165,6 +175,26 @@ public:
 	string convertColourToString(colour colorClient);
 	void setResourceCounter(ResourceCounter* resourceCounter);
 	ResourceCounter* getResourceCounter();
+	/*
+	* Dadas las coordenadas x, y las agrego a la lista de tiles donde quiero construir el edificio
+	* */
+	void addTileForBuilding(int x, int y);
+	/*
+	 * Limpia la lista de tiles para ubicar el edificio, porque antes de mandar una tanda de tiles tengo que limpiar la lista
+	 */
+	void clearTilesForBuilding();
+	/*
+	* Aparte de llamar a  clearTilesForBuilding borra el nombre de la entidad a construir, solo se ejecuta una vez que se hizo click eligiendo la posicion donde construir
+	* */
+	void clearAllDataForBuilding();
+	/*
+	 * Devuelvo si las posiciones para el edificio están disponibles
+	 */
+	bool isAvailablePosForBuild();
+	/*
+	 * Seteo la entidad que estoy tratando de construir
+	 */
+	void setEntityForBuild(string entityName);
 	~JuegoVista();
 };
 
