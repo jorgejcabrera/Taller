@@ -38,7 +38,8 @@ void MenuVista::drawMe() {
 	if (this->drawDescription) this->drawEntityDescription();
 
 	if (strings["name"] == "Barracks") {
-		PicassoHelper::GetInstance()->renderObject("../../Taller/Images/Personajes/aldeanoSolo.png",GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), GameSettings::GetInstance()->getAlturaMenuInferior()/2, GameSettings::GetInstance()->getAlturaMenuInferior()/2);
+		string path = "../../Taller/Images/Personajes/aldeanoSolo.png";
+		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
 	} else if (strings["name"] == "Town Center") {
 
 	}else if (strings["name"] == "aldeano"){
