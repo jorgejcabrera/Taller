@@ -50,18 +50,23 @@ void Mapa::createResources(){
 			if( tipo == 1 ){
 				newResource = new Resource("gold",x,y,1000);
 				newResource->setNotifiable(true);
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
 			}
 			if( tipo == 2 ){
 				newResource = new Resource("food",x,y,1000);
 				newResource->setNotifiable(true);
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
 			}
 			if( tipo == 3 ){
 				newResource = new Resource("wood",x,y,1000);
 				newResource->setNotifiable(true);
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
 			}
 			if( tipo == 4 ){
 				newResource = new Resource("rock",x,y,1000);
 				newResource->setNotifiable(true);
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
+
 			}
 			this->resources.push_front(newResource);
 		}

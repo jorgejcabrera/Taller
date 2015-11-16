@@ -12,7 +12,6 @@ using namespace std;
 Juego::Juego() {
 	gameSettings = GameSettings::GetInstance();
 	this->mapa = new Mapa();
-	//this->resourseManager = new ResourceManager(this->mapa);
 }
 
 pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
@@ -52,7 +51,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	EntidadPartida* edificioCreado = new EntidadEstatica(nombre,width,height,true);
 	edificioCreado->setPosition(xOrigin,yOrigin);
 	edificioCreado->setOwner(owner);
-	edificioCreado->setHealth(1234);
 	this->mapa->pushEntity(edificioCreado);
 	this->newEntities.push_back(edificioCreado);
 
@@ -82,7 +80,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 
 	//Creo los personajes del cliente
 	xOrigin += width;
-	int villagerHealth = 500;
 	int villagerStrength = 4;
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
@@ -95,7 +92,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 															positionOfProtagonista.second,
 															gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"),
 															gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"));
-		protagonista->setHealth(villagerHealth);
 		protagonista->setStrength(villagerStrength);
 		protagonista->setPrecision(villagerPrecition);
 		protagonista->setOwner(owner);
@@ -203,10 +199,6 @@ EntidadPartida* Juego::getEntityById(int id){
 	return NULL;
 }
 
-/*ResourceManager* Juego::getResourceManager(){
-	return this->resourseManager;
-}*/
-
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);
 	if (positionOfCreated.first == -1) positionOfCreated = this->mapa->getAvailablePosition();
@@ -216,7 +208,6 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 														positionOfCreated.second,
 														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"),
 														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"));
-	dinamicEntity->setHealth(100);
 	dinamicEntity->setStrength(4);
 	dinamicEntity->setPrecision(0.5);
 	dinamicEntity->setOwner(owner);
@@ -237,7 +228,6 @@ void Juego::createKingForClient(string owner){
 												positionOfProtagonista.second,
 												gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"),
 												gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"));
-	king->setHealth(1000);
 	king->setStrength(0);
 	king->setPrecision(0);
 	king->setOwner(owner);
@@ -256,7 +246,6 @@ void Juego::createFlag(string owner){
 	EntidadPartida* flagEntity = new EntidadEstatica(name,width,height,true);
 	flagEntity->setPosition(position.first, position.second);
 	flagEntity->setOwner(owner);
-	flagEntity->setHealth(100);
 	this->mapa->pushEntity(flagEntity);
 	this->newEntities.push_back(flagEntity);
 }
@@ -310,9 +299,6 @@ void Juego::transferEntitiesToUser(string userFrom, string userTo){
 		if( it->second->getOwner() == userFrom ){
 			it->second->setOwner(userTo);
 			this->newEntities.push_back(it->second);
-			stringstream ss;
-			ss<< "Transfiriendo entidad "<< it->second->getId() << " name "<< it->second->getName() << " last owner "<< userFrom<< " new owner: "<< it->second->getOwner()<< " newowner " <<userTo;
-			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 		}
 	}
 	list<EntidadPartida*>* entities = this->mapa->getEntities();
@@ -320,9 +306,6 @@ void Juego::transferEntitiesToUser(string userFrom, string userTo){
 		if((*iterateEntities)->getOwner() == userFrom && (*iterateEntities)->getName()!="flag"){
 			(*iterateEntities)->setOwner(userTo);
 			this->newEntities.push_back((*iterateEntities));
-			stringstream ss;
-			ss<< "Transfiriendo entidad "<< (*iterateEntities)->getId() << " name "<< (*iterateEntities)->getName() << " last owner "<< userFrom<< " new owner: "<< (*iterateEntities)->getOwner()<< " newowner " <<userTo;
-			Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
 		}
 	}
 }

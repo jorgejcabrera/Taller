@@ -9,93 +9,111 @@ configuracion:
 tipos:
 - nombre: Church
   imagen: ../../Taller/Images/Industrial_Age/Church-3x3.png
+  health: 500
   ancho_base: 3
   alto_base: 3
 
 tipos:
 - nombre: AdvancedChurch
   imagen: ../../Taller/Images/Industrial_Age/Church-3x4.png
+  health: 500
   ancho_base: 3
   alto_base: 4
   tipos:
 
 - nombre: Factory
   imagen: ../../Taller/Images/Industrial_Age/Factory-4x4.png
+  health: 500
   ancho_base: 4
   alto_base: 4
 
 - nombre: Consulate
   imagen: ../../Taller/Images/Industrial_Age/Consulate-3x3.png
+  health: 500  
   ancho_base: 3
   alto_base: 3
 
 - nombre: Town_Hall
   imagen: ../../Taller/Images/Industrial_Age/Town_Hall-4x4.png
+  health: 500  
   ancho_base: 4
   alto_base: 4
 
 - nombre: Army
   imagen: ../../Taller/Images/Industrial_Age/Army-4x4.png
+  health: 500  
   ancho_base: 4
   alto_base: 4
 
 - nombre: Castle
   imagen: ../../Taller/Images/Industrial_Age/Castle-4x4.png
+  health: 500  
   ancho_base: 4
   alto_base: 4
 
 - nombre: Armory
   imagen: ../../Taller/Images/Industrial_Age/Armory-3x3.png
+  health: 500 
   ancho_base: 3
   alto_base: 3
 
 - nombre: Smithy
   imagen: ../../Taller/Images/Industrial_Age/Smithy-3x3.png
+  health: 500
   ancho_base: 3
   alto_base: 3
 
 - nombre: Barracks
   imagen: ../../Taller/Images/Industrial_Age/Barracks-3x3.png
+  health: 500  
   ancho_base: 3
   alto_base: 3
 
 - nombre: chori
   imagen: ../../Taller/Images/Resources/cow.png
+  health: 500  
   ancho_base: 1
   alto_base: 1
 
 - nombre: gold
   imagen: ../../Taller/Images/Resources/gold.png
+  health: 500  
   ancho_base: 1
   alto_base: 1
 
 - nombre: wood
   imagen: ../../Taller/Images/Resources/wood.png
+  health: 500  
   ancho_base: 1
   alto_base: 1
 
 - nombre: rock
   imagen: ../../Taller/Images/Resources/rock.png
+  health: 500  
   ancho_base: 1
   alto_base: 1
 
 - nombre: House1
   imagen: ../../Taller/Images/Industrial_Age/House1-2x2.png
+  health: 500  
   ancho_base: 2
   alto_base: 2
 
 - nombre: University
   imagen: ../../Taller/Images/Industrial_Age/University-3x3.png
+  health: 500  
   ancho_base: 3
   alto_base: 3
 
 - nombre: Market
   imagen: ../../Taller/Images/Industrial_Age/Market-3x4.png
+  health: 500  
   ancho_base: 3
   alto_base: 4
 
 - nombre: molino
   imagen: ../../Taller/Images/Industrial_Age/Molino.png
+  health: 500  
   ancho_base: 1
   alto_base: 1
   fps: 20
@@ -113,6 +131,7 @@ tipos:
 
 - nombre: aldeano
   imagen: ../../Taller/Images/Personajes/aldeano.png
+  health: 200 
   fps: 50
   total_frames_line: 14
   pixels_dimension: 70
@@ -121,6 +140,7 @@ tipos:
 
 - nombre: king
   imagen: ../../Taller/Images/Personajes/king.png
+  health: 200  
   fps: 50
   total_frames_line: 7
   pixels_dimension: 50
@@ -128,6 +148,7 @@ tipos:
   velocidad: 8
 
 - nombre: flag
+  health: 500  
   imagen: ../../Taller/Images/Flags/flag.png
   ancho_base: 1
   alto_base: 1

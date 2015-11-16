@@ -295,7 +295,6 @@ void Server::sendNewsResourses(){
 	for(list<Resource*>::iterator it = newsResources.begin(); it!=newsResources.end();++it){
 		//el recurso fue consumido por completo
 		if( (*it)->getHealth() <= 0 ){
-			//armamos el mensaje avanzamos el ptro y despues borramos el elemento
 			int entityToDelete = (*it)->getId();
 			++it;
 			this->gController->getJuego()->getMap()->deleteEntity(entityToDelete);

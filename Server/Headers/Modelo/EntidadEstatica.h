@@ -8,6 +8,7 @@
 #ifndef SOURCE_MODELO_ENTIDADESTATICA_H_
 #define SOURCE_MODELO_ENTIDADESTATICA_H_
 
+#include "GameSettings.h"
 #include "EntidadPartida.h"
 
 using namespace std;
