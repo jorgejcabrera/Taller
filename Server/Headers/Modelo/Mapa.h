@@ -30,7 +30,7 @@ private:
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
 	/*
-	* genera de recursos de manera ramdom
+	* genera recursos de manera ramdom
 	* */
 	void createResources();
 
@@ -45,10 +45,15 @@ public:
 	* */
 	pair<int,int> getAvailablePosition(int xFrom, int yFrom);
 	Tile* getTileAt(int x,int y);
+	/*
+	* devuelve una lista de novedades de recursos que sufrieron un cambio
+	* */
+	list<Resource> getNewsResources();
 	list<Resource*>* getResources();
-	map<pair<int,int>,Tile*>* getTiles();
 	list<EntidadPartida*>* getEntities();
+	map<pair<int,int>,Tile*>* getTiles();
 	void pushEntity(EntidadPartida* entidad);
+	void deleteEntity(int id);
 	bool positionAvailable(EntidadPartida* entidad);
 	~Mapa();
 };

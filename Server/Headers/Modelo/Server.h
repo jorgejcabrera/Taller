@@ -11,21 +11,21 @@
 #define ERROR -1
 #define OK 0
 
-#include <netinet/in.h>
-#include <iostream>
-#include <string.h>
-#include "../Utils/Socket/SocketUtils.h"
-#include "../Utils/Socket/SocketQueue.h"
-#include "../Utils/Socket/Message.h"
-#include "../Utils/Thread.h"
-#include "Client.h"
-#include <map>
 #include "GameSettings.h"
 #include "DefaultSettings.h"
 #include "EntidadPartida.h"
+#include "../Utils/Socket/SocketUtils.h"
+#include "../Utils/Socket/SocketQueue.h"
+#include "../Utils/Socket/Message.h"
 #include "../../Headers/Control/GameController.h"
+#include "../Utils/Thread.h"
+#include "Client.h"
+#include <netinet/in.h>
+#include <iostream>
+#include <string.h>
 #include <ctime>
 #include <list>
+#include <map>
 
 using namespace std;
 
@@ -61,8 +61,7 @@ private:
 	* */
 	void sendDinamicEntitesChanges();
 	void sendNewEntities();
-	void sendResoursesChanges();
-	void sendNewResourses();
+	void sendNewsResourses();
 	void sendFallenEntites();
 	void sendNewStaticEntites();
 

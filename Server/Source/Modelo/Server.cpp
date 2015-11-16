@@ -231,8 +231,8 @@ void Server::notifyClients(){
 	this->sendDinamicEntitesChanges();
 	this->sendFallenEntites();
 	this->sendNewEntities();
-	this->sendResoursesChanges();
-	this->sendNewResourses();
+	//this->sendResoursesChanges();
+	this->sendNewsResourses();
 	this->gController->getJuego()->cleanNewEntities();
 	this->pingMessage();
 }
@@ -274,35 +274,17 @@ void Server::sendNewEntities(){
 	}
 }
 
-void Server::sendResoursesChanges(){
-	/*ResourceManager* rm = this->gController->getJuego()->getResourceManager();
-	if(rm->hasToNotify()){
-		Message* resourceMessage = new Message(rm->getIdAEliminar(),"deleteResource");
-		rm->yaNotifique();
-		resourceMessage->setName(rm->getUltimoTipoConsumido());
-		resourceMessage->setOwner(rm->getUltimoEnConsumir());
-		list<Client*> activeClients= getActiveClients();
-		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
-			(*clientIterator)->writeMessagesInQueue(resourceMessage);
-		}
-	}*/
-}
+void Server::sendNewsResourses(){
+	list<Resource> newsResources = this->gController->getJuego()->getMap()->getNewsResources();
+	for(list<Resource>::iterator it = newsResources.begin(); it!=newsResources.end();++it){
+		//el recurso fue consumido por completo
+		if( (*it).getHealth() <= 0 ){
+			this->gController->getJuego()->getMap()->deleteEntity((*it).getId());
+		//el recurso es nuevo o sufrió algún cambio
+		}else{
 
-void Server::sendNewResourses(){
-	/*ResourceManager* rm = this->gController->getJuego()->getResourceManager();
-	if( rm->hasNewResource() ){
-		pair<int,int> pos = rm->getPosNuevoRecurso();
-		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource");
-		newResourceMessage->setPosition(pos);
-		rm->newResourceSent();
-		newResourceMessage->setName(rm->getUltimoTipoCreado());
-		newResourceMessage->setHealth(100);
-
-		list<Client*> activeClients= getActiveClients();
-		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-			(*clientIterator)->writeMessagesInQueue(newResourceMessage);
 		}
-	}*/
+	}
 }
 
 void Server::sendFallenEntites(){

@@ -28,7 +28,7 @@ private:
 	* */
 	map<int,EntidadDinamica*> protagonistas;
 	/*
-	* ?
+	* lista de entidades que deben ser notificadas porque sufrieron algún cambio
 	* */
 	list<EntidadPartida*> newEntities;
 	//ResourceManager* resourseManager;
@@ -67,7 +67,7 @@ public:
 	* Borro el personaje pasado por parametro, lo uso cuando el cliente de desconecto
 	* */
 	void deleteEntity(int id);
-	ResourceManager* getResourceManager();
+	//ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadPartida*>* getNewEntitiesToNotify();
 	void createNewEntitie(string owner,string type, int idOfCreator);

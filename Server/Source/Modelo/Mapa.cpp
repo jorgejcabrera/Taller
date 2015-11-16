@@ -49,15 +49,19 @@ void Mapa::createResources(){
 			Resource* newResource;
 			if( tipo == 1 ){
 				newResource = new Resource("gold",x,y,1000);
+				newResource->setNotifiable(true);
 			}
 			if( tipo == 2 ){
 				newResource = new Resource("food",x,y,1000);
+				newResource->setNotifiable(true);
 			}
 			if( tipo == 3 ){
 				newResource = new Resource("wood",x,y,1000);
+				newResource->setNotifiable(true);
 			}
 			if( tipo == 4 ){
 				newResource = new Resource("rock",x,y,1000);
+				newResource->setNotifiable(true);
 			}
 			this->resources.push_front(newResource);
 		}
@@ -67,6 +71,30 @@ void Mapa::createResources(){
 	}
 }
 
+list<Resource> Mapa::getNewsResources(){
+	list<Resource> news;
+	for(list<Resource*>::iterator it = this->resources.begin(); it != this->resources.end(); ++it){
+		if( (*it)->hasToNotify() ){
+			news.push_front(*(*it));
+		}
+	}
+	return news;
+}
+
+void Mapa::deleteEntity(int id){
+	for(list<Resource*>::iterator it = this->resources.begin() ; it!=this->resources.end();++it){
+		if( (*it)->getId() == id ){
+			this->resources.erase(it);
+			return;
+		}
+	}
+	for(list<EntidadPartida*>::iterator itEntity = this->entidades.begin(); itEntity!=this->entidades.end();++itEntity){
+		if( (*itEntity)->getId() == id ){
+			this->entidades.erase(itEntity);
+			return;
+		}
+	}
+}
 
 list<Resource*>* Mapa::getResources(){
 	return &this->resources;
