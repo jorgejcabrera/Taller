@@ -71,9 +71,9 @@ int EntidadPartida::getVisibilityRange() {
 	return this->visibilityRange;
 }
 
-/*void EntidadPartida::setHealth(int health){
+void EntidadPartida::setHealth(int health){
 	this->health = health;
-}*/
+}
 
 int EntidadPartida::getHealth(){
 	return this->health;
