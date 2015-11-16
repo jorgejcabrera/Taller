@@ -1,7 +1,7 @@
 # Taller
 Taller de Programacion - 2do cuatrimestre 2015
 
-El objetivo del trabajo práctico es la implementación de un juego de estrategia, similar al [***Age of Empires***](http://www.ageofempires.com/) :+1.
+El objetivo del trabajo práctico es la implementación de un juego de estrategia, similar al [***Age of Empires***](http://www.ageofempires.com/) :+1: .
 
 ###Librerías
 Para la interfaz gráfica usamos la librería [SDL](https://www.libsdl.org/download-2.0.php)
