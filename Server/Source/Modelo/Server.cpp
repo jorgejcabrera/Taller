@@ -174,15 +174,14 @@ bool Server::checkForExitMsg(Message* msg){
 }
 
 bool Server::checkForAttackMsg(Message* msg){
-	if( this->gameRunning && msg->getTipo() == "attack" ){
-		//int entityToUpd = msg->getId();
-		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
-		
-		//si la entidad ya tenia un target debe comenzar a atacar
+	EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());	
+	if( this->gameRunning && msg->getTipo() == "attack" ){		
+		//si la entidad ya tenia un target empieza a atacar
 		if( entityToUpd->getTarget() != 0 ){
 			Logger::get()->logDebug("Server","checkForAttackMsg","llega mensaje para comenzar a atacar");
 			entityToUpd->prepareToFigth(true);
 
+		//la entidad empieza a dirigirse a la posicion del target
 		}else{
 			int target = msg->getTarget();
 			pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
@@ -190,6 +189,15 @@ bool Server::checkForAttackMsg(Message* msg){
 			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
 			this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		}
+		return true;
+	
+	}else if( this->gameRunning && msg->getTipo() == "pursuit" ){
+		int target = msg->getTarget();
+		pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
+		this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
+		this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
+		this->idEntitiesUpdated.push_back(entityToUpd->getId());
+		entityToUpd->prepareToFigth(false);
 		return true;
 	}
 	return false;
@@ -511,7 +519,7 @@ void Server::sendColours(Client* client) {
 }
 
 Server::~Server() {
-	for(map<string,Client*>::iterator it=this->clients.begin(); it!=this->clients.end(); ++it){
+	for(map<string,Client*>::iterator it=this->clients.begin(); it != this->clients.end(); ++it){
 		it->second->~Client();
 	}
 	//this->gameSettings = NULL;

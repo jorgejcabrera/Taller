@@ -96,13 +96,17 @@ void GameController::pursuitAndAttackTarget(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0 ){
+			//si el target está vivo, pero no está cerca, entonces lo debemos perseguir
 			if( this->targetIsAlive(it->second) && !this->readyToAttack(it->second) ){
 				pair<int,int> targetPosition = this->juego->getEntityById(it->second->getTarget())->getPosition();
 				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
 			
+			//el target está vivo pero se escapo
 			}else if( this->targetIsAlive(it->second) && this->targetOutOfReach(it->second) ){
-				this->juego->getEntityById(it->second->getId())->setTarget(0);
+				it->second->setTarget(0);
+				it->second->prepareToFigth(false);
 
+			//atacamos
 			}else if( this->targetIsAlive(it->second) ){
 				EntidadPartida* enemy = this->juego->getEntityById(it->second->getTarget());
 				it->second->attackTo(enemy);

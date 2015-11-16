@@ -135,14 +135,16 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 
 list<EntidadPartida> Juego::getFallenEntities(){
 	list<EntidadPartida> fallenEntities;
+	//personajes eliminados
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
-		if(it->second->getHealth() <= 0 ){
+		if( it->second->getHealth() <= 0 ){
 			pair<int,int> position = it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
 			this->protagonistas.erase(it);
 		}
 	}
+	//edificios destruidos
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
 			this->enableTiles(*itBuilds);

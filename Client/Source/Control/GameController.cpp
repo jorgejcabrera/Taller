@@ -74,16 +74,34 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 
 void GameController::readyToAttack(list<Message*>* messages){
 	map<int, EntidadDinamicaVista*>* entities = this->juegoVista->getDinamicEntities();
+	int distanceBeetweenTiles = 50;
+
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
 		if( it->second->getTarget() != 0 ){
 			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget() );
+			//el target ya fue eliminado
 			if( target == NULL ){
 				it->second->setTarget(0);
 				it->second->prepareToFight(false);
 				return;
 			}
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
-			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) <= 50 && !it->second->isReadyToAttack() ){
+			
+			//el target se movio luego de que empezo la pelea, pero lo podemos alcanzar
+			if( this->utils->getDistance(it->second->getScreenPosition(), targetPosition) > distanceBeetweenTiles && it->second->isReadyToAttack()){
+				it->second->prepareToFight(false);
+				Message* message = new Message();
+				msg_game body;
+				body.set_id(it->second->getId());
+				body.set_tipo("pursuit");
+				body.set_target(target->getId());
+				message->setContent(body);
+				messages->push_back(message);
+				return;
+			}
+
+			//se envia por segunda vez el msj para que empieze a atacar cuando esta cerca del target
+			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) <= distanceBeetweenTiles && !it->second->isReadyToAttack() ){
 				Message* message = new Message();
 				msg_game body;
 				body.set_id(it->second->getId());
@@ -152,7 +170,6 @@ list<Message*> GameController::action() {
 	list<Message*> messages;
 	if (!this->idsEntitiesSelected.empty()) {
 		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		} else {
 			list<int>::iterator it = this->idsEntitiesSelected.begin();
@@ -164,18 +181,18 @@ list<Message*> GameController::action() {
 				//attack
 				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+						//mandamos por primera vez el msj para que el servidor setee el target
 						Message* message = new Message();
 						msg_game body;
 						body.set_id(*it);
 						body.set_tipo("attack");
 						body.set_target(atoi(targetToAttack["id"].c_str()));
 						message->setContent(body);
-						/*stringstream ss;
-						ss << "id :" << *it;
-						Logger::get()->logInfo("GC","attack",ss.str());*/
 						entity->setTarget(atoi(targetToAttack["id"].c_str()));
 						messages.push_back(message);
 					}
+				
+				//update
 				}else{
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
@@ -186,10 +203,6 @@ list<Message*> GameController::action() {
 						body.set_y(cartesianPosition.second);
 						body.set_target(0);
 						message->setContent(body);
-						/*stringstream ss;
-						ss << "id :" << *it;
-						Logger::get()->logInfo("GC","update",ss.str());*/
-
 						messages.push_back(message);
 					}
 				}
