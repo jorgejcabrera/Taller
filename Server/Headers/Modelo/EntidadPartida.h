@@ -71,7 +71,7 @@ public:
 	pair<int,int> getPosition();
 	void setTarget(int target);
 	void setPosition(int x,int y);
-	//void setHealth(int health);
+	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float presition);
 	void setTargetPosition(pair<int,int> position);
