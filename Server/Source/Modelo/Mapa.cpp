@@ -8,7 +8,7 @@
 #include "../../Headers/Modelo/Mapa.h"
 
 Mapa::Mapa() {
-	gameSettings = GameSettings::GetInstance();
+	this->gameSettings = GameSettings::GetInstance();
 	//barrido vertical del mapa
 	for(int i = 0; i < gameSettings->getMapHeight(); i++){
 		//barrido horizontal del mapa
@@ -29,18 +29,60 @@ Mapa::Mapa() {
 		int posY = (*it).first.second;
 		this->getTileAt(posX,posY)->setSuperficie((*it).second);
 	}
+
+	//creamos recursos de manera ramdom
+	this->createResources();
 }
+
+void Mapa::createResources(){
+	unsigned int maxResources = 10;
+	//genramos una posicion random
+	int height = this->gameSettings->getMapHeight();
+	int width = this->gameSettings->getMapWidth();
+	int x = rand() % width;
+	int y = rand() % height;
+	//generamos un tipo de recurso random
+	int tipo = ( rand() % 4 + 1);
+
+	while( this->resources.size() <= maxResources ){
+		if( this->tiles.at(make_pair(x,y))->isAvailable() ){
+			Resource* newResource;
+			if( tipo == 1 ){
+				newResource = new Resource("gold",x,y,1000);
+			}
+			if( tipo == 2 ){
+				newResource = new Resource("food",x,y,1000);
+			}
+			if( tipo == 3 ){
+				newResource = new Resource("wood",x,y,1000);
+			}
+			if( tipo == 4 ){
+				newResource = new Resource("rock",x,y,1000);
+			}
+			this->resources.push_front(newResource);
+		}
+		x = rand() % width;
+		y = rand() % height;
+		tipo = ( rand() % 4 + 1);
+	}
+}
+
+
+list<Resource*>* Mapa::getResources(){
+	return &this->resources;
+}
+
 
 void Mapa::pushEntity(EntidadPartida* entidad){
 	stringstream ss;
 	if(!this->positionAvailable(entidad)){
 		ss << entidad->getName() << " can't push entity in " << entidad->getPosition().first <<" "<< entidad->getPosition().second;
-		Logger::get()->logDebug("Mapa","pushEntity",ss.str());
+		Logger::get()->logError("Mapa","pushEntity",ss.str());
 		return;
 	}else{
 		pair<int,int> lowerVertex = make_pair(entidad->getPosition().first+ entidad->getWidth(), entidad->getPosition().second + entidad->getLength());
 		this->entidades.push_back(entidad);
-		//le cambiamos el estado a los tiles que ocupa
+		//le cambiamos el estado a los tiles que ocupa la entidad
 		for(int j=entidad->getPosition().second; j<lowerVertex.second; j++)
 			for(int i=entidad->getPosition().first; i<lowerVertex.first; i++){
 				this->tiles.at(make_pair(i,j))->changeStatusAvailable();

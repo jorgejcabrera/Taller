@@ -12,7 +12,7 @@ using namespace std;
 Juego::Juego() {
 	gameSettings = GameSettings::GetInstance();
 	this->mapa = new Mapa();
-	this->resourseManager = new ResourceManager(this->mapa);
+	//this->resourseManager = new ResourceManager(this->mapa);
 }
 
 pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
@@ -128,7 +128,7 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	EntidadDinamica* protagonistaToUpdate = this->protagonistas.at(idProtagonista);
 	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition().first,
 									  protagonistaToUpdate->getPosition().second,
-									  x,y,this->mapa,this->resourseManager);
+									  x,y,this->mapa/*,this->resourseManager*/);
 
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
@@ -139,14 +139,16 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 
 list<EntidadPartida> Juego::getFallenEntities(){
 	list<EntidadPartida> fallenEntities;
+	//personajes eliminados
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
-		if(it->second->getHealth() <= 0 ){
+		if( it->second->getHealth() <= 0 ){
 			pair<int,int> position = it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
 			this->protagonistas.erase(it);
 		}
 	}
+	//edificios destruidos
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
 			this->enableTiles(*itBuilds);
@@ -201,9 +203,9 @@ EntidadPartida* Juego::getEntityById(int id){
 	return NULL;
 }
 
-ResourceManager* Juego::getResourceManager(){
+/*ResourceManager* Juego::getResourceManager(){
 	return this->resourseManager;
-}
+}*/
 
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);

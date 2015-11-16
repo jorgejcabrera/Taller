@@ -32,11 +32,15 @@ private:
 	string ultimoEnConsumir;
 	string ultimoTipoConsumido;
 	string tipoUltimoCreado;
+
 public:
 	void collectResourceAt(pair<int,int>* pos);
 	ResourceManager(Mapa* map);
-	bool resourceAt(int x,int y);
-	void actualizar();
+	bool isResourceAt(int x,int y);
+	/*
+	* genera un recurso ramdom
+	* */
+	void getNewResource();
 	bool hasToNotify();
 	void yaNotifique();
 	bool hasNewResource();
