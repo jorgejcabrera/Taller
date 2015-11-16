@@ -149,6 +149,10 @@ void Server::processReceivedMessages(){
 			msgProcessed = this->checkForUpdMsg(messageUpdate);
 		}
 		if(!msgProcessed){
+			msgProcessed = this->checkForBuildingMsg(messageUpdate);
+		}
+
+		if(!msgProcessed){
 			stringstream ss;
 			ss << "No se que hacer con el mensaje : "<< messageUpdate->toString();
 			Logger::get()->logInfo("Server","processReceivedMessages",ss.str());
@@ -222,6 +226,18 @@ bool Server::checkForUpdMsg(Message* msg){
 		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
 		this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
 		this->idEntitiesUpdated.push_back(idUpdate);
+		return true;
+	}
+	return false;
+}
+
+bool Server::checkForBuildingMsg(Message* msg){
+	if( this->gameRunning && msg->getTipo() == "building" ){
+		int idUpdate = msg->getId();
+		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
+		int idEntity = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
+		//this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
+		//this->idEntitiesUpdated.push_back(idUpdate);
 		return true;
 	}
 	return false;

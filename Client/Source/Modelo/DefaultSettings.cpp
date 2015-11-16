@@ -266,6 +266,10 @@ map<string,int> DefaultSettings::getCostsOf(string type) {
 	}else if (type == "aldeano") {
 		returnMap["chori"] = 3;
 		returnMap["rock"] = 2;
+	}else if (type == "Castle") {
+		returnMap["chori"] = 10;
+		returnMap["rock"] = 10;
+		returnMap["gold"] = 10;
 	}
 	return returnMap;
 }

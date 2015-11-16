@@ -327,6 +327,18 @@ void Juego::transferEntitiesToUser(string userFrom, string userTo){
 	}
 }
 
+int Juego::buildEntity(string nameEntity, int positionX, int positionY, string owner){
+	int width = this->gameSettings->getConfigAttributeOfEntityAsInt(nameEntity, "ancho_base");
+	int height = this->gameSettings->getConfigAttributeOfEntityAsInt(nameEntity, "alto_base");
+	EntidadPartida* flagEntity = new EntidadEstatica(nameEntity,width,height,true);
+	flagEntity->setPosition(positionX, positionY);
+	flagEntity->setOwner(owner);
+	flagEntity->setHealth(100);
+	this->mapa->pushEntity(flagEntity);
+	this->newEntities.push_back(flagEntity);
+	return 0;
+}
+
 Juego::~Juego() {
 	for(map<int,EntidadDinamica*>::iterator it=this->protagonistas.begin(); it!=this->protagonistas.end(); ++it){
 			delete(it->second);

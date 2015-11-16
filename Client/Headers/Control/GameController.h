@@ -127,7 +127,14 @@ public:
 	* obtiene la posicion del mouse y devuelve las coordenadas cartecianas
 	* */
 	pair <int,int> convertMousePositionToCartesianPosition();
-
+	/*
+	 * controla si el cliente tiene los recursos disponibles para crear la entidad
+	 */
+	bool hasResourcesRequired(string entity);
+	/*
+	 * Decrementa los recursos necesarios para la entidad
+	 */
+	void decreaseResources(string entity);
 	virtual ~GameController();
 };
 
