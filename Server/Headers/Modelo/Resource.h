@@ -10,9 +10,9 @@
 
 #include "EntidadEstatica.h"
 
-class Resource: public EntidadEstatica {
+class Resource: public EntidadEstatica {	
 public:
-	Resource(string tipo,int x,int y,int health);
+	Resource(string tipo,int x,int y,int quantity);
 	virtual ~Resource();
 };
 

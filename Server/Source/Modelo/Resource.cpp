@@ -9,12 +9,12 @@
 
 using namespace std;
 
-Resource::Resource(string tipo,int x,int y,int health) {
+Resource::Resource(string tipo,int x,int y,int quantity) {
 	this->position.first = x;
 	this->position.second = y;
 	this->width = 1;
 	this->length = 1;
-	this->health = health;
+	this->health = quantity;
 	this->name = tipo;
 	//Aca estaban los path de los recursos, hay que crear vistaResource en el cliente y ponerlos ahi
 }

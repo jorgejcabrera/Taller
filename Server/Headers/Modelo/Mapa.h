@@ -15,6 +15,7 @@
 #include "DefaultSettings.h"
 #include "GameSettings.h"
 #include "../Control/UtilsController.h"
+#include "Resource.h"
 #include <iostream>
 #include <map>
 #include <list>
@@ -25,8 +26,13 @@ using namespace std;
 class Mapa {
 private:
 	list<EntidadPartida*> entidades;
+	list<Resource*> resources;
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
+	/*
+	* genera de recursos de manera ramdom
+	* */
+	void createResources();
 
 public:
 	Mapa();
@@ -39,6 +45,7 @@ public:
 	* */
 	pair<int,int> getAvailablePosition(int xFrom, int yFrom);
 	Tile* getTileAt(int x,int y);
+	list<Resource*>* getResources();
 	map<pair<int,int>,Tile*>* getTiles();
 	list<EntidadPartida*>* getEntities();
 	void pushEntity(EntidadPartida* entidad);
