@@ -12,7 +12,7 @@ using namespace std;
 Juego::Juego() {
 	gameSettings = GameSettings::GetInstance();
 	this->mapa = new Mapa();
-	this->resourseManager = new ResourceManager(this->mapa);
+	//this->resourseManager = new ResourceManager(this->mapa);
 }
 
 pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
@@ -128,7 +128,7 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	EntidadDinamica* protagonistaToUpdate = this->protagonistas.at(idProtagonista);
 	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition().first,
 									  protagonistaToUpdate->getPosition().second,
-									  x,y,this->mapa,this->resourseManager);
+									  x,y,this->mapa/*,this->resourseManager*/);
 
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
@@ -153,9 +153,6 @@ list<EntidadPartida> Juego::getFallenEntities(){
 		if( (*itBuilds)->getHealth() <= 0 ){
 			this->enableTiles(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
-			/*stringstream ss;
-			ss << "borramos la entidad " << (*itBuilds)->getTarget();
-			Logger::get()->logDebug("Juego","getFallenEntities",ss.str());*/
 			delete *itBuilds;
 			itBuilds = this->mapa->getEntities()->erase(itBuilds);
 		}else{
@@ -206,9 +203,9 @@ EntidadPartida* Juego::getEntityById(int id){
 	return NULL;
 }
 
-ResourceManager* Juego::getResourceManager(){
+/*ResourceManager* Juego::getResourceManager(){
 	return this->resourseManager;
-}
+}*/
 
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);

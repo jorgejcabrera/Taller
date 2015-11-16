@@ -275,7 +275,7 @@ void Server::sendNewEntities(){
 }
 
 void Server::sendResoursesChanges(){
-	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
+	/*ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if(rm->hasToNotify()){
 		Message* resourceMessage = new Message(rm->getIdAEliminar(),"deleteResource");
 		rm->yaNotifique();
@@ -285,11 +285,11 @@ void Server::sendResoursesChanges(){
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(resourceMessage);
 		}
-	}
+	}*/
 }
 
 void Server::sendNewResourses(){
-	ResourceManager* rm = this->gController->getJuego()->getResourceManager();
+	/*ResourceManager* rm = this->gController->getJuego()->getResourceManager();
 	if( rm->hasNewResource() ){
 		pair<int,int> pos = rm->getPosNuevoRecurso();
 		Message* newResourceMessage = new Message(rm->getIdNuevoRecurso(),"newResource");
@@ -302,7 +302,7 @@ void Server::sendNewResourses(){
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
 			(*clientIterator)->writeMessagesInQueue(newResourceMessage);
 		}
-	}
+	}*/
 }
 
 void Server::sendFallenEntites(){

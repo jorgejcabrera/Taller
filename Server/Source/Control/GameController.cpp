@@ -75,9 +75,9 @@ void GameController::setNextPaths(){
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
 		pair<int,int> pos = (*it).second->getPosition();
-		if( ! (*it).second->isWalking() && this->juego->getResourceManager()->resourceAt(pos.first,pos.second)){
-			this->juego->getResourceManager()->collectResourceAt(&pos);
-			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());
+		if( ! (*it).second->isWalking()/* && this->juego->getResourceManager()->isResourceAt(pos.first,pos.second)*/){
+			/*this->juego->getResourceManager()->collectResourceAt(&pos);
+			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());*/
 		}
 		
 		//pongo el tile anterior disponible
@@ -144,7 +144,7 @@ bool GameController::targetOutOfReach(EntidadDinamica* entity){
 void GameController::updateGame(){
 	this->pursuitAndAttackTarget();
 	this->setNextPaths();
-	this->juego->getResourceManager()->actualizar();
+	//this->juego->getResourceManager()->getNewResource();
 }
 
 int GameController::getRunCycles(){
