@@ -193,19 +193,6 @@ string DefaultSettings::getTypeEntity(const string &type){
 	return "";
 }
 
-list<string> DefaultSettings::getListOfAttributesCanSetByType(const string &type){
-	list<string> attributes;
-	attributes.push_back("imagen");
-	if(type == "edificios"){
-		attributes.push_back("ancho_base");
-		attributes.push_back("alto_base");
-	}else if (type == "personajes"){
-		attributes.push_back("fps");
-		attributes.push_back("delay");
-	}
-	return attributes;
-}
-
 bool DefaultSettings::isInList(list<string> listOfThings, const string &type){
 	return (std::find(listOfThings.begin(), listOfThings.end(), type) != listOfThings.end());
 }
