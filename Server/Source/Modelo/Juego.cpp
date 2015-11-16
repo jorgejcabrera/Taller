@@ -313,13 +313,13 @@ void Juego::transferEntitiesToUser(string userFrom, string userTo){
 int Juego::buildEntity(string nameEntity, int positionX, int positionY, string owner){
 	int width = this->gameSettings->getConfigAttributeOfEntityAsInt(nameEntity, "ancho_base");
 	int height = this->gameSettings->getConfigAttributeOfEntityAsInt(nameEntity, "alto_base");
-	EntidadPartida* flagEntity = new EntidadEstatica(nameEntity,width,height,true);
+	EntidadPartida* flagEntity = new EntidadEstatica(nameEntity,width,height,false);
 	flagEntity->setPosition(positionX, positionY);
 	flagEntity->setOwner(owner);
-	flagEntity->setHealth(100);
+	flagEntity->setHealth(1);
 	this->mapa->pushEntity(flagEntity);
 	this->newEntities.push_back(flagEntity);
-	return 0;
+	return flagEntity->getId();
 }
 
 Juego::~Juego() {
