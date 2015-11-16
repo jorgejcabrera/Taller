@@ -275,14 +275,18 @@ void Server::sendNewEntities(){
 }
 
 void Server::sendNewsResourses(){
-	list<Resource> newsResources = this->gController->getJuego()->getMap()->getNewsResources();
-	for(list<Resource>::iterator it = newsResources.begin(); it!=newsResources.end();++it){
+	list<Resource*> newsResources = this->gController->getJuego()->getMap()->getNewsResources();
+	for(list<Resource*>::iterator it = newsResources.begin(); it!=newsResources.end();++it){
 		//el recurso fue consumido por completo
-		if( (*it).getHealth() <= 0 ){
-			this->gController->getJuego()->getMap()->deleteEntity((*it).getId());
+		if( (*it)->getHealth() <= 0 ){
+			//armamos el mensaje avanzamos el ptro y despues borramos el elemento
+			int entityToDelete = (*it)->getId();
+			++it;
+			this->gController->getJuego()->getMap()->deleteEntity(entityToDelete);
+
 		//el recurso es nuevo o sufrió algún cambio
 		}else{
-
+			(*it)->setNotifiable(false);
 		}
 	}
 }

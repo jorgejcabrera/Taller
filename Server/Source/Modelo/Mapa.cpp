@@ -71,11 +71,11 @@ void Mapa::createResources(){
 	}
 }
 
-list<Resource> Mapa::getNewsResources(){
-	list<Resource> news;
+list<Resource*> Mapa::getNewsResources(){
+	list<Resource*> news;
 	for(list<Resource*>::iterator it = this->resources.begin(); it != this->resources.end(); ++it){
 		if( (*it)->hasToNotify() ){
-			news.push_front(*(*it));
+			news.push_front((*it));
 		}
 	}
 	return news;

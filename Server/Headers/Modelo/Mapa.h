@@ -48,7 +48,7 @@ public:
 	/*
 	* devuelve una lista de novedades de recursos que sufrieron un cambio
 	* */
-	list<Resource> getNewsResources();
+	list<Resource*> getNewsResources();
 	list<Resource*>* getResources();
 	list<EntidadPartida*>* getEntities();
 	map<pair<int,int>,Tile*>* getTiles();
