@@ -155,47 +155,11 @@ string GameSettings::getAgeOfEmpires(){
 	return DefaultSettings::getAgeOfEmpires();
 }
 
-string GameSettings::getTipoProtagonista(){
-	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
-}
-
-int GameSettings::getPosXProtagonista(){
-	return (this->POS_X_PROTAGONISTA > 0) ? this->POS_X_PROTAGONISTA : DefaultSettings::getPosXProtagonista();
-}
-int GameSettings::getPosYProtagonista(){
-	return (this->POS_Y_PROTAGONISTA > 0) ? this->POS_Y_PROTAGONISTA : DefaultSettings::getPosYProtagonista();
-}
-
-int GameSettings::getVelocidadPersonaje	(){
-	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
-}
-
-
 GameSettings* GameSettings::GetInstance() {
 	if (!instance) {
 		instance = new GameSettings();
 	}
 	return instance;
-}
-
-int GameSettings::getProtagonistaFPS(){
-	return this->FPS_PROTAGONISTA;
-}
-
-string GameSettings::getProtagonistaPath(){
-	return this->PATH_PROTAGONISTA;
-}
-
-int GameSettings::getProtagonistaFramesInFile(){
-	return this->FRAMES_IN_FILE_PROTAGONISTA;
-}
-
-int GameSettings::getProtagonistaDelay(){
-	return this->DELAY_PROTAGONISTA;
-}
-
-int GameSettings::getProtagonistaPixelDimension(){
-	return this->PIXEL_DIMENSION_PROTAGONISTA;
 }
 
 list<EntidadPartidaVista*> GameSettings::getEntidadesEstaticas(){

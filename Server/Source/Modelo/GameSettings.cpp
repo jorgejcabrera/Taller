@@ -52,14 +52,6 @@ string GameSettings::imagePathTilesByType(const string &object){
 	return DefaultSettings::imagePathTilesByType(object);
 }
 
-string GameSettings::getEntityType(){
-	return (TIPO_PROTAGONISTA != "") ? TIPO_PROTAGONISTA : DefaultSettings::getTipoProtagonista();
-}
-
-int GameSettings::getEntitySpeed(){
-	return (this->VELOCIDAD_PERSONAJE > 0) ? this->VELOCIDAD_PERSONAJE: DefaultSettings::getVelocidadPersonaje();
-}
-
 void GameSettings::createConfMessages(){
 	vector< map< string, string> > *listaDeTipos = loader->getTypes();
 	for(vector< map< string, string> >::iterator it=listaDeTipos->begin(); it!=listaDeTipos->end(); ++it){
@@ -101,7 +93,6 @@ void GameSettings::SetGameSettings(){
 	mapSI->clear();
 	// seteo conf
 	mapSI = loader->getConf();
-	this->VELOCIDAD_PERSONAJE = mapSI->operator []("vel_personaje");
 	this->LONG_MARGEN_SCROLL = mapSI->operator []("margen_scroll");
 	mapSI->clear();
 	//seteo escenario
@@ -110,45 +101,6 @@ void GameSettings::SetGameSettings(){
 	this->MAP_HEIGHT = atoi(mapSS->operator []("size_x").c_str());
 	this->MAP_WIDTH = atoi(mapSS->operator []("size_y").c_str());
 	mapSS->clear();
-	//seteo protagonista
-	mapSS = loader->getMainCharacter();
-	this->TIPO_PROTAGONISTA = mapSS->operator []("tipo");
-	this->POS_X_PROTAGONISTA = atoi(mapSS->operator []("x").c_str());
-	this->POS_Y_PROTAGONISTA = atoi(mapSS->operator []("y").c_str());
-	mapSS->clear();
-
-	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", this->TIPO_PROTAGONISTA);
-	int fps = atoi(this->getValueInMap(entidadObjeto, "fps").c_str());
-	if(fps>0){
-		this->FPS_PROTAGONISTA = fps;
-	}else{
-		this->FPS_PROTAGONISTA = 1;
-	}
-
-	int delay = atoi(this->getValueInMap(entidadObjeto, "delay").c_str());
-	this->DELAY_PROTAGONISTA = delay;
-
-	string imagen = this->getValueInMap(entidadObjeto, "imagen");
-	if(!(isFileExist(imagen))){
-		cout << "LOG.INFO : Uso la imagen por default porque no existe el file: " << imagen <<endl;
-		this->PATH_PROTAGONISTA = DefaultSettings::defaultImage();
-	}else{
-		this->PATH_PROTAGONISTA = imagen;
-	}
-
-	int total_frames_line = atoi(this->getValueInMap(entidadObjeto, "total_frames_line").c_str());
-	if(total_frames_line>0){
-		this->FRAMES_IN_FILE_PROTAGONISTA = total_frames_line;
-	}else{
-		this->FRAMES_IN_FILE_PROTAGONISTA = 7;
-	}
-
-	int pixels_dimension = atoi(this->getValueInMap(entidadObjeto, "pixels_dimension").c_str());
-	if(pixels_dimension>0){
-		this->PIXEL_DIMENSION_PROTAGONISTA = pixels_dimension;
-	}else{
-		this->PIXEL_DIMENSION_PROTAGONISTA = 50;
-	}
 
 	// los pongo en NULL para no borrar informacion del Loader
 	mapSI = NULL;
@@ -208,22 +160,16 @@ GameSettings* GameSettings::GetInstance() {
 	}
 }*/
 
-pair<int,int> GameSettings::getConfigDimensionOfEntity(string nombre){
+string GameSettings::getConfigAttributeOfEntityAsString(string nombre, string attribute){
 	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
-	int anchoBase = atoi(this->getValueInMap(entidadObjeto, "ancho_base").c_str());
-	int altoBase = atoi(this->getValueInMap(entidadObjeto, "alto_base").c_str());
-	pair<int,int> dimension = make_pair(anchoBase,altoBase);
-	return dimension;
+	return this->getValueInMap(entidadObjeto, attribute);
 }
 
-int GameSettings::getValueForAttributeOfEntity(string nombre, string attribute){
+int GameSettings::getConfigAttributeOfEntityAsInt(string nombre, string attribute){
 	map<string,string> entidadObjeto = this->getValueInVector(*(loader->getTypes()), "nombre", nombre);
 	return atoi(this->getValueInMap(entidadObjeto, attribute).c_str());
 }
 
-int GameSettings::getPixelDimension(){
-	return this->PIXEL_DIMENSION_PROTAGONISTA;
-}
 
 list<EntidadPartida*> GameSettings::getEntidadesEstaticas(){
 	return this->edificios;

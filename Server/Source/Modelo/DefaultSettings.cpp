@@ -12,7 +12,6 @@ const string DefaultSettings::IMAGE_BASE_PATH = "../../Taller/Images";
 const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
-const string DefaultSettings::TIPO_PROTAGONISTA = "soldado";
 const string DefaultSettings::NAME_OF_CIVIC_CENTER = "Barracks";
 
 DefaultSettings::DefaultSettings() {
@@ -170,7 +169,7 @@ string DefaultSettings::getTypeEntity(const string &type){
 	list<string> personajes;
 	personajes.push_back("soldado");
 	personajes.push_back("king");
-	personajes.push_back("villager");
+	personajes.push_back("aldeano");
 	if(isInList(personajes,type))
 		return "personajes";
 
@@ -232,20 +231,6 @@ string DefaultSettings::imagePathTilesByType(const string &object){
 			return IMAGE_BASE_PATH+"/"+IMAGE_TILES_PATH+"/"+object+".png";
 		}
 	return defaultImage();
-}
-
-string DefaultSettings::getTipoProtagonista(){
-	return TIPO_PROTAGONISTA;
-}
-int DefaultSettings::getPosXProtagonista(){
-	return POS_X_PROTAGONISTA;
-}
-int DefaultSettings::getPosYProtagonista(){
-	return POS_Y_PROTAGONISTA;
-}
-
-int DefaultSettings::getVelocidadPersonaje	(){
-	return VELOCIDAD_PERSONAJE;
 }
 
 int DefaultSettings::getRangeVisibility() {
