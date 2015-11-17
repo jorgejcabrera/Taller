@@ -154,9 +154,7 @@ void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,
 	pair<int,int> screenPosition = entidad->getScreenPosition();
 	entidad->trasladarse();
 	bool drawEntity = true;
-	//si hay una entidad para consumir la eliminamos
-	int id = this->consumeResource(entidad);
-	if( id != 0 ) this->deleteStaticEntityById(id);
+
 	if(!isMyEntity){
 		drawEntity = isEnemyEntityVisible(entidad->getPosition());
 	}
@@ -397,20 +395,6 @@ map<string,string> JuegoVista::getEntityAttributes(EntidadPartidaVista* entidad)
 	return mapInThisPosition;
 }
 
-
-void JuegoVista::deleteStaticEntityById(int id){
-	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
-	this->buildings.erase(itEstaticos);
-}
-
-void JuegoVista::deleteDinamicEntityById(int id){
-	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
-	if( itEnemy != this->personajes.end()){
-		this->personajes.erase(itEnemy);
-		return;		
-	}
-}
-
 void JuegoVista::deleteEntityById(int id){
 	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
 	if( itEnemy != this->personajes.end() ){
@@ -506,28 +490,6 @@ void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 	resources["oro"] = resourceCounter->getOro();
 	resources["roca"] = resourceCounter->getRoca();
 	this->menuVista->drawResources(resources);
-}
-
-void JuegoVista::addResourceToConsume(int idResourse){
-	map<int, EntidadEstaticaVista*>::iterator it = this->buildings.find(idResourse);
-	if( it != this->buildings.end() ){
-		pair<int,int> position = (*it).second->getPosition();
-		this->resoursesToConsume.insert(make_pair(make_pair(position.first,position.second),idResourse));
-		return;
-	}
-}
-
-int JuegoVista::consumeResource(EntidadDinamicaVista* entidad){
-	pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad->getPosition().first, entidad->getPosition().second);
-	map<pair<int,int>, int>::iterator it = this->resoursesToConsume.find(make_pair(entidad->getPosition().first,entidad->getPosition().second));
-	if( it != this->resoursesToConsume.end()){
-		if (isometricPosition.first == entidad->getScreenPosition().first && isometricPosition.second==entidad->getScreenPosition().second){
-			int id =(*it).second;
-			this->resoursesToConsume.erase(it);
-			return id;
-		}
-	}
-	return 0;
 }
 
 void JuegoVista::setColour(string owner,int iColour) {

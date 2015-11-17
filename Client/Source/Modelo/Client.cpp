@@ -133,13 +133,6 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "fog"){
 			this->gController->getJuegoVista()->setVisibleTile((*it)->getPositionX(),(*it)->getPositionY());
 
-		}else if (tipoMensaje == "deleteResource"){
-			this->gController->getJuegoVista()->addResourceToConsume((*it)->getId());
-			bool imTheOwner= ((*it)->getOwner() == this->userName);
-			if(imTheOwner){
-				this->resourceCounter->recolectar((*it)->getNombre());
-			}
-
 		}else if (tipoMensaje == "deleteEntity"){
 			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
 		
