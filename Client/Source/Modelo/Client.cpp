@@ -97,6 +97,7 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
 		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources" ){
+			//Logger::get()->logDebug("Client", "processReceivedMessages", (*it)->toString());
 			this->gController->getJuegoVista()->addStaticEntity((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),

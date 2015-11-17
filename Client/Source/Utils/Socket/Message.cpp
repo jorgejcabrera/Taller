@@ -44,6 +44,7 @@ string Message::toString(){
 	ss << " line: " << this->msg.total_frames_line();
 	ss << " dimension: " << this->msg.pixels_dimension();
 	ss << " owner: "<< this->msg.owner();
+	ss << " isCompleted: "<< this->msg.building();
 	return ss.str();
 }
 

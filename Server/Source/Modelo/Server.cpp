@@ -281,6 +281,8 @@ void Server::sendNewEntities(){
 		newEntity->setOwner((*it)->getOwner());
 		newEntity->setHealth((*it)->getHealth());
 		newEntity->setBuilding((*it)->isConstructionCompleted());
+		Logger::get()->logDebug("Server", "sendNewEntities", newEntity->toString());
+
 
 		list<Client*> activeClients = getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
