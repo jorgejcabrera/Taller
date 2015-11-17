@@ -51,6 +51,7 @@ public:
 	int getMapHeight();
 	int getRangeVisibility();
 	list<Message*> getConfMessages();
+	Message* getWindowMessage();
 	map<pair<int,int>,string> getTiles();
 	string imagePathBuildingsByTypeAndAge(const string &object,const string &age);
 	string imagePathPersonajesByType(const string &object);

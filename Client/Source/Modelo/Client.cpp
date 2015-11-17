@@ -97,6 +97,7 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
 		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources"){
+			Logger::get()->logDebug("Client","processReceivedmessages","llega msj para crear recurso");
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
@@ -144,6 +145,9 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
 		
 		}else if (tipoMensaje == "newResource"){
+			stringstream ss;
+			ss << "el cliente " << this->userName << " recibio un msj " << (*it)->getNombre()<< " "<<(*it)->getPositionX() << (*it)->getPositionY();
+			Logger::get()->logDebug("Client","processReceivedmessages",ss.str());
 			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),

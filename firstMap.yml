@@ -69,27 +69,27 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
-- nombre: chori
+- nombre: food
   imagen: ../../Taller/Images/Resources/cow.png
-  health: 500  
+  health: 1000  
   ancho_base: 1
   alto_base: 1
 
 - nombre: gold
   imagen: ../../Taller/Images/Resources/gold.png
-  health: 500  
+  health: 1000  
   ancho_base: 1
   alto_base: 1
 
 - nombre: wood
   imagen: ../../Taller/Images/Resources/wood.png
-  health: 500  
+  health: 1000  
   ancho_base: 1
   alto_base: 1
 
 - nombre: rock
   imagen: ../../Taller/Images/Resources/rock.png
-  health: 500  
+  health: 1000  
   ancho_base: 1
   alto_base: 1
 

@@ -76,6 +76,16 @@ void EntidadDinamica::setPathIsNew(bool isNew){
 	this->newPath = isNew;
 }
 
+Message* EntidadDinamica::getEntityMessage(){
+	Message* msg = new Message(this->id, DefaultSettings::getTypeEntity(this->name));
+	msg->setPosition(this->position);
+	msg->setOwner(this->owner);
+	msg->setHealth(this->health);
+	msg->setStrength(this->strength);
+	msg->setPrecision(this->precision);
+	return msg;
+}
+
 bool EntidadDinamica::pathIsNew(){
 	return this->pathIsNew();
 }

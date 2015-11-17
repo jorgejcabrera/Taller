@@ -43,30 +43,29 @@ void Mapa::createResources(){
 	int y = rand() % height;
 	//generamos un tipo de recurso random
 	int tipo = ( rand() % 4 + 1);
+	Resource* newResource = NULL;
 
-	while( this->resources.size() <= maxResources ){
+	while( this->resources.size() < maxResources ){
 		if( this->tiles.at(make_pair(x,y))->isAvailable() ){
-			Resource* newResource;
 			if( tipo == 1 ){
-				newResource = new Resource("gold",x,y,1000);
+				newResource = new Resource("gold",x,y);
 				newResource->setNotifiable(true);
 				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-			}
-			if( tipo == 2 ){
-				newResource = new Resource("food",x,y,1000);
+			
+			}else if( tipo == 2 ){
+				newResource = new Resource("food",x,y);
 				newResource->setNotifiable(true);
 				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-			}
-			if( tipo == 3 ){
-				newResource = new Resource("wood",x,y,1000);
+			
+			}else if( tipo == 3 ){
+				newResource = new Resource("wood",x,y);
 				newResource->setNotifiable(true);
 				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-			}
-			if( tipo == 4 ){
-				newResource = new Resource("rock",x,y,1000);
+			
+			}else if( tipo == 4 ){
+				newResource = new Resource("rock",x,y);
 				newResource->setNotifiable(true);
 				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-
 			}
 			this->resources.push_front(newResource);
 		}
@@ -76,12 +75,17 @@ void Mapa::createResources(){
 	}
 }
 
-list<Resource*> Mapa::getNewsResources(){
-	list<Resource*> news;
+list<Message*> Mapa::getResourcesMessages(){
+	list<Message*> news;
+	Message* msg = NULL;
 	for(list<Resource*>::iterator it = this->resources.begin(); it != this->resources.end(); ++it){
-		if( (*it)->hasToNotify() ){
-			news.push_front((*it));
-		}
+		Logger::get()->logDebug("Mapa","getNewsResources","agregamos un recurso para que sea notificado");
+		msg = new Message();
+		msg->setId((*it)->getId());
+		msg->setName((*it)->getName());
+		msg->setType("newResource");
+		msg->setPosition((*it)->getPosition());
+		news.push_front(msg);
 	}
 	return news;
 }

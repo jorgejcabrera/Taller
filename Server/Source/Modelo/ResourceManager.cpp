@@ -19,9 +19,9 @@ ResourceManager::ResourceManager(Mapa* map){
 
 	this->map = map;
 	this->resources = new list<Resource*>();
-	Resource* oro = new Resource("gold",14,16,10000);
-	Resource* chori = new Resource("food",0,20,10000);
-	Resource* madera = new Resource("wood",20,15,10000);
+	Resource* oro = new Resource("gold",14,16);
+	Resource* chori = new Resource("food",0,20);
+	Resource* madera = new Resource("wood",20,15);
 
 	this->resources->push_front(oro);
 	this->map->pushEntity(oro);
@@ -87,19 +87,19 @@ void ResourceManager::getNewResource(){
 	if(this->map->getTileAt(x,y)->isAvailable() && nRandom == 0 && this->resources->size() < maxResources){
 		Resource* nuevoRecurso;
 		if(tipo == 1){
-			nuevoRecurso = new Resource("gold",x,y,100);
+			nuevoRecurso = new Resource("gold",x,y);
 			this->tipoUltimoCreado = "gold";
 		}
 		if(tipo == 2){
-			nuevoRecurso = new Resource("chori",x,y,100);
+			nuevoRecurso = new Resource("chori",x,y);
 			this->tipoUltimoCreado = "chori";
 		}
 		if(tipo == 3){
-			nuevoRecurso = new Resource("wood",x,y,100);
+			nuevoRecurso = new Resource("wood",x,y);
 			this->tipoUltimoCreado = "wood";
 		}
 		if(tipo == 4){
-			nuevoRecurso = new Resource("rock",x,y,100);
+			nuevoRecurso = new Resource("rock",x,y);
 			this->tipoUltimoCreado = "rock";
 		}
 
