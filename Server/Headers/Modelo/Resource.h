@@ -10,9 +10,13 @@
 
 #include "EntidadEstatica.h"
 
-class Resource: public EntidadEstatica {	
+class Resource: public EntidadEstatica {
+private:
+	int beforeQuantity;
 public:
 	Resource(string tipo,int x,int y);
+	void takeDamage(int damage, string attarckerId);
+	int getAmountCollected();
 	virtual ~Resource();
 };
 

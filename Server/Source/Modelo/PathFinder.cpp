@@ -7,7 +7,7 @@
 
 #include "../../Headers/Modelo/PathFinder.h"
 
-PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap/*,ResourceManager* rm*/) {
+PathFinder::PathFinder(int x,int y,int dX,int dY,Mapa* unMap) {
 	gameSettings = GameSettings::GetInstance();
 	this->map = unMap;
 

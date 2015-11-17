@@ -12,7 +12,6 @@
 #include <iostream>
 #include "Mapa.h"
 #include "../Modelo/GameSettings.h"
-#include "../Modelo/ResourceManager.h"
 
 using namespace std;
 
