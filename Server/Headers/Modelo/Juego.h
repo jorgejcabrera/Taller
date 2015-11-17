@@ -92,6 +92,10 @@ public:
 	* Dados dos usuarios traspasa todas las entidades del ownerFrom al ownerTo y lo agrega en la lista newEntities para que se notifiquen
 	* */
 	void transferEntitiesToUser(string userFrom, string userTo);
+	/*
+	 * construye un edificio
+	 */
+	int buildEntity(string nameEntity, int positionX, int positionY, string owner);
 	virtual ~Juego();
 };
 

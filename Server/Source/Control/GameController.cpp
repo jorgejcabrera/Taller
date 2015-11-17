@@ -92,24 +92,31 @@ void GameController::setNextPaths(){
 	}
 }
 
-void GameController::pursuitAndAttackTarget(){
+void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
+	//si el target está vivo, pero no está cerca, entonces lo debemos perseguir
+	if(!this->readyToAttack(attacker) ){
+		pair<int,int> targetPosition = this->juego->getEntityById(attacker->getTarget())->getPosition();
+		this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
+	//el target está vivo pero se escapo
+	}else if( this->targetOutOfReach(attacker) ){
+		attacker->setTarget(0);
+		attacker->prepareToFigth(false);
+	//atacamos
+	}else{
+		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
+		attacker->attackTo(enemy);
+	}
+}
+
+void GameController::interactWithTargets(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0 ){
-			//si el target está vivo, pero no está cerca, entonces lo debemos perseguir
-			if( this->targetIsAlive(it->second) && !this->readyToAttack(it->second) ){
-				pair<int,int> targetPosition = this->juego->getEntityById(it->second->getTarget())->getPosition();
-				this->juego->setPlaceToGo(it->second->getId(),targetPosition.first, targetPosition.second);
-			
-			//el target está vivo pero se escapo
-			}else if( this->targetIsAlive(it->second) && this->targetOutOfReach(it->second) ){
-				it->second->setTarget(0);
-				it->second->prepareToFigth(false);
-
-			//atacamos
-			}else if( this->targetIsAlive(it->second) ){
-				EntidadPartida* enemy = this->juego->getEntityById(it->second->getTarget());
-				it->second->attackTo(enemy);
+			if( this->targetIsAlive(it->second) ){
+				//ME fijo que el objetivo no sea mio, en caso de ser mio tengo que construirlo, no atacarlo
+				if( this->juego->getEntityById(it->second->getTarget())->getOwner() != it->second->getOwner()){
+					this->pursuitAndAttackTarget(it->second);
+				}
 			}
 		}
 	}
@@ -142,7 +149,7 @@ bool GameController::targetOutOfReach(EntidadDinamica* entity){
 }
 
 void GameController::updateGame(){
-	this->pursuitAndAttackTarget();
+	this->interactWithTargets();
 	this->setNextPaths();
 	//this->juego->getResourceManager()->getNewResource();
 }

@@ -39,7 +39,7 @@ private:
 	/*
 	* si las entidades tiene algun target, y éste se movió, se debe perseguirlo
 	* */
-	void pursuitAndAttackTarget();
+	void pursuitAndAttackTarget(EntidadDinamica* attacker);
 	/*
 	* indica si la entidad pasada como parámetro está a la distancia necesaria del target para poder atacar
 	* */
@@ -52,6 +52,10 @@ private:
 	* devuelve true si el target aún está presente en el mapa
 	* */
 	bool targetIsAlive(EntidadDinamica* entidad);
+	/*
+	* si las entidades tiene algun target, interactuan con el, ya sea atacandolo o construyendolo
+	* */
+	void interactWithTargets();
 
 public:
 	GameController();

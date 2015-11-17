@@ -199,6 +199,8 @@ list<Message*> GameController::action() {
 			body.set_owner(this->clientName);
 			message->setContent(body);
 			messages.push_back(message);
+			//gasto los recursos
+			this->decreaseResources(this->entityToBuild);
 			ss << " mensaje: "<< message->toString();
 			Logger::get()->logDebug("GameController","action",ss.str());
 			this->entityToBuild = "";
@@ -389,34 +391,46 @@ void GameController::showFinalMessage(){
 list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialPosMouseY) {
 	list<Message*> messages;
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
-	if (buildingAndEntitie.second == "Castle") {
-		Logger::get()->logDebug("GameController","interactiveMenu","Construir un castillo");
-		this->entityToBuild = buildingAndEntitie.second;
-		this->juegoVista->setEntityForBuild(this->entityToBuild);
-	}else if (buildingAndEntitie.second != "") {
-		ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
-		map<string,int> costs = this->gameSettings->getCostsOf(buildingAndEntitie.second);
-		if (	costs["chori"] <= resourceCounter->getAlimento() &&
-				costs["rock"] <= resourceCounter->getRoca() &&
-				costs["gold"] <= resourceCounter->getOro() &&
-				costs["wood"] <= resourceCounter->getMadera() ) {
-			//gasto los recursos
-			for (map<string,int>::iterator it = costs.begin(); it != costs.end(); ++it){
-				for (int resource = (*it).second; resource!=0 ; resource --) {
-					resourceCounter->gastar((*it).first);
-				}
+	if (buildingAndEntitie.second != "") {
+		if (this->hasResourcesRequired(buildingAndEntitie.second)) {
+			if( buildingAndEntitie.second == "Castle" ){
+				this->entityToBuild = buildingAndEntitie.second;
+				this->juegoVista->setEntityForBuild(this->entityToBuild);
+			}else{
+				//gasto los recursos
+				this->decreaseResources(buildingAndEntitie.second);
+				Message* message = new Message();
+				msg_game body;
+				body.set_id(buildingAndEntitie.first);
+				body.set_tipo("create");
+				body.set_nombre(buildingAndEntitie.second);
+				message->setContent(body);
+				message->setOwner(this->clientName);
+				messages.push_back(message);
 			}
-			Message* message = new Message();
-			msg_game body;
-			body.set_id(buildingAndEntitie.first);
-			body.set_tipo("create");
-			body.set_nombre(buildingAndEntitie.second);
-			message->setContent(body);
-			message->setOwner(this->clientName);
-			messages.push_back(message);
 		}
 	}
 	return messages;
+}
+
+bool GameController::hasResourcesRequired(string entity){
+	ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
+	map<string,int> costs = this->gameSettings->getCostsOf(entity);
+	bool hasResources = (costs["chori"] <= resourceCounter->getAlimento() &&
+					costs["rock"] <= resourceCounter->getRoca() &&
+					costs["gold"] <= resourceCounter->getOro() &&
+					costs["wood"] <= resourceCounter->getMadera());
+	return hasResources;
+}
+
+void GameController::decreaseResources(string entity){
+	ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
+	map<string,int> costs = this->gameSettings->getCostsOf(entity);
+	for (map<string,int>::iterator it = costs.begin(); it != costs.end(); ++it){
+		for (int resource = (*it).second; resource!=0 ; resource --) {
+			resourceCounter->gastar((*it).first);
+		}
+	}
 }
 
 void GameController::placeTheBuilding(string buildingName){

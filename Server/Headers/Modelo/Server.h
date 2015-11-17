@@ -56,6 +56,7 @@ private:
 	bool checkForAttackMsg(Message* msg);
 	bool checkForCreateMsg(Message* msg);
 	bool checkForUpdMsg(Message* msg);
+	bool checkForBuildingMsg(Message* msg);
 	/*
 	* Envían msg a los clientes activos, sobre las novedades de las entidades de la partida
 	* */
