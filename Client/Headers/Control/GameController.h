@@ -117,11 +117,10 @@ public:
 	void placeTheBuilding(string buildingName);
 
 	/*
-	 * selecciona las entidades dentro de un recuadro "dibujado" por el mouse
-	 *TODO ver si se puede dibujar el recuadro, de todos modos en el enunciado dice que el recuadro se "dibuja"
+	 * selecciona una o varias entidades
 	 */
-	void selectBox();
-	void individualSelection();
+	void selection();
+
 	list<Message*> action();
 	/*
 	* obtiene la posicion del mouse y devuelve las coordenadas cartecianas
