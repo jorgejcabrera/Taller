@@ -47,7 +47,7 @@ tipos:
 
 - nombre: Castle
   imagen: ../../Taller/Images/Industrial_Age/Castle-4x4.png
-  health: 500  
+  health: 1000
   ancho_base: 4
   alto_base: 4
 
@@ -128,6 +128,7 @@ tipos:
   pixels_dimension: 50
   delay: 0
   velocidad: 10
+  builder_effort: 0
 
 - nombre: aldeano
   imagen: ../../Taller/Images/Personajes/aldeano.png
@@ -137,6 +138,7 @@ tipos:
   pixels_dimension: 70
   delay: 0
   velocidad: 10
+  builder_effort: 1
 
 - nombre: king
   imagen: ../../Taller/Images/Personajes/king.png
@@ -146,6 +148,7 @@ tipos:
   pixels_dimension: 50
   delay: 0
   velocidad: 8
+  builder_effort: 0
 
 - nombre: flag
   health: 500  

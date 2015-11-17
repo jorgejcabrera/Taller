@@ -38,7 +38,7 @@ private:
 	/*
 	* necesario para sincronizar la parte visual en el cliente con la parte logica en el server
 	* */
-	bool readyToAttack;
+	bool readyToInteract;
 	int ciclos;
 	int cicloActual;
 	/*
@@ -66,10 +66,14 @@ public:
 	* */
 	void setPathIsNew(bool esNuevo);
 	void setPath(list<pair<int,int> >* camino);
-	void prepareToFigth(bool value);
-	bool isReadyToAttack();
+	void prepareToInteract(bool value);
+	bool isReadyToInteract();
 	bool isWalking();
 	bool pathIsNew();
+	/*
+	* aumenta la salud del edicicio
+	* */
+	void construct(EntidadPartida* entity);
 	virtual ~EntidadDinamica();
 };
 

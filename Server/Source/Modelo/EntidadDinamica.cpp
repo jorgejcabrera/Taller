@@ -22,7 +22,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float
 	this->ciclos = (DefaultSettings::getTileSize() / vel) + 3;
 	this->cicloActual = 0;
 	this->newPath = false;
-	this->readyToAttack = false;
+	this->readyToInteract = false;
 	this->health = health;
 	this->maxHealth = GameSettings::GetInstance()->getConfigAttributeOfEntityAsInt(nameEntity, "health");
 	this->health = this->maxHealth;
@@ -55,12 +55,16 @@ void EntidadDinamica::attackTo(EntidadPartida* entity){
 	entity->takeDamage(this->getDamage(), this->getOwner());
 }
 
-bool EntidadDinamica::isReadyToAttack(){
-	return this->readyToAttack;
+void EntidadDinamica::construct(EntidadPartida* entity){
+	entity->takeBuilderEffort(this->builderEffort);
 }
 
-void EntidadDinamica::prepareToFigth(bool value){
-	this->readyToAttack = value;
+bool EntidadDinamica::isReadyToInteract(){
+	return this->readyToInteract;
+}
+
+void EntidadDinamica::prepareToInteract(bool value){
+	this->readyToInteract = value;
 }
 
 list<pair<int,int> >* EntidadDinamica::getPath(){

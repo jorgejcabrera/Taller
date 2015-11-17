@@ -16,6 +16,7 @@ EntidadPartida::EntidadPartida() {
 	this->target = 0;
 	this->targetPosition = make_pair(0,0);
 	this->attacker = "";
+	this->builderEffort = 0;
 }
 
 int EntidadPartida::getId(){
@@ -87,6 +88,10 @@ int EntidadPartida::getStrength(){
 	return this->strength;
 }
 
+void EntidadPartida::setBuilderEffort(int effort){
+	this->builderEffort = effort;
+}
+
 void EntidadPartida::setPrecision(float precision){
 	this->precision = precision;
 }
@@ -112,6 +117,10 @@ void EntidadPartida::takeDamage(int damage, string userAttarcker){
 	this->attacker = userAttarcker;
 }
 
+void EntidadPartida::takeBuilderEffort(int effort){
+	this->health += effort;
+}
+
 void EntidadPartida::setOwner(string ownerId){
 	this->owner = ownerId;
 }
@@ -134,6 +143,10 @@ string EntidadPartida::getAttacker(){
 
 void EntidadPartida::setAttacker(int attackerId){
 	 this->attacker = attackerId;
+}
+
+bool EntidadPartida::isMaxHealth(){
+	return (this->health == this->maxHealth);
 }
 
 EntidadPartida::~EntidadPartida() {

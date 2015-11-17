@@ -42,6 +42,7 @@ protected:
 	int maxHealth;
 	int strength;
 	float precision;
+	int builderEffort;
 	/*
 	* id de la entidad con la que se va a interactuar, por ejemplo a atacar
 	* */
@@ -74,6 +75,7 @@ public:
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float presition);
+	void setBuilderEffort(int effort);
 	void setTargetPosition(pair<int,int> position);
 	void setName(string name);
 	void setVisibilityRange(int range);
@@ -83,6 +85,10 @@ public:
 	* la entidad recibe el daño provocado y el userName dueño del atacante y descuenta salud
 	* */
 	void takeDamage(int damage, string attarckerId);
+	/*
+	* la entidad recibe el efuerzo aplicado a la construccion
+	* */
+	void takeBuilderEffort(int effort);
 	/*
 	* si la entidad sufrio algun cambio debe ser notificado
 	* */
@@ -95,6 +101,10 @@ public:
 	* seteo el id del atacante
 	* */
 	void setAttacker(int attackerId);
+	/*
+	* analiza si la salud esta al maximo
+	* */
+	bool isMaxHealth();
 	virtual ~EntidadPartida();
 };
 

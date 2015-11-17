@@ -94,13 +94,13 @@ void GameController::setNextPaths(){
 
 void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	//si el target está vivo, pero no está cerca, entonces lo debemos perseguir
-	if(!this->readyToAttack(attacker) ){
+	if(!this->readyToInteract(attacker) ){
 		pair<int,int> targetPosition = this->juego->getEntityById(attacker->getTarget())->getPosition();
 		this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
 	//el target está vivo pero se escapo
 	}else if( this->targetOutOfReach(attacker) ){
 		attacker->setTarget(0);
-		attacker->prepareToFigth(false);
+		attacker->prepareToInteract(false);
 	//atacamos
 	}else{
 		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
@@ -108,23 +108,43 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	}
 }
 
+void GameController::buildTarget(EntidadDinamica* builder){
+	//si el target no está cerca, entonces me tengo que acercar
+	if(!this->readyToInteract(builder) ){
+		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
+		pair<int,int> targetPosition = building->getPosition();
+		this->juego->setPlaceToGo(builder->getId(),targetPosition.first, targetPosition.second);
+		//Logger::get()->logDebug("GameController","buildTarget","No estoy listo, me muevo cerca");
+	//el target ya esta construido en su totalidad
+	}else if( this->targetCompleted(builder) ){
+		builder->setTarget(0);
+		builder->prepareToInteract(false);
+		//Logger::get()->logDebug("GameController","buildTarget","YA esta listo el edifico");
+	//construimos
+	}else{
+		//Logger::get()->logDebug("GameController","buildTarget","Estoy construyendo");
+		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
+		builder->construct(building);
+	}
+}
+
 void GameController::interactWithTargets(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
-		if( it->second->getTarget() != 0 ){
-			if( this->targetIsAlive(it->second) ){
+		if( it->second->getTarget() != 0 && this->targetIsAlive(it->second) ){
 				//ME fijo que el objetivo no sea mio, en caso de ser mio tengo que construirlo, no atacarlo
 				if( this->juego->getEntityById(it->second->getTarget())->getOwner() != it->second->getOwner()){
 					this->pursuitAndAttackTarget(it->second);
+				}else{
+					this->buildTarget(it->second);
 				}
-			}
 		}
 	}
 }
 
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1
-bool GameController::readyToAttack(EntidadDinamica* entity){
-	if( entity->isReadyToAttack() ){
+bool GameController::readyToInteract(EntidadDinamica* entity){
+	if( entity->isReadyToInteract() ){
 		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
 		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
 	}else{
@@ -137,7 +157,7 @@ bool GameController::targetIsAlive(EntidadDinamica* entity){
 	if(!targetEntity){
 		entity->setTarget(0);
 		entity->setTargetPosition(make_pair(0,0));
-		entity->prepareToFigth(false);
+		entity->prepareToInteract(false);
 		return false;
 	}
 	return true;
@@ -146,6 +166,10 @@ bool GameController::targetIsAlive(EntidadDinamica* entity){
 bool GameController::targetOutOfReach(EntidadDinamica* entity){
 	pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
 	return UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) >= 10;
+}
+
+bool GameController::targetCompleted(EntidadDinamica* entity){
+	return this->juego->getEntityById(entity->getTarget())->isMaxHealth();
 }
 
 void GameController::updateGame(){

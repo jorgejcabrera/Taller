@@ -43,11 +43,15 @@ private:
 	/*
 	* indica si la entidad pasada como parámetro está a la distancia necesaria del target para poder atacar
 	* */
-	bool readyToAttack(EntidadDinamica* entidad);
+	bool readyToInteract(EntidadDinamica* entidad);
 	/*
 	* si el objetivo está demasiado lejos, ya no los podemos seguir
 	* */
 	bool targetOutOfReach(EntidadDinamica* entidad);
+	/*
+	* El target ya esta construido en totalidad
+	* */
+	bool targetCompleted(EntidadDinamica* entity);
 	/*
 	* devuelve true si el target aún está presente en el mapa
 	* */
@@ -56,6 +60,10 @@ private:
 	* si las entidades tiene algun target, interactuan con el, ya sea atacandolo o construyendolo
 	* */
 	void interactWithTargets();
+	/*
+	* La entidad construye el objetivo que tiene seteado
+	* */
+	void buildTarget(EntidadDinamica* builder);
 
 public:
 	GameController();

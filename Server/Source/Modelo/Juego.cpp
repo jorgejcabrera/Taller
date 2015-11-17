@@ -96,6 +96,7 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 		protagonista->setPrecision(villagerPrecition);
 		protagonista->setOwner(owner);
 		protagonista->setVisibilityRange(gameSettings->getRangeVisibility());
+		protagonista->setBuilderEffort(gameSettings->getConfigAttributeOfEntityAsInt(name, "builder_effort"));
 		protagonista->setNotifiable(true);
 		this->protagonistas.insert(make_pair(protagonista->getId(),protagonista));
 		this->mapa->getTileAt(positionOfProtagonista.first,positionOfProtagonista.second)->changeStatusAvailable();
@@ -232,6 +233,7 @@ void Juego::createKingForClient(string owner){
 	king->setPrecision(0);
 	king->setOwner(owner);
 	king->setVisibilityRange(gameSettings->getRangeVisibility());
+	king->setBuilderEffort(gameSettings->getConfigAttributeOfEntityAsInt(name, "builder_effort"));
 	this->protagonistas.insert(make_pair(king->getId(),king));
 	this->mapa->getTileAt(positionOfProtagonista.first,positionOfProtagonista.second)->changeStatusAvailable();
 	this->newEntities.push_back(king);

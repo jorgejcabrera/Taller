@@ -188,7 +188,7 @@ bool Server::checkForAttackMsg(Message* msg){
 		//si la entidad ya tenia un target empieza a atacar
 		if( entityToUpd->getTarget() != 0 ){
 			Logger::get()->logDebug("Server","checkForAttackMsg","llega mensaje para consumir recurso");
-			entityToUpd->prepareToFigth(true);
+			entityToUpd->prepareToInteract(true);
 
 		//la entidad empieza a dirigirse a la posicion del target
 		}else{
@@ -206,17 +206,17 @@ bool Server::checkForAttackMsg(Message* msg){
 		this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
 		this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
 		this->idEntitiesUpdated.push_back(entityToUpd->getId());
-		entityToUpd->prepareToFigth(false);
+		entityToUpd->prepareToInteract(false);
 		return true;
 	}
 	return false;
 }
 
 bool Server::checkForCreateMsg(Message* msg){
-	 if( this->gameRunning && msg->getTipo() == "create" ){
+	if( this->gameRunning && msg->getTipo() == "create" ){
 		this->gController->getJuego()->createNewEntitie(msg->getOwner(),msg->getName(), msg->getId());
 		return true;
-	 }
+	}
 	return false;
 }
 
@@ -233,14 +233,14 @@ bool Server::checkForUpdMsg(Message* msg){
 
 bool Server::checkForBuildingMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "building" ){
-		int idUpdate = msg->getId();
+		int idBuilder = msg->getId();
 		int x = msg->getPositionX() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "ancho_base");
 		int y = msg->getPositionY() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "alto_base");
-
-		this->gController->getJuego()->setPlaceToGo(idUpdate, x, y);
+		this->gController->getJuego()->setPlaceToGo(idBuilder, x, y);
 		int idEntity = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
-		//this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
-		//this->idEntitiesUpdated.push_back(idUpdate);
+		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
+		entityToUpd->prepareToInteract(true);
+		entityToUpd->setTarget(idEntity);
 		return true;
 	}
 	return false;
