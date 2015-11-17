@@ -173,7 +173,6 @@ bool Server::checkForExitMsg(Message* msg){
 
 bool Server::checkForAttackMsg(Message* msg){
 	EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());	
-	Logger::get()->logDebug("Server","checkForAttackMsg","me llega un mensaje para atacar");
 	if( this->gameRunning && msg->getTipo() == "attack" ){		
 		//si la entidad ya tenia un target empieza a atacar
 		if( entityToUpd->getTarget() != 0 ){

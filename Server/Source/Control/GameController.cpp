@@ -151,7 +151,6 @@ bool GameController::targetOutOfReach(EntidadDinamica* entity){
 void GameController::updateGame(){
 	this->interactWithTargets();
 	this->setNextPaths();
-	//this->juego->getResourceManager()->getNewResource();
 }
 
 int GameController::getRunCycles(){

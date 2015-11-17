@@ -96,7 +96,6 @@ void GameController::readyToAttack(list<Message*>* messages){
 				it->second->prepareToFight(false);
 				return;
 			}
-			Logger::get()->logDebug("GameController","readyToAttack","encontramos el target");
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
 			
 			//el target se movio luego de que empezo la pelea, pero lo podemos alcanzar
@@ -179,14 +178,14 @@ void GameController::individualSelection() {
 }
 
 //TODO este método es un asco lleno de else if sin sentido, lo tenemos que refactorizar
-list<Message*> GameController::action() {
+list<Message*> GameController::action(){
 	list<Message*> messages;
 	if (!this->idsEntitiesSelected.empty()) {
 		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		
-		}else if(this->entityToBuild != ""){
+		}else if( this->entityToBuild != ""){
 			this->juegoVista->clearAllDataForBuilding();
 			stringstream ss;
 			ss << "click DERECHO, construyo en " << finalPosMouseX << " " << finalPosMouseY;
@@ -208,7 +207,7 @@ list<Message*> GameController::action() {
 		}else{
 			list<int>::iterator it = this->idsEntitiesSelected.begin();
 			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
-			if (entity != NULL) {
+			if ( entity != NULL ){
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 				Logger::get()->logDebug("GameController","action","seleccionamos un target");
