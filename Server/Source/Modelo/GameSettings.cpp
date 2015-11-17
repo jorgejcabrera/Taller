@@ -82,6 +82,15 @@ list<Message*> GameSettings::getConfMessages(){
 	return this->messageConfigList;
 }
 
+Message* GameSettings::getWindowMessage(){
+	Message* msgWindow = new Message(0,"window");
+	msgWindow->setName("window");
+	msgWindow->setPosition(make_pair(this->getScreenWidth(),this->getScreenHeight()));
+	msgWindow->setBaseWidth(this->getMapWidth());
+	msgWindow->setBaseHeight(this->getMapHeight());
+	return msgWindow;
+}
+
 void GameSettings::SetGameSettings(){
 	map<string,int>* mapSI;
 	map< string, string> * mapSS;

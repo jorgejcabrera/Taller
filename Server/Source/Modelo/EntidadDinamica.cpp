@@ -52,7 +52,13 @@ int EntidadDinamica::getDamage(){
 }
 
 void EntidadDinamica::attackTo(EntidadPartida* entity){
+	stringstream ss;
+	ss << "estamos atacando. La salud de la entidad era de " << entity->getHealth();
+	Logger::get()->logDebug("EntidadDinamica","attackTo",ss.str()); 
 	entity->takeDamage(this->getDamage(), this->getOwner());
+	ss.str("");
+	ss << "La salud de la entidad es " << entity->getHealth();
+	Logger::get()->logDebug("EntidadDinamica","attackTo",ss.str()); 
 }
 
 void EntidadDinamica::construct(EntidadPartida* entity){
@@ -78,6 +84,17 @@ void EntidadDinamica::setPath(list<pair<int,int> >* caminito){
 
 void EntidadDinamica::setPathIsNew(bool isNew){
 	this->newPath = isNew;
+}
+
+Message* EntidadDinamica::getEntityMessage(){
+	Message* msg = new Message(this->id, DefaultSettings::getTypeEntity(this->name));
+	msg->setName(this->name);
+	msg->setPosition(this->position);
+	msg->setOwner(this->owner);
+	msg->setHealth(this->health);
+	msg->setStrength(this->strength);
+	msg->setPrecision(this->precision);
+	return msg;
 }
 
 bool EntidadDinamica::pathIsNew(){

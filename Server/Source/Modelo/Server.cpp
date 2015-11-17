@@ -66,12 +66,7 @@ int Server::run(void * data){
 			bool clientAcepted = initConnection(newClient);
 			if(clientAcepted){
 				//Mando la dimension de la ventana
-				Message* msgWindow = new Message(0,"window");
-				msgWindow->setName("window");
-				msgWindow->setPosition(make_pair(GameSettings::GetInstance()->getScreenWidth(),GameSettings::GetInstance()->getScreenHeight()));
-				msgWindow->setBaseWidth(GameSettings::GetInstance()->getMapWidth());
-				msgWindow->setBaseHeight(GameSettings::GetInstance()->getMapHeight());
-				newClient->writeMessagesInQueue(msgWindow);
+				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getWindowMessage());
 
 				//Mando la informacion que está en el YAML
 				newClient->writeMessagesInQueue(GameSettings::GetInstance()->getConfMessages());
@@ -79,8 +74,7 @@ int Server::run(void * data){
 				//Mando los tiles para dibujarlos en la vista
 				newClient->writeMessagesInQueue(this->gController->getTilesMessages());
 
-				//Le mando a todos los clientes el color del cliente
-				//Lo hago antes de mandar las entidades porque cuando recibo la bandera tengo que saber cual es el color del cliente
+				//Le mando a todos los clientes el color del cliente. Lo hago antes de mandar las entidades para saber el color de la bandera
 				this->sendColours(newClient);
 
 				//Mando las entidades que tiene el mapa
@@ -89,8 +83,10 @@ int Server::run(void * data){
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
 
-				newClient->writeMessagesInQueue(newClient->getSeenTilesAsMessages());
+				//Mando los recursos del mapa
+				newClient->writeMessagesInQueue(this->gController->getJuego()->getMap()->getResourcesMessages());
 
+				//Mano offset inicial
 				newClient->writeMessagesInQueue(newClient->getInitialOffsetAsMessage());
 
 				newClient->connect();
@@ -113,18 +109,11 @@ list<Message*> Server::getProtagonistasMessages(){
 	list<Message*> listaDeProtagonistas;
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = protagonistas->begin(); it != protagonistas->end();++it){
-		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
-		Message* protagonistaMessage = new Message((*it).second->getId(), tipoEntidad);
-		protagonistaMessage->setName((*it).second->getName());
-		protagonistaMessage->setPosition((*it).second->getPosition());
-		protagonistaMessage->setClientConnected(clientConnected);
-		protagonistaMessage->setOwner((*it).second->getOwner());
-		protagonistaMessage->setHealth((*it).second->getHealth());
-		protagonistaMessage->setStrength((*it).second->getStrength());
-		protagonistaMessage->setPrecision((*it).second->getPrecision());
-		listaDeProtagonistas.push_back(protagonistaMessage);
+		Message* msg = it->second->getEntityMessage();
+		msg->setClientConnected(clientConnected);
+		listaDeProtagonistas.push_back(msg);
 	}
 	return listaDeProtagonistas;
 }
@@ -187,9 +176,7 @@ bool Server::checkForAttackMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "attack" ){		
 		//si la entidad ya tenia un target empieza a atacar
 		if( entityToUpd->getTarget() != 0 ){
-			Logger::get()->logDebug("Server","checkForAttackMsg","llega mensaje para consumir recurso");
 			entityToUpd->prepareToInteract(true);
-
 		//la entidad empieza a dirigirse a la posicion del target
 		}else{
 			int target = msg->getTarget();
@@ -250,7 +237,6 @@ void Server::notifyClients(){
 	this->sendDinamicEntitesChanges();
 	this->sendFallenEntites();
 	this->sendNewEntities();
-	//this->sendResoursesChanges();
 	this->sendNewsResourses();
 	this->gController->getJuego()->cleanNewEntities();
 	this->pingMessage();
@@ -294,28 +280,13 @@ void Server::sendNewEntities(){
 }
 
 void Server::sendNewsResourses(){
-	list<Resource*> newsResources = this->gController->getJuego()->getMap()->getNewsResources();
-	for(list<Resource*>::iterator it = newsResources.begin(); it!=newsResources.end();++it){
-		//el recurso fue consumido por completo
-		if( (*it)->getHealth() <= 0 ){
-			int entityToDelete = (*it)->getId();
-			++it;
-			this->gController->getJuego()->getMap()->deleteEntity(entityToDelete);
 
-		//el recurso es nuevo o sufrió algún cambio
-		}else{
-			(*it)->setNotifiable(false);
-		}
-	}
 }
 
 void Server::sendFallenEntites(){
 	list<EntidadPartida> fallenEntities = this->gController->getJuego()->getFallenEntities();
 	for(list<EntidadPartida>::iterator itFallenEntities = fallenEntities.begin(); itFallenEntities != fallenEntities.end(); ++itFallenEntities ){
-		if(itFallenEntities->getName()=="flag"){
-			/*stringstream ss;
-			ss<< "Murio bandera "<< itFallenEntities->getOwner();
-			Logger::get()->logInfo("Server","sendFallenEntites",ss.str());*/
+		if(itFallenEntities->getName() == "flag"){
 			this->gController->getJuego()->transferEntitiesToUser(itFallenEntities->getOwner(), itFallenEntities->getAttacker());
 		}
 		Message* msgfallenEntity = new Message();

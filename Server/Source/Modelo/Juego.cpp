@@ -156,6 +156,17 @@ list<EntidadPartida> Juego::getFallenEntities(){
 			++itBuilds;
 		}
 	}
+	//recursos consumidos
+	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources != this->mapa->getResources()->end(); ){
+		if( (*itResources)->getHealth() <= 0 ){
+			this->enableTiles(*itResources);
+			fallenEntities.push_front(*(*itResources));
+			delete *itResources;
+			itResources = this->mapa->getResources()->erase(itResources);
+		}else{
+			++itResources;
+		}
+	}
 	return fallenEntities;
 }
 
@@ -196,6 +207,10 @@ EntidadPartida* Juego::getEntityById(int id){
 	for(list<EntidadPartida*>::iterator iterateEntities = entities->begin(); iterateEntities!=entities->end();++iterateEntities){
 		if((*iterateEntities)->getId() == id) 
 			return (*iterateEntities);
+	}
+	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources!= this->mapa->getResources()->end();++itResources){
+		if((*itResources)->getId() == id)
+			return (*itResources);
 	}
 	return NULL;
 }

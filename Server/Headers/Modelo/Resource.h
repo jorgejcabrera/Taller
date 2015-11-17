@@ -12,7 +12,7 @@
 
 class Resource: public EntidadEstatica {	
 public:
-	Resource(string tipo,int x,int y,int quantity);
+	Resource(string tipo,int x,int y);
 	virtual ~Resource();
 };
 

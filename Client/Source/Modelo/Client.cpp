@@ -96,8 +96,8 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
-		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources"){
-			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
+		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources" ){
+			this->gController->getJuegoVista()->addStaticEntity((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY(),
@@ -143,22 +143,19 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "deleteEntity"){
 			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
 		
-		}else if (tipoMensaje == "newResource"){
-			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
-															(*it)->getNombre(),
-															(*it)->getPositionX(),
-															(*it)->getPositionY(),
-															"",
-															(*it)->getHealth());
 		}else if (tipoMensaje == "start"){
 			this->gController->setGameRunning();
+		
 		}else if (tipoMensaje == "offset"){
 			this->gController->getJuegoVista()->updateOffset((*it)->getPositionX(),(*it)->getPositionY());
+		
 		}else if (tipoMensaje == "colour"){
 			this->gController->getJuegoVista()->setColour((*it)->getOwner(),(*it)->getPositionX());
+		
 		}else if (tipoMensaje == "win"){
 			this->gController->winGame();
 			this->status = DISCONECTED;
+		
 		}else if (tipoMensaje == "lost"){
 			if((*it)->getNombre() == this->userName){
 				this->gController->loseGame();

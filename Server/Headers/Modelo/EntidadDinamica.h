@@ -64,6 +64,7 @@ public:
 	/*
 	* este metodo nos indica si la entidad visualmente está preparada para atacar.
 	* */
+	Message* getEntityMessage();
 	void setPathIsNew(bool esNuevo);
 	void setPath(list<pair<int,int> >* camino);
 	void prepareToInteract(bool value);
