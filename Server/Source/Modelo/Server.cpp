@@ -234,7 +234,7 @@ bool Server::checkForBuildingMsg(Message* msg){
 			EntidadPartida* target = this->gController->getJuego()->getEntityById(msg->getTarget());
 			x = target->getPosition().first;
 			y = target->getPosition().second;
-			idTarget = msg->getTarget();
+			idTarget = target->getId();
 		}
 		this->gController->getJuego()->setPlaceToGo(idBuilder, x, y);
 		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
@@ -275,7 +275,7 @@ void Server::sendDinamicEntitesChanges(){
 void Server::sendNewEntities(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
-		Message* newEntity = new Message((*it)->getId(), DefaultSettings::getTypeEntity((*it)->getName()));
+		Message* newEntity = new Message((*it)->getId(),  DefaultSettings::getTypeEntity((*it)->getName()));
 		newEntity->setName((*it)->getName());
 		newEntity->setPosition((*it)->getPosition());
 		newEntity->setOwner((*it)->getOwner());

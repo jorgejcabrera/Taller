@@ -93,6 +93,10 @@ public:
 	* construye un edificio
 	* */
 	int buildEntity(string nameEntity, int positionX, int positionY, string owner);
+	/*
+	* Agrego una entidad para notificar
+	* */
+	void addNewEntity(EntidadPartida* entity);
 	virtual ~Juego();
 };
 

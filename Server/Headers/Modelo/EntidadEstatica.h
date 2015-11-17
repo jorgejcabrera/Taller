@@ -14,10 +14,6 @@
 using namespace std;
 
 class EntidadEstatica: public EntidadPartida {
-private:
-	//Utilizado para decir que está completamente construido
-	bool isCompleted;
-
 public:
 	EntidadEstatica();
 	EntidadEstatica(string nameEntity, int width,int length, bool isCompletedConstruction);
