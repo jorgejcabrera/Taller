@@ -234,7 +234,10 @@ bool Server::checkForUpdMsg(Message* msg){
 bool Server::checkForBuildingMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "building" ){
 		int idUpdate = msg->getId();
-		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
+		int x = msg->getPositionX() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "ancho_base");
+		int y = msg->getPositionY() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "alto_base");
+
+		this->gController->getJuego()->setPlaceToGo(idUpdate, x, y);
 		int idEntity = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
 		//this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
 		//this->idEntitiesUpdated.push_back(idUpdate);
