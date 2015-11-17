@@ -113,8 +113,13 @@ void EntidadPartida::takeDamage(int damage, string userAttarcker){
 	int damageTaken = damage - this->defend();
 	if( damageTaken <= 0 )
 		return;
+	int beforeQuantity = this->health;
 	this->health = this->health - damageTaken;
 	this->attacker = userAttarcker;
+
+	//si la entidad es un recurso lo recolectamos
+	if( this->name == "gold" || this->name == "food" || this->name == "wood" || this->name == "rock"  )
+		ResourceCounter::GetInstance()->collectResource(userAttarcker,this->name,beforeQuantity - this->health);
 }
 
 void EntidadPartida::takeBuilderEffort(int effort){

@@ -13,15 +13,17 @@
 #include <iostream>
 #include <typeinfo>
 #include "../Utils/SequenceUtils.h"
+ #include "../Utils/ResourceCounter.h"
 #include "DefaultSettings.h"
 
 using namespace std;
 
 class EntidadPartida {
 protected:
-	//Utilizado para decir que está completamente construido
+	/*
+	* utilizado para decir que está completamente construido
+	* */
 	bool isCompleted;
-
 	pair<int,int> position;
 	/*
 	* posicion de la entidad marcada como objetivo
