@@ -144,7 +144,7 @@ void GameController::interactWithTargets(){
 bool GameController::readyToInteract(EntidadDinamica* entity){
 	if( entity->isReadyToInteract() ){
 		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
-		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 2;
+		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
 	}else{
 		return false;
 	}
