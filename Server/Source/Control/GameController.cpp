@@ -43,7 +43,7 @@ list<Message*> GameController::getTilesMessages(){
 list<Message*> GameController::getEntitiesMessages(){
 	list<Message*> listaDeEntities;
 	list<EntidadPartida*>* entidades = this->getJuego()->getMap()->getEntities();
-	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
+	for(list<EntidadPartida*>::iterator it = entidades->begin(); it!=entidades->end();++it){
 		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado		
 		listaDeEntities.push_back((*it)->getMessage());
 

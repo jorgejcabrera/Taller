@@ -62,7 +62,7 @@ private:
 	* */
 	void sendDinamicEntitesChanges();
 	void sendNewEntities();
-	void sendNewsResourses();
+	void sendNewsResources();
 	void sendFallenEntites();
 	void sendNewStaticEntites();
 

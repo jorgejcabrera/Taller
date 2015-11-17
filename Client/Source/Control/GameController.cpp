@@ -206,7 +206,6 @@ list<Message*> GameController::action(){
 			if ( entity != NULL ){
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-				Logger::get()->logDebug("GameController","action","seleccionamos un target");
 				if( targetToAttack.size() > 0 ){
 					//voy a construir algo
 					string typeMessage = "build";
