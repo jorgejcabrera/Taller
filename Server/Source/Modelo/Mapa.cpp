@@ -84,6 +84,7 @@ list<Message*> Mapa::getResourcesMessages(){
 		msg->setName((*it)->getName());
 		msg->setType("resources");
 		msg->setPosition((*it)->getPosition());
+		msg->setOwner("");
 		news.push_front(msg);
 	}
 	return news;

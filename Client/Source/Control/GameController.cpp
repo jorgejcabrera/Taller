@@ -96,6 +96,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 				it->second->prepareToFight(false);
 				return;
 			}
+			Logger::get()->logDebug("GameController","readyToAttack","encontramos el target");
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
 			
 			//el target se movio luego de que empezo la pelea, pero lo podemos alcanzar
@@ -210,7 +211,7 @@ list<Message*> GameController::action() {
 			if (entity != NULL) {
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-
+				Logger::get()->logDebug("GameController","action","seleccionamos un target");
 				//attack
 				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {

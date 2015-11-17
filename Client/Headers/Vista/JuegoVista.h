@@ -47,13 +47,13 @@ private:
 	* */
 	map<pair<int,int>,int> resoursesToConsume;
 	/*
-	* entidades del mapa
-	* */
-	list<TileVista*> tiles;
-	/*
 	* colores de los clientes
 	* */
 	map<string,colour> coloursOfClients;
+	/*
+	* entidades del mapa
+	* */
+	list<TileVista*> tiles;
 	map<int, EntidadEstaticaVista*> buildings;
 	map<int, EntidadSemiEstaticaVista*> semiEstaticos;
 	map<int, EntidadDinamicaVista*> personajes;
@@ -115,7 +115,7 @@ public:
 	void updateOffset(int offsetX,int offsetY);
 	void setResources(int alimento, int madera, int oro);
 	void addTile(string surface, int x, int y);
-	void addBuilding(int id, string type, int x, int y,string owner,int health);
+	void addStaticEntity(int id, string type, int x, int y,string owner,int health);
 	void addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health);
 	void addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision);
 	pair<int,int>* getOffset();

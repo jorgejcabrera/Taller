@@ -96,9 +96,8 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
-		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources"){
-			Logger::get()->logDebug("Client","processReceivedmessages","llega msj para crear recurso");
-			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
+		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources" ){
+			this->gController->getJuegoVista()->addStaticEntity((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
 															(*it)->getPositionY(),

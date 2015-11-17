@@ -196,6 +196,10 @@ EntidadPartida* Juego::getEntityById(int id){
 		if((*iterateEntities)->getId() == id) 
 			return (*iterateEntities);
 	}
+	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources!= this->mapa->getResources()->end();++itResources){
+		if((*itResources)->getId() == id)
+			return (*itResources);
+	}
 	return NULL;
 }
 

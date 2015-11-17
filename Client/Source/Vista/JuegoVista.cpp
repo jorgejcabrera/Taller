@@ -203,11 +203,11 @@ void JuegoVista::addTile(string surface, int x, int y){
 	this->tiles.push_back(newtile);
 }
 
-void JuegoVista::addBuilding(int id, string type, int x, int y, string owner,int health){
+void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner,int health){
 	if ( this->buildings.find(id) == this->buildings.end() ) {
 		//Nueva edificio
-		EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
-																		gameSettings->getEntityConfig(type)->getAlto());
+		EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),
+																	gameSettings->getEntityConfig(type)->getAlto());
 		newBuilding->setName(type);
 		newBuilding->setPosition(x,y);
 		newBuilding->setId(id);
