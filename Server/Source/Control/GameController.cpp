@@ -35,10 +35,7 @@ list<Message*> GameController::getTilesMessages(){
 	list<Message*> listaDeTiles;
 	map<pair<int,int>,Tile*>* tilesList = this->juego->getMap()->getTiles();
 	for(map<pair<int,int>,Tile*>::iterator it=tilesList->begin(); it!=tilesList->end(); ++it){
-		Message* tileMessage = new Message(0,"tile");
-		tileMessage->setName(it->second->getSuperficie());
-		tileMessage->setPosition(it->first);
-		listaDeTiles.push_back(tileMessage);
+		listaDeTiles.push_back(it->second->getMessage());
 	}
 	return listaDeTiles;
 }
@@ -47,14 +44,9 @@ list<Message*> GameController::getEntitiesMessages(){
 	list<Message*> listaDeEntities;
 	list<EntidadPartida*>* entidades = this->getJuego()->getMap()->getEntities();
 	for(list<EntidadPartida*>::iterator it=entidades->begin(); it!=entidades->end();++it){
-		string tipoEntidad = DefaultSettings::getTypeEntity((*it)->getName());
-		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado
-		Message* entityMessage = new Message((**it).getId(), tipoEntidad);
-		entityMessage->setName((*it)->getName());
-		entityMessage->setPosition((*it)->getPosition());
-		entityMessage->setOwner((*it)->getOwner());
-		entityMessage->setHealth((*it)->getHealth());
-		listaDeEntities.push_back(entityMessage);
+		//TODO revisar, las entidades tambien van a pertener a un cliente con lo cual tambien deberiamos mandar si el dueño está conectado o no. Seteo el ultimo parametro en 0 para simular que el dueño está conectado		
+		listaDeEntities.push_back((*it)->getMessage());
+
 	}
 	return listaDeEntities;
 }
@@ -71,24 +63,16 @@ list<int> GameController::getEntitiesOfClient(string userName){
 }
 
 void GameController::setNextPaths(){
-	//antes de setear el proximo path, me fijo si hay un recurso en donde esta
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
-		pair<int,int> pos = (*it).second->getPosition();
-		if( ! (*it).second->isWalking()/* && this->juego->getResourceManager()->isResourceAt(pos.first,pos.second)*/){
-			/*this->juego->getResourceManager()->collectResourceAt(&pos);
-			this->juego->getResourceManager()->setUltimoEnConsumir((*it).second->getOwner());*/
-		}
-		
-		//pongo el tile anterior disponible
+		pair<int,int> pos = (*it).second->getPosition();		
+		//pongo la posicion anterior desocupada
 		pair<int,int> firstPosition = (*it).second->getPosition();
 		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
-		//busco la nueva posicion
 		(*it).second->nextPosition();
-		//pongo el nuevo tile como ocupado
+		//pongo la nueva posicion como ocupada
 		pair<int,int> newPos = (*it).second->getPosition();
 		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
-
 	}
 }
 

@@ -130,6 +130,17 @@ void EntidadPartida::setOwner(string ownerId){
 	this->owner = ownerId;
 }
 
+Message* EntidadPartida::getMessage(){
+	Message* msg = new Message(this->id, DefaultSettings::getTypeEntity(this->name));
+	msg->setName(this->name);
+	msg->setPosition(this->position);
+	msg->setOwner(this->owner);
+	msg->setHealth(this->health);
+	msg->setStrength(this->strength);
+	msg->setPrecision(this->precision);
+	return msg;
+}
+
 string EntidadPartida::getOwner(){
 	return this->owner;
 }

@@ -33,7 +33,6 @@ enum Direccion{
 class EntidadDinamica: public EntidadPartida {
 private:
 	list<pair<int,int> >* path;
-	bool walking;
 	bool newPath;
 	/*
 	* necesario para sincronizar la parte visual en el cliente con la parte logica en el server
@@ -54,22 +53,17 @@ public:
 	* */
 	void nextPosition();
 	/*
-	* ?
+	* devuelve el camino que debe recorrer la entidad para llegar a la posicion deseada
 	* */
 	list<pair<int,int> >* getPath();
 	/*
 	* disminuye la salud de la entidad según 
 	* */
 	void attackTo(EntidadPartida* entity);
-	/*
-	* este metodo nos indica si la entidad visualmente está preparada para atacar.
-	* */
-	Message* getEntityMessage();
 	void setPathIsNew(bool esNuevo);
 	void setPath(list<pair<int,int> >* camino);
 	void prepareToInteract(bool value);
 	bool isReadyToInteract();
-	bool isWalking();
 	bool pathIsNew();
 	/*
 	* aumenta la salud del edicicio

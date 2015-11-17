@@ -111,7 +111,7 @@ list<Message*> Server::getProtagonistasMessages(){
 	for(map<int,EntidadDinamica*>::iterator it = protagonistas->begin(); it != protagonistas->end();++it){
 		//0 : conectado, -1 Desconectado
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
-		Message* msg = it->second->getEntityMessage();
+		Message* msg = it->second->getMessage();
 		msg->setClientConnected(clientConnected);
 		listaDeProtagonistas.push_back(msg);
 	}

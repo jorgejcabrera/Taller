@@ -9,8 +9,8 @@
 #define SOURCE_MODELO_TILE_H_
 
 #include "../Utils/Logger.h"
+#include "../Utils/Socket/Message.h"
 #include <string>
-#include <sstream>
 #include <iostream>
 
 using namespace std;
@@ -32,19 +32,18 @@ class Tile {
 	string superficieStr;
 
 public:
-	void setPathImage(string path);
 	Tile(int x,int y);
+	void setPathImage(string path);
 	void changeStatusAvailable();
-	bool isAvailable();
-	int getPosX();
-	int getPosY();
-	pair<int,int>* getPosition();
+	void setSuperficie(string superficieNueva);
 	void pushSurface(surface_type surface);
+	bool isAvailable();
+	pair<int,int> getPosition();
 	int getSurfaceSpeed();
 	string getSuperficie();
-	void setSuperficie(string superficieNueva);
-	virtual ~Tile();
 	string getPathImage();
+	Message* getMessage();
+	virtual ~Tile();
 };
 
 #endif /* SOURCE_MODELO_TILE_H_ */

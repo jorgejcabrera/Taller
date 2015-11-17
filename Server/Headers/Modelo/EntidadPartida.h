@@ -13,7 +13,8 @@
 #include <iostream>
 #include <typeinfo>
 #include "../Utils/SequenceUtils.h"
- #include "../Utils/ResourceCounter.h"
+#include "../Utils/ResourceCounter.h"
+#include "../Utils/Socket/Message.h"
 #include "DefaultSettings.h"
 
 using namespace std;
@@ -74,6 +75,7 @@ public:
 	string getOwner();
 	pair<int,int> getTargetPosition();
 	pair<int,int> getPosition();
+	Message* getMessage();
 	void setTarget(int target);
 	void setPosition(int x,int y);
 	void setHealth(int health);
