@@ -228,7 +228,7 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 														positionOfCreated.second,
 														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"),
 														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"));
-	dinamicEntity->setStrength(4);
+	dinamicEntity->setStrength(gameSettings->getConfigAttributeOfEntityAsInt(type, "strength"));
 	dinamicEntity->setPrecision(0.5);
 	dinamicEntity->setOwner(owner);
 	dinamicEntity->setVisibilityRange(gameSettings->getRangeVisibility());
@@ -248,7 +248,7 @@ void Juego::createKingForClient(string owner){
 												positionOfProtagonista.second,
 												gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"),
 												gameSettings->getConfigAttributeOfEntityAsInt(name, "pixels_dimension"));
-	king->setStrength(0);
+	king->setStrength(gameSettings->getConfigAttributeOfEntityAsInt(name, "strength"));
 	king->setPrecision(0);
 	king->setOwner(owner);
 	king->setVisibilityRange(gameSettings->getRangeVisibility());
