@@ -127,8 +127,8 @@ void Client::processReceivedMessages(){
 																(*it)->getStrength(),
 																(*it)->getPrecision());
 		}else if( tipoMensaje == "updResource"){
-			Logger::get()->logDebug("Client","processReceivedmessages","me llego msh para actualizar recurso");
-			
+			this->resourceCounter->increase((*it)->getNombre(), (*it)->getHealth());
+
 		}else if ( tipoMensaje == "disconnect"){
 			this->disconnectPlayer((*it)->getNombre());
 		
