@@ -151,7 +151,7 @@ tipos:
   builder_effort: 0
 
 - nombre: flag
-  health: 500  
+  health: 2000  
   imagen: ../../Taller/Images/Flags/flag.png
   ancho_base: 1
   alto_base: 1

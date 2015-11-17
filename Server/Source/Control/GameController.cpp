@@ -7,10 +7,15 @@
 
 #include "../../Headers/Control/GameController.h"
 
-GameController::GameController(){
-	this->gameType = CIVIC_CENTER;
-	//this->gameType = REGICIDE;
-	//this->gameType = CAPTURE_FLAG;
+GameController::GameController(string gameSelected){
+	if(gameSelected == "CAPTURE_FLAG"){
+		this->gameType = CAPTURE_FLAG;
+	}else if(gameSelected == "REGICIDE"){
+		this->gameType = REGICIDE;
+	}else{
+		this->gameType = CIVIC_CENTER;
+	}
+
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->gameRunning = true;

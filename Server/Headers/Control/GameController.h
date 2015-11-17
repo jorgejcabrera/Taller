@@ -66,7 +66,7 @@ private:
 	void buildTarget(EntidadDinamica* builder);
 
 public:
-	GameController();
+	GameController(string gameSelected);
 	/*
 	*defino un delay variable para poder mandarle los ms que yo quiera, mas que nada para el ciclo mientras espera clientes
 	* */

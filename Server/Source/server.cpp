@@ -16,9 +16,13 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+	int port = 7845;
+	int clientsQty = 3;
+	// CIVIC_CENTER, REGICIDE, CAPTURE_FLAG
+	string gameType = "CAPTURE_FLAG";
 
-	GameController* gController = new GameController();
-	Server* server = new Server(7844,gController);
+	GameController* gController = new GameController(gameType);
+	Server* server = new Server(port,gController, clientsQty);
 	if( server->initSocketServer() == ERROR)
 		return ERROR;
 	server->start((void *) &server);

@@ -7,7 +7,14 @@
 
 #include "../../Headers/Modelo/Server.h"
 
-Server::Server(int port, GameController* myController) {
+Server::Server(int port, GameController* myController, int qtyUsers) {
+	if(qtyUsers<2){
+		this->clientsQty = 2;
+	}else if (qtyUsers>4){
+		this->clientsQty = 4;
+	}else{
+		this->clientsQty = qtyUsers;
+	}
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
@@ -19,8 +26,7 @@ Server::Server(int port, GameController* myController) {
 }
 
 bool Server::acceptingNewClients(){
-	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<2);
+	return (this->clients.size()<this->clientsQty);
 }
 
 int Server::initSocketServer(){
