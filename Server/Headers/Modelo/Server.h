@@ -40,6 +40,7 @@ private:
 	int serverSocket;
 	int port;
 	struct sockaddr_in serverAddress;
+	int clientsQty;
 	/*
 	* ALGUIEN PUEDE COMENTAR PARA QUE ES ESTA LISTA DE ENTIDADES?
 	* */
@@ -67,7 +68,7 @@ private:
 	void sendNewStaticEntites();
 
 public:
-	Server(int port, GameController *myController);
+	Server(int port, GameController *myController, int qtyUsers);
 	int initSocketServer();
 	/*
 	* escuchamos nuevas conexiones de clientes, y le mandamos toda la conf de la partida

@@ -7,7 +7,14 @@
 
 #include "../../Headers/Modelo/Server.h"
 
-Server::Server(int port, GameController* myController) {
+Server::Server(int port, GameController* myController, int qtyUsers) {
+	if(qtyUsers<2){
+		this->clientsQty = 2;
+	}else if (qtyUsers>4){
+		this->clientsQty = 4;
+	}else{
+		this->clientsQty = qtyUsers;
+	}
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
@@ -19,8 +26,7 @@ Server::Server(int port, GameController* myController) {
 }
 
 bool Server::acceptingNewClients(){
-	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<2);
+	return (this->clients.size()<this->clientsQty);
 }
 
 int Server::initSocketServer(){
@@ -269,21 +275,24 @@ void Server::sendDinamicEntitesChanges(){
 void Server::sendNewEntities(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
-		Message* newEntity = new Message((*it)->getId(),  DefaultSettings::getTypeEntity((*it)->getName()));
-		newEntity->setName((*it)->getName());
-		newEntity->setPosition((*it)->getPosition());
-		newEntity->setOwner((*it)->getOwner());
-		newEntity->setHealth((*it)->getHealth());
-		newEntity->setBuilding((*it)->isConstructionCompleted());
-		Logger::get()->logDebug("Server", "sendNewEntities", newEntity->toString());
+		if((*it)->getHealth()>0){
+			Message* newEntity = new Message((*it)->getId(),  DefaultSettings::getTypeEntity((*it)->getName()));
+			newEntity->setName((*it)->getName());
+			newEntity->setPosition((*it)->getPosition());
+			newEntity->setOwner((*it)->getOwner());
+			newEntity->setHealth((*it)->getHealth());
+			newEntity->setBuilding((*it)->isConstructionCompleted());
+			Logger::get()->logDebug("Server", "sendNewEntities", newEntity->toString());
 
 
-		list<Client*> activeClients = getActiveClients();
-		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-			if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
-				//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
-				(*clientIterator)->writeMessagesInQueue(newEntity);
+			list<Client*> activeClients = getActiveClients();
+			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+				if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
+					//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
+					(*clientIterator)->writeMessagesInQueue(newEntity);
+				}
 			}
+
 		}
 	}
 }

@@ -61,23 +61,9 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 						ss << "click IZQUIERDO, no construyo nada en " << finalPosMouseX << " " << finalPosMouseY;
 						Logger::get()->logDebug("GameController","getMessagesFromEvent",ss.str());
 					}
-					//siempre que hago una nueva seleccion borro la lista de seleccionados
 					this->idsEntitiesSelected.clear();
 					this->juegoVista->getMenuVista()->deselectedEntity();
-					SDL_GetMouseState(&finalPosMouseX,&finalPosMouseY);
-					//si se movio el mouse
-					if (initialPosMouseX != finalPosMouseX || initialPosMouseY != finalPosMouseY) {
-						this->pressedMouseButton ="";
-						this->selectBox();
-						return messages;
-						//si no se movio el mouse
-					}else {
-						this->pressedMouseButton ="";
-						this->individualSelection();
-						//TODO esto claramente esta mal...hay que hacerle un refactor a todo el metodo, o
-						//analizar la mejor solucion para este caso
-						return messages;
-					}
+					this->selection();
 				}
 			}
 	return messages;
@@ -126,15 +112,19 @@ void GameController::readyToAttack(list<Message*>* messages){
 	}
 }
 
-void GameController::selectBox() {
+void GameController::selection() {
 	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
+
+		SDL_GetMouseState(&finalPosMouseX,&finalPosMouseY);
 		pair<int,int>* offset = this->juegoVista->getOffset();
+		pair<int,int> cartesianPosition;
+		map<string,string> entidadMap;
+
 		//TODO chequear cual es el mejor numero para sumarle a i y a j
 		for (int i = this->initialPosMouseX; i <= this->finalPosMouseX ; i = i + gameSettings->getTileSize()) {
 			for ( int j = this->initialPosMouseY ; j <= this->finalPosMouseY ; j = j + gameSettings->getTileSize()/2) {
-				pair<int,int> cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
-				//TODO obtener solo entidades dinamicas
-				map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
+				cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
+				entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
 					if(this->clientName == entidadMap.at("owner")){
 						this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
@@ -143,40 +133,15 @@ void GameController::selectBox() {
 			}
 		}
 		this->idsEntitiesSelected.unique();
-		//si no pude seleccionar ninguna entidad propia
-		if (this->idsEntitiesSelected.empty()) {
-			this->juegoVista->getMenuVista()->deselectedEntity();
+		if (this->idsEntitiesSelected.size() == 1) {
+			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 		} else {
-			//this->juegoVista->getMenuVista()->setSelectedsEntitiesDescription(this->idsEntitiesSelected);
-			//TODO este metodo deberia renderizar en el menu todos los personajes elegidos
+		//TODO eliminar entidades que no ataquen o no se muevan
+		//TODO este metodo deberia renderizar en el menu todos los personajes elegidos
+		//this->juegoVista->getMenuVista()->setSelectedsEntitiesDescription(this->idsEntitiesSelected);
 		}
 	}
 }
-
-
-void GameController::individualSelection() {
-	if ( initialPosMouseY <= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
-		pair<int,int>* offset = this->juegoVista->getOffset();
-		pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
-		map<string,string> entidadMap = juegoVista->getEntityAt(cartesianPosition);
-		if( entidadMap.size()>0 && this->clientName == entidadMap.at("owner") ){
-			//this->idEntitySelected = atoi(entidadMap.at("id").c_str());
-			this->idsEntitiesSelected.push_back( atoi(entidadMap.at("id").c_str()));
-			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
-
-		}else if( entidadMap.size()>0 ){
-			//this->idEntitySelected = 0;
-			this->idsEntitiesSelected.clear();
-			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
-
-		}else{
-			this->juegoVista->getMenuVista()->deselectedEntity();
-			//this->idEntitySelected=0;
-			this->idsEntitiesSelected.clear();
-		}
-	}
-}
-
 //TODO este método es un asco lleno de else if sin sentido, lo tenemos que refactorizar
 list<Message*> GameController::action(){
 	list<Message*> messages;

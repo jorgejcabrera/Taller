@@ -7,10 +7,15 @@
 
 #include "../../Headers/Control/GameController.h"
 
-GameController::GameController(){
-	this->gameType = CIVIC_CENTER;
-	//this->gameType = REGICIDE;
-	//this->gameType = CAPTURE_FLAG;
+GameController::GameController(string gameSelected){
+	if(gameSelected == "CAPTURE_FLAG"){
+		this->gameType = CAPTURE_FLAG;
+	}else if(gameSelected == "REGICIDE"){
+		this->gameType = REGICIDE;
+	}else{
+		this->gameType = CIVIC_CENTER;
+	}
+
 	this->gameSettings = GameSettings::GetInstance();
 	this->utils = UtilsController::GetInstance();
 	this->gameRunning = true;
@@ -65,7 +70,6 @@ list<int> GameController::getEntitiesOfClient(string userName){
 void GameController::setNextPaths(){
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
-		pair<int,int> pos = (*it).second->getPosition();		
 		//pongo la posicion anterior desocupada
 		pair<int,int> firstPosition = (*it).second->getPosition();
 		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
@@ -89,6 +93,9 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	}else{
 		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
 		attacker->attackTo(enemy);
+		if(enemy->getHealth()>0){
+			this->juego->addNewEntity(enemy);
+		}
 	}
 }
 
@@ -115,6 +122,7 @@ void GameController::buildTarget(EntidadDinamica* builder){
 		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
 		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
 		builder->construct(building);
+		this->juego->addNewEntity(building);
 	}
 }
 
@@ -136,7 +144,7 @@ void GameController::interactWithTargets(){
 bool GameController::readyToInteract(EntidadDinamica* entity){
 	if( entity->isReadyToInteract() ){
 		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
-		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
+		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 2;
 	}else{
 		return false;
 	}
