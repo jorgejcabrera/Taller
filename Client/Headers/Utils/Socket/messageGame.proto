@@ -16,4 +16,5 @@ message msg_game{
 	optional int32 health = 15;
 	optional int32 strength = 16;
 	optional float precition = 17;
+	optional bool building = 18;
 }
