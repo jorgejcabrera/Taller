@@ -175,7 +175,12 @@ bool GameController::targetOutOfReach(EntidadDinamica* entity){
 }
 
 bool GameController::targetCompleted(EntidadDinamica* entity){
-	return this->juego->getEntityById(entity->getTarget())->isMaxHealth();
+	EntidadPartida* target = this->juego->getEntityById(entity->getTarget());
+	if( !target->isConstructionCompleted()){
+		target->completeConstruction();
+		this->juego->addNewEntity(target);
+	}
+	return target->isMaxHealth();
 }
 
 void GameController::updateGame(){

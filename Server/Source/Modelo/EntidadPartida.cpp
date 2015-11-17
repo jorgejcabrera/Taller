@@ -149,5 +149,12 @@ bool EntidadPartida::isMaxHealth(){
 	return (this->health == this->maxHealth);
 }
 
+bool EntidadPartida::isConstructionCompleted(){
+		return this->isCompleted;
+}
+void EntidadPartida::completeConstruction(){
+	this->isCompleted = true;
+}
+
 EntidadPartida::~EntidadPartida() {
 }

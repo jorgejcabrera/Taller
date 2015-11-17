@@ -20,6 +20,9 @@ using namespace std;
 
 class EntidadPartida {
 protected:
+	//Utilizado para decir que está completamente construido
+	bool isCompleted;
+
 	pair<int,int> position;
 	/*
 	* posicion de la entidad marcada como objetivo
@@ -105,6 +108,11 @@ public:
 	* analiza si la salud esta al maximo
 	* */
 	bool isMaxHealth();
+	/*
+	 *
+	 */
+	bool isConstructionCompleted();
+	void completeConstruction();
 	virtual ~EntidadPartida();
 };
 

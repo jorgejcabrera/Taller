@@ -117,6 +117,10 @@ list<EntidadPartida*>* Juego::getNewEntitiesToNotify(){
 	return &this->newEntities;
 }
 
+void Juego::addNewEntity(EntidadPartida* entity){
+	this->newEntities.push_back(entity);
+}
+
 void Juego::cleanNewEntities(){
 	this->newEntities.clear();
 }
