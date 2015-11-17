@@ -17,18 +17,6 @@ Resource::Resource(string tipo,int x,int y) {
 	this->name = tipo;
 	this->maxHealth = GameSettings::GetInstance()->getConfigAttributeOfEntityAsInt(tipo, "health");
 	this->health = this->maxHealth;
-	this->beforeQuantity = this->health;
-}
-
-void Resource::takeDamage(int damage, string userAttarcker){
-	this->notifiable = true;
-	this->beforeQuantity = this->health;
-	this->health = this->health - damage;
-	this->attacker = userAttarcker;
-}
-
-int Resource::getAmountCollected(){
-	return this->health - this->beforeQuantity;
 }
 
 Resource::~Resource() {

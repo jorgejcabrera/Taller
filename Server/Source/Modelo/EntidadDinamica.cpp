@@ -52,13 +52,7 @@ int EntidadDinamica::getDamage(){
 }
 
 void EntidadDinamica::attackTo(EntidadPartida* entity){
-	stringstream ss;
-	ss << "estamos atacando. La salud de la entidad era de " << entity->getHealth();
-	Logger::get()->logDebug("EntidadDinamica","attackTo",ss.str()); 
 	entity->takeDamage(this->getDamage(), this->getOwner());
-	ss.str("");
-	ss << "La salud de la entidad es " << entity->getHealth();
-	Logger::get()->logDebug("EntidadDinamica","attackTo",ss.str()); 
 }
 
 void EntidadDinamica::construct(EntidadPartida* entity){
