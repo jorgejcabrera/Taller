@@ -187,8 +187,6 @@ list<Message*> GameController::action(){
 		
 		}else if( this->entityToBuild != ""){
 			this->juegoVista->clearAllDataForBuilding();
-			stringstream ss;
-			ss << "click DERECHO, construyo en " << finalPosMouseX << " " << finalPosMouseY;
 			Message* message = new Message();
 			msg_game body;
 			body.set_id(this->idsEntitiesSelected.front());
@@ -201,8 +199,6 @@ list<Message*> GameController::action(){
 			messages.push_back(message);
 			//gasto los recursos
 			this->decreaseResources(this->entityToBuild);
-			ss << " mensaje: "<< message->toString();
-			Logger::get()->logDebug("GameController","action",ss.str());
 			this->entityToBuild = "";
 		}else{
 			list<int>::iterator it = this->idsEntitiesSelected.begin();
@@ -211,22 +207,26 @@ list<Message*> GameController::action(){
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 				Logger::get()->logDebug("GameController","action","seleccionamos un target");
-				//attack
-				if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+				if( targetToAttack.size() > 0 ){
+					//voy a construir algo
+					string typeMessage = "build";
+					if(this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+						//voy a atacar
+						typeMessage = "attack";
+					}
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
 						msg_game body;
 						body.set_id(*it);
-						body.set_tipo("attack");
+						body.set_tipo(typeMessage);
 						body.set_target(atoi(targetToAttack["id"].c_str()));
 						message->setContent(body);
 						entity->setTarget(atoi(targetToAttack["id"].c_str()));
 						entity->prepareToFight(false);
 						messages.push_back(message);
 					}
-				
-				//update
 				}else{
+					//update
 					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
 						msg_game body;

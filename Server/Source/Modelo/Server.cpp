@@ -219,15 +219,27 @@ bool Server::checkForUpdMsg(Message* msg){
 }
 
 bool Server::checkForBuildingMsg(Message* msg){
-	if( this->gameRunning && msg->getTipo() == "building" ){
+	if( this->gameRunning && ( msg->getTipo() == "building" ||  msg->getTipo() == "build" ) ){
 		int idBuilder = msg->getId();
-		int x = msg->getPositionX() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "ancho_base");
-		int y = msg->getPositionY() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "alto_base");
+		int x = 0;
+		int y = 0;
+		int idTarget = 0;
+		if(  msg->getTipo() == "building" ){
+			//Creo una entidad
+			x = msg->getPositionX() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "ancho_base");
+			y = msg->getPositionY() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "alto_base");
+			idTarget = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
+		}else{
+			// ayudo a construir una entidad ya creada
+			EntidadPartida* target = this->gController->getJuego()->getEntityById(msg->getTarget());
+			x = target->getPosition().first;
+			y = target->getPosition().second;
+			idTarget = msg->getTarget();
+		}
 		this->gController->getJuego()->setPlaceToGo(idBuilder, x, y);
-		int idEntity = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
 		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
 		entityToUpd->prepareToInteract(true);
-		entityToUpd->setTarget(idEntity);
+		entityToUpd->setTarget(idTarget);
 		return true;
 	}
 	return false;

@@ -47,7 +47,7 @@ tipos:
 
 - nombre: Castle
   imagen: ../../Taller/Images/Industrial_Age/Castle-4x4.png
-  health: 1000
+  health: 1500
   ancho_base: 4
   alto_base: 4
 
