@@ -201,7 +201,7 @@ void JuegoVista::addTile(string surface, int x, int y){
 	this->tiles.push_back(newtile);
 }
 
-void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner,int health){
+void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner,int health, bool completed){
 	if ( this->buildings.find(id) == this->buildings.end() ) {
 		//Nueva edificio
 		EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),
@@ -211,6 +211,7 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 		newBuilding->setId(id);
 		newBuilding->setOwner(owner);
 		newBuilding->setHealth(health);
+		newBuilding->setBuildingCompleted(completed);
 		string pathImage="";
 		if( type == "flag" ){
 			pathImage = getPathFlagImage(this->coloursOfClients[owner]);
@@ -222,7 +223,10 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 		this->buildings.insert(make_pair(id,newBuilding));
 	} else {
 		//Entidad ya existia y ahora cambia de dueño
-		this->buildings.at(id)->setOwner(owner);
+		EntidadEstaticaVista* building = this->buildings.at(id);
+		building->setOwner(owner);
+		building->setHealth(health);
+		building->setBuildingCompleted(completed);
 	}
 }
 

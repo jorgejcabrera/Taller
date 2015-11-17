@@ -26,6 +26,7 @@ EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float
 	this->health = health;
 	this->maxHealth = GameSettings::GetInstance()->getConfigAttributeOfEntityAsInt(nameEntity, "health");
 	this->health = this->maxHealth;
+	this->isCompleted = true;
 }
 
 void EntidadDinamica::nextPosition(){

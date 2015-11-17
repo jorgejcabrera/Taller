@@ -53,6 +53,13 @@ int Message::getSize(){
 	return this->msg.ByteSize() + sizeof(int);
 }
 
+void Message::setBuilding(bool isBuilding){
+	this->msg.set_building(isBuilding);
+}
+
+bool Message::getBuilding(){
+	return this->msg.building();
+}
 char* Message::serializeToArray(){
 	int size = this->msg.ByteSize();
 	char* buffer = new char[ size + sizeof(int) ];

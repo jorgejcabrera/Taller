@@ -260,6 +260,14 @@ void Message::colourOfClient(string client, int colour){
 	this->msg.set_tipo("colour");
 }
 
+void Message::setBuilding(bool isBuilding){
+	this->msg.set_building(isBuilding);
+}
+
+bool Message::getBuilding(){
+	return this->msg.building();
+}
+
 Message::~Message(){
 	this->msg.~msg_game();
 }

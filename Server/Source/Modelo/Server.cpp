@@ -280,11 +280,7 @@ void Server::sendNewEntities(){
 		newEntity->setPosition((*it)->getPosition());
 		newEntity->setOwner((*it)->getOwner());
 		newEntity->setHealth((*it)->getHealth());
-		bool underConstruction = false;
-		if( !(*it)->isConstructionCompleted()){
-			underConstruction = true;
-		}
-		//newEntity->setBuilding(underConstruction);
+		newEntity->setBuilding((*it)->isConstructionCompleted());
 
 		list<Client*> activeClients = getActiveClients();
 		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){

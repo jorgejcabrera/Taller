@@ -53,6 +53,19 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h)
 		renderTexture(textureExists,x,y,w,h);
 }
 
+//TODO revisar esto, tenemos 4 render object que casi hacen lo mismo
+void PicassoHelper::renderObjectGrey(const string &file, int x, int y, int w, int h){
+		SDL_Texture* textureExists;
+		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
+		if(it != mapByImagePath.end()){
+			textureExists = it->second;
+		}else{
+			textureExists = loadTexture(file);
+		}
+		SDL_SetTextureColorMod(textureExists, 82, 82, 82);
+		renderTexture(textureExists,x,y,w,h);
+}
+
 void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, bool available){
 		SDL_Texture* textureExists;
 		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());

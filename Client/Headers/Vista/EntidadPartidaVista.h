@@ -17,6 +17,7 @@ using namespace std;
 
 class EntidadPartidaVista {
 protected:
+	bool isCompleted;
 	pair<int,int> position;
 	int id;
 	int width;

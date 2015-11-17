@@ -12,6 +12,7 @@ EntidadDinamicaVista::EntidadDinamicaVista() {
 	this->width = 50;
 	this->length = 50;
  	this->readyToAttack = false;
+ 	this->isCompleted = true;
 }
 
 EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, float lengthPixels, int fps){
@@ -28,6 +29,7 @@ EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, floa
 	this->camino = new list<pair<int,int> >();
 	this->owner = "";
  	this->readyToAttack = false;
+ 	this->isCompleted = true;
 }
 
 string EntidadDinamicaVista::getName(){

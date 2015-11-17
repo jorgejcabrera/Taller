@@ -10,6 +10,7 @@
 namespace std {
 
 EntidadSemiEstatica::EntidadSemiEstatica() {
+	this->isCompleted = true;
 }
 
 string getStringSize(EntidadPartida* entidad){
@@ -36,6 +37,7 @@ EntidadSemiEstatica::EntidadSemiEstatica(string nameEntity, int width, int lengt
 	this->name = nameEntity;
 	this->frame = 0;
 	//this->sizeString = getStringSize(this);
+	this->isCompleted = true;
 }
 
 int EntidadSemiEstatica::getFramesPerSecond(){

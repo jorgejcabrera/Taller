@@ -28,9 +28,18 @@ string getStringSize(EntidadPartidaVista* entidad){
 EntidadEstaticaVista::EntidadEstaticaVista(int width,int length){
 	this->width = width;
 	this->length = length;
-	this->edificable = true;
+	this->isCompleted = true;
 	this->sizeString = getStringSize(this);
 	this->owner = "";
+	this->isCompleted = true;
+}
+
+bool EntidadEstaticaVista::isBuildingCompleted(){
+	return this->isCompleted;
+}
+
+void EntidadEstaticaVista::setBuildingCompleted(bool completed){
+	this->isCompleted = completed;
 }
 
 void EntidadEstaticaVista::destruir(){
@@ -38,12 +47,32 @@ void EntidadEstaticaVista::destruir(){
 }
 
 void EntidadEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
+	int x;
+	int y;
+	int h;
+	int w;
 	if(this->sizeString == "standarSmallSize"){
-		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,this->getWidth() * 2 * DefaultSettings::getTileSize(), this->getLength() * DefaultSettings::getTileSize() * 2);
+		x = (isometricPosition.first+ offSetX);
+		y= (isometricPosition.second+ offSetY);
+		w = this->getWidth() * 2 * DefaultSettings::getTileSize();
+		h= this->getLength() * DefaultSettings::getTileSize() * 2;
 	}else if(this->sizeString =="standarMiniSize"){
-		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX-10) , (isometricPosition.second+ offSetY-10) ,DefaultSettings::getTileSize(), DefaultSettings::getTileSize());
+		x = (isometricPosition.first+ offSetX-10);
+		y = (isometricPosition.second+ offSetY-10);
+		w = DefaultSettings::getTileSize();
+		h = DefaultSettings::getTileSize();
 	}else{
-		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), (isometricPosition.first+ offSetX) , (isometricPosition.second+ offSetY) ,this->getWidth() * 2 * DefaultSettings::getTileSize(), (this->getLength()-1) * DefaultSettings::getTileSize() * 2);
+		x = (isometricPosition.first+ offSetX);
+		y = (isometricPosition.second+ offSetY);
+		w = this->getWidth() * 2 * DefaultSettings::getTileSize();
+		h = (this->getLength()-1) * DefaultSettings::getTileSize() * 2;
+	}
+
+
+	if(this->isCompleted){
+		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), x, y, w, h);
+	}else{
+		PicassoHelper::GetInstance()->renderObjectGrey(this->getPathImage(), x, y, w, h);
 	}
 }
 

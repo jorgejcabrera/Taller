@@ -69,6 +69,8 @@ public:
 	* */
 	void pingMessage(string nombre);
 	string toString();
+	void setBuilding(bool isBuilding);
+	bool getBuilding();
 	virtual ~Message();
 };
 

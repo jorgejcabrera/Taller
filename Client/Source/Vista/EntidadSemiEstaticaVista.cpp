@@ -24,6 +24,7 @@ string getStringSize(EntidadPartidaVista* entidad){
 }
 
 EntidadSemiEstaticaVista::EntidadSemiEstaticaVista() {
+	this->isCompleted = true;
 }
 
 
@@ -38,6 +39,7 @@ EntidadSemiEstaticaVista::EntidadSemiEstaticaVista(int width, int length, float 
 	this->inDelayPeriod = false;
 	this->sizeString = getStringSize(this);
 	this->owner = "";
+	this->isCompleted = true;
 }
 
 int EntidadSemiEstaticaVista::getFramesPerSecond(){

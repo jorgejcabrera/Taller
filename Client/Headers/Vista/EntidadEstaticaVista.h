@@ -13,15 +13,15 @@
 using namespace std;
 
 class EntidadEstaticaVista: public EntidadPartidaVista {
-private:
-	bool edificable;
-
 public:
 	EntidadEstaticaVista();
 	void destruir();
 	EntidadEstaticaVista(int width,int length);
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
+	bool isBuildingCompleted();
+	void setBuildingCompleted(bool completed);
 	virtual ~EntidadEstaticaVista();
+
 };
 
 #endif /* SOURCE_VISTA_ENTIDADESTATICAVISTA_H_ */

@@ -106,6 +106,8 @@ public:
 	 */
 	void clientWin(string clientName);
 	void colourOfClient(string client, int colour);
+	void setBuilding(bool isBuilding);
+	bool getBuilding();
 	virtual ~Message();
 };
 
