@@ -227,6 +227,13 @@ class msg_game : public ::google::protobuf::Message {
   inline float precition() const;
   inline void set_precition(float value);
 
+  // optional bool building = 18;
+  inline bool has_building() const;
+  inline void clear_building();
+  static const int kBuildingFieldNumber = 18;
+  inline bool building() const;
+  inline void set_building(bool value);
+
   // @@protoc_insertion_point(class_scope:msg_game)
  private:
   inline void set_has_id();
@@ -263,6 +270,8 @@ class msg_game : public ::google::protobuf::Message {
   inline void clear_has_strength();
   inline void set_has_precition();
   inline void clear_has_precition();
+  inline void set_has_building();
+  inline void clear_has_building();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -285,6 +294,7 @@ class msg_game : public ::google::protobuf::Message {
   ::google::protobuf::int32 health_;
   ::google::protobuf::int32 strength_;
   float precition_;
+  bool building_;
   friend void  protobuf_AddDesc_messageGame_2eproto();
   friend void protobuf_AssignDesc_messageGame_2eproto();
   friend void protobuf_ShutdownFile_messageGame_2eproto();
@@ -913,6 +923,30 @@ inline void msg_game::set_precition(float value) {
   set_has_precition();
   precition_ = value;
   // @@protoc_insertion_point(field_set:msg_game.precition)
+}
+
+// optional bool building = 18;
+inline bool msg_game::has_building() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+inline void msg_game::set_has_building() {
+  _has_bits_[0] |= 0x00020000u;
+}
+inline void msg_game::clear_has_building() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+inline void msg_game::clear_building() {
+  building_ = false;
+  clear_has_building();
+}
+inline bool msg_game::building() const {
+  // @@protoc_insertion_point(field_get:msg_game.building)
+  return building_;
+}
+inline void msg_game::set_building(bool value) {
+  set_has_building();
+  building_ = value;
+  // @@protoc_insertion_point(field_set:msg_game.building)
 }
 
 
