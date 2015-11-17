@@ -79,11 +79,10 @@ list<Message*> Mapa::getResourcesMessages(){
 	list<Message*> news;
 	Message* msg = NULL;
 	for(list<Resource*>::iterator it = this->resources.begin(); it != this->resources.end(); ++it){
-		Logger::get()->logDebug("Mapa","getNewsResources","agregamos un recurso para que sea notificado");
 		msg = new Message();
 		msg->setId((*it)->getId());
 		msg->setName((*it)->getName());
-		msg->setType("newResource");
+		msg->setType("resources");
 		msg->setPosition((*it)->getPosition());
 		news.push_front(msg);
 	}

@@ -144,25 +144,19 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "deleteEntity"){
 			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
 		
-		}else if (tipoMensaje == "newResource"){
-			stringstream ss;
-			ss << "el cliente " << this->userName << " recibio un msj " << (*it)->getNombre()<< " "<<(*it)->getPositionX() << (*it)->getPositionY();
-			Logger::get()->logDebug("Client","processReceivedmessages",ss.str());
-			this->gController->getJuegoVista()->addBuilding((*it)->getId(),
-															(*it)->getNombre(),
-															(*it)->getPositionX(),
-															(*it)->getPositionY(),
-															"",
-															(*it)->getHealth());
 		}else if (tipoMensaje == "start"){
 			this->gController->setGameRunning();
+		
 		}else if (tipoMensaje == "offset"){
 			this->gController->getJuegoVista()->updateOffset((*it)->getPositionX(),(*it)->getPositionY());
+		
 		}else if (tipoMensaje == "colour"){
 			this->gController->getJuegoVista()->setColour((*it)->getOwner(),(*it)->getPositionX());
+		
 		}else if (tipoMensaje == "win"){
 			this->gController->winGame();
 			this->status = DISCONECTED;
+		
 		}else if (tipoMensaje == "lost"){
 			if((*it)->getNombre() == this->userName){
 				this->gController->loseGame();

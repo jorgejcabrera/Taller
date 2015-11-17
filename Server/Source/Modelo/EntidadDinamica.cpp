@@ -78,6 +78,7 @@ void EntidadDinamica::setPathIsNew(bool isNew){
 
 Message* EntidadDinamica::getEntityMessage(){
 	Message* msg = new Message(this->id, DefaultSettings::getTypeEntity(this->name));
+	msg->setName(this->name);
 	msg->setPosition(this->position);
 	msg->setOwner(this->owner);
 	msg->setHealth(this->health);

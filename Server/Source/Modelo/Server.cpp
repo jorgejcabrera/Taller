@@ -110,19 +110,10 @@ list<Message*> Server::getProtagonistasMessages(){
 	map<int,EntidadDinamica*>* protagonistas = this->gController->getJuego()->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = protagonistas->begin(); it != protagonistas->end();++it){
 		//0 : conectado, -1 Desconectado
-		string tipoEntidad = DefaultSettings::getTypeEntity((*it).second->getName());
 		int clientConnected = this->clients.at((*it).second->getOwner())->getStatus();
-		Message* protagonistaMessage = new Message((*it).second->getId(), tipoEntidad);
-		protagonistaMessage->setName((*it).second->getName());
-		protagonistaMessage->setPosition((*it).second->getPosition());
-		protagonistaMessage->setOwner((*it).second->getOwner());
-		protagonistaMessage->setHealth((*it).second->getHealth());
-		protagonistaMessage->setStrength((*it).second->getStrength());
-		protagonistaMessage->setPrecision((*it).second->getPrecision());
-		protagonistaMessage->setClientConnected(clientConnected);
-		/*Message* msg = it->second->getEntityMessage();
-		msg->setClientConnected(clientConnected);*/
-		listaDeProtagonistas.push_back(protagonistaMessage);
+		Message* msg = it->second->getEntityMessage();
+		msg->setClientConnected(clientConnected);
+		listaDeProtagonistas.push_back(msg);
 	}
 	return listaDeProtagonistas;
 }
