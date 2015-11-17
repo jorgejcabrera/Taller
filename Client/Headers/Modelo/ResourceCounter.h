@@ -20,15 +20,12 @@ private:
 	int roca;
 public:
 	ResourceCounter();
-	void recolectarOro();
-	void recolectarMadera();
-	void recolectarAlimento();
 	void gastar(string recurso);
-	void recolectar(string recurso);
-	int getOro();
-	int getAlimento();
-	int getMadera();
-	int getRoca();
+	void increase(string recurso,int quantity);
+	int getGold();
+	int getFood();
+	int getWood();
+	int getRock();
 	virtual ~ResourceCounter();
 };
 

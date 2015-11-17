@@ -131,22 +131,16 @@ void Server::processReceivedMessages(){
 	while( !this->readQueue->isEmpty() ){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
 		bool msgProcessed = this->checkForPingMsg(messageUpdate);
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForExitMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForAttackMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForCreateMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForUpdMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForBuildingMsg(messageUpdate);
-		}
-
 		if(!msgProcessed){
 			stringstream ss;
 			ss << "No se que hacer con el mensaje : "<< messageUpdate->toString();
@@ -255,7 +249,7 @@ void Server::notifyClients(){
 	this->sendDinamicEntitesChanges();
 	this->sendFallenEntites();
 	this->sendNewEntities();
-	this->sendNewsResourses();
+	this->sendNewsResources();
 	this->gController->getJuego()->cleanNewEntities();
 	this->pingMessage();
 }
@@ -303,8 +297,16 @@ void Server::sendNewEntities(){
 	}
 }
 
-void Server::sendNewsResourses(){
-
+void Server::sendNewsResources(){
+	list<Message*> news = ResourceCounter::GetInstance()->getNews();
+	list<Client*> activeClients = getActiveClients();
+	for(list<Message*>::iterator itMsg = news.begin(); itMsg != news.end();++itMsg){
+		for(list<Client*>::iterator itCli = activeClients.begin(); itCli != activeClients.end();++itCli){
+			if( (*itCli)->getUserName() == (*itMsg)->getOwner()){
+				(*itCli)->writeMessagesInQueue((*itMsg));
+			}
+		}
+	}
 }
 
 void Server::sendFallenEntites(){
