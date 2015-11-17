@@ -14,7 +14,6 @@
 #include <typeinfo>
 #include "../Utils/SequenceUtils.h"
  #include "../Utils/ResourceCounter.h"
-#include "../Utils/Logger.h"
 #include "DefaultSettings.h"
 
 using namespace std;

@@ -23,7 +23,6 @@ ResourceCounter* ResourceCounter::GetInstance(){
 
 void ResourceCounter::collectResource(string username,string type,int quantity){
 	map<pair<string,string>, int >::iterator it = this->rscByClientAndType.find(make_pair(username,type));
-	Logger::get()->logDebug("ResourceCounter","collectResource","estamos recolectando recursos");
 	if( it != this->rscByClientAndType.end() ){
 		this->rscByClientAndType.at(make_pair(username,type)) += quantity;
 	}else{
