@@ -43,10 +43,6 @@ private:
 	* */
 	pair<int,int> offset;
 	/*
-	* colección de recursos a ser consumidos cuando la entidad llegue a la posicion donde esta el recurso
-	* */
-	map<pair<int,int>,int> resoursesToConsume;
-	/*
 	* colores de los clientes
 	* */
 	map<string,colour> coloursOfClients;
@@ -90,15 +86,6 @@ public:
 	* metodo que se encarga de dibujar mapa y todas las entidades
 	* */
 	void render(int ciclos, ResourceCounter* resourceCounter, string userName);
-	/*
-	* agrega un recurso que será consumido cuando la entidad ocupe el correspondiente tile
-	* */
-	void addResourceToConsume(int id);
-	/*
-	* si hay algún recurso para consumir en la posicion de la entidad pasada como parametro devuelve el id del
-	* recurso, caso contrario devuelve 0
-	* */
-	int consumeResource(EntidadDinamicaVista* entidad);
 	/*
 	* borra el recurso o el edificio correspondiente al id pasado como parametro
 	* */

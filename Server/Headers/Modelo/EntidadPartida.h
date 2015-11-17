@@ -14,7 +14,6 @@
 #include <typeinfo>
 #include "../Utils/SequenceUtils.h"
 #include "DefaultSettings.h"
-//#include "GameSettings.h"
 
 using namespace std;
 
