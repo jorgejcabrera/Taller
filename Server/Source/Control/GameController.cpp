@@ -114,15 +114,21 @@ void GameController::buildTarget(EntidadDinamica* builder){
 		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
 		pair<int,int> targetPosition = building->getPosition();
 		this->juego->setPlaceToGo(builder->getId(),targetPosition.first, targetPosition.second);
-		//Logger::get()->logDebug("GameController","buildTarget","No estoy listo, me muevo cerca");
+		/*stringstream ss;
+		ss << "No estoy listo, me muevo cerca " << builder->getId();
+		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
 	//el target ya esta construido en su totalidad
 	}else if( this->targetCompleted(builder) ){
 		builder->setTarget(0);
 		builder->prepareToInteract(false);
-		//Logger::get()->logDebug("GameController","buildTarget","YA esta listo el edifico");
+		/*stringstream ss;
+		ss << "YA esta listo el edifico " << builder->getId();
+		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
 	//construimos
 	}else{
-		//Logger::get()->logDebug("GameController","buildTarget","Estoy construyendo");
+		/*stringstream ss;
+		ss <<"Estoy construyendo "<< builder->getId();
+		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
 		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
 		builder->construct(building);
 	}
