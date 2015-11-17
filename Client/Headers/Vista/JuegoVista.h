@@ -86,14 +86,6 @@ public:
 	* metodo que se encarga de dibujar mapa y todas las entidades
 	* */
 	void render(int ciclos, ResourceCounter* resourceCounter, string userName);
-	/*
-	* borra el recurso o el edificio correspondiente al id pasado como parametro
-	* */
-	void deleteStaticEntityById(int id);
-	/*
-	* borra las entidades dinamicas que se quedaron sin vida
-	* */
-	void deleteDinamicEntityById(int id);
 	void deleteEntityById(int id);
 	/*
 	*?

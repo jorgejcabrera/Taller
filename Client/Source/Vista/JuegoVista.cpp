@@ -395,20 +395,6 @@ map<string,string> JuegoVista::getEntityAttributes(EntidadPartidaVista* entidad)
 	return mapInThisPosition;
 }
 
-
-void JuegoVista::deleteStaticEntityById(int id){
-	map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.find(id);
-	this->buildings.erase(itEstaticos);
-}
-
-void JuegoVista::deleteDinamicEntityById(int id){
-	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
-	if( itEnemy != this->personajes.end()){
-		this->personajes.erase(itEnemy);
-		return;		
-	}
-}
-
 void JuegoVista::deleteEntityById(int id){
 	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
 	if( itEnemy != this->personajes.end() ){
