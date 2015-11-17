@@ -11,7 +11,6 @@ EntidadDinamica::EntidadDinamica(){
 }
 
 EntidadDinamica::EntidadDinamica(string nameEntity,int vel,float x,float y,float widthPixel,float lengthPixels){
-	this->walking = false;
 	this->notifiable = false;
 	this->position.first = x;
 	this->position.second = y;
@@ -81,23 +80,8 @@ void EntidadDinamica::setPathIsNew(bool isNew){
 	this->newPath = isNew;
 }
 
-Message* EntidadDinamica::getEntityMessage(){
-	Message* msg = new Message(this->id, DefaultSettings::getTypeEntity(this->name));
-	msg->setName(this->name);
-	msg->setPosition(this->position);
-	msg->setOwner(this->owner);
-	msg->setHealth(this->health);
-	msg->setStrength(this->strength);
-	msg->setPrecision(this->precision);
-	return msg;
-}
-
 bool EntidadDinamica::pathIsNew(){
 	return this->pathIsNew();
-}
-
-bool EntidadDinamica::isWalking(){
-	return this->walking;
 }
 
 EntidadDinamica::~EntidadDinamica() {

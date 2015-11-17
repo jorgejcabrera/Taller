@@ -149,9 +149,9 @@ pair<int,int> Mapa::getAvailablePosition(){
 pair<int,int> Mapa::getAvailablePosition(int xFrom, int yFrom){
 	bool positionFound = false;
 	for(map<pair<int,int>,Tile*>::iterator tilesIterator = this->tiles.begin(); tilesIterator != this->tiles.end(); ++tilesIterator){
-		if ((tilesIterator->second->getPosX() == xFrom && tilesIterator->second->getPosY() == yFrom) || positionFound ){
+		if ((tilesIterator->second->getPosition().first == xFrom && tilesIterator->second->getPosition().second == yFrom) || positionFound ){
 			positionFound=true;
-			if(tilesIterator->second->isAvailable() && abs(tilesIterator->second->getPosX()-xFrom)<10 && abs(tilesIterator->second->getPosY()-yFrom)<10){
+			if(tilesIterator->second->isAvailable() && abs(tilesIterator->second->getPosition().first-xFrom)<10 && abs(tilesIterator->second->getPosition().second-yFrom)<10){
 				return tilesIterator->first;
 			}
 		}

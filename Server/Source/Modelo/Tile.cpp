@@ -41,17 +41,17 @@ int Tile::getSurfaceSpeed(){
 	return this->superficie;
 }
 
-pair<int,int>* Tile::getPosition(){
-	return &this->position;
+pair<int,int> Tile::getPosition(){
+	return this->position;
 }
 
-int Tile::getPosX(){
-	return this->position.first;
+Message* Tile::getMessage(){
+	Message* tileMessage = new Message(0,"tile");
+	tileMessage->setName(this->superficieStr);
+	tileMessage->setPosition(this->position);
+	return tileMessage;
 }
 
-int Tile::getPosY(){
-	return this->position.second;
-}
 
 Tile::~Tile() {
 }
