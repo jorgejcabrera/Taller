@@ -38,8 +38,6 @@ private:
 	int dManhattan(int x,int y);
 	void setInicio();
 	GameSettings* gameSettings;
-	//ResourceManager* resourceManager;
-
 	candidato inicio;
 	candidato destino;
 	Mapa* map;
@@ -57,7 +55,7 @@ private:
 	int posX;
 	int posY;
 public:
-	PathFinder(int x,int y,int dX,int dY,Mapa* map/*,ResourceManager* rm*/);
+	PathFinder(int x,int y,int dX,int dY,Mapa* map);
 	list<pair<int,int> >* buscarCamino();
 	virtual ~PathFinder();
 };

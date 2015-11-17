@@ -90,25 +90,9 @@ list<Message*> Mapa::getResourcesMessages(){
 	return news;
 }
 
-void Mapa::deleteEntity(int id){
-	for(list<Resource*>::iterator it = this->resources.begin() ; it!=this->resources.end();++it){
-		if( (*it)->getId() == id ){
-			this->resources.erase(it);
-			return;
-		}
-	}
-	for(list<EntidadPartida*>::iterator itEntity = this->entidades.begin(); itEntity!=this->entidades.end();++itEntity){
-		if( (*itEntity)->getId() == id ){
-			this->entidades.erase(itEntity);
-			return;
-		}
-	}
-}
-
 list<Resource*>* Mapa::getResources(){
 	return &this->resources;
 }
-
 
 void Mapa::pushEntity(EntidadPartida* entidad){
 	stringstream ss;

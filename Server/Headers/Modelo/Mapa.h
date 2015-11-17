@@ -53,7 +53,6 @@ public:
 	list<EntidadPartida*>* getEntities();
 	map<pair<int,int>,Tile*>* getTiles();
 	void pushEntity(EntidadPartida* entidad);
-	void deleteEntity(int id);
 	bool positionAvailable(EntidadPartida* entidad);
 	~Mapa();
 };

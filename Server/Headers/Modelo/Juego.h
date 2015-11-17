@@ -23,6 +23,7 @@ using namespace std ;
 class Juego {
 private:
 	Mapa* mapa;
+	GameSettings* gameSettings;
 	/*
 	* entidades dinámicas mapeadas por el owner
 	* */
@@ -31,8 +32,6 @@ private:
 	* lista de entidades que deben ser notificadas porque sufrieron algún cambio
 	* */
 	list<EntidadPartida*> newEntities;
-	//ResourceManager* resourseManager;
-	GameSettings* gameSettings;
 	/*
 	* habilita los tiles ocupados por la entidad pasada como parametro una vez que se elimina
 	* */
@@ -67,34 +66,33 @@ public:
 	* Borro el personaje pasado por parametro, lo uso cuando el cliente de desconecto
 	* */
 	void deleteEntity(int id);
-	//ResourceManager* getResourceManager();
 	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadPartida*>* getNewEntitiesToNotify();
 	void createNewEntitie(string owner,string type, int idOfCreator);
 	/*
-	 * Creo al rey del jugador
-	 */
+	* Creo al rey del jugador
+	* */
 	void createKingForClient(string owner);
 	/*
-	 * Obtengo la posicion del centro civico del jugador
-	 */
+	* Obtengo la posicion del centro civico del jugador
+	* */
 	pair<int,int> getCivicCenterPositionOfClient(string owner);
 	/*
-	 * Creo la bandera para el jugador
-	 */
+	* Creo la bandera para el jugador
+	* */
 	void createFlag(string client);
 	/*
-	 * Obtengo una posicion dentro del perimetro del edificio,
-	 * si no hay ninguna disponible, llama a mapa->getAvailablePosition(x,y)
-	 */
+	* Obtengo una posicion dentro del perimetro del edificio,
+	* si no hay ninguna disponible, llama a mapa->getAvailablePosition(x,y)
+	* */
 	pair<int,int> getNearestPositionOfABuilding(int idBuilding);
 	/*
 	* Dados dos usuarios traspasa todas las entidades del ownerFrom al ownerTo y lo agrega en la lista newEntities para que se notifiquen
 	* */
 	void transferEntitiesToUser(string userFrom, string userTo);
 	/*
-	 * construye un edificio
-	 */
+	* construye un edificio
+	* */
 	int buildEntity(string nameEntity, int positionX, int positionY, string owner);
 	virtual ~Juego();
 };
