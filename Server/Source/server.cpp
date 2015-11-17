@@ -16,8 +16,8 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	int port = 7845;
-	int clientsQty = 3;
+	int port = 7844;
+	int clientsQty = 2;
 	// CIVIC_CENTER, REGICIDE, CAPTURE_FLAG
 	string gameType = "CAPTURE_FLAG";
 
