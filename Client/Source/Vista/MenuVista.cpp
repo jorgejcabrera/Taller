@@ -38,10 +38,10 @@ void MenuVista::drawMe() {
 	if (this->drawDescription) this->drawEntityDescription();
 
 	if (strings["name"] == "Barracks") {
-		string path = "../../Taller/Images/Personajes/aldeanoSolo.png";
+		string path = GameSettings::GetInstance()->imagePathPersonajesByType("aldeanoSolo");
 		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
 	} else if (strings["name"] == "Castle") {
-		string path = "../../Taller/Images/Personajes/soldadoSolo.png";
+		string path = GameSettings::GetInstance()->imagePathPersonajesByType("soldadoSolo");
 		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
 	}else if (strings["name"] == "aldeano"){
 		string path = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
