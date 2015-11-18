@@ -57,9 +57,6 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 					if(this->entityToBuild != ""){
 						this->entityToBuild = "";
 						this->juegoVista->clearAllDataForBuilding();
-						stringstream ss;
-						ss << "click IZQUIERDO, no construyo nada en " << finalPosMouseX << " " << finalPosMouseY;
-						Logger::get()->logDebug("GameController","getMessagesFromEvent",ss.str());
 					}
 					this->idsEntitiesSelected.clear();
 					this->juegoVista->getMenuVista()->deselectedEntity();
