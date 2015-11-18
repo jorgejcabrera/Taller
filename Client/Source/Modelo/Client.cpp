@@ -126,6 +126,9 @@ void Client::processReceivedMessages(){
 																(*it)->getHealth(),
 																(*it)->getStrength(),
 																(*it)->getPrecision());
+		}else if( tipoMensaje == "updResource"){
+			this->resourceCounter->increase((*it)->getNombre(), (*it)->getHealth());
+
 		}else if ( tipoMensaje == "disconnect"){
 			this->disconnectPlayer((*it)->getNombre());
 		

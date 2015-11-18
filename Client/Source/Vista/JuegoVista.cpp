@@ -211,7 +211,7 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 		newBuilding->setId(id);
 		newBuilding->setOwner(owner);
 		newBuilding->setHealth(health);
-		newBuilding->setBuildingCompleted(completed);
+		newBuilding->setBuildingCompleted(true);
 		string pathImage="";
 		if( type == "flag" ){
 			pathImage = getPathFlagImage(this->coloursOfClients[owner]);
@@ -222,7 +222,6 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 
 		this->buildings.insert(make_pair(id,newBuilding));
 	} else {
-		//Entidad ya existia y ahora cambia de dueño
 		EntidadEstaticaVista* building = this->buildings.at(id);
 		building->setOwner(owner);
 		building->setHealth(health);
@@ -248,7 +247,9 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 		this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 	} else {
 		//Entidad ya existia y ahora cambia de dueño
-		this->semiEstaticos.at(id)->setOwner(owner);
+		EntidadSemiEstaticaVista* newSemiStatic = this->semiEstaticos.at(id);
+		newSemiStatic->setOwner(owner);
+		newSemiStatic->setHealth(health);
 	}
 }
 
@@ -276,8 +277,9 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active,
 		newPersonaje->setId(id);
 		this->personajes.insert(make_pair(id,newPersonaje));
 	} else {
-		//Entidad ya existia y ahora cambia de dueño
-		this->personajes.at(id)->setOwner(owner);
+		EntidadDinamicaVista* myPersonaje = this->personajes.at(id);
+		myPersonaje->setOwner(owner);
+		myPersonaje->setHealth(health);
 	}
 }
 
@@ -489,10 +491,10 @@ bool JuegoVista::isEnemyEntityVisible(pair< int, int> pos) {
 
 void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 	map<string,int> resources;
-	resources["alimento"] = resourceCounter->getAlimento();
-	resources["madera"] = resourceCounter->getMadera();
-	resources["oro"] = resourceCounter->getOro();
-	resources["roca"] = resourceCounter->getRoca();
+	resources["alimento"] = resourceCounter->getFood();
+	resources["madera"] = resourceCounter->getWood();
+	resources["oro"] = resourceCounter->getGold();
+	resources["roca"] = resourceCounter->getRock();
 	this->menuVista->drawResources(resources);
 }
 

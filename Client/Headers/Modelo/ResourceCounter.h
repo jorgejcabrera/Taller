@@ -14,21 +14,18 @@ using namespace std;
 
 class ResourceCounter {
 private:
-	int oro;
-	int madera;
-	int alimento;
-	int roca;
+	int gold;
+	int wood;
+	int food;
+	int rock;
 public:
 	ResourceCounter();
-	void recolectarOro();
-	void recolectarMadera();
-	void recolectarAlimento();
 	void gastar(string recurso);
-	void recolectar(string recurso);
-	int getOro();
-	int getAlimento();
-	int getMadera();
-	int getRoca();
+	void increase(string recurso,int quantity);
+	int getGold();
+	int getFood();
+	int getWood();
+	int getRock();
 	virtual ~ResourceCounter();
 };
 

@@ -129,6 +129,7 @@ tipos:
   delay: 0
   velocidad: 10
   builder_effort: 0
+  strength: 4
 
 - nombre: aldeano
   imagen: ../../Taller/Images/Personajes/aldeano.png
@@ -139,6 +140,7 @@ tipos:
   delay: 0
   velocidad: 10
   builder_effort: 1
+  strength: 1
 
 - nombre: king
   imagen: ../../Taller/Images/Personajes/king.png
@@ -149,9 +151,10 @@ tipos:
   delay: 0
   velocidad: 8
   builder_effort: 0
+  strength: 0
 
 - nombre: flag
-  health: 500  
+  health: 2000  
   imagen: ../../Taller/Images/Flags/flag.png
   ancho_base: 1
   alto_base: 1

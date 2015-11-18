@@ -7,7 +7,14 @@
 
 #include "../../Headers/Modelo/Server.h"
 
-Server::Server(int port, GameController* myController) {
+Server::Server(int port, GameController* myController, int qtyUsers) {
+	if(qtyUsers<2){
+		this->clientsQty = 2;
+	}else if (qtyUsers>4){
+		this->clientsQty = 4;
+	}else{
+		this->clientsQty = qtyUsers;
+	}
 	this->port = port;
 	this->serverSocket = 0;
 	this->gController = myController;
@@ -19,8 +26,7 @@ Server::Server(int port, GameController* myController) {
 }
 
 bool Server::acceptingNewClients(){
-	//TODO setear el limite en algun lado, no tiene que estar hardcodeado
-	return (this->clients.size()<2);
+	return (this->clients.size()<this->clientsQty);
 }
 
 int Server::initSocketServer(){
@@ -125,22 +131,16 @@ void Server::processReceivedMessages(){
 	while( !this->readQueue->isEmpty() ){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
 		bool msgProcessed = this->checkForPingMsg(messageUpdate);
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForExitMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForAttackMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForCreateMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForUpdMsg(messageUpdate);
-		}
-		if(!msgProcessed){
+		if(!msgProcessed)
 			msgProcessed = this->checkForBuildingMsg(messageUpdate);
-		}
-
 		if(!msgProcessed){
 			stringstream ss;
 			ss << "No se que hacer con el mensaje : "<< messageUpdate->toString();
@@ -249,7 +249,7 @@ void Server::notifyClients(){
 	this->sendDinamicEntitesChanges();
 	this->sendFallenEntites();
 	this->sendNewEntities();
-	this->sendNewsResourses();
+	this->sendNewsResources();
 	this->gController->getJuego()->cleanNewEntities();
 	this->pingMessage();
 }
@@ -275,27 +275,38 @@ void Server::sendDinamicEntitesChanges(){
 void Server::sendNewEntities(){
 	list<EntidadPartida*>* newEntities = this->gController->getJuego()->getNewEntitiesToNotify();
 	for(list<EntidadPartida*>::iterator it = newEntities->begin(); it != newEntities->end();++it){
-		Message* newEntity = new Message((*it)->getId(),  DefaultSettings::getTypeEntity((*it)->getName()));
-		newEntity->setName((*it)->getName());
-		newEntity->setPosition((*it)->getPosition());
-		newEntity->setOwner((*it)->getOwner());
-		newEntity->setHealth((*it)->getHealth());
-		newEntity->setBuilding((*it)->isConstructionCompleted());
-		Logger::get()->logDebug("Server", "sendNewEntities", newEntity->toString());
+		if((*it)->getHealth()>0){
+			Message* newEntity = new Message((*it)->getId(),  DefaultSettings::getTypeEntity((*it)->getName()));
+			newEntity->setName((*it)->getName());
+			newEntity->setPosition((*it)->getPosition());
+			newEntity->setOwner((*it)->getOwner());
+			newEntity->setHealth((*it)->getHealth());
+			newEntity->setBuilding((*it)->isConstructionCompleted());
+			Logger::get()->logDebug("Server", "sendNewEntities", newEntity->toString());
 
 
-		list<Client*> activeClients = getActiveClients();
-		for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-			if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
-				//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
-				(*clientIterator)->writeMessagesInQueue(newEntity);
+			list<Client*> activeClients = getActiveClients();
+			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+				if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
+					//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
+					(*clientIterator)->writeMessagesInQueue(newEntity);
+				}
 			}
+
 		}
 	}
 }
 
-void Server::sendNewsResourses(){
-
+void Server::sendNewsResources(){
+	list<Message*> news = ResourceCounter::GetInstance()->getNews();
+	list<Client*> activeClients = getActiveClients();
+	for(list<Message*>::iterator itMsg = news.begin(); itMsg != news.end();++itMsg){
+		for(list<Client*>::iterator itCli = activeClients.begin(); itCli != activeClients.end();++itCli){
+			if( (*itCli)->getUserName() == (*itMsg)->getOwner()){
+				(*itCli)->writeMessagesInQueue((*itMsg));
+			}
+		}
+	}
 }
 
 void Server::sendFallenEntites(){
