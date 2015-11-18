@@ -123,6 +123,7 @@ tipos:
 
 - nombre: soldado
   imagen: ../../Taller/Images/Personajes/soldado.png
+  health: 200 
   fps: 50
   total_frames_line: 7
   pixels_dimension: 50
@@ -133,7 +134,7 @@ tipos:
 
 - nombre: aldeano
   imagen: ../../Taller/Images/Personajes/aldeano.png
-  health: 200 
+  health: 100 
   fps: 50
   total_frames_line: 14
   pixels_dimension: 70
