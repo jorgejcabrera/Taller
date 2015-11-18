@@ -149,7 +149,7 @@ list<Message*> GameController::action(){
 			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
 		
-		}else if( this->entityToBuild != ""){
+		}else if( this->entityToBuild != "" && this->juegoVista->isAvailablePosForBuild()){
 			this->juegoVista->clearAllDataForBuilding();
 			Message* message = new Message();
 			msg_game body;
@@ -379,7 +379,7 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 bool GameController::hasResourcesRequired(string entity){
 	ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
 	map<string,int> costs = this->gameSettings->getCostsOf(entity);
-	bool hasResources = (costs["chori"] <= resourceCounter->getFood() &&
+	bool hasResources = (costs["food"] <= resourceCounter->getFood() &&
 					costs["rock"] <= resourceCounter->getRock() &&
 					costs["gold"] <= resourceCounter->getGold() &&
 					costs["wood"] <= resourceCounter->getWood());
@@ -410,10 +410,6 @@ void GameController::placeTheBuilding(string buildingName){
 				this->juegoVista->addTileForBuilding(i,j);
 			}
 		}
-		/*stringstream ssSecond;
-		ssSecond << "Mouse en " << finalPosMouseX << " " << finalPosMouseY;
-		Logger::get()->logDebug("GameController","placeTheBuilding",ssSecond.str());
-		 */
 	}
 }
 
