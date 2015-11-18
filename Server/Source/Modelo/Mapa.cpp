@@ -50,27 +50,19 @@ void Mapa::createResources(){
 			if( tipo == 1 ){
 				newResource = new Resource("gold",x,y);
 				newResource->setNotifiable(true);
-				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-				Logger::get()->logDebug("Mapa","createResources","oro");
-			
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();			
 			}else if( tipo == 2 ){
 				newResource = new Resource("food",x,y);
 				newResource->setNotifiable(true);
-				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-				Logger::get()->logDebug("Mapa","createResources","comida");
-			
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();			
 			}else if( tipo == 3 ){
 				newResource = new Resource("wood",x,y);
 				newResource->setNotifiable(true);
-				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-				Logger::get()->logDebug("Mapa","createResources","madera");
-			
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();			
 			}else{
 				newResource = new Resource("rock",x,y);
 				newResource->setNotifiable(true);
 				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-				Logger::get()->logDebug("Mapa","createResources","roca");
-
 			}
 			this->resources.push_front(newResource);
 		}
