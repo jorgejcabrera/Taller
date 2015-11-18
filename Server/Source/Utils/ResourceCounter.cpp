@@ -10,8 +10,6 @@
 ResourceCounter* ResourceCounter::instance = NULL;
 
 ResourceCounter::ResourceCounter() {
-	// TODO Auto-generated constructor stub
-
 }
 
 ResourceCounter* ResourceCounter::GetInstance(){
@@ -50,7 +48,7 @@ list<Message*> ResourceCounter::getNews(){
 		newsList.push_front(msg);
 	}
 	//boramos la lista de novedades
-	this->news.erase(this->news.begin(),this->news.end());
+	this->news.clear();
 	return newsList;
 }
 ResourceCounter::~ResourceCounter() {
