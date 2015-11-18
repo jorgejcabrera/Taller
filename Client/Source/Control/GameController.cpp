@@ -58,7 +58,7 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 						this->entityToBuild = "";
 						this->juegoVista->clearAllDataForBuilding();
 					}
-					this->idsEntitiesSelected.clear();
+					this->entitiesSelected.clear();
 					this->juegoVista->getMenuVista()->deselectedEntity();
 					this->selection();
 				}
@@ -123,20 +123,19 @@ void GameController::selection() {
 				cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
 				entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
-					this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
+					EntidadPartidaVista* entity = this->juegoVista->getEntityById(atoi(entidadMap.at("id").c_str()));
+					this->entitiesSelected.push_back(entity);
 				}
 			}
 		}
-		this->idsEntitiesSelected.sort();
-		this->idsEntitiesSelected.unique();
-		if (this->idsEntitiesSelected.size() == 1) {
+		this->entitiesSelected.sort();
+		this->entitiesSelected.unique();
+		if (this->entitiesSelected.size() == 1) {
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
-			//dejo esto turbio para que vuelva a andar todo como antes, despues hago refactor
-			EntidadPartidaVista* e = this->juegoVista->getEntityById(this->idsEntitiesSelected.back());
-			if ( e->getOwner() != this->clientName )  this->idsEntitiesSelected.clear();
+			if (this->entitiesSelected.back()->getOwner() != this->clientName )  this->entitiesSelected.clear();
 		} else {
 		//TODO eliminar entidades de la lista de seleccionadas  a las entidades rivales, o a las que no ataquen o no se muevan
-			this->juegoVista->entitiesToRenderInMenu(this->idsEntitiesSelected);
+			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
 		}
 	}
 }
@@ -144,7 +143,7 @@ void GameController::selection() {
 //TODO este método es un asco lleno de else if sin sentido, lo tenemos que refactorizar
 list<Message*> GameController::action(){
 	list<Message*> messages;
-	if (!this->idsEntitiesSelected.empty()) {
+	if (!this->entitiesSelected.empty()) {
 		if ( initialPosMouseY >= gameSettings->getScreenHeight()-gameSettings->getAlturaMenuInferior() ){
 			//menu
 			return this->interactiveMenu(initialPosMouseX,initialPosMouseY);
@@ -153,7 +152,7 @@ list<Message*> GameController::action(){
 			this->juegoVista->clearAllDataForBuilding();
 			Message* message = new Message();
 			msg_game body;
-			body.set_id(this->idsEntitiesSelected.front());
+			body.set_id(this->entitiesSelected.front()->getId());
 			body.set_tipo("building");
 			body.set_nombre(this->entityToBuild);
 			body.set_x(finalPosMouseX);
@@ -165,8 +164,8 @@ list<Message*> GameController::action(){
 			this->decreaseResources(this->entityToBuild);
 			this->entityToBuild = "";
 		}else{
-			list<int>::iterator it = this->idsEntitiesSelected.begin();
-			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById(*it);
+			list<EntidadPartidaVista*>::iterator it = this->entitiesSelected.begin();
+			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById((*it)->getId());
 			if ( entity != NULL ){
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
@@ -177,10 +176,10 @@ list<Message*> GameController::action(){
 						//voy a atacar
 						typeMessage = "attack";
 					}
-					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+					for (; it != this->entitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
 						msg_game body;
-						body.set_id(*it);
+						body.set_id((*it)->getId());
 						body.set_tipo(typeMessage);
 						body.set_target(atoi(targetToAttack["id"].c_str()));
 						message->setContent(body);
@@ -190,10 +189,10 @@ list<Message*> GameController::action(){
 					}
 				}else{
 					//update
-					for (; it != this->idsEntitiesSelected.end() ; ++it ) {
+					for (; it != this->entitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
 						msg_game body;
-						body.set_id(*it);
+						body.set_id((*it)->getId());
 						body.set_tipo("update");
 						body.set_x(cartesianPosition.first);
 						body.set_y(cartesianPosition.second);

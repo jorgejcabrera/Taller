@@ -584,11 +584,10 @@ void JuegoVista::setEntityForBuild(string entityName){
 	this->entityForBuild = entityName;
 }
 
-void JuegoVista::entitiesToRenderInMenu(list<int> entitiesId) {
+void JuegoVista::entitiesToRenderInMenu(list<EntidadPartidaVista*> entities) {
 	map<string,int> map;
-	for (list<int>::iterator itList = entitiesId.begin() ; itList != entitiesId.end() ; ++itList) {
-		EntidadPartidaVista* entity = this->getEntityById(*itList);
-		map[entity->getPathImage()]++;
+	for (list<EntidadPartidaVista*>::iterator itList = entities.begin(); itList != entities.end() ; ++itList) {
+		map[(*itList)->getPathImage()]++;
 	}
 	this->menuVista->setSelectedEntities(map);
 }
