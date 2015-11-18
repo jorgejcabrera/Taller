@@ -83,8 +83,11 @@ void GameController::setNextPaths(){
 void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	//si el target está vivo, pero no está cerca, entonces lo debemos perseguir
 	if(!this->readyToInteract(attacker) ){
-		pair<int,int> targetPosition = this->juego->getEntityById(attacker->getTarget())->getPosition();
-		this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
+		//pair<int,int> targetPosition = this->juego->getEntityById(attacker->getTarget())->getPosition();
+		pair<int,int> targetPosition = this->juego->getNearestPosition(this->juego->getEntityById(attacker->getTarget()));
+		if( attacker->placeToGo.first != targetPosition.first && attacker->placeToGo.second != targetPosition.second)
+			this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
+		//this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
 
 	//el target está vivo pero se escapo
 	}else if( this->targetOutOfReach(attacker) ){
@@ -105,7 +108,6 @@ void GameController::buildTarget(EntidadDinamica* builder){
 	//si el target no está cerca, entonces me tengo que acercar
 	if(!this->readyToInteract(builder) ){
 		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
-		//pair<int,int> targetPosition = building->getPosition();
 		pair<int,int> targetPosition = this->juego->getNearestPosition(building);
 		if( builder->placeToGo.first != targetPosition.first && builder->placeToGo.second != targetPosition.second)
 			this->juego->setPlaceToGo(builder->getId(),targetPosition.first, targetPosition.second);

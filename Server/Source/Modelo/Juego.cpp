@@ -83,8 +83,9 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	int villagerStrength = 4;
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
-		//TODO revisar que le ponemos en tipo
+		//TODO el metodo getAvailablePosition no es redundante hay q usar get nearest position
 		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
+		//pair<int,int> positionOfProtagonista = this->getNearestPosition(edificioCreado);
 		string name = "aldeano";
 		EntidadDinamica* protagonista = new EntidadDinamica(name,
 															gameSettings->getConfigAttributeOfEntityAsInt(name, "velocidad"),
@@ -292,7 +293,26 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 	pair<int,int> entityPosition = entity->getPosition();
 	pair<int,int> candidatePosition;
 
-	//recorro el perimetro del edificio
+	//posición cercana a la entidad dinamica
+	/*if( entityWidth == 1 && entityHeight == 1){
+		Tile* tile = this->mapa->getTileAt(entityPosition.first-1, candidatePosition.second );
+		if(tile && tile->isAvailable())
+			return make_pair(entityPosition.first - 1, candidatePosition.second );
+
+		tile = this->mapa->getTileAt(entityPosition.first, candidatePosition.second + 1 );
+		if(tile && tile->isAvailable())
+			return make_pair(entityPosition.first, candidatePosition.second + 1);
+
+		tile = this->mapa->getTileAt(entityPosition.first + 1, candidatePosition.second - 1 );
+		if(tile && tile->isAvailable())
+			return make_pair(entityPosition.first + 1, candidatePosition.second - 1);
+
+		tile = this->mapa->getTileAt(entityPosition.first, candidatePosition.second + 1 );
+		if(tile && tile->isAvailable())
+			return make_pair(entityPosition.first , candidatePosition.second + 1);
+	}*/
+
+	//posicion cercana al edificio
 	candidatePosition = make_pair(entity->getPosition().first + entityWidth,entity->getPosition().second);
 	for(; candidatePosition.second <= entityPosition.second + entityHeight ; candidatePosition.second++){
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
@@ -320,7 +340,8 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 		if (tile && tile->isAvailable())
 			return candidatePosition;
 	}
-	return this->getMap()->getAvailablePosition(entityPosition.first+entityWidth,entityPosition.second+entityHeight);
+	//return this->getMap()->getAvailablePosition(entityPosition.first+entityWidth,entityPosition.second+entityHeight);
+	return entity->getPosition();
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){
