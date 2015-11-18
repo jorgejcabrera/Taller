@@ -37,6 +37,7 @@ void MenuVista::drawMe() {
 		PicassoHelper::GetInstance()->renderObject(pathImage, i, 0, this->mediumStripSise, this->mediumStripSise);
 	}
 	if (this->drawDescription) this->drawEntityDescription();
+	else if (this->drawEntities) this->drawEntitiesSelected();
 
 	if (strings["name"] == "Barracks") {
 		string path = GameSettings::GetInstance()->imagePathPersonajesByType("aldeanoSolo");
@@ -68,6 +69,8 @@ int MenuVista::getMiniMapHeight() {
 void MenuVista::deselectedEntity() {
 	this->strings.clear();
 	this->drawDescription = false;
+	this->selectedEntities.clear();
+	this->drawEntities = false;
 }
 
 void MenuVista::setSelectedEntityDescription(map<string,string> description) {
@@ -138,6 +141,34 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 		else result.second = "";
 	}
 	return result;
+}
+
+void MenuVista::drawEntitiesSelected() {
+	int cantidad;
+	int width = 50;
+	int posX = GameSettings::GetInstance()->getScreenWidth()/4;
+	for ( map<string,int>::iterator it = this->selectedEntities.begin() ; it != this->selectedEntities.end(); ++it ) {
+		string path= (*it).first;
+		size_t found = path.find("Molino");
+		if(found!=string::npos) path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
+		found = path.find("soldado.");
+		if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
+		found = path.find("king");
+		if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
+		found = path.find("aldeano");
+		if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
+		found = path.find("soldadoDesconectado");
+		if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
+		for ( cantidad = (*it).second ; cantidad > 0 ; --cantidad) {
+			PicassoHelper::GetInstance()->renderObject(path,posX, GameSettings::GetInstance()->getScreenHeight()-110, width, 50);
+			posX = posX+width;
+		}
+	}
+}
+
+void MenuVista::setSelectedEntities(map<string,int> entitiesToDraw) {
+	this->drawEntities = true;
+	this->selectedEntities = entitiesToDraw;
 }
 
 MenuVista::~MenuVista() {

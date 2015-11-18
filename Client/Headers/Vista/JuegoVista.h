@@ -174,6 +174,10 @@ public:
 	 * Seteo la entidad que estoy tratando de construir
 	 */
 	void setEntityForBuild(string entityName);
+	/*
+	 * preparo un map mediante la lista recibida, para pasarselo al menuVista y que luego lo renderize
+	 */
+	void entitiesToRenderInMenu(list<int>);
 	~JuegoVista();
 };
 
