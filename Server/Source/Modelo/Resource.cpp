@@ -17,6 +17,7 @@ Resource::Resource(string tipo,int x,int y) {
 	this->name = tipo;
 	this->maxHealth = GameSettings::GetInstance()->getConfigAttributeOfEntityAsInt(tipo, "health");
 	this->health = this->maxHealth;
+	this->owner = "";
 }
 
 Resource::~Resource() {

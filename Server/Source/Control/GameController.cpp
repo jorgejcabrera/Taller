@@ -93,7 +93,7 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	}else{
 		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
 		attacker->attackTo(enemy);
-		if(enemy->getHealth()>0){
+		if(enemy->getHealth()>0 && enemy->getOwner() != ""){
 			this->juego->addNewEntity(enemy);
 		}
 	}
