@@ -42,7 +42,7 @@ void Mapa::createResources(){
 	int x = rand() % width;
 	int y = rand() % height;
 	//generamos un tipo de recurso random
-	int tipo = rand() % 4 ;
+	int tipo = rand() % 5 + 1 ;
 	Resource* newResource = NULL;
 
 	while( this->resources.size() < maxResources ){
@@ -50,29 +50,25 @@ void Mapa::createResources(){
 			if( tipo == 1 ){
 				newResource = new Resource("gold",x,y);
 				newResource->setNotifiable(true);
-				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-			
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();			
 			}else if( tipo == 2 ){
 				newResource = new Resource("food",x,y);
 				newResource->setNotifiable(true);
-				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-			
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();			
 			}else if( tipo == 3 ){
 				newResource = new Resource("wood",x,y);
 				newResource->setNotifiable(true);
-				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-			
+				this->tiles.at(make_pair(x,y))->changeStatusAvailable();			
 			}else{
 				newResource = new Resource("rock",x,y);
 				newResource->setNotifiable(true);
 				this->tiles.at(make_pair(x,y))->changeStatusAvailable();
-
 			}
 			this->resources.push_front(newResource);
 		}
 		x = rand() % width;
 		y = rand() % height;
-		tipo = rand() % 4 ;
+		tipo = rand() % 5 + 1 ;
 	}
 }
 
