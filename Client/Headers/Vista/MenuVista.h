@@ -27,6 +27,8 @@ private:
 	int miniMapHeight;
 	bool drawDescription;
 	map<string,string> strings;
+	bool drawEntities;
+	map<string,int> selectedEntities;
 	int posXvertexFirstButton;
 	int posYvertexFirstButton;
 	int sideFirstButton;
@@ -44,6 +46,8 @@ public:
 	void setSelectedEntityDescription(map<string,string> description);
 	void drawResources(map<string,int> resources);
 	pair<int, string> getTypeOfNewEntity(int posMouseX,int posMouseY);
+	void drawEntitiesSelected();
+	void setSelectedEntities(map<string,int>);
 	virtual ~MenuVista();
 };
 

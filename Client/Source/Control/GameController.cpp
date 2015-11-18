@@ -132,13 +132,13 @@ void GameController::selection() {
 				}
 			}
 		}
+		this->idsEntitiesSelected.sort();
 		this->idsEntitiesSelected.unique();
 		if (this->idsEntitiesSelected.size() == 1) {
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 		} else {
-		//TODO eliminar entidades que no ataquen o no se muevan
-		//TODO este metodo deberia renderizar en el menu todos los personajes elegidos
-		//this->juegoVista->getMenuVista()->setSelectedsEntitiesDescription(this->idsEntitiesSelected);
+		//TODO eliminar entidades de la lista de seleccionadas que no ataquen o no se muevan
+			this->juegoVista->entitiesToRenderInMenu(this->idsEntitiesSelected);
 		}
 	}
 }
