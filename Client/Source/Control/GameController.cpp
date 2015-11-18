@@ -379,7 +379,7 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 bool GameController::hasResourcesRequired(string entity){
 	ResourceCounter* resourceCounter = this->juegoVista->getResourceCounter();
 	map<string,int> costs = this->gameSettings->getCostsOf(entity);
-	bool hasResources = (costs["chori"] <= resourceCounter->getFood() &&
+	bool hasResources = (costs["food"] <= resourceCounter->getFood() &&
 					costs["rock"] <= resourceCounter->getRock() &&
 					costs["gold"] <= resourceCounter->getGold() &&
 					costs["wood"] <= resourceCounter->getWood());

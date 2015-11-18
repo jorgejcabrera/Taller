@@ -263,13 +263,13 @@ string DefaultSettings::getPathOfMenuBackground(){
 map<string,int> DefaultSettings::getCostsOf(string type) {
 	map<string,int>  returnMap;
 	if (type == "soldado") {
-			returnMap["chori"] = 3;
-			returnMap["rock"] = 2;
+			returnMap["food"] = 3;
+			returnMap["gold"] = 2;
 	}else if (type == "aldeano") {
-		returnMap["chori"] = 3;
+		returnMap["food"] = 3;
 		returnMap["rock"] = 2;
 	}else if (type == "Castle") {
-		returnMap["chori"] = 10;
+		returnMap["food"] = 10;
 		returnMap["rock"] = 10;
 		returnMap["gold"] = 10;
 	}
