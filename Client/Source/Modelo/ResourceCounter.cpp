@@ -20,7 +20,7 @@ void ResourceCounter::gastar(string recurso) {
 		this->oro--;
 	if(recurso == "wood")
 		this->madera--;
-	if(recurso == "chori")
+	if(recurso == "food")
 		this->alimento--;
 	if(recurso == "rock")
 		this->roca--;
@@ -31,7 +31,7 @@ void ResourceCounter::increase(string recurso,int quantity){
 		this->oro += quantity;
 	if(recurso == "wood")
 		this->madera += quantity;
-	if(recurso == "chori")
+	if(recurso == "food")
 		this->alimento += quantity;
 	if(recurso == "rock")
 		this->roca += quantity;
