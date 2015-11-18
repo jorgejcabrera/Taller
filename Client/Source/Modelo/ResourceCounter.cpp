@@ -9,48 +9,48 @@
 
 ResourceCounter::ResourceCounter() {
 	int cantInicial = 10;
-	this->alimento = cantInicial;
-	this->oro = cantInicial;
-	this->madera = cantInicial;
-	this->roca = cantInicial;
+	this->food = cantInicial;
+	this->gold = cantInicial;
+	this->wood = cantInicial;
+	this->rock = cantInicial;
 }
 
 void ResourceCounter::gastar(string recurso) {
 	if(recurso == "gold")
-		this->oro--;
+		this->gold--;
 	if(recurso == "wood")
-		this->madera--;
-	if(recurso == "chori")
-		this->alimento--;
+		this->wood--;
+	if(recurso == "food")
+		this->food--;
 	if(recurso == "rock")
-		this->roca--;
+		this->rock--;
 }
 
 void ResourceCounter::increase(string recurso,int quantity){
 	if(recurso == "gold")
-		this->oro += quantity;
+		this->gold += quantity;
 	if(recurso == "wood")
-		this->madera += quantity;
-	if(recurso == "chori")
-		this->alimento += quantity;
+		this->wood += quantity;
+	if(recurso == "food")
+		this->food += quantity;
 	if(recurso == "rock")
-		this->roca += quantity;
+		this->rock += quantity;
 }
 
 int ResourceCounter::getGold(){
-	return this->oro;
+	return this->gold;
 }
 
 int ResourceCounter::getFood(){
-	return this->alimento;
+	return this->food;
 }
 
 int ResourceCounter::getWood(){
-	return this->madera;
+	return this->wood;
 }
 
 int ResourceCounter::getRock(){
-	return this->roca;
+	return this->rock;
 }
 
 ResourceCounter::~ResourceCounter() {

@@ -14,10 +14,10 @@ using namespace std;
 
 class ResourceCounter {
 private:
-	int oro;
-	int madera;
-	int alimento;
-	int roca;
+	int gold;
+	int wood;
+	int food;
+	int rock;
 public:
 	ResourceCounter();
 	void gastar(string recurso);
