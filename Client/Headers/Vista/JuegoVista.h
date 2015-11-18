@@ -177,7 +177,7 @@ public:
 	/*
 	 * preparo un map mediante la lista recibida, para pasarselo al menuVista y que luego lo renderize
 	 */
-	void entitiesToRenderInMenu(list<int>);
+	void entitiesToRenderInMenu(list<EntidadPartidaVista*> entities);
 	~JuegoVista();
 };
 

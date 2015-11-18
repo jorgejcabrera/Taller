@@ -33,8 +33,7 @@ private:
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
 
-	//TODO PORQUE NO GUARDAS EL PUNTERO A LAS ENTIDADES?
-	list<int> idsEntitiesSelected;
+	list<EntidadPartidaVista*> entitiesSelected;
 	int initialPosMouseX;
 	int initialPosMouseY;
 	string pressedMouseButton;
