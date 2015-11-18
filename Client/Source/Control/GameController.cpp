@@ -57,9 +57,6 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 					if(this->entityToBuild != ""){
 						this->entityToBuild = "";
 						this->juegoVista->clearAllDataForBuilding();
-						stringstream ss;
-						ss << "click IZQUIERDO, no construyo nada en " << finalPosMouseX << " " << finalPosMouseY;
-						Logger::get()->logDebug("GameController","getMessagesFromEvent",ss.str());
 					}
 					this->idsEntitiesSelected.clear();
 					this->juegoVista->getMenuVista()->deselectedEntity();
@@ -126,22 +123,24 @@ void GameController::selection() {
 				cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
 				entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
-					if(this->clientName == entidadMap.at("owner")){
-						this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
-					}
+					this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
 				}
 			}
 		}
+		this->idsEntitiesSelected.sort();
 		this->idsEntitiesSelected.unique();
 		if (this->idsEntitiesSelected.size() == 1) {
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+			//dejo esto turbio para que vuelva a andar todo como antes, despues hago refactor
+			EntidadPartidaVista* e = this->juegoVista->getEntityById(this->idsEntitiesSelected.back());
+			if ( e->getOwner() != this->clientName )  this->idsEntitiesSelected.clear();
 		} else {
-		//TODO eliminar entidades que no ataquen o no se muevan
-		//TODO este metodo deberia renderizar en el menu todos los personajes elegidos
-		//this->juegoVista->getMenuVista()->setSelectedsEntitiesDescription(this->idsEntitiesSelected);
+		//TODO eliminar entidades de la lista de seleccionadas  a las entidades rivales, o a las que no ataquen o no se muevan
+			this->juegoVista->entitiesToRenderInMenu(this->idsEntitiesSelected);
 		}
 	}
 }
+
 //TODO este método es un asco lleno de else if sin sentido, lo tenemos que refactorizar
 list<Message*> GameController::action(){
 	list<Message*> messages;

@@ -184,8 +184,9 @@ string DefaultSettings::getTypeEntity(const string &type){
 
 		list<string> resources;
 		resources.push_back("gold");
-		resources.push_back("chori");
+		resources.push_back("food");
 		resources.push_back("wood");
+		resources.push_back("rock");
 		if(isInList(resources,type))
 				return "resources";
 	return "";

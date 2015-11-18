@@ -574,6 +574,15 @@ void JuegoVista::setEntityForBuild(string entityName){
 	this->entityForBuild = entityName;
 }
 
+void JuegoVista::entitiesToRenderInMenu(list<int> entitiesId) {
+	map<string,int> map;
+	for (list<int>::iterator itList = entitiesId.begin() ; itList != entitiesId.end() ; ++itList) {
+		EntidadPartidaVista* entity = this->getEntityById(*itList);
+		map[entity->getPathImage()]++;
+	}
+	this->menuVista->setSelectedEntities(map);
+}
+
 JuegoVista::~JuegoVista() {
 //	this->picassoHelper()->~PicassoHelper();
 	delete(this->menuVista);
