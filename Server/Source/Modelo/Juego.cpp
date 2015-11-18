@@ -220,7 +220,8 @@ EntidadPartida* Juego::getEntityById(int id){
 }
 
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
-	pair<int, int> positionOfCreated = this->getNearestPositionOfABuilding(idOfCreator);
+	EntidadPartida* building = this->getEntityById(idOfCreator);
+	pair<int, int> positionOfCreated = this->getNearestPosition(building);
 	if (positionOfCreated.first == -1) positionOfCreated = this->mapa->getAvailablePosition();
 	EntidadDinamica* dinamicEntity = new EntidadDinamica(type,
 														gameSettings->getConfigAttributeOfEntityAsInt(type, "velocidad"),
@@ -281,35 +282,44 @@ pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
 	return pair<int,int>();
 }
 
-pair<int,int> Juego::getNearestPositionOfABuilding(int idBuilding) {
-	stringstream ss;
-	EntidadPartida* building = this->getEntityById(idBuilding);
-	if (building == NULL) return make_pair(-1,-1);
-	int buildingWidth = gameSettings->getConfigAttributeOfEntityAsInt(building->getName(), "ancho_base");
-	int buildingHeight = gameSettings->getConfigAttributeOfEntityAsInt(building->getName(), "alto_base");
-	pair<int,int> buildingPosition;
+pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
+	if (entity == NULL) return make_pair(-1,-1);
+	
+	int entityWidth = gameSettings->getConfigAttributeOfEntityAsInt(entity->getName(), "ancho_base");
+	int entityHeight = gameSettings->getConfigAttributeOfEntityAsInt(entity->getName(), "alto_base");
+
+	pair<int,int> entityPosition = entity->getPosition();
 	pair<int,int> candidatePosition;
-	buildingPosition.first = building->getPosition().first;
-	buildingPosition.second = building->getPosition().second;
-	candidatePosition.first = buildingPosition.first+buildingWidth;
+
 	//recorro el perimetro del edificio
-	for( candidatePosition.second = buildingPosition.second+buildingHeight; candidatePosition.second > buildingPosition.second-1 ; candidatePosition.second--) {
+	candidatePosition = make_pair(entity->getPosition().first + entityWidth,entity->getPosition().second);
+	for(; candidatePosition.second <= entityPosition.second + entityHeight ; candidatePosition.second++){
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
-		if (tile->isAvailable()) return candidatePosition;
+		if (tile && tile->isAvailable())
+			return candidatePosition;
 	}
-	for( ; candidatePosition.first > buildingPosition.first-1 ; candidatePosition.first--) {
+
+	candidatePosition = make_pair(entity->getPosition().first,entity->getPosition().second + entityHeight);
+	for(; candidatePosition.first <= entityPosition.first + entityWidth ; candidatePosition.first++){
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
-		if (tile->isAvailable()) return candidatePosition;
+		if (tile && tile->isAvailable())
+			return candidatePosition;
 	}
-	for( ; candidatePosition.second < buildingPosition.second+buildingHeight ; candidatePosition.second++) {
+
+	candidatePosition = make_pair(entity->getPosition().first,entity->getPosition().second-1);
+	for(; candidatePosition.first <= entityPosition.first + entityWidth ; candidatePosition.first++){
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
-		if (tile->isAvailable()) return candidatePosition;
+		if (tile && tile->isAvailable())
+			return candidatePosition;
 	}
-	for( ; candidatePosition.first < buildingPosition.first+buildingWidth ; candidatePosition.first++) {
+
+	candidatePosition = make_pair(entity->getPosition().first-1,entity->getPosition().second);
+	for(; candidatePosition.second <= entityPosition.second + entityHeight ; candidatePosition.second++){
 		Tile* tile = this->mapa->getTileAt(candidatePosition.first, candidatePosition.second );
-		if (tile->isAvailable()) return candidatePosition;
-	}//si no hay posiciones disponibles en el mapa ..
-	return this->getMap()->getAvailablePosition(buildingPosition.first+buildingWidth,buildingPosition.second+buildingHeight);
+		if (tile && tile->isAvailable())
+			return candidatePosition;
+	}
+	return this->getMap()->getAvailablePosition(entityPosition.first+entityWidth,entityPosition.second+entityHeight);
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){

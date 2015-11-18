@@ -84,7 +84,7 @@ public:
 	* Obtengo una posicion dentro del perimetro del edificio,
 	* si no hay ninguna disponible, llama a mapa->getAvailablePosition(x,y)
 	* */
-	pair<int,int> getNearestPositionOfABuilding(int idBuilding);
+	pair<int,int> getNearestPosition(EntidadPartida* entity);
 	/*
 	* Dados dos usuarios traspasa todas las entidades del ownerFrom al ownerTo y lo agrega en la lista newEntities para que se notifiquen
 	* */

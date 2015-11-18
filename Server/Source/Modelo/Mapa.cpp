@@ -130,7 +130,12 @@ bool Mapa::positionAvailable(EntidadPartida* entidad){
 }
 
 Tile* Mapa::getTileAt(int x,int y){
-	return this->tiles.at(make_pair(x,y));
+	map<pair<int,int>,Tile*>::iterator it = this->tiles.find(make_pair(x,y));
+	if(it != this->tiles.end() ){
+		return this->tiles.at(make_pair(x,y));
+	}else{
+		return NULL;
+	}
 }
 
 //Busco una posicion disponible para poner un personaje cuando se crea un cliente
