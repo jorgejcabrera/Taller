@@ -370,6 +370,7 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 				message->setContent(body);
 				message->setOwner(this->clientName);
 				messages.push_back(message);
+				//Logger::get()->logInfo("GameController","interactiveMenu", message->toString());
 			}
 		}
 	}
