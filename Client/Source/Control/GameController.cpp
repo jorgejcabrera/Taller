@@ -126,9 +126,7 @@ void GameController::selection() {
 				cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
 				entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
-					if(this->clientName == entidadMap.at("owner")){
-						this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
-					}
+					this->idsEntitiesSelected.push_back(atoi(entidadMap.at("id").c_str()));
 				}
 			}
 		}
@@ -136,12 +134,16 @@ void GameController::selection() {
 		this->idsEntitiesSelected.unique();
 		if (this->idsEntitiesSelected.size() == 1) {
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+			//dejo esto turbio para que vuelva a andar todo como antes, despues hago refactor
+			EntidadPartidaVista* e = this->juegoVista->getEntityById(this->idsEntitiesSelected.back());
+			if ( e->getOwner() != this->clientName )  this->idsEntitiesSelected.clear();
 		} else {
-		//TODO eliminar entidades de la lista de seleccionadas que no ataquen o no se muevan
+		//TODO eliminar entidades de la lista de seleccionadas  a las entidades rivales, o a las que no ataquen o no se muevan
 			this->juegoVista->entitiesToRenderInMenu(this->idsEntitiesSelected);
 		}
 	}
 }
+
 //TODO este método es un asco lleno de else if sin sentido, lo tenemos que refactorizar
 list<Message*> GameController::action(){
 	list<Message*> messages;
