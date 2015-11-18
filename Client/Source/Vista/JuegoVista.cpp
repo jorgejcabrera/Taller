@@ -21,6 +21,10 @@ MenuVista* JuegoVista::getMenuVista(){
 	return this->menuVista;
 }
 
+bool JuegoVista::isAvailablePosForBuilding(){
+	return this->availablePosForBuilding;
+}
+
 map<int, EntidadDinamicaVista*>* JuegoVista::getDinamicEntities(){
 	return &this->personajes;
 }

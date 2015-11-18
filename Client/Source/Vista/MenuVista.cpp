@@ -11,17 +11,17 @@ namespace std {
 
 MenuVista::MenuVista() {
 	//TODO modificar esto para obtenerse del default o del yaml
-	pathImage = "../../Taller/Images/Menu/Menu3.jpg";
-	pathPergamino = "../../Taller/Images/Menu/pergamino.jpg";
-	bigHeight = GameSettings::GetInstance()->getAlturaMenuInferior();
-	littleStripSise = 10;
-	mediumStripSise = 20;
-	miniMapHeight = 0;
-	drawDescription = false;
-	drawEntities = false;
-	posXvertexFirstButton = GameSettings::GetInstance()->getScreenWidth()/2 ;
-	posYvertexFirstButton = GameSettings::GetInstance()->getScreenHeight() - bigHeight;
-	sideFirstButton = 55;
+	this->pathImage = "../../Taller/Images/Menu/Menu3.jpg";
+	this->pathPergamino = "../../Taller/Images/Menu/pergamino.jpg";
+	this->bigHeight = GameSettings::GetInstance()->getAlturaMenuInferior();
+	this->littleStripSise = 10;
+	this->mediumStripSise = 20;
+	this->miniMapHeight = 0;
+	this->drawDescription = false;
+	//this->posXvertexFirstButton = GameSettings::GetInstance()->getScreenWidth()/2 ;
+	this->posXvertexFirstButton = 30;
+	this->posYvertexFirstButton = GameSettings::GetInstance()->getScreenHeight() - bigHeight;
+	this->sideFirstButton = 50;
 }
 
 void MenuVista::drawMe() {
@@ -41,13 +41,13 @@ void MenuVista::drawMe() {
 
 	if (strings["name"] == "Barracks") {
 		string path = GameSettings::GetInstance()->imagePathPersonajesByType("aldeanoSolo");
-		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
+		PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
 	} else if (strings["name"] == "Castle") {
 		string path = GameSettings::GetInstance()->imagePathPersonajesByType("soldadoSolo");
-		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
+		PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
 	}else if (strings["name"] == "aldeano"){
 		string path = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
-		PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight()-GameSettings::GetInstance()->getAlturaMenuInferior(), 50, 50);
+		PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
 	}
 
 }
@@ -107,7 +107,7 @@ void MenuVista::drawEntityDescription() {
 			if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
 			found = path.find("soldadoDesconectado");
 			if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
-			PicassoHelper::GetInstance()->renderObject(path,30, GameSettings::GetInstance()->getScreenHeight()-110, 100, 100);
+			PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight() - this->bigHeight, 100, 100);
 		}
 	}
 	
@@ -128,10 +128,10 @@ void MenuVista::drawResources(map<string,int> resources){
 
 pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 	pair<int, string> result;
-	if (posMouseX > posXvertexFirstButton &&
-		posMouseX < posXvertexFirstButton + sideFirstButton &&
-		posMouseY > posYvertexFirstButton &&
-		posMouseY < posYvertexFirstButton + sideFirstButton ) {
+	if (posMouseX > this->posXvertexFirstButton &&
+		posMouseX < this->posXvertexFirstButton + this->sideFirstButton &&
+		posMouseY > this->posYvertexFirstButton &&
+		posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
 		result.first = atoi(strings["id"].c_str());
 		//TODO Nuestro centro civico es Barracks
 		if (strings["name"] == "Barracks") result.second = "aldeano";

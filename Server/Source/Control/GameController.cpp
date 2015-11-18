@@ -93,7 +93,7 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	}else{
 		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
 		attacker->attackTo(enemy);
-		if(enemy->getHealth()>0){
+		if(enemy->getHealth()>0 && enemy->getOwner() != ""){
 			this->juego->addNewEntity(enemy);
 		}
 	}
@@ -144,7 +144,7 @@ void GameController::interactWithTargets(){
 bool GameController::readyToInteract(EntidadDinamica* entity){
 	if( entity->isReadyToInteract() ){
 		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget())->getPosition();
-		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 2;
+		return  UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) <= 1;
 	}else{
 		return false;
 	}
