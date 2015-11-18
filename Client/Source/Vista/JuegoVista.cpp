@@ -74,6 +74,12 @@ void JuegoVista::drawEntityForBuild(){
 		int width = this->gameSettings->getEntityConfig(this->entityForBuild)->getAncho();
 		int height = this->gameSettings->getEntityConfig(this->entityForBuild)->getAlto();
 		string path = this->gameSettings->getEntityConfig(this->entityForBuild)->getPath();
+		size_t found = path.find("Molino");
+		if(found!=string::npos){
+			path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
+			//Sumo uno porque el molino de 1 de alto y para dibujarlo se hace 0
+			height += 1;
+		}
 		pair<int,int> isometricPosition = UtilsController::GetInstance()->getIsometricPosition(cartesianPosition.first-width*2, cartesianPosition.second-height);
 		PicassoHelper::GetInstance()->renderObject(path, (isometricPosition.first+ offsetX) , (isometricPosition.second+ offsetY) ,width * 2 * DefaultSettings::getTileSize(), (height-1) * DefaultSettings::getTileSize() * 2, this->availablePosForBuilding);
 	}

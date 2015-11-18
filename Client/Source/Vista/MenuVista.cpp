@@ -19,7 +19,7 @@ MenuVista::MenuVista() {
 	this->miniMapHeight = 0;
 	this->drawDescription = false;
 	//this->posXvertexFirstButton = GameSettings::GetInstance()->getScreenWidth()/2 ;
-	this->posXvertexFirstButton = 30;
+	this->posXvertexFirstButton = 50;
 	this->posYvertexFirstButton = GameSettings::GetInstance()->getScreenHeight() - bigHeight;
 	this->sideFirstButton = 50;
 }
@@ -46,8 +46,12 @@ void MenuVista::drawMe() {
 		string path = GameSettings::GetInstance()->imagePathPersonajesByType("soldadoSolo");
 		PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
 	}else if (strings["name"] == "aldeano"){
-		string path = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
-		PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
+		string pathCastle = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
+		PicassoHelper::GetInstance()->renderObject(pathCastle,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
+		string pathArmy = GameSettings::GetInstance()->getEntityConfig("Army")->getPath();
+		PicassoHelper::GetInstance()->renderObject(pathArmy,this->posXvertexFirstButton*2, this->posYvertexFirstButton, 50, 50);
+		string pathMolino = "../../Taller/Images/Industrial_Age/MolinoSolo.png";
+		PicassoHelper::GetInstance()->renderObject(pathMolino,this->posXvertexFirstButton*3, this->posYvertexFirstButton, 50, 50);
 	}
 
 }
@@ -129,16 +133,32 @@ void MenuVista::drawResources(map<string,int> resources){
 pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 	pair<int, string> result;
 	if (posMouseX > this->posXvertexFirstButton &&
-		posMouseX < this->posXvertexFirstButton + this->sideFirstButton &&
-		posMouseY > this->posYvertexFirstButton &&
-		posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
-		result.first = atoi(strings["id"].c_str());
-		//TODO Nuestro centro civico es Barracks
-		if (strings["name"] == "Barracks") result.second = "aldeano";
-		else if (strings["name"] == "Town Center") result.second = "aldeano";
-		else if (strings["name"] == "aldeano") result.second = "Castle";
-		else if (strings["name"] == "Castle") result.second = "soldado";
-		else result.second = "";
+			posMouseX < this->posXvertexFirstButton + this->sideFirstButton &&
+			posMouseY > this->posYvertexFirstButton &&
+			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
+			result.first = atoi(strings["id"].c_str());
+			//TODO Nuestro centro civico es Barracks
+			if (strings["name"] == "Barracks") result.second = "aldeano";
+			else if (strings["name"] == "Town Center") result.second = "aldeano";
+			else if (strings["name"] == "aldeano") result.second = "Castle";
+			else if (strings["name"] == "Castle") result.second = "soldado";
+			else result.second = "";
+	}
+	if (posMouseX > this->posXvertexFirstButton*2 &&
+			posMouseX < this->posXvertexFirstButton*2 + this->sideFirstButton &&
+			posMouseY > this->posYvertexFirstButton &&
+			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
+			result.first = atoi(strings["id"].c_str());
+			if (strings["name"] == "aldeano") result.second = "Army";
+			else result.second = "";
+	}
+	if (posMouseX > this->posXvertexFirstButton*3 &&
+			posMouseX < this->posXvertexFirstButton*3 + this->sideFirstButton &&
+			posMouseY > this->posYvertexFirstButton &&
+			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
+			result.first = atoi(strings["id"].c_str());
+			if (strings["name"] == "aldeano") result.second = "molino";
+			else result.second = "";
 	}
 	return result;
 }

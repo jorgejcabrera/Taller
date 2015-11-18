@@ -356,7 +356,7 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 	pair<int, string> buildingAndEntitie = this->juegoVista->getMenuVista()->getTypeOfNewEntity(initialPosMouseX,initialPosMouseY);
 	if (buildingAndEntitie.second != "") {
 		if (this->hasResourcesRequired(buildingAndEntitie.second)) {
-			if( buildingAndEntitie.second == "Castle" ){
+			if( buildingAndEntitie.second == "Castle" || buildingAndEntitie.second == "Army" || buildingAndEntitie.second=="molino"){
 				this->entityToBuild = buildingAndEntitie.second;
 				this->juegoVista->setEntityForBuild(this->entityToBuild);
 			}else{

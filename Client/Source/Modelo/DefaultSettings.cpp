@@ -272,7 +272,17 @@ map<string,int> DefaultSettings::getCostsOf(string type) {
 		returnMap["food"] = 10;
 		returnMap["rock"] = 10;
 		returnMap["gold"] = 10;
-	}
+	}else if (type == "Army"){
+		returnMap["food"] = 8;
+		returnMap["rock"] = 8;
+		returnMap["gold"] = 8;
+		returnMap["wood"] = 8;
+	}else if (type == "molino"){
+		returnMap["food"] = 5;
+		returnMap["rock"] = 5;
+		returnMap["gold"] = 5;
+		returnMap["wood"] = 5;
+		}
 	return returnMap;
 }
 string DefaultSettings::getPathFlagImage(string stringColor){
