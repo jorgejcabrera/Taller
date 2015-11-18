@@ -85,10 +85,12 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	if(!this->readyToInteract(attacker) ){
 		pair<int,int> targetPosition = this->juego->getEntityById(attacker->getTarget())->getPosition();
 		this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
+
 	//el target está vivo pero se escapo
 	}else if( this->targetOutOfReach(attacker) ){
 		attacker->setTarget(0);
 		attacker->prepareToInteract(false);
+
 	//atacamos
 	}else{
 		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
@@ -103,23 +105,18 @@ void GameController::buildTarget(EntidadDinamica* builder){
 	//si el target no está cerca, entonces me tengo que acercar
 	if(!this->readyToInteract(builder) ){
 		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
-		pair<int,int> targetPosition = building->getPosition();
-		this->juego->setPlaceToGo(builder->getId(),targetPosition.first, targetPosition.second);
-		/*stringstream ss;
-		ss << "No estoy listo, me muevo cerca " << builder->getId();
-		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
+		//pair<int,int> targetPosition = building->getPosition();
+		pair<int,int> targetPosition = this->juego->getNearestPosition(building);
+		if( builder->placeToGo.first != targetPosition.first && builder->placeToGo.second != targetPosition.second)
+			this->juego->setPlaceToGo(builder->getId(),targetPosition.first, targetPosition.second);
+
 	//el target ya esta construido en su totalidad
 	}else if( this->targetCompleted(builder) ){
 		builder->setTarget(0);
 		builder->prepareToInteract(false);
-		/*stringstream ss;
-		ss << "YA esta listo el edifico " << builder->getId();
-		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
+
 	//construimos
 	}else{
-		/*stringstream ss;
-		ss <<"Estoy construyendo "<< builder->getId();
-		Logger::get()->logDebug("GameController","buildTarget",ss.str());*/
 		EntidadPartida* building = this->juego->getEntityById(builder->getTarget());
 		builder->construct(building);
 		this->juego->addNewEntity(building);
