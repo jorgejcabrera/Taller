@@ -130,12 +130,23 @@ void GameController::selection() {
 		}
 		this->entitiesSelected.sort();
 		this->entitiesSelected.unique();
+
 		if (this->entitiesSelected.size() == 1) {
+			entidadMap = this->juegoVista->getEntityAttributes(this->entitiesSelected.back());
 			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
 			if (this->entitiesSelected.back()->getOwner() != this->clientName )  this->entitiesSelected.clear();
 		} else {
-		//TODO eliminar entidades de la lista de seleccionadas  a las entidades rivales, o a las que no ataquen o no se muevan
-			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
+			list<EntidadPartidaVista*>::iterator it = this->entitiesSelected.begin();
+			while ( !this->entitiesSelected.empty() && it != this->entitiesSelected.end()) {
+				if (this->juegoVista->getDinamicEntityById((*it)->getId()) == NULL ||
+					((*it)->getOwner() != this->clientName )) it = this->entitiesSelected.erase(it);
+				else ++it;
+			}
+			//tengo que volver a chequear si quedo una sola, en ese caso renderizo su descripcion completa
+			if (this->entitiesSelected.size() == 1) {
+				entidadMap = this->juegoVista->getEntityAttributes(this->entitiesSelected.back());
+				this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+			} else this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
 		}
 	}
 }
