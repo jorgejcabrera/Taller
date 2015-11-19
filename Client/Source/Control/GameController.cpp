@@ -117,9 +117,8 @@ void GameController::selection() {
 		pair<int,int> cartesianPosition;
 		map<string,string> entidadMap;
 
-		//TODO chequear cual es el mejor numero para sumarle a i y a j
-		for (int i = this->initialPosMouseX; i <= this->finalPosMouseX ; i = i + gameSettings->getTileSize()) {
-			for ( int j = this->initialPosMouseY ; j <= this->finalPosMouseY ; j = j + gameSettings->getTileSize()/2) {
+		for (int i = this->initialPosMouseX; i <= this->finalPosMouseX ; i = i + gameSettings->getTileSize()/2) {
+			for ( int j = this->initialPosMouseY ; j <= this->finalPosMouseY ; j = j + gameSettings->getTileSize()/4) {
 				cartesianPosition = this->utils->convertToCartesian(i-offset->first,j-offset->second);
 				entidadMap = juegoVista->getEntityAt(cartesianPosition);
 				if(entidadMap.size()>0){
