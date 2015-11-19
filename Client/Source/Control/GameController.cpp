@@ -68,7 +68,7 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 
 void GameController::readyToAttack(list<Message*>* messages){
 	map<int, EntidadDinamicaVista*>* entities = this->juegoVista->getDinamicEntities();
-	int distanceBeetweenTiles = 50;
+	int distanceBeetweenTiles = 60;
 
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
 		if( it->second->getTarget() != 0 ){
@@ -95,7 +95,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 			}
 
 			//se envia por segunda vez el msj para que empieze a atacar cuando esta cerca del target
-			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) <= distanceBeetweenTiles && !it->second->isReadyToAttack() ){
+			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) < distanceBeetweenTiles && !it->second->isReadyToAttack() ){
 				Message* message = new Message();
 				msg_game body;
 				body.set_id(it->second->getId());

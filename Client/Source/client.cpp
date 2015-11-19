@@ -24,8 +24,8 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	GameController* gController = new GameController();
 	Client* jorge = new Client(gController);
-	jorge->connectToServer("192.168.1.1");
-	//jorge->connectToServer("127.0.0.1");
+	//jorge->connectToServer("192.168.1.1");
+	jorge->connectToServer("127.0.0.1");
 	
 	//delay to wait all messages from server
 	SDL_Delay(9000);

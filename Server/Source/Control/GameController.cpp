@@ -81,7 +81,7 @@ void GameController::setNextPaths(){
 }
 
 void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
-	//si el target está vivo, pero no está cerca, entonces lo debemos perseguir
+	//el target está vivo, pero no está cerca, entonces lo debemos perseguir
 	if(!this->readyToInteract(attacker) ){
 		//pair<int,int> targetPosition = this->juego->getEntityById(attacker->getTarget())->getPosition();
 		pair<int,int> targetPosition = this->juego->getNearestPosition(this->juego->getEntityById(attacker->getTarget()));
@@ -94,12 +94,25 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 		attacker->setTarget(0);
 		attacker->prepareToInteract(false);
 
-	//atacamos
+	//atacamos o recolectamos el recurso
 	}else{
-		EntidadPartida* enemy = this->juego->getEntityById(attacker->getTarget());
-		attacker->attackTo(enemy);
-		if(enemy->getHealth()>0 && enemy->getOwner() != ""){
-			this->juego->addNewEntity(enemy);
+		EntidadPartida* target = this->juego->getEntityById(attacker->getTarget());
+		this->attackOrWork(attacker,target);
+	}
+}
+
+void GameController::attackOrWork(EntidadDinamica* entity,EntidadPartida* target){
+	//si el target es un recurso, solo lo pueden recolectar los aldeanos
+	if( (target->getName() == "gold" || target->getName() == "food" || target->getName() == "wood" || target->getName() == "rock") && entity->getName() != "aldeano"){
+		entity->setTarget(0);
+		entity->prepareToInteract(false);
+		return;
+	}else{
+		entity->attackTo(target);
+
+		//colocamos la entidad en la lista de novedades
+		if(target->getHealth()>0 && target->getOwner() != ""){
+			this->juego->addNewEntity(target);
 		}
 	}
 }
@@ -129,9 +142,11 @@ void GameController::interactWithTargets(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0 && this->targetIsAlive(it->second) ){
-				//ME fijo que el objetivo no sea mio, en caso de ser mio tengo que construirlo, no atacarlo
+				//ataco o recolecto, dependiento del target
 				if( this->juego->getEntityById(it->second->getTarget())->getOwner() != it->second->getOwner()){
 					this->pursuitAndAttackTarget(it->second);
+
+				//construyo
 				}else{
 					this->buildTarget(it->second);
 				}
@@ -227,9 +242,6 @@ bool GameController::clientKeepFlag(string userName){
 	list<EntidadPartida*>* listEntities = this->juego->getMap()->getEntities();
 	for(list<EntidadPartida*>::iterator iterateEntities= listEntities->begin(); iterateEntities!=listEntities->end();++iterateEntities){
 		if(((*iterateEntities)->getOwner()==userName) && (*iterateEntities)->getName()== "flag"){
-			/*stringstream ss;
-			ss<< "Tengo la bandera de " << userName;
-			Logger::get()->logInfo("GameController","clientKeepFlag",ss.str());*/
 			return true;
 		}
 	}

@@ -37,7 +37,11 @@ private:
 
 	void setNextPaths();
 	/*
-	* si las entidades tiene algun target, y éste se movió, se debe perseguirlo
+	* la entidad dinamica ataca o recolecta el recurso dependiendo del target
+	* */
+	void attackOrWork(EntidadDinamica* entity,EntidadPartida* target);
+	/*
+	* si las entidades tienen algun target, y éste se movió, se debe perseguirlo
 	* */
 	void pursuitAndAttackTarget(EntidadDinamica* attacker);
 	/*
@@ -71,14 +75,11 @@ public:
 	*defino un delay variable para poder mandarle los ms que yo quiera, mas que nada para el ciclo mientras espera clientes
 	* */
 	void delay(int ms);
-	/*
-	*generadores de mensajes para cuando se conecta un cliente nuevo
-	* */
-	Juego* getJuego();
 	void updateGame();
+	void delay();
+	Juego* getJuego();
 	int getRunCycles();
 	int getMaxFramesPerSecond();
-	void delay();
 	list<Message*> getTilesMessages();
 	list<Message*> getEntitiesMessages();
 	list<int> getEntitiesOfClient(string userName);
@@ -87,29 +88,29 @@ public:
 	 */
 	bool checkIfClientLostGame(string clientName);
 	/*
-	 * Verifica si dentro de la lista de los personajes de un cliente existe uno que tenga name=king
-	 * Ver si queremos identificar al key de otra manera
-	 */
+	* Verifica si dentro de la lista de los personajes de un cliente existe uno que tenga name=king
+	* Ver si queremos identificar al key de otra manera
+	* */
 	bool isKingOfClientAlive(string userName);
 	/*
-	 * Verifica si el cliente aun tiene un centro civico
-	 */
+	* Verifica si el cliente aun tiene un centro civico
+	* */
 	bool isCivicCenterStillExist(string userName);
 	/*
-	 * Verifica si el cliente aun tiene la bandera
-	 */
+	* Verifica si el cliente aun tiene la bandera
+	* */
 	bool clientKeepFlag(string clienName);
 	/*
-	 * devuelve true si el juego esta en curso o false si hay algun ganador
-	 */
+	* devuelve true si el juego esta en curso o false si hay algun ganador
+	* */
 	bool isGameRunning();
 	/*
-	 * Setea el gameRunning en false para indicar que ya termino el juego
-	 */
+	* Setea el gameRunning en false para indicar que ya termino el juego
+	* */
 	void gameFinished();
 	/*
-	 * Crea las entidades del cliente
-	 */
+	* Crea las entidades del cliente
+	* */
 	pair<int,int> createEntitiesForClient(string owner, int clientIndex);
 	virtual ~GameController();
 };
