@@ -70,10 +70,6 @@ private:
 	void drawEntityForBuild();
 	void drawResources(ResourceCounter* resourceCounter);
 	/*
-	* devuelve la información de la entidad en una colección
-	* */
-	map<string,string> getEntityAttributes(EntidadPartidaVista* entidad);
-	/*
 	 * Lista de pares x,y donde tengo que construir el edificio, lo tengo para mostrarlo diferente en la vista
 	 */
 	list<pair< int,int > > tilesForBuilding;
@@ -87,6 +83,10 @@ public:
 	* */
 	void render(int ciclos, ResourceCounter* resourceCounter, string userName);
 	void deleteEntityById(int id);
+	/*
+	* devuelve la información de la entidad en una colección
+	* */
+	map<string,string> getEntityAttributes(EntidadPartidaVista* entidad);
 	/*
 	*?
 	* */
