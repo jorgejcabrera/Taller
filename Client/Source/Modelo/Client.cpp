@@ -97,7 +97,6 @@ void Client::processReceivedMessages(){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
 
 		}else if ( tipoMensaje == "edificios" || tipoMensaje == "resources" ){
-			//Logger::get()->logDebug("Client", "processReceivedMessages", (*it)->toString());
 			this->gController->getJuegoVista()->addStaticEntity((*it)->getId(),
 															(*it)->getNombre(),
 															(*it)->getPositionX(),
@@ -114,9 +113,6 @@ void Client::processReceivedMessages(){
 																	(*it)->getHealth());
 		}else if ( tipoMensaje == "personajes"){
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
-			//stringstream ss;
-			//ss<< "newProtagonista... name " <<(*it)->getNombre()<< " posx: "<< (*it)->getPositionX() << "posy: "<< (*it)->getPositionY() << "posx: "<< (*it)->getPositionX() << " client = " << this->userName;
-			//Logger::get()->logInfo("Client","processReceivedmessages",ss.str());
 			this->gController->getJuegoVista()->addDinamicEntity((*it)->getId(),
 																(*it)->getNombre(),
 																(*it)->getPositionX(),

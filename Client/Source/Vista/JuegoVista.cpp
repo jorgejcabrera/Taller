@@ -212,8 +212,8 @@ void JuegoVista::addTile(string surface, int x, int y){
 }
 
 void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner,int health, bool completed){
+	//nueva entidad estática
 	if ( this->buildings.find(id) == this->buildings.end() ) {
-		//Nueva edificio
 		EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),
 																	gameSettings->getEntityConfig(type)->getAlto());
 		newBuilding->setName(type);
@@ -231,6 +231,8 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 		newBuilding->setPathImage(pathImage);
 
 		this->buildings.insert(make_pair(id,newBuilding));
+	
+	//update de entidad estática
 	} else {
 		EntidadEstaticaVista* building = this->buildings.at(id);
 		building->setOwner(owner);
