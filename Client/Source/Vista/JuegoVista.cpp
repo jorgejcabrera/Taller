@@ -546,7 +546,7 @@ ResourceCounter* JuegoVista::getResourceCounter() {
 void JuegoVista::addTileForBuilding(int x, int y){
 	//stringstream ssSecond;
 	//ssSecond << "agrego el tile " << x << " " << y;
-	if(x < 0 || y < 0 || y> this->gameSettings->getMapHeight() || x > this->gameSettings->getMapWidth()){
+	if(x < 0 || y < 0 || y >= this->gameSettings->getMapHeight() || x >= this->gameSettings->getMapWidth()){
 		this->availablePosForBuilding = false;
 		//ssSecond << " INVALIDO";
 	}else{

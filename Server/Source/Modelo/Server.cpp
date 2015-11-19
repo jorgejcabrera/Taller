@@ -226,8 +226,8 @@ bool Server::checkForBuildingMsg(Message* msg){
 		int idTarget = 0;
 		if(  msg->getTipo() == "building" ){
 			//Creo una entidad
-			x = msg->getPositionX() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "ancho_base");
-			y = msg->getPositionY() + this->gameSettings->getConfigAttributeOfEntityAsInt(msg->getName(), "alto_base");
+			x = msg->getPositionX();
+			y = msg->getPositionY();
 			idTarget = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
 		}else{
 			// ayudo a construir una entidad ya creada
