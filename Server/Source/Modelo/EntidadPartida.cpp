@@ -44,6 +44,31 @@ void EntidadPartida::setPosition(int x,int y){
 	this->position.second = y;
 }
 
+list<pair<int,int> > EntidadPartida::getNearestPositions(){
+	list<pair<int,int> > nearestPositions;
+	//posiciones cercanas a la entidad
+	pair<int,int> currentPosition = make_pair(this->position.first + this->width,this->position.second);
+	for(; currentPosition.second < this->position.second + this->length ; currentPosition.second++){
+		nearestPositions.push_front(currentPosition);
+	}
+
+	currentPosition = make_pair(this->position.first,this->position.second + this->length);
+	for(; currentPosition.first < this->position.first + this->width ; currentPosition.first++){
+		nearestPositions.push_front(currentPosition);
+	}
+
+	currentPosition = make_pair(this->position.first,this->position.second-1);
+	for(; currentPosition.first < this->position.first + this->width ; currentPosition.first++){
+		nearestPositions.push_front(currentPosition);
+	}
+
+	currentPosition = make_pair(this->position.first-1,this->position.second);
+	for(; currentPosition.second < this->position.second + this->length ; currentPosition.second++){
+		nearestPositions.push_front(currentPosition);
+	}
+	return nearestPositions;
+}
+
 pair<int,int> EntidadPartida::getPosition(){
 	return this->position;
 }

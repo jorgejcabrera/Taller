@@ -177,6 +177,7 @@ bool Server::checkForAttackMsg(Message* msg){
 		//si la entidad ya tenia un target empieza a atacar
 		if( entityToUpd->getTarget() != 0 ){
 			entityToUpd->prepareToInteract(true);
+		
 		//la entidad empieza a dirigirse a la posicion del target
 		}else{
 			int target = msg->getTarget();
@@ -187,6 +188,7 @@ bool Server::checkForAttackMsg(Message* msg){
 		}
 		return true;
 	
+	//el target se empezo a mover
 	}else if( this->gameRunning && msg->getTipo() == "pursuit" ){
 		int target = msg->getTarget();
 		pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();

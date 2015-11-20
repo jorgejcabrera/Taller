@@ -75,6 +75,7 @@ public:
 	string getOwner();
 	pair<int,int> getTargetPosition();
 	pair<int,int> getPosition();
+	list<pair<int,int> > getNearestPositions();
 	Message* getMessage();
 	void setTarget(int target);
 	void setPosition(int x,int y);
