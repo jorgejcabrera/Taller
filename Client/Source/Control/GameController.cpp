@@ -176,62 +176,54 @@ list<Message*> GameController::action(){
 		}else{
 			list<EntidadPartidaVista*>::iterator it = this->entitiesSelected.begin();
 			EntidadDinamicaVista* entity = this->juegoVista->getDinamicEntityById((*it)->getId());
-			if ( entity != NULL ){
-				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
-				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-				string typeMessage = "";
+			pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
+			map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
-				//voy a construir algo
-				if( targetToAttack.size() > 0 && !this->juegoVista->getDinamicEntityById(atoi(targetToAttack["id"].c_str()))){
-					typeMessage = "build";
-					/*if(this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
-						//voy a atacar
-						typeMessage = "attack";
-					}*/
-					for (; it != this->entitiesSelected.end() ; ++it ) {
-						Message* message = new Message();
-						msg_game body;
-						body.set_id((*it)->getId());
-						body.set_tipo(typeMessage);
-						body.set_target(atoi(targetToAttack["id"].c_str()));
-						message->setContent(body);
-						entity->setTarget(atoi(targetToAttack["id"].c_str()));
-						entity->prepareToFight(false);
-						messages.push_back(message);
-					}
+			//construir
+			if( targetToAttack.size() > 0 && !this->juegoVista->getDinamicEntityById(atoi(targetToAttack["id"].c_str()))){
+				for (; it != this->entitiesSelected.end() ; ++it ) {
+					Message* message = new Message();
+					msg_game body;
+					body.set_id((*it)->getId());
+					body.set_tipo("build");
+					body.set_target(atoi(targetToAttack["id"].c_str()));
+					message->setContent(body);
+					entity->setTarget(atoi(targetToAttack["id"].c_str()));
+					entity->prepareToFight(false);
+					messages.push_back(message);
+				}
 
-				//voy a atacar
-				}else if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0 ){
-					typeMessage = "attack";
-					for (; it != this->entitiesSelected.end() ; ++it ) {
-						Message* message = new Message();
-						msg_game body;
-						body.set_id((*it)->getId());
-						body.set_tipo(typeMessage);
-						body.set_target(atoi(targetToAttack["id"].c_str()));
-						message->setContent(body);
-						entity->setTarget(atoi(targetToAttack["id"].c_str()));
-						entity->prepareToFight(false);
-						messages.push_back(message);
-					}
-
-				}else{
-					//update
-					for (; it != this->entitiesSelected.end() ; ++it ) {
-						Message* message = new Message();
-						msg_game body;
-						body.set_id((*it)->getId());
-						body.set_tipo("update");
-						body.set_x(cartesianPosition.first);
-						body.set_y(cartesianPosition.second);
-						body.set_target(0);
-						message->setContent(body);
-						messages.push_back(message);
-						entity->setTarget(0);
-						entity->prepareToFight(false);
-					}
+			//atacar
+			}else if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0 ){
+				for (; it != this->entitiesSelected.end() ; ++it ) {
+					Message* message = new Message();
+					msg_game body;
+					body.set_id((*it)->getId());
+					body.set_tipo("attack");
+					body.set_target(atoi(targetToAttack["id"].c_str()));
+					message->setContent(body);
+					entity->setTarget(atoi(targetToAttack["id"].c_str()));
+					entity->prepareToFight(false);
+					messages.push_back(message);
+				}
+			
+			//update
+			}else if( entity ){
+				for (; it != this->entitiesSelected.end() ; ++it ) {
+					Message* message = new Message();
+					msg_game body;
+					body.set_id((*it)->getId());
+					body.set_tipo("update");
+					body.set_x(cartesianPosition.first);
+					body.set_y(cartesianPosition.second);
+					body.set_target(0);
+					message->setContent(body);
+					messages.push_back(message);
+					entity->setTarget(0);
+					entity->prepareToFight(false);
 				}
 			}
+
 		}
 	}
 	return messages;
@@ -299,6 +291,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 }
 
 pair<int,int> GameController::getValidCartesianPosition(EntidadPartidaVista* entidad){
+	if(!entidad) return make_pair(-1,-1);
 	pair<int,int>* offset = this->juegoVista->getOffset();
 	pair<int,int> cartesianPosition = this->utils->convertToCartesian( this->initialPosMouseX-offset->first, this->initialPosMouseY-offset->second);
 
