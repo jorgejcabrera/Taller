@@ -78,6 +78,7 @@ void GameController::setNextPaths(){
 		//pongo la nueva posicion como ocupada
 		pair<int,int> newPos = entidad->getPosition();
 		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
+		//si mi destino esta ocupado, recalculo la posicion
 		if (entidad->isMoving()) {
 			pair<int,int> finalPos = entidad->getPositionToGo();
 			if ( !this->juego->getMap()->getTileAt(finalPos.first,finalPos.second)->isAvailable())
