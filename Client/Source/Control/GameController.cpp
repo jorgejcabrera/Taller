@@ -179,7 +179,7 @@ list<Message*> GameController::action(){
 			if ( entity != NULL ){
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
-				if( targetToAttack.size() > 0 ){
+				if( targetToAttack.size() > 0 && !this->juegoVista->getDinamicEntityById(atoi(targetToAttack["id"].c_str()))){
 					//voy a construir algo
 					string typeMessage = "build";
 					if(this->clientName.compare(targetToAttack["owner"].c_str()) != 0){

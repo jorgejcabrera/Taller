@@ -44,6 +44,7 @@ void EntidadPartida::setPosition(int x,int y){
 	this->position.second = y;
 }
 
+//TODO las distancias que devuelve este metodo se tienen que validar en algun lado
 list<pair<int,int> > EntidadPartida::getNearestPositions(){
 	list<pair<int,int> > nearestPositions;
 	//posiciones cercanas a la entidad

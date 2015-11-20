@@ -181,7 +181,8 @@ bool Server::checkForAttackMsg(Message* msg){
 		//la entidad empieza a dirigirse a la posicion del target
 		}else{
 			int target = msg->getTarget();
-			pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
+			pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
+			Logger::get()->logDebug("Server","checkForAttackMsg","");
 			this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
 			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
 			this->idEntitiesUpdated.push_back(entityToUpd->getId());
@@ -212,6 +213,10 @@ bool Server::checkForCreateMsg(Message* msg){
 bool Server::checkForUpdMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "update" ){
 		int idUpdate = msg->getId();
+		EntidadDinamica* entity = this->gController->getJuego()->getDinamicEntityById(idUpdate);
+		if(entity){
+			entity->prepareToInteract(false);
+		}
 		this->gController->getJuego()->setPlaceToGo(idUpdate, msg->getPositionX(), msg->getPositionY());
 		this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
 		this->idEntitiesUpdated.push_back(idUpdate);
@@ -284,8 +289,6 @@ void Server::sendNewEntities(){
 			newEntity->setOwner((*it)->getOwner());
 			newEntity->setHealth((*it)->getHealth());
 			newEntity->setBuilding((*it)->isConstructionCompleted());
-			//Logger::get()->logDebug("Server", "sendNewEntities", newEntity->toString());
-
 
 			list<Client*> activeClients = getActiveClients();
 			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){

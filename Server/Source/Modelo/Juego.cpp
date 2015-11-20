@@ -84,8 +84,8 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO el metodo getAvailablePosition no es redundante hay q usar get nearest position
-		pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
-		//pair<int,int> positionOfProtagonista = this->getNearestPosition(edificioCreado);
+		//pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
+		pair<int,int> positionOfProtagonista = this->getNearestPosition(edificioCreado);
 		string name = "aldeano";
 		EntidadDinamica* protagonista = new EntidadDinamica(name,
 															gameSettings->getConfigAttributeOfEntityAsInt(name, "velocidad"),
@@ -128,7 +128,6 @@ void Juego::cleanNewEntities(){
 
 void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	EntidadDinamica* protagonistaToUpdate = this->protagonistas.at(idProtagonista);
-	protagonistaToUpdate->placeToGo = make_pair(x,y);
 	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition().first,
 									  protagonistaToUpdate->getPosition().second,
 									  x,y,this->mapa);
@@ -136,6 +135,8 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
 	delete pathF;
+	stringstream ss;
+	ss << "la longitud del camino es de "<< caminoMinimo->size();
 	protagonistaToUpdate->setPath(caminoMinimo);
 	protagonistaToUpdate->setPathIsNew(true);
 }
@@ -286,31 +287,30 @@ pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
 
 pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 	if (entity == NULL) return make_pair(-1,-1);
+	/*pair<int,int> candidatePosition;
+
+	list<pair<int,int> > nearesPositions = entity->getNearestPositions();
+	for(list<pair<int,int> >::iterator it = nearesPositions.begin(); it!= nearesPositions.end();++it){
+		stringstream ss;
+		ss.str("");
+		ss << "vamos a construir la entidad "<< entity->getName() << " en "<< entity->getPosition().first<< " "<< entity->getPosition().second<< " alto "<<entity->getLength()<<" ancho "<<entity->getWidth();
+		Logger::get()->logDebug("Juego","getNearesPosition",ss.str());
+		ss.str("");
+		ss << "la primer posicion cercada es "<< (*it).first <<" "<< (*it).second;
+		Logger::get()->logDebug("Juego","getNearesPosition",ss.str());
+		Tile* tile = this->mapa->getTileAt((*it).first, (*it).second );
+		if ( tile && tile->isAvailable())
+			ss.str("");
+			ss << "devolvemos la posicion " << (*it).first<< " "<< (*it).second;
+			Logger::get()->logDebug("Juego","getNearesPosition",ss.str());
+			return *it;
+	}*/
 	
 	int entityWidth = gameSettings->getConfigAttributeOfEntityAsInt(entity->getName(), "ancho_base");
 	int entityHeight = gameSettings->getConfigAttributeOfEntityAsInt(entity->getName(), "alto_base");
 
 	pair<int,int> entityPosition = entity->getPosition();
 	pair<int,int> candidatePosition;
-
-	//posición cercana a la entidad dinamica
-	/*if( entityWidth == 1 && entityHeight == 1){
-		Tile* tile = this->mapa->getTileAt(entityPosition.first-1, candidatePosition.second );
-		if(tile && tile->isAvailable())
-			return make_pair(entityPosition.first - 1, candidatePosition.second );
-
-		tile = this->mapa->getTileAt(entityPosition.first, candidatePosition.second + 1 );
-		if(tile && tile->isAvailable())
-			return make_pair(entityPosition.first, candidatePosition.second + 1);
-
-		tile = this->mapa->getTileAt(entityPosition.first + 1, candidatePosition.second - 1 );
-		if(tile && tile->isAvailable())
-			return make_pair(entityPosition.first + 1, candidatePosition.second - 1);
-
-		tile = this->mapa->getTileAt(entityPosition.first, candidatePosition.second + 1 );
-		if(tile && tile->isAvailable())
-			return make_pair(entityPosition.first , candidatePosition.second + 1);
-	}*/
 
 	//posicion cercana al edificio
 	candidatePosition = make_pair(entity->getPosition().first + entityWidth,entity->getPosition().second);
@@ -342,6 +342,7 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 	}
 	//return this->getMap()->getAvailablePosition(entityPosition.first+entityWidth,entityPosition.second+entityHeight);
 	return entity->getPosition();
+	//return entity->getPosition();
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){

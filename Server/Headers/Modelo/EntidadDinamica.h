@@ -69,10 +69,6 @@ public:
 	* aumenta la salud del edicicio
 	* */
 	void construct(EntidadPartida* entity);
-	/*
-	*
-	* */
-	pair<int,int> placeToGo;
 	virtual ~EntidadDinamica();
 };
 

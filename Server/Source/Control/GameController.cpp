@@ -138,14 +138,14 @@ void GameController::interactWithTargets(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
 		if( it->second->getTarget() != 0 && this->targetIsAlive(it->second) ){
-				//ataco o recolecto, dependiento del target
-				if( this->juego->getEntityById(it->second->getTarget())->getOwner() != it->second->getOwner()){
-					this->pursuitAndAttackTarget(it->second);
+			//ataco o recolecto, dependiento del target
+			if( this->juego->getEntityById(it->second->getTarget())->getOwner() != it->second->getOwner()){
+				this->pursuitAndAttackTarget(it->second);
 
-				//construyo
-				}else{
-					this->buildTarget(it->second);
-				}
+			//construyo
+			}else{
+				this->buildTarget(it->second);
+			}
 		}
 	}
 }
@@ -158,9 +158,8 @@ bool GameController::readyToInteract(EntidadDinamica* entity){
 			if( UtilsController::GetInstance()->getDistance(*it,entity->getPosition()) <= 1 )
 				return true;
 		}
-	}else{
-		return false;
 	}
+	return false;
 }
 
 bool GameController::targetIsAlive(EntidadDinamica* entity){

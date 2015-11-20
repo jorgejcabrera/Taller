@@ -21,7 +21,8 @@
 enum game {
 	CIVIC_CENTER,
 	CAPTURE_FLAG,
-	REGICIDE} ;
+	REGICIDE
+};
 
 class GameController {
 
