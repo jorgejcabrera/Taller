@@ -84,5 +84,15 @@ bool EntidadDinamica::pathIsNew(){
 	return this->pathIsNew();
 }
 
+bool EntidadDinamica::isMoving() {
+	if (!this->path->empty()) return true;
+	return false;
+}
+
+pair<int,int> EntidadDinamica::getPositionToGo() {
+	return this->path->back();
+
+}
+
 EntidadDinamica::~EntidadDinamica() {
 }

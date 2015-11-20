@@ -70,13 +70,20 @@ list<int> GameController::getEntitiesOfClient(string userName){
 void GameController::setNextPaths(){
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
+		EntidadDinamica* entidad = (*it).second;
 		//pongo la posicion anterior desocupada
-		pair<int,int> firstPosition = (*it).second->getPosition();
+		pair<int,int> firstPosition = entidad->getPosition();
 		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
 		(*it).second->nextPosition();
 		//pongo la nueva posicion como ocupada
-		pair<int,int> newPos = (*it).second->getPosition();
+		pair<int,int> newPos = entidad->getPosition();
 		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
+		//si mi destino esta ocupado, recalculo la posicion
+		if (entidad->isMoving()) {
+			pair<int,int> finalPos = entidad->getPositionToGo();
+			if ( !this->juego->getMap()->getTileAt(finalPos.first,finalPos.second)->isAvailable())
+				this->juego->setPlaceToGo(entidad->getId(),finalPos.first,finalPos.second);
+		}
 	}
 }
 

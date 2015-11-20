@@ -135,10 +135,17 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
 	delete pathF;
-	stringstream ss;
-	ss << "la longitud del camino es de "<< caminoMinimo->size();
 	protagonistaToUpdate->setPath(caminoMinimo);
 	protagonistaToUpdate->setPathIsNew(true);
+
+	//pongo la posicion anterior desocupada
+	pair<int,int> firstPosition = protagonistaToUpdate->getPosition();
+	this->mapa->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
+	protagonistaToUpdate->nextPosition();
+	//pongo la nueva posicion como ocupada
+	pair<int,int> newPos = protagonistaToUpdate->getPosition();
+	this->mapa->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
+
 }
 
 list<EntidadPartida> Juego::getFallenEntities(){
