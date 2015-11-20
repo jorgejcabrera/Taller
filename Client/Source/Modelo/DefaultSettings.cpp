@@ -174,6 +174,10 @@ string DefaultSettings::getTypeEntity(const string &type){
 	personajes.push_back("aldeanoSolo");
 	personajes.push_back("king");
 	personajes.push_back("aldeano");
+	personajes.push_back("cobra");
+	personajes.push_back("caballo");
+	personajes.push_back("cobraSolo");
+	personajes.push_back("caballoSolo");
 	if(isInList(personajes,type))
 		return "personajes";
 
@@ -278,10 +282,20 @@ map<string,int> DefaultSettings::getCostsOf(string type) {
 		returnMap["gold"] = 8;
 		returnMap["wood"] = 8;
 	}else if (type == "molino"){
-		returnMap["food"] = 5;
-		returnMap["rock"] = 5;
-		returnMap["gold"] = 5;
-		returnMap["wood"] = 5;
+			returnMap["food"] = 5;
+			returnMap["rock"] = 5;
+			returnMap["gold"] = 5;
+			returnMap["wood"] = 5;
+	}else if (type == "cobra"){
+			returnMap["food"] = 1000;
+			returnMap["rock"] = 1000;
+			returnMap["gold"] = 1000;
+			returnMap["wood"] = 1000;
+	}else if (type == "caballo"){
+			returnMap["food"] = 100;
+			returnMap["rock"] = 100;
+			returnMap["gold"] = 100;
+			returnMap["wood"] = 100;
 		}
 	return returnMap;
 }

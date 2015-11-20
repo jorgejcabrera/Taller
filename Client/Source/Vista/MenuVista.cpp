@@ -45,6 +45,10 @@ void MenuVista::drawMe() {
 	} else if (strings["name"] == "Castle") {
 		string path = GameSettings::GetInstance()->imagePathPersonajesByType("soldadoSolo");
 		PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
+		string pathCobra = GameSettings::GetInstance()->imagePathPersonajesByType("cobraSolo");
+		PicassoHelper::GetInstance()->renderObject(pathCobra,this->posXvertexFirstButton*2, this->posYvertexFirstButton, 50, 50);
+		string pathHorse = GameSettings::GetInstance()->imagePathPersonajesByType("caballoSolo");
+		PicassoHelper::GetInstance()->renderObject(pathHorse,this->posXvertexFirstButton*3, this->posYvertexFirstButton, 50, 50);
 	}else if (strings["name"] == "aldeano"){
 		string pathCastle = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
 		PicassoHelper::GetInstance()->renderObject(pathCastle,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
@@ -109,6 +113,10 @@ void MenuVista::drawEntityDescription() {
 			if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
 			found = path.find("aldeano");
 			if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
+			found = path.find("cobra");
+			if(found!=string::npos) path=path.replace(path.find("cobra"), sizeof("cobra")-1, "cobraSolo");
+			found = path.find("caballo");
+			if(found!=string::npos) path=path.replace(path.find("caballo"), sizeof("caballo")-1, "caballoSolo");
 			found = path.find("soldadoDesconectado");
 			if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
 			PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight() - this->bigHeight, 100, 100);
@@ -150,6 +158,7 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
 			result.first = atoi(strings["id"].c_str());
 			if (strings["name"] == "aldeano") result.second = "Army";
+			else if (strings["name"] == "Castle") result.second = "cobra";
 			else result.second = "";
 	}
 	if (posMouseX > this->posXvertexFirstButton*3 &&
@@ -158,6 +167,7 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
 			result.first = atoi(strings["id"].c_str());
 			if (strings["name"] == "aldeano") result.second = "molino";
+			else if (strings["name"] == "Castle") result.second = "caballo";
 			else result.second = "";
 	}
 	return result;

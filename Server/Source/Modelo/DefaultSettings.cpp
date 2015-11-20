@@ -170,6 +170,8 @@ string DefaultSettings::getTypeEntity(const string &type){
 	personajes.push_back("soldado");
 	personajes.push_back("king");
 	personajes.push_back("aldeano");
+	personajes.push_back("cobra");
+	personajes.push_back("caballo");
 	if(isInList(personajes,type))
 		return "personajes";
 

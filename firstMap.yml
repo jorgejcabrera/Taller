@@ -13,7 +13,6 @@ tipos:
   ancho_base: 3
   alto_base: 3
 
-tipos:
 - nombre: AdvancedChurch
   imagen: ../../Taller/Images/Industrial_Age/Church-3x4.png
   health: 500
@@ -142,6 +141,28 @@ tipos:
   velocidad: 10
   builder_effort: 1
   strength: 1
+
+- nombre: caballo
+  imagen: ../../Taller/Images/Personajes/caballo.png
+  health: 200 
+  fps: 50
+  total_frames_line: 10
+  pixels_dimension: 85
+  delay: 0
+  velocidad: 40
+  builder_effort: 0
+  strength: 8
+
+- nombre: cobra
+  imagen: ../../Taller/Images/Personajes/cobra.png
+  health: 500 
+  fps: 1
+  total_frames_line: 1
+  pixels_dimension: 120
+  delay: 0
+  velocidad: 100
+  builder_effort: 0
+  strength: 20
 
 - nombre: king
   imagen: ../../Taller/Images/Personajes/king.png

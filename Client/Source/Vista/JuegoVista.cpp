@@ -170,8 +170,8 @@ void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,
 	}
 	if(drawEntity){
 		this->picassoHelper->renderObject(	entidad->getPathImage(),
-											screenPosition.first - entidad->getWidthPixel()/2 + offSetX,
-											screenPosition.second  - entidad->getLengthPixel()/2 + offSetY,
+											screenPosition.first - entidad->getWidthPixel()/4 + offSetX,
+											screenPosition.second  - entidad->getLengthPixel()/4 + offSetY,
 											gameSettings->getTileSize(),
 											gameSettings->getTileSize(),
 											entidad->getPositionOfSprite(runCycles));
@@ -546,31 +546,19 @@ ResourceCounter* JuegoVista::getResourceCounter() {
 }
 
 void JuegoVista::addTileForBuilding(int x, int y){
-	//stringstream ssSecond;
-	//ssSecond << "agrego el tile " << x << " " << y;
 	if(x < 0 || y < 0 || y >= this->gameSettings->getMapHeight() || x >= this->gameSettings->getMapWidth()){
 		this->availablePosForBuilding = false;
-		//ssSecond << " INVALIDO";
 	}else{
 		this->tilesForBuilding.push_back(make_pair(x,y));
 		if( ((this->getEntityAt(make_pair(x,y))).size() > 0) ){
 			this->availablePosForBuilding = false;
-			//ssSecond << " NO disponible";
-			//}else{
-			//ssSecond << " DISPONIBLE";
 		}
 	}
-	//Logger::get()->logDebug("JuegoVista","addTileForBuilding",ssSecond.str());
 }
 
 void JuegoVista::clearTilesForBuilding(){
-
 	this->availablePosForBuilding = true;
 	this->tilesForBuilding.clear();
-
-	/*stringstream ss;
-	ss << "Limpio la lista de tiles, disponible "<< this->availablePosForBuilding<< " tiles "<< this->tilesForBuilding.size();
-	Logger::get()->logDebug("JuegoVista","clearTilesForBuilding",ss.str());*/
 }
 
 void JuegoVista::clearAllDataForBuilding(){
