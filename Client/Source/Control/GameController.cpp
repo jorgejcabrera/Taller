@@ -179,13 +179,15 @@ list<Message*> GameController::action(){
 			if ( entity != NULL ){
 				pair<int,int> cartesianPosition = this->getValidCartesianPosition(entity);
 				map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
+				string typeMessage = "";
+
+				//voy a construir algo
 				if( targetToAttack.size() > 0 && !this->juegoVista->getDinamicEntityById(atoi(targetToAttack["id"].c_str()))){
-					//voy a construir algo
-					string typeMessage = "build";
-					if(this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
+					typeMessage = "build";
+					/*if(this->clientName.compare(targetToAttack["owner"].c_str()) != 0){
 						//voy a atacar
 						typeMessage = "attack";
-					}
+					}*/
 					for (; it != this->entitiesSelected.end() ; ++it ) {
 						Message* message = new Message();
 						msg_game body;
@@ -197,6 +199,22 @@ list<Message*> GameController::action(){
 						entity->prepareToFight(false);
 						messages.push_back(message);
 					}
+
+				//voy a atacar
+				}else if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0 ){
+					typeMessage = "attack";
+					for (; it != this->entitiesSelected.end() ; ++it ) {
+						Message* message = new Message();
+						msg_game body;
+						body.set_id((*it)->getId());
+						body.set_tipo(typeMessage);
+						body.set_target(atoi(targetToAttack["id"].c_str()));
+						message->setContent(body);
+						entity->setTarget(atoi(targetToAttack["id"].c_str()));
+						entity->prepareToFight(false);
+						messages.push_back(message);
+					}
+
 				}else{
 					//update
 					for (; it != this->entitiesSelected.end() ; ++it ) {
