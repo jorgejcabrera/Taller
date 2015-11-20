@@ -65,6 +65,8 @@ public:
 	void prepareToInteract(bool value);
 	bool isReadyToInteract();
 	bool pathIsNew();
+	bool isMoving();
+	pair<int,int> getPositionToGo();
 	/*
 	* aumenta la salud del edicicio
 	* */
