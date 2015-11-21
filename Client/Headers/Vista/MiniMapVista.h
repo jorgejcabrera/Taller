@@ -9,6 +9,8 @@
 #define MINIMAPVISTA_H_
 
 #include "../../Headers/Modelo/GameSettings.h"
+#include "EntidadPartidaVista.h"
+#include "../../Headers/Modelo/PicassoHelper.h"
 
 enum colour { red=1, blue, yellow, lightGreen,} ;
 
@@ -16,7 +18,6 @@ namespace std {
 
 class MiniMapVista {
 private:
-	GameSettings* gameSettings;
 	string miniTilePath;
 	string miniUnseenTilePath;
 	string miniFoggedTilePath;
@@ -41,11 +42,19 @@ public:
 	string getEntityPath();
 	string getCharacterPath();
 	string getEnemyCharacterPath();
-	void makeMiniPos(int posX, int posY);
+	void makeMiniPos(pair<int,int> position);
 	int getMiniPosX();
 	int getMiniPosY();
 	int getMiniWidth();
 	int getMiniHeight();
+	/*
+	 * renderiza la entidad en el minimapa
+	 */
+	void renderEntity(string pathImage, EntidadPartidaVista* entity);
+	/*
+	 * renderiza los tiles
+	 */
+	void renderTile(string pathImage, pair<int,int> position);
 };
 
 } /* namespace std */

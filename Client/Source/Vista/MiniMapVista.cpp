@@ -10,7 +10,7 @@
 namespace std {
 
 MiniMapVista::MiniMapVista() {
-	gameSettings = GameSettings::GetInstance();
+	GameSettings* gameSettings = GameSettings::GetInstance();
 	miniTilePath = "../../Taller/Images/Tiles/tileVerde.png";
 	miniUnseenTilePath = "../../Taller/Images/Tiles/tileNegro.png";
 	miniFoggedTilePath = "../../Taller/Images/Tiles/tilefog.png";
@@ -29,9 +29,9 @@ MiniMapVista::MiniMapVista() {
 	miniPosY = 0;
 }
 
-void MiniMapVista::makeMiniPos(int posX, int posY) {
-	this->miniPosY = (posX+posY)*miniHeight/2 + offsetY;
-	this->miniPosX = (posX-posY)*miniWidth/2 + offsetX;
+void MiniMapVista::makeMiniPos(pair<int,int> position) {
+	this->miniPosY = (position.first+position.second)*miniHeight/2 + offsetY;
+	this->miniPosX = (position.first-position.second)*miniWidth/2 + offsetX;
 }
 
 string MiniMapVista::getMiniTilePath() {
@@ -74,7 +74,27 @@ int MiniMapVista::getMiniHeight() {
 	return this->miniHeight;
 }
 
+void MiniMapVista::renderEntity(string pathImage, EntidadPartidaVista* entity){
+	this->makeMiniPos(entity->getPosition());
+	int miniWidth = this->getMiniWidth() + entity->getWidth()-1;
+	int miniHeight = this->getMiniHeight() + entity->getLength()-1;
+	PicassoHelper::GetInstance()->renderObject(	pathImage,
+												this->getMiniPosX(),
+												this->getMiniPosY(),
+												miniWidth,
+												miniHeight);
+
+}
+
+void MiniMapVista::renderTile(string pathImage, pair<int,int> position){
+	this->makeMiniPos(position);
+	PicassoHelper::GetInstance()->renderObject(	pathImage,
+												this->getMiniPosX(),
+												this->getMiniPosY(),
+												this->getMiniWidth(),
+												this->getMiniHeight());
+}
+
 MiniMapVista::~MiniMapVista() {
-	this->gameSettings = NULL;
 }
 } /* namespace std */

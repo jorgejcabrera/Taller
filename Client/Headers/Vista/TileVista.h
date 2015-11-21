@@ -24,7 +24,7 @@ public:
 	TileVista(int x,int y);
 	int getPosX();
 	int getPosY();
-	pair<int,int>* getPosition();
+	pair<int,int> getPosition();
 	virtual ~TileVista();
 	string getPathImage();
 	bool getSeen();

@@ -15,6 +15,7 @@ JuegoVista::JuegoVista() {
 	this->loginVista = new LoginVista();
 	this->availablePosForBuilding = true;
 	this->entityForBuild = "";
+	this->miniMapVista = new MiniMapVista();
 }
 
 MenuVista* JuegoVista::getMenuVista(){
@@ -270,76 +271,38 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active,
 }
 
 void JuegoVista::drawMiniMap() {
-	this->miniMapVista = new MiniMapVista();
 	//dibujo el minimap
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-		this->miniMapVista->makeMiniPos((*itTiles)->getPosX(), (*itTiles)->getPosY());
-		this->picassoHelper->renderObject(	this->miniMapVista->getMiniTilePath(),
-											this->miniMapVista->getMiniPosX(),
-											this->miniMapVista->getMiniPosY(),
-											this->miniMapVista->getMiniWidth(),
-											this->miniMapVista->getMiniHeight());
-		}
+		this->miniMapVista->renderTile(this->miniMapVista->getMiniTilePath(),(*itTiles)->getPosition());
+	}
 
 	//dibujo las entidades estaticas
 	for(map<int,EntidadEstaticaVista*>::iterator itEstaticos = this->buildings.begin(); itEstaticos!=this->buildings.end(); ++itEstaticos){
-		pair<int,int> position;
 		EntidadEstaticaVista* entidad = (*itEstaticos).second;
-		position = entidad->getPosition();
-		int x = position.first;
-		int y =  position.second;
-		this->miniMapVista->makeMiniPos(x,y);
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];
-		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
-											this->miniMapVista->getMiniPosX(),
-											this->miniMapVista->getMiniPosY(),
-											this->miniMapVista->getMiniWidth()+1,
-											this->miniMapVista->getMiniHeight()+1);
+		this->miniMapVista->renderEntity(DefaultSettings::getPathTileColour(convertColourToString(colourClient)), entidad);
 	}
 
 	//Dibujo los semi estaticos
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
 		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
-		int x = entidad->getPosition().first;
-		int y = entidad->getPosition().second;
-		this->miniMapVista->makeMiniPos(x,y);
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];
-		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
-											this->miniMapVista->getMiniPosX(),
-											this->miniMapVista->getMiniPosY(),
-											this->miniMapVista->getMiniWidth()+1,
-											this->miniMapVista->getMiniHeight()+1);
+		this->miniMapVista->renderEntity(DefaultSettings::getPathTileColour(convertColourToString(colourClient)), entidad);
 	}
-
-
 
 	//dibujo los personajes
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
-		pair<int,int> cartesianPosition = (*itDinamicos).second->getPosition();
-		this->miniMapVista->makeMiniPos(cartesianPosition.first, cartesianPosition.second);
-		colour colourClient = this->coloursOfClients[(*itDinamicos).second->getOwner()];
-		this->picassoHelper->renderObject(	DefaultSettings::getPathTileColour(convertColourToString(colourClient)),
-											this->miniMapVista->getMiniPosX() ,
-											this->miniMapVista->getMiniPosY(),
-											this->miniMapVista->getMiniWidth(),
-											this->miniMapVista->getMiniHeight());
+		EntidadDinamicaVista* entidad = (*itDinamicos).second;
+		colour colourClient = this->coloursOfClients[entidad->getOwner()];
+		this->miniMapVista->renderEntity(DefaultSettings::getPathTileColour(convertColourToString(colourClient)), entidad);
 	}
 	for(list<TileVista*>::iterator itTiles = this->tiles.begin(); itTiles!=this->tiles.end(); ++itTiles){
-		this->miniMapVista->makeMiniPos((*itTiles)->getPosX(), (*itTiles)->getPosY());
 		if ((*itTiles)->getSeen()){
 			if ( (*itTiles)->getFogged()) {
-				this->picassoHelper->renderFogOfWar(this->gameSettings->getPathOfFoggedTile(),
-																this->miniMapVista->getMiniPosX(),
-																this->miniMapVista->getMiniPosY(),
-																this->miniMapVista->getMiniWidth(),
-																this->miniMapVista->getMiniHeight());
+				this->miniMapVista->renderTile(this->gameSettings->getPathOfFoggedTile(),(*itTiles)->getPosition());
 			}
 		} else {
-			this->picassoHelper->renderObject(	this->miniMapVista->getMiniUnseenTilePath(),
-																this->miniMapVista->getMiniPosX(),
-																this->miniMapVista->getMiniPosY(),
-																this->miniMapVista->getMiniWidth(),
-																this->miniMapVista->getMiniHeight());
+			this->miniMapVista->renderTile(this->miniMapVista->getMiniUnseenTilePath(),(*itTiles)->getPosition());
 		}
 	}
 }
