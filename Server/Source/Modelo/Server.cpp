@@ -126,7 +126,6 @@ list<Message*> Server::getProtagonistasMessages(){
 
 void Server::processReceivedMessages(){
 	this->readQueue->lockQueue();
-	//TODO revisar, hoy no usamos la lista idEntitiesUpdated porque notificamos lo que se este "moviendo"
 	this->idEntitiesUpdated.clear();
 	while( !this->readQueue->isEmpty() ){
 		Message* messageUpdate = this->readQueue->pullTailWithoutLock();
@@ -182,7 +181,6 @@ bool Server::checkForAttackMsg(Message* msg){
 		}else{
 			int target = msg->getTarget();
 			pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
-			Logger::get()->logDebug("Server","checkForAttackMsg","");
 			this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
 			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
 			this->idEntitiesUpdated.push_back(entityToUpd->getId());
@@ -192,11 +190,11 @@ bool Server::checkForAttackMsg(Message* msg){
 	//el target se empezo a mover
 	}else if( this->gameRunning && msg->getTipo() == "pursuit" ){
 		int target = msg->getTarget();
-		pair<int,int> targetPosition = this->gController->getJuego()->getEntityById(target)->getPosition();
+		pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
 		this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
 		this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
-		this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		entityToUpd->prepareToInteract(false);
+		this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		return true;
 	}
 	return false;
@@ -228,22 +226,18 @@ bool Server::checkForUpdMsg(Message* msg){
 bool Server::checkForBuildingMsg(Message* msg){
 	if( this->gameRunning && ( msg->getTipo() == "building" ||  msg->getTipo() == "build" ) ){
 		int idBuilder = msg->getId();
-		int x = 0;
-		int y = 0;
+		pair<int,int> targetPosition;
 		int idTarget = 0;
+		//comenzamos a contruir
 		if(  msg->getTipo() == "building" ){
-			//Creo una entidad
-			x = msg->getPositionX();
-			y = msg->getPositionY();
 			idTarget = this->gController->getJuego()->buildEntity(msg->getName(), msg->getPositionX(), msg->getPositionY(), msg->getOwner());
+
+		//ayudo a construir una entidad ya creada
 		}else{
-			// ayudo a construir una entidad ya creada
-			EntidadPartida* target = this->gController->getJuego()->getEntityById(msg->getTarget());
-			x = target->getPosition().first;
-			y = target->getPosition().second;
-			idTarget = target->getId();
+			idTarget = msg->getTarget();
 		}
-		this->gController->getJuego()->setPlaceToGo(idBuilder, x, y);
+		targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(idTarget));
+		this->gController->getJuego()->setPlaceToGo(idBuilder, targetPosition.first, targetPosition.second);
 		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
 		entityToUpd->prepareToInteract(true);
 		entityToUpd->setTarget(idTarget);

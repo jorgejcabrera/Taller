@@ -75,8 +75,7 @@ public:
 	* */
 	int run(void * data);
 	/* 
-	* 1- Bajo todos los mansajes de la cola
- 	* 2- actualizo la posicion de los protagonistas
+	* lee los mensajes de la cola y actualiza el modelo
  	* */
  	void processReceivedMessages();
 	/*
