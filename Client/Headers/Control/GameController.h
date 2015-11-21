@@ -14,6 +14,7 @@
 #include "../Modelo/GameSettings.h"
 #include "../Modelo/DefaultSettings.h"
 #include "../Modelo/EntidadConfig.h"
+#include "../Modelo/Mixer.h"
 #include "../Control/UtilsController.h"
 #include "../Utils/Socket/Message.h"
 #include <list>
@@ -32,6 +33,7 @@ private:
 	SDL_Event* event;
 	JuegoVista* juegoVista;
 	GameSettings* gameSettings;
+	Mixer* mixer;
 
 	list<EntidadPartidaVista*> entitiesSelected;
 	int initialPosMouseX;
