@@ -137,9 +137,13 @@ void MenuVista::drawResources(map<string,int> resources){
 	int posY = 0;
 	stringstream ss;
 	for (map<string,int>::iterator it = resources.begin() ; it != resources.end(); ++it ) {
-		ss << (*it).first <<" : " << resources[(*it).first];
-		PicassoHelper::GetInstance()->renderText(posX,	posY, ss.str().size()*15, 20, ss.str(),255,255,255);
-		posX = posX+ss.str().size()*15 + 30;
+		string resourceName = (*it).first;
+		EntidadConfig* entity = GameSettings::GetInstance()->getEntityConfig(resourceName);
+		ss << resources[resourceName];
+		PicassoHelper::GetInstance()->renderObject(entity->getPath(),posX, posY, 25, 25);
+		posX += 25;
+		PicassoHelper::GetInstance()->renderText(posX,	posY, ss.str().size()*10, 20, ss.str(),255,255,255);
+		posX += ss.str().size()*10 + 20;
 		ss.str("");
 	}
 }

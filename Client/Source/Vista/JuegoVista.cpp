@@ -440,10 +440,10 @@ bool JuegoVista::isEnemyEntityVisible(pair< int, int> pos) {
 
 void JuegoVista::drawResources(ResourceCounter* resourceCounter) {
 	map<string,int> resources;
-	resources["alimento"] = resourceCounter->getFood();
-	resources["madera"] = resourceCounter->getWood();
-	resources["oro"] = resourceCounter->getGold();
-	resources["roca"] = resourceCounter->getRock();
+	resources["food"] = resourceCounter->getFood();
+	resources["wood"] = resourceCounter->getWood();
+	resources["gold"] = resourceCounter->getGold();
+	resources["rock"] = resourceCounter->getRock();
 	this->menuVista->drawResources(resources);
 }
 
