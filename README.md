@@ -19,7 +19,7 @@ Ubuntu/Debian/MacOs
 make
 sudo make install
 ```
-También se van a usar algunas librerías auxiliares de SDL, como [SDL_image](https://www.libsdl.org/projects/SDL_image/).
+También se van a usar algunas librerías auxiliares de SDL, como [SDL_image](https://www.libsdl.org/projects/SDL_image/) y [SDL_mixer](https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.0.tar.gz).
 ```
 Ubuntu/Debian/MacOs
 ./configure
@@ -55,7 +55,7 @@ Para más imformación [aquí](https://developers.google.com/protocol-buffers/do
 Una vez instaladas todas las librerías las agregamos al IDE
 ```
 Eclipse
-	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / SDL2_ttf / yaml / protobuf
+	Projects -> Properties -> C/C++ Build -> Settings -> GCC C++ Linker -> Libraries -> add -> SDL2 / SDL2_image / SDL2_ttf / yaml / protobuf / SDL2_mixer
 ```
 
 ###Valgrind
