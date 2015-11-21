@@ -13,6 +13,7 @@ const string DefaultSettings::IMAGE_TILES_PATH = "Tiles";
 const string DefaultSettings::IMAGE_PERSONAJES_PATH = "Personajes";
 const string DefaultSettings::AGE_OF_EMPIRES = "Industrial_Age";
 const string DefaultSettings::NAME_OF_CIVIC_CENTER = "Barracks";
+const string DefaultSettings::PATH_MENU_BACKGROUND = "../../Taller/Images/Menu/background.png";
 
 DefaultSettings::DefaultSettings() {
 }
@@ -246,6 +247,9 @@ int DefaultSettings::getQtyInitialCharacters(){
 
 string DefaultSettings::getNameCivicCenter(){
 	return NAME_OF_CIVIC_CENTER;
+}
+string DefaultSettings::getPathOfMenuBackground(){
+	return PATH_MENU_BACKGROUND;
 }
 
 DefaultSettings::~DefaultSettings() {
