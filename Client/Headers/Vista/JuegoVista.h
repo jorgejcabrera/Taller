@@ -23,6 +23,7 @@
 #include "EntidadEstaticaVista.h"
 #include "EntidadSemiEstaticaVista.h"
 #include "EntidadDinamicaVista.h"
+#include "EntidadPartidaVista.h"
 #include "../Utils/Logger.h"
 #include "MenuVista.h"
 #include "MiniMapVista.h"

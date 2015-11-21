@@ -15,8 +15,8 @@ TileVista::TileVista(int x, int y ) {
 	this->seen = false;
 }
 
-pair<int,int>* TileVista::getPosition(){
-	return &this->position;
+pair<int,int> TileVista::getPosition(){
+	return this->position;
 }
 
 int TileVista::getPosX(){
