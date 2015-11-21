@@ -82,7 +82,7 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 		renderTexture(textureExists,x,y,w,h);
 }
 
-void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject){
+void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject, bool buildingCompleted){
 		SDL_Texture* textureExists;
 		map<string,SDL_Texture*>::iterator it = mapByImagePath.find( file.c_str());
 		if(it != mapByImagePath.end()){
@@ -90,6 +90,12 @@ void PicassoHelper::renderObject(const string &file, int x, int y, int w, int h,
 		}else{
 			textureExists = loadTexture(file);
 		}
+		if(!buildingCompleted){
+			SDL_SetTextureColorMod(textureExists, 82, 82, 82);
+		}else{
+			SDL_SetTextureColorMod(textureExists, 255, 255, 255);
+		}
+
 		renderTexture(textureExists,x,y,w,h,rectObject);
 }
 

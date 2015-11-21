@@ -110,7 +110,8 @@ void Client::processReceivedMessages(){
 																	(*it)->getPositionX(),
 																	(*it)->getPositionY(),
 																	(*it)->getOwner(),
-																	(*it)->getHealth());
+																	(*it)->getHealth(),
+																	(*it)->getBuilding());
 		}else if ( tipoMensaje == "personajes"){
 			//TODO uso el FPS para mandar si está conectado o no el cliente, agregar un campo generico para eso
 			this->gController->getJuegoVista()->addDinamicEntity((*it)->getId(),

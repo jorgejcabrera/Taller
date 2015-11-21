@@ -8,7 +8,9 @@
 #ifndef SOURCE_CONTROL_UTILSCONTROLLER_H_
 #define SOURCE_CONTROL_UTILSCONTROLLER_H_
 #include <iostream>
+
 #include "../Modelo/GameSettings.h"
+#include "../../Headers/Vista/EntidadPartidaVista.h"
 
 using namespace std;
 

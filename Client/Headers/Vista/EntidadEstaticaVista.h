@@ -8,7 +8,7 @@
 #ifndef SOURCE_VISTA_ENTIDADESTATICAVISTA_H_
 #define SOURCE_VISTA_ENTIDADESTATICAVISTA_H_
 
-#include "EntidadPartidaVista.h"
+#include "../../Headers/Vista/EntidadPartidaVista.h"
 
 using namespace std;
 
@@ -18,8 +18,6 @@ public:
 	void destruir();
 	EntidadEstaticaVista(int width,int length);
 	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
-	bool isBuildingCompleted();
-	void setBuildingCompleted(bool completed);
 	virtual ~EntidadEstaticaVista();
 
 };

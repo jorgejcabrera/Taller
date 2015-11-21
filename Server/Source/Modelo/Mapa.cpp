@@ -18,11 +18,6 @@ Mapa::Mapa() {
 		}
 	}
 
-	list<EntidadPartida*> edificios = gameSettings->getEntidadesEstaticas();
-	for(list<EntidadPartida*>::iterator it=edificios.begin(); it!=edificios.end(); ++it){
-		this->pushEntity(*it);
-	}
-
 	map<pair<int,int>,string> tilesToSetImage = gameSettings->getTiles();
 	for (std::map<pair<int,int>,string>::iterator it = tilesToSetImage.begin(); it != tilesToSetImage.end();++it){
 		int posX = (*it).first.first;

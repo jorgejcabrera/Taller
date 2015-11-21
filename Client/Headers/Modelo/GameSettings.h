@@ -13,9 +13,6 @@
 #include <fstream>
 #include <map>
 #include <vector>
-#include "../../Headers/Vista/EntidadEstaticaVista.h"
-#include "../../Headers/Vista/EntidadPartidaVista.h"
-#include "../../Headers/Vista/EntidadSemiEstaticaVista.h"
 #include "EntidadConfig.h"
 
 namespace std {
@@ -48,7 +45,6 @@ public:
 	int VELOCIDAD_SCROLL_UNO;
 	int VELOCIDAD_SCROLL_DOS;
 
-	list<EntidadPartidaVista*> edificios;
 	map<pair<int,int>,string> tiles;
 	static GameSettings* GetInstance();
 	virtual ~GameSettings();
@@ -83,7 +79,6 @@ public:
 	int getMargenInferiorDos();
 	string getValueInMap(map<string,string> myMap, const string &key);
 	map<string,string> getValueInVector(vector < map<string,string> > myVector, const string &key, const string &value);
-	list<EntidadPartidaVista*> getEntidadesEstaticas();
 	map<pair<int,int>,string> getTiles();
 	int getAlturaMenuInferior();
 

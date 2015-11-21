@@ -162,10 +162,6 @@ GameSettings* GameSettings::GetInstance() {
 	return instance;
 }
 
-list<EntidadPartidaVista*> GameSettings::getEntidadesEstaticas(){
-	return this->edificios;
-}
-
 map<pair<int,int>,string> GameSettings::getTiles(){
 	return this->tiles;
 }
