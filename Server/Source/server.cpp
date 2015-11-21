@@ -9,17 +9,21 @@
 
 /* Includes */
 #include "../Headers/Control/GameController.h"
+#include "../Headers/Vista/LoginVista.h"
 #include "../Headers/Modelo/Server.h"
 #include <stdlib.h>
 #include <string.h>
+//#include <sstream>
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	int port = 7844;
-	int clientsQty = 2;
-	// CIVIC_CENTER, REGICIDE, CAPTURE_FLAG
-	string gameType = "CAPTURE_FLAG";
+	LoginVista* loginVista = new LoginVista();
+	string gameType = loginVista->askGameType();
+	int clientsQty = loginVista->askClientsNumber();
+	int port = loginVista->askPort();
+	cout << "Partida: "<< gameType << " cantidad: " <<clientsQty<< " Puerto: "<< port<<endl;
+	loginVista->~LoginVista();
 
 	GameController* gController = new GameController(gameType);
 	Server* server = new Server(port,gController, clientsQty);
