@@ -131,8 +131,8 @@ void GameController::selection() {
 		this->entitiesSelected.unique();
 
 		if (this->entitiesSelected.size() == 1) {
-			entidadMap = this->juegoVista->getEntityAttributes(this->entitiesSelected.back());
-			this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+			EntidadPartidaVista* entitySelected = this->entitiesSelected.back();
+			this->juegoVista->getMenuVista()->setSelectedEntity(entitySelected);
 			if (this->entitiesSelected.back()->getOwner() != this->clientName )  this->entitiesSelected.clear();
 		} else {
 			list<EntidadPartidaVista*>::iterator it = this->entitiesSelected.begin();
@@ -143,8 +143,7 @@ void GameController::selection() {
 			}
 			//tengo que volver a chequear si quedo una sola, en ese caso renderizo su descripcion completa
 			if (this->entitiesSelected.size() == 1) {
-				entidadMap = this->juegoVista->getEntityAttributes(this->entitiesSelected.back());
-				this->juegoVista->getMenuVista()->setSelectedEntityDescription(entidadMap);
+				EntidadPartidaVista* entitySelected = this->entitiesSelected.back();
 			} else this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
 		}
 	}
