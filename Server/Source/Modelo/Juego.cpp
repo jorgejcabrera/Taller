@@ -232,20 +232,27 @@ EntidadPartida* Juego::getEntityById(int id){
 void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	EntidadPartida* building = this->getEntityById(idOfCreator);
 	pair<int, int> positionOfCreated = this->getNearestPosition(building);
-	if (positionOfCreated.first == -1) positionOfCreated = this->mapa->getAvailablePosition();
-	EntidadDinamica* dinamicEntity = new EntidadDinamica(type,
-														gameSettings->getConfigAttributeOfEntityAsInt(type, "velocidad"),
-														positionOfCreated.first,
-														positionOfCreated.second,
-														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"),
-														gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"));
-	dinamicEntity->setStrength(gameSettings->getConfigAttributeOfEntityAsInt(type, "strength"));
-	dinamicEntity->setPrecision(0.5);
-	dinamicEntity->setOwner(owner);
-	dinamicEntity->setVisibilityRange(gameSettings->getRangeVisibility());
-	this->protagonistas.insert(make_pair(dinamicEntity->getId(),dinamicEntity));
-	this->mapa->getTileAt(positionOfCreated.first,positionOfCreated.second)->changeStatusAvailable();
-	this->newEntities.push_back(dinamicEntity);
+	
+	//creamos la entidad
+	if ( positionOfCreated.first != -1 && positionOfCreated != building->getPosition()){ //positionOfCreated = this->mapa->getAvailablePosition();
+		EntidadDinamica* dinamicEntity = new EntidadDinamica(type,
+															gameSettings->getConfigAttributeOfEntityAsInt(type, "velocidad"),
+															positionOfCreated.first,
+															positionOfCreated.second,
+															gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"),
+															gameSettings->getConfigAttributeOfEntityAsInt(type, "pixels_dimension"));
+		dinamicEntity->setStrength(gameSettings->getConfigAttributeOfEntityAsInt(type, "strength"));
+		dinamicEntity->setPrecision(0.5);
+		dinamicEntity->setOwner(owner);
+		dinamicEntity->setVisibilityRange(gameSettings->getRangeVisibility());
+		this->protagonistas.insert(make_pair(dinamicEntity->getId(),dinamicEntity));
+		this->mapa->getTileAt(positionOfCreated.first,positionOfCreated.second)->changeStatusAvailable();
+		this->newEntities.push_back(dinamicEntity);
+	
+	//no hay lugar para crear la entidad
+	}else{
+		//TODO hacer el refund de lo que gasto el cliente en generar ese recurso
+	}
 }
 
 
@@ -294,25 +301,7 @@ pair<int,int> Juego::getCivicCenterPositionOfClient(string owner){
 
 pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 	if (entity == NULL) return make_pair(-1,-1);
-	/*pair<int,int> candidatePosition;
 
-	list<pair<int,int> > nearesPositions = entity->getNearestPositions();
-	for(list<pair<int,int> >::iterator it = nearesPositions.begin(); it!= nearesPositions.end();++it){
-		stringstream ss;
-		ss.str("");
-		ss << "vamos a construir la entidad "<< entity->getName() << " en "<< entity->getPosition().first<< " "<< entity->getPosition().second<< " alto "<<entity->getLength()<<" ancho "<<entity->getWidth();
-		Logger::get()->logDebug("Juego","getNearesPosition",ss.str());
-		ss.str("");
-		ss << "la primer posicion cercada es "<< (*it).first <<" "<< (*it).second;
-		Logger::get()->logDebug("Juego","getNearesPosition",ss.str());
-		Tile* tile = this->mapa->getTileAt((*it).first, (*it).second );
-		if ( tile && tile->isAvailable())
-			ss.str("");
-			ss << "devolvemos la posicion " << (*it).first<< " "<< (*it).second;
-			Logger::get()->logDebug("Juego","getNearesPosition",ss.str());
-			return *it;
-	}*/
-	
 	int entityWidth = gameSettings->getConfigAttributeOfEntityAsInt(entity->getName(), "ancho_base");
 	int entityHeight = gameSettings->getConfigAttributeOfEntityAsInt(entity->getName(), "alto_base");
 
@@ -349,7 +338,6 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 	}
 	//return this->getMap()->getAvailablePosition(entityPosition.first+entityWidth,entityPosition.second+entityHeight);
 	return entity->getPosition();
-	//return entity->getPosition();
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){

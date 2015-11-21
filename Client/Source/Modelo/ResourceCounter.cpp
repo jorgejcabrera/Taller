@@ -8,7 +8,7 @@
 #include "../../Headers/Modelo/ResourceCounter.h"
 
 ResourceCounter::ResourceCounter() {
-	int cantInicial = 10;
+	int cantInicial = 10000;
 	this->food = cantInicial;
 	this->gold = cantInicial;
 	this->wood = cantInicial;
