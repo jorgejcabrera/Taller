@@ -22,6 +22,7 @@ GameController::GameController(){
 	this->gameStatus = RUNNING;
 	this->pressedMouseButton = "";
 	this->entityToBuild = "";
+	this->mixer = new Mixer();
 }
 
 list<Message*> GameController::getMessagesFromEvent(string userName){
@@ -454,5 +455,7 @@ GameController::~GameController() {
 	this->event->quit;
 	delete(this->event);
 	this->event = NULL;
+	delete(this->mixer);
+	this->mixer = NULL;
 }
 
