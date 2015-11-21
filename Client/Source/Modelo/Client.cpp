@@ -89,6 +89,7 @@ void Client::processReceivedMessages(){
 			//TODO ojo cuando actualizemos la salud de un endificio esto no va a andar por las calses estaticas no tienen el metodo addTileTopath
 			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->addTileToPath((*it)->getPositionX(),(*it)->getPositionY());
 			EntidadPartidaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
+			if (entity->getHealth() != (*it)->getHealth()) this->gController->getMixer()->playEffect();
 			entity->setHealth((*it)->getHealth());
 			entity->setStrength((*it)->getStrength());
 			entity->setPrecision((*it)->getPrecision());
@@ -192,6 +193,7 @@ void Client::sendEvents(){
 	}else{
 		for(list<Message*>::iterator it = messages.begin() ; it != messages.end() ; ++it) {
 			this->writeThread->writeMessage((*it));
+			if ((*it)->getTipo() == "attack") this->gController->getMixer()->playEffect();
 			if( (*it)->getTipo() == "exit" ){
 				this->status = DISCONECTED;
 				this->readThread->shutDown();

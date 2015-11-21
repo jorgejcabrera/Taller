@@ -135,6 +135,7 @@ public:
 	 * Decrementa los recursos necesarios para la entidad
 	 */
 	void decreaseResources(string entity);
+	Mixer * getMixer();
 	virtual ~GameController();
 };
 

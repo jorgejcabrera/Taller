@@ -37,6 +37,19 @@ void Mixer::initialize() {
 	}
 }
 
+void Mixer::playMusic() {
+	Mix_PlayMusic( this->music, -1 );
+}
+
+void Mixer::playEffect() {
+	Mix_PlayChannel( -1, this->soundOfSword, 0 );
+}
+
+void Mixer::startOrStopMusic() {
+	if( Mix_PausedMusic() == 1 ) Mix_ResumeMusic();
+	else Mix_PauseMusic();
+}
+
 Mixer::~Mixer() {
 	//Free the sound effects
 	Mix_FreeChunk(this->soundOfSword);

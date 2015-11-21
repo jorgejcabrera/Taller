@@ -23,6 +23,9 @@ private:
 public:
 Mixer();
 void initialize();
+void playMusic();
+void playEffect();
+void startOrStopMusic();
 virtual ~Mixer();
 
 

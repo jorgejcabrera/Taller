@@ -63,6 +63,8 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 					this->juegoVista->getMenuVista()->deselectedEntity();
 					this->selection();
 				}
+				if( event->type == SDL_KEYDOWN && event->key.keysym.sym == SDLK_m)
+					this->mixer->startOrStopMusic();
 			}
 	return messages;
 }
@@ -235,6 +237,7 @@ JuegoVista* GameController::getJuegoVista(){
 
 void GameController::setGameRunning(){
 	this->gameRunning=true;
+	this->mixer->playMusic();
 }
 
 void GameController::updateGame(){
@@ -441,6 +444,9 @@ pair <int,int> GameController::convertMousePositionToCartesianPosition(){
 	return this->utils->convertToCartesian( posicionX - offset->first, posicionY - offset->second);
 }
 
+Mixer* GameController::getMixer() {
+	return this->mixer;
+}
 
 GameController::~GameController() {
 	//delete(this->juegoVista);
