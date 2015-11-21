@@ -100,7 +100,7 @@ public:
 	void setInitialScreenPosition(float x,float y);
 	void setPosition(int x,int y);
 	void addTileToPath(int x,int y);
-	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY);
+	void drawMe(pair<int,int>* offSet, int ciclos);
 	void trasladarse();
 	bool isWalking();
 	virtual ~EntidadDinamicaVista();

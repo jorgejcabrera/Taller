@@ -38,7 +38,7 @@ public:
 	int getFramesPerSecond();
 	void setDelay(int delayFrames);
 	SDL_Rect getPositionOfSprite(int ciclos);
-	void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
+	void drawMe(pair<int,int> isometricPosition, pair<int,int>* offSet, int ciclos);
 	virtual ~EntidadSemiEstaticaVista();
 };
 

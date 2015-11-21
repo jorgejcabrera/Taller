@@ -44,7 +44,7 @@ public:
 	void clearView();
 	void renderObject(const string &file, int x, int y, int w, int h);
 	void renderObjectGrey(const string &file, int x, int y, int w, int h);
-	void renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject);
+	void renderObject(const string &file, int x, int y, int w, int h, SDL_Rect rectObject, bool buildingCompleted);
 	/*
 	* render utilizado para cambiar el color de la imagen, solo cuando estoy tratando de construir
 	* */

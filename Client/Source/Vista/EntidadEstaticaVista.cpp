@@ -34,14 +34,6 @@ EntidadEstaticaVista::EntidadEstaticaVista(int width,int length){
 	this->isCompleted = true;
 }
 
-bool EntidadEstaticaVista::isBuildingCompleted(){
-	return this->isCompleted;
-}
-
-void EntidadEstaticaVista::setBuildingCompleted(bool completed){
-	this->isCompleted = completed;
-}
-
 void EntidadEstaticaVista::destruir(){
 	this->~EntidadEstaticaVista();
 }

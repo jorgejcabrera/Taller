@@ -12,6 +12,7 @@
 #include <iostream>
 #include <typeinfo>
 #include "../../Headers/Modelo/PicassoHelper.h"
+#include "../Modelo/GameSettings.h"
 
 using namespace std;
 
@@ -66,8 +67,10 @@ public:
 	* El objeto le dice a la vista que lo dibuje segun el tamaño que tenga la misma: 1x1,2x2,3x3,
 	* 4x4 ya que el render depende de este factor
 	* */
-	virtual void drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos);
+	virtual void drawMe(pair<int,int> isometricPosition, pair<int,int>* offSet, int ciclos);
 	void saw();
+	bool isBuildingCompleted();
+	void setBuildingCompleted(bool completed);
 	virtual ~EntidadPartidaVista();
 };
 

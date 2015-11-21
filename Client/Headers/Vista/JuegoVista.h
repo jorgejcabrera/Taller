@@ -59,7 +59,6 @@ private:
 	void drawIsometricMap();
 	void drawStaticEntities(int runCycles);
 	void drawDinamicEntities(int runCycles);
-	void drawDinamicEntity(EntidadDinamicaVista* entity,int runCycles,bool isMyEntity);
 	void drawSemiStaticsEntities(int runCycles);
 	void drawMenu();
 	void drawMiniMap();
@@ -95,7 +94,7 @@ public:
 	void setResources(int alimento, int madera, int oro);
 	void addTile(string surface, int x, int y);
 	void addStaticEntity(int id, string type, int x, int y,string owner,int health, bool completed);
-	void addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health);
+	void addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health, bool completed);
 	void addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision);
 	pair<int,int>* getOffset();
 	map<int,EntidadDinamicaVista*>* getPersonajes();

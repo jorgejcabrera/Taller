@@ -92,13 +92,14 @@ SDL_Rect EntidadSemiEstaticaVista::getPositionOfSprite(int ciclos){
 		return srcrect;
 }
 
-void EntidadSemiEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
-	//primero tenemos que centrar la entidad semiestatica
-	int widthScreen = this->widthPixel * this->width;
-	int lengthScreen = this->lengthPixel*this->length;
-	int posXScreen = (isometricPosition.first + offSetX) - this->widthPixel / 2 + DefaultSettings::getTileSize();
-	int posYScreen = (isometricPosition.second + offSetY) - this->widthPixel / 2 - DefaultSettings::getTileSize() /2;
-	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),posXScreen,posYScreen,widthScreen,lengthScreen, this->getPositionOfSprite(ciclos));
+void EntidadSemiEstaticaVista::drawMe(pair<int,int> isometricPosition, pair<int,int>* offSet, int ciclos){
+	PicassoHelper::GetInstance()->renderObject(	this->getPathImage(),
+										isometricPosition.first + offSet->first - this->getWidthPixel() / 2 + DefaultSettings::getTileSize(),
+										isometricPosition.second + offSet->second - this->getWidthPixel() / 2 - DefaultSettings::getTileSize() /2,
+										this->getWidthPixel(),
+										this->getLengthPixel(),
+										this->getPositionOfSprite(ciclos),
+										this->isBuildingCompleted());
 }
 
 EntidadSemiEstaticaVista::~EntidadSemiEstaticaVista() {

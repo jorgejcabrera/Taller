@@ -150,48 +150,20 @@ void JuegoVista::drawStaticEntities(int runCycles){
 }
 
 void JuegoVista::drawDinamicEntities(int runCycles){
-	pair<int,int> isometricPosition;
 	EntidadDinamicaVista* entidad;
 	for(map<int,EntidadDinamicaVista*>::iterator itDinamicos = this->personajes.begin(); itDinamicos!=this->personajes.end(); ++itDinamicos){
 		entidad = (*itDinamicos).second;
-		drawDinamicEntity(entidad,runCycles,false);
-	}
-}
-
-void JuegoVista::drawDinamicEntity(EntidadDinamicaVista* entidad, int runCycles,bool isMyEntity){
-	int offSetX = this->getOffset()->first;
-	int offSetY = this->getOffset()->second;
-	pair<int,int> screenPosition = entidad->getScreenPosition();
-	entidad->trasladarse();
-	bool drawEntity = true;
-
-	if(!isMyEntity){
-		drawEntity = isEnemyEntityVisible(entidad->getPosition());
-	}
-	if(drawEntity){
-		this->picassoHelper->renderObject(	entidad->getPathImage(),
-											screenPosition.first - entidad->getWidthPixel()/4 + offSetX,
-											screenPosition.second  - entidad->getLengthPixel()/4 + offSetY,
-											gameSettings->getTileSize(),
-											gameSettings->getTileSize(),
-											entidad->getPositionOfSprite(runCycles));
+		entidad->trasladarse();
+		if(isEnemyEntityVisible(entidad->getPosition())){
+			entidad->drawMe(this->getOffset(), runCycles);
+		}
 	}
 }
 
 void JuegoVista::drawSemiStaticsEntities(int runCycles){
-	pair<int,int> isometricPosition;
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
-		int offSetX = this->getOffset()->first;
-		int offSetY = this->getOffset()->second;
 		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
-		isometricPosition = UtilsController::GetInstance()->getIsometricPosition(entidad);
-		this->picassoHelper->renderObject(	entidad->getPathImage(),
-											isometricPosition.first + offSetX - entidad->getWidthPixel() / 2 + DefaultSettings::getTileSize(),
-											isometricPosition.second + offSetY - entidad->getWidthPixel() / 2 - DefaultSettings::getTileSize() /2,
-											entidad->getWidthPixel(),
-											entidad->getLengthPixel(),
-											entidad->getPositionOfSprite(runCycles));
-
+		entidad->drawMe(UtilsController::GetInstance()->getIsometricPosition(entidad), this->getOffset(), runCycles);
 	}
 }
 
@@ -241,7 +213,7 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 	}
 }
 
-void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health){
+void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health, bool completed){
 	if ( this->semiEstaticos.find(id) == this->semiEstaticos.end() ) {
 		EntidadSemiEstaticaVista* newSemiStatic = new EntidadSemiEstaticaVista(	gameSettings->getEntityConfig(type)->getAncho(),
 																				gameSettings->getEntityConfig(type)->getAlto(),
@@ -256,12 +228,14 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 		newSemiStatic->setFramesInLineFile(gameSettings->getEntityConfig(type)->getTotalFramesLine());
 		newSemiStatic->setId(id);
 		newSemiStatic->setOwner(owner);
+		newSemiStatic->setBuildingCompleted(completed);
 		this->semiEstaticos.insert(make_pair(id,newSemiStatic));
 	} else {
 		//Entidad ya existia y ahora cambia de dueño
 		EntidadSemiEstaticaVista* newSemiStatic = this->semiEstaticos.at(id);
 		newSemiStatic->setOwner(owner);
 		newSemiStatic->setHealth(health);
+		newSemiStatic->setBuildingCompleted(completed);
 	}
 }
 

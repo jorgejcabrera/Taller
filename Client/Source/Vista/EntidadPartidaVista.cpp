@@ -51,7 +51,7 @@ string EntidadPartidaVista::getSizeString(){
 	return this->sizeString;
 }
 
-void EntidadPartidaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY, int ciclos){
+void EntidadPartidaVista::drawMe(pair<int,int> isometricPosition, pair<int,int>* offSet, int ciclos){
 }
 
 void EntidadPartidaVista::setId(int identifier){
@@ -108,6 +108,14 @@ void EntidadPartidaVista::setOwner(string newOwner){
 }
 string EntidadPartidaVista::getOwner(){
 	return this->owner;
+}
+
+bool EntidadPartidaVista::isBuildingCompleted(){
+	return this->isCompleted;
+}
+
+void EntidadPartidaVista::setBuildingCompleted(bool completed){
+	this->isCompleted = completed;
 }
 
 EntidadPartidaVista::~EntidadPartidaVista() {

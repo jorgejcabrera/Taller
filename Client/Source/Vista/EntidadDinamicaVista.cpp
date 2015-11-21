@@ -242,7 +242,14 @@ void EntidadDinamicaVista::setDelay(int delayFrames){
 	this->delay = delayFrames;
 }
 
-void EntidadDinamicaVista::drawMe(pair<int,int> isometricPosition, int offSetX, int offSetY){
+void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
+	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),
+											screenPosition.first - this->getWidthPixel()/4 + offSet->first,
+											screenPosition.second  - this->getLengthPixel()/4 + offSet->second,
+											GameSettings::GetInstance()->getTileSize(),
+											GameSettings::GetInstance()->getTileSize(),
+											this->getPositionOfSprite(runCycles),
+											true);
 }
 
 string EntidadDinamicaVista::toString(){
