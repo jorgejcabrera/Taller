@@ -147,7 +147,7 @@ tipos:
   health: 200 
   fps: 50
   total_frames_line: 10
-  pixels_dimension: 85
+  pixels_dimension: 90
   delay: 0
   velocidad: 40
   builder_effort: 0
