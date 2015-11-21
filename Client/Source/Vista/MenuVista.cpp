@@ -117,20 +117,7 @@ void MenuVista::renderEntityField(string field, int value, int offset){
 }
 
 void MenuVista::renderEntityImage(string path){
-	size_t found = path.find("Molino");
-	if(found!=string::npos) path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
-	found = path.find("soldado.");
-	if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
-	found = path.find("king");
-	if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
-	found = path.find("aldeano");
-	if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
-	found = path.find("cobra");
-	if(found!=string::npos) path=path.replace(path.find("cobra"), sizeof("cobra")-1, "cobraSolo");
-	found = path.find("caballo");
-	if(found!=string::npos) path=path.replace(path.find("caballo"), sizeof("caballo")-1, "caballoSolo");
-	found = path.find("soldadoDesconectado");
-	if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
+	path = DefaultSettings::covertPathOfAnimatedEntity(path);
 	PicassoHelper::GetInstance()->renderObject(path,GameSettings::GetInstance()->getScreenWidth()/2, GameSettings::GetInstance()->getScreenHeight() - this->bigHeight, 100, 100);
 }
 
@@ -198,17 +185,7 @@ void MenuVista::drawEntitiesSelected() {
 	int width = 50;
 	int posX = GameSettings::GetInstance()->getScreenWidth()/4;
 	for ( map<string,int>::iterator it = this->selectedEntities.begin() ; it != this->selectedEntities.end(); ++it ) {
-		string path= (*it).first;
-		size_t found = path.find("Molino");
-		if(found!=string::npos) path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
-		found = path.find("soldado.");
-		if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
-		found = path.find("king");
-		if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
-		found = path.find("aldeano");
-		if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
-		found = path.find("soldadoDesconectado");
-		if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
+		string path = DefaultSettings::covertPathOfAnimatedEntity((*it).first);
 		for ( cantidad = (*it).second ; cantidad > 0 ; --cantidad) {
 			PicassoHelper::GetInstance()->renderObject(path,posX, GameSettings::GetInstance()->getScreenHeight()-110, width, 50);
 			posX = posX+width;

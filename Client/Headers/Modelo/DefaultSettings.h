@@ -92,6 +92,7 @@ class DefaultSettings {
 		static string getPathFlagImage(string stringColor);
 		static string getPathTileColour(string stringColor);
 		static string getPathTileAvailable(bool available);
+		static string covertPathOfAnimatedEntity(string path);
 };
 
 

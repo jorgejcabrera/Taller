@@ -317,8 +317,24 @@ string DefaultSettings::getPathTileAvailable(bool available){
 	if(available)
 		return IMAGE_BASE_PATH +"/Tiles/lightGreenTile.png";
 	return IMAGE_BASE_PATH +"/Tiles/redTile.png";
+}
 
-
+string DefaultSettings::covertPathOfAnimatedEntity(string path){
+	size_t found = path.find("Molino");
+	if(found!=string::npos) path=path.replace(path.find("Molino"), sizeof("Molino")-1, "MolinoSolo");
+	found = path.find("soldado.");
+	if(found!=string::npos) path=path.replace(path.find("soldado."), sizeof("soldado.")-1, "soldadoSolo.");
+	found = path.find("king");
+	if(found!=string::npos) path=path.replace(path.find("king"), sizeof("king")-1, "kingSolo");
+	found = path.find("aldeano");
+	if(found!=string::npos) path=path.replace(path.find("aldeano"), sizeof("aldeano")-1, "aldeanoSolo");
+	found = path.find("cobra");
+	if(found!=string::npos) path=path.replace(path.find("cobra"), sizeof("cobra")-1, "cobraSolo");
+	found = path.find("caballo");
+	if(found!=string::npos) path=path.replace(path.find("caballo"), sizeof("caballo")-1, "caballoSolo");
+	found = path.find("soldadoDesconectado");
+	if(found!=string::npos) path=path.replace(path.find("soldadoDesconectado"), sizeof("soldado.")-1, "soldadoSolo");
+	return path;
 }
 
 DefaultSettings::~DefaultSettings() {
