@@ -353,9 +353,9 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){
-	stringstream ss;
+	/*stringstream ss;
 	ss<< "Entre en  transferEntitiesToUser "<< userFrom << " to "<< userTo;
-	Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());
+	Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());*/
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( it->second->getOwner() == userFrom ){
 			it->second->setOwner(userTo);
