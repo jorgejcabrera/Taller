@@ -139,7 +139,7 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "deleteEntity"){
 			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
 		
-		/*}else if(tipoMensaje == "refund"){
+		/*{else if(tipoMensaje == "refund"){
 			this->resourceCounter->refund((*it)->getNombre());*/
 
 		}else if (tipoMensaje == "start"){
