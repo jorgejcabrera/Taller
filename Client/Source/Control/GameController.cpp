@@ -75,6 +75,10 @@ void GameController::readyToAttack(list<Message*>* messages){
 
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
 		if( it->second->getTarget() != 0 ){
+			if(it->second->getName() == "cobra"){
+				this->getMixer()->playCarAttackEffect();
+			}
+
 			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget() );
 			//el target ya fue eliminado
 			if( target == NULL ){
@@ -99,6 +103,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 
 			//se envia por segunda vez el msj para que empieze a atacar cuando esta cerca del target
 			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) < distanceBeetweenTiles && !it->second->isReadyToAttack() ){
+				//Si el que ataca es el auto ejecuto el sonido
 				Message* message = new Message();
 				msg_game body;
 				body.set_id(it->second->getId());

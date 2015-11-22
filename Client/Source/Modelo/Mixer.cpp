@@ -35,6 +35,11 @@ void Mixer::initialize() {
 	if( this->soundOfSword == NULL ) {
 		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
+
+	this->soundOfCarAttack = Mix_LoadWAV( "../Sounds/car_attack.wav" );
+	if( this->soundOfCarAttack == NULL ) {
+		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
 }
 
 void Mixer::playMusic() {
@@ -42,6 +47,10 @@ void Mixer::playMusic() {
 }
 
 void Mixer::playEffect() {
+	Mix_PlayChannel( -1, this->soundOfSword, 0 );
+}
+
+void Mixer::playCarAttackEffect() {
 	Mix_PlayChannel( -1, this->soundOfSword, 0 );
 }
 
