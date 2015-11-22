@@ -267,8 +267,8 @@ string DefaultSettings::getPathOfMenuBackground(){
 map<string,int> DefaultSettings::getCostsOf(string type) {
 	map<string,int>  returnMap;
 	if (type == "soldado") {
-			returnMap["food"] = 3;
-			returnMap["gold"] = 2;
+		returnMap["food"] = 3;
+		returnMap["gold"] = 2;
 	}else if (type == "aldeano") {
 		returnMap["food"] = 3;
 		returnMap["rock"] = 2;
@@ -282,21 +282,21 @@ map<string,int> DefaultSettings::getCostsOf(string type) {
 		returnMap["gold"] = 8;
 		returnMap["wood"] = 8;
 	}else if (type == "molino"){
-			returnMap["food"] = 5;
-			returnMap["rock"] = 5;
-			returnMap["gold"] = 5;
-			returnMap["wood"] = 5;
+		returnMap["food"] = 5;
+		returnMap["rock"] = 5;
+		returnMap["gold"] = 5;
+		returnMap["wood"] = 5;
 	}else if (type == "cobra"){
-			returnMap["food"] = 1000;
-			returnMap["rock"] = 1000;
-			returnMap["gold"] = 1000;
-			returnMap["wood"] = 1000;
+		returnMap["food"] = 1000;
+		returnMap["rock"] = 1000;
+		returnMap["gold"] = 1000;
+		returnMap["wood"] = 1000;
 	}else if (type == "caballo"){
-			returnMap["food"] = 100;
-			returnMap["rock"] = 100;
-			returnMap["gold"] = 100;
-			returnMap["wood"] = 100;
-		}
+		returnMap["food"] = 100;
+		returnMap["rock"] = 100;
+		returnMap["gold"] = 100;
+		returnMap["wood"] = 100;
+	}
 	return returnMap;
 }
 string DefaultSettings::getPathFlagImage(string stringColor){

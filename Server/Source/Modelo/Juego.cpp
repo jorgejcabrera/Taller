@@ -229,12 +229,12 @@ EntidadPartida* Juego::getEntityById(int id){
 	return NULL;
 }
 
-void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
+int Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 	EntidadPartida* building = this->getEntityById(idOfCreator);
 	pair<int, int> positionOfCreated = this->getNearestPosition(building);
 	
 	//creamos la entidad
-	if ( positionOfCreated.first != -1 && positionOfCreated != building->getPosition()){ //positionOfCreated = this->mapa->getAvailablePosition();
+	if ( positionOfCreated.first != -1 && positionOfCreated != building->getPosition()){
 		EntidadDinamica* dinamicEntity = new EntidadDinamica(type,
 															gameSettings->getConfigAttributeOfEntityAsInt(type, "velocidad"),
 															positionOfCreated.first,
@@ -248,11 +248,11 @@ void Juego::createNewEntitie(string owner,string type, int idOfCreator) {
 		this->protagonistas.insert(make_pair(dinamicEntity->getId(),dinamicEntity));
 		this->mapa->getTileAt(positionOfCreated.first,positionOfCreated.second)->changeStatusAvailable();
 		this->newEntities.push_back(dinamicEntity);
+		return OK;
+	}
 	
 	//no hay lugar para crear la entidad
-	}else{
-		//TODO hacer el refund de lo que gasto el cliente en generar ese recurso
-	}
+	return ERROR;
 }
 
 

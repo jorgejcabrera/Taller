@@ -202,7 +202,21 @@ bool Server::checkForAttackMsg(Message* msg){
 
 bool Server::checkForCreateMsg(Message* msg){
 	if( this->gameRunning && msg->getTipo() == "create" ){
-		this->gController->getJuego()->createNewEntitie(msg->getOwner(),msg->getName(), msg->getId());
+		int response = this->gController->getJuego()->createNewEntitie(msg->getOwner(),msg->getName(), msg->getId());
+		
+		//la entidad no pudo ser creada
+		if ( response == 0 ){
+			Logger::get()->logDebug("Server","checkForCreateMsg","ocurrio un error");
+			Message* messageUpdate = new Message(0,"refund");
+			messageUpdate->setName(msg->getName());
+
+			list<Client*> activeClients = getActiveClients();
+			for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
+				if( (*clientIterator)->getUserName() == msg->getOwner() && this->gameRunning){
+					(*clientIterator)->writeMessagesInQueue(messageUpdate);
+				}
+			}
+		}
 		return true;
 	}
 	return false;

@@ -9,6 +9,7 @@
 #define RESOURCECOUNTER_H_
 
 #include <string>
+#include "DefaultSettings.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 	ResourceCounter();
 	void gastar(string recurso);
 	void increase(string recurso,int quantity);
+	void refund(string type);
 	int getGold();
 	int getFood();
 	int getWood();

@@ -230,7 +230,7 @@ int GameSettings::getRangeVisibility() {
 }
 
 map<string,int> GameSettings::getCostsOf(string type) {
-	return DefaultSettings::getCostsOf(type);
+	return DefaultSettings::getCostsOf(type);	
 }
 
 } /* namespace std */

@@ -26,6 +26,21 @@ void ResourceCounter::gastar(string recurso) {
 		this->rock--;
 }
 
+void ResourceCounter::refund(string type){
+	map<string,int> costs = DefaultSettings::getCostsOf(type);
+	for (map<string,int>::iterator it = costs.begin(); it != costs.end(); ++it){
+		if( it->first == "gold" ){
+			this->gold += it->second;
+		}else if( it->first == "food" ){
+			this->food += it->second;
+		}else if(it->first == "wood" ){
+			this->wood += it->second;
+		}else{
+			this->rock += it->second;
+		}
+	}
+}
+
 void ResourceCounter::increase(string recurso,int quantity){
 	if(recurso == "gold")
 		this->gold += quantity;
