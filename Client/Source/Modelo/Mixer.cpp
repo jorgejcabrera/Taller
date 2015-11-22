@@ -31,7 +31,8 @@ void Mixer::initialize() {
 	}
 
 	//Load sound effects
-	this->soundOfSword = Mix_LoadWAV( "../Sounds/scratch.wav" );
+	//this->soundOfSword = Mix_LoadWAV( "../Sounds/scratch.wav" );
+	this->soundOfSword = Mix_LoadWAV( "../Sounds/campana.wav" );
 	if( this->soundOfSword == NULL ) {
 		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
