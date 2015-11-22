@@ -188,12 +188,20 @@ void MenuVista::drawEntitiesSelected() {
 	int cantidad;
 	int width = 50;
 	int posX = GameSettings::GetInstance()->getScreenWidth()/4;
+	int posY = GameSettings::GetInstance()->getScreenHeight()-110;
+	int numberOfRenderedEntities = 0;
 	for ( map<string,int>::iterator it = this->selectedEntities.begin() ; it != this->selectedEntities.end(); ++it ) {
 		string path = DefaultSettings::covertPathOfAnimatedEntity((*it).first);
 		for ( cantidad = (*it).second ; cantidad > 0 ; --cantidad) {
-			PicassoHelper::GetInstance()->renderObject(path,posX, GameSettings::GetInstance()->getScreenHeight()-110, width, 50);
+			PicassoHelper::GetInstance()->renderObject(path,posX, posY, width, 50);
 			posX = posX+width;
+			if ( numberOfRenderedEntities == 7 ) {
+				posX = GameSettings::GetInstance()->getScreenWidth()/4;
+				posY = posY+53;
+			}
+			++numberOfRenderedEntities;
 		}
+
 	}
 }
 
