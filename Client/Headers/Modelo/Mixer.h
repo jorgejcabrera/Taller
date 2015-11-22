@@ -21,12 +21,14 @@ private:
 	//The sound effects that will be used
 	Mix_Chunk *soundOfSword;
 	Mix_Chunk *soundOfCarAttack;
+	Mix_Chunk *soundOfCarStart;
 public:
 Mixer();
 void initialize();
 void playMusic();
 void playEffect();
-void playCarAttackEffect();
+void playCarAttack();
+void playCarStart();
 void startOrStopMusic();
 virtual ~Mixer();
 

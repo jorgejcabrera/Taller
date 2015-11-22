@@ -76,7 +76,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
 		if( it->second->getTarget() != 0 ){
 			if(it->second->getName() == "cobra"){
-				this->getMixer()->playCarAttackEffect();
+				this->getMixer()->playCarAttack();
 			}
 
 			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget() );
@@ -399,6 +399,10 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 				message->setContent(body);
 				message->setOwner(this->clientName);
 				messages.push_back(message);
+
+				if(buildingAndEntitie.second == "cobra"){
+					this->getMixer()->playCarStart();
+				}
 			}
 		}
 	}

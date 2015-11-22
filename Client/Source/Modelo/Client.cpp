@@ -163,7 +163,6 @@ void Client::processReceivedMessages(){
 				this->status = DISCONECTED;
 			}else{
 				//Si el que perdio es otro, borro sus entidades
-				//TODO revisar que pasa si el juego es captura de bandera
 				disconnectPlayer((*it)->getNombre());
 			}
 		}else{
