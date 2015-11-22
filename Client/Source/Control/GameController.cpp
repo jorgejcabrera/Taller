@@ -147,6 +147,7 @@ void GameController::selection() {
 			//tengo que volver a chequear si quedo una sola, en ese caso renderizo su descripcion completa
 			if (this->entitiesSelected.size() == 1) {
 				EntidadPartidaVista* entitySelected = this->entitiesSelected.back();
+				this->juegoVista->getMenuVista()->setSelectedEntity(entitySelected);
 			} else this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
 		}
 	}
