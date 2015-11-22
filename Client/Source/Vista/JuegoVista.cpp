@@ -283,7 +283,7 @@ void JuegoVista::drawMiniMap() {
 		this->miniMapVista->renderEntity(DefaultSettings::getPathTileColour(convertColourToString(colourClient)), entidad);
 	}
 
-	//Dibujo los semi estaticos
+	//dibujo los semi estaticos
 	for(map<int,EntidadSemiEstaticaVista*>::iterator itSemiStatics = this->semiEstaticos.begin(); itSemiStatics!=this->semiEstaticos.end(); ++itSemiStatics){
 		EntidadSemiEstaticaVista* entidad = (*itSemiStatics).second;
 		colour colourClient = this->coloursOfClients[entidad->getOwner()];

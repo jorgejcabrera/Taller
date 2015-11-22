@@ -8,8 +8,8 @@
 #ifndef SOURCE_MODELO_SERVER_H_
 #define SOURCE_MODELO_SERVER_H_
 
-#define ERROR -1
-#define OK 0
+#define ERROR 0
+#define OK 1
 
 #include "GameSettings.h"
 #include "DefaultSettings.h"

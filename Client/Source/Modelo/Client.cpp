@@ -34,7 +34,7 @@ int Client::connectToServer(string ip){
 	struct sockaddr_in s_addr;
 	memset(&s_addr, 0, sizeof(s_addr));
 	s_addr.sin_family = AF_INET;							//address family internet
-	s_addr.sin_port = htons(this->port);							//set server's port number
+	s_addr.sin_port = htons(this->port);					//set server's port number
 	s_addr.sin_addr.s_addr = inet_addr(this->ip.c_str());	//set server's IP
 
 	if ( s_addr.sin_addr.s_addr < 0 ){
@@ -139,6 +139,9 @@ void Client::processReceivedMessages(){
 		}else if (tipoMensaje == "deleteEntity"){
 			this->gController->getJuegoVista()->deleteEntityById((*it)->getId());
 		
+		/*{else if(tipoMensaje == "refund"){
+			this->resourceCounter->refund((*it)->getNombre());*/
+
 		}else if (tipoMensaje == "start"){
 			this->gController->setGameRunning();
 		

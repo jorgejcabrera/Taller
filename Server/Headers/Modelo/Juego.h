@@ -7,6 +7,8 @@
 
 #ifndef SOURCE_MODELO_JUEGO_H_
 #define SOURCE_MODELO_JUEGO_H_
+#define OK 1
+#define ERROR 0
 
 #include "Mapa.h"
 #include "EntidadDinamica.h"
@@ -67,7 +69,7 @@ public:
 	void deleteEntity(int id);
 	map<int,EntidadDinamica*>* getDinamicEntities();
 	list<EntidadPartida*>* getNewEntitiesToNotify();
-	void createNewEntitie(string owner,string type, int idOfCreator);
+	int createNewEntitie(string owner,string type, int idOfCreator);
 	/*
 	* Creo al rey del jugador
 	* */
