@@ -22,6 +22,7 @@ private:
 	Mix_Chunk *soundOfSword;
 	Mix_Chunk *soundOfCarAttack;
 	Mix_Chunk *soundOfCarStart;
+	Mix_Chunk *soundOfHorse;
 public:
 Mixer();
 void initialize();
@@ -29,6 +30,7 @@ void playMusic();
 void playEffect();
 void playCarAttack();
 void playCarStart();
+void playHorse();
 void startOrStopMusic();
 virtual ~Mixer();
 

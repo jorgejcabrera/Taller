@@ -402,6 +402,8 @@ list<Message*> GameController::interactiveMenu(int initialPosMouseX,int initialP
 
 				if(buildingAndEntitie.second == "cobra"){
 					this->getMixer()->playCarStart();
+				}else if(buildingAndEntitie.second == "caballo"){
+					this->getMixer()->playHorse();
 				}
 			}
 		}
