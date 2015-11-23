@@ -16,6 +16,18 @@
 
 using namespace std;
 
+enum Direccion{
+	Norte,
+	Noreste,
+	Este,
+	Sureste,
+	Sur,
+	Suroeste,
+	Oeste,
+	Noroeste,
+	Sindireccion
+};
+
 class EntidadPartidaVista {
 protected:
 	bool isCompleted;

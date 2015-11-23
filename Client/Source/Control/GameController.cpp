@@ -196,7 +196,7 @@ list<Message*> GameController::action(){
 					body.set_target(atoi(targetToAttack["id"].c_str()));
 					message->setContent(body);
 					EntidadPartidaVista* target = this->juegoVista->getEntityById(atoi(targetToAttack["id"].c_str()));
-					entity->setTarget(target/*atoi(targetToAttack["id"].c_str())*/);
+					entity->setTarget(target);
 					entity->prepareToFight(false);
 					messages.push_back(message);
 				}
@@ -285,7 +285,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	if ((posicionY <= gameSettings->getMargenSuperiorUno()) && (posicionY > gameSettings->getMargenSuperiorDos()) && !((offSetY > gameSettings->getLimiteSuperior()))) {
 		offSetY += gameSettings->getVelocidadScrollUno();
 	}
-	if (posicionY <= gameSettings->getMargenSuperiorDos() && !((offSetY > gameSettings->getLimiteSuperior()))) {
+	if (posicionY <= gameSettings->getMargenSuperiorDos(/*atoi(targetToAttack["id"].c_str())*/) && !((offSetY > gameSettings->getLimiteSuperior()))) {
 		offSetY += gameSettings->getVelocidadScrollDos();
 	}
 	if (posicionY >= gameSettings->getMargenInferiorUno() && (posicionY < gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
