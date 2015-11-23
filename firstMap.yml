@@ -123,9 +123,9 @@ tipos:
 - nombre: soldado
   imagen: ../../Taller/Images/Personajes/soldado.png
   health: 200 
-  fps: 50
-  total_frames_line: 7
-  pixels_dimension: 50
+  fps: 10
+  total_frames_line: 10
+  pixels_dimension: 148
   delay: 0
   velocidad: 10
   builder_effort: 0

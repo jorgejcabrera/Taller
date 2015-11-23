@@ -246,8 +246,8 @@ void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
 	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),
 											screenPosition.first - this->getWidthPixel()/4 + offSet->first,
 											screenPosition.second  - this->getLengthPixel()/4 + offSet->second,
-											GameSettings::GetInstance()->getTileSize(),
-											GameSettings::GetInstance()->getTileSize(),
+											GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4,
+											GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4,
 											this->getPositionOfSprite(runCycles),
 											true);
 }
