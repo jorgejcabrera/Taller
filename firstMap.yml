@@ -135,8 +135,8 @@ tipos:
   imagen: ../../Taller/Images/Personajes/aldeano.png
   health: 100 
   fps: 50
-  total_frames_line: 14
-  pixels_dimension: 70
+  total_frames_line: 15
+  pixels_dimension: 132
   delay: 0
   velocidad: 10
   builder_effort: 1
