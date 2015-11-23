@@ -208,7 +208,7 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 	//update de entidad estática
 	} else {
 		EntidadEstaticaVista* building = this->buildings.at(id);
-		if (building->getHealth() != health && building->getOwner() == owner){
+		if (building->getHealth() != health && building->getOwner() == GameSettings::GetInstance()->getUserName()){
 			Mixer::GetInstance()->playEffect();
 		}
 		building->setOwner(owner);
@@ -239,7 +239,7 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 	} else {
 		//Entidad ya existia y ahora cambia de dueño
 		EntidadSemiEstaticaVista* newSemiStatic = this->semiEstaticos.at(id);
-		if (newSemiStatic->getHealth() != health && newSemiStatic->getOwner() == owner){
+		if (newSemiStatic->getHealth() != health && newSemiStatic->getOwner() == GameSettings::GetInstance()->getUserName()){
 			Mixer::GetInstance()->playEffect();
 		}
 		newSemiStatic->setOwner(owner);
@@ -273,7 +273,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active,
 		this->personajes.insert(make_pair(id,newPersonaje));
 	} else {
 		EntidadDinamicaVista* myPersonaje = this->personajes.at(id);
-		if (myPersonaje->getHealth() != health && myPersonaje->getOwner() == owner){
+		if (myPersonaje->getHealth() != health && myPersonaje->getOwner() == GameSettings::GetInstance()->getUserName()){
 			Mixer::GetInstance()->playEffect();
 		}
 		myPersonaje->setOwner(owner);

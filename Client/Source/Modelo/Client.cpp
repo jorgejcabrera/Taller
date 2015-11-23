@@ -248,6 +248,7 @@ void Client::notifyUserName(){
 			initialMessage = "Esperando cantidad minima de jugadores";
 			this->gController->setClientName(this->userName);
 			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
+			GameSettings::GetInstance()->setUserName(this->userName);
 		}else if(response->getNombre()=="NOTALLOW"){
 			this->status = DISCONECTED;
 			valid=true;

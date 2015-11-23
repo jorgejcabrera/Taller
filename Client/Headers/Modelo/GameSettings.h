@@ -23,6 +23,7 @@ private:
 	GameSettings();
 	bool isFileExist(const string fileName);
 	map<string,EntidadConfig*> entitiesConfig;
+	string userName;
 
 public:
 	//pantalla:
@@ -91,6 +92,8 @@ public:
 	string getPathOfCoveredTile();
 	int getRangeVisibility();
 	map<string,int> getCostsOf(string type);
+	void setUserName(string usrName);
+	string getUserName();
 };
 
 } /* namespace std */

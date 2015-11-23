@@ -12,6 +12,7 @@ GameSettings* GameSettings::instance = NULL;
 namespace std {
 
 GameSettings::GameSettings() {
+	this->userName = "";
 }
 
 int GameSettings::getScreenWidth(){
@@ -231,6 +232,14 @@ int GameSettings::getRangeVisibility() {
 
 map<string,int> GameSettings::getCostsOf(string type) {
 	return DefaultSettings::getCostsOf(type);	
+}
+
+void GameSettings::setUserName(string usrName){
+	this->userName = usrName;
+}
+
+string GameSettings::getUserName(){
+	return this->userName;
 }
 
 } /* namespace std */
