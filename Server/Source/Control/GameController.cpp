@@ -162,8 +162,9 @@ bool GameController::readyToInteract(EntidadDinamica* entity){
 	if( entity->isReadyToInteract() ){
 		list<pair<int,int> > nearestPositions = this->juego->getEntityById(entity->getTarget())->getNearestPositions();
 		for(list<pair<int,int> >::iterator it = nearestPositions.begin(); it != nearestPositions.end();++it){
-			if( UtilsController::GetInstance()->getDistance(*it,entity->getPosition()) <= 1 )
+			if( UtilsController::GetInstance()->getDistance(*it,entity->getPosition()) <= 1 ){
 				return true;
+			}
 		}
 	}
 	return false;

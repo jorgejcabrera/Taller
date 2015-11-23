@@ -173,7 +173,7 @@ bool Server::checkForExitMsg(Message* msg){
 bool Server::checkForAttackMsg(Message* msg){
 	EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());	
 	if( this->gameRunning && msg->getTipo() == "attack" ){		
-		//si la entidad ya tenia un target empieza a atacar
+		//si la entidad ya tenia un target empieza a atacar o a consumir el recurso
 		if( entityToUpd->getTarget() != 0 ){
 			entityToUpd->prepareToInteract(true);
 		
@@ -183,6 +183,7 @@ bool Server::checkForAttackMsg(Message* msg){
 			pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
 			this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
 			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
+			entityToUpd->prepareToInteract(false);
 			this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		}
 		return true;

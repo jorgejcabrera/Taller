@@ -71,7 +71,6 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 
 void GameController::readyToAttack(list<Message*>* messages){
 	map<int, EntidadDinamicaVista*>* entities = this->juegoVista->getDinamicEntities();
-	int distanceBeetweenTiles = 60;
 
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
 		if( it->second->getTarget() != 0 ){
@@ -86,6 +85,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 				it->second->prepareToFight(false);
 				return;
 			}
+			int distanceBeetweenTiles = 60 * target->getLength();
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
 			
 			//el target se movio luego de que empezo la pelea, pero lo podemos alcanzar
@@ -103,7 +103,6 @@ void GameController::readyToAttack(list<Message*>* messages){
 
 			//se envia por segunda vez el msj para que empieze a atacar cuando esta cerca del target
 			if(  this->utils->getDistance(it->second->getScreenPosition(), targetPosition) < distanceBeetweenTiles && !it->second->isReadyToAttack() ){
-				//Si el que ataca es el auto ejecuto el sonido
 				Message* message = new Message();
 				msg_game body;
 				body.set_id(it->second->getId());
@@ -188,7 +187,7 @@ list<Message*> GameController::action(){
 			map<string,string> targetToAttack = this->juegoVista->getEntityAt(cartesianPosition);
 
 			//construir
-			if( targetToAttack.size() > 0 && !this->juegoVista->getDinamicEntityById(atoi(targetToAttack["id"].c_str()))){
+			if( targetToAttack.size() > 0 && !this->juegoVista->getDinamicEntityById(atoi(targetToAttack["id"].c_str())) && this->clientName.compare(targetToAttack["owner"].c_str()) == 0 ){
 				for (; it != this->entitiesSelected.end() ; ++it ) {
 					Message* message = new Message();
 					msg_game body;
@@ -201,7 +200,7 @@ list<Message*> GameController::action(){
 					messages.push_back(message);
 				}
 
-			//atacar
+			//atacar o consumir
 			}else if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0 ){
 				for (; it != this->entitiesSelected.end() ; ++it ) {
 					Message* message = new Message();
