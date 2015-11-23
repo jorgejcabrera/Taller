@@ -15,6 +15,7 @@
 #include "../../Headers/Modelo/PicassoHelper.h"
 #include "../../Headers/Control/UtilsController.h"
 #include "../../Headers/Modelo/DefaultSettings.h"
+#include "../../Headers/Modelo/Mixer.h"
 #include <string>
 #include <iostream>
 #include <stdlib.h>

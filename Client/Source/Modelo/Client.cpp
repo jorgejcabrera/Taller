@@ -89,9 +89,6 @@ void Client::processReceivedMessages(){
 			//TODO ojo cuando actualizemos la salud de un endificio esto no va a andar por las calses estaticas no tienen el metodo addTileTopath
 			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->addTileToPath((*it)->getPositionX(),(*it)->getPositionY());
 			EntidadPartidaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
-			if (entity->getHealth() != (*it)->getHealth() && entity->getOwner() == this->userName){
-				this->gController->getMixer()->playEffect();
-			}
 			entity->setHealth((*it)->getHealth());
 			entity->setStrength((*it)->getStrength());
 			entity->setPrecision((*it)->getPrecision());
@@ -251,6 +248,7 @@ void Client::notifyUserName(){
 			initialMessage = "Esperando cantidad minima de jugadores";
 			this->gController->setClientName(this->userName);
 			this->gController->getJuegoVista()->renderFinishLogin(initialMessage);
+			GameSettings::GetInstance()->setUserName(this->userName);
 		}else if(response->getNombre()=="NOTALLOW"){
 			this->status = DISCONECTED;
 			valid=true;

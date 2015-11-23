@@ -22,7 +22,7 @@ GameController::GameController(){
 	this->gameStatus = RUNNING;
 	this->pressedMouseButton = "";
 	this->entityToBuild = "";
-	this->mixer = new Mixer();
+	this->mixer = Mixer::GetInstance();
 }
 
 list<Message*> GameController::getMessagesFromEvent(string userName){

@@ -6,12 +6,19 @@
  */
 
 #include "../../Headers/Modelo/Mixer.h"
-
+Mixer* Mixer::instance = NULL;
 
 Mixer::Mixer() {
 	this->music = NULL;
 	this->soundOfSword = NULL;
 	this->initialize();
+}
+
+Mixer* Mixer::GetInstance() {
+	if (!instance) {
+		instance = new Mixer();
+	}
+	return instance;
 }
 
 void Mixer::initialize() {
@@ -37,6 +44,11 @@ void Mixer::initialize() {
 		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
 
+	this->soundOfNosEstanAtacando = Mix_LoadWAV( "../Sounds/nos_estan_atacando_empire_earth.wav" );
+	if( this->soundOfNosEstanAtacando == NULL ) {
+		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
+
 	this->soundOfCarAttack = Mix_LoadWAV( "../Sounds/car_attack.wav" );
 	if( this->soundOfCarAttack == NULL ) {
 		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
@@ -58,6 +70,10 @@ void Mixer::playMusic() {
 
 void Mixer::playEffect() {
 	Mix_PlayChannel( -1, this->soundOfSword, 0 );
+}
+
+void Mixer::playNosEstanAtacando() {
+	Mix_PlayChannel( -1, this->soundOfNosEstanAtacando, 0 );
 }
 
 void Mixer::playCarAttack() {
