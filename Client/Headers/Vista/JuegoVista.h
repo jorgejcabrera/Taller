@@ -93,7 +93,6 @@ public:
 	* */
 	void createView();
 	void updateOffset(int offsetX,int offsetY);
-	void setResources(int alimento, int madera, int oro);
 	void addTile(string surface, int x, int y);
 	void addStaticEntity(int id, string type, int x, int y,string owner,int health, bool completed);
 	void addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health, bool completed);

@@ -10,9 +10,8 @@
 EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
 	this->seen = false;
-	//TODO sacar esto, lo dejo asi sino a veces lo pone como el valor maximo de int
 	this->health = 100;
-	this->target = 0;
+	this->target = NULL;
 }
 
 void EntidadPartidaVista::setPosition(int x,int y){
@@ -24,13 +23,46 @@ pair<int,int> EntidadPartidaVista::getPosition(){
 	return this->position;
 }
 
-int EntidadPartidaVista::getTarget(){
+EntidadPartidaVista* EntidadPartidaVista::getTarget(){
 	return this->target;
 }
-void EntidadPartidaVista::setTarget(int target){
-	this->target = target;
+
+Direccion EntidadPartidaVista::getStandigDirection(){
+	if(this->target){
+		pair<int,int> targetPosition = this->target->getPosition();
+		//direccion norte
+		if( this->position.first == targetPosition.first && this->position.second > targetPosition.second){
+			return Norte;
+		//direccion noroeste
+		}if( this->position.first > targetPosition.first && this->position.second > targetPosition.second){
+			return Noroeste;
+		//direccion oeste
+		}if( this->position.first > targetPosition.first && this->position.second == targetPosition.second){
+			return Oeste;
+		//direccion suroeste
+		}if( this->position.first > targetPosition.first && this->position.second < targetPosition.second){
+			return Suroeste;
+		//direccion sur
+		}if( this->position.first == targetPosition.first && this->position.second < targetPosition.second){
+			return Sur;
+		//direccion sureste
+		}if( this->position.first < targetPosition.first && this->position.second < targetPosition.second){
+			return Sureste;
+		//direccion este
+		}if( this->position.first < targetPosition.first && this->position.second == targetPosition.second){
+			return Este;
+		//direccion noreste
+		}else{
+			return Noroeste;
+		}
+	}else{
+		return Noreste;
+	}
 }
 
+void EntidadPartidaVista::setTarget(EntidadPartidaVista* target){
+	this->target = target;
+}
 int EntidadPartidaVista::getWidth(){
 	return this->width;
 }

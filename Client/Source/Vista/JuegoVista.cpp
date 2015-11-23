@@ -34,10 +34,6 @@ void JuegoVista::createView(){
 	picassoHelper = PicassoHelper::GetInstance(gameSettings->getScreenWidth(), gameSettings->getScreenHeight());
 }
 
-void JuegoVista::setResources(int alimento, int madera, int oro) {
-//???
-}
-
 string JuegoVista::renderUserInputView(string initialMessage){
 	string userInput = this->loginVista->askInfoUser(initialMessage);
 	return userInput;

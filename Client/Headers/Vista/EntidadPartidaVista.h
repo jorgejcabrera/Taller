@@ -16,6 +16,18 @@
 
 using namespace std;
 
+enum Direccion{
+	Norte,
+	Noreste,
+	Este,
+	Sureste,
+	Sur,
+	Suroeste,
+	Oeste,
+	Noroeste,
+	Sindireccion
+};
+
 class EntidadPartidaVista {
 protected:
 	bool isCompleted;
@@ -31,7 +43,7 @@ protected:
 	/*
 	* id de la entidad con la que se va a interactuar, por ejemplo a atacar
 	* */
-	int target;
+	EntidadPartidaVista* target;
 	/*
 	* parametros variables segun el nivel y características de la entidad
 	* */
@@ -43,7 +55,6 @@ public:
 	EntidadPartidaVista();
 	int getWidth();
 	int getLength();
-	int getTarget();
 	int getId();
 	int getHealth();
 	int getStrength();
@@ -54,12 +65,17 @@ public:
 	string getSizeString();
 	bool getSeen();
 	pair<int,int> getPosition();
+	EntidadPartidaVista* getTarget();
+	/*
+	* retorna la posición con la que quedo orientada la entidad al llegar al target
+	* */
+	Direccion getStandigDirection();
 	void setOwner(string owner);
 	void setName(string name);
 	void setPosition(int x,int y);
 	void setPathImage(string path);
 	void setId(int identifier);
-	void setTarget(int target);	
+	void setTarget(EntidadPartidaVista* target);
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float presition);

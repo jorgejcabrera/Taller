@@ -78,14 +78,14 @@ void GameController::readyToAttack(list<Message*>* messages){
 				this->getMixer()->playCarAttack();
 			}
 
-			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget() );
+			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget()->getId() );
 			//el target ya fue eliminado
 			if( target == NULL ){
-				it->second->setTarget(0);
+				it->second->setTarget(NULL);
 				it->second->prepareToFight(false);
 				return;
 			}
-			int distanceBeetweenTiles = 60 * target->getLength();
+			int distanceBeetweenTiles = 50 * target->getLength();
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
 			
 			//el target se movio luego de que empezo la pelea, pero lo podemos alcanzar
@@ -195,7 +195,8 @@ list<Message*> GameController::action(){
 					body.set_tipo("build");
 					body.set_target(atoi(targetToAttack["id"].c_str()));
 					message->setContent(body);
-					entity->setTarget(atoi(targetToAttack["id"].c_str()));
+					EntidadPartidaVista* target = this->juegoVista->getEntityById(atoi(targetToAttack["id"].c_str()));
+					entity->setTarget(target);
 					entity->prepareToFight(false);
 					messages.push_back(message);
 				}
@@ -209,7 +210,8 @@ list<Message*> GameController::action(){
 					body.set_tipo("attack");
 					body.set_target(atoi(targetToAttack["id"].c_str()));
 					message->setContent(body);
-					entity->setTarget(atoi(targetToAttack["id"].c_str()));
+					EntidadPartidaVista* target = this->juegoVista->getEntityById(atoi(targetToAttack["id"].c_str()));
+					entity->setTarget(target);
 					entity->prepareToFight(false);
 					messages.push_back(message);
 				}
@@ -283,7 +285,7 @@ pair<int,int> GameController::getOffset(int offSetX, int offSetY){
 	if ((posicionY <= gameSettings->getMargenSuperiorUno()) && (posicionY > gameSettings->getMargenSuperiorDos()) && !((offSetY > gameSettings->getLimiteSuperior()))) {
 		offSetY += gameSettings->getVelocidadScrollUno();
 	}
-	if (posicionY <= gameSettings->getMargenSuperiorDos() && !((offSetY > gameSettings->getLimiteSuperior()))) {
+	if (posicionY <= gameSettings->getMargenSuperiorDos(/*atoi(targetToAttack["id"].c_str())*/) && !((offSetY > gameSettings->getLimiteSuperior()))) {
 		offSetY += gameSettings->getVelocidadScrollDos();
 	}
 	if (posicionY >= gameSettings->getMargenInferiorUno() && (posicionY < gameSettings->getMargenInferiorDos()) && !((offSetY < gameSettings->getLimiteInferior()))) {
