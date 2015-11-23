@@ -55,7 +55,6 @@ public:
 	EntidadPartidaVista();
 	int getWidth();
 	int getLength();
-	EntidadPartidaVista* getTarget();
 	int getId();
 	int getHealth();
 	int getStrength();
@@ -66,6 +65,11 @@ public:
 	string getSizeString();
 	bool getSeen();
 	pair<int,int> getPosition();
+	EntidadPartidaVista* getTarget();
+	/*
+	* retorna la posición con la que quedo orientada la entidad al llegar al target
+	* */
+	Direccion getStandigDirection();
 	void setOwner(string owner);
 	void setName(string name);
 	void setPosition(int x,int y);
