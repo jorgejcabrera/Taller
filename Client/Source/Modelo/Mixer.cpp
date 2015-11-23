@@ -32,7 +32,8 @@ void Mixer::initialize() {
 	}
 
 	//Load music
-	this->music = Mix_LoadMUS( "../Sounds/beat.wav" );
+	//this->music = Mix_LoadMUS( "../Sounds/beat.wav" );
+	this->music = Mix_LoadMUS( "../Sounds/AoEIII.wav" );
 	if( this->music == NULL ) {
 		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
