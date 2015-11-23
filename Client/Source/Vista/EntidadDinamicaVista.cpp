@@ -30,6 +30,7 @@ EntidadDinamicaVista::EntidadDinamicaVista(string myName, float widthPixel, floa
 	this->owner = "";
  	this->readyToAttack = false;
  	this->isCompleted = true;
+ 	this->lastDirection = Este;
 }
 
 string EntidadDinamicaVista::getName(){
@@ -149,7 +150,7 @@ float EntidadDinamicaVista::distanciaEnX(float x){
 
 Direccion EntidadDinamicaVista::getDireccionHorizontal(){
 	Direccion dHorizontal = Sindireccion;
-	if(caminando && (vecVelocity.first / this->velocidad > 0.38)){
+	if(vecVelocity.first / this->velocidad > 0.38){
 		if(screenPosition.first > destinoX) dHorizontal = Oeste;
 		else dHorizontal = Este;
 	}
@@ -160,7 +161,7 @@ Direccion EntidadDinamicaVista::getDireccionVertical(){
 	// equivale a un angulo de 22,5 grados o mas
 
 	Direccion dVertical = Sindireccion;
-	if(caminando && (vecVelocity.second / velocidad > 0.38 )){
+	if(vecVelocity.second / velocidad > 0.38 ){
 		if(screenPosition.second > destinoY) dVertical = Norte;
 		else dVertical = Sur;
 	}
@@ -168,24 +169,25 @@ Direccion EntidadDinamicaVista::getDireccionVertical(){
 }
 
 Direccion EntidadDinamicaVista::getDireccion(){
-	Direccion dir = Sindireccion;
-	Direccion dVertical = getDireccionVertical();
-	Direccion dHorizontal = getDireccionHorizontal();
+	if(caminando){
+		Direccion dVertical = getDireccionVertical();
+		Direccion dHorizontal = getDireccionHorizontal();
 
-	switch(dVertical){
-	case Sindireccion: dir = dHorizontal; break;
-	case Norte: switch(dHorizontal){
-				case Sindireccion: dir = Norte;break;
-				case Este: dir = Noreste;break;
-				case Oeste: dir = Noroeste;
-				} break;
-	case Sur: switch(dHorizontal){
-			  case Sindireccion: dir = Sur;break;
-			  case Este: dir = Sureste;break;
-			  case Oeste: dir = Suroeste;break;
-			  }
+		switch(dVertical){
+		case Sindireccion: this->lastDirection = dHorizontal; break;
+		case Norte: switch(dHorizontal){
+					case Sindireccion: this->lastDirection = Norte;break;
+					case Este: this->lastDirection = Noreste;break;
+					case Oeste: this->lastDirection = Noroeste;
+					} break;
+		case Sur: switch(dHorizontal){
+				  case Sindireccion: this->lastDirection = Sur;break;
+				  case Este: this->lastDirection = Sureste;break;
+				  case Oeste: this->lastDirection = Suroeste;break;
+				  }
+		}
 	}
-	return dir;
+	return this->lastDirection;
 }
 
 bool EntidadDinamicaVista::isWalking(){
