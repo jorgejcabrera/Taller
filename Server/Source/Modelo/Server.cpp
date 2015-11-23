@@ -182,7 +182,7 @@ bool Server::checkForAttackMsg(Message* msg){
 			int target = msg->getTarget();
 			pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
 			this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
-			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
+			this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(this->gController->getJuego()->getEntityById(msg->getTarget()));
 			entityToUpd->prepareToInteract(false);
 			this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		}
@@ -193,7 +193,7 @@ bool Server::checkForAttackMsg(Message* msg){
 		int target = msg->getTarget();
 		pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
 		this->gController->getJuego()->setPlaceToGo(entityToUpd->getId(), targetPosition.first, targetPosition.second);
-		this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(target);
+		this->gController->getJuego()->getEntityById(entityToUpd->getId())->setTarget(this->gController->getJuego()->getEntityById(msg->getTarget()));
 		entityToUpd->prepareToInteract(false);
 		this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		return true;
@@ -255,7 +255,7 @@ bool Server::checkForBuildingMsg(Message* msg){
 		this->gController->getJuego()->setPlaceToGo(idBuilder, targetPosition.first, targetPosition.second);
 		EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());
 		entityToUpd->prepareToInteract(true);
-		entityToUpd->setTarget(idTarget);
+		entityToUpd->setTarget(this->gController->getJuego()->getEntityById(idTarget));
 		return true;
 	}
 	return false;

@@ -156,12 +156,28 @@ list<EntidadPartida> Juego::getFallenEntities(){
 			pair<int,int> position = it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
+
+			//a las entidades que tenian seteadas el target caido les saco el target
+			for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
+				if( itClear->second->getTarget() == it->second ){
+					itClear->second->setTarget(NULL);
+					itClear->second->prepareToInteract(false);
+				}
+			}
 			this->protagonistas.erase(it);
 		}
 	}
 	//edificios destruidos
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
+			//a las entidades que tenian seteadas el target caido les saco el target
+			for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
+				if( itClear->second->getTarget() == *itBuilds ){
+					itClear->second->setTarget(NULL);
+					itClear->second->prepareToInteract(false);
+				}
+			}
+
 			this->enableTiles(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
 			delete *itBuilds;
@@ -173,6 +189,13 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	//recursos consumidos
 	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources != this->mapa->getResources()->end(); ){
 		if( (*itResources)->getHealth() <= 0 ){
+			//a las entidades que tenian seteadas el target caido les saco el target
+			for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
+				if( itClear->second->getTarget() == *itResources ){
+					itClear->second->setTarget(NULL);
+					itClear->second->prepareToInteract(false);
+				}
+			}
 			this->enableTiles(*itResources);
 			fallenEntities.push_front(*(*itResources));
 			delete *itResources;
