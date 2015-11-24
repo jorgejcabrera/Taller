@@ -148,13 +148,14 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 
 }
 
-void Juego::clearTarget(EntidadPartida* target){
+void Juego::clearTarget(EntidadPartida* fallenEntity){
 	for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
-		if( itClear->second->getTarget() == target ){
+		if( itClear->second->getTarget() == fallenEntity ){
 			itClear->second->setTarget(NULL);
 			itClear->second->prepareToInteract(false);
 		}
 	}
+	this->enableTiles(fallenEntity);
 }
 
 list<EntidadPartida> Juego::getFallenEntities(){
@@ -163,7 +164,6 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if( it->second->getHealth() <= 0 ){
 			pair<int,int> position = it->second->getPosition();
-			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
 			this->clearTarget(it->second);
 			this->protagonistas.erase(it);
@@ -173,7 +173,6 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
 			this->clearTarget(*itBuilds);
-			this->enableTiles(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
 			delete *itBuilds;
 			itBuilds = this->mapa->getEntities()->erase(itBuilds);
@@ -185,7 +184,6 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources != this->mapa->getResources()->end(); ){
 		if( (*itResources)->getHealth() <= 0 ){
 			this->clearTarget(*itResources);
-			this->enableTiles(*itResources);
 			fallenEntities.push_front(*(*itResources));
 			delete *itResources;
 			itResources = this->mapa->getResources()->erase(itResources);
