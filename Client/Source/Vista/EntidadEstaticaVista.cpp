@@ -49,10 +49,10 @@ void EntidadEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, 
 		w = this->getWidth() * 2 * DefaultSettings::getTileSize();
 		h= this->getLength() * DefaultSettings::getTileSize() * 2;
 	}else if(this->sizeString =="standarMiniSize"){
-		x = (isometricPosition.first+ offSetX-10);
+		x = (isometricPosition.first+ offSetX-5);
 		y = (isometricPosition.second+ offSetY-10);
-		w = DefaultSettings::getTileSize();
-		h = DefaultSettings::getTileSize();
+		w = DefaultSettings::getTileSize()*9/10;
+		h = DefaultSettings::getTileSize()*9/10;
 	}else{
 		x = (isometricPosition.first+ offSetX);
 		y = (isometricPosition.second+ offSetY);
