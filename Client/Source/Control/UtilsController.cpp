@@ -37,6 +37,8 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad
 
 	//Centramos la entidad segun la cantidad de tiles que ocupa
 	string stringSize = entidad->getSizeString();
+	int offsetX = -(DefaultSettings::getTileSize() * 0,07);
+	int offsetY = -(DefaultSettings::getTileSize() * 0,15);
 
 	//3x3
 	if ( stringSize == "standarMediumSize"){
@@ -59,8 +61,11 @@ pair<int,int> UtilsController::getIsometricPosition(EntidadPartidaVista* entidad
 		isometricPosition.first = isometricPosition.first + gameSettings->getTileSize()*2/3;
 		isometricPosition.second =isometricPosition.second + gameSettings->getTileSize()/4;
 	}
-
 	//TODO centrar entidades de 4x2
+
+	//sumo offset para que las entidades no queden por debajo de los edificios
+	isometricPosition.first += offsetX;
+	isometricPosition.second += offsetY;
 	return isometricPosition;
 }
 
