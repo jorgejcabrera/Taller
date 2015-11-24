@@ -82,7 +82,7 @@ void GameController::setNextPaths(){
 		if (entidad->isMoving()) {
 			pair<int,int> finalPos = entidad->getPositionToGo();
 			if ( !this->juego->getMap()->getTileAt(finalPos.first,finalPos.second)->isAvailable())
-				this->juego->setPlaceToGo(entidad->getId(),finalPos.first,finalPos.second);
+				this->juego->setPlaceToGo(entidad,finalPos.first,finalPos.second);
 		}
 	}
 }
@@ -91,7 +91,7 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	//el target está vivo, pero no está cerca, entonces lo debemos perseguir
 	if(!this->readyToInteract(attacker) ){
 		pair<int,int> targetPosition = this->juego->getNearestPosition(attacker->getTarget());
-		this->juego->setPlaceToGo(attacker->getId(),targetPosition.first, targetPosition.second);
+		this->juego->setPlaceToGo(attacker,targetPosition.first, targetPosition.second);
 
 	//el target está vivo pero se escapo
 	}else if( this->targetOutOfReach(attacker) ){
@@ -126,7 +126,7 @@ void GameController::buildTarget(EntidadDinamica* builder){
 	if(!this->readyToInteract(builder) ){
 		EntidadPartida* building = builder->getTarget();
 		pair<int,int> targetPosition = this->juego->getNearestPosition(building);
-		this->juego->setPlaceToGo(builder->getId(),targetPosition.first, targetPosition.second);
+		this->juego->setPlaceToGo(builder,targetPosition.first, targetPosition.second);
 
 	//el target ya esta construido en su totalidad
 	}else if( this->targetCompleted(builder) ){

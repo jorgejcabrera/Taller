@@ -52,7 +52,7 @@ public:
 	/*
 	* establece la posición a donde va a moverse la entidad
 	* */
-	void setPlaceToGo(int idProtagonista, int x,int y);
+	void setPlaceToGo(EntidadDinamica* entity, int x,int y);
 	/*
 	* genera una entidad dinámica y se la asigna al jugador pasado como parámetro, devuelve el offset inicial del cliente
 	* */

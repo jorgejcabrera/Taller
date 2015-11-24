@@ -84,7 +84,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO el metodo getAvailablePosition no es redundante hay q usar get nearest position
-		//pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
 		pair<int,int> positionOfProtagonista = this->getNearestPosition(edificioCreado);
 		string name = "aldeano";
 		EntidadDinamica* protagonista = new EntidadDinamica(name,
@@ -126,26 +125,24 @@ void Juego::cleanNewEntities(){
 	this->newEntities.clear();
 }
 
-void Juego::setPlaceToGo(int idProtagonista, int x,int y){
-	EntidadDinamica* protagonistaToUpdate = this->protagonistas.at(idProtagonista);
-	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition().first,
-									  protagonistaToUpdate->getPosition().second,
+void Juego::setPlaceToGo(EntidadDinamica* entity,int x,int y){
+	PathFinder* pathF = new PathFinder(entity->getPosition().first,
+									  entity->getPosition().second,
 									  x,y,this->mapa);
 
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
 	delete pathF;
-	protagonistaToUpdate->setPath(caminoMinimo);
-	protagonistaToUpdate->setPathIsNew(true);
+	entity->setPath(caminoMinimo);
+	entity->setPathIsNew(true);
 
 	//pongo la posicion anterior desocupada
-	pair<int,int> firstPosition = protagonistaToUpdate->getPosition();
+	pair<int,int> firstPosition = entity->getPosition();
 	this->mapa->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
-	protagonistaToUpdate->nextPosition();
+	entity->nextPosition();
 	//pongo la nueva posicion como ocupada
-	pair<int,int> newPos = protagonistaToUpdate->getPosition();
+	pair<int,int> newPos = entity->getPosition();
 	this->mapa->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
-
 }
 
 void Juego::clearTarget(EntidadPartida* fallenEntity){
