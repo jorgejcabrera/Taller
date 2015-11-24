@@ -14,7 +14,6 @@ EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
 	this->target = NULL;
-	//this->targetPosition = make_pair(0,0);
 	this->attacker = "";
 	this->builderEffort = 0;
 }
@@ -174,10 +173,6 @@ bool EntidadPartida::hasToNotify(){
 
 string EntidadPartida::getAttacker(){
 	return this->attacker;
-}
-
-void EntidadPartida::setAttacker(int attackerId){
-	 this->attacker = attackerId;
 }
 
 bool EntidadPartida::isMaxHealth(){

@@ -59,6 +59,9 @@ protected:
 
 public:
 	EntidadPartida();
+	/*
+	* geters
+	* */
 	int getWidth();
 	int getLength();
 	int getVisibilityRange();
@@ -68,10 +71,14 @@ public:
 	float getPrecision();
 	string getName();
 	string getOwner();
+	string getAttacker();
 	pair<int,int> getPosition();
 	list<pair<int,int> > getNearestPositions();
 	EntidadPartida* getTarget();
 	Message* getMessage();
+	/*
+	* seters
+	* */
 	void setTarget(EntidadPartida* target);
 	void setPosition(int x,int y);
 	void setHealth(int health);
@@ -94,14 +101,6 @@ public:
 	* si la entidad sufrio algun cambio debe ser notificado
 	* */
 	bool hasToNotify();
-	/*
-	* devuelvo user que lo ataco
-	* */
-	string getAttacker();
-	/*
-	* seteo el id del atacante
-	* */
-	void setAttacker(int attackerId);
 	/*
 	* analiza si la salud esta al maximo
 	* */
