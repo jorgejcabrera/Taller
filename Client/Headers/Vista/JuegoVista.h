@@ -94,7 +94,7 @@ public:
 	void createView();
 	void updateOffset(int offsetX,int offsetY);
 	void addTile(string surface, int x, int y);
-	void addStaticEntity(int id, string type, int x, int y,string owner,int health, bool completed);
+	void addStaticEntity(int id, string type, int x, int y,string owner,int health, bool completed, string typeEntity);
 	void addSemiEstaticEntity(int id, string type, int x, int y, string owner,int health, bool completed);
 	void addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision, int targetID);
 	pair<int,int>* getOffset();

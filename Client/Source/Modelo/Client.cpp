@@ -103,7 +103,8 @@ void Client::processReceivedMessages(){
 															(*it)->getPositionY(),
 															(*it)->getOwner(),
 															(*it)->getHealth(),
-															(*it)->getBuilding());
+															(*it)->getBuilding(),
+															tipoMensaje);
 		}else if ( tipoMensaje == "semiestaticos"){
 			this->gController->getJuegoVista()->addSemiEstaticEntity((*it)->getId(),
 																	(*it)->getNombre(),
