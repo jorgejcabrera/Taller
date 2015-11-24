@@ -519,9 +519,13 @@ void JuegoVista::setEntityForBuild(string entityName){
 }
 
 void JuegoVista::entitiesToRenderInMenu(list<EntidadPartidaVista*> entities) {
-	map<string,int> map;
+	map<EntidadPartidaVista*,int> map;
 	for (list<EntidadPartidaVista*>::iterator itList = entities.begin(); itList != entities.end() ; ++itList) {
-		map[(*itList)->getPathImage()]++;
+		map[(*itList)]++;
+		if (	(*itList)->getName() == "Barracks" ||
+				(*itList)->getName() == "Castle" ||
+				(*itList)->getName() == "aldeano" )
+			this->menuVista->setCreatorEntitySelected((*itList));
 	}
 	this->menuVista->setSelectedEntities(map);
 }

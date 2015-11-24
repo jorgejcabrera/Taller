@@ -21,7 +21,7 @@ MenuVista::MenuVista() {
 	this->posXvertexFirstButton = 50;
 	this->posYvertexFirstButton = GameSettings::GetInstance()->getScreenHeight() - bigHeight;
 	this->sideFirstButton = 50;
-	this->entitySelected = NULL;
+	this->creatorEntitySelected = NULL;
 }
 
 void MenuVista::drawMe() {
@@ -37,18 +37,18 @@ void MenuVista::drawMe() {
 		PicassoHelper::GetInstance()->renderObject(pathImage, i, 0, this->mediumStripSise, this->mediumStripSise);
 	}
 	this->drawEntityDescription();
-	if(this->entitySelected != NULL){
-		if (this->entitySelected->getName() == "Barracks") {
+	if(this->creatorEntitySelected != NULL){
+		if (this->creatorEntitySelected->getName() == "Barracks") {
 			string path = GameSettings::GetInstance()->imagePathPersonajesByType("aldeanoSolo");
 			PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
-		} else if (this->entitySelected->getName() == "Castle") {
+		} else if (this->creatorEntitySelected->getName() == "Castle") {
 			string path = GameSettings::GetInstance()->imagePathPersonajesByType("soldadoSolo");
 			PicassoHelper::GetInstance()->renderObject(path,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
 			string pathCobra = GameSettings::GetInstance()->imagePathPersonajesByType("cobraSolo");
 			PicassoHelper::GetInstance()->renderObject(pathCobra,this->posXvertexFirstButton*2, this->posYvertexFirstButton, 50, 50);
 			string pathHorse = GameSettings::GetInstance()->imagePathPersonajesByType("caballoSolo");
 			PicassoHelper::GetInstance()->renderObject(pathHorse,this->posXvertexFirstButton*3, this->posYvertexFirstButton, 50, 50);
-		}else if (this->entitySelected->getName() == "aldeano"){
+		}else if (this->creatorEntitySelected->getName() == "aldeano"){
 			string pathCastle = GameSettings::GetInstance()->getEntityConfig("Castle")->getPath();
 			PicassoHelper::GetInstance()->renderObject(pathCastle,this->posXvertexFirstButton, this->posYvertexFirstButton, 50, 50);
 			string pathArmy = GameSettings::GetInstance()->getEntityConfig("Army")->getPath();
@@ -71,28 +71,29 @@ int MenuVista::getMiniMapHeight() {
 
 void MenuVista::deselectedEntity() {
 	//una sola entidad seleccionada
-	this->entitySelected = NULL;
+	this->creatorEntitySelected = NULL;
 
 	//muchas entidades seleccionadas
 	this->selectedEntities.clear();
 }
 
-void MenuVista::setSelectedEntity(EntidadPartidaVista* entity){
-	this->entitySelected = entity;
+void MenuVista::setCreatorEntitySelected(EntidadPartidaVista* entity){
+	this->creatorEntitySelected = entity;
 }
 
 void MenuVista::drawEntityDescription() {
-	if (this->entitySelected != NULL){
+	if (this->selectedEntities.size() == 1){
 		int offsetY = 0;
-		this->renderEntityField("id", this->entitySelected->getId(), offsetY);
+		map<EntidadPartidaVista*,int>::iterator it = this->selectedEntities.begin();
+		this->renderEntityField("id", (*it).first->getId(), offsetY);
 		offsetY = offsetY + this->letterHeight;
-		this->renderEntityField("", this->entitySelected->getName(), offsetY);
+		this->renderEntityField("", (*it).first->getName(), offsetY);
 		offsetY = offsetY + this->letterHeight;
-		this->renderEntityField("dueno", this->entitySelected->getOwner(), offsetY);
+		this->renderEntityField("dueno", (*it).first->getOwner(), offsetY);
 		offsetY = offsetY + this->letterHeight;
-		this->renderEntityField("salud", this->entitySelected->getHealth(), offsetY);
+		this->renderEntityField("salud", (*it).first->getHealth(), offsetY);
 		offsetY = offsetY + this->letterHeight;
-		this->renderEntityImage(this->entitySelected->getPathImage());
+		this->renderEntityImage((*it).first->getPathImage());
 	}else{
 		this->drawEntitiesSelected();
 	}
@@ -150,35 +151,35 @@ void MenuVista::drawResources(map<string,int> resources){
 
 pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 	pair<int, string> result;
-	if (this->entitySelected == NULL){
+	if (this->creatorEntitySelected == NULL){
 		result.second = "";
 		return result;
 	}
-	result.first = this->entitySelected->getId();
+	result.first = this->creatorEntitySelected->getId();
 	if (posMouseX > this->posXvertexFirstButton &&
 			posMouseX < this->posXvertexFirstButton + this->sideFirstButton &&
 			posMouseY > this->posYvertexFirstButton &&
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
-			if (this->entitySelected->getName() == "Barracks") result.second = "aldeano";
-			else if (this->entitySelected->getName() == "Town Center") result.second = "aldeano";
-			else if (this->entitySelected->getName() == "aldeano") result.second = "Castle";
-			else if (this->entitySelected->getName() == "Castle") result.second = "soldado";
+			if (this->creatorEntitySelected->getName() == "Barracks") result.second = "aldeano";
+			else if (this->creatorEntitySelected->getName() == "Town Center") result.second = "aldeano";
+			else if (this->creatorEntitySelected->getName() == "aldeano") result.second = "Castle";
+			else if (this->creatorEntitySelected->getName() == "Castle") result.second = "soldado";
 			else result.second = "";
 	}
 	if (posMouseX > this->posXvertexFirstButton*2 &&
 			posMouseX < this->posXvertexFirstButton*2 + this->sideFirstButton &&
 			posMouseY > this->posYvertexFirstButton &&
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
-			if (this->entitySelected->getName() == "aldeano") result.second = "Army";
-			else if (this->entitySelected->getName() == "Castle") result.second = "cobra";
+			if (this->creatorEntitySelected->getName() == "aldeano") result.second = "Army";
+			else if (this->creatorEntitySelected->getName() == "Castle") result.second = "cobra";
 			else result.second = "";
 	}
 	if (posMouseX > this->posXvertexFirstButton*3 &&
 			posMouseX < this->posXvertexFirstButton*3 + this->sideFirstButton &&
 			posMouseY > this->posYvertexFirstButton &&
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
-			if (this->entitySelected->getName() == "aldeano") result.second = "molino";
-			else if (this->entitySelected->getName() == "Castle") result.second = "caballo";
+			if (this->creatorEntitySelected->getName() == "aldeano") result.second = "molino";
+			else if (this->creatorEntitySelected->getName() == "Castle") result.second = "caballo";
 			else result.second = "";
 	}
 	return result;
@@ -190,8 +191,8 @@ void MenuVista::drawEntitiesSelected() {
 	int posX = GameSettings::GetInstance()->getScreenWidth()/4;
 	int posY = GameSettings::GetInstance()->getScreenHeight()-110;
 	int numberOfRenderedEntities = 0;
-	for ( map<string,int>::iterator it = this->selectedEntities.begin() ; it != this->selectedEntities.end(); ++it ) {
-		string path = DefaultSettings::covertPathOfAnimatedEntity((*it).first);
+	for ( map<EntidadPartidaVista*,int>::iterator it = this->selectedEntities.begin() ; it != this->selectedEntities.end(); ++it ) {
+		string path = DefaultSettings::covertPathOfAnimatedEntity((*it).first->getPathImage());
 		for ( cantidad = (*it).second ; cantidad > 0 ; --cantidad) {
 			PicassoHelper::GetInstance()->renderObject(path,posX, posY, width, 50);
 			posX = posX+width;
@@ -205,7 +206,7 @@ void MenuVista::drawEntitiesSelected() {
 	}
 }
 
-void MenuVista::setSelectedEntities(map<string,int> entitiesToDraw) {
+void MenuVista::setSelectedEntities(map<EntidadPartidaVista*,int> entitiesToDraw) {
 	this->selectedEntities = entitiesToDraw;
 }
 

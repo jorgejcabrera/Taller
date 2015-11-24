@@ -138,21 +138,16 @@ void GameController::selection() {
 		this->entitiesSelected.unique();
 
 		if (this->entitiesSelected.size() == 1) {
-			EntidadPartidaVista* entitySelected = this->entitiesSelected.back();
-			this->juegoVista->getMenuVista()->setSelectedEntity(entitySelected);
+			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
 			if (this->entitiesSelected.back()->getOwner() != this->clientName )  this->entitiesSelected.clear();
-		} else {
+		} else { // si tengo mas de una entidad seleccionada, solo renderizo mis dinamicas
 			list<EntidadPartidaVista*>::iterator it = this->entitiesSelected.begin();
 			while ( !this->entitiesSelected.empty() && it != this->entitiesSelected.end()) {
 				if (this->juegoVista->getDinamicEntityById((*it)->getId()) == NULL ||
 					((*it)->getOwner() != this->clientName )) it = this->entitiesSelected.erase(it);
 				else ++it;
 			}
-			//tengo que volver a chequear si quedo una sola, en ese caso renderizo su descripcion completa
-			if (this->entitiesSelected.size() == 1) {
-				EntidadPartidaVista* entitySelected = this->entitiesSelected.back();
-				this->juegoVista->getMenuVista()->setSelectedEntity(entitySelected);
-			} else this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
+			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
 		}
 	}
 }

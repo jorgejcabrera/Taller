@@ -27,8 +27,8 @@ private:
 	int miniMapWidth;
 	int miniMapHeight;
 	map<string,string> strings;
-	map<string,int> selectedEntities;
-	EntidadPartidaVista* entitySelected;
+	map<EntidadPartidaVista*,int> selectedEntities;
+	EntidadPartidaVista* creatorEntitySelected;
 	int posXvertexFirstButton;
 	int posYvertexFirstButton;
 	int sideFirstButton;
@@ -46,11 +46,11 @@ public:
 	void drawResources(map<string,int> resources);
 	pair<int, string> getTypeOfNewEntity(int posMouseX,int posMouseY);
 	void drawEntitiesSelected();
-	void setSelectedEntities(map<string,int>);
+	void setSelectedEntities(map<EntidadPartidaVista*,int>);
 	/*
 	* seteo la entidad que voy a mostrar en el menu como seleccionada
 	* */
-	void setSelectedEntity(EntidadPartidaVista* entity);
+	void setCreatorEntitySelected(EntidadPartidaVista* entity);
 	/*
 	* armo un string con field y value y llamo a renderEntityText
 	* */
