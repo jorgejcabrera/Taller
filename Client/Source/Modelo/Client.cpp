@@ -122,7 +122,8 @@ void Client::processReceivedMessages(){
 																(*it)->getOwner(),
 																(*it)->getHealth(),
 																(*it)->getStrength(),
-																(*it)->getPrecision());
+																(*it)->getPrecision(),
+																(*it)->getTarget());
 		}else if( tipoMensaje == "updResource"){
 			this->resourceCounter->increase((*it)->getNombre(), (*it)->getHealth());
 

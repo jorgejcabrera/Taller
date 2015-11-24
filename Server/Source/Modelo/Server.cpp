@@ -298,6 +298,12 @@ void Server::sendNewEntities(){
 			newEntity->setOwner((*it)->getOwner());
 			newEntity->setHealth((*it)->getHealth());
 			newEntity->setBuilding((*it)->isConstructionCompleted());
+			if((*it)->getTarget() != NULL){
+				newEntity->setTarget((*it)->getTarget()->getId());
+			}else{
+				newEntity->setTarget(0);
+			}
+
 
 			list<Client*> activeClients = getActiveClients();
 			for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
