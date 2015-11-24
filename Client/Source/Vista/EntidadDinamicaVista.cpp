@@ -260,8 +260,6 @@ void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
 		if(this->name=="aldeano"){
 			sizeImg = (GameSettings::GetInstance()->getTileSize()*8/10);// +(GameSettings::GetInstance()->getTileSize()/6));
 		}
-	}else{
-
 	}
 
 	int auxDraw = this->getLengthPixel()/4;
