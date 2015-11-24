@@ -79,6 +79,9 @@ void GameController::setNextPaths(){
 				this->juego->setPlaceToGo(entity,finalPos.first,finalPos.second);
 				finalPos = entity->getPositionToGo();
 				nextPos = entity->getNextPosition();
+				stringstream ss;
+				ss << "nextX : "<< nextPos.first << " - nextY : "<< nextPos.second;
+				Logger::get()->logInfo("GC","setNextPaths",ss.str());
 			}
 		}
 		//pongo la posicion anterior desocupada

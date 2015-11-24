@@ -367,6 +367,7 @@ map<string,string> JuegoVista::getEntityAttributes(EntidadPartidaVista* entidad)
 void JuegoVista::deleteEntityById(int id){
 	map<int, EntidadDinamicaVista*>::iterator itEnemy = this->personajes.find(id);
 	if( itEnemy != this->personajes.end() ){
+		Mixer::GetInstance()->playDeath();
 		this->personajes.erase(itEnemy);
 		return;		
 	}
