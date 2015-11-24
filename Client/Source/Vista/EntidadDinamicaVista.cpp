@@ -53,7 +53,7 @@ void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
 SDL_Rect EntidadDinamicaVista::getPositionOfSprite(int ciclos){
 	int ciclesPerFrame = 50 / this->framesPerSecond;
 	int lineaSprite = this->getLineSprite(this->getDireccion());
-	if(this->isReadyToAttack() && (this->name == "aldeano" || this->name == "soldado") ){
+	if(this->isReadyToAttack() && (this->name == "aldeano" || this->name == "soldado") && !this->caminando){
 		lineaSprite = this->getLineSprite(this->getStandigDirection());
 		if(this->name == "aldeano" ){
 			lineaSprite +=7;
@@ -253,7 +253,7 @@ void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
 	string path = this->getPathImage();
 	int sizeImg = GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4;
 	int auxDraw = this->getLengthPixel()/4;
-	if(this->isReadyToAttack() && (this->name == "soldado") ){
+	if(this->isReadyToAttack() && (this->name == "soldado") && !this->caminando){
 		path = "../../Taller/Images/Personajes/soldadoAtacando.png";
 		sizeImg = GameSettings::GetInstance()->getTileSize()*7/4;
 		auxDraw += GameSettings::GetInstance()->getTileSize()/2;
