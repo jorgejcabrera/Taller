@@ -50,10 +50,6 @@ private:
 	* */
 	bool readyToInteract(EntidadDinamica* entidad);
 	/*
-	* si el objetivo está demasiado lejos, ya no los podemos seguir
-	* */
-	bool targetOutOfReach(EntidadDinamica* entidad);
-	/*
 	* El target ya esta construido en totalidad
 	* */
 	bool targetCompleted(EntidadDinamica* entity);

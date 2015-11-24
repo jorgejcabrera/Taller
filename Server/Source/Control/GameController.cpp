@@ -79,9 +79,6 @@ void GameController::setNextPaths(){
 				this->juego->setPlaceToGo(entity,finalPos.first,finalPos.second);
 				finalPos = entity->getPositionToGo();
 				nextPos = entity->getNextPosition();
-				stringstream ss;
-				ss << "nextX : "<< nextPos.first << " - nextY : "<< nextPos.second;
-				Logger::get()->logInfo("GC","setNextPaths",ss.str());
 			}
 		}
 		//pongo la posicion anterior desocupada
@@ -100,11 +97,6 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 		pair<int,int> targetPosition = this->juego->getNearestPosition(attacker->getTarget());
 		this->juego->setPlaceToGo(attacker,targetPosition.first, targetPosition.second);
 
-	//el target está vivo pero se escapo
-	}else if( this->targetOutOfReach(attacker) ){
-		attacker->setTarget(0);
-		attacker->prepareToInteract(false);
-
 	//atacamos o recolectamos el recurso
 	}else{
 		this->attackOrWork(attacker);
@@ -115,7 +107,7 @@ void GameController::attackOrWork(EntidadDinamica* entity){
 	EntidadPartida* target = entity->getTarget();
 	//si el target es un recurso, solo lo pueden recolectar los aldeanos
 	if( (target->getName() == "gold" || target->getName() == "food" || target->getName() == "wood" || target->getName() == "rock") && entity->getName() != "aldeano"){
-		entity->setTarget(0);
+		entity->setTarget(NULL);
 		entity->prepareToInteract(false);
 		return;
 
@@ -152,7 +144,7 @@ void GameController::buildTarget(EntidadDinamica* builder){
 void GameController::interactWithTargets(){
 	map<int,EntidadDinamica*>* entities = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = entities->begin(); it != entities->end();++it ){
-		if( it->second->getTarget() != 0 /*&& this->targetIsAlive(it->second)*/ ){
+		if( it->second->getTarget() ){
 			//ataco o recolecto, dependiento del target
 			if( it->second->getTarget()->getOwner() != it->second->getOwner()){
 				this->pursuitAndAttackTarget(it->second);
@@ -168,8 +160,8 @@ void GameController::interactWithTargets(){
 //TODO la distancia minima para poder atacar depende del tipo de entidad, so deshardcodear el 1
 bool GameController::readyToInteract(EntidadDinamica* entity){
 	EntidadPartida* target = entity->getTarget();
-	if( entity->isReadyToInteract() && target ){
-		list<pair<int,int> > nearestPositions = this->juego->getEntityById(entity->getTarget()->getId())->getNearestPositions();
+	if( entity->isReadyToInteract() ){
+		list<pair<int,int> > nearestPositions = target->getNearestPositions();
 		for(list<pair<int,int> >::iterator it = nearestPositions.begin(); it != nearestPositions.end();++it){
 			if( UtilsController::GetInstance()->getDistance(*it,entity->getPosition()) <= 1 ){
 				return true;
@@ -177,15 +169,6 @@ bool GameController::readyToInteract(EntidadDinamica* entity){
 		}
 	}
 	return false;
-}
-
-bool GameController::targetOutOfReach(EntidadDinamica* entity){
-	if(entity->getTarget()){
-		pair<int,int> targetPosition = this->juego->getEntityById(entity->getTarget()->getId())->getPosition();
-		return UtilsController::GetInstance()->getDistance(targetPosition,entity->getPosition()) >= 10;
-	}else{
-		return false;
-	}
 }
 
 bool GameController::targetCompleted(EntidadDinamica* entity){

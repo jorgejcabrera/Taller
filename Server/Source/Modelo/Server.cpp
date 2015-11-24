@@ -210,7 +210,6 @@ bool Server::checkForCreateMsg(Message* msg){
 		
 		//la entidad no pudo ser creada
 		if ( response == 0 ){
-			Logger::get()->logDebug("Server","checkForCreateMsg","ocurrio un error");
 			Message* messageUpdate = new Message(0,"refund");
 			messageUpdate->setName(msg->getName());
 
@@ -234,7 +233,7 @@ bool Server::checkForUpdMsg(Message* msg){
 			entity->prepareToInteract(false);
 		}
 		this->gController->getJuego()->setPlaceToGo(entity, msg->getPositionX(), msg->getPositionY());
-		this->gController->getJuego()->getEntityById(idUpdate)->setTarget(0);
+		entity->setTarget(NULL);
 		this->idEntitiesUpdated.push_back(idUpdate);
 		return true;
 	}
