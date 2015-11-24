@@ -29,10 +29,6 @@ private:
 	list<Resource*> resources;
 	map<pair<int,int>,Tile*> tiles;
 	GameSettings* gameSettings;
-	/*
-	* genera recursos de manera ramdom
-	* */
-	void createResources();
 
 public:
 	Mapa();
@@ -44,6 +40,10 @@ public:
 	* Devuelve una posicion disponible cercana al origen que recibe
 	* */
 	pair<int,int> getAvailablePosition(int xFrom, int yFrom);
+	/*
+	* genera recursos de manera ramdom
+	* */
+	void createResources();
 	Tile* getTileAt(int x,int y);
 	/*
 	* devuelve una lista de novedades de recursos que sufrieron un cambio

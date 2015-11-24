@@ -24,9 +24,6 @@ Mapa::Mapa() {
 		int posY = (*it).first.second;
 		this->getTileAt(posX,posY)->setSuperficie((*it).second);
 	}
-
-	//creamos recursos de manera ramdom
-	this->createResources();
 }
 
 void Mapa::createResources(){

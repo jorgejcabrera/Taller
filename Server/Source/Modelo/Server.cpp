@@ -89,9 +89,6 @@ int Server::run(void * data){
 				//Mando los protagonistas hasta el momento
 				newClient->writeMessagesInQueue(getProtagonistasMessages());
 
-				//Mando los recursos del mapa
-				newClient->writeMessagesInQueue(this->gController->getJuego()->getMap()->getResourcesMessages());
-
 				//Mano offset inicial
 				newClient->writeMessagesInQueue(newClient->getInitialOffsetAsMessage());
 
@@ -105,9 +102,15 @@ int Server::run(void * data){
 void Server::notifyGameInitToClients(){
 	Message* messageStart = new Message();
 	messageStart->startGame();
+	//le decimos al mapa que genere recursos
+	this->gController->getJuego()->getMap()->createResources();
+
 	list<Client*> activeClients = getActiveClients();
 	for(list<Client*>::iterator clientIterator = activeClients.begin(); clientIterator != activeClients.end(); ++clientIterator){
 		(*clientIterator)->writeMessagesInQueue(messageStart);
+		
+		//Mando los recursos del mapa
+		(*clientIterator)->writeMessagesInQueue(this->gController->getJuego()->getMap()->getResourcesMessages());
 	}
 }
 
