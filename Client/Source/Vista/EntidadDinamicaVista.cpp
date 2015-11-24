@@ -52,15 +52,18 @@ void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
 
 SDL_Rect EntidadDinamicaVista::getPositionOfSprite(int ciclos){
 	int ciclesPerFrame = 50 / this->framesPerSecond;
-
 	int lineaSprite = this->getLineSprite(this->getDireccion());
+	if(this->isReadyToAttack() && this->name == "aldeano"){
+		lineaSprite = this->getLineSprite(this->getStandigDirection());
+		lineaSprite +=7;
+	}
 	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
 	if(this->inDelayPeriod){
 		if((SDL_GetTicks()-this->delayIndex)>= (this->delay*1000)){
 			this->inDelayPeriod = false;
 		}
 	}else{
-			if(!this->caminando){
+			if(!this->caminando && !this->isReadyToAttack()){
 				this->frame = 0;
 			}else{
 				if(ciclos % ciclesPerFrame == 0){
