@@ -37,6 +37,10 @@ private:
 	* habilita los tiles ocupados por la entidad pasada como parametro una vez que se elimina
 	* */
 	void enableTiles(EntidadPartida* entity);
+	/*
+	* si hay entidades con un target que fue eliminado, se lo pone en null
+	* */
+	void clearTarget(EntidadPartida* target);
 
 public:
 	Juego();
@@ -48,7 +52,7 @@ public:
 	/*
 	* establece la posición a donde va a moverse la entidad
 	* */
-	void setPlaceToGo(int idProtagonista, int x,int y);
+	void setPlaceToGo(EntidadDinamica* entity, int x,int y);
 	/*
 	* genera una entidad dinámica y se la asigna al jugador pasado como parámetro, devuelve el offset inicial del cliente
 	* */

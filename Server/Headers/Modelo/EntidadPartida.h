@@ -26,10 +26,6 @@ protected:
 	* */
 	bool isCompleted;
 	pair<int,int> position;
-	/*
-	* posicion de la entidad marcada como objetivo
-	* */
-	pair<int,int> targetPosition;
 	int width;
 	int length;
 	int id;
@@ -51,7 +47,7 @@ protected:
 	/*
 	* id de la entidad con la que se va a interactuar, por ejemplo a atacar
 	* */
-	int target;
+	EntidadPartida* target;
 	/*
 	* establece la defenza de la entidad cuando lo están atacando
 	* */
@@ -63,9 +59,11 @@ protected:
 
 public:
 	EntidadPartida();
+	/*
+	* geters
+	* */
 	int getWidth();
 	int getLength();
-	int getTarget();
 	int getVisibilityRange();
 	int getId();
 	int getHealth();
@@ -73,17 +71,20 @@ public:
 	float getPrecision();
 	string getName();
 	string getOwner();
-	pair<int,int> getTargetPosition();
+	string getAttacker();
 	pair<int,int> getPosition();
 	list<pair<int,int> > getNearestPositions();
+	EntidadPartida* getTarget();
 	Message* getMessage();
-	void setTarget(int target);
+	/*
+	* seters
+	* */
+	void setTarget(EntidadPartida* target);
 	void setPosition(int x,int y);
 	void setHealth(int health);
 	void setStrength(int strength);
 	void setPrecision(float presition);
 	void setBuilderEffort(int effort);
-	void setTargetPosition(pair<int,int> position);
 	void setName(string name);
 	void setVisibilityRange(int range);
 	void setNotifiable(bool notifiable);
@@ -100,14 +101,6 @@ public:
 	* si la entidad sufrio algun cambio debe ser notificado
 	* */
 	bool hasToNotify();
-	/*
-	* devuelvo user que lo ataco
-	* */
-	string getAttacker();
-	/*
-	* seteo el id del atacante
-	* */
-	void setAttacker(int attackerId);
 	/*
 	* analiza si la salud esta al maximo
 	* */

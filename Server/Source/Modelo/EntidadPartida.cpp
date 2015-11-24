@@ -13,8 +13,7 @@ using namespace std;
 EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
-	this->target = 0;
-	this->targetPosition = make_pair(0,0);
+	this->target = NULL;
 	this->attacker = "";
 	this->builderEffort = 0;
 }
@@ -23,19 +22,11 @@ int EntidadPartida::getId(){
 	return this->id;
 }
 
-pair<int,int> EntidadPartida::getTargetPosition(){
-	return this->targetPosition;
-}
-
-void EntidadPartida::setTargetPosition(pair<int,int> position){
-	this->targetPosition = position;
-}
-
-int EntidadPartida::getTarget(){
+EntidadPartida* EntidadPartida::getTarget(){
 	return this->target;
 }
 
-void EntidadPartida::setTarget(int target){
+void EntidadPartida::setTarget(EntidadPartida* target){
 	this->target = target;
 }
 
@@ -182,10 +173,6 @@ bool EntidadPartida::hasToNotify(){
 
 string EntidadPartida::getAttacker(){
 	return this->attacker;
-}
-
-void EntidadPartida::setAttacker(int attackerId){
-	 this->attacker = attackerId;
 }
 
 bool EntidadPartida::isMaxHealth(){

@@ -84,7 +84,6 @@ pair<int,int> Juego::createEntitiesForClient(string owner, int clientIndex){
 	float villagerPrecition = 0.5;
 	for(int actualCharacters = 0; actualCharacters<DefaultSettings::getQtyInitialCharacters(); ++actualCharacters){
 		//TODO el metodo getAvailablePosition no es redundante hay q usar get nearest position
-		//pair<int,int> positionOfProtagonista = this->mapa->getAvailablePosition(xOrigin,yOrigin);
 		pair<int,int> positionOfProtagonista = this->getNearestPosition(edificioCreado);
 		string name = "aldeano";
 		EntidadDinamica* protagonista = new EntidadDinamica(name,
@@ -126,26 +125,34 @@ void Juego::cleanNewEntities(){
 	this->newEntities.clear();
 }
 
-void Juego::setPlaceToGo(int idProtagonista, int x,int y){
-	EntidadDinamica* protagonistaToUpdate = this->protagonistas.at(idProtagonista);
-	PathFinder* pathF = new PathFinder(protagonistaToUpdate->getPosition().first,
-									  protagonistaToUpdate->getPosition().second,
+void Juego::setPlaceToGo(EntidadDinamica* entity,int x,int y){
+	PathFinder* pathF = new PathFinder(entity->getPosition().first,
+									  entity->getPosition().second,
 									  x,y,this->mapa);
 
 	//calculo el camino minimo para llegar a destino
 	list<pair<int,int> >* caminoMinimo = pathF->buscarCamino();
 	delete pathF;
-	protagonistaToUpdate->setPath(caminoMinimo);
-	protagonistaToUpdate->setPathIsNew(true);
+	entity->setPath(caminoMinimo);
+	entity->setPathIsNew(true);
 
 	//pongo la posicion anterior desocupada
-	pair<int,int> firstPosition = protagonistaToUpdate->getPosition();
+	pair<int,int> firstPosition = entity->getPosition();
 	this->mapa->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
-	protagonistaToUpdate->nextPosition();
+	entity->nextPosition();
 	//pongo la nueva posicion como ocupada
-	pair<int,int> newPos = protagonistaToUpdate->getPosition();
+	pair<int,int> newPos = entity->getPosition();
 	this->mapa->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
+}
 
+void Juego::clearTarget(EntidadPartida* fallenEntity){
+	for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
+		if( itClear->second->getTarget() == fallenEntity ){
+			itClear->second->setTarget(NULL);
+			itClear->second->prepareToInteract(false);
+		}
+	}
+	this->enableTiles(fallenEntity);
 }
 
 list<EntidadPartida> Juego::getFallenEntities(){
@@ -154,15 +161,15 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end(); ++it){
 		if( it->second->getHealth() <= 0 ){
 			pair<int,int> position = it->second->getPosition();
-			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
+			this->clearTarget(it->second);
 			this->protagonistas.erase(it);
 		}
 	}
 	//edificios destruidos
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
-			this->enableTiles(*itBuilds);
+			this->clearTarget(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
 			delete *itBuilds;
 			itBuilds = this->mapa->getEntities()->erase(itBuilds);
@@ -173,7 +180,7 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	//recursos consumidos
 	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources != this->mapa->getResources()->end(); ){
 		if( (*itResources)->getHealth() <= 0 ){
-			this->enableTiles(*itResources);
+			this->clearTarget(*itResources);
 			fallenEntities.push_front(*(*itResources));
 			delete *itResources;
 			itResources = this->mapa->getResources()->erase(itResources);
@@ -341,9 +348,6 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){
-	/*stringstream ss;
-	ss<< "Entre en  transferEntitiesToUser "<< userFrom << " to "<< userTo;
-	Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());*/
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( it->second->getOwner() == userFrom ){
 			it->second->setOwner(userTo);

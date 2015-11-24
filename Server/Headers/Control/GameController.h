@@ -58,10 +58,6 @@ private:
 	* */
 	bool targetCompleted(EntidadDinamica* entity);
 	/*
-	* devuelve true si el target aún está presente en el mapa
-	* */
-	bool targetIsAlive(EntidadDinamica* entidad);
-	/*
 	* si las entidades tiene algun target, interactuan con el, ya sea atacandolo o construyendolo
 	* */
 	void interactWithTargets();

@@ -65,7 +65,6 @@ private:
 	void sendNewEntities();
 	void sendNewsResources();
 	void sendFallenEntites();
-	void sendNewStaticEntites();
 
 public:
 	Server(int port, GameController *myController, int qtyUsers);
