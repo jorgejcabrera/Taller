@@ -62,6 +62,7 @@ private:
 	Direccion getDireccionVertical();
 	Direccion getDireccionHorizontal();
 	int getLineSprite(Direccion dir);
+	Direccion lastDirection;
 
 public:
 	EntidadDinamicaVista();
