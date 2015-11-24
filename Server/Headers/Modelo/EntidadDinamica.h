@@ -59,7 +59,7 @@ public:
 	/*
 	* disminuye la salud de la entidad según 
 	* */
-	void attackTo(EntidadPartida* entity);
+	void attackTo();
 	void setPathIsNew(bool esNuevo);
 	void setPath(list<pair<int,int> >* camino);
 	void prepareToInteract(bool value);
