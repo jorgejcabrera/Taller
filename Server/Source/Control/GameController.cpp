@@ -132,6 +132,7 @@ void GameController::buildTarget(EntidadDinamica* builder){
 	}else if( this->targetCompleted(builder) ){
 		builder->setTarget(NULL);
 		builder->prepareToInteract(false);
+		this->juego->addNewEntity(builder);
 
 	//construimos
 	}else{

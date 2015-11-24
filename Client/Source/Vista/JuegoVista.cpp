@@ -244,7 +244,7 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 	}
 }
 
-void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision){
+void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision, int targetID){
 	if ( this->personajes.find(id) == this->personajes.end() ) {
 		//Nueva entidad
 		EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
@@ -274,6 +274,9 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active,
 		}
 		myPersonaje->setOwner(owner);
 		myPersonaje->setHealth(health);
+		if(targetID==0){
+			myPersonaje->prepareToFight(false);
+		}
 	}
 }
 
