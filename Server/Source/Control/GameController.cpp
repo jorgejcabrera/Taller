@@ -100,12 +100,12 @@ void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 
 	//atacamos o recolectamos el recurso
 	}else{
-		EntidadPartida* target = attacker->getTarget();
-		this->attackOrWork(attacker,target);
+		this->attackOrWork(attacker);
 	}
 }
 
-void GameController::attackOrWork(EntidadDinamica* entity,EntidadPartida* target){
+void GameController::attackOrWork(EntidadDinamica* entity){
+	EntidadPartida* target = entity->getTarget();
 	//si el target es un recurso, solo lo pueden recolectar los aldeanos
 	if( (target->getName() == "gold" || target->getName() == "food" || target->getName() == "wood" || target->getName() == "rock") && entity->getName() != "aldeano"){
 		entity->setTarget(0);
@@ -114,7 +114,7 @@ void GameController::attackOrWork(EntidadDinamica* entity,EntidadPartida* target
 
 	//interactuamos y colocamos el target en la lista de novedades
 	}else{
-		entity->attackTo(target);
+		entity->attackTo();
 		if(target->getHealth()>0 && target->getOwner() != ""){
 			this->juego->addNewEntity(target);
 		}

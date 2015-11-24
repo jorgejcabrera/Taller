@@ -40,7 +40,7 @@ private:
 	/*
 	* la entidad dinamica ataca o recolecta el recurso dependiendo del target
 	* */
-	void attackOrWork(EntidadDinamica* entity,EntidadPartida* target);
+	void attackOrWork(EntidadDinamica* entity);
 	/*
 	* si las entidades tienen algun target, y éste se movió, se debe perseguirlo
 	* */

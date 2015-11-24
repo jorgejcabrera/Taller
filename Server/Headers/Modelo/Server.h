@@ -14,12 +14,12 @@
 #include "GameSettings.h"
 #include "DefaultSettings.h"
 #include "EntidadPartida.h"
+#include "Client.h"
 #include "../Utils/Socket/SocketUtils.h"
 #include "../Utils/Socket/SocketQueue.h"
 #include "../Utils/Socket/Message.h"
-#include "../../Headers/Control/GameController.h"
 #include "../Utils/Thread.h"
-#include "Client.h"
+#include "../Control/GameController.h"
 #include <netinet/in.h>
 #include <iostream>
 #include <string.h>
