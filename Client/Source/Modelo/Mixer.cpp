@@ -65,7 +65,12 @@ void Mixer::initialize() {
 	}
 
 	this->soundOfDeath = Mix_LoadWAV( "../Sounds/death1.wav" );
-	if( this->soundOfHorse == NULL ) {
+	if( this->soundOfDeath == NULL ) {
+		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
+
+	this->soundOfConstruction = Mix_LoadWAV( "../Sounds/construction.wav" );
+	if( this->soundOfConstruction == NULL ) {
 		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
 }
@@ -96,6 +101,10 @@ void Mixer::playHorse() {
 
 void Mixer::playDeath() {
 	Mix_PlayChannel( -1, this->soundOfDeath, 0 );
+}
+
+void Mixer::playConstruction() {
+	Mix_PlayChannel( -1, this->soundOfConstruction, 0 );
 }
 
 void Mixer::startOrStopMusic() {

@@ -180,7 +180,7 @@ void JuegoVista::addTile(string surface, int x, int y){
 	this->tiles.push_back(newtile);
 }
 
-void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner,int health, bool completed){
+void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner,int health, bool completed, string typeEntity){
 	//nueva entidad estática
 	if ( this->buildings.find(id) == this->buildings.end() ) {
 		EntidadEstaticaVista *newBuilding = new EntidadEstaticaVista(gameSettings->getEntityConfig(type)->getAncho(),
@@ -206,7 +206,10 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 		EntidadEstaticaVista* building = this->buildings.at(id);
 		if (building->getHealth() > health && building->getOwner() == GameSettings::GetInstance()->getUserName()){
 			Mixer::GetInstance()->playEffect();
+		} else if ( building->getHealth() < health && building->getOwner() == GameSettings::GetInstance()->getUserName() && typeEntity == "edificios" ) {
+			Mixer::GetInstance()->playConstruction();
 		}
+
 		/*if(building->getName()=="food"){
 			building->setPathImage("../../Taller/Images/Resources/cowRed.png");
 		}*/
