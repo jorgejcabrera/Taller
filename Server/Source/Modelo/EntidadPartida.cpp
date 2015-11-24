@@ -13,7 +13,6 @@ using namespace std;
 EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
-	//this->target = 0;
 	this->target = NULL;
 	this->targetPosition = make_pair(0,0);
 	this->attacker = "";
@@ -32,10 +31,6 @@ void EntidadPartida::setTargetPosition(pair<int,int> position){
 	this->targetPosition = position;
 }
 
-/*int EntidadPartida::getTarget(){
-	return this->target;
-}*/
-
 EntidadPartida* EntidadPartida::getTarget(){
 	return this->target;
 }
@@ -43,10 +38,6 @@ EntidadPartida* EntidadPartida::getTarget(){
 void EntidadPartida::setTarget(EntidadPartida* target){
 	this->target = target;
 }
-
-/*void EntidadPartida::setTarget(int target){
-	this->target = target;
-}*/
 
 void EntidadPartida::setPosition(int x,int y){
 	this->position.first = x;

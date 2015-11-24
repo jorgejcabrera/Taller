@@ -51,7 +51,6 @@ protected:
 	/*
 	* id de la entidad con la que se va a interactuar, por ejemplo a atacar
 	* */
-	//int target;
 	EntidadPartida* target;
 	/*
 	* establece la defenza de la entidad cuando lo están atacando
@@ -66,7 +65,6 @@ public:
 	EntidadPartida();
 	int getWidth();
 	int getLength();
-	EntidadPartida* getTarget();
 	int getVisibilityRange();
 	int getId();
 	int getHealth();
@@ -77,8 +75,8 @@ public:
 	pair<int,int> getTargetPosition();
 	pair<int,int> getPosition();
 	list<pair<int,int> > getNearestPositions();
+	EntidadPartida* getTarget();
 	Message* getMessage();
-	//void setTarget(int target);
 	void setTarget(EntidadPartida* target);
 	void setPosition(int x,int y);
 	void setHealth(int health);

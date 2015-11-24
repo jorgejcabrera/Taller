@@ -339,10 +339,6 @@ void Server::sendFallenEntites(){
 	}
 }
 
-void Server::sendNewStaticEntites(){
-	//TODO hacerlo ;)
-}
-
 void Server::pingMessage(){
 	//Si hace mas de X segundos notifico que estoy conectado
 	if((time(0)-this->lastReportedServer)>=(DefaultSettings::getTimeOut()-5)){
