@@ -90,6 +90,7 @@ void GameController::setNextPaths(){
 void GameController::pursuitAndAttackTarget(EntidadDinamica* attacker){
 	//el target está vivo, pero no está cerca, entonces lo debemos perseguir
 	if(!this->readyToInteract(attacker) ){
+		Logger::get()->logDebug("GameController","pursuitAndAttackTarget","le cambiamos la posicion");
 		pair<int,int> targetPosition = this->juego->getNearestPosition(attacker->getTarget());
 		this->juego->setPlaceToGo(attacker,targetPosition.first, targetPosition.second);
 
