@@ -26,10 +26,6 @@ protected:
 	* */
 	bool isCompleted;
 	pair<int,int> position;
-	/*
-	* posicion de la entidad marcada como objetivo
-	* */
-	pair<int,int> targetPosition;
 	int width;
 	int length;
 	int id;
@@ -72,7 +68,6 @@ public:
 	float getPrecision();
 	string getName();
 	string getOwner();
-	pair<int,int> getTargetPosition();
 	pair<int,int> getPosition();
 	list<pair<int,int> > getNearestPositions();
 	EntidadPartida* getTarget();
@@ -83,7 +78,6 @@ public:
 	void setStrength(int strength);
 	void setPrecision(float presition);
 	void setBuilderEffort(int effort);
-	void setTargetPosition(pair<int,int> position);
 	void setName(string name);
 	void setVisibilityRange(int range);
 	void setNotifiable(bool notifiable);

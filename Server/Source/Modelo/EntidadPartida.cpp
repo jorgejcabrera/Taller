@@ -14,21 +14,13 @@ EntidadPartida::EntidadPartida() {
 	this->owner = "";
 	this->id = SequenceUtils::GetInstance()->getSequence();
 	this->target = NULL;
-	this->targetPosition = make_pair(0,0);
+	//this->targetPosition = make_pair(0,0);
 	this->attacker = "";
 	this->builderEffort = 0;
 }
 
 int EntidadPartida::getId(){
 	return this->id;
-}
-
-pair<int,int> EntidadPartida::getTargetPosition(){
-	return this->targetPosition;
-}
-
-void EntidadPartida::setTargetPosition(pair<int,int> position){
-	this->targetPosition = position;
 }
 
 EntidadPartida* EntidadPartida::getTarget(){
