@@ -138,7 +138,7 @@ void GameController::selection() {
 		this->entitiesSelected.unique();
 
 		if (this->entitiesSelected.size() == 1) {
-			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
+			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected, this->clientName);
 			if (this->entitiesSelected.back()->getOwner() != this->clientName )  this->entitiesSelected.clear();
 		} else { // si tengo mas de una entidad seleccionada, solo renderizo mis dinamicas
 			list<EntidadPartidaVista*>::iterator it = this->entitiesSelected.begin();
@@ -147,7 +147,7 @@ void GameController::selection() {
 					((*it)->getOwner() != this->clientName )) it = this->entitiesSelected.erase(it);
 				else ++it;
 			}
-			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected);
+			this->juegoVista->entitiesToRenderInMenu(this->entitiesSelected, this->clientName);
 		}
 	}
 }

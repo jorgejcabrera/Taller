@@ -202,7 +202,6 @@ void MenuVista::drawEntitiesSelected() {
 			}
 			++numberOfRenderedEntities;
 		}
-
 	}
 }
 

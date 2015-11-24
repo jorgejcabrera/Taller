@@ -177,7 +177,7 @@ public:
 	/*
 	 * preparo un map mediante la lista recibida, para pasarselo al menuVista y que luego lo renderize
 	 */
-	void entitiesToRenderInMenu(list<EntidadPartidaVista*> entities);
+	void entitiesToRenderInMenu(list<EntidadPartidaVista*> entities, string client);
 	/*
 	* obtengo el booleando que indica si la posicion esta disponible para construir el edificio
 	* */

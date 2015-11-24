@@ -525,13 +525,14 @@ void JuegoVista::setEntityForBuild(string entityName){
 	this->entityForBuild = entityName;
 }
 
-void JuegoVista::entitiesToRenderInMenu(list<EntidadPartidaVista*> entities) {
+void JuegoVista::entitiesToRenderInMenu(list<EntidadPartidaVista*> entities, string client) {
 	map<EntidadPartidaVista*,int> map;
 	for (list<EntidadPartidaVista*>::iterator itList = entities.begin(); itList != entities.end() ; ++itList) {
 		map[(*itList)]++;
-		if (	(*itList)->getName() == "Barracks" ||
+		if (	((*itList)->getName() == "Barracks" ||
 				(*itList)->getName() == "Castle" ||
-				(*itList)->getName() == "aldeano" )
+				(*itList)->getName() == "aldeano" ) &&
+				(*itList)->getOwner() == client)
 			this->menuVista->setCreatorEntitySelected((*itList));
 	}
 	this->menuVista->setSelectedEntities(map);
