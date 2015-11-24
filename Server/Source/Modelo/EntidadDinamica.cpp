@@ -91,7 +91,10 @@ bool EntidadDinamica::isMoving() {
 
 pair<int,int> EntidadDinamica::getPositionToGo() {
 	return this->path->back();
+}
 
+pair<int,int> EntidadDinamica::getNextPosition() {
+	return this->path->front();
 }
 
 EntidadDinamica::~EntidadDinamica() {

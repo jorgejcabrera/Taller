@@ -67,6 +67,7 @@ public:
 	bool pathIsNew();
 	bool isMoving();
 	pair<int,int> getPositionToGo();
+	pair<int,int> getNextPosition();
 	/*
 	* aumenta la salud del edicicio
 	* */
