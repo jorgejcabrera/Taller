@@ -53,9 +53,11 @@ void EntidadDinamicaVista::setInitialScreenPosition(float x,float y){
 SDL_Rect EntidadDinamicaVista::getPositionOfSprite(int ciclos){
 	int ciclesPerFrame = 50 / this->framesPerSecond;
 	int lineaSprite = this->getLineSprite(this->getDireccion());
-	if(this->isReadyToAttack() && this->name == "aldeano"){
+	if(this->isReadyToAttack() && (this->name == "aldeano" || this->name == "soldado") ){
 		lineaSprite = this->getLineSprite(this->getStandigDirection());
-		lineaSprite +=7;
+		if(this->name == "aldeano" ){
+			lineaSprite +=7;
+		}
 	}
 	SDL_Rect srcrect = { this->frame * this->widthPixel, this->lengthPixel*lineaSprite, this->widthPixel, this->lengthPixel };
 	if(this->inDelayPeriod){
@@ -248,11 +250,20 @@ void EntidadDinamicaVista::setDelay(int delayFrames){
 }
 
 void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
-	PicassoHelper::GetInstance()->renderObject(this->getPathImage(),
+	string path = this->getPathImage();
+	int sizeImg = GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4;
+	int auxDraw = this->getLengthPixel()/4;
+	if(this->isReadyToAttack() && (this->name == "soldado") ){
+		path = "../../Taller/Images/Personajes/soldadoAtacando.png";
+		sizeImg = GameSettings::GetInstance()->getTileSize()*7/4;
+		auxDraw += GameSettings::GetInstance()->getTileSize()/2;
+	}
+
+	PicassoHelper::GetInstance()->renderObject(path,
 											screenPosition.first - this->getWidthPixel()/4 + offSet->first,
-											screenPosition.second  - this->getLengthPixel()/4 + offSet->second,
-											GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4,
-											GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4,
+											screenPosition.second - auxDraw + offSet->second,
+											sizeImg,
+											sizeImg,
 											this->getPositionOfSprite(runCycles),
 											true);
 }
