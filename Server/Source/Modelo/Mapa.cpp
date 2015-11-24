@@ -24,9 +24,6 @@ Mapa::Mapa() {
 		int posY = (*it).first.second;
 		this->getTileAt(posX,posY)->setSuperficie((*it).second);
 	}
-
-	//creamos recursos de manera ramdom
-	this->createResources();
 }
 
 void Mapa::createResources(){
@@ -72,6 +69,7 @@ list<Message*> Mapa::getResourcesMessages(){
 	Message* msg = NULL;
 	for(list<Resource*>::iterator it = this->resources.begin(); it != this->resources.end(); ++it){
 		msg = new Message();
+		msg->setHealth((*it)->getHealth());
 		msg->setId((*it)->getId());
 		msg->setName((*it)->getName());
 		msg->setType("resources");

@@ -207,6 +207,9 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 		if (building->getHealth() > health && building->getOwner() == GameSettings::GetInstance()->getUserName()){
 			Mixer::GetInstance()->playEffect();
 		}
+		/*if(building->getName()=="food"){
+			building->setPathImage("../../Taller/Images/Resources/cowRed.png");
+		}*/
 		building->setOwner(owner);
 		building->setHealth(health);
 		building->setBuildingCompleted(completed);
@@ -244,7 +247,7 @@ void JuegoVista::addSemiEstaticEntity(int id, string type, int x, int y, string 
 	}
 }
 
-void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision){
+void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active, string owner,int health,int strength,float precision, int targetID){
 	if ( this->personajes.find(id) == this->personajes.end() ) {
 		//Nueva entidad
 		EntidadDinamicaVista* newPersonaje = new EntidadDinamicaVista(	gameSettings->getEntityConfig(type)->getName(),
@@ -274,6 +277,10 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active,
 		}
 		myPersonaje->setOwner(owner);
 		myPersonaje->setHealth(health);
+		if(targetID==0){
+			myPersonaje->prepareToFight(false);
+			myPersonaje->setTarget(NULL);
+		}
 	}
 }
 

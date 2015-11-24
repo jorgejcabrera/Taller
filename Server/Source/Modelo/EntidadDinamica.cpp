@@ -51,8 +51,8 @@ int EntidadDinamica::getDamage(){
 	}
 }
 
-void EntidadDinamica::attackTo(EntidadPartida* entity){
-	entity->takeDamage(this->getDamage(), this->getOwner());
+void EntidadDinamica::attackTo(){
+	this->target->takeDamage(this->getDamage(), this->getOwner());
 }
 
 void EntidadDinamica::construct(EntidadPartida* entity){
