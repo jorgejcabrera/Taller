@@ -37,6 +37,10 @@ private:
 	* habilita los tiles ocupados por la entidad pasada como parametro una vez que se elimina
 	* */
 	void enableTiles(EntidadPartida* entity);
+	/*
+	* si hay entidades con un target que fue eliminado, se lo pone en null
+	* */
+	void clearTarget(EntidadPartida* target);
 
 public:
 	Juego();

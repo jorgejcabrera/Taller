@@ -148,6 +148,15 @@ void Juego::setPlaceToGo(int idProtagonista, int x,int y){
 
 }
 
+void Juego::clearTarget(EntidadPartida* target){
+	for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
+		if( itClear->second->getTarget() == target ){
+			itClear->second->setTarget(NULL);
+			itClear->second->prepareToInteract(false);
+		}
+	}
+}
+
 list<EntidadPartida> Juego::getFallenEntities(){
 	list<EntidadPartida> fallenEntities;
 	//personajes eliminados
@@ -156,28 +165,14 @@ list<EntidadPartida> Juego::getFallenEntities(){
 			pair<int,int> position = it->second->getPosition();
 			this->getMap()->getTileAt(position.first,position.second)->changeStatusAvailable();
 			fallenEntities.push_front(*it->second);
-
-			//a las entidades que tenian seteadas el target caido les saco el target
-			for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
-				if( itClear->second->getTarget() == it->second ){
-					itClear->second->setTarget(NULL);
-					itClear->second->prepareToInteract(false);
-				}
-			}
+			this->clearTarget(it->second);
 			this->protagonistas.erase(it);
 		}
 	}
 	//edificios destruidos
 	for(list<EntidadPartida*>::iterator itBuilds = this->mapa->getEntities()->begin(); itBuilds != this->mapa->getEntities()->end(); ){
 		if( (*itBuilds)->getHealth() <= 0 ){
-			//a las entidades que tenian seteadas el target caido les saco el target
-			for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
-				if( itClear->second->getTarget() == *itBuilds ){
-					itClear->second->setTarget(NULL);
-					itClear->second->prepareToInteract(false);
-				}
-			}
-
+			this->clearTarget(*itBuilds);
 			this->enableTiles(*itBuilds);
 			fallenEntities.push_front(*(*itBuilds));
 			delete *itBuilds;
@@ -189,13 +184,7 @@ list<EntidadPartida> Juego::getFallenEntities(){
 	//recursos consumidos
 	for(list<Resource*>::iterator itResources = this->mapa->getResources()->begin(); itResources != this->mapa->getResources()->end(); ){
 		if( (*itResources)->getHealth() <= 0 ){
-			//a las entidades que tenian seteadas el target caido les saco el target
-			for(map<int,EntidadDinamica*>::iterator itClear = this->protagonistas.begin(); itClear != this->protagonistas.end(); ++itClear){
-				if( itClear->second->getTarget() == *itResources ){
-					itClear->second->setTarget(NULL);
-					itClear->second->prepareToInteract(false);
-				}
-			}
+			this->clearTarget(*itResources);
 			this->enableTiles(*itResources);
 			fallenEntities.push_front(*(*itResources));
 			delete *itResources;
@@ -364,9 +353,6 @@ pair<int,int> Juego::getNearestPosition(EntidadPartida* entity) {
 }
 
 void Juego::transferEntitiesToUser(string userFrom, string userTo){
-	/*stringstream ss;
-	ss<< "Entre en  transferEntitiesToUser "<< userFrom << " to "<< userTo;
-	Logger::get()->logInfo("Juego","transferEntitiesToUser",ss.str());*/
 	for(map<int,EntidadDinamica*>::iterator it = this->protagonistas.begin(); it != this->protagonistas.end();++it){
 		if( it->second->getOwner() == userFrom ){
 			it->second->setOwner(userTo);
