@@ -24,6 +24,8 @@ private:
 	Mix_Chunk *soundOfCarAttack;
 	Mix_Chunk *soundOfCarStart;
 	Mix_Chunk *soundOfHorse;
+	Mix_Chunk *soundOfDeath;
+	Mix_Chunk *soundOfConstruction;
 	Mixer();
 	static Mixer* instance;
 public:
@@ -35,6 +37,8 @@ void playCarAttack();
 void playCarStart();
 void playNosEstanAtacando();
 void playHorse();
+void playDeath();
+void playConstruction();
 void startOrStopMusic();
 virtual ~Mixer();
 

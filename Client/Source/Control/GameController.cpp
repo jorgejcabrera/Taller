@@ -78,7 +78,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 				this->getMixer()->playCarAttack();
 			}
 
-			EntidadPartidaVista* target = this->juegoVista->getEntityById( it->second->getTarget()->getId() );
+			EntidadPartidaVista* target = /*this->juegoVista->getEntityById(*/ it->second->getTarget()/*->getId() )*/;
 			//el target ya fue eliminado
 			if( target == NULL ){
 				it->second->setTarget(NULL);
@@ -223,10 +223,9 @@ list<Message*> GameController::action(){
 					body.set_tipo("update");
 					body.set_x(cartesianPosition.first);
 					body.set_y(cartesianPosition.second);
-					body.set_target(0);
 					message->setContent(body);
 					messages.push_back(message);
-					entity->setTarget(0);
+					entity->setTarget(NULL);
 					entity->prepareToFight(false);
 				}
 			}
@@ -241,7 +240,7 @@ JuegoVista* GameController::getJuegoVista(){
 }
 
 void GameController::setGameRunning(){
-	this->gameRunning=true;
+	this->gameRunning = true;
 	this->mixer->playMusic();
 }
 
