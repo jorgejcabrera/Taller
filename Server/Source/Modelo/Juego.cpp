@@ -135,14 +135,6 @@ void Juego::setPlaceToGo(EntidadDinamica* entity,int x,int y){
 	delete pathF;
 	entity->setPath(caminoMinimo);
 	entity->setPathIsNew(true);
-
-	//pongo la posicion anterior desocupada
-	pair<int,int> firstPosition = entity->getPosition();
-	this->mapa->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
-	entity->nextPosition();
-	//pongo la nueva posicion como ocupada
-	pair<int,int> newPos = entity->getPosition();
-	this->mapa->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
 }
 
 void Juego::clearTarget(EntidadPartida* fallenEntity){

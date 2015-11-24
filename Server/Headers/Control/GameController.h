@@ -109,6 +109,9 @@ public:
 	* Crea las entidades del cliente
 	* */
 	pair<int,int> createEntitiesForClient(string owner, int clientIndex);
+
+	void recalculate(EntidadDinamica* entity);
+
 	virtual ~GameController();
 };
 

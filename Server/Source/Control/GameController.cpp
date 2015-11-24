@@ -70,21 +70,24 @@ list<int> GameController::getEntitiesOfClient(string userName){
 void GameController::setNextPaths(){
 	map<int,EntidadDinamica*>* listaPersonajes = this->juego->getDinamicEntities();
 	for(map<int,EntidadDinamica*>::iterator it = listaPersonajes->begin(); it!=listaPersonajes->end();++it){
-		EntidadDinamica* entidad = (*it).second;
+		EntidadDinamica* entity = (*it).second;
+		if (entity->isMoving()){
+			pair<int,int> finalPos = entity->getPositionToGo();
+			pair<int,int> nextPos = entity->getNextPosition();
+			//recalculo el movimiento hasta encontrar una siguiente posicion libre
+			while (!this->juego->getMap()->getTileAt(nextPos.first,nextPos.second)->isAvailable()) {
+				this->juego->setPlaceToGo(entity,finalPos.first,finalPos.second);
+				finalPos = entity->getPositionToGo();
+				nextPos = entity->getNextPosition();
+			}
+		}
 		//pongo la posicion anterior desocupada
-		pair<int,int> firstPosition = entidad->getPosition();
+		pair<int,int> firstPosition = entity->getPosition();
 		this->juego->getMap()->getTileAt(firstPosition.first,firstPosition.second)->changeStatusAvailable();
 		(*it).second->nextPosition();
 		//pongo la nueva posicion como ocupada
-		pair<int,int> newPos = entidad->getPosition();
+		pair<int,int> newPos = entity->getPosition();
 		this->juego->getMap()->getTileAt(newPos.first,newPos.second)->changeStatusAvailable();
-		//si mi destino esta ocupado, recalculo la posicion
-		if (entidad->isMoving()) {
-			pair<int,int> finalPos = entidad->getPositionToGo();
-			pair<int,int> nextPos = entidad->getNextPosition();
-			if ( !this->juego->getMap()->getTileAt(nextPos.first,nextPos.second)->isAvailable())
-				this->juego->setPlaceToGo(entidad,finalPos.first,finalPos.second);
-		}
 	}
 }
 
@@ -269,6 +272,16 @@ pair<int,int> GameController::createEntitiesForClient(string owner, int clientIn
 		this->getJuego()->createFlag(owner);
 	}
 	return offsetClient;
+}
+
+void GameController::recalculate(EntidadDinamica* entity) {
+	pair<int,int> finalPos = entity->getPositionToGo();
+	pair<int,int> nextPos = entity->getNextPosition();
+	while ( !this->juego->getMap()->getTileAt(nextPos.first,nextPos.second)->isAvailable()) {
+		this->juego->setPlaceToGo(entity,finalPos.first,finalPos.second);
+		finalPos = entity->getPositionToGo();
+		nextPos = entity->getNextPosition();
+	}
 }
 
 GameController::~GameController() {
