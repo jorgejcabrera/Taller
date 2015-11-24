@@ -276,6 +276,7 @@ void JuegoVista::addDinamicEntity(int id, string type, int x, int y, int active,
 		myPersonaje->setHealth(health);
 		if(targetID==0){
 			myPersonaje->prepareToFight(false);
+			myPersonaje->setTarget(NULL);
 		}
 	}
 }
