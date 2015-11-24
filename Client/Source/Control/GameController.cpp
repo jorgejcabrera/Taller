@@ -162,9 +162,10 @@ list<Message*> GameController::action(){
 		
 		}else if( this->entityToBuild != "" && this->juegoVista->isAvailablePosForBuild()){
 			this->juegoVista->clearAllDataForBuilding();
+			EntidadPartidaVista* entity = this->entitiesSelected.front();
 			Message* message = new Message();
 			msg_game body;
-			body.set_id(this->entitiesSelected.front()->getId());
+			body.set_id(entity->getId());
 			body.set_tipo("building");
 			body.set_nombre(this->entityToBuild);
 			body.set_x(finalPosMouseX);
@@ -172,6 +173,8 @@ list<Message*> GameController::action(){
 			body.set_owner(this->clientName);
 			message->setContent(body);
 			messages.push_back(message);
+			EntidadDinamicaVista* entityDinamic = this->juegoVista->getDinamicEntityById(entity->getId());
+			entityDinamic->prepareToFight(true);
 			//gasto los recursos
 			this->decreaseResources(this->entityToBuild);
 			this->entityToBuild = "";
