@@ -14,6 +14,7 @@
 #include <sstream>
 #include <fstream>
 #include "EntidadPartidaVista.h"
+#include "../Modelo/Mixer.h"
 
 using namespace std;
 

@@ -26,6 +26,8 @@ private:
 	Mix_Chunk *soundOfHorse;
 	Mix_Chunk *soundOfDeath;
 	Mix_Chunk *soundOfConstruction;
+	Mix_Chunk* soundOfSwordAttacker;
+
 	Mixer();
 	static Mixer* instance;
 public:
@@ -40,6 +42,7 @@ void playHorse();
 void playDeath();
 void playConstruction();
 void startOrStopMusic();
+void playSwordEffect();
 virtual ~Mixer();
 
 

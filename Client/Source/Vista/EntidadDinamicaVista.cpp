@@ -269,10 +269,15 @@ void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
 		offsetX = (DefaultSettings::getTileSize() * 0,1);
 		offsetY = (DefaultSettings::getTileSize() * 0,15);
 		if(this->isReadyToAttack() && !this->caminando){
+			Mixer::GetInstance()->playSwordEffect();
 			path = "../../Taller/Images/Personajes/soldadoAtacando.png";
 			sizeImg = (GameSettings::GetInstance()->getTileSize()*3/2);
 			auxDraw += GameSettings::GetInstance()->getTileSize()/2;
 		}
+	}
+
+	if(this->name == "caballo" && this->isReadyToAttack() && !this->caminando){
+		Mixer::GetInstance()->playSwordEffect();
 	}
 
 	PicassoHelper::GetInstance()->renderObject(path,
