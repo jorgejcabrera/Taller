@@ -163,7 +163,7 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 			if (this->creatorEntitySelected->getName() == "Barracks") result.second = "aldeano";
 			else if (this->creatorEntitySelected->getName() == "Town Center") result.second = "aldeano";
 			else if (this->creatorEntitySelected->getName() == "aldeano") result.second = "Castle";
-			else if (this->creatorEntitySelected->getName() == "Castle") result.second = "soldado";
+			else if (this->creatorEntitySelected->getName() == "Castle" && this->creatorEntitySelected->isBuildingCompleted()) result.second = "soldado";
 			else result.second = "";
 	}
 	if (posMouseX > this->posXvertexFirstButton*2 &&
@@ -171,7 +171,7 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 			posMouseY > this->posYvertexFirstButton &&
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
 			if (this->creatorEntitySelected->getName() == "aldeano") result.second = "Army";
-			else if (this->creatorEntitySelected->getName() == "Castle") result.second = "cobra";
+			else if (this->creatorEntitySelected->getName() == "Castle" && this->creatorEntitySelected->isBuildingCompleted()) result.second = "cobra";
 			else result.second = "";
 	}
 	if (posMouseX > this->posXvertexFirstButton*3 &&
@@ -179,7 +179,7 @@ pair<int, string> MenuVista::getTypeOfNewEntity(int posMouseX,int posMouseY) {
 			posMouseY > this->posYvertexFirstButton &&
 			posMouseY < this->posYvertexFirstButton + this->sideFirstButton ) {
 			if (this->creatorEntitySelected->getName() == "aldeano") result.second = "molino";
-			else if (this->creatorEntitySelected->getName() == "Castle") result.second = "caballo";
+			else if (this->creatorEntitySelected->getName() == "Castle" && this->creatorEntitySelected->isBuildingCompleted()) result.second = "caballo";
 			else result.second = "";
 	}
 	return result;

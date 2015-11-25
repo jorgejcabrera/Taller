@@ -323,7 +323,7 @@ void Server::sendNewEntities(){
 
 					list<Client*> activeClients = getActiveClients();
 					for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
-						if((*clientIterator)->getUserName()!=(*it)->getOwner()){
+						if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
 							//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
 							(*clientIterator)->writeMessagesInQueue(newEntity);
 						}

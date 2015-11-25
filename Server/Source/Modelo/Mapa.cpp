@@ -27,7 +27,7 @@ Mapa::Mapa() {
 }
 
 void Mapa::createResources(){
-	unsigned int maxResources = 10;
+	unsigned int maxResources = 15;
 	//genramos una posicion random
 	int height = this->gameSettings->getMapHeight();
 	int width = this->gameSettings->getMapWidth();
