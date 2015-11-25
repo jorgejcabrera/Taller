@@ -93,7 +93,7 @@ void Client::processReceivedMessages(){
 			entity->setStrength((*it)->getStrength());
 			entity->setPrecision((*it)->getPrecision());
 			entity->prepareToFight(false);
-			entity->setTarget(NULL);
+			//entity->setTarget(NULL);
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
