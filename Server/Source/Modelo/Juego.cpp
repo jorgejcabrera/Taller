@@ -279,7 +279,7 @@ void Juego::createKingForClient(string owner){
 void Juego::createFlag(string owner){
 	string name = "flag";
 	pair<int,int> civicCenterPosition = this->getCivicCenterPositionOfClient(owner);
-	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+3,civicCenterPosition.second+3);
+	pair<int,int> position = this->mapa->getAvailablePosition(civicCenterPosition.first+4,civicCenterPosition.second+4);
 	int width = this->gameSettings->getConfigAttributeOfEntityAsInt(name, "ancho_base");
 	int height = this->gameSettings->getConfigAttributeOfEntityAsInt(name, "alto_base");
 	EntidadPartida* flagEntity = new EntidadEstatica(name,width,height,true);
