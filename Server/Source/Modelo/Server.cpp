@@ -314,6 +314,25 @@ void Server::sendNewEntities(){
 				}
 			}
 
+			//mando el id de las entidades que tienen este target
+			for(map<int,EntidadDinamica*>::iterator itAttacker = this->gController->getJuego()->getDinamicEntities()->begin(); 
+				itAttacker != this->gController->getJuego()->getDinamicEntities()->end();++itAttacker){
+				if( itAttacker->second->getTarget() == *it ){
+					Message* newEntity = new Message(itAttacker->second->getId(),  "attacker");
+
+					list<Client*> activeClients = getActiveClients();
+					for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){
+						if((*clientIterator)->getUserName()!=(*it)->getOwner() || this->gameRunning){
+							//no notifico al dueño del personaje porque ya lo recibio, salvo que la partida ya este corriendo
+							(*clientIterator)->writeMessagesInQueue(newEntity);
+						}
+					}
+				}
+			}
+
+
+
+
 		}
 	}
 }

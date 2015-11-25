@@ -156,6 +156,9 @@ void Client::processReceivedMessages(){
 			this->gController->winGame();
 			this->status = DISCONECTED;
 		
+		}else if( tipoMensaje == "attacker"){
+			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->prepareToFight(true);
+		
 		}else if (tipoMensaje == "lost"){
 			if((*it)->getNombre() == this->userName){
 				this->gController->loseGame();
