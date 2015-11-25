@@ -195,7 +195,7 @@ bool Server::checkForAttackMsg(Message* msg){
 		int target = msg->getTarget();
 		pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
 		this->gController->getJuego()->setPlaceToGo(entityToUpd, targetPosition.first, targetPosition.second);
-		entityToUpd->setTarget(this->gController->getJuego()->getEntityById(msg->getTarget()));
+		entityToUpd->setTarget(this->gController->getJuego()->getEntityById(target));
 		entityToUpd->prepareToInteract(false);
 		this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		return true;
