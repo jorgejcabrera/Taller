@@ -88,7 +88,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 				msg_game body;
 				body.set_id(it->second->getId());
 				body.set_tipo("pursuit");
-				body.set_target(0);
+				body.set_target(it->second->getTarget()->getId());
 				message->setContent(body);
 				messages->push_back(message);
 				return;
