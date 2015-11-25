@@ -7,6 +7,7 @@
 
 #ifndef RESOURCECOUNTER_H_
 #define RESOURCECOUNTER_H_
+#define INIT_CANT 10000;
 
 #include <string>
 #include "DefaultSettings.h"

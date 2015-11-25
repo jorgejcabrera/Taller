@@ -8,11 +8,10 @@
 #include "../../Headers/Modelo/ResourceCounter.h"
 
 ResourceCounter::ResourceCounter() {
-	int cantInicial = 10000;
-	this->food = cantInicial;
-	this->gold = cantInicial;
-	this->wood = cantInicial;
-	this->rock = cantInicial;
+	this->food = INIT_CANT;
+	this->gold = INIT_CANT;
+	this->wood = INIT_CANT;
+	this->rock = INIT_CANT;
 }
 
 void ResourceCounter::gastar(string recurso) {
@@ -43,13 +42,13 @@ void ResourceCounter::refund(string type){
 
 void ResourceCounter::increase(string recurso,int quantity){
 	if(recurso == "gold")
-		this->gold += quantity;
+		this->gold = quantity + INIT_CANT;
 	if(recurso == "wood")
-		this->wood += quantity;
+		this->wood = quantity + INIT_CANT;
 	if(recurso == "food")
-		this->food += quantity;
+		this->food = quantity + INIT_CANT;
 	if(recurso == "rock")
-		this->rock += quantity;
+		this->rock = quantity + INIT_CANT;
 }
 
 int ResourceCounter::getGold(){
