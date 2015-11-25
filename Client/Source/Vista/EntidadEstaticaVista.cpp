@@ -32,6 +32,7 @@ EntidadEstaticaVista::EntidadEstaticaVista(int width,int length){
 	this->sizeString = getStringSize(this);
 	this->owner = "";
 	this->isCompleted = true;
+	this->maxHealth = 0;
 }
 
 void EntidadEstaticaVista::destruir(){
@@ -63,13 +64,14 @@ void EntidadEstaticaVista::drawMe(pair<int,int> isometricPosition, int offSetX, 
 
 	if(this->isCompleted){
 		PicassoHelper::GetInstance()->renderObject(this->getPathImage(), x, y, w, h);
-		if(this->isUnderAttack() && this->owner != "" && this->name!= "flag"){
-			string pathFire = "../../Taller/Images/Personajes/fire.png";
-			PicassoHelper::GetInstance()->renderObject(pathFire, x+(this->width*DefaultSettings::getTileSize())/2, y, DefaultSettings::getTileSize()*3, DefaultSettings::getTileSize()*3);
-		}
 	}else{
 		PicassoHelper::GetInstance()->renderObjectGrey(this->getPathImage(), x, y, w, h);
 	}
+
+	if(this->isUnderAttack() && this->owner != "" && this->name!= "flag"){
+				string pathFire = "../../Taller/Images/Personajes/fire.png";
+				PicassoHelper::GetInstance()->renderObject(pathFire, x+(this->width*DefaultSettings::getTileSize())/2, y, DefaultSettings::getTileSize()*3, DefaultSettings::getTileSize()*3);
+			}
 }
 
 EntidadEstaticaVista::~EntidadEstaticaVista() {
