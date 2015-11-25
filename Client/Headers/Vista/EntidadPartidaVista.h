@@ -48,6 +48,7 @@ protected:
 	* parametros variables segun el nivel y características de la entidad
 	* */
 	int health;
+	int maxHealth;
 	int strength;
 	float precision;
 
@@ -87,6 +88,7 @@ public:
 	void saw();
 	bool isBuildingCompleted();
 	void setBuildingCompleted(bool completed);
+	bool isUnderAttack();
 	virtual ~EntidadPartidaVista();
 };
 

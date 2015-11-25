@@ -11,6 +11,7 @@ EntidadPartidaVista::EntidadPartidaVista() {
 	this->id = 0;
 	this->seen = false;
 	this->health = 100;
+	this->maxHealth = this->health;
 	this->target = NULL;
 }
 
@@ -108,6 +109,9 @@ float EntidadPartidaVista::getPrecision(){
 
 void EntidadPartidaVista::setHealth(int health){
 	this->health = health;
+	if(this->health> this->maxHealth){
+		this->maxHealth = this->health;
+	}
 }
 
 void EntidadPartidaVista::setStrength(int strength){
@@ -148,6 +152,10 @@ bool EntidadPartidaVista::isBuildingCompleted(){
 
 void EntidadPartidaVista::setBuildingCompleted(bool completed){
 	this->isCompleted = completed;
+}
+
+bool EntidadPartidaVista::isUnderAttack(){
+	return (this->health<this->maxHealth);
 }
 
 EntidadPartidaVista::~EntidadPartidaVista() {
