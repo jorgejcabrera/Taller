@@ -114,7 +114,7 @@ void GameController::attackOrWork(EntidadDinamica* entity){
 	//interactuamos y colocamos el target en la lista de novedades
 	}else{
 		entity->attackTo();
-		if(target->getHealth()>0 && target->getOwner() != ""){
+		if(target->getHealth()>0){
 			this->juego->addNewEntity(target);
 		}
 	}
