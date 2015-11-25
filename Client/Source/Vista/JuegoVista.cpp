@@ -210,9 +210,9 @@ void JuegoVista::addStaticEntity(int id, string type, int x, int y, string owner
 			Mixer::GetInstance()->playConstruction();
 		}
 
-		/*if(building->getName()=="food"){
+		if(building->getName()=="food"){
 			building->setPathImage("../../Taller/Images/Resources/cowRed.png");
-		}*/
+		}
 		building->setOwner(owner);
 		building->setHealth(health);
 		building->setBuildingCompleted(completed);
