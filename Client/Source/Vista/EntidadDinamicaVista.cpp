@@ -251,17 +251,33 @@ void EntidadDinamicaVista::setDelay(int delayFrames){
 
 void EntidadDinamicaVista::drawMe(pair<int,int>* offSet, int runCycles){
 	string path = this->getPathImage();
-	int sizeImg = GameSettings::GetInstance()->getTileSize()+GameSettings::GetInstance()->getTileSize()/4;
+	int sizeImg = (GameSettings::GetInstance()->getTileSize() +(GameSettings::GetInstance()->getTileSize()/6));
+	int offsetX = 0;
+	int offsetY = 0;
 	int auxDraw = this->getLengthPixel()/4;
-	if(this->isReadyToAttack() && (this->name == "soldado") && !this->caminando){
-		path = "../../Taller/Images/Personajes/soldadoAtacando.png";
-		sizeImg = GameSettings::GetInstance()->getTileSize()*7/4;
-		auxDraw += GameSettings::GetInstance()->getTileSize()/2;
+	if(this->name=="aldeano"){
+		offsetX = (DefaultSettings::getTileSize() * 0,1);
+		offsetY = (DefaultSettings::getTileSize() * 0,15);
+		if(this->isReadyToAttack() && !this->caminando){
+			sizeImg = (GameSettings::GetInstance()->getTileSize());
+		}else{
+			sizeImg = (GameSettings::GetInstance()->getTileSize()*8/10);
+		}
+	}
+
+	if(this->name == "soldado"){
+		offsetX = (DefaultSettings::getTileSize() * 0,1);
+		offsetY = (DefaultSettings::getTileSize() * 0,15);
+		if(this->isReadyToAttack() && !this->caminando){
+			path = "../../Taller/Images/Personajes/soldadoAtacando.png";
+			sizeImg = (GameSettings::GetInstance()->getTileSize()*3/2);
+			auxDraw += GameSettings::GetInstance()->getTileSize()/2;
+		}
 	}
 
 	PicassoHelper::GetInstance()->renderObject(path,
-											screenPosition.first - this->getWidthPixel()/4 + offSet->first,
-											screenPosition.second - auxDraw + offSet->second,
+											screenPosition.first - this->getWidthPixel()/4 + offSet->first + offsetX,
+											screenPosition.second - auxDraw + offSet->second + offsetY,
 											sizeImg,
 											sizeImg,
 											this->getPositionOfSprite(runCycles),
