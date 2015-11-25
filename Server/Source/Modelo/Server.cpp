@@ -146,7 +146,7 @@ void Server::processReceivedMessages(){
 		if(!msgProcessed){
 			stringstream ss;
 			ss << "No se que hacer con el mensaje : "<< messageUpdate->toString();
-			Logger::get()->logInfo("Server","processReceivedMessages",ss.str());
+			Logger::get()->logError("Server","processReceivedMessages",ss.str());
 		}
 	}
 	this->readQueue->unlockQueue();
@@ -175,22 +175,21 @@ bool Server::checkForExitMsg(Message* msg){
 
 bool Server::checkForAttackMsg(Message* msg){
 	EntidadDinamica* entityToUpd = this->gController->getJuego()->getDinamicEntityById(msg->getId());	
-	if( this->gameRunning && msg->getTipo() == "attack" ){		
-		//si la entidad ya tenia un target empieza a atacar o a consumir el recurso
-		if( entityToUpd->getTarget() != 0 ){
-			entityToUpd->prepareToInteract(true);
-		
-		//la entidad empieza a dirigirse a la posicion del target
-		}else{
-			int target = msg->getTarget();
-			pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
-			this->gController->getJuego()->setPlaceToGo(entityToUpd, targetPosition.first, targetPosition.second);
-			entityToUpd->setTarget(this->gController->getJuego()->getEntityById(msg->getTarget()));
-			entityToUpd->prepareToInteract(false);
-			this->idEntitiesUpdated.push_back(entityToUpd->getId());
-		}
+	//la entidad empieza a dirigirse a la posicion del target
+	if( this->gameRunning && msg->getTipo() == "go"){
+		int target = msg->getTarget();
+		pair<int,int> targetPosition = this->gController->getJuego()->getNearestPosition(this->gController->getJuego()->getEntityById(target));
+		this->gController->getJuego()->setPlaceToGo(entityToUpd, targetPosition.first, targetPosition.second);
+		entityToUpd->setTarget(this->gController->getJuego()->getEntityById(msg->getTarget()));
+		entityToUpd->prepareToInteract(false);
+		this->idEntitiesUpdated.push_back(entityToUpd->getId());
 		return true;
-	
+
+	//la entidad está preparada para interactuar
+	}else if( this->gameRunning && msg->getTipo() == "attack"){
+		entityToUpd->prepareToInteract(true);
+		return true;
+
 	//el target se empezo a mover
 	}else if( this->gameRunning && msg->getTipo() == "pursuit" ){
 		int target = msg->getTarget();

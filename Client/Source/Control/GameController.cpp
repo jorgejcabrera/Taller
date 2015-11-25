@@ -71,20 +71,13 @@ list<Message*> GameController::getMessagesFromEvent(string userName){
 
 void GameController::readyToAttack(list<Message*>* messages){
 	map<int, EntidadDinamicaVista*>* entities = this->juegoVista->getDinamicEntities();
-
 	for(map<int, EntidadDinamicaVista*>::iterator it = entities->begin(); it != entities->end() ;++it){
-		if( it->second->getTarget() != 0 ){
+		if( it->second->getTarget() != NULL ){
 			if(it->second->getName() == "cobra"){
 				this->getMixer()->playCarAttack();
 			}
 
-			EntidadPartidaVista* target = /*this->juegoVista->getEntityById(*/ it->second->getTarget()/*->getId() )*/;
-			//el target ya fue eliminado
-			if( target == NULL ){
-				it->second->setTarget(NULL);
-				it->second->prepareToFight(false);
-				return;
-			}
+			EntidadPartidaVista* target = it->second->getTarget();
 			int distanceBeetweenTiles = 50 * target->getLength();
 			pair<int,int> targetPosition = this->utils->getIsometricPosition(target->getPosition().first, target->getPosition().second);
 			
@@ -95,7 +88,7 @@ void GameController::readyToAttack(list<Message*>* messages){
 				msg_game body;
 				body.set_id(it->second->getId());
 				body.set_tipo("pursuit");
-				body.set_target(target->getId());
+				body.set_target(0);
 				message->setContent(body);
 				messages->push_back(message);
 				return;
@@ -199,13 +192,13 @@ list<Message*> GameController::action(){
 					messages.push_back(message);
 				}
 
-			//atacar o consumir
+			//dirigirse a atacar o consumir recurso
 			}else if( targetToAttack.size() > 0 && this->clientName.compare(targetToAttack["owner"].c_str()) != 0 ){
 				for (; it != this->entitiesSelected.end() ; ++it ) {
 					Message* message = new Message();
 					msg_game body;
 					body.set_id((*it)->getId());
-					body.set_tipo("attack");
+					body.set_tipo("go");
 					body.set_target(atoi(targetToAttack["id"].c_str()));
 					message->setContent(body);
 					EntidadPartidaVista* target = this->juegoVista->getEntityById(atoi(targetToAttack["id"].c_str()));
