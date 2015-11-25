@@ -93,6 +93,7 @@ void Client::processReceivedMessages(){
 			entity->setStrength((*it)->getStrength());
 			entity->setPrecision((*it)->getPrecision());
 			entity->prepareToFight(false);
+			entity->setTarget(NULL);
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
@@ -159,6 +160,7 @@ void Client::processReceivedMessages(){
 		
 		}else if( tipoMensaje == "attacker"){
 			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->prepareToFight(true);
+			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->setTarget(this->gController->getJuegoVista()->getEntityById((*it)->getTarget()));
 		
 		}else if (tipoMensaje == "lost"){
 			if((*it)->getNombre() == this->userName){
