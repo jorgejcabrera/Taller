@@ -142,6 +142,7 @@ void Juego::clearTarget(EntidadPartida* fallenEntity){
 		if( itClear->second->getTarget() == fallenEntity ){
 			itClear->second->setTarget(NULL);
 			itClear->second->prepareToInteract(false);
+			this->addNewEntity(itClear->second);
 		}
 	}
 	this->enableTiles(fallenEntity);
