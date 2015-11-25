@@ -16,6 +16,8 @@ string getStringSize(EntidadPartidaVista* entidad){
 		return "standardBigSize";
 	}else if(entidad->getWidth() == 2 && entidad->getLength() == 2){
 		return "standarSmallSize";
+	}else if(entidad->getWidth() == 1 && entidad->getLength() == 1){
+		return "standarMiniSize";
 	}else if(entidad->getWidth() == 3 && entidad->getLength() == 4){
 		return "mediumSize";
 	}else{
@@ -92,14 +94,14 @@ SDL_Rect EntidadSemiEstaticaVista::getPositionOfSprite(int ciclos){
 		return srcrect;
 }
 
-void EntidadSemiEstaticaVista::drawMe(pair<int,int> isometricPosition, pair<int,int>* offSet, int ciclos){
-	PicassoHelper::GetInstance()->renderObject(	this->getPathImage(),
-										isometricPosition.first + offSet->first - this->getWidthPixel() / 2 + DefaultSettings::getTileSize(),
-										isometricPosition.second + offSet->second - this->getWidthPixel() / 2 - DefaultSettings::getTileSize() /2,
-										this->getWidthPixel(),
-										this->getLengthPixel(),
-										this->getPositionOfSprite(ciclos),
-										this->isBuildingCompleted());
+void EntidadSemiEstaticaVista::drawMe(pair<int,int> isometricPosition, pair<int,int>* offSet, int runCycles){
+	PicassoHelper::GetInstance()->renderObject( this->getPathImage(),
+			isometricPosition.first -this->getWidthPixel()*45/100+ offSet->first,
+			isometricPosition.second - this->getWidthPixel()*75/100 + offSet->second,
+			this->getWidthPixel(),
+			this->getWidthPixel(),
+			this->getPositionOfSprite(runCycles),
+			this->isBuildingCompleted());
 }
 
 EntidadSemiEstaticaVista::~EntidadSemiEstaticaVista() {
