@@ -9,6 +9,7 @@
 #define SOURCE_UTILS_RESOURCECOUNTER_H_
 
 #include "../Utils/Socket/Message.h"
+#include "Logger.h"
 #include <map>
 #include <list>
 #include <stddef.h>
