@@ -319,6 +319,7 @@ void Server::sendNewEntities(){
 				itAttacker != this->gController->getJuego()->getDinamicEntities()->end();++itAttacker){
 				if( itAttacker->second->getTarget() == *it ){
 					Message* newEntity = new Message(itAttacker->second->getId(),  "attacker");
+					newEntity->setTarget((*it)->getId());
 
 					list<Client*> activeClients = getActiveClients();
 					for(list<Client*>::iterator clientIterator=activeClients.begin(); clientIterator!=activeClients.end(); ++clientIterator){

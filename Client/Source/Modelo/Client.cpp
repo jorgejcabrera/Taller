@@ -88,10 +88,11 @@ void Client::processReceivedMessages(){
 		}else if ( tipoMensaje == "update" ){
 			//TODO ojo cuando actualizemos la salud de un endificio esto no va a andar por las calses estaticas no tienen el metodo addTileTopath
 			this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId())->addTileToPath((*it)->getPositionX(),(*it)->getPositionY());
-			EntidadPartidaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
+			EntidadDinamicaVista* entity = this->gController->getJuegoVista()->getDinamicEntityById((*it)->getId());
 			entity->setHealth((*it)->getHealth());
 			entity->setStrength((*it)->getStrength());
 			entity->setPrecision((*it)->getPrecision());
+			entity->prepareToFight(false);
 
 		}else if ( tipoMensaje == "tile" ){
 			this->gController->getJuegoVista()->addTile((*it)->getNombre(),(*it)->getPositionX(), (*it)->getPositionY());
